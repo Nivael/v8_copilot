@@ -4,7 +4,9 @@ from pathlib import Path
 
 import api as api_module
 import httpx
+from api import SPAStaticFiles
 from answer_engine import BASE_DB, EPISODE_INDEX
+from fastapi import FastAPI
 from jsonschema import Draft202012Validator
 from lens_binding import RELEASE_LIBRARY
 
@@ -165,3 +167,25 @@ def test_cors_is_restricted_to_local_vite_origins() -> None:
 
     assert allowed.headers["access-control-allow-origin"] == "http://127.0.0.1:5173"
     assert "access-control-allow-origin" not in denied.headers
+
+
+def test_spa_static_files_support_deep_links_without_hiding_asset_404s(tmp_path) -> None:
+    (tmp_path / "index.html").write_text("<main>copilot</main>", encoding="utf-8")
+    static_app = SPAStaticFiles(directory=tmp_path, html=True)
+    test_app = FastAPI()
+    test_app.mount("/", static_app)
+
+    async def fetch(path: str) -> httpx.Response:
+        transport = httpx.ASGITransport(app=test_app)
+        async with httpx.AsyncClient(
+            transport=transport,
+            base_url="http://testserver",
+        ) as client:
+            return await client.get(path)
+
+    deep_link = asyncio.run(fetch("/stocks/603398"))
+    missing_asset = asyncio.run(fetch("/assets/missing.js"))
+
+    assert deep_link.status_code == 200
+    assert deep_link.text == "<main>copilot</main>"
+    assert missing_asset.status_code == 404

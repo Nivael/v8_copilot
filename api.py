@@ -10,6 +10,7 @@ from fastapi import FastAPI, HTTPException, Path
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from api_contract import (
     API_CONTRACT_VERSION,
@@ -26,6 +27,23 @@ from orchestrator import route_only, stream_events
 
 
 logger = logging.getLogger(__name__)
+
+
+class SPAStaticFiles(StaticFiles):
+    """Serve index.html for client routes while preserving real 404s."""
+
+    async def get_response(self, path: str, scope):
+        try:
+            return await super().get_response(path, scope)
+        except StarletteHTTPException as exc:
+            leaf = path.rsplit("/", 1)[-1]
+            if (
+                exc.status_code != 404
+                or path.startswith("api/")
+                or "." in leaf
+            ):
+                raise
+            return await super().get_response("index.html", scope)
 
 
 def orchestrate(request: ResearchRequest) -> ResearchResponse:
@@ -123,4 +141,4 @@ def stock_dossier(
 
 _WEB_DIST = FilePath(__file__).resolve().parent / "web/dist"
 if _WEB_DIST.exists():
-    app.mount("/", StaticFiles(directory=_WEB_DIST, html=True), name="web")
+    app.mount("/", SPAStaticFiles(directory=_WEB_DIST, html=True), name="web")

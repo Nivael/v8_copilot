@@ -19,6 +19,7 @@ Run from `v8_copilot/`:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 evals/validate_w2_evals.py
+PYTHONDONTWRITEBYTECODE=1 python3 evals/run_route_eval.py
 ```
 
 Passing this gate means the acceptance artifacts are internally consistent and
@@ -34,4 +35,22 @@ that a production router or LLM adapter exists yet.
   1 needs_review.
 - Known seed debt assignment gaps: `QC-20260710-003`, `QC-20260710-005`,
   `QC-20260710-006`.
-- Golden assertions: 20 checks against the current three generated AnswerCards.
+- Golden assertions: 20 checks against the three original slice AnswerCards.
+- Deterministic router v0: 30/30 route matches against
+  `question_routing_set_v0.jsonl`.
+
+## Deterministic Router v0
+
+`deterministic_router_v0.py` is the W2 fallback router. It maps a user question
+and object scope to a lawful route only:
+
+- answer query/evidence/checklist/methodology
+- data debt
+- lens gap
+- needs review
+- clarify
+- refusal/rewrite for trading-advice boundaries
+
+It does not compute facts and does not generate AnswerCards. The route eval
+compares predicted route/status/view/lens behavior/data-debt refs/QuestionCard
+refs against the 30-question acceptance set.

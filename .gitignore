@@ -1,0 +1,9 @@
+.DS_Store
+.python-version.local
+.venv/
+.pytest_cache/
+.playwright-cli/
+__pycache__/
+*.py[cod]
+out/
+ui/dossier_*.html

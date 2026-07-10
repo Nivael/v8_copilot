@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v8_answer_contract_v0",
+  "title": "ST Research Copilot AnswerCard v0",
+  "type": "object",
+  "required": [
+    "question",
+    "object_ref",
+    "view",
+    "as_of",
+    "sample_scope",
+    "evidence_grade",
+    "contract_version",
+    "lens_invocations",
+    "lens_gap",
+    "v7_release_library_version",
+    "episode_index_version",
+    "data_snapshot_as_of",
+    "source_freshness",
+    "body_rows",
+    "analysis_claims",
+    "data_debt",
+    "data_debt_refs",
+    "caveats",
+    "provenance"
+  ],
+  "properties": {
+    "question": {"type": "string", "minLength": 1},
+    "object_ref": {"type": "string", "minLength": 1},
+    "view": {
+      "enum": ["query", "evidence", "checklist", "methodology", "data_debt"]
+    },
+    "as_of": {"type": "string", "minLength": 1},
+    "sample_scope": {"type": "string", "minLength": 1},
+    "evidence_grade": {"type": "string", "minLength": 1},
+    "contract_version": {"const": "v8_answer_contract_v0"},
+    "lens_invocations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/lensInvocation"}
+    },
+    "lens_gap": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/lensGap"}
+    },
+    "v7_release_library_version": {"type": "string", "minLength": 1},
+    "episode_index_version": {"type": "string", "minLength": 1},
+    "data_snapshot_as_of": {"type": "string", "minLength": 1},
+    "source_freshness": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "body_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["row_id"],
+        "properties": {"row_id": {"type": "string", "minLength": 1}},
+        "additionalProperties": true
+      }
+    },
+    "analysis_claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/analysisClaim"}
+    },
+    "data_debt": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/dataDebt"}
+    },
+    "data_debt_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "caveats": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false,
+  "anyOf": [
+    {"properties": {"lens_invocations": {"minItems": 1}}},
+    {"properties": {"lens_gap": {"minItems": 1}}}
+  ],
+  "$defs": {
+    "lensInvocation": {
+      "type": "object",
+      "required": [
+        "release_id",
+        "lens_kind",
+        "release_role",
+        "contributed_section",
+        "logic_chain_summary",
+        "evidence_grade",
+        "cohort_id",
+        "allowed_wording",
+        "forbidden_wording",
+        "provenance_refs"
+      ],
+      "properties": {
+        "release_id": {"type": "string", "minLength": 1},
+        "lens_kind": {
+          "enum": ["evidence", "query", "checklist", "methodology", "data_debt"]
+        },
+        "release_role": {"type": "string", "minLength": 1},
+        "contributed_section": {"type": "string", "minLength": 1},
+        "logic_chain_summary": {"type": "string"},
+        "evidence_grade": {"type": "string"},
+        "cohort_id": {"type": "string"},
+        "allowed_wording": {"type": "string"},
+        "forbidden_wording": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "provenance_refs": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "lensGap": {
+      "type": "object",
+      "required": ["gap_id", "missing_for", "sediment_as", "note"],
+      "properties": {
+        "gap_id": {"type": "string", "minLength": 1},
+        "missing_for": {"type": "string", "minLength": 1},
+        "sediment_as": {"type": "string", "minLength": 1},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "analysisClaim": {
+      "type": "object",
+      "required": ["text", "claim_type", "backing"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1},
+        "claim_type": {
+          "enum": ["fact", "inference", "caveat", "question", "data_gap"]
+        },
+        "backing": {
+          "type": "object",
+          "required": ["kind", "ref"],
+          "properties": {
+            "kind": {
+              "enum": [
+                "lens_invocation",
+                "query_row",
+                "provenance_ref",
+                "data_debt",
+                "lens_gap"
+              ]
+            },
+            "ref": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "dataDebt": {
+      "type": "object",
+      "required": ["gap", "affects", "debt_ref"],
+      "properties": {
+        "gap": {"type": "string", "minLength": 1},
+        "affects": {"type": "string", "minLength": 1},
+        "debt_ref": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -30,7 +30,8 @@ def payload(question: str, *, kind: str = "stock", ref: str = "603398") -> dict:
     }
 
 
-def test_health_exposes_contracts_and_read_only_mode() -> None:
+def test_health_exposes_contracts_and_read_only_mode(monkeypatch) -> None:
+    monkeypatch.setattr(api_module, "openai_configured", lambda: False)
     response = api_request("GET", "/api/v1/health")
 
     assert response.status_code == 200

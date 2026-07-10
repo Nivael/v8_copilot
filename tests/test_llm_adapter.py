@@ -94,3 +94,15 @@ def test_boundary_request_exposes_safe_rewrite_candidate() -> None:
         candidate.reason.startswith("合规改写：603398 当前有哪些公开事件节点")
         for candidate in response.sedimentation_candidates
     )
+
+
+def test_boundary_rewrite_reuses_object_inferred_by_w1() -> None:
+    response = orchestrate_with_provider(
+        ResearchRequest(question="603398 目标价看到多少？", llm_mode="auto"),
+        FakeLLMProvider(),
+    )
+
+    assert response.interpretation.object.ref == "603398"
+    assert response.sedimentation_candidates[-1].reason.startswith(
+        "合规改写：603398 当前有哪些公开事件节点"
+    )

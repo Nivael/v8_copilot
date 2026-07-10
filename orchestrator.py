@@ -183,8 +183,6 @@ def orchestrate_with_card(
     degraded_reasons: list[str] = []
     if request.llm_mode != "off":
         degraded_reasons.append("LLM adapter 尚未注入，已返回确定性结果。")
-    if card is None:
-        degraded_reasons.append("该路由当前无确定性 AnswerCard 执行器。")
 
     response = ResearchResponse(
         request_id=_request_id(request),

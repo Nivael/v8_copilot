@@ -55,7 +55,7 @@ def orchestrate_with_provider(
     parser_result = QuestionParser(provider, model=resolved_model).parse_or_fallback(
         request.question,
         request.context,
-        authoritative_object=request.object,
+        authoritative_object=deterministic.interpretation.object,
     )
     interpretation = deterministic.interpretation
     if parser_result.interpretation is not None:

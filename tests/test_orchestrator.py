@@ -98,7 +98,7 @@ def test_unassigned_data_gap_returns_stable_response_without_card() -> None:
 
     assert response.route.route == "data_debt"
     assert response.answer_card is None
-    assert response.degraded is True
+    assert response.degraded is False
     assert response.gaps[0].kind == "execution_gap"
     assert any(candidate.kind == "data_debt" for candidate in response.sedimentation_candidates)
 

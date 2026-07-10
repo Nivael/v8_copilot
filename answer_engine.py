@@ -22,12 +22,12 @@ import sqlite3
 import statistics
 from dataclasses import dataclass, field, asdict
 from datetime import date
-from pathlib import Path
 from typing import Any, Iterable
 
 from lens_binding import LensRegistry, LensInvocation, LensGap
+from settings import DATA_ROOT
 
-_ROOT = Path(__file__).resolve().parent.parent
+_ROOT = DATA_ROOT
 BASE_DB = _ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
 EPISODE_INDEX = _ROOT / "shared_data/v7/episode_index_v0/episode_index.jsonl"
 EPISODE_MANIFEST = _ROOT / "shared_data/v7/episode_index_v0/builder_run_manifest.json"
@@ -524,7 +524,7 @@ def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, win
                     "shared_data/v7/release_library_v1/release_library.json"])
 
 
-def card_calendar_regime_evidence(release_id: str = "RL-A-001") -> AnswerCard:
+def card_release_lens_evidence(release_id: str) -> AnswerCard:
     """直接消费 frozen evidence lens，展示 N、effect digest、反例和措辞边界。"""
     record = _REGISTRY.get(release_id)
     if record.get("release_role") != "evidence_lens":
@@ -532,7 +532,7 @@ def card_calendar_regime_evidence(release_id: str = "RL-A-001") -> AnswerCard:
 
     sample_n = record["sample_n"]
     invocation = _REGISTRY.invoke(record, "历史日历窗口证据、反例与措辞边界")
-    row_id = f"calendar_evidence_{release_id.lower().replace('-', '_')}"
+    row_id = f"release_evidence_{release_id.lower().replace('-', '_')}"
     body = _row(
         row_id,
         **{
@@ -551,7 +551,7 @@ def card_calendar_regime_evidence(release_id: str = "RL-A-001") -> AnswerCard:
         record["effect_report_ref"],
     ]
     return AnswerCard(
-        question=f"{release_id} 的月份/日历历史先验站得住吗？",
+        question=f"{release_id} 的历史先验、反例和使用边界是什么？",
         object_ref=f"lens:{release_id}",
         view="evidence",
         as_of=record["as_of"],
@@ -576,6 +576,145 @@ def card_calendar_regime_evidence(release_id: str = "RL-A-001") -> AnswerCard:
             record["source_universe_caveat"],
         ],
         provenance=provenance,
+    )
+
+
+def card_calendar_regime_evidence(release_id: str = "RL-A-001") -> AnswerCard:
+    """兼容 P1 seed 名称；实际由通用 frozen evidence builder 生成。"""
+    return card_release_lens_evidence(release_id)
+
+
+def card_control_structure_methodology() -> AnswerCard:
+    """控制权/股东行为只作为方法论观察框架，不升级为 evidence。"""
+    records = _REGISTRY.candidate_lenses(
+        topic_terms=["股东行为", "拍卖", "控制权", "原实控人"]
+    )
+    invocations = [
+        _REGISTRY.invoke(record, "控制权与股东行为观察框架") for record in records
+    ]
+    if not invocations:
+        raise ValueError("release library 无控制权/股东行为 methodology lens")
+    body_rows = [
+        _row(
+            f"methodology_{invocation.release_id.lower().replace('-', '_')}",
+            **{
+                "release_id": invocation.release_id,
+                "逻辑链": invocation.logic_chain_summary,
+                "允许措辞": invocation.allowed_wording,
+            },
+        )
+        for invocation in invocations
+    ]
+    return AnswerCard(
+        question="控股股东、司法拍卖和控制权变化应该如何组织观察？",
+        object_ref="methodology:control_structure",
+        view="methodology",
+        as_of="2026-07-08",
+        sample_scope=f"frozen release library 中 {len(invocations)} 条 methodology frame",
+        evidence_grade="context_only",
+        lens_invocations=invocations,
+        body_rows=body_rows,
+        analysis_claims=[
+            AnalysisClaim(
+                text="这些记录约束观察维度和措辞，不构成历史效果证据。",
+                claim_type="caveat",
+                backing=BackingRef(
+                    kind="lens_invocation", ref=invocations[0].release_id
+                ),
+            )
+        ],
+        caveats=FIXED_CAVEATS + [
+            "methodology frame 只约束分析方式，不携带效果结论。"
+        ],
+        provenance=[
+            "shared_data/v7/release_library_v1/release_library.json",
+            *[
+                provenance_ref
+                for invocation in invocations
+                for provenance_ref in invocation.provenance_refs
+            ],
+        ],
+    )
+
+
+DATA_DEBT_CATALOG: dict[str, dict[str, str]] = {
+    "D-051A": {
+        "gap": "symbol→省份/注册地映射",
+        "affects": "省份分层",
+        "provenance": "v7_worksite/coordination/debt_cards/D-051A_province_mapping.md",
+    },
+    "D-051B": {
+        "gap": "庭外/庭内重整标记",
+        "affects": "重整路径阶段分层",
+        "provenance": "v7_worksite/coordination/debt_cards/D-051B_out_of_court_flag.md",
+    },
+    "D-051C": {
+        "gap": "大盘指数日线序列",
+        "affects": "相对大盘分布",
+        "provenance": "v7_worksite/coordination/debt_cards/D-051C_market_index_series.md",
+    },
+    "C14": {
+        "gap": "as-of 市值/股本",
+        "affects": "微盘 cohort 定义",
+        "provenance": "shared_data/v7/release_library_v1/release_library.json",
+    },
+    "D-021": {
+        "gap": "股东人数全量覆盖",
+        "affects": "ST 前后股东人数变化比较",
+        "provenance": "v7_worksite/coordination/decisions.md#D-021",
+    },
+}
+
+
+def card_data_debt(
+    question: str,
+    object_ref: str,
+    debt_refs: list[str],
+) -> AnswerCard:
+    """把已登记数据债转换为合法 AnswerCard；未知 debt id 直接失败。"""
+    unknown = [debt_ref for debt_ref in debt_refs if debt_ref not in DATA_DEBT_CATALOG]
+    if unknown:
+        raise ValueError(f"未知 data debt id: {unknown}")
+    if not debt_refs:
+        raise ValueError("data_debt AnswerCard 至少需要一个已登记 debt id")
+
+    rows = [
+        DataDebtRow(
+            gap=DATA_DEBT_CATALOG[debt_ref]["gap"],
+            affects=DATA_DEBT_CATALOG[debt_ref]["affects"],
+            debt_ref=debt_ref,
+        )
+        for debt_ref in debt_refs
+    ]
+    gaps = [
+        LensGap(
+            gap_id=f"data_debt_{debt_ref.lower().replace('-', '_')}",
+            missing_for=DATA_DEBT_CATALOG[debt_ref]["affects"],
+            sediment_as=f"data_debt:{debt_ref}",
+            note="该缺口已进入统一数据债台账。",
+        )
+        for debt_ref in debt_refs
+    ]
+    return AnswerCard(
+        question=question,
+        object_ref=object_ref,
+        view="data_debt",
+        as_of="2026-07-10",
+        sample_scope="请求维度所需字段在当前只读快照中不可用",
+        evidence_grade="insufficient_data",
+        lens_gap=gaps,
+        analysis_claims=[
+            AnalysisClaim(
+                text=f"{DATA_DEBT_CATALOG[debt_ref]['affects']} 当前不可答。",
+                claim_type="data_gap",
+                backing=BackingRef(kind="data_debt", ref=debt_ref),
+            )
+            for debt_ref in debt_refs
+        ],
+        data_debt=rows,
+        data_debt_refs=debt_refs,
+        caveats=FIXED_CAVEATS + ["缺字段时不使用文本猜测、代理字段或静默降维。"],
+        provenance=[DATA_DEBT_CATALOG[debt_ref]["provenance"] for debt_ref in debt_refs],
     )
 
 

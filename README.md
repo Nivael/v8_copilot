@@ -1,4 +1,4 @@
-# v8_copilot — ST Research Copilot Core（P1）
+# v8_copilot — ST Research Copilot Core/API
 
 独立、只读的证据化问答引擎。v8 消费层第一条腿（"回答问题"）的可运行骨架。
 产品定义由 D-052 和统一版 v8 PRD 管理；本仓只保留可执行实现、版本化契约和验收资产。
@@ -35,13 +35,40 @@ W1 使用独立 `uv` 环境，Python 版本和依赖由 `.python-version`、`pyp
 uv sync --group dev
 uv run pytest
 uv run python run_seeds.py
+uv run python run_api.py
 ```
+
+`run_api.py` 只绑定 `127.0.0.1`，默认端口 `8765`。canonical 目录布局无需额外配置；
+若独立 worktree 不与 `shared_data/` 同级，使用 `V8_DATA_ROOT` 指向包含
+`shared_data/` 的数据根目录。
+
+## Batch 2 API
+
+公开接口：
+
+- `GET /api/v1/health`
+- `POST /api/v1/route`
+- `POST /api/v1/answers`
+- `POST /api/v1/answers/stream`
+- `GET /api/v1/stocks/{symbol}/dossier`
+
+`/answers/stream` 使用 NDJSON，只发送完整、已验证的领域事件：`accepted`、
+`interpreted`、`routed`、`answer_card`、`claim_block`、`degraded`、`completed`、
+`error`。不转发模型 token delta。
+
+当前 W1 API 不加载 LLM。`llm_mode=auto|required` 时仍返回确定性结果，并显式标记
+`degraded`；`llm_mode=off` 是纯确定性模式。
 
 ## 契约与文件
 
 - `lens_binding.py` — **脊梁**：LensRegistry（只读加载 pinned v1 库）+ candidate_lenses（按主题标签/cluster 精确匹配）+ LensInvocation + LensGap。
 - `answer_engine.py` — AnswerCard、AnalysisClaim/backing、只读数据访问和 card builders。
 - `contracts/v8_answer_contract_v0/` — W1 单写、W2/W3/LLM 只读的 JSON 契约。
+- `contracts/v8_copilot_api_contract_v0/` — Batch 2 API schema、manifest 和固定 fixtures。
+- `api_contract.py` — ResearchRequest、RouteDecision、ResearchResponse、dossier 和 stream 类型。
+- `core_router.py` / `orchestrator.py` — 确定性解释、最终路由和 AnswerCard 执行编排。
+- `api.py` / `run_api.py` — FastAPI 接口和本机启动入口。
+- `dossier_service.py` — 只读个股价格、状态、事件、时间线和 lens payload。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。
 - `out/` — 生成的答案卡（JSON + 人话 Markdown）。
@@ -52,7 +79,7 @@ uv run python run_seeds.py
 `shared_data/v5/.../st_stocks_v5_backup.sqlite3`（ro URI）+ M6 episode index。
 本地原型，生成物只进 `out/`。
 
-## 已验证（2026-07-10，W1）
+## 已验证
 
 七张种子卡覆盖：
 
@@ -65,7 +92,15 @@ uv run python run_seeds.py
 所有卡必须同时通过 `AnswerCard.validate()` 和
 `contracts/v8_answer_contract_v0/schema.json`。
 
+Batch 2 W1 另验证：
+
+- 六个 API 公开对象与提交的 JSON Schema 零漂移；
+- 原有 30 题 deterministic route 和 20 个 golden fact 继续通过；
+- 真实 HTTP 进程可返回 health、route、NDJSON 和 603398 dossier；
+- dossier 读取 1982 个价格点、162 个去重事件、5 条时间线和 3 条 lens 摘要；
+- API 和 dossier 不写研究数据库。
+
 ## W1 边界
 
-W1 单写共享契约和 Core。Question routing/eval 属于 W2，UI 属于 W3，LLM 编排必须等
-`v8_answer_contract_v0` 验收后接入。任何新事实字段先进入确定性 Core，再暴露给 LLM/UI。
+W1 单写共享契约和 Core/API。LLM/eval 属于 W2，UI 属于 W3。任何新事实字段先进入
+确定性 Core 和 AnswerCard，再暴露给 LLM/UI；W2/W3 不直接修改 `contracts/`。

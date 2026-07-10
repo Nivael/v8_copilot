@@ -18,7 +18,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-_ROOT = Path(__file__).resolve().parent.parent
+from settings import DATA_ROOT
+
+
+_ROOT = DATA_ROOT
 RELEASE_LIBRARY = _ROOT / "shared_data/v7/release_library_v1/release_library.json"
 
 # release_role → D-050 lens_kind

@@ -1,0 +1,12 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "request_id": "fixture-request-001",
+  "route": "answer_checklist",
+  "status": "answerable",
+  "view": "checklist",
+  "required_lens_behavior": "lens_invocations_or_gap",
+  "data_debt_refs": [],
+  "question_card_refs": ["QC-20260710-015"],
+  "matched_rules": ["stock_observation_window_checklist"],
+  "note": "预测式问法已改写为可观察窗口。"
+}

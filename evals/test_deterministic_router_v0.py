@@ -30,6 +30,7 @@ def test_trading_advice_routes_to_boundary() -> None:
     })
 
     assert prediction.predicted_route == "refuse_or_rewrite"
+    assert prediction.matched_rules == ["trading_advice_boundary"]
     assert prediction.expected_view == "boundary"
     assert prediction.required_lens_behavior == "not_applicable"
 
@@ -41,7 +42,16 @@ def test_trading_boundary_precedes_missing_context() -> None:
     })
 
     assert prediction.predicted_route == "refuse_or_rewrite"
-    assert prediction.matched_rules == ["trading_advice_boundary"]
+
+
+def test_unknown_object_without_dangling_reference_reaches_stable_fallback() -> None:
+    prediction = route_question({
+        "user_question": "请分析一个当前规则尚未定义的新型风险模式。",
+        "object": {"kind": "unknown", "ref": ""},
+    })
+
+    assert prediction.predicted_route == "lens_gap"
+    assert prediction.matched_rules == ["deterministic_unknown_fallback"]
 
 
 def test_compound_data_gaps_preserve_all_known_refs() -> None:

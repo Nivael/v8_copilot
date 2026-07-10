@@ -1,0 +1,7 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "request_id": "fixture-request-001",
+  "sequence": 1,
+  "event": "accepted",
+  "payload": {"llm_mode": "disabled"}
+}

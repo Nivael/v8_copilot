@@ -1,0 +1,954 @@
+{
+  "$defs": {
+    "ClaimBacking": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "lens_invocation",
+            "query_row",
+            "provenance_ref",
+            "data_debt",
+            "lens_gap"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "ClaimBacking",
+      "type": "object"
+    },
+    "Degradation": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "llm_unavailable",
+            "llm_failed",
+            "llm_output_rejected"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "Degradation",
+      "type": "object"
+    },
+    "DossierLensSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "title": "Release Id",
+          "type": "string"
+        },
+        "lens_label": {
+          "title": "Lens Label",
+          "type": "string"
+        },
+        "contributed_section": {
+          "title": "Contributed Section",
+          "type": "string"
+        },
+        "evidence_grade_label": {
+          "title": "Evidence Grade Label",
+          "type": "string"
+        },
+        "cohort_label": {
+          "title": "Cohort Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "release_id",
+        "lens_label",
+        "contributed_section",
+        "evidence_grade_label",
+        "cohort_label"
+      ],
+      "title": "DossierLensSummary",
+      "type": "object"
+    },
+    "EventNode": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "date": {
+          "format": "date",
+          "title": "Date",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "lane_id": {
+          "title": "Lane Id",
+          "type": "string"
+        },
+        "lane_label": {
+          "title": "Lane Label",
+          "type": "string"
+        },
+        "episode_type_id": {
+          "title": "Episode Type Id",
+          "type": "string"
+        },
+        "episode_label": {
+          "title": "Episode Label",
+          "type": "string"
+        },
+        "subtype_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype Id"
+        },
+        "subtype_label": {
+          "title": "Subtype Label",
+          "type": "string"
+        },
+        "source_material_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Material Ref"
+        },
+        "source_material_label": {
+          "title": "Source Material Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "date",
+        "title",
+        "lane_id",
+        "lane_label",
+        "episode_type_id",
+        "episode_label",
+        "subtype_label",
+        "source_material_label"
+      ],
+      "title": "EventNode",
+      "type": "object"
+    },
+    "FallbackResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "lens_gap",
+            "data_debt",
+            "clarify",
+            "needs_review",
+            "refuse"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "question_card_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Question Card Refs",
+          "type": "array"
+        },
+        "data_debt_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Data Debt Refs",
+          "type": "array"
+        },
+        "suggested_question": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Suggested Question"
+        },
+        "provenance": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Provenance",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "title",
+        "message"
+      ],
+      "title": "FallbackResult",
+      "type": "object"
+    },
+    "PricePoint": {
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "format": "date",
+          "title": "Date",
+          "type": "string"
+        },
+        "close": {
+          "title": "Close",
+          "type": "number"
+        }
+      },
+      "required": [
+        "date",
+        "close"
+      ],
+      "title": "PricePoint",
+      "type": "object"
+    },
+    "QuestionInterpretation": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "title": "Request Id",
+          "type": "string"
+        },
+        "object": {
+          "$ref": "#/$defs/ResearchObject"
+        },
+        "intent": {
+          "title": "Intent",
+          "type": "string"
+        },
+        "time_scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResearchContext"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "requested_dimensions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requested Dimensions",
+          "type": "array"
+        },
+        "ambiguities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ambiguities",
+          "type": "array"
+        },
+        "candidate_topics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Candidate Topics",
+          "type": "array"
+        },
+        "generated_by": {
+          "default": "deterministic",
+          "enum": [
+            "deterministic",
+            "llm_validated"
+          ],
+          "title": "Generated By",
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id",
+        "object",
+        "intent"
+      ],
+      "title": "QuestionInterpretation",
+      "type": "object"
+    },
+    "ResearchContext": {
+      "additionalProperties": false,
+      "properties": {
+        "symbol": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{6}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Symbol"
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Id"
+        },
+        "event_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Date"
+        },
+        "event_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Title"
+        },
+        "time_start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time Start"
+        },
+        "time_end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time End"
+        },
+        "selected_lenses": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Selected Lenses",
+          "type": "array"
+        },
+        "active_question": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Active Question"
+        }
+      },
+      "title": "ResearchContext",
+      "type": "object"
+    },
+    "ResearchObject": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "stock",
+            "event",
+            "cohort",
+            "lens",
+            "unknown"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ref"
+        },
+        "display_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Name"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "ResearchObject",
+      "type": "object"
+    },
+    "ResearchRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "object": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResearchObject"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "context": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResearchContext"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "llm_mode": {
+          "default": "auto",
+          "enum": [
+            "auto",
+            "disabled"
+          ],
+          "title": "Llm Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "title": "ResearchRequest",
+      "type": "object"
+    },
+    "ResearchResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "title": "Request Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "degraded"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "interpretation": {
+          "$ref": "#/$defs/QuestionInterpretation"
+        },
+        "route": {
+          "$ref": "#/$defs/RouteDecision"
+        },
+        "answer_card": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer Card"
+        },
+        "fallback": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FallbackResult"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/ValidatedClaim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "degradations": {
+          "items": {
+            "$ref": "#/$defs/Degradation"
+          },
+          "title": "Degradations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "request_id",
+        "status",
+        "interpretation",
+        "route"
+      ],
+      "title": "ResearchResponse",
+      "type": "object"
+    },
+    "ResearchStreamEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "title": "Request Id",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "event": {
+          "enum": [
+            "accepted",
+            "interpreted",
+            "routed",
+            "answer_card",
+            "claim_block",
+            "degraded",
+            "completed",
+            "error"
+          ],
+          "title": "Event",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "request_id",
+        "sequence",
+        "event",
+        "payload"
+      ],
+      "title": "ResearchStreamEvent",
+      "type": "object"
+    },
+    "RouteDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "title": "Request Id",
+          "type": "string"
+        },
+        "route": {
+          "enum": [
+            "answer_query",
+            "answer_evidence",
+            "answer_checklist",
+            "answer_methodology",
+            "data_debt",
+            "lens_gap",
+            "needs_review",
+            "clarify",
+            "refuse_or_rewrite"
+          ],
+          "title": "Route",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "answerable",
+            "needs_data",
+            "needs_review",
+            "clarify",
+            "boundary"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "view": {
+          "enum": [
+            "query",
+            "evidence",
+            "checklist",
+            "methodology",
+            "data_debt",
+            "lens_gap",
+            "clarify",
+            "boundary"
+          ],
+          "title": "View",
+          "type": "string"
+        },
+        "required_lens_behavior": {
+          "title": "Required Lens Behavior",
+          "type": "string"
+        },
+        "data_debt_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Data Debt Refs",
+          "type": "array"
+        },
+        "question_card_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Question Card Refs",
+          "type": "array"
+        },
+        "matched_rules": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Matched Rules",
+          "type": "array"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id",
+        "route",
+        "status",
+        "view",
+        "required_lens_behavior"
+      ],
+      "title": "RouteDecision",
+      "type": "object"
+    },
+    "StatusInterval": {
+      "additionalProperties": false,
+      "properties": {
+        "start_date": {
+          "format": "date",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "status_type_id": {
+          "title": "Status Type Id",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_date",
+        "display_name",
+        "status_type_id",
+        "source"
+      ],
+      "title": "StatusInterval",
+      "type": "object"
+    },
+    "StockDossierPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "symbol": {
+          "pattern": "^\\d{6}$",
+          "title": "Symbol",
+          "type": "string"
+        },
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "as_of": {
+          "format": "date",
+          "title": "As Of",
+          "type": "string"
+        },
+        "price_series": {
+          "items": {
+            "$ref": "#/$defs/PricePoint"
+          },
+          "title": "Price Series",
+          "type": "array"
+        },
+        "status_intervals": {
+          "items": {
+            "$ref": "#/$defs/StatusInterval"
+          },
+          "title": "Status Intervals",
+          "type": "array"
+        },
+        "event_nodes": {
+          "items": {
+            "$ref": "#/$defs/EventNode"
+          },
+          "title": "Event Nodes",
+          "type": "array"
+        },
+        "timeline_lanes": {
+          "items": {
+            "$ref": "#/$defs/TimelineLane"
+          },
+          "title": "Timeline Lanes",
+          "type": "array"
+        },
+        "lens_invocations": {
+          "items": {
+            "$ref": "#/$defs/DossierLensSummary"
+          },
+          "title": "Lens Invocations",
+          "type": "array"
+        },
+        "source_freshness": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Source Freshness",
+          "type": "object"
+        },
+        "provenance": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Provenance",
+          "type": "array"
+        }
+      },
+      "required": [
+        "symbol",
+        "display_name",
+        "as_of",
+        "price_series",
+        "timeline_lanes",
+        "source_freshness",
+        "provenance"
+      ],
+      "title": "StockDossierPayload",
+      "type": "object"
+    },
+    "TimelineLane": {
+      "additionalProperties": false,
+      "properties": {
+        "lane_id": {
+          "title": "Lane Id",
+          "type": "string"
+        },
+        "display_label": {
+          "title": "Display Label",
+          "type": "string"
+        },
+        "color": {
+          "title": "Color",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lane_id",
+        "display_label",
+        "color"
+      ],
+      "title": "TimelineLane",
+      "type": "object"
+    },
+    "ValidatedClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "claim_type": {
+          "enum": [
+            "fact",
+            "inference",
+            "caveat",
+            "question",
+            "data_gap"
+          ],
+          "title": "Claim Type",
+          "type": "string"
+        },
+        "backing": {
+          "$ref": "#/$defs/ClaimBacking"
+        }
+      },
+      "required": [
+        "claim_id",
+        "text",
+        "claim_type",
+        "backing"
+      ],
+      "title": "ValidatedClaim",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ResearchRequest"
+    },
+    {
+      "$ref": "#/$defs/ResearchContext"
+    },
+    {
+      "$ref": "#/$defs/QuestionInterpretation"
+    },
+    {
+      "$ref": "#/$defs/RouteDecision"
+    },
+    {
+      "$ref": "#/$defs/ResearchResponse"
+    },
+    {
+      "$ref": "#/$defs/StockDossierPayload"
+    },
+    {
+      "$ref": "#/$defs/ResearchStreamEvent"
+    }
+  ],
+  "$id": "v8_copilot_api_contract_v0",
+  "title": "ST Research Copilot API Contract v0"
+}

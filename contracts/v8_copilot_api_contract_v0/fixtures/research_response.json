@@ -1,0 +1,40 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "request_id": "fixture-request-002",
+  "status": "complete",
+  "interpretation": {
+    "contract_version": "v8_copilot_api_contract_v0",
+    "request_id": "fixture-request-002",
+    "object": {"kind": "unknown", "ref": null, "display_name": null},
+    "intent": "unknown",
+    "time_scope": null,
+    "requested_dimensions": [],
+    "ambiguities": [],
+    "candidate_topics": [],
+    "generated_by": "deterministic"
+  },
+  "route": {
+    "contract_version": "v8_copilot_api_contract_v0",
+    "request_id": "fixture-request-002",
+    "route": "lens_gap",
+    "status": "needs_review",
+    "view": "lens_gap",
+    "required_lens_behavior": "lens_gap_required",
+    "data_debt_refs": [],
+    "question_card_refs": ["question_card:new"],
+    "matched_rules": ["deterministic_unknown_fallback"],
+    "note": "当前规则未覆盖，进入问题沉淀。"
+  },
+  "answer_card": null,
+  "fallback": {
+    "kind": "lens_gap",
+    "title": "当前没有可用的证据路径",
+    "message": "问题已保留为待验证候选，不提供事实结论。",
+    "question_card_refs": ["question_card:new"],
+    "data_debt_refs": [],
+    "suggested_question": null,
+    "provenance": ["evals/deterministic_router_v0.py"]
+  },
+  "claims": [],
+  "degradations": []
+}

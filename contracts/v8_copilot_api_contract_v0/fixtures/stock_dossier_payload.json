@@ -1,0 +1,15 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "symbol": "603398",
+  "display_name": "*ST沐邦",
+  "as_of": "2026-06-26",
+  "price_series": [{"date": "2026-06-26", "close": 13.42}],
+  "status_intervals": [],
+  "event_nodes": [],
+  "timeline_lanes": [
+    {"lane_id": "restructuring", "display_label": "重整/预重整", "color": "#b45309"}
+  ],
+  "lens_invocations": [],
+  "source_freshness": {"price_data_as_of": "2026-06-26"},
+  "provenance": ["shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices[603398]"]
+}

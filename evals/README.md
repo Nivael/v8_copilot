@@ -14,12 +14,15 @@ is to define acceptance pressure for W1 and later LLM orchestration:
 - `golden_fact_assertions_v0.json` - fact assertions against the current seed
   AnswerCards. These are not standard prose answers.
 - `validate_w2_evals.py` - stdlib validator for all W2 artifacts.
+- `question_routing_paraphrases_v0.jsonl` - 20 个改写、未知和边界问题。
+- `run_route_eval_50.py` - 原 30 题加 20 个改写题的最终合法路由门。
 
 Run from `v8_copilot/`:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 evals/validate_w2_evals.py
 PYTHONDONTWRITEBYTECODE=1 python3 evals/run_route_eval.py
+PYTHONDONTWRITEBYTECODE=1 python3 evals/run_route_eval_50.py
 ```
 
 Passing this gate means the acceptance artifacts are internally consistent and
@@ -38,6 +41,7 @@ that a production router or LLM adapter exists yet.
 - Golden assertions: 20 checks against the three original slice AnswerCards.
 - Deterministic router v0: 30/30 route matches against
   `question_routing_set_v0.jsonl`.
+- Batch 2 final route gate: 50/50（30 canonical + 20 paraphrases）。
 
 ## Deterministic Router v0
 

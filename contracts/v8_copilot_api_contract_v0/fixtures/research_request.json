@@ -1,0 +1,19 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "request_id": "fixture-request-001",
+  "question": "沐邦平台整理期该看哪些窗口？",
+  "object": {
+    "kind": "stock",
+    "ref": "603398",
+    "display_name": "沐邦"
+  },
+  "context": {
+    "symbol": "603398",
+    "event_id": null,
+    "event_date": null,
+    "event_title": null,
+    "time_start": null,
+    "time_end": null
+  },
+  "llm_mode": "disabled"
+}

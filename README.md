@@ -1,6 +1,7 @@
-# v8_copilot — ST Research Copilot Core（P1）
+# v8_copilot — ST Research Copilot（Batch 2）
 
-独立、只读的证据化问答引擎。v8 消费层第一条腿（"回答问题"）的可运行骨架。
+独立、只读的证据化问答系统。Batch 2 已接入确定性路由、本地 API、可选 LLM 叙述层、
+Copilot 主面板和个股证据面板。
 产品定义由 D-052 和统一版 v8 PRD 管理；本仓只保留可执行实现、版本化契约和验收资产。
 
 ## 脊梁（D-052 修正案）
@@ -37,11 +38,43 @@ uv run pytest
 uv run python run_seeds.py
 ```
 
+## 本地产品
+
+构建前端并启动单进程本地服务：
+
+```bash
+cd web
+npm install
+npm run build
+cd ..
+uv run python -m api
+```
+
+打开 `http://127.0.0.1:8765`。开发模式可另启 `npm run dev`，Vite 会把 `/api`
+代理到 `127.0.0.1:8765`。
+
+API 包含 `/api/v1/route`、`/api/v1/answers`、NDJSON `/api/v1/answers/stream` 和
+`/api/v1/stocks/{symbol}/dossier`。未知问题必须返回合法 fallback，不套用相近旧卡。
+
+LLM 是可选叙述层。实时 OpenAI 模式要求本地环境提供 `OPENAI_API_KEY`、
+`V8_OPENAI_MODEL`，以及 OpenAI Python SDK：
+
+```bash
+uv pip install "openai>=2,<3"
+```
+
+未配置或输出校验失败时，服务退回确定性 AnswerCard；LLM 不接触数据库，也不能改写
+事实、路由、证据等级或 provenance。
+
 ## 契约与文件
 
 - `lens_binding.py` — **脊梁**：LensRegistry（只读加载 pinned v1 库）+ candidate_lenses（按主题标签/cluster 精确匹配）+ LensInvocation + LensGap。
 - `answer_engine.py` — AnswerCard、AnalysisClaim/backing、只读数据访问和 card builders。
 - `contracts/v8_answer_contract_v0/` — W1 单写、W2/W3/LLM 只读的 JSON 契约。
+- `contracts/v8_copilot_api_contract_v0/` — API、LLM、Web 共享的公开类型、schema 和 fixtures。
+- `api/` / `service/` — FastAPI 本地入口和只读 orchestrator/dossier adapter。
+- `llm/` — Structured Outputs parser/composer、Fake provider 和 OpenAI adapter。
+- `web/` — React/Vite 主面板与个股面板。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。
 - `out/` — 生成的答案卡（JSON + 人话 Markdown）。
@@ -52,7 +85,7 @@ uv run python run_seeds.py
 `shared_data/v5/.../st_stocks_v5_backup.sqlite3`（ro URI）+ M6 episode index。
 本地原型，生成物只进 `out/`。
 
-## 已验证（2026-07-10，W1）
+## 已验证（2026-07-11）
 
 七张种子卡覆盖：
 
@@ -64,8 +97,3 @@ uv run python run_seeds.py
 
 所有卡必须同时通过 `AnswerCard.validate()` 和
 `contracts/v8_answer_contract_v0/schema.json`。
-
-## W1 边界
-
-W1 单写共享契约和 Core。Question routing/eval 属于 W2，UI 属于 W3，LLM 编排必须等
-`v8_answer_contract_v0` 验收后接入。任何新事实字段先进入确定性 Core，再暴露给 LLM/UI。

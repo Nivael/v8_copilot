@@ -1,0 +1,56 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "request_id": "req-fixture-001",
+  "interpretation": {
+    "contract_version": "v8_copilot_api_contract_v0",
+    "object": {
+      "kind": "unknown",
+      "ref": "pronoun"
+    },
+    "intent": "clarify_object",
+    "time_range": {
+      "start": null,
+      "end": null
+    },
+    "dimensions": [],
+    "ambiguities": [
+      "缺少可绑定的股票或事件对象"
+    ],
+    "candidate_topics": []
+  },
+  "route": {
+    "contract_version": "v8_copilot_api_contract_v0",
+    "route": "clarify",
+    "status": "clarify",
+    "view": "clarify",
+    "reason": "缺少可绑定的 stock/event/context，先澄清。",
+    "matched_rules": [
+      "missing_object_or_context"
+    ],
+    "data_debt_refs": [],
+    "question_card_refs": [],
+    "required_lens_behavior": "not_applicable"
+  },
+  "answer_card": null,
+  "claims": [],
+  "gaps": [
+    {
+      "kind": "execution_gap",
+      "gap_id": "missing_object_or_context",
+      "description": "需要补充股票或事件对象后再执行研究查询。",
+      "refs": []
+    }
+  ],
+  "sedimentation_candidates": [
+    {
+      "kind": "question_card",
+      "ref": null,
+      "reason": "等待用户补充研究对象，不自动持久化。"
+    }
+  ],
+  "degraded": true,
+  "degraded_reasons": [
+    "问题对象不明确"
+  ],
+  "llm_used": false
+}

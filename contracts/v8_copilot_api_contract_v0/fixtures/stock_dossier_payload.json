@@ -1,0 +1,38 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "symbol": "603398",
+  "display_name": "*ST沐邦",
+  "as_of": "2026-06-26",
+  "status_intervals": [],
+  "price_series": [
+    {
+      "date": "2026-06-26",
+      "close": 13.42
+    }
+  ],
+  "events": [],
+  "timeline_lanes": [],
+  "lens_summaries": [],
+  "data_gaps": [
+    {
+      "gap_id": "shareholder_count_full_coverage",
+      "display_label": "股东人数全量覆盖尚未完成",
+      "debt_ref": "D-021"
+    }
+  ],
+  "display_labels": {
+    "price_adjustment": "前复权"
+  },
+  "research_context": {
+    "symbol": "603398",
+    "date_range": null,
+    "selected_event": null,
+    "selected_episode": null,
+    "selected_lenses": [],
+    "active_question": null,
+    "answer_card_id": null
+  },
+  "provenance": [
+    "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices"
+  ]
+}

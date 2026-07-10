@@ -1,0 +1,19 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "request_id": "req-fixture-001",
+  "question": "那它呢？",
+  "object": {
+    "kind": "unknown",
+    "ref": "pronoun"
+  },
+  "context": {
+    "symbol": null,
+    "date_range": null,
+    "selected_event": null,
+    "selected_episode": null,
+    "selected_lenses": [],
+    "active_question": null,
+    "answer_card_id": null
+  },
+  "llm_mode": "off"
+}

@@ -1,0 +1,12 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "schema": "schema.json",
+  "fixtures": [
+    "question_interpretation.json",
+    "research_request.json",
+    "research_response.json",
+    "research_stream_events.ndjson",
+    "route_decision.json",
+    "stock_dossier_payload.json"
+  ]
+}

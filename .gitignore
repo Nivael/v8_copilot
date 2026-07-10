@@ -1,4 +1,7 @@
 .DS_Store
+.env
+.env.*
+!.env.example
 .python-version.local
 .venv/
 .pytest_cache/
@@ -7,3 +10,4 @@ __pycache__/
 *.py[cod]
 out/
 ui/dossier_*.html
+local_secrets/

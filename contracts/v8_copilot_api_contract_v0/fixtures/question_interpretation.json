@@ -1,0 +1,17 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "object": {
+    "kind": "unknown",
+    "ref": "pronoun"
+  },
+  "intent": "clarify_object",
+  "time_range": {
+    "start": null,
+    "end": null
+  },
+  "dimensions": [],
+  "ambiguities": [
+    "缺少可绑定的股票或事件对象"
+  ],
+  "candidate_topics": []
+}

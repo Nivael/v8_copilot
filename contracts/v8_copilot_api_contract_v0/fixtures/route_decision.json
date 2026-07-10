@@ -1,0 +1,13 @@
+{
+  "contract_version": "v8_copilot_api_contract_v0",
+  "route": "clarify",
+  "status": "clarify",
+  "view": "clarify",
+  "reason": "缺少可绑定的 stock/event/context，先澄清。",
+  "matched_rules": [
+    "missing_object_or_context"
+  ],
+  "data_debt_refs": [],
+  "question_card_refs": [],
+  "required_lens_behavior": "not_applicable"
+}

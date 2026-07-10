@@ -14,6 +14,7 @@ EVALS = ROOT / "evals"
 QUESTION_SET = EVALS / "question_routing_set_v0.jsonl"
 SEED_SET = EVALS / "question_card_seeds_v0.jsonl"
 GOLDEN = EVALS / "golden_fact_assertions_v0.json"
+REWRITE_SET = EVALS / "rewrite_routing_set_v0.jsonl"
 
 LEGAL_ROUTES = {
     "answer_query",
@@ -155,6 +156,27 @@ def validate_question_routes(rows: list[dict[str, Any]]) -> None:
         raise AssertionError("question set should include at least five stock-scoped questions")
 
 
+def validate_rewrite_routes(rows: list[dict[str, Any]]) -> None:
+    if len(rows) != 20:
+        raise AssertionError(f"rewrite routing set must contain 20 rows, got {len(rows)}")
+    ids = [row.get("rewrite_id") for row in rows]
+    if any(not rewrite_id for rewrite_id in ids):
+        raise AssertionError("rewrite routing set has empty rewrite_id")
+    if len(ids) != len(set(ids)):
+        raise AssertionError("rewrite routing set has duplicate rewrite_id")
+    for row in rows:
+        rewrite_id = row["rewrite_id"]
+        missing = {"rewrite_id", "user_question", "object", "expected_route"} - set(row)
+        if missing:
+            raise AssertionError(f"{rewrite_id} missing fields: {sorted(missing)}")
+        if row["expected_route"] != "refuse_or_rewrite":
+            raise AssertionError(f"{rewrite_id} must route to refuse_or_rewrite")
+        if not row["user_question"]:
+            raise AssertionError(f"{rewrite_id} has empty user_question")
+        if not row["object"].get("kind") or not row["object"].get("ref"):
+            raise AssertionError(f"{rewrite_id} has invalid object")
+
+
 def validate_question_seeds(rows: list[dict[str, Any]]) -> None:
     if len(rows) != 15:
         raise AssertionError(f"QuestionCard seed set must contain 15 rows, got {len(rows)}")
@@ -213,20 +235,24 @@ def validate_golden_assertions(spec: dict[str, Any]) -> None:
 
 def main() -> int:
     question_rows = load_jsonl(QUESTION_SET)
+    rewrite_rows = load_jsonl(REWRITE_SET)
     seed_rows = load_jsonl(SEED_SET)
     golden_spec = json.loads(GOLDEN.read_text(encoding="utf-8"))
 
     assert_no_local_paths(QUESTION_SET.name, question_rows)
+    assert_no_local_paths(REWRITE_SET.name, rewrite_rows)
     assert_no_local_paths(SEED_SET.name, seed_rows)
     assert_no_local_paths(GOLDEN.name, golden_spec)
 
     validate_question_routes(question_rows)
+    validate_rewrite_routes(rewrite_rows)
     validate_question_seeds(seed_rows)
     validate_golden_assertions(golden_spec)
 
     route_counts = Counter(r["expected_route"] for r in question_rows)
     seed_counts = Counter(r["status"] for r in seed_rows)
     print("[OK] W2 question routing set: 30 rows")
+    print("[OK] W2 rewrite routing set: 20 rows")
     print("[OK] route coverage:", dict(sorted(route_counts.items())))
     print("[OK] QuestionCard seed counts:", dict(sorted(seed_counts.items())))
     print("[OK] golden fact assertions:", len(golden_spec["assertions"]))

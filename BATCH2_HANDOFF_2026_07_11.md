@@ -20,7 +20,11 @@ Batch 2 在 W1 正式契约/Core/API 基线上接入 W2 LLM adapter 与 W3 React
 ## 验收命令
 
 ```bash
+uv run python run_seeds.py
 uv run pytest tests evals/test_deterministic_router_v0.py
+uv run pytest evals/test_llm_pipeline_v0.py evals/test_rewrite_routing_v0.py evals/test_w1_contract_consumer_v0.py
+uv run python evals/validate_w2_evals.py
 uv run python evals/run_route_eval_50.py
+uv run python evals/run_llm_eval.py
 cd web && npm test && npm run lint && npm run build
 ```

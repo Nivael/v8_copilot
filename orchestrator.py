@@ -172,7 +172,10 @@ def _sedimentation_candidates(route: RouteDecision) -> list[SedimentationCandida
     return candidates
 
 
-def orchestrate(request: ResearchRequest) -> ResearchResponse:
+def orchestrate_with_card(
+    request: ResearchRequest,
+) -> tuple[ResearchResponse, AnswerCard | None]:
+    """Run deterministic research and retain the validated card for W2 composition."""
     interpretation = interpret_request(request)
     route = decide_route(request, interpretation)
     card = _execute_answer(request, interpretation, route)
@@ -183,7 +186,7 @@ def orchestrate(request: ResearchRequest) -> ResearchResponse:
     if card is None:
         degraded_reasons.append("该路由当前无确定性 AnswerCard 执行器。")
 
-    return ResearchResponse(
+    response = ResearchResponse(
         request_id=_request_id(request),
         interpretation=interpretation,
         route=route,
@@ -195,6 +198,11 @@ def orchestrate(request: ResearchRequest) -> ResearchResponse:
         degraded_reasons=degraded_reasons,
         llm_used=False,
     )
+    return response, card
+
+
+def orchestrate(request: ResearchRequest) -> ResearchResponse:
+    return orchestrate_with_card(request)[0]
 
 
 def route_only(request: ResearchRequest) -> RouteDecision:

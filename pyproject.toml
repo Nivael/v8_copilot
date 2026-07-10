@@ -6,8 +6,10 @@ requires-python = ">=3.12,<3.14"
 dependencies = [
   "fastapi>=0.116,<1",
   "numpy>=1.26,<3",
+  "openai>=2.45.0",
   "pandas>=2.2,<4",
-  "pydantic>=2.11,<3",
+  "pydantic>=2.13.4,<3",
+  "python-dotenv>=1.2.2",
   "uvicorn>=0.35,<1",
 ]
 

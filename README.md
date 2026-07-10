@@ -56,9 +56,9 @@ uv run python run_api.py
 `interpreted`、`routed`、`answer_card`、`claim_block`、`degraded`、`completed`、
 `error`。不转发模型 token delta。
 
-`llm_adapter.py` 提供 Fake provider、OpenAI Responses Structured Outputs adapter、
-问题解释和 claim backing 校验。确定性 router 始终拥有最终路由；LLM 不接数据库，
-只接收问题/ResearchContext 或过滤后的 AnswerCard。
+`llm/` 提供 Fake provider、OpenAI Responses Structured Outputs adapter、问题解释和
+claim backing 校验；`llm_adapter.py` 只负责把这套边界注入 W1 API。确定性 router
+始终拥有最终路由；LLM 不接数据库，只接收问题/ResearchContext 或过滤后的 AnswerCard。
 
 实时 OpenAI 模式要求本地环境提供 `OPENAI_API_KEY`、`V8_OPENAI_MODEL`，并在本地
 虚拟环境安装 `openai>=2,<3`。未配置、超时或输出校验失败时仍返回确定性结果；
@@ -87,7 +87,8 @@ uv run python run_api.py
 - `core_router.py` / `orchestrator.py` — 确定性解释、最终路由和 AnswerCard 执行编排。
 - `api.py` / `run_api.py` — FastAPI 接口和本机启动入口。
 - `dossier_service.py` — 只读个股价格、状态、事件、时间线和 lens payload。
-- `llm_adapter.py` — Structured Outputs parser/composer、Fake provider 和 backing 门。
+- `llm/` — Structured Outputs parser/composer、provider、schema 和 backing 门。
+- `llm_adapter.py` — W1 API 与 W2 LLM 边界之间的薄集成层。
 - `web/` — React/Vite 主面板、个股面板和 ResearchContext 联动。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。

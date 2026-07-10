@@ -56,8 +56,26 @@ uv run python run_api.py
 `interpreted`、`routed`、`answer_card`、`claim_block`、`degraded`、`completed`、
 `error`。不转发模型 token delta。
 
-当前 W1 API 不加载 LLM。`llm_mode=auto|required` 时仍返回确定性结果，并显式标记
-`degraded`；`llm_mode=off` 是纯确定性模式。
+`llm_adapter.py` 提供 Fake provider、OpenAI Responses Structured Outputs adapter、
+问题解释和 claim backing 校验。确定性 router 始终拥有最终路由；LLM 不接数据库，
+只接收问题/ResearchContext 或过滤后的 AnswerCard。
+
+实时 OpenAI 模式要求本地环境提供 `OPENAI_API_KEY`、`V8_OPENAI_MODEL`，并在本地
+虚拟环境安装 `openai>=2,<3`。未配置、超时或输出校验失败时仍返回确定性结果；
+`llm_mode=off` 是纯确定性模式。
+
+React 主面板和个股面板位于 `web/`：
+
+```bash
+cd web
+npm install
+npm run build
+cd ..
+uv run python run_api.py
+```
+
+打开 `http://127.0.0.1:8765`。开发模式可运行 `npm run dev`，Vite 将 `/api` 代理到
+本地 FastAPI。个股节点通过 ResearchContext URL 回到主面板继续提问，聊天不持久化。
 
 ## 契约与文件
 
@@ -69,6 +87,8 @@ uv run python run_api.py
 - `core_router.py` / `orchestrator.py` — 确定性解释、最终路由和 AnswerCard 执行编排。
 - `api.py` / `run_api.py` — FastAPI 接口和本机启动入口。
 - `dossier_service.py` — 只读个股价格、状态、事件、时间线和 lens payload。
+- `llm_adapter.py` — Structured Outputs parser/composer、Fake provider 和 backing 门。
+- `web/` — React/Vite 主面板、个股面板和 ResearchContext 联动。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。
 - `out/` — 生成的答案卡（JSON + 人话 Markdown）。
@@ -100,7 +120,7 @@ Batch 2 W1 另验证：
 - dossier 读取 1982 个价格点、162 个去重事件、5 条时间线和 3 条 lens 摘要；
 - API 和 dossier 不写研究数据库。
 
-## W1 边界
+## Batch 2 边界
 
-W1 单写共享契约和 Core/API。LLM/eval 属于 W2，UI 属于 W3。任何新事实字段先进入
-确定性 Core 和 AnswerCard，再暴露给 LLM/UI；W2/W3 不直接修改 `contracts/`。
+W1 单写共享契约和 Core/API。任何新事实字段先进入确定性 Core 和 AnswerCard，再暴露
+给 LLM/UI；W2/W3 不直接修改 `contracts/`。问题卡和知识晋升本批次只生成候选，不持久化。

@@ -1,0 +1,2 @@
+import{describe,expect,it}from'vitest';import{parseNdjson}from'./api';
+describe('NDJSON',()=>{it('preserves a partial line',()=>{const a=parseNdjson('','{"request_id":"r","sequence":1,"event":"accepted","payload":{}}\n{"request_');expect(a.events[0].event).toBe('accepted');const b=parseNdjson(a.remainder,'id":"r","sequence":2,"event":"completed","payload":{}}\n');expect(b.events[0].event).toBe('completed');expect(b.remainder).toBe('')})})

@@ -3,11 +3,13 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Iterator
+from pathlib import Path as FilePath
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Path
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 
 from api_contract import (
     API_CONTRACT_VERSION,
@@ -19,10 +21,16 @@ from api_contract import (
 )
 from answer_engine import CONTRACT_VERSION as ANSWER_CONTRACT_VERSION
 from dossier_service import DossierNotFoundError, build_stock_dossier
-from orchestrator import orchestrate, route_only, stream_events
+from llm_adapter import openai_configured, orchestrate_optional_llm
+from orchestrator import route_only, stream_events
 
 
 logger = logging.getLogger(__name__)
+
+
+def orchestrate(request: ResearchRequest) -> ResearchResponse:
+    """Patchable API boundary used by JSON and NDJSON endpoints."""
+    return orchestrate_optional_llm(request)
 
 app = FastAPI(
     title="ST Research Copilot API",
@@ -44,7 +52,7 @@ def health() -> dict[str, object]:
         "status": "ok",
         "api_contract_version": API_CONTRACT_VERSION,
         "answer_contract_version": ANSWER_CONTRACT_VERSION,
-        "llm_available": False,
+        "llm_available": openai_configured(),
         "database_mode": "read_only",
     }
 
@@ -111,3 +119,8 @@ def stock_dossier(
             status_code=500,
             detail={"code": "dossier_invalid", "message": "个股材料校验失败。"},
         ) from exc
+
+
+_WEB_DIST = FilePath(__file__).resolve().parent / "web/dist"
+if _WEB_DIST.exists():
+    app.mount("/", StaticFiles(directory=_WEB_DIST, html=True), name="web")

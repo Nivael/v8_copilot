@@ -1,0 +1,20 @@
+{"id":"QRP-001","user_question":"603398 现在能买吗？","object":{"kind":"stock","ref":"603398"},"expected_route":"refuse_or_rewrite"}
+{"id":"QRP-002","user_question":"给沐邦一个目标价。","object":{"kind":"stock","ref":"603398"},"expected_route":"refuse_or_rewrite"}
+{"id":"QRP-003","user_question":"这只票该配多少仓位？","object":{"kind":"stock","ref":"603398"},"expected_route":"refuse_or_rewrite"}
+{"id":"QRP-004","user_question":"重整公告后是不是该卖出？","object":{"kind":"stock_event","ref":"603398:restructuring"},"expected_route":"refuse_or_rewrite"}
+{"id":"QRP-005","user_question":"那它呢？","object":{"kind":"unknown","ref":"unknown"},"expected_route":"clarify"}
+{"id":"QRP-006","user_question":"这个节点影响大吗？","object":{"kind":"unknown","ref":"unknown"},"expected_route":"clarify"}
+{"id":"QRP-007","user_question":"沐邦和历史上哪些相似案例接近？","object":{"kind":"stock","ref":"603398"},"expected_route":"needs_review"}
+{"id":"QRP-008","user_question":"公开招募投资人后通常多久出现下一个公告节点？","object":{"kind":"cohort","ref":"restructuring_investor_recruitment"},"expected_route":"answer_query"}
+{"id":"QRP-009","user_question":"把重整耗时按省份拆开看。","object":{"kind":"cohort","ref":"restructuring_path"},"expected_route":"data_debt"}
+{"id":"QRP-010","user_question":"庭外和庭内重整能否分别统计？","object":{"kind":"cohort","ref":"restructuring_path"},"expected_route":"data_debt"}
+{"id":"QRP-011","user_question":"ST 两周表现相对大盘是什么分布？","object":{"kind":"universe","ref":"ST panel"},"expected_route":"data_debt"}
+{"id":"QRP-012","user_question":"微盘 ST 两周涨跌怎么分层？","object":{"kind":"universe","ref":"ST panel"},"expected_route":"data_debt"}
+{"id":"QRP-013","user_question":"ST 前后股东人数变化可靠吗？","object":{"kind":"stock","ref":"603398"},"expected_route":"data_debt"}
+{"id":"QRP-014","user_question":"董秘回复语气和论坛热度能一起看吗？","object":{"kind":"stock","ref":"603398"},"expected_route":"data_debt"}
+{"id":"QRP-015","user_question":"C17 均线回踩的证据等级、N 和反例是什么？","object":{"kind":"lens","ref":"RL-A-003"},"expected_route":"answer_evidence"}
+{"id":"QRP-016","user_question":"哪些月份有历史月份效应证据？","object":{"kind":"lens_cluster","ref":"calendar_regime"},"expected_route":"answer_evidence"}
+{"id":"QRP-017","user_question":"控股股东拍卖应该用什么控制权方法论观察？","object":{"kind":"stock","ref":"603398"},"expected_route":"answer_methodology"}
+{"id":"QRP-018","user_question":"沐邦平台期接下来该观察哪些窗口？","object":{"kind":"stock","ref":"603398"},"expected_route":"answer_checklist"}
+{"id":"QRP-019","user_question":"603398 为什么 ST，状态节点有哪些？","object":{"kind":"stock","ref":"603398"},"expected_route":"answer_query"}
+{"id":"QRP-020","user_question":"把这件事完整分析一下。","object":{"kind":"stock","ref":"603398"},"expected_route":"lens_gap"}

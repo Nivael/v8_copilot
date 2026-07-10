@@ -14,12 +14,15 @@ is to define acceptance pressure for W1 and later LLM orchestration:
 - `golden_fact_assertions_v0.json` - fact assertions against the current seed
   AnswerCards. These are not standard prose answers.
 - `validate_w2_evals.py` - stdlib validator for all W2 artifacts.
+- `question_routing_paraphrases_v0.jsonl` - 20 个改写、未知与边界问题。
+- `run_route_eval_50.py` - 30 个 canonical 问题加 20 个改写问题的最终合法路由门。
 
 Run from `v8_copilot/`:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 evals/validate_w2_evals.py
 PYTHONDONTWRITEBYTECODE=1 python3 evals/run_route_eval.py
+PYTHONDONTWRITEBYTECODE=1 python3 evals/run_route_eval_50.py
 ```
 
 Passing this gate means the acceptance artifacts are internally consistent and

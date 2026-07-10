@@ -230,5 +230,6 @@ def stream_events(
         "route": response.route.route,
         "has_answer_card": response.answer_card is not None,
         "claim_count": len(response.claims),
+        "response": response.model_dump(mode="json"),
     })
     return events

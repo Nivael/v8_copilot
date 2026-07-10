@@ -74,7 +74,10 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             note="交易建议/目标价/仓位请求必须拒绝或改写为研究问题。",
         )
 
-    if object_kind == "unknown" or text in {"那它呢?", "那它呢？", "那它呢"}:
+    missing_referent = object_kind == "unknown" and _has_any(
+        text, ["那它呢", "它怎么样", "这只票", "这个股票", "这个节点"],
+    )
+    if missing_referent or text in {"那它呢?", "那它呢？", "那它呢"}:
         return _prediction(
             "clarify",
             "clarify",

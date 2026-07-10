@@ -1,0 +1,2 @@
+import{describe,expect,it}from'vitest';import{questionLink,readContext}from'./context';
+describe('ResearchContext',()=>{it('round trips a selected event',()=>{const href=questionLink({symbol:'603398',selected_event:{event_id:'e1',date:'2026-01-05',title:'重整进展'},selected_lenses:['RL-A-003']},'节点前后发生了什么？');expect(readContext(new URL(href,'http://local').search)).toEqual({symbol:'603398',selected_event:{event_id:'e1',date:'2026-01-05',title:'重整进展'},selected_lenses:['RL-A-003'],active_question:'节点前后发生了什么？'})})})

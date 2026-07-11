@@ -1,4 +1,27 @@
 import '@testing-library/jest-dom/vitest'
+import {vi} from 'vitest'
+
+vi.mock('lightweight-charts', () => ({
+  ColorType: {Solid: 'solid'},
+  CrosshairMode: {Normal: 0},
+  LineSeries: 'LineSeries',
+  createSeriesMarkers: () => ({setMarkers: vi.fn(), detach: vi.fn(), markers: () => []}),
+  createChart: () => {
+    const scale = {
+      setVisibleRange: vi.fn(),
+      fitContent: vi.fn(),
+      subscribeVisibleTimeRangeChange: vi.fn(),
+      unsubscribeVisibleTimeRangeChange: vi.fn(),
+    }
+    return {
+      addSeries: () => ({setData: vi.fn()}),
+      timeScale: () => scale,
+      subscribeClick: vi.fn(),
+      unsubscribeClick: vi.fn(),
+      remove: vi.fn(),
+    }
+  },
+}))
 
 // Node 22+ 的实验性 webstorage 会以残缺对象遮蔽 jsdom 的 localStorage
 // （--localstorage-file 无有效路径时连 setItem 都没有），统一替换为内存实现，

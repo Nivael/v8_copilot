@@ -200,7 +200,11 @@ def test_dossier_endpoint_uses_real_read_only_sources() -> None:
     assert len(body["price_series"]) == 1982
     assert len(body["events"]) >= 150
     assert len({event["event_id"] for event in body["events"]}) == len(body["events"])
-    assert len(body["lens_summaries"]) == 3
+    assert {item["release_id"] for item in body["lens_summaries"]} == {
+        "RL-C-002", "RL-C-003",
+    }
+    assert body["display_labels"]["lens_library_size"] == "冻结库 9 条"
+    assert "RL-A-003" not in {item["release_id"] for item in body["lens_summaries"]}
     assert all("episode_label" in event for event in body["events"])
 
 

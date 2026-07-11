@@ -20,8 +20,8 @@ from api_contract import (
 from answer_engine import (
     BASE_DB,
     EPISODE_INDEX,
-    card_consolidation_checklist,
 )
+from lens_binding import LensRegistry
 
 
 class DossierNotFoundError(LookupError):
@@ -204,6 +204,40 @@ def _append_announcement_focus(
     events.sort(key=lambda event: (event.date, event.event_id))
 
 
+def _dossier_lens_summaries(events: list[DossierEvent]) -> tuple[list[DossierLensSummary], int]:
+    """Bind only lenses supported by actual dossier event content.
+
+    A generic stock dossier must not inherit the Mubon consolidation checklist. Broad
+    event lanes receive methodology frames only where their topic is an exact match;
+    narrow evidence/case lenses require an explicit title-level trigger.
+    """
+    registry = LensRegistry()
+    selected: list[tuple[str, str]] = []
+    if any(event.timeline_lane == "control" for event in events):
+        selected.extend([
+            ("RL-C-002", "股东行为与拍卖节点的核查框架"),
+            ("RL-C-003", "控制权结构变化的核查框架"),
+        ])
+    titles = "\n".join(event.title for event in events)
+    if "共益债" in titles or "公益债" in titles:
+        selected.append(("RL-B-002", "共益债相关个案材料，仅作个案支持"))
+    if "重大资产重组" in titles or "资产注入" in titles:
+        selected.append(("RL-C-004", "重大资产重组与资产注入的核查框架"))
+
+    summaries: list[DossierLensSummary] = []
+    for release_id, section in selected:
+        invocation = registry.invoke(registry.get(release_id), section)
+        summaries.append(DossierLensSummary(
+            release_id=invocation.release_id,
+            lens_kind=invocation.lens_kind,
+            display_label=invocation.contributed_section,
+            evidence_grade=invocation.evidence_grade,
+            contributed_section=invocation.contributed_section,
+            provenance_refs=invocation.provenance_refs,
+        ))
+    return summaries, len(registry.records)
+
+
 def build_stock_dossier(
     symbol: str,
     announcement_focus: str | None = None,
@@ -254,19 +288,7 @@ def build_stock_dossier(
         for lane_id, lane in LANES.items()
     ]
 
-    checklist_card = card_consolidation_checklist(symbol)
-    checklist_card.validate()
-    lens_summaries = [
-        DossierLensSummary(
-            release_id=invocation.release_id,
-            lens_kind=invocation.lens_kind,
-            display_label=invocation.contributed_section,
-            evidence_grade=invocation.evidence_grade,
-            contributed_section=invocation.contributed_section,
-            provenance_refs=invocation.provenance_refs,
-        )
-        for invocation in checklist_card.lens_invocations
-    ]
+    lens_summaries, library_size = _dossier_lens_summaries(events)
 
     return StockDossierPayload(
         symbol=symbol,
@@ -292,6 +314,7 @@ def build_stock_dossier(
             "price_adjustment": "前复权",
             "event_count": f"{len(events)} 个已分类公告节点",
             "source_boundary": "本地只读历史快照",
+            "lens_library_size": f"冻结库 {library_size} 条",
         },
         research_context=ResearchContext(
             symbol=symbol,

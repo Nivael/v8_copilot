@@ -1017,6 +1017,17 @@ def card_stock_research_overview(
     card = card_st_status_timeline(symbol)
     card.question = question
 
+    if requested & {"shareholder_count", "equity", "capital_structure", "control_structure"}:
+        control_records = _REGISTRY.candidate_lenses(
+            topic_terms=["股东行为", "拍卖", "原实控人", "控制权"],
+        )
+        existing_release_ids = {invocation.release_id for invocation in card.lens_invocations}
+        card.lens_invocations.extend(
+            _REGISTRY.invoke(record, "股东、股权与控制权字段的解释框架")
+            for record in control_records
+            if str(record["release_id"]) not in existing_release_ids
+        )
+
     if not requested or "announcement" in requested:
         announcement_snapshot = load_table_snapshot(
             BASE_DB, table="company_announcements", date_column="announcement_date"

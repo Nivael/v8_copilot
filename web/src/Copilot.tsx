@@ -1,7 +1,7 @@
 import {FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState} from 'react'
 import {
-  AlertTriangle, ArrowRight, BookOpenCheck, Database, ExternalLink,
-  FileQuestion, History, Link2, Search, Send, X,
+  AlertTriangle, ArrowRight, BookOpenCheck, ExternalLink,
+  FileQuestion, History, Link2, PanelRightOpen, Search, Send, X,
 } from 'lucide-react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import {ask} from './api'
@@ -93,20 +93,53 @@ function EvidenceTables({rows}: {rows: Array<Record<string, unknown>>}) {
   )
 }
 
-function Claims({claims}: {claims: Claim[]}) {
-  if (!claims.length) return null
+function ReadableAnalysis({card, claims, onOpenEvidence}: {
+  card: AnswerCard
+  claims: Claim[]
+  onOpenEvidence: () => void
+}) {
+  const primary = claims.filter(claim => claim.claim_type === 'fact' || claim.claim_type === 'inference')
+  const auditPhrases = ['本地证据表', 'M6 事件索引', 'pilot 对该股票', '官方公告表提供', '机械计算']
+  const narrativePrimary = primary.filter(claim => !auditPhrases.some(phrase => claim.text.includes(phrase)))
+  const limits = claims.filter(claim => claim.claim_type === 'caveat' || claim.claim_type === 'data_gap')
+  const nextQuestions = claims.filter(claim => claim.claim_type === 'question')
+  const readablePrimary = narrativePrimary.length ? narrativePrimary : (primary.length ? primary : claims.slice(0, 1))
   return (
-    <section>
-      <h2>分析</h2>
-      {claims.map((claim, index) => (
-        <article className={`claim claim-${claim.claim_type}`} key={`${claim.backing.ref}-${index}`}>
-          <p>{show(claim.text)}</p>
-          <small>
-            <span className={`claim-tag claim-tag-${claim.claim_type}`}>{show(claim.claim_type)}</span>
-            {' '}{show(claim.backing.kind)}: {show(claim.backing.ref)}
-          </small>
-        </article>
-      ))}
+    <section className="readable-analysis">
+      <header>
+        <div>
+          <p className="eyebrow">研究回答</p>
+          <h2>基于当前本地证据，能确认什么</h2>
+        </div>
+        <button type="button" className="evidence-button" onClick={onOpenEvidence}>
+          <PanelRightOpen size={16}/>查看证据与来源
+        </button>
+      </header>
+      <div className="analysis-copy">
+        {readablePrimary.map((claim, index) => (
+          <p key={`${claim.backing.ref}-${index}`}>{show(claim.text)}</p>
+        ))}
+      </div>
+      <div className="analysis-basis">
+        <span>{show(card.evidence_grade)}</span>
+        <p>
+          {card.lens_invocations.length > 0
+            ? `本题调用 ${card.lens_invocations.length} 条适用的冻结 Lens；其余内容来自可回链的本地查询。`
+            : '本题没有匹配到适用的冻结 Lens；以下内容按描述性查询呈现，不升级为历史先验。'}
+        </p>
+      </div>
+      {limits.length > 0 && (
+        <section className="analysis-limits">
+          <h3>需要保留的不确定性</h3>
+          <ul>{limits.map((claim, index) => <li key={`${claim.backing.ref}-limit-${index}`}>{show(claim.text)}</li>)}</ul>
+        </section>
+      )}
+      {nextQuestions.length > 0 && (
+        <section className="analysis-next">
+          <h3>下一步应继续核查</h3>
+          <ul>{nextQuestions.map((claim, index) => <li key={`${claim.backing.ref}-next-${index}`}>{show(claim.text)}</li>)}</ul>
+        </section>
+      )}
     </section>
   )
 }
@@ -136,19 +169,35 @@ export function EvidenceNavigation({items, selectedId}: {items: NavigationRef[];
   )
 }
 
-function Inspector({card, navigation, selectedId}: {
+function Inspector({card, claims, navigation, selectedId, onClose}: {
   card: AnswerCard
+  claims: Claim[]
   navigation: NavigationRef[]
   selectedId?: string
+  onClose: () => void
 }) {
   const bySource = (kind: string, source: string) => navigation.find(
     item => item.kind === kind && item.source_ref === source,
   )
   return (
-    <aside className="inspector">
-      <header><BookOpenCheck size={17}/><h2>证据检查器</h2></header>
+    <aside className="inspector" aria-label="证据与来源">
+      <header>
+        <BookOpenCheck size={18}/>
+        <div><h2>证据与来源</h2><p>审阅出处、Lens 和原始查询行</p></div>
+        <button type="button" className="icon-button" aria-label="关闭证据与来源" onClick={onClose}><X size={17}/></button>
+      </header>
+      <EvidenceNavigation items={navigation} selectedId={selectedId}/>
       <section>
-        <h3>Lens 调用</h3>
+        <h3>论断回链</h3>
+        {(claims.length ? claims : card.analysis_claims).map((claim, index) => (
+          <article className="claim-source" key={`${claim.backing.ref}-${index}`}>
+            <p>{show(claim.text)}</p>
+            <span>{show(claim.backing.kind)} · {show(claim.backing.ref)}</span>
+          </article>
+        ))}
+      </section>
+      <section>
+        <h3>Lens 调用 · {card.lens_invocations.length}</h3>
         {card.lens_invocations.map(invocation => {
           const releaseId = String(invocation.release_id)
           const nav = bySource('lens', releaseId)
@@ -161,7 +210,26 @@ function Inspector({card, navigation, selectedId}: {
           )
           return <article key={releaseId}>{nav ? <Link to={nav.href}>{content}</Link> : content}</article>
         })}
+        {card.lens_invocations.length === 0 && <p className="inspector-empty">本题无适用的冻结 Lens。数据库查询仍可作为描述性证据，但不升级为 Lens 结论。</p>}
       </section>
+      {card.lens_gap.length > 0 && (
+        <section>
+          <h3>Lens 缺口</h3>
+          {card.lens_gap.map(gap => (
+            <article key={String(gap.gap_id)}><strong>{show(gap.missing_for)}</strong><p>{show(gap.note)}</p></article>
+          ))}
+        </section>
+      )}
+      <section>
+        <h3>查询证据 · {card.body_rows.length} 行</h3>
+        <EvidenceTables rows={card.body_rows}/>
+      </section>
+      {card.data_debt.length > 0 && (
+        <section>
+          <h3>数据债 · {card.data_debt.length}</h3>
+          {card.data_debt.map(debt => <article key={String(debt.debt_ref)}><strong>{show(debt.gap)}</strong><p>{show(debt.affects)} · {show(debt.debt_ref)}</p></article>)}
+        </section>
+      )}
       <section>
         <h3>新鲜度</h3>
         {Object.entries(card.source_freshness).map(([key, value]) => (
@@ -184,6 +252,10 @@ function Inspector({card, navigation, selectedId}: {
             )
             : <p className="source" key={source}>{show(source)}</p>
         })}
+      </section>
+      <section>
+        <h3>回答边界</h3>
+        {card.caveats.map(caveat => <p className="source" key={caveat}>{show(caveat)}</p>)}
       </section>
     </aside>
   )
@@ -264,11 +336,11 @@ export function QuestionDrawer({response, selectedId, currentContext = {}}: {
   )
 }
 
-function Answer({card, claims, navigation, selectedId}: {
+function Answer({card, claims, navigation, onOpenEvidence}: {
   card: AnswerCard
   claims: Claim[]
   navigation: NavigationRef[]
-  selectedId?: string
+  onOpenEvidence: () => void
 }) {
   const stock = navigation.find(item => item.kind === 'stock')
   return (
@@ -284,40 +356,13 @@ function Answer({card, claims, navigation, selectedId}: {
         <b className={`grade grade-${card.evidence_grade}`}>{show(card.evidence_grade)}</b>
         <span>{show(card.sample_scope)}</span>
       </div>
-      <EvidenceNavigation items={navigation} selectedId={selectedId}/>
-      <Claims claims={claims.length ? claims : card.analysis_claims}/>
-      <section>
-        <h2>证据菜单</h2>
-        <EvidenceTables rows={card.body_rows}/>
-      </section>
-      {card.lens_gap.length > 0 && (
-        <div className="callout gap">
-          <AlertTriangle size={18}/>
-          <div>
-            <h2>Lens 缺口</h2>
-            {card.lens_gap.map(gap => (
-              <p key={String(gap.gap_id)}>{show(gap.missing_for)}：{show(gap.note)}</p>
-            ))}
-          </div>
-        </div>
-      )}
-      {card.data_debt.length > 0 && (
-        <div className="callout debt">
-          <Database size={18}/>
-          <div>
-            <h2>数据债</h2>
-            {card.data_debt.map(debt => (
-              <p key={String(debt.debt_ref)}>
-                {show(debt.gap)} · {show(debt.affects)} · {show(debt.debt_ref)}
-              </p>
-            ))}
-          </div>
-        </div>
-      )}
-      <section className="caveats">
-        <h2>边界</h2>
-        {card.caveats.map(caveat => <p key={caveat}>{show(caveat)}</p>)}
-      </section>
+      <ReadableAnalysis card={card} claims={claims.length ? claims : card.analysis_claims} onOpenEvidence={onOpenEvidence}/>
+      <footer className="answer-foot">
+        <span>{card.body_rows.length} 行查询证据</span>
+        <span>{card.lens_invocations.length} 条 Lens 命中</span>
+        <span>{card.data_debt.length + card.lens_gap.length} 项缺口</span>
+        <button type="button" onClick={onOpenEvidence}>展开审阅材料<ArrowRight size={14}/></button>
+      </footer>
     </article>
   )
 }
@@ -333,6 +378,7 @@ export function Copilot() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [recent, setRecent] = useState<string[]>(readRecent)
+  const [evidenceOpen, setEvidenceOpen] = useState(false)
   const activeRequest = useRef<AbortController | null>(null)
   const urlQuestion = useRef(context.active_question)
 
@@ -342,7 +388,7 @@ export function Copilot() {
     activeRequest.current?.abort()
     activeRequest.current = null
     setQuestion(context.active_question ?? '')
-    setEvents([]); setResponse(null); setError(''); setBusy(false)
+    setEvents([]); setResponse(null); setError(''); setBusy(false); setEvidenceOpen(false)
   }, [context.active_question])
   useEffect(() => () => activeRequest.current?.abort(), [])
 
@@ -363,7 +409,7 @@ export function Copilot() {
     const controller = new AbortController()
     activeRequest.current = controller
     urlQuestion.current = nextQuestion
-    setEvents([]); setResponse(null); setError(''); setBusy(true)
+    setEvents([]); setResponse(null); setError(''); setBusy(true); setEvidenceOpen(false)
     const params = new URLSearchParams(location.search)
     params.set('question', nextQuestion)
     navigate(`/?${params}`, {replace: true})
@@ -516,21 +562,30 @@ export function Copilot() {
         )}
       </div>
       {response?.answer_card && (
-        <div className="answer-grid">
-          <Answer
-            card={response.answer_card}
-            claims={response.claims}
-            navigation={response.navigation_refs}
-            selectedId={selectedNavigation?.id}
-          />
-          <div className="answer-side">
+        <div className={`answer-workspace${evidenceOpen ? ' evidence-open' : ''}`}>
+          <div className="answer-main">
+            <Answer
+              card={response.answer_card}
+              claims={response.claims}
+              navigation={response.navigation_refs}
+              onOpenEvidence={() => setEvidenceOpen(true)}
+            />
+            {(response.question_cards.length + response.data_debt_candidates.length) > 0 && (
+              <details className="followup-drawer">
+                <summary>研究后续 · {response.question_cards.length + response.data_debt_candidates.length} 项候选</summary>
+                <QuestionDrawer response={response} selectedId={selectedNavigation?.id} currentContext={context}/>
+              </details>
+            )}
+          </div>
+          {evidenceOpen && (
             <Inspector
               card={response.answer_card}
+              claims={response.claims}
               navigation={response.navigation_refs}
               selectedId={selectedNavigation?.id}
+              onClose={() => setEvidenceOpen(false)}
             />
-            <QuestionDrawer response={response} selectedId={selectedNavigation?.id} currentContext={context}/>
-          </div>
+          )}
         </div>
       )}
     </div>

@@ -23,6 +23,7 @@ from answer_engine import (
     card_data_debt,
     card_next_node_gap,
     card_release_lens_evidence,
+    card_stock_research_overview,
     card_st_status_timeline,
     card_stock_event_window,
     card_two_week_move,
@@ -85,6 +86,14 @@ def _execute_answer(
             symbol = _symbol(request, interpretation)
             if symbol:
                 card = card_st_status_timeline(symbol)
+        elif "stock_research_overview" in rules:
+            symbol = _symbol(request, interpretation)
+            if symbol:
+                card = card_stock_research_overview(
+                    symbol,
+                    request.question,
+                    interpretation.dimensions,
+                )
     elif route.route == "answer_checklist" and executor_key == "observation_checklist":
         symbol = _symbol(request, interpretation)
         if symbol:
@@ -217,6 +226,29 @@ def orchestrate_with_card(
             "view": "clarify",
             "reason": "选中事件未命中正式公告或 episode，请重新选择可回链节点。",
             "matched_rules": [*route.matched_rules, "event_resolution_gap"],
+            "required_lens_behavior": "not_applicable",
+        })
+    elif (
+        card is None
+        and route.route == "answer_query"
+        and template
+        and template.executor_key == "st_status_timeline"
+    ):
+        route = route.model_copy(update={
+            "route": "clarify",
+            "status": "clarify",
+            "view": "clarify",
+            "reason": "未能把问题中的股票名称解析为本地股票代码，请补充六位代码。",
+            "matched_rules": [*route.matched_rules, "stock_resolution_gap"],
+            "required_lens_behavior": "not_applicable",
+        })
+    elif card is None and "stock_research_overview" in route.matched_rules:
+        route = route.model_copy(update={
+            "route": "clarify",
+            "status": "clarify",
+            "view": "clarify",
+            "reason": "未能把问题中的股票名称解析为本地股票代码，请补充六位代码。",
+            "matched_rules": [*route.matched_rules, "stock_resolution_gap"],
             "required_lens_behavior": "not_applicable",
         })
     elif (

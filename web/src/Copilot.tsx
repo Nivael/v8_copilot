@@ -61,12 +61,35 @@ function Table({rows}: {rows: Array<Record<string, unknown>>}) {
         <tbody>
           {rows.map(row => (
             <tr key={String(row.row_id)}>
-              {columns.map(column => <td key={column}>{show(row[column])}</td>)}
+              {columns.map(column => (
+                <td key={column}>{row[column] == null ? '' : show(row[column])}</td>
+              ))}
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+  )
+}
+
+function EvidenceTables({rows}: {rows: Array<Record<string, unknown>>}) {
+  const groups = useMemo(() => {
+    const grouped = new Map<string, Array<Record<string, unknown>>>()
+    rows.forEach(row => {
+      const label = typeof row['记录类型'] === 'string' ? row['记录类型'] : '证据数据'
+      grouped.set(label, [...(grouped.get(label) ?? []), row])
+    })
+    return Array.from(grouped.entries())
+  }, [rows])
+  return (
+    <>
+      {groups.map(([label, group]) => (
+        <section className="evidence-table-group" key={label}>
+          {groups.length > 1 && <h3>{show(label)}</h3>}
+          <Table rows={group}/>
+        </section>
+      ))}
+    </>
   )
 }
 
@@ -265,7 +288,7 @@ function Answer({card, claims, navigation, selectedId}: {
       <Claims claims={claims.length ? claims : card.analysis_claims}/>
       <section>
         <h2>证据菜单</h2>
-        <Table rows={card.body_rows}/>
+        <EvidenceTables rows={card.body_rows}/>
       </section>
       {card.lens_gap.length > 0 && (
         <div className="callout gap">
@@ -348,6 +371,9 @@ export function Copilot() {
       await ask(nextQuestion, {...context, active_question: nextQuestion}, streamEvent => {
         if (activeRequest.current !== controller) return
         setEvents(current => [...current, streamEvent])
+        if (streamEvent.event === 'answer_card' && streamEvent.payload.response) {
+          setResponse(streamEvent.payload.response as unknown as Response)
+        }
         if (streamEvent.event === 'completed' && streamEvent.payload.response) {
           setResponse(streamEvent.payload.response as unknown as Response)
           setRecent(current => writeRecent(nextQuestion, current))

@@ -163,6 +163,18 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             note="多表节点前后汇总可以先给可得字段，并显式列缺口。",
         )
 
+    if gap_rules == ["missing_shareholder_count_full_coverage"] and object_kind == "stock":
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            debt_refs=["D-021"],
+            question_refs=q_refs,
+            rules=["stock_research_overview", *gap_rules],
+            note="单票有 pilot 数据时先回答；全覆盖不足继续保留数据债。",
+        )
+
     if gap_rules:
         return _prediction(
             "data_debt",
@@ -227,8 +239,9 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             note="只作为 methodology/checklist，不升级成 evidence。",
         )
 
-    if object_kind == "stock" and _has_any(
-        text, ["横", "窗口", "爆发点", "最晚", "投资协议", "平台"]
+    if object_kind == "stock" and (
+        _has_any(text, ["横", "爆发点", "最晚", "投资协议", "平台"])
+        or _has_any(text, ["哪些窗口", "该看哪些", "观察窗口"])
     ):
         lens_behavior = "lens_gap_required" if _has_any(text, ["最晚", "投资协议"]) else "lens_invocations_or_gap"
         return _prediction(
@@ -304,6 +317,16 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             "lens_invocations_or_gap",
             rules=["delisting_path_episode_query"],
             note="episode index 路径汇总，不预测退市结果。",
+        )
+
+    if object_kind == "stock":
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            rules=["stock_research_overview"],
+            note="按题面维度读取该股票的可用状态、公告、价格和事件资料。",
         )
 
     return _prediction(

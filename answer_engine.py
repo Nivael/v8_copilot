@@ -35,6 +35,7 @@ from snapshot_metadata import (
 
 _ROOT = DATA_ROOT
 BASE_DB = _ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
+SHAREHOLDER_DB = _ROOT / "shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3"
 EPISODE_INDEX = _ROOT / "shared_data/v7/episode_index_v0/episode_index.jsonl"
 EPISODE_MANIFEST = _ROOT / "shared_data/v7/episode_index_v0/builder_run_manifest.json"
 
@@ -1006,25 +1007,242 @@ def card_province_mapping_debt() -> AnswerCard:
     )
 
 
+def card_stock_research_overview(
+    symbol: str,
+    question: str,
+    dimensions: Iterable[str] = (),
+) -> AnswerCard:
+    """Answer an open stock question from available read-only dimensions."""
+    requested = set(dimensions)
+    card = card_st_status_timeline(symbol)
+    card.question = question
+
+    if not requested or "announcement" in requested:
+        announcement_snapshot = load_table_snapshot(
+            BASE_DB, table="company_announcements", date_column="announcement_date"
+        )
+        with _db() as connection:
+            announcements = connection.execute(
+                "select announcement_id,announcement_date,title from company_announcements "
+                "where symbol=? order by announcement_date desc,announcement_id desc limit 8",
+                (symbol,),
+            ).fetchall()
+        existing_ids = {
+            str(row.get("公告编号")) for row in card.body_rows if row.get("公告编号")
+        }
+        official_row_ids: list[str] = []
+        for index, (announcement_id, announcement_date, title) in enumerate(announcements, 1):
+            if str(announcement_id) in existing_ids:
+                continue
+            row_id = f"recent_official_announcement_{index:02d}"
+            official_row_ids.append(row_id)
+            card.body_rows.append(_row(
+                row_id,
+                **{
+                    "记录类型": "近期官方公告",
+                    "公告编号": str(announcement_id),
+                    "日期": str(announcement_date)[:10],
+                    "标题": str(title),
+                },
+            ))
+        if official_row_ids:
+            card.analysis_claims.append(AnalysisClaim(
+                text=f"官方公告表提供最近 {len(announcements)} 条披露供逐条核查。",
+                claim_type="fact",
+                backing=BackingRef(kind="query_row", ref=official_row_ids[0]),
+            ))
+        card.source_freshness["company_announcements_as_of"] = announcement_snapshot.as_of
+        card.provenance.append(
+            f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements[{symbol}]"
+        )
+
+    if "price" in requested:
+        price_snapshot = load_price_snapshot(BASE_DB)
+        with _db() as connection:
+            prices = connection.execute(
+                "select trade_date,close,turnover_rate from daily_prices "
+                "where symbol=? and adjust='qfq' order by trade_date desc limit 61",
+                (symbol,),
+            ).fetchall()
+        prices = list(reversed(prices))
+        if prices:
+            latest_date, latest_close, _ = prices[-1]
+            values = [float(row[1]) for row in prices]
+            price_row: dict[str, Any] = {
+                "记录类型": "近期价格窗口",
+                "截至": str(latest_date)[:10],
+                "最新收盘": round(float(latest_close), 2),
+                "窗口最低": round(min(values), 2),
+                "窗口最高": round(max(values), 2),
+            }
+            for window in (10, 20, 60):
+                if len(prices) > window:
+                    price_row[f"近{window}日变化"] = (
+                        f"{(float(latest_close) / float(prices[-window - 1][1]) - 1) * 100:.1f}%"
+                    )
+            turnover = [float(row[2]) for row in prices[-20:] if row[2] is not None]
+            if turnover:
+                price_row["近20日平均换手率"] = f"{statistics.mean(turnover):.2f}%"
+            card.body_rows.append(_row("recent_price_window", **price_row))
+            card.analysis_claims.append(AnalysisClaim(
+                text="近期价格窗口由前复权日线机械计算，只描述历史区间，不解释方向。",
+                claim_type="caveat",
+                backing=BackingRef(kind="query_row", ref="recent_price_window"),
+            ))
+        else:
+            gap = LensGap(
+                gap_id="stock_price_coverage",
+                missing_for=f"{symbol} 的前复权价格窗口",
+                sediment_as="question_card:stock_price_coverage",
+                note="当前只读价格快照无该股票记录。",
+            )
+            card.lens_gap.append(gap)
+            card.analysis_claims.append(AnalysisClaim(
+                text="当前快照没有该股票的可复算价格窗口。",
+                claim_type="data_gap",
+                backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+            ))
+        card.source_freshness["price_data_as_of"] = price_snapshot.as_of
+        card.provenance.append(
+            f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices[{symbol}]"
+        )
+
+    if "shareholder_count" in requested:
+        shareholder_snapshot = load_table_snapshot(
+            SHAREHOLDER_DB,
+            table="shareholder_count_snapshots",
+            date_column="report_date",
+        )
+        with sqlite3.connect(f"file:{SHAREHOLDER_DB}?mode=ro", uri=True) as connection:
+            holders = connection.execute(
+                "select report_date,holder_count,holder_count_delta,holder_count_delta_pct "
+                "from shareholder_count_snapshots where symbol=? "
+                "order by report_date desc limit 8",
+                (symbol,),
+            ).fetchall()
+        for index, (report_date, holder_count, delta, delta_pct) in enumerate(holders, 1):
+            card.body_rows.append(_row(
+                f"shareholder_count_{index:02d}",
+                **{
+                    "记录类型": "股东人数",
+                    "报告期": str(report_date)[:10],
+                    "股东人数": int(holder_count),
+                    "较上期变化": delta if delta is not None else "无上期值",
+                    "较上期变化率": (
+                        f"{float(delta_pct):.1f}%" if delta_pct is not None else "无上期值"
+                    ),
+                },
+            ))
+        if holders:
+            card.analysis_claims.append(AnalysisClaim(
+                text=f"股东人数 pilot 对该股票提供最近 {len(holders)} 个报告期快照。",
+                claim_type="fact",
+                backing=BackingRef(kind="query_row", ref="shareholder_count_01"),
+            ))
+        if "D-021" not in card.data_debt_refs:
+            card.data_debt.append(DataDebtRow(
+                gap="股东人数当前只有 57 股 pilot，非全市场完整覆盖",
+                affects="跨股票异常比较和全样本历史先验",
+                debt_ref="D-021",
+            ))
+            card.data_debt_refs.append("D-021")
+        card.source_freshness["shareholder_count_as_of"] = shareholder_snapshot.as_of
+        card.provenance.append(
+            f"shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3::shareholder_count_snapshots[{symbol}]"
+        )
+
+    if requested & {"equity", "capital_structure"}:
+        with sqlite3.connect(f"file:{SHAREHOLDER_DB}?mode=ro", uri=True) as connection:
+            equity_events = connection.execute(
+                "select event_date,event_category,event_type,event_title,actor,shares_delta,pct_total_after "
+                "from equity_timeline_events where symbol=? order by event_date desc limit 8",
+                (symbol,),
+            ).fetchall()
+        for index, event in enumerate(equity_events, 1):
+            event_date, category, event_type, title, actor, shares_delta, pct_total = event
+            card.body_rows.append(_row(
+                f"equity_event_{index:02d}",
+                **{
+                    "记录类型": "股权事件",
+                    "日期": str(event_date)[:10],
+                    "类别": category,
+                    "类型": event_type,
+                    "标题": title,
+                    "主体": actor or "未结构化",
+                    "股份变化": shares_delta if shares_delta is not None else "未结构化",
+                    "占总股本": (
+                        f"{float(pct_total):.2f}%" if pct_total is not None else "未结构化"
+                    ),
+                },
+            ))
+        if equity_events:
+            equity_snapshot = load_table_snapshot(
+                SHAREHOLDER_DB,
+                table="equity_timeline_events",
+                date_column="event_date",
+            )
+            card.analysis_claims.append(AnalysisClaim(
+                text=f"股权事件 pilot 对该股票提供最近 {len(equity_events)} 个结构化节点。",
+                claim_type="fact",
+                backing=BackingRef(kind="query_row", ref="equity_event_01"),
+            ))
+            card.source_freshness["equity_timeline_as_of"] = equity_snapshot.as_of
+        else:
+            gap = LensGap(
+                gap_id="equity_timeline_coverage",
+                missing_for=f"{symbol} 的结构化股权/股本时间线",
+                sediment_as="question_card:equity_timeline_coverage",
+                note="当前 pilot 没有该股票的结构化股权事件；不从公告标题推算股份变化。",
+            )
+            card.lens_gap.append(gap)
+            card.analysis_claims.append(AnalysisClaim(
+                text="当前 pilot 没有该股票的结构化股权/股本事件。",
+                claim_type="data_gap",
+                backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+            ))
+        card.provenance.append(
+            f"shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3::equity_timeline_events[{symbol}]"
+        )
+
+    card.sample_scope += f"；按题面加载维度：{','.join(sorted(requested)) or '基础概览'}"
+    card.as_of = limiting_as_of(*card.source_freshness.values())
+    card.data_snapshot_as_of = card.as_of
+    card.provenance = list(dict.fromkeys(card.provenance))
+    return card
+
+
 def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
-    """读取 ST 生命周期区间；原因解释仍显式保留为 lens gap。"""
+    """Read ST intervals, matched trigger announcements, and recent episode nodes."""
     status_snapshot = load_table_snapshot(
         BASE_DB,
         table="st_status_history",
         date_column="fetched_at",
     )
-    con = _db()
-    rows = con.execute(
-        "select start_date,end_date,status_name,status_type,source,fetched_at "
-        "from st_status_history where symbol=? order by start_date",
-        (symbol,),
-    ).fetchall()
-    con.close()
+    evidence_snapshot = load_table_snapshot(
+        BASE_DB,
+        table="st_status_history_evidence",
+        date_column="generated_at",
+    )
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
+    with _db() as con:
+        rows = con.execute(
+            "select start_date,end_date,status_name,status_type,source,fetched_at "
+            "from st_status_history where symbol=? order by start_date",
+            (symbol,),
+        ).fetchall()
+        evidence_rows = con.execute(
+            "select start_date,status_name,announcement_id,announcement_date,title,"
+            "match_reason,confidence from st_status_history_evidence "
+            "where symbol=? and evidence_status='matched' and evidence_rank=1 "
+            "order by start_date",
+            (symbol,),
+        ).fetchall()
 
-    body_rows = [
+    status_body_rows = [
         _row(
             f"st_interval_{index:02d}",
             **{
+                "记录类型": "状态区间",
                 "开始日": start_date,
                 "结束日": end_date or "仍在持续/未记录结束日",
                 "状态": status_name,
@@ -1034,18 +1252,78 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
         )
         for index, (start_date, end_date, status_name, status_type, source, _) in enumerate(rows, 1)
     ]
-    if not body_rows:
-        body_rows = [_row("st_interval_missing", **{"状态": "当前快照无 ST 生命周期记录"})]
+    if not status_body_rows:
+        status_body_rows = [_row("st_interval_missing", **{"状态": "当前快照无 ST 生命周期记录"})]
+
+    trigger_rows = [
+        _row(
+            f"st_trigger_announcement_{index:02d}",
+            **{
+                "记录类型": "触发公告",
+                "状态开始日": start_date,
+                "状态": status_name,
+                "公告编号": announcement_id,
+                "日期": announcement_date,
+                "标题": title,
+                "匹配说明": match_reason,
+                "匹配置信度": confidence,
+            },
+        )
+        for index, (
+            start_date,
+            status_name,
+            announcement_id,
+            announcement_date,
+            title,
+            match_reason,
+            confidence,
+        ) in enumerate(evidence_rows, 1)
+    ]
+
+    anchors: list[tuple[str, str, str, str]] = []
+    for episode in _iter_episodes(symbol):
+        episode_type = str(episode.get("episode_type", "unclassified"))
+        for anchor in episode.get("anchor_events", []):
+            event_date = str(anchor.get("announcement_date") or anchor.get("anchor_date") or "")
+            title = str(anchor.get("title") or "未命名节点")
+            source_ids = [str(item) for item in anchor.get("source_material_ids", [])]
+            announcement_id = next(
+                (item.split(":", 1)[1] for item in source_ids if item.startswith("announcement:")),
+                str(anchor.get("announcement_id") or ""),
+            )
+            if event_date:
+                anchors.append((event_date, title, episode_type, announcement_id))
+    recent_anchors = sorted(set(anchors), reverse=True)[:8]
+    episode_rows = [
+        _row(
+            f"recent_episode_node_{index:02d}",
+            **{
+                "记录类型": "近期分类节点",
+                "日期": event_date,
+                "标题": title,
+                "事件段": episode_type,
+                "公告编号": announcement_id,
+            },
+        )
+        for index, (event_date, title, episode_type, announcement_id) in enumerate(recent_anchors, 1)
+    ]
+    body_rows = [*status_body_rows, *trigger_rows, *episode_rows]
 
     gap_id = "st_reason_announcement_binding"
     fetched_at = max((row[5] for row in rows), default=status_snapshot.as_of)
+    data_as_of = limiting_as_of(
+        str(fetched_at), evidence_snapshot.as_of, episode_snapshot.as_of
+    )
     provenance_ref = "shared_data/v5/.../st_stocks_v5_backup.sqlite3::st_status_history"
     return AnswerCard(
         question=f"{symbol} 的 ST 状态关键节点是什么，为什么进入 ST？",
         object_ref=f"stock:{symbol}",
         view="query",
-        as_of=str(fetched_at)[:10],
-        sample_scope=f"{symbol} 的 st_status_history，{len(rows)} 个状态区间",
+        as_of=data_as_of,
+        sample_scope=(
+            f"{symbol}：{len(rows)} 个 ST 状态区间，{len(evidence_rows)} 条一级匹配触发公告，"
+            f"{len(recent_anchors)} 个近期已分类事件节点"
+        ),
         evidence_grade="descriptive_query",
         lens_gap=[LensGap(
             gap_id=gap_id,
@@ -1053,21 +1331,41 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
             sediment_as="question_card:QC-20260710-001",
             note="状态区间可直接读取；具体原因仍需公告/episode 绑定，不能由状态名称反推。",
         )],
+        episode_index_version=episode_snapshot.version,
         body_rows=body_rows,
         analysis_claims=[
             AnalysisClaim(
-                text="状态区间来自 st_status_history；具体 ST 原因不能仅凭状态名称确定。",
+                text=(
+                    "ST 状态区间来自生命周期表；触发原因只展示已与状态开始日匹配的一级公告，"
+                    "不从状态简称反推。"
+                ),
                 claim_type="caveat",
                 backing=BackingRef(kind="lens_gap", ref=gap_id),
-            )
+            ),
+            *([AnalysisClaim(
+                text=f"本地证据表为 {len(evidence_rows)} 个状态开始节点匹配到一级触发公告。",
+                claim_type="fact",
+                backing=BackingRef(kind="query_row", ref="st_trigger_announcement_01"),
+            )] if evidence_rows else []),
+            *([AnalysisClaim(
+                text=f"M6 事件索引提供最近 {len(recent_anchors)} 个已分类公告节点供继续核查。",
+                claim_type="fact",
+                backing=BackingRef(kind="query_row", ref="recent_episode_node_01"),
+            )] if recent_anchors else []),
         ],
-        data_snapshot_as_of=str(fetched_at)[:10],
+        data_snapshot_as_of=data_as_of,
         source_freshness={
             "st_status_fetched_at": str(fetched_at),
+            "st_evidence_generated_at": evidence_snapshot.as_of,
+            "episode_index_as_of": episode_snapshot.as_of,
         },
         caveats=FIXED_CAVEATS + [
             "生命周期表描述状态区间，不自动解释触发原因；原因解释需回到公告原文。",
             "不同 source 的状态区间可能重叠；本卡保留原始 source 行，不擅自合并冲突。",
         ],
-        provenance=[provenance_ref],
+        provenance=[
+            provenance_ref,
+            "shared_data/v5/.../st_stocks_v5_backup.sqlite3::st_status_history_evidence",
+            "shared_data/v7/episode_index_v0/episode_index.jsonl",
+        ],
     )

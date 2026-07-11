@@ -59,7 +59,15 @@ def test_seed_cards_keep_known_baseline_values(tmp_path: Path) -> None:
 
     status = cards["slice07_st_status_timeline"]
     assert status["view"] == "query"
-    assert {row["状态"] for row in status["body_rows"]} == {"*ST沐邦:*ST", "*ST沐邦"}
+    status_rows = [
+        row for row in status["body_rows"]
+        if row["row_id"].startswith("st_interval_")
+    ]
+    assert {row["状态"] for row in status_rows} == {"*ST沐邦:*ST", "*ST沐邦"}
+    assert any(
+        row["row_id"].startswith("st_trigger_announcement_")
+        for row in status["body_rows"]
+    )
 
 
 def test_unknown_episode_subtype_returns_stable_empty_distribution() -> None:

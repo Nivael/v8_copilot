@@ -83,6 +83,26 @@ def test_answers_endpoint_returns_validated_answer_card() -> None:
     Draft202012Validator(schema).validate(body["answer_card"])
 
 
+def test_stream_answers_non_seed_stock_name_with_real_backing(monkeypatch) -> None:
+    monkeypatch.setattr(api_module, "openai_configured", lambda: False)
+    request_payload = {
+        "request_id": "req-huawei-micro",
+        "question": "ST华微为什么被ST？最近有哪些关键公告和风险节点？",
+        "llm_mode": "off",
+    }
+
+    response = api_request("POST", "/api/v1/answers/stream", json=request_payload)
+
+    assert response.status_code == 200
+    events = [json.loads(line) for line in response.text.splitlines()]
+    assert events[-1]["event"] == "completed"
+    result = events[-1]["payload"]["response"]
+    assert result["interpretation"]["object"] == {"kind": "stock", "ref": "600360"}
+    assert result["answer_card"] is not None
+    assert result["claims"]
+    assert not any(event["event"] == "error" for event in events)
+
+
 def test_ndjson_stream_emits_validated_domain_events() -> None:
     response = api_request(
         "POST",
@@ -97,13 +117,54 @@ def test_ndjson_stream_emits_validated_domain_events() -> None:
     assert rows[0]["event"] == "accepted"
     assert rows[-1]["event"] == "completed"
     assert all(row["event"] not in {"token", "delta", "token_delta"} for row in rows)
+    answer_event = next(row for row in rows if row["event"] == "answer_card")
+    assert answer_event["payload"]["response"]["answer_card"] is not None
+
+
+def test_auto_stream_exposes_deterministic_card_before_llm_completion(monkeypatch) -> None:
+    original_final = api_module.orchestrate
+    monkeypatch.setattr(
+        api_module,
+        "orchestrate",
+        lambda request: api_module.orchestrate_deterministic(request),
+    )
+    request_payload = payload("沐邦为什么 ST？关键节点是什么？")
+    request_payload["llm_mode"] = "auto"
+
+    response = api_request("POST", "/api/v1/answers/stream", json=request_payload)
+
+    monkeypatch.setattr(api_module, "orchestrate", original_final)
+    rows = [json.loads(line) for line in response.text.splitlines()]
+    answer_index = next(index for index, row in enumerate(rows) if row["event"] == "answer_card")
+    completed_index = next(index for index, row in enumerate(rows) if row["event"] == "completed")
+    assert answer_index < completed_index
+    assert rows[answer_index]["payload"]["response"]["answer_card"] is not None
+    assert rows[answer_index]["payload"]["response"]["llm_used"] is False
+
+
+def test_llm_phase_failure_keeps_deterministic_card_and_completes(monkeypatch) -> None:
+    def fail(_request):
+        raise RuntimeError("provider unavailable")
+
+    monkeypatch.setattr(api_module, "orchestrate", fail)
+    request_payload = payload("沐邦为什么 ST？关键节点是什么？")
+    request_payload["llm_mode"] = "auto"
+
+    response = api_request("POST", "/api/v1/answers/stream", json=request_payload)
+
+    rows = [json.loads(line) for line in response.text.splitlines()]
+    assert any(row["event"] == "answer_card" for row in rows)
+    assert rows[-1]["event"] == "completed"
+    assert rows[-1]["payload"]["response"]["answer_card"] is not None
+    assert rows[-1]["payload"]["response"]["degraded"] is True
+    assert not any(row["event"] == "error" for row in rows)
 
 
 def test_stream_failure_returns_safe_error_event(monkeypatch) -> None:
     def fail(_request):
         raise RuntimeError("sensitive local detail")
 
-    monkeypatch.setattr(api_module, "orchestrate", fail)
+    monkeypatch.setattr(api_module, "orchestrate_deterministic", fail)
     response = api_request(
         "POST",
         "/api/v1/answers/stream",

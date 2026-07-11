@@ -223,7 +223,7 @@ def _navigation_refs(
 ) -> list[NavigationRef]:
     refs: list[NavigationRef] = []
     obj = response.interpretation.object
-    symbol = obj.ref if obj.kind == "stock" else None
+    symbol = obj.ref if obj.kind == "stock" and re.fullmatch(r"[0-9]{6}", obj.ref) else None
     if not symbol and request.context:
         symbol = request.context.symbol
     if not symbol and response.answer_card:

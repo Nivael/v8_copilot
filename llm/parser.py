@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, datetime
+import re
 from typing import Any, Callable, Mapping
 
 from pydantic import BaseModel, ValidationError
@@ -81,7 +82,11 @@ def _resolved_object(
     symbol = context.get("symbol")
     if isinstance(symbol, str) and symbol:
         return {"kind": "stock", "ref": symbol}
-    if parsed is not None:
+    if (
+        parsed is not None
+        and parsed.object_kind == "stock"
+        and re.fullmatch(r"[0-9]{6}", parsed.object_ref)
+    ):
         return {"kind": parsed.object_kind, "ref": parsed.object_ref}
     return explicit or {"kind": "unknown", "ref": "unknown"}
 

@@ -106,3 +106,30 @@ def test_boundary_rewrite_reuses_object_inferred_by_w1() -> None:
     assert response.sedimentation_candidates[-1].reason.startswith(
         "合规改写：603398 当前有哪些公开事件节点"
     )
+
+
+def test_llm_cannot_replace_unknown_authoritative_object_with_stock_name() -> None:
+    def named_stock_factory(response_model: type, payload: dict) -> dict:
+        if response_model is ParsedQuestion:
+            return {
+                "normalized_question": payload["question"],
+                "object_kind": "stock",
+                "object_ref": "ST不存在",
+                "intent": "st_status_timeline",
+                "time_range": {"start": "", "end": ""},
+                "dimensions": ["announcement"],
+                "ambiguities": [],
+                "candidate_topics": ["st_lifecycle"],
+                "proposed_route": "answer_query",
+                "compliant_rewrite": "",
+            }
+        raise AssertionError(response_model)
+
+    response = orchestrate_with_provider(
+        ResearchRequest(question="ST不存在为什么被ST？", llm_mode="auto"),
+        FakeLLMProvider(response_factory=named_stock_factory),
+    )
+
+    assert response.interpretation.object.kind == "unknown"
+    assert response.route.route == "clarify"
+    assert response.answer_card is None

@@ -83,10 +83,14 @@ def test_shareholder_count_uses_existing_d021_debt() -> None:
         ref="603398",
     ))
 
-    assert response.route.route == "data_debt"
+    assert response.route.route == "answer_query"
     assert response.route.data_debt_refs == ["D-021"]
     assert response.answer_card is not None
     assert response.answer_card["data_debt_refs"] == ["D-021"]
+    assert any(
+        row["row_id"].startswith("shareholder_count_")
+        for row in response.answer_card["body_rows"]
+    )
 
 
 def test_unassigned_data_gap_returns_stable_response_without_card() -> None:
@@ -113,6 +117,38 @@ def test_unknown_question_stably_degrades_to_lens_gap() -> None:
     assert response.route.route == "lens_gap"
     assert response.answer_card is None
     assert response.gaps[0].gap_id == "deterministic_unknown_fallback"
+
+
+def test_non_seed_stock_name_executes_real_status_announcement_and_episode_query() -> None:
+    response = orchestrate(ResearchRequest(
+        request_id="req-stock-name",
+        question="ST华微为什么被ST？最近有哪些关键公告和风险节点？",
+        llm_mode="off",
+    ))
+
+    assert response.interpretation.object.kind == "stock"
+    assert response.interpretation.object.ref == "600360"
+    assert response.route.route == "answer_query"
+    assert response.answer_card is not None
+    rows = response.answer_card["body_rows"]
+    assert any(row["row_id"].startswith("st_trigger_announcement_") for row in rows)
+    assert any(row["row_id"].startswith("recent_episode_node_") for row in rows)
+    assert any("实施其他风险警示" in str(row.get("标题", "")) for row in rows)
+    assert any("st_status_history_evidence" in ref for ref in response.answer_card["provenance"])
+    assert any("episode_index" in ref for ref in response.answer_card["provenance"])
+
+
+def test_unresolved_stock_name_asks_for_code_without_crashing() -> None:
+    response = orchestrate(ResearchRequest(
+        request_id="req-unresolved-name",
+        question="ST不存在为什么被ST？",
+        llm_mode="off",
+    ))
+
+    assert response.interpretation.object.kind == "unknown"
+    assert response.route.route == "clarify"
+    assert response.answer_card is None
+    assert "六位代码" in response.route.reason
 
 
 def test_boundary_request_has_safe_rewrite_reason() -> None:

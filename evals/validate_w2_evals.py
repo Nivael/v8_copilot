@@ -59,7 +59,6 @@ EXPECTED_SEED_STATUS_COUNTS = Counter({"answerable": 7, "needs_data": 7, "needs_
 KNOWN_SEED_DEBT_ASSIGNMENT_GAPS = {
     "QC-20260710-003",
     "QC-20260710-005",
-    "QC-20260710-006",
 }
 LOCAL_PATH_RE = re.compile(r"/Users/|/home/|/private/var/")
 

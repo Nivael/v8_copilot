@@ -42,8 +42,24 @@ still requires a separately authorized API-key eval.
   needs review, clarify, refusal/rewrite.
 - QuestionCard seed audit: 15 seeds, status counts 7 answerable / 7 needs_data /
   1 needs_review.
-- Known seed debt assignment gaps: `QC-20260710-003`, `QC-20260710-005`,
-  `QC-20260710-006`.
+- Known seed debt assignment gaps: `QC-20260710-003`, `QC-20260710-005`.
+  `QC-20260710-006` is bound to the existing `D-021` debt card.
+
+## Batch 2 closeout acceptance order
+
+Generate the seven deterministic cards before running golden assertions, then run
+the fixed routing and failure matrices:
+
+```bash
+uv run python run_seeds.py
+uv run python evals/validate_w2_evals.py
+uv run python evals/run_route_eval_50.py
+uv run python evals/run_fault_injection_eval.py
+```
+
+The fault matrix is fixed at 10 cases and covers missing/corrupt snapshots,
+freshness mismatch, incomplete provenance, hanging claim backing, and missing
+data-debt identity.
 - Golden assertions: 20 checks against the three original slice AnswerCards.
 - Deterministic router v0: 30/30 route matches against
   `question_routing_set_v0.jsonl`.

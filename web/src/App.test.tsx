@@ -1,2 +1,37 @@
-import{render,screen}from'@testing-library/react';import{MemoryRouter}from'react-router-dom';import{describe,expect,it}from'vitest';import{App}from'./App';
-describe('App',()=>{it('opens on the usable research composer',()=>{render(<MemoryRouter initialEntries={['/']}><App/></MemoryRouter>);expect(screen.getByRole('textbox',{name:'研究问题'})).toBeInTheDocument();expect(screen.getByRole('button',{name:'提交'})).toBeDisabled();expect(screen.getByText('证据问答')).toBeInTheDocument()})})
+import {render,screen} from '@testing-library/react'
+import {MemoryRouter} from 'react-router-dom'
+import {afterEach,describe,expect,it,vi} from 'vitest'
+import {App} from './App'
+
+describe('App',()=>{
+  afterEach(()=>vi.restoreAllMocks())
+
+  it('opens on the usable research composer',()=>{
+    render(<MemoryRouter initialEntries={['/']}><App/></MemoryRouter>)
+    expect(screen.getByRole('textbox',{name:'研究问题'})).toBeInTheDocument()
+    expect(screen.getByRole('button',{name:'提交'})).toBeDisabled()
+    expect(screen.getByText('证据问答')).toBeInTheDocument()
+  })
+
+  it('resolves a non-episode announcement deep link into a dossier detail focus',async()=>{
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({
+      symbol:'603398',display_name:'沐邦高科',as_of:'2026-01-02',
+      price_series:[{date:'2026-01-02',close:13.5}],status_intervals:[],events:[{
+        event_id:'announcement:1',date:'2026-01-01',title:'正式公告',
+        episode_type:'other_event_path',episode_label:'公开公告（未纳入事件段）',
+        subtype_label:'其他公开公告',timeline_lane:'financial',timeline_label:'财报与公告',
+        provenance_refs:['announcement:1'],related_lens_ids:[],
+      }],
+      timeline_lanes:[{lane_id:'financial',label:'财报与公告',event_ids:[]}],
+      lens_summaries:[],data_gaps:[],display_labels:{},provenance:[],
+    }),{status:200,headers:{'Content-Type':'application/json'}}))
+    render(<MemoryRouter initialEntries={[
+      '/stocks/603398?event=announcement%3A1&date=2026-01-01&title=虚构公告',
+    ]}><App/></MemoryRouter>)
+
+    expect(await screen.findByRole('heading',{name:'正式公告'})).toBeInTheDocument()
+    expect(screen.queryByText('虚构公告')).not.toBeInTheDocument()
+    expect(screen.getByText('公开公告（未纳入事件段）')).toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'就此提问'}).getAttribute('href')).toContain('object_kind=stock_event')
+  })
+})

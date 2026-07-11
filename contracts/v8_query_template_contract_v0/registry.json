@@ -1,0 +1,149 @@
+[
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-001",
+    "question_pattern": "某事件后下一个节点多久",
+    "required_inputs": [
+      "episode_type"
+    ],
+    "query_intent": "event_next_node_timing",
+    "definition_variants": [
+      "next_any_announcement",
+      "next_classified_event",
+      "next_stage_milestone"
+    ],
+    "default_caveats": [
+      "不同节点定义必须并列展示"
+    ],
+    "data_debt_fallbacks": [
+      "D-051A",
+      "D-051B"
+    ],
+    "executor_key": "next_node_timing",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-002",
+    "question_pattern": "某节点前后公告、价格和 episode 发生了什么",
+    "required_inputs": [
+      "symbol",
+      "event_id",
+      "event_date"
+    ],
+    "query_intent": "stock_event_window",
+    "definition_variants": [],
+    "default_caveats": [
+      "只描述可回链的历史窗口"
+    ],
+    "data_debt_fallbacks": [
+      "D-021"
+    ],
+    "executor_key": "stock_event_window",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-003",
+    "question_pattern": "某股票 ST 前后时间线",
+    "required_inputs": [
+      "symbol"
+    ],
+    "query_intent": "st_status_timeline",
+    "definition_variants": [],
+    "default_caveats": [
+      "状态名称不能替代触发原因公告"
+    ],
+    "data_debt_fallbacks": [],
+    "executor_key": "st_status_timeline",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-004",
+    "question_pattern": "某 cohort 两周分布",
+    "required_inputs": [
+      "cohort",
+      "daily_prices"
+    ],
+    "query_intent": "cohort_two_week_distribution",
+    "definition_variants": [
+      "t_plus_10_trading_days"
+    ],
+    "default_caveats": [
+      "横截面分布不构成交易阈值"
+    ],
+    "data_debt_fallbacks": [
+      "D-051C",
+      "C14"
+    ],
+    "executor_key": "two_week_distribution",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-005",
+    "question_pattern": "字段缺失时生成标准 data-debt 出口",
+    "required_inputs": [
+      "debt_ref"
+    ],
+    "query_intent": "data_debt_exit",
+    "definition_variants": [],
+    "default_caveats": [
+      "缺字段时不得生成替代结论"
+    ],
+    "data_debt_fallbacks": [],
+    "executor_key": "data_debt",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-006",
+    "question_pattern": "单票当前应观察哪些公开窗口",
+    "required_inputs": [
+      "symbol",
+      "daily_prices",
+      "episode_index"
+    ],
+    "query_intent": "stock_observation_windows",
+    "definition_variants": [],
+    "default_caveats": [
+      "观察窗口不预测方向或期限"
+    ],
+    "data_debt_fallbacks": [],
+    "executor_key": "observation_checklist",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-007",
+    "question_pattern": "读取 frozen release lens 的证据字段",
+    "required_inputs": [
+      "release_id"
+    ],
+    "query_intent": "release_lens_detail",
+    "definition_variants": [],
+    "default_caveats": [
+      "历史先验不自动成为可交易信号"
+    ],
+    "data_debt_fallbacks": [],
+    "executor_key": "release_lens_detail",
+    "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-008",
+    "question_pattern": "读取控制权与股东行为方法论框架",
+    "required_inputs": [
+      "lens_cluster"
+    ],
+    "query_intent": "control_structure_methodology",
+    "definition_variants": [],
+    "default_caveats": [
+      "methodology 不得升级为 evidence"
+    ],
+    "data_debt_fallbacks": [],
+    "executor_key": "control_methodology",
+    "not_evidence": true
+  }
+]

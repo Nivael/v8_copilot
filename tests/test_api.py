@@ -39,7 +39,9 @@ def test_health_exposes_contracts_and_read_only_mode(monkeypatch) -> None:
     assert response.status_code == 200
     assert response.json() == {
         "status": "ok",
-        "api_contract_version": "v8_copilot_api_contract_v0",
+        "api_contract_version": "v8_copilot_api_contract_v1",
+        "request_contract_version": "v8_copilot_api_contract_v0",
+        "response_contract_version": "v8_copilot_api_contract_v1",
         "answer_contract_version": "v8_answer_contract_v0",
         "llm_available": False,
         "database_mode": "read_only",
@@ -71,6 +73,7 @@ def test_answers_endpoint_returns_validated_answer_card() -> None:
 
     assert response.status_code == 200
     body = response.json()
+    assert body["contract_version"] == "v8_copilot_api_contract_v1"
     assert body["answer_card"]["contract_version"] == "v8_answer_contract_v0"
     assert [row["中位(天)"] for row in body["answer_card"]["body_rows"]] == [4, 10, 14]
     schema = json.loads((
@@ -110,7 +113,7 @@ def test_stream_failure_returns_safe_error_event(monkeypatch) -> None:
     rows = [json.loads(line) for line in response.text.splitlines()]
     assert rows == [
         {
-            "contract_version": "v8_copilot_api_contract_v0",
+            "contract_version": "v8_copilot_api_contract_v1",
             "request_id": "req-api-test",
             "sequence": 1,
             "event": "error",
@@ -145,6 +148,34 @@ def test_dossier_invalid_or_missing_symbol_fails_cleanly() -> None:
     response = api_request("GET", "/api/v1/stocks/999999/dossier")
     assert response.status_code == 404
     assert response.json()["detail"]["code"] == "dossier_not_found"
+
+
+def test_dossier_announcement_focus_is_resolved_from_sqlite_not_url_metadata() -> None:
+    focused = api_request(
+        "GET",
+        "/api/v1/stocks/603398/dossier?announcement_focus=announcement%3A1221661091",
+    )
+    fake = api_request(
+        "GET",
+        "/api/v1/stocks/603398/dossier?announcement_focus=announcement%3AFAKE",
+    )
+    bare = api_request(
+        "GET",
+        "/api/v1/stocks/603398/dossier?announcement_focus=1221766612",
+    )
+
+    assert focused.status_code == 200
+    event = next(
+        item for item in focused.json()["events"]
+        if item["event_id"] == "announcement:1221661091"
+    )
+    assert event["title"] == "江西沐邦高科股份有限公司关于董事会、监事会延期换届选举的提示性公告"
+    assert event["episode_label"] == "公开公告（未纳入事件段）"
+    assert all(item["event_id"] != "announcement:FAKE" for item in fake.json()["events"])
+    assert sum(
+        item["event_id"] == "announcement:1221766612"
+        for item in bare.json()["events"]
+    ) == 1
 
 
 def test_cors_is_restricted_to_local_vite_origins() -> None:

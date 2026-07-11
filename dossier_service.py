@@ -163,7 +163,51 @@ def _load_events(symbol: str) -> list[DossierEvent]:
     return events
 
 
-def build_stock_dossier(symbol: str) -> StockDossierPayload:
+def _append_announcement_focus(
+    symbol: str,
+    event_id: str | None,
+    events: list[DossierEvent],
+) -> None:
+    """Resolve one non-episode announcement from SQLite for dossier deep links."""
+    if not event_id:
+        return
+    announcement_id = (
+        event_id.split(":", 1)[1]
+        if event_id.startswith("announcement:")
+        else event_id
+    )
+    resolved_id = f"announcement:{announcement_id}"
+    if resolved_id in {event.event_id for event in events}:
+        return
+    with sqlite3.connect(f"file:{BASE_DB}?mode=ro", uri=True) as connection:
+        row = connection.execute(
+            "select announcement_id,announcement_date,title from company_announcements "
+            "where symbol=? and announcement_id=? limit 1",
+            (symbol, announcement_id),
+        ).fetchone()
+    if not row:
+        return
+    resolved_id = f"announcement:{row[0]}"
+    events.append(DossierEvent(
+        event_id=resolved_id,
+        date=date.fromisoformat(str(row[1])[:10]),
+        title=str(row[2]),
+        episode_type="other_event_path",
+        episode_label="公开公告（未纳入事件段）",
+        subtype="announcement_unclassified",
+        subtype_label="其他公开公告",
+        timeline_lane="financial",
+        timeline_label=str(LANES["financial"]["label"]),
+        provenance_refs=[resolved_id],
+        related_lens_ids=[],
+    ))
+    events.sort(key=lambda event: (event.date, event.event_id))
+
+
+def build_stock_dossier(
+    symbol: str,
+    announcement_focus: str | None = None,
+) -> StockDossierPayload:
     if len(symbol) != 6 or not symbol.isdigit():
         raise ValueError(f"股票代码必须是 6 位数字: {symbol!r}")
 
@@ -196,6 +240,7 @@ def build_stock_dossier(symbol: str) -> StockDossierPayload:
         for start_date, end_date, status_name, status_type, source in status_rows
     ]
     events = _load_events(symbol)
+    _append_announcement_focus(symbol, announcement_focus, events)
 
     lane_events: dict[str, list[str]] = defaultdict(list)
     for event in events:

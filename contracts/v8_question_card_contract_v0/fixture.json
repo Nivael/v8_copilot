@@ -1,0 +1,22 @@
+{
+  "contract_version": "v8_question_card_contract_v0",
+  "id": "QC-20260710-011",
+  "question": "同一重整招募问题按省份分层如何？",
+  "object": {
+    "kind": "cohort",
+    "ref": "restructuring_investor_recruitment"
+  },
+  "needs_data": [
+    "symbol_to_province"
+  ],
+  "status": "needs_data",
+  "view": "data_debt",
+  "source": "system_gap",
+  "debt_ref": "D-051A",
+  "created_from": [
+    {
+      "kind": "data_debt",
+      "ref": "D-051A"
+    }
+  ]
+}

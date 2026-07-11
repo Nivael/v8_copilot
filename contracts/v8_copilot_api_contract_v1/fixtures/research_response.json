@@ -1,0 +1,85 @@
+{
+  "contract_version": "v8_copilot_api_contract_v1",
+  "request_id": "req-fixture-v1",
+  "interpretation": {
+    "contract_version": "v8_copilot_api_contract_v0",
+    "object": {
+      "kind": "unknown",
+      "ref": "unknown"
+    },
+    "intent": "research_question",
+    "time_range": null,
+    "dimensions": [],
+    "ambiguities": [
+      "当前方法未覆盖"
+    ],
+    "candidate_topics": []
+  },
+  "route": {
+    "contract_version": "v8_copilot_api_contract_v0",
+    "route": "lens_gap",
+    "status": "needs_review",
+    "view": "lens_gap",
+    "reason": "稳定沉淀为问题卡。",
+    "matched_rules": [
+      "deterministic_unknown_fallback"
+    ],
+    "data_debt_refs": [],
+    "question_card_refs": [
+      "QC-CAND-0123456789ab"
+    ],
+    "required_lens_behavior": "lens_gap_required"
+  },
+  "answer_card": null,
+  "claims": [],
+  "gaps": [],
+  "sedimentation_candidates": [],
+  "question_cards": [
+    {
+      "contract_version": "v8_question_card_contract_v0",
+      "id": "QC-CAND-0123456789ab",
+      "question": "这个问题当前需要补充哪类数据？",
+      "object": {
+        "kind": "unknown",
+        "ref": "unknown"
+      },
+      "needs_data": [],
+      "status": "needs_review",
+      "view": "query",
+      "source": "system_gap",
+      "debt_ref": null,
+      "created_from": [
+        {
+          "kind": "user_question",
+          "ref": "req-fixture-v1"
+        }
+      ]
+    }
+  ],
+  "data_debt_candidates": [],
+  "navigation_refs": [
+    {
+      "id": "nav-lens-rl-a-003",
+      "kind": "lens",
+      "label": "RL-A-003",
+      "source_kind": "lens_invocation",
+      "source_ref": "RL-A-003",
+      "href": "/?lens=RL-A-003",
+      "context": {
+        "symbol": null,
+        "date_start": null,
+        "date_end": null,
+        "event_id": null,
+        "event_title": null,
+        "episode_ref": null,
+        "lens_id": "RL-A-003",
+        "provenance_ref": null,
+        "data_debt_ref": null
+      }
+    }
+  ],
+  "query_template_id": null,
+  "degraded": false,
+  "degraded_reasons": [],
+  "llm_used": false
+}

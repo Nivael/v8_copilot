@@ -1,0 +1,948 @@
+{
+  "$defs": {
+    "ClaimBacking": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "lens_invocation",
+            "query_row",
+            "provenance_ref",
+            "data_debt",
+            "lens_gap"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "ClaimBacking",
+      "type": "object"
+    },
+    "DataDebtCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "debt_ref": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Debt Ref",
+          "type": "string"
+        },
+        "gap": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Gap",
+          "type": "string"
+        },
+        "affects": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Affects",
+          "type": "string"
+        },
+        "created_from": {
+          "items": {
+            "$ref": "#/$defs/QuestionOrigin"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Created From",
+          "type": "array"
+        }
+      },
+      "required": [
+        "debt_ref",
+        "gap",
+        "affects",
+        "created_from"
+      ],
+      "title": "DataDebtCandidate",
+      "type": "object"
+    },
+    "DateRange": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        }
+      },
+      "title": "DateRange",
+      "type": "object"
+    },
+    "GapDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "lens_gap",
+            "data_debt",
+            "execution_gap"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "gap_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Gap Id",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "gap_id",
+        "description"
+      ],
+      "title": "GapDescriptor",
+      "type": "object"
+    },
+    "NavigationRef": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "stock",
+            "date",
+            "announcement",
+            "episode",
+            "lens",
+            "provenance",
+            "data_debt"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "request_context",
+            "answer_card",
+            "answer_row",
+            "lens_invocation",
+            "provenance",
+            "data_debt"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "href": {
+          "pattern": "^/",
+          "title": "Href",
+          "type": "string"
+        },
+        "context": {
+          "$ref": "#/$defs/ResearchContextPatch"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "source_kind",
+        "source_ref",
+        "href",
+        "context"
+      ],
+      "title": "NavigationRef",
+      "type": "object"
+    },
+    "QuestionCard": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_question_card_contract_v0",
+          "default": "v8_question_card_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^QC-(?:[0-9]{8}-[0-9]{3}|CAND-[a-f0-9]{12})$",
+          "title": "Id",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "object": {
+          "$ref": "#/$defs/QuestionObject"
+        },
+        "needs_data": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "title": "Needs Data",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "answerable",
+            "needs_data",
+            "needs_review"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "view": {
+          "enum": [
+            "evidence",
+            "query",
+            "checklist",
+            "methodology",
+            "data_debt"
+          ],
+          "title": "View",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "user",
+            "human_review",
+            "slice",
+            "system_gap"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "debt_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Debt Ref"
+        },
+        "created_from": {
+          "items": {
+            "$ref": "#/$defs/QuestionOrigin"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Created From",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "object",
+        "status",
+        "view",
+        "source",
+        "created_from"
+      ],
+      "title": "QuestionCard",
+      "type": "object"
+    },
+    "QuestionInterpretation": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "object": {
+          "$ref": "#/$defs/ResearchObject"
+        },
+        "intent": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Intent",
+          "type": "string"
+        },
+        "time_range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateRange"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dimensions": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Dimensions",
+          "type": "array"
+        },
+        "ambiguities": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Ambiguities",
+          "type": "array"
+        },
+        "candidate_topics": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Candidate Topics",
+          "type": "array"
+        }
+      },
+      "required": [
+        "object",
+        "intent"
+      ],
+      "title": "QuestionInterpretation",
+      "type": "object"
+    },
+    "QuestionObject": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "stock",
+            "stock_event",
+            "episode_type",
+            "cluster",
+            "lens_cluster",
+            "lens",
+            "cohort",
+            "universe",
+            "unknown"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "QuestionObject",
+      "type": "object"
+    },
+    "QuestionOrigin": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "user_question",
+            "answer_card",
+            "lens_gap",
+            "data_debt",
+            "review_item"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "QuestionOrigin",
+      "type": "object"
+    },
+    "ResearchContextPatch": {
+      "additionalProperties": false,
+      "properties": {
+        "symbol": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9]{6}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Symbol"
+        },
+        "date_start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date Start"
+        },
+        "date_end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date End"
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Id"
+        },
+        "event_title": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Title"
+        },
+        "episode_ref": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Episode Ref"
+        },
+        "lens_id": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lens Id"
+        },
+        "provenance_ref": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provenance Ref"
+        },
+        "data_debt_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Debt Ref"
+        }
+      },
+      "title": "ResearchContextPatch",
+      "type": "object"
+    },
+    "ResearchObject": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "stock",
+            "stock_event",
+            "episode_type",
+            "cluster",
+            "lens_cluster",
+            "lens",
+            "cohort",
+            "universe",
+            "unknown"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "ResearchObject",
+      "type": "object"
+    },
+    "ResearchResponseV1": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v1",
+          "default": "v8_copilot_api_contract_v1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "interpretation": {
+          "$ref": "#/$defs/QuestionInterpretation"
+        },
+        "route": {
+          "$ref": "#/$defs/RouteDecision"
+        },
+        "answer_card": {
+          "anyOf": [
+            {
+              "$ref": "../v8_answer_contract_v0/schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "x-contract-ref": "../v8_answer_contract_v0/schema.json"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/VerifiedClaim"
+          },
+          "maxItems": 100,
+          "title": "Claims",
+          "type": "array"
+        },
+        "gaps": {
+          "items": {
+            "$ref": "#/$defs/GapDescriptor"
+          },
+          "maxItems": 50,
+          "title": "Gaps",
+          "type": "array"
+        },
+        "sedimentation_candidates": {
+          "items": {
+            "$ref": "#/$defs/SedimentationCandidate"
+          },
+          "maxItems": 50,
+          "title": "Sedimentation Candidates",
+          "type": "array"
+        },
+        "question_cards": {
+          "items": {
+            "$ref": "#/$defs/QuestionCard"
+          },
+          "maxItems": 20,
+          "title": "Question Cards",
+          "type": "array"
+        },
+        "data_debt_candidates": {
+          "items": {
+            "$ref": "#/$defs/DataDebtCandidate"
+          },
+          "maxItems": 20,
+          "title": "Data Debt Candidates",
+          "type": "array"
+        },
+        "navigation_refs": {
+          "items": {
+            "$ref": "#/$defs/NavigationRef"
+          },
+          "maxItems": 200,
+          "title": "Navigation Refs",
+          "type": "array"
+        },
+        "query_template_id": {
+          "anyOf": [
+            {
+              "pattern": "^QT-[0-9]{3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Template Id"
+        },
+        "degraded": {
+          "default": false,
+          "title": "Degraded",
+          "type": "boolean"
+        },
+        "degraded_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Degraded Reasons",
+          "type": "array"
+        },
+        "llm_used": {
+          "default": false,
+          "title": "Llm Used",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "request_id",
+        "interpretation",
+        "route"
+      ],
+      "title": "ResearchResponseV1",
+      "type": "object"
+    },
+    "ResearchStreamEventV1": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v1",
+          "default": "v8_copilot_api_contract_v1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "event": {
+          "enum": [
+            "accepted",
+            "interpreted",
+            "routed",
+            "answer_card",
+            "claim_block",
+            "degraded",
+            "completed",
+            "error"
+          ],
+          "title": "Event",
+          "type": "string"
+        },
+        "emitted_at": {
+          "format": "date-time",
+          "title": "Emitted At",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "request_id",
+        "sequence",
+        "event"
+      ],
+      "title": "ResearchStreamEventV1",
+      "type": "object"
+    },
+    "RouteDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_copilot_api_contract_v0",
+          "default": "v8_copilot_api_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "route": {
+          "enum": [
+            "answer_query",
+            "answer_evidence",
+            "answer_checklist",
+            "answer_methodology",
+            "data_debt",
+            "lens_gap",
+            "needs_review",
+            "clarify",
+            "refuse_or_rewrite"
+          ],
+          "title": "Route",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "answerable",
+            "needs_data",
+            "needs_review",
+            "clarify",
+            "boundary"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "view": {
+          "enum": [
+            "query",
+            "evidence",
+            "checklist",
+            "methodology",
+            "data_debt",
+            "lens_gap",
+            "clarify",
+            "boundary"
+          ],
+          "title": "View",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "matched_rules": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "title": "Matched Rules",
+          "type": "array"
+        },
+        "data_debt_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Data Debt Refs",
+          "type": "array"
+        },
+        "question_card_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Question Card Refs",
+          "type": "array"
+        },
+        "required_lens_behavior": {
+          "enum": [
+            "lens_invocation_required",
+            "lens_invocations_or_gap",
+            "lens_gap_required",
+            "not_applicable"
+          ],
+          "title": "Required Lens Behavior",
+          "type": "string"
+        }
+      },
+      "required": [
+        "route",
+        "status",
+        "view",
+        "reason",
+        "required_lens_behavior"
+      ],
+      "title": "RouteDecision",
+      "type": "object"
+    },
+    "SedimentationCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "question_card",
+            "data_debt"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ref"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reason"
+      ],
+      "title": "SedimentationCandidate",
+      "type": "object"
+    },
+    "VerifiedClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "claim_type": {
+          "enum": [
+            "fact",
+            "inference",
+            "caveat",
+            "question",
+            "data_gap"
+          ],
+          "title": "Claim Type",
+          "type": "string"
+        },
+        "backing": {
+          "$ref": "#/$defs/ClaimBacking"
+        }
+      },
+      "required": [
+        "text",
+        "claim_type",
+        "backing"
+      ],
+      "title": "VerifiedClaim",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ResearchResponseV1"
+    },
+    {
+      "$ref": "#/$defs/ResearchStreamEventV1"
+    },
+    {
+      "$ref": "#/$defs/NavigationRef"
+    },
+    {
+      "$ref": "#/$defs/QuestionCard"
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v8_copilot_api_contract_v1",
+  "title": "ST Research Copilot API Contract v1",
+  "x-contract-version": "v8_copilot_api_contract_v1"
+}

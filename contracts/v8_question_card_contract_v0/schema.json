@@ -1,0 +1,160 @@
+{
+  "$defs": {
+    "QuestionObject": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "stock",
+            "stock_event",
+            "episode_type",
+            "cluster",
+            "lens_cluster",
+            "lens",
+            "cohort",
+            "universe",
+            "unknown"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "QuestionObject",
+      "type": "object"
+    },
+    "QuestionOrigin": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "user_question",
+            "answer_card",
+            "lens_gap",
+            "data_debt",
+            "review_item"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "title": "QuestionOrigin",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "v8_question_card_contract_v0",
+      "default": "v8_question_card_contract_v0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^QC-(?:[0-9]{8}-[0-9]{3}|CAND-[a-f0-9]{12})$",
+      "title": "Id",
+      "type": "string"
+    },
+    "question": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "object": {
+      "$ref": "#/$defs/QuestionObject"
+    },
+    "needs_data": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Needs Data",
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "answerable",
+        "needs_data",
+        "needs_review"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "view": {
+      "enum": [
+        "evidence",
+        "query",
+        "checklist",
+        "methodology",
+        "data_debt"
+      ],
+      "title": "View",
+      "type": "string"
+    },
+    "source": {
+      "enum": [
+        "user",
+        "human_review",
+        "slice",
+        "system_gap"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "debt_ref": {
+      "anyOf": [
+        {
+          "maxLength": 128,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Debt Ref"
+    },
+    "created_from": {
+      "items": {
+        "$ref": "#/$defs/QuestionOrigin"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Created From",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "question",
+    "object",
+    "status",
+    "view",
+    "source",
+    "created_from"
+  ],
+  "title": "QuestionCard",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v8_question_card_contract_v0"
+}

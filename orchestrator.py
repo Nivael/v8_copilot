@@ -16,15 +16,19 @@ from api_contract import (
 )
 from answer_engine import (
     AnswerCard,
+    EventNotFoundError,
+    StockNotFoundError,
     card_consolidation_checklist,
     card_control_structure_methodology,
     card_data_debt,
     card_next_node_gap,
     card_release_lens_evidence,
     card_st_status_timeline,
+    card_stock_event_window,
     card_two_week_move,
 )
 from core_router import decide_route, interpret_request
+from query_templates import template_for_rules
 
 
 def _request_id(request: ResearchRequest) -> str:
@@ -52,22 +56,43 @@ def _execute_answer(
     route: RouteDecision,
 ) -> AnswerCard | None:
     rules = set(route.matched_rules)
+    template = template_for_rules(route.matched_rules)
+    executor_key = template.executor_key if template else None
     card: AnswerCard | None = None
 
     if route.route == "answer_query":
-        if "restructuring_next_node_query" in rules:
+        if executor_key == "next_node_timing":
             card = card_next_node_gap()
-        elif "st_panel_two_week_distribution" in rules:
-            card = card_two_week_move()
-        elif "stock_st_status_timeline" in rules:
+        elif executor_key == "stock_event_window":
+            symbol = _symbol(request, interpretation)
+            selected_event = request.context.selected_event if request.context else None
+            if symbol and selected_event and selected_event.date:
+                try:
+                    card = card_stock_event_window(
+                        symbol=symbol,
+                        event_id=selected_event.event_id,
+                        event_date=selected_event.date.isoformat(),
+                        event_title=selected_event.title or "",
+                    )
+                except EventNotFoundError:
+                    card = None
+        elif executor_key == "two_week_distribution":
+            card = card_two_week_move(
+                include_market_debt="相对大盘" in request.question,
+                include_microcap_debt="微盘" in request.question,
+            )
+        elif executor_key == "st_status_timeline":
             symbol = _symbol(request, interpretation)
             if symbol:
                 card = card_st_status_timeline(symbol)
-    elif route.route == "answer_checklist" and "stock_observation_window_checklist" in rules:
+    elif route.route == "answer_checklist" and executor_key == "observation_checklist":
         symbol = _symbol(request, interpretation)
         if symbol:
-            card = card_consolidation_checklist(symbol)
-    elif route.route == "answer_evidence":
+            try:
+                card = card_consolidation_checklist(symbol)
+            except StockNotFoundError:
+                card = None
+    elif route.route == "answer_evidence" and executor_key == "release_lens_detail":
         if "release_library_lens_detail" in rules:
             card = card_release_lens_evidence("RL-A-003")
         elif "calendar_regime_evidence_lenses" in rules:
@@ -75,9 +100,9 @@ def _execute_answer(
                 term in request.question for term in ("8月", "11月", "八月", "十一月")
             ) else "RL-A-001"
             card = card_release_lens_evidence(release_id)
-    elif route.route == "answer_methodology" and "control_structure_methodology" in rules:
+    elif route.route == "answer_methodology" and executor_key == "control_methodology":
         card = card_control_structure_methodology()
-    elif route.route == "data_debt":
+    elif route.route == "data_debt" and executor_key == "data_debt":
         refs = route.data_debt_refs
         if refs:
             card = card_data_debt(
@@ -179,6 +204,35 @@ def orchestrate_with_card(
     interpretation = interpret_request(request)
     route = decide_route(request, interpretation)
     card = _execute_answer(request, interpretation, route)
+    template = template_for_rules(route.matched_rules)
+    if (
+        card is None
+        and route.route == "answer_query"
+        and template
+        and template.executor_key == "stock_event_window"
+    ):
+        route = route.model_copy(update={
+            "route": "clarify",
+            "status": "clarify",
+            "view": "clarify",
+            "reason": "选中事件未命中正式公告或 episode，请重新选择可回链节点。",
+            "matched_rules": [*route.matched_rules, "event_resolution_gap"],
+            "required_lens_behavior": "not_applicable",
+        })
+    elif (
+        card is None
+        and route.route == "answer_checklist"
+        and template
+        and template.executor_key == "observation_checklist"
+    ):
+        route = route.model_copy(update={
+            "route": "clarify",
+            "status": "clarify",
+            "view": "clarify",
+            "reason": "当前只读快照未找到该股票，请核对股票代码或对象范围。",
+            "matched_rules": [*route.matched_rules, "stock_resolution_gap"],
+            "required_lens_behavior": "not_applicable",
+        })
 
     degraded_reasons: list[str] = []
     if request.llm_mode != "off":

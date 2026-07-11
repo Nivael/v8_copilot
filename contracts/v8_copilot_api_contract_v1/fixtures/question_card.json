@@ -1,0 +1,20 @@
+{
+  "contract_version": "v8_question_card_contract_v0",
+  "id": "QC-CAND-0123456789ab",
+  "question": "这个问题当前需要补充哪类数据？",
+  "object": {
+    "kind": "unknown",
+    "ref": "unknown"
+  },
+  "needs_data": [],
+  "status": "needs_review",
+  "view": "query",
+  "source": "system_gap",
+  "debt_ref": null,
+  "created_from": [
+    {
+      "kind": "user_question",
+      "ref": "req-fixture-v1"
+    }
+  ]
+}

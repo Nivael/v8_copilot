@@ -64,6 +64,10 @@ claim backing 校验；`llm_adapter.py` 只负责把这套边界注入 W1 API。
 虚拟环境安装 `openai>=2,<3`。未配置、超时或输出校验失败时仍返回确定性结果；
 `llm_mode=off` 是纯确定性模式。
 
+The current HTTP boundary accepts `v8_copilot_api_contract_v0` requests and
+returns `v8_copilot_api_contract_v1` responses. This is an explicit request /
+response split, not a claim that v1 responses validate as v0.
+
 React 主面板和个股面板位于 `web/`：
 
 ```bash
@@ -82,9 +86,14 @@ uv run python run_api.py
 - `lens_binding.py` — **脊梁**：LensRegistry（只读加载 pinned v1 库）+ candidate_lenses（按主题标签/cluster 精确匹配）+ LensInvocation + LensGap。
 - `answer_engine.py` — AnswerCard、AnalysisClaim/backing、只读数据访问和 card builders。
 - `contracts/v8_answer_contract_v0/` — W1 单写、W2/W3/LLM 只读的 JSON 契约。
-- `contracts/v8_copilot_api_contract_v0/` — Batch 2 API schema、manifest 和固定 fixtures。
+- `contracts/v8_copilot_api_contract_v0/` — 冻结的 Batch 2 API v0 schema、manifest 和固定 fixtures。
+- `contracts/v8_copilot_api_contract_v1/` — 增量 API v1：typed QuestionCard、QueryTemplate id 和证据导航。
+- `contracts/v8_question_card_contract_v0/` — 问题卡对象、生命周期和固定 fixture。
+- `contracts/v8_query_template_contract_v0/` — 八类可复用查询模板；全部标记 `not_evidence=true`。
 - `api_contract.py` — ResearchRequest、RouteDecision、ResearchResponse、dossier 和 stream 类型。
 - `core_router.py` / `orchestrator.py` — 确定性解释、最终路由和 AnswerCard 执行编排。
+- `orchestrator_v1.py` — typed sedimentation、QueryTemplate 和七类证据导航增量层。
+- `snapshot_metadata.py` — SQLite/episode freshness 读取与 fail-loudly 快照契约。
 - `api.py` / `run_api.py` — FastAPI 接口和本机启动入口。
 - `dossier_service.py` — 只读个股价格、状态、事件、时间线和 lens payload。
 - `llm/` — Structured Outputs parser/composer、provider、schema 和 backing 门。

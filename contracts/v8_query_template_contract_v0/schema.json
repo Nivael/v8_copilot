@@ -1,0 +1,84 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "v8_query_template_contract_v0",
+      "default": "v8_query_template_contract_v0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "template_id": {
+      "pattern": "^QT-[0-9]{3}$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "question_pattern": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Question Pattern",
+      "type": "string"
+    },
+    "required_inputs": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Required Inputs",
+      "type": "array"
+    },
+    "query_intent": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Query Intent",
+      "type": "string"
+    },
+    "definition_variants": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Definition Variants",
+      "type": "array"
+    },
+    "default_caveats": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Default Caveats",
+      "type": "array"
+    },
+    "data_debt_fallbacks": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Data Debt Fallbacks",
+      "type": "array"
+    },
+    "executor_key": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Executor Key",
+      "type": "string"
+    },
+    "not_evidence": {
+      "const": true,
+      "default": true,
+      "title": "Not Evidence",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "template_id",
+    "question_pattern",
+    "required_inputs",
+    "query_intent",
+    "executor_key"
+  ],
+  "title": "QueryTemplate",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v8_query_template_contract_v0"
+}

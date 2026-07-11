@@ -1,0 +1,12 @@
+[
+  {"case_id":"FI-001","fault":"research_database_missing","expected_error":"SnapshotContractError","message_contains":"研究数据库不存在"},
+  {"case_id":"FI-002","fault":"daily_prices_table_missing","expected_error":"SnapshotContractError","message_contains":"研究数据库缺表"},
+  {"case_id":"FI-003","fault":"price_as_of_mismatch","expected_error":"SnapshotContractError","message_contains":"as_of 不匹配"},
+  {"case_id":"FI-004","fault":"episode_index_missing","expected_error":"SnapshotContractError","message_contains":"episode index 不存在"},
+  {"case_id":"FI-005","fault":"episode_index_corrupt_json","expected_error":"SnapshotContractError","message_contains":"episode index JSON 非法"},
+  {"case_id":"FI-006","fault":"episode_manifest_missing_metadata","expected_error":"SnapshotContractError","message_contains":"缺 builder_version/as_of"},
+  {"case_id":"FI-007","fault":"release_library_missing","expected_error":"FileNotFoundError","message_contains":"release library 不存在"},
+  {"case_id":"FI-008","fault":"release_record_missing_provenance","expected_error":"ValueError","message_contains":"缺字段"},
+  {"case_id":"FI-009","fault":"analysis_claim_hanging_backing","expected_error":"ValueError","message_contains":"backing 无对应对象"},
+  {"case_id":"FI-010","fault":"data_debt_row_missing_id","expected_error":"ValueError","message_contains":"data_debt 行缺 debt_ref"}
+]

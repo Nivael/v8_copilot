@@ -29,6 +29,8 @@ def valid_card() -> AnswerCard:
         as_of="2026-07-10",
         sample_scope="测试样本 N=1",
         evidence_grade="descriptive_query",
+        data_snapshot_as_of="2026-07-10",
+        source_freshness={"fixture_as_of": "2026-07-10"},
         lens_gap=[LensGap(
             gap_id="test_gap",
             missing_for="测试证据",

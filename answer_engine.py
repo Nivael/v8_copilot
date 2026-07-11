@@ -21,11 +21,17 @@ import json
 import sqlite3
 import statistics
 from dataclasses import dataclass, field, asdict
-from datetime import date
+from datetime import date, timedelta
 from typing import Any, Iterable
 
 from lens_binding import LensRegistry, LensInvocation, LensGap
 from settings import DATA_ROOT
+from snapshot_metadata import (
+    limiting_as_of,
+    load_episode_snapshot,
+    load_price_snapshot,
+    load_table_snapshot,
+)
 
 _ROOT = DATA_ROOT
 BASE_DB = _ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
@@ -49,13 +55,6 @@ VALID_BACKING_KINDS = {
 CONTRACT_VERSION = "v8_answer_contract_v0"
 
 _REGISTRY = LensRegistry()
-_EP_VERSION = "unknown"
-_EP_ASOF = "unknown"
-if EPISODE_MANIFEST.exists():
-    _m = json.loads(EPISODE_MANIFEST.read_text(encoding="utf-8"))
-    _EP_VERSION = _m.get("builder_version", "unknown")
-    _EP_ASOF = _m.get("as_of", "unknown")
-PRICE_ASOF = "2026-06-26"  # daily_prices 最新交易日
 
 
 @dataclass
@@ -63,6 +62,14 @@ class DataDebtRow:
     gap: str
     affects: str
     debt_ref: str
+
+
+class EventNotFoundError(LookupError):
+    """A selected event does not resolve to the read-only announcement/episode sources."""
+
+
+class StockNotFoundError(LookupError):
+    """A requested stock has no rows in the required read-only source."""
 
 
 @dataclass
@@ -92,13 +99,9 @@ class AnswerCard:
     lens_gap: list[LensGap] = field(default_factory=list)
     # ---- 版本 / 新鲜度（必带）----
     v7_release_library_version: str = _REGISTRY.library_version
-    episode_index_version: str = _EP_VERSION
-    data_snapshot_as_of: str = PRICE_ASOF
-    source_freshness: dict[str, str] = field(default_factory=lambda: {
-        "release_library_frozen_at": _REGISTRY.frozen_at,
-        "episode_index_as_of": _EP_ASOF,
-        "price_data_as_of": PRICE_ASOF,
-    })
+    episode_index_version: str = "not_used"
+    data_snapshot_as_of: str = ""
+    source_freshness: dict[str, str] = field(default_factory=dict)
     # ---- 主体 ----
     body_rows: list[dict[str, Any]] = field(default_factory=list)
     analysis_claims: list[AnalysisClaim] = field(default_factory=list)
@@ -325,6 +328,10 @@ def _row(row_id: str, **values: Any) -> dict[str, Any]:
 
 def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitment") -> AnswerCard:
     """#01 重整招募→下一节点。lens：重整方法论框架贡献 caveat；无 evidence lens → lens_gap 沉淀。"""
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
+    announcement_snapshot = load_table_snapshot(
+        BASE_DB, table="company_announcements", date_column="announcement_date"
+    )
     SAME = {trigger_subtype, trigger_subtype + "_progress"}
     g_classified, g_milestone, recs = [], [], []
     for d in _iter_episodes():
@@ -382,9 +389,19 @@ def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitmen
     return AnswerCard(
         question=f"{trigger_subtype} 之后，下一个公告节点平均多久？",
         object_ref=f"cohort:{trigger_subtype}（{len(recs)} 事件）",
-        view="query", as_of="2026-06-26",
+        view="query", as_of=limiting_as_of(
+            episode_snapshot.as_of, announcement_snapshot.as_of
+        ),
         sample_scope=f"M6 episode index canonical 语料，{len({s for s,_ in recs})} 只股票 / {len(recs)} 触发事件",
         evidence_grade="descriptive_query",
+        episode_index_version=episode_snapshot.version,
+        data_snapshot_as_of=limiting_as_of(
+            episode_snapshot.as_of, announcement_snapshot.as_of
+        ),
+        source_freshness={
+            "episode_index_as_of": episode_snapshot.as_of,
+            "company_announcements_as_of": announcement_snapshot.as_of,
+        },
         lens_invocations=invs, lens_gap=gaps,
         body_rows=body_rows,
         analysis_claims=[
@@ -400,9 +417,12 @@ def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitmen
                     "shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements"])
 
 
-def card_two_week_move() -> AnswerCard:
+def card_two_week_move(
+    *, include_market_debt: bool = True, include_microcap_debt: bool = True
+) -> AnswerCard:
     """#02 两周异动。无 evidence lens 直接命中『两周横截面异动』→ lens_gap 沉淀 + 两条 data_debt。"""
     import numpy as np, pandas as pd
+    price_snapshot = load_price_snapshot(BASE_DB)
     con = _db()
     df = pd.read_sql("select symbol,trade_date,close from daily_prices where adjust='qfq'", con)
     con.close()
@@ -424,8 +444,16 @@ def card_two_week_move() -> AnswerCard:
             },
         ),
     ]
-    debts = [DataDebtRow("大盘指数日线序列", "『相对大盘』无真基准，只能 ST-relative 代理", "D-051C"),
-             DataDebtRow("as-of 市值/股本", "『微盘』cohort 无法定义（市值字段全空）", "C14")]
+    debts: list[DataDebtRow] = []
+    if include_market_debt:
+        debts.append(DataDebtRow(
+            "大盘指数日线序列", "『相对大盘』无真基准，只能 ST-relative 代理", "D-051C"
+        ))
+    if include_microcap_debt:
+        debts.append(DataDebtRow(
+            "as-of 市值/股本", "『微盘』cohort 无法定义（市值字段全空）", "C14"
+        ))
+    debt_refs = [debt.debt_ref for debt in debts]
     # 尝试绑定：日历 regime evidence lens 存在，但它是月份口径，不解答两周横截面 → 记为 gap
     gaps = [LensGap(gap_id="two_week_cross_section_evidence",
                     missing_for="两周横截面异动分布的验证证据",
@@ -435,36 +463,231 @@ def card_two_week_move() -> AnswerCard:
     return AnswerCard(
         question="ST/微盘相对大盘异动的两周分布如何？",
         object_ref="universe: ST panel (daily_prices qfq)",
-        view="query", as_of="2026-06-26",
-        sample_scope="902 只 ST 面板，2018-01-02~2026-06-26，1,006,352 股票-日观测",
+        view="query", as_of=price_snapshot.as_of,
+        sample_scope=(
+            f"{price_snapshot.symbol_count} 只 ST 面板，"
+            f"{price_snapshot.min_date}~{price_snapshot.as_of}，"
+            f"源价格行 {price_snapshot.row_count:,}；T+10 收益观测 "
+            f"{price_snapshot.return_observation_count:,}"
+        ),
         evidence_grade="descriptive_query",
+        data_snapshot_as_of=price_snapshot.as_of,
+        source_freshness={"price_data_as_of": price_snapshot.as_of},
         lens_invocations=[], lens_gap=gaps,
-        body_rows=body, data_debt=debts, data_debt_refs=["D-051C", "C14"],
+        body_rows=body, data_debt=debts, data_debt_refs=debt_refs,
         analysis_claims=[
-            AnalysisClaim(
+            *([AnalysisClaim(
                 text="相对大盘层缺少大盘指数日线序列。",
                 claim_type="data_gap",
                 backing=BackingRef(kind="data_debt", ref="D-051C"),
-            ),
-            AnalysisClaim(
+            )] if include_market_debt else []),
+            *([AnalysisClaim(
                 text="微盘分层缺少 as-of 市值或可复算字段。",
                 claim_type="data_gap",
                 backing=BackingRef(kind="data_debt", ref="C14"),
-            ),
+            )] if include_microcap_debt else []),
         ],
         caveats=FIXED_CAVEATS + [
             "退市股价格可能右截断（生存偏差）；两周=10 交易日口径。",
-            "半题可答：ST 分布可给，『相对大盘』『微盘』因缺数据不可答；且无 evidence lens 背书——见 lens_gap。"],
+            "请求包含相对大盘或微盘分层时，缺失维度明确进入 data debt；ST 面板自身分布仍为描述性 query。"],
         provenance=["shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices"])
+
+
+def card_stock_event_window(
+    symbol: str,
+    event_id: str,
+    event_date: str,
+    event_title: str = "",
+) -> AnswerCard:
+    """Describe one selected event through linked price, announcement, and episode rows."""
+    requested_date = _pd(event_date)
+    if requested_date is None:
+        raise EventNotFoundError("事件窗口缺 event_date")
+    price_snapshot = load_price_snapshot(BASE_DB)
+    announcement_snapshot = load_table_snapshot(
+        BASE_DB, table="company_announcements", date_column="announcement_date"
+    )
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
+
+    matched_episode: dict[str, Any] | None = None
+    matched_anchor: dict[str, Any] | None = None
+    for episode in _iter_episodes(symbol):
+        for anchor in episode.get("anchor_events", []):
+            source_ids = [str(item) for item in anchor.get("source_material_ids", [])]
+            if event_id in source_ids:
+                matched_episode = episode
+                matched_anchor = anchor
+                break
+        if matched_episode:
+            break
+
+    announcement_key = event_id.split(":", 1)[1] if event_id.startswith("announcement:") else event_id
+
+    with _db() as connection:
+        official_announcement = connection.execute(
+            "select announcement_id,announcement_date,title,url from company_announcements "
+            "where symbol=? and announcement_id=? limit 1",
+            (symbol, announcement_key),
+        ).fetchone()
+        if official_announcement:
+            official_id, official_date, official_title, _ = official_announcement
+            anchor_date = _pd(str(official_date))
+            resolved_event_id = (
+                event_id if matched_anchor else f"announcement:{official_id}"
+            )
+            resolved_title = str(official_title)
+        elif matched_anchor:
+            anchor_date = _pd(str(matched_anchor.get("announcement_date", "")))
+            resolved_event_id = event_id
+            resolved_title = str(matched_anchor.get("title") or event_title or "未命名公告")
+        else:
+            raise EventNotFoundError(
+                f"选中事件未命中正式公告或 episode: {symbol}:{event_id}"
+            )
+        if anchor_date is None:
+            raise EventNotFoundError(f"选中事件缺合法日期: {symbol}:{event_id}")
+        prices = connection.execute(
+            "select trade_date,close from daily_prices "
+            "where symbol=? and adjust='qfq' order by trade_date",
+            (symbol,),
+        ).fetchall()
+        announcements = connection.execute(
+            "select announcement_id,announcement_date,title,url from company_announcements "
+            "where symbol=? and announcement_date between ? and ? "
+            "order by announcement_date,announcement_id",
+            (
+                symbol,
+                (anchor_date - timedelta(days=14)).isoformat(),
+                (anchor_date + timedelta(days=14)).isoformat(),
+            ),
+        ).fetchall()
+    if not prices:
+        raise ValueError(f"当前快照无股票 {symbol} 的 qfq 价格数据")
+
+    before_indexes = [
+        index for index, (trade_date, _) in enumerate(prices)
+        if _pd(trade_date) and _pd(trade_date) <= anchor_date
+    ]
+    if not before_indexes:
+        raise EventNotFoundError(
+            f"事件日期早于 {symbol} 的价格覆盖范围: {anchor_date.isoformat()}"
+        )
+    anchor_index = before_indexes[-1]
+    before_index = max(0, anchor_index - 10)
+    after_index = min(len(prices) - 1, anchor_index + 10)
+    base_close = float(prices[anchor_index][1])
+    before_close = float(prices[before_index][1])
+    after_close = float(prices[after_index][1])
+
+    episode_type = str((matched_episode or {}).get("episode_type", "unclassified"))
+    event_sources = [str(item) for item in (matched_anchor or {}).get("source_material_ids", [])]
+    if official_announcement:
+        event_sources.append(f"announcement:{official_announcement[0]}")
+    body_rows = [
+        _row(
+            "selected_event",
+            事件编号=resolved_event_id,
+            日期=anchor_date.isoformat(),
+            标题=resolved_title,
+            episode=episode_type,
+        ),
+        _row(
+            "event_price_window",
+            窗口=f"锚点前后各 10 个交易日（可得范围）",
+            前端日期=str(prices[before_index][0])[:10],
+            前端收盘=round(before_close, 2),
+            锚点交易日=str(prices[anchor_index][0])[:10],
+            锚点收盘=round(base_close, 2),
+            后端日期=str(prices[after_index][0])[:10],
+            后端收盘=round(after_close, 2),
+            后段变化=f"{(after_close / base_close - 1) * 100:.1f}%",
+        ),
+        *[
+            _row(
+                f"nearby_announcement_{index:02d}",
+                公告编号=str(announcement_id),
+                日期=str(announcement_date)[:10],
+                标题=str(title),
+                原文=str(url or ""),
+            )
+            for index, (announcement_id, announcement_date, title, url)
+            in enumerate(announcements, 1)
+        ],
+    ]
+
+    topic_terms: list[str] = []
+    if "restructuring" in episode_type:
+        topic_terms = ["重整", "资产重组", "资产注入", "共益债"]
+    elif "control" in episode_type or "investor" in episode_type:
+        topic_terms = ["股东行为", "拍卖", "控制权", "原实控人"]
+    invocations = [
+        _REGISTRY.invoke(record, "选中节点的事件解释边界")
+        for record in _REGISTRY.candidate_lenses(topic_terms=topic_terms)
+    ]
+    gaps = [] if invocations else [LensGap(
+        gap_id="stock_event_window_lens",
+        missing_for="选中节点的可用 lens 解释",
+        sediment_as="question_card:QC-20260710-004",
+        note="价格、公告和 episode 可描述；无匹配 frozen lens 时不补造解释。",
+    )]
+    freshness = {
+        "price_data_as_of": price_snapshot.as_of,
+        "company_announcements_as_of": announcement_snapshot.as_of,
+        "episode_index_as_of": episode_snapshot.as_of,
+    }
+    if invocations:
+        freshness["release_library_frozen_at"] = _REGISTRY.frozen_at
+    data_as_of = limiting_as_of(*freshness.values())
+    provenance = [
+        f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices[{symbol}]",
+        f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements[{symbol}]",
+        "shared_data/v7/episode_index_v0/episode_index.jsonl",
+        *event_sources,
+    ]
+    if invocations:
+        provenance.append("shared_data/v7/release_library_v1/release_library.json")
+    return AnswerCard(
+        question=f"{symbol} 在 {anchor_date.isoformat()} 的节点前后发生了什么？",
+        object_ref=f"stock:{symbol};{resolved_event_id};episode:{episode_type}",
+        view="query",
+        as_of=data_as_of,
+        sample_scope=(
+            f"{symbol} 单票；选中节点 1 个；邻近公告 {len(announcements)} 条；"
+            "价格窗口为锚点前后各 10 个交易日"
+        ),
+        evidence_grade="descriptive_query",
+        lens_invocations=invocations,
+        lens_gap=gaps,
+        episode_index_version=episode_snapshot.version,
+        data_snapshot_as_of=data_as_of,
+        source_freshness=freshness,
+        body_rows=body_rows,
+        analysis_claims=[
+            AnalysisClaim(
+                text="节点窗口只描述公开公告、episode 分类和可复算价格，不推断后续方向。",
+                claim_type="caveat",
+                backing=BackingRef(kind="query_row", ref="selected_event"),
+            )
+        ],
+        caveats=FIXED_CAVEATS + [
+            "事件日非交易日时，价格锚点取不晚于事件日的最近交易日。",
+            "前后窗口为描述性查询；episode 分类与 lens 只约束解释边界。",
+        ],
+        provenance=list(dict.fromkeys(provenance)),
+    )
 
 
 def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, window: int = 42) -> AnswerCard:
     """#03 沐邦平台整理。lens：C17 短窗波动收敛(evidence, C17 wording 边界) + 股东行为/控制权 methodology。"""
     import numpy as np, pandas as pd
+    price_snapshot = load_price_snapshot(BASE_DB)
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
     con = _db()
     p = pd.read_sql("select trade_date,close from daily_prices where symbol=? and adjust='qfq' order by trade_date",
                     con, params=(symbol,))
     con.close()
+    if p.empty:
+        raise StockNotFoundError(f"当前快照无股票 {symbol} 的 qfq 价格数据")
     p["trade_date"] = pd.to_datetime(p["trade_date"]); p = p.set_index("trade_date")
     rng = (p["close"].rolling(window).max() - p["close"].rolling(window).min()) / p["close"].rolling(window).mean()
     plat = p[rng < band]
@@ -504,10 +727,21 @@ def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, win
     return AnswerCard(
         question=f"{symbol} 平台整理期该看哪些窗口？",
         object_ref=f"stock:{symbol}（最近平台段 {latest or '未检出'}）",
-        view="checklist", as_of="2026-06-26",
+        view="checklist", as_of=limiting_as_of(
+            price_snapshot.as_of, episode_snapshot.as_of, _REGISTRY.frozen_at
+        ),
         sample_scope=f"{symbol} 单票：{n_nodes} 个已分类 episode 节点；节点族 top: " +
                      ", ".join(f"{k}×{v}" for k, v in top),
         evidence_grade="anecdotal_support",
+        episode_index_version=episode_snapshot.version,
+        data_snapshot_as_of=limiting_as_of(
+            price_snapshot.as_of, episode_snapshot.as_of, _REGISTRY.frozen_at
+        ),
+        source_freshness={
+            "price_data_as_of": price_snapshot.as_of,
+            "episode_index_as_of": episode_snapshot.as_of,
+            "release_library_frozen_at": _REGISTRY.frozen_at,
+        },
         lens_invocations=invs, lens_gap=gaps,
         body_rows=body,
         analysis_claims=[
@@ -560,6 +794,8 @@ def card_release_lens_evidence(release_id: str) -> AnswerCard:
             f"control N={sample_n['control']}"
         ),
         evidence_grade=record["evidence_grade"],
+        data_snapshot_as_of=record["as_of"],
+        source_freshness={"release_library_frozen_at": _REGISTRY.frozen_at},
         lens_invocations=[invocation],
         body_rows=[body],
         analysis_claims=[
@@ -605,13 +841,16 @@ def card_control_structure_methodology() -> AnswerCard:
         )
         for invocation in invocations
     ]
+    data_as_of = str(_REGISTRY.frozen_at)[:10]
     return AnswerCard(
         question="控股股东、司法拍卖和控制权变化应该如何组织观察？",
         object_ref="methodology:control_structure",
         view="methodology",
-        as_of="2026-07-08",
+        as_of=data_as_of,
         sample_scope=f"frozen release library 中 {len(invocations)} 条 methodology frame",
         evidence_grade="context_only",
+        data_snapshot_as_of=data_as_of,
+        source_freshness={"release_library_frozen_at": _REGISTRY.frozen_at},
         lens_invocations=invocations,
         body_rows=body_rows,
         analysis_claims=[
@@ -642,26 +881,31 @@ DATA_DEBT_CATALOG: dict[str, dict[str, str]] = {
         "gap": "symbol→省份/注册地映射",
         "affects": "省份分层",
         "provenance": "v7_worksite/coordination/debt_cards/D-051A_province_mapping.md",
+        "as_of": "2026-07-10",
     },
     "D-051B": {
         "gap": "庭外/庭内重整标记",
         "affects": "重整路径阶段分层",
         "provenance": "v7_worksite/coordination/debt_cards/D-051B_out_of_court_flag.md",
+        "as_of": "2026-07-10",
     },
     "D-051C": {
         "gap": "大盘指数日线序列",
         "affects": "相对大盘分布",
         "provenance": "v7_worksite/coordination/debt_cards/D-051C_market_index_series.md",
+        "as_of": "2026-07-10",
     },
     "C14": {
         "gap": "as-of 市值/股本",
         "affects": "微盘 cohort 定义",
         "provenance": "shared_data/v7/release_library_v1/release_library.json",
+        "as_of": "2026-07-10",
     },
     "D-021": {
         "gap": "股东人数全量覆盖",
         "affects": "ST 前后股东人数变化比较",
         "provenance": "v7_worksite/coordination/decisions.md#D-021",
+        "as_of": "2026-07-10",
     },
 }
 
@@ -695,13 +939,18 @@ def card_data_debt(
         )
         for debt_ref in debt_refs
     ]
+    data_as_of = limiting_as_of(
+        *(DATA_DEBT_CATALOG[debt_ref]["as_of"] for debt_ref in debt_refs)
+    )
     return AnswerCard(
         question=question,
         object_ref=object_ref,
         view="data_debt",
-        as_of="2026-07-10",
+        as_of=data_as_of,
         sample_scope="请求维度所需字段在当前只读快照中不可用",
         evidence_grade="insufficient_data",
+        data_snapshot_as_of=data_as_of,
+        source_freshness={"data_debt_registry_as_of": data_as_of},
         lens_gap=gaps,
         analysis_claims=[
             AnalysisClaim(
@@ -726,9 +975,13 @@ def card_province_mapping_debt() -> AnswerCard:
         question="重整路径按省份分层如何？",
         object_ref="cohort:restructuring_by_province",
         view="data_debt",
-        as_of="2026-07-10",
+        as_of=DATA_DEBT_CATALOG[debt_ref]["as_of"],
         sample_scope="当前 base DB 无 symbol→省份/注册地映射，无法形成省份分层样本",
         evidence_grade="insufficient_data",
+        data_snapshot_as_of=DATA_DEBT_CATALOG[debt_ref]["as_of"],
+        source_freshness={
+            "data_debt_registry_as_of": DATA_DEBT_CATALOG[debt_ref]["as_of"]
+        },
         lens_gap=[LensGap(
             gap_id=gap_id,
             missing_for="省份/注册地分层",
@@ -755,6 +1008,11 @@ def card_province_mapping_debt() -> AnswerCard:
 
 def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
     """读取 ST 生命周期区间；原因解释仍显式保留为 lens gap。"""
+    status_snapshot = load_table_snapshot(
+        BASE_DB,
+        table="st_status_history",
+        date_column="fetched_at",
+    )
     con = _db()
     rows = con.execute(
         "select start_date,end_date,status_name,status_type,source,fetched_at "
@@ -780,7 +1038,7 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
         body_rows = [_row("st_interval_missing", **{"状态": "当前快照无 ST 生命周期记录"})]
 
     gap_id = "st_reason_announcement_binding"
-    fetched_at = max((row[5] for row in rows), default=PRICE_ASOF)
+    fetched_at = max((row[5] for row in rows), default=status_snapshot.as_of)
     provenance_ref = "shared_data/v5/.../st_stocks_v5_backup.sqlite3::st_status_history"
     return AnswerCard(
         question=f"{symbol} 的 ST 状态关键节点是什么，为什么进入 ST？",
@@ -805,8 +1063,6 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
         ],
         data_snapshot_as_of=str(fetched_at)[:10],
         source_freshness={
-            "release_library_frozen_at": _REGISTRY.frozen_at,
-            "episode_index_as_of": _EP_ASOF,
             "st_status_fetched_at": str(fetched_at),
         },
         caveats=FIXED_CAVEATS + [

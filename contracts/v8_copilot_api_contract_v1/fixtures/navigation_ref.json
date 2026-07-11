@@ -1,0 +1,19 @@
+{
+  "id": "nav-lens-rl-a-003",
+  "kind": "lens",
+  "label": "RL-A-003",
+  "source_kind": "lens_invocation",
+  "source_ref": "RL-A-003",
+  "href": "/?lens=RL-A-003",
+  "context": {
+    "symbol": null,
+    "date_start": null,
+    "date_end": null,
+    "event_id": null,
+    "event_title": null,
+    "episode_ref": null,
+    "lens_id": "RL-A-003",
+    "provenance_ref": null,
+    "data_debt_ref": null
+  }
+}

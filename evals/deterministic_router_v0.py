@@ -227,7 +227,9 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             note="只作为 methodology/checklist，不升级成 evidence。",
         )
 
-    if "沐邦" in text and _has_any(text, ["横", "窗口", "爆发点", "最晚", "投资协议", "平台"]):
+    if object_kind == "stock" and _has_any(
+        text, ["横", "窗口", "爆发点", "最晚", "投资协议", "平台"]
+    ):
         lens_behavior = "lens_gap_required" if _has_any(text, ["最晚", "投资协议"]) else "lens_invocations_or_gap"
         return _prediction(
             "answer_checklist",

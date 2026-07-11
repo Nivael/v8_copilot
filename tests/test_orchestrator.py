@@ -168,3 +168,74 @@ def test_route_only_does_not_query_answer_data() -> None:
     ))
 
     assert route.route == "clarify"
+
+
+def test_selected_event_executes_stock_event_window_template() -> None:
+    research_request = ResearchRequest.model_validate({
+        "request_id": "req-event-window",
+        "question": "这个节点前后发生了什么？",
+        "object": {"kind": "stock", "ref": "603398"},
+        "context": {
+            "symbol": "603398",
+            "selected_event": {
+                "event_id": "announcement:1221766612",
+                "date": "2025-11-25",
+                "title": "控股股东相关公告",
+            },
+        },
+        "llm_mode": "off",
+    })
+
+    response = orchestrate(research_request)
+
+    assert response.route.route == "answer_query"
+    assert response.answer_card is not None
+    assert response.answer_card["body_rows"][0]["事件编号"] == "announcement:1221766612"
+    assert response.answer_card["body_rows"][0]["标题"] != "控股股东相关公告"
+    assert response.answer_card["source_freshness"]["price_data_as_of"] == "2026-06-26"
+
+
+def test_unresolved_client_event_cannot_generate_an_answer_card() -> None:
+    research_request = ResearchRequest.model_validate({
+        "request_id": "req-fake-event",
+        "question": "这个节点前后发生了什么？",
+        "object": {"kind": "stock", "ref": "603398"},
+        "context": {"symbol": "603398", "selected_event": {
+            "event_id": "announcement:FAKE",
+            "date": "2025-11-25",
+            "title": "虚构公告",
+        }},
+        "llm_mode": "off",
+    })
+
+    response = orchestrate(research_request)
+
+    assert response.route.route == "clarify"
+    assert response.route.status == "clarify"
+    assert response.answer_card is None
+    assert response.gaps[0].kind == "execution_gap"
+
+
+def test_missing_stock_status_returns_stable_empty_timeline() -> None:
+    response = orchestrate(request(
+        "999999 为什么 ST？",
+        kind="stock",
+        ref="999999",
+    ))
+
+    assert response.answer_card is not None
+    assert response.answer_card["body_rows"] == [
+        {"row_id": "st_interval_missing", "状态": "当前快照无 ST 生命周期记录"}
+    ]
+
+
+def test_missing_stock_cannot_generate_checklist_or_false_provenance() -> None:
+    response = orchestrate(request(
+        "999999 接下来该看哪些窗口？",
+        kind="stock",
+        ref="999999",
+    ))
+
+    assert response.route.route == "clarify"
+    assert response.route.status == "clarify"
+    assert response.answer_card is None

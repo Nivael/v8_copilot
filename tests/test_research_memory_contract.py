@@ -14,6 +14,7 @@ from research_memory_contract import (
     STATUS_TRANSITIONS,
     DataDebtCard,
     ExecutorRef,
+    FeedbackEvent,
     ObjectScope,
     ProvenanceRef,
     QueryParameterSpec,
@@ -25,6 +26,7 @@ from research_memory_contract import (
     StatusTransition,
     TimeScope,
     build_data_debt_card,
+    build_feedback_event,
     build_query_template_record,
     build_question_card,
     normalize_symbol,
@@ -146,11 +148,11 @@ def test_qc_candidate_is_source_only_not_memory_identity() -> None:
     assert "QC-CAND" not in card.canonical_key
 
 
-def test_fixed_seed_identity_uses_qc_id_not_question_wording() -> None:
+def test_fixed_seed_and_online_question_share_semantic_identity() -> None:
     common = {
-        "external_qc_id": "QC-20260710-015",
         "scope": ObjectScope(kind="stock", refs=["603398"]),
-        "semantic_intent": "seed:QC-20260710-015",
+        "semantic_intent": "stock_observation_windows",
+        "dimensions": ["price", "episode"],
         "needs_data": ["daily_prices", "episode_index"],
         "research_status": "answerable",
         "view": "checklist",
@@ -158,22 +160,29 @@ def test_fixed_seed_identity_uses_qc_id_not_question_wording() -> None:
         "status": "accepted",
         "created_at": STAMP,
         "updated_at": STAMP,
-        "source_refs": [SourceRef(source_type="seed_fixture", source_ref="seed")],
-        "provenance_refs": [
+    }
+    seed = build_question_card(
+        external_qc_id="QC-20260710-015",
+        canonical_question="沐邦(603398)平台整理两个月该看哪些窗口？",
+        source_refs=[SourceRef(source_type="seed_fixture", source_ref="seed")],
+        provenance_refs=[
             ProvenanceRef(provenance_type="seed_fixture", provenance_ref="seed")
         ],
-    }
-    first = build_question_card(canonical_question="seed canonical question", **common)
-    second = build_question_card(
-        canonical_question="seed canonical question",
-        aliases=["user wording must remain an alias"],
         **common,
     )
-
-    assert first.dedupe_key == second.dedupe_key
-    assert first.canonical_key == (
-        '{"kind":"question_card","seed_id":"qc-20260710-015"}'
+    online = build_question_card(
+        canonical_question="603398 后面应该观察什么？",
+        original_source="user",
+        status="candidate",
+        source_refs=[SourceRef(source_type="research_run", source_ref="run-online")],
+        provenance_refs=provenance("response-online"),
+        **{key: value for key, value in common.items() if key not in {"original_source", "status"}},
     )
+
+    assert seed.dedupe_key == online.dedupe_key
+    assert seed.memory_id == online.memory_id
+    assert "qc-20260710-015" not in seed.canonical_key
+    assert json.loads(seed.canonical_key)["intent"] == "stock_observation_windows"
 
 
 def test_fixed_seed_id_rejects_non_seed_source() -> None:
@@ -182,7 +191,8 @@ def test_fixed_seed_id_rejects_non_seed_source() -> None:
             external_qc_id="QC-20260710-015",
             canonical_question="forged fixed card",
             scope=ObjectScope(kind="stock", refs=["603398"]),
-            semantic_intent="seed:QC-20260710-015",
+            semantic_intent="stock_observation_windows",
+            dimensions=["price", "episode"],
             research_status="answerable",
             view="checklist",
             original_source="user",
@@ -346,6 +356,53 @@ def test_data_debt_internal_id_is_separate_from_optional_external_ref() -> None:
     assert unassigned.memory_id.startswith("MEM-DD-")
     assert unassigned.external_debt_ref is None
     assert unassigned.debt_ref_status == "needs_assignment"
+
+
+def test_feedback_taxonomy_and_research_run_target_are_public() -> None:
+    payloads = json.loads((CONTRACT / "fixtures/feedback_taxonomy.json").read_text())
+    events = [FeedbackEvent.model_validate(payload) for payload in payloads]
+
+    assert {event.feedback_kind for event in events} == {
+        "useful",
+        "not_useful",
+        "scope_error",
+        "missing_evidence",
+        "wording_issue",
+        "other",
+    }
+    assert any(event.target_type == "research_run" for event in events)
+
+
+def test_feedback_wording_and_source_do_not_change_event_key() -> None:
+    common = {
+        "feedback_kind": "wording_issue",
+        "target_type": "research_run",
+        "target_ref": "run-001",
+        "status": "accepted",
+        "created_at": STAMP,
+        "updated_at": STAMP,
+        "provenance_refs": [
+            ProvenanceRef(provenance_type="user_feedback", provenance_ref="feedback")
+        ],
+    }
+    first = build_feedback_event(
+        feedback_text="措辞过强",
+        source_refs=[SourceRef(source_type="user_question", source_ref="feedback-a")],
+        **common,
+    )
+    second = build_feedback_event(
+        feedback_text="应该降级表达",
+        source_refs=[SourceRef(source_type="user_question", source_ref="feedback-b")],
+        **common,
+    )
+    other_target = build_feedback_event(
+        feedback_text="措辞过强",
+        source_refs=[SourceRef(source_type="user_question", source_ref="feedback-c")],
+        **{**common, "target_ref": "run-002"},
+    )
+
+    assert first.dedupe_key == second.dedupe_key
+    assert first.dedupe_key != other_target.dedupe_key
 
 
 def test_combo_object_kinds_survive_seed_migration() -> None:

@@ -278,9 +278,10 @@
         "feedback_kind": {
           "enum": [
             "useful",
-            "inaccurate",
-            "missing_data",
-            "missing_context",
+            "not_useful",
+            "scope_error",
+            "missing_evidence",
+            "wording_issue",
             "other"
           ],
           "title": "Feedback Kind",
@@ -288,6 +289,7 @@
         },
         "target_type": {
           "enum": [
+            "research_run",
             "answer_card",
             "research_response",
             "question_card"

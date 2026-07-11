@@ -17,9 +17,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-F72393760136B2BA1EFE",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-001\"}",
-    "dedupe_key": "f72393760136b2ba1efefeb46e801751db8d763a37d70a539d1f7c4e3420b2a4",
+    "memory_id": "MEM-QC-67122C077D9DC94AC739",
+    "canonical_key": "{\"dimensions\":[\"announcement\",\"episode\",\"st_status\"],\"intent\":\"st_status_reason_and_key_nodes\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "67122c077d9dc94ac7390b9ff17adec28abc3eb58b087b075c1ebedbd541c14a",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-001",
@@ -31,8 +31,12 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-001",
-    "dimensions": [],
+    "semantic_intent": "st_status_reason_and_key_nodes",
+    "dimensions": [
+      "announcement",
+      "episode",
+      "st_status"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -69,9 +73,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-B792E3EA9F910AC0643E",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-002\"}",
-    "dedupe_key": "b792e3ea9f910ac0643e701f7d282ec938b3bf887bc547f62fa8a2b7247a5f1c",
+    "memory_id": "MEM-QC-73E18FBA19CC1DC2700E",
+    "canonical_key": "{\"dimensions\":[\"episode_sequence\",\"event_type\",\"price_path\"],\"intent\":\"historical_case_similarity\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_to_universe\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "73e18fba19cc1dc2700ec03c61fa7978e092c24f32d70daa79f55ccc1e9325f8",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-002",
@@ -83,8 +87,12 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-002",
-    "dimensions": [],
+    "semantic_intent": "historical_case_similarity",
+    "dimensions": [
+      "episode_sequence",
+      "event_type",
+      "price_path"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -119,9 +127,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-2E39B96FDF53D1617FC3",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-003\"}",
-    "dedupe_key": "2e39b96fdf53d1617fc3ab87354831c9711a0388bd718cd4c7de2a10bcb8ed8c",
+    "memory_id": "MEM-QC-E942E59A6D5111E34FBA",
+    "canonical_key": "{\"dimensions\":[\"lens_kind\",\"rejected_boundary\",\"validation_status\"],\"intent\":\"lens_applicability_and_standing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "e942e59a6d5111e34fbaaa4cbffbfa7bfc66e2e651e6ec55183fa20e88615211",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-003",
@@ -133,8 +141,12 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-003",
-    "dimensions": [],
+    "semantic_intent": "lens_applicability_and_standing",
+    "dimensions": [
+      "lens_kind",
+      "rejected_boundary",
+      "validation_status"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -169,9 +181,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-2C5BBCAB98168C7FE61D",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-004\"}",
-    "dedupe_key": "2c5bbcab98168c7fe61d4ad8f17b42b9a2305ffeb742dc8bd5622dbe8c273cec",
+    "memory_id": "MEM-QC-3D0D01195653B2CEB50A",
+    "canonical_key": "{\"dimensions\":[\"announcement\",\"price\",\"regulatory_action\",\"share_capital\",\"shareholder_count\"],\"intent\":\"stock_event_multi_dimension_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_event\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "3d0d01195653b2ceb50a120fb5d468b9226761acf53b6dc2b625e1fb4fb8d5d9",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-004",
@@ -183,8 +195,14 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-004",
-    "dimensions": [],
+    "semantic_intent": "stock_event_multi_dimension_window",
+    "dimensions": [
+      "announcement",
+      "price",
+      "regulatory_action",
+      "share_capital",
+      "shareholder_count"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -223,9 +241,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-760253DF86E57A7F8123",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-005\"}",
-    "dedupe_key": "760253df86e57a7f8123caaef23918e3f2cb54f2e155548217448cba14ce73f8",
+    "memory_id": "MEM-QC-4961AD99CEFD0E5200ED",
+    "canonical_key": "{\"dimensions\":[\"counterexample\",\"data_gap\",\"evidence_grade\",\"sample_n\"],\"intent\":\"lens_evidence_audit\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"lens\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "4961ad99cefd0e5200ed8b61220cd230128657f6ca1bb634e12fa658d2cd9fab",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-005",
@@ -237,8 +255,13 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-005",
-    "dimensions": [],
+    "semantic_intent": "lens_evidence_audit",
+    "dimensions": [
+      "counterexample",
+      "data_gap",
+      "evidence_grade",
+      "sample_n"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -273,9 +296,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-3AF287E6EF0ED71A5DF2",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-006\"}",
-    "dedupe_key": "3af287e6ef0ed71a5df2dd21e29bb52419d7cdf7ab5b87914fb2d5e485712863",
+    "memory_id": "MEM-QC-B77D8951629071E52F6C",
+    "canonical_key": "{\"dimensions\":[\"shareholder_count\"],\"intent\":\"st_shareholder_count_change\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_or_episode\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "b77d8951629071e52f6cc14dc0b41e87dd1421eabab876da0539b8e4ede697a8",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-006",
@@ -287,8 +310,10 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-006",
-    "dimensions": [],
+    "semantic_intent": "st_shareholder_count_change",
+    "dimensions": [
+      "shareholder_count"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -323,9 +348,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-C60A2CD7284D55BD74AD",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-007\"}",
-    "dedupe_key": "c60a2cd7284d55bd74ad5fd9a1778ed902c5f4e44734d46a4416e19b2503a95f",
+    "memory_id": "MEM-QC-64C993E3AA970E08D1CE",
+    "canonical_key": "{\"dimensions\":[\"announcement_density\"],\"intent\":\"st_announcement_density\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_or_episode\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "64c993e3aa970e08d1ceafce4425b2670d6f0ce4e49e43d092224744a9df3dfb",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-007",
@@ -337,8 +362,10 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-007",
-    "dimensions": [],
+    "semantic_intent": "st_announcement_density",
+    "dimensions": [
+      "announcement_density"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -373,9 +400,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-98396D209252E4D5E256",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-008\"}",
-    "dedupe_key": "98396d209252e4d5e2563040fc851cdfbb66fc61c190503195cdeabbe2e6a9b9",
+    "memory_id": "MEM-QC-AB6C42751AA074251C6A",
+    "canonical_key": "{\"dimensions\":[\"multi_table_summary\"],\"intent\":\"stock_event_data_summary\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_event\",\"refs\":[\"任意\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "ab6c42751aa074251c6a9ee36db7437dc547ab630860e2e402e93ea214b6367f",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-008",
@@ -387,8 +414,10 @@
         "任意"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-008",
-    "dimensions": [],
+    "semantic_intent": "stock_event_data_summary",
+    "dimensions": [
+      "multi_table_summary"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -423,9 +452,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-6F7672D8FD9BD1CE3CB1",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-009\"}",
-    "dedupe_key": "6f7672d8fd9bd1ce3cb1badf72badfdb41339fbf71ec422318630fcc0de5d8d8",
+    "memory_id": "MEM-QC-C073582794D36285F84E",
+    "canonical_key": "{\"dimensions\":[\"elapsed_days\",\"episode_transition\"],\"intent\":\"restructuring_stage_timing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"episode_type\",\"refs\":[\"restructuring\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "c073582794d36285f84ed0b985cc454d20344f5ead1d5b24438d9a865242c754",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-009",
@@ -437,8 +466,11 @@
         "restructuring"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-009",
-    "dimensions": [],
+    "semantic_intent": "restructuring_stage_timing",
+    "dimensions": [
+      "elapsed_days",
+      "episode_transition"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -473,9 +505,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-F5DF942C6A7DA7CFD56E",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-010\"}",
-    "dedupe_key": "f5df942c6a7da7cfd56ec197dac0c6ad40bdc85b165e448295ef7de4edaf7124",
+    "memory_id": "MEM-QC-29E8AFFCC2F556D3B4DD",
+    "canonical_key": "{\"dimensions\":[\"next_announcement\",\"stage\"],\"intent\":\"restructuring_recruitment_next_node_timing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"cohort\",\"refs\":[\"重整招募\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "29e8affcc2f556d3b4dd6f3686516111dbb06de7473375f16be7b9853167477e",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-010",
@@ -487,8 +519,11 @@
         "重整招募"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-010",
-    "dimensions": [],
+    "semantic_intent": "restructuring_recruitment_next_node_timing",
+    "dimensions": [
+      "next_announcement",
+      "stage"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -523,9 +558,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-1F7A62D0AEDBEF2FE906",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-011\"}",
-    "dedupe_key": "1f7a62d0aedbef2fe90664481d06e0d21eebc6b54d189a4ef7855f9fc0a061dd",
+    "memory_id": "MEM-QC-1E761EF5384C05DBE8A0",
+    "canonical_key": "{\"dimensions\":[\"next_announcement\",\"province\",\"stage\"],\"intent\":\"restructuring_recruitment_next_node_timing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"cohort\",\"refs\":[\"重整招募\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "1e761ef5384c05dbe8a0a18a5ea6bfbed8aff94920aa5a37b90227c85096f596",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-011",
@@ -537,8 +572,12 @@
         "重整招募"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-011",
-    "dimensions": [],
+    "semantic_intent": "restructuring_recruitment_next_node_timing",
+    "dimensions": [
+      "next_announcement",
+      "province",
+      "stage"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -573,9 +612,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-D97EE94BDAF8AFAC8A58",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-012\"}",
-    "dedupe_key": "d97ee94bdaf8afac8a5875f6a0bb5fa5c089ddd96142e8515eedcba1c84f8968",
+    "memory_id": "MEM-QC-22D8CC4CCB5620BC47E1",
+    "canonical_key": "{\"dimensions\":[\"elapsed_days\",\"in_court\",\"out_of_court\"],\"intent\":\"restructuring_path_isolation\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"cohort\",\"refs\":[\"重整\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "22d8cc4ccb5620bc47e16f3646aff61f1e1a04d58e988495b5b27494f82f1025",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-012",
@@ -587,8 +626,12 @@
         "重整"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-012",
-    "dimensions": [],
+    "semantic_intent": "restructuring_path_isolation",
+    "dimensions": [
+      "elapsed_days",
+      "in_court",
+      "out_of_court"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -623,9 +666,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-B9A74994D528E91CE25E",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-013\"}",
-    "dedupe_key": "b9a74994d528e91ce25ef808713b527a8d67d13689a89e55ebe886b0a36288b9",
+    "memory_id": "MEM-QC-E08F235F50A70BF0959C",
+    "canonical_key": "{\"dimensions\":[\"market_cap_cohort\",\"two_week_return\"],\"intent\":\"st_microcap_two_week_distribution\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"universe\",\"refs\":[\"st panel\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "e08f235f50a70bf0959c615e65840104ee08a57de776ef7a11da325f374f2887",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-013",
@@ -637,8 +680,11 @@
         "st panel"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-013",
-    "dimensions": [],
+    "semantic_intent": "st_microcap_two_week_distribution",
+    "dimensions": [
+      "market_cap_cohort",
+      "two_week_return"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -673,9 +719,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-5148A332A77F2C4D9A09",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-014\"}",
-    "dedupe_key": "5148a332a77f2c4d9a0959d538a8827d5a4e2643c8f30a475297416d7ec915a0",
+    "memory_id": "MEM-QC-9C0376A119346887A800",
+    "canonical_key": "{\"dimensions\":[\"market_index\",\"two_week_excess_return\"],\"intent\":\"st_market_relative_two_week_distribution\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"universe\",\"refs\":[\"st panel\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "9c0376a119346887a800e4e744db9ebbb89a475b9f076c07d8e8751708ebffd2",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-014",
@@ -687,8 +733,11 @@
         "st panel"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-014",
-    "dimensions": [],
+    "semantic_intent": "st_market_relative_two_week_distribution",
+    "dimensions": [
+      "market_index",
+      "two_week_excess_return"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -723,9 +772,9 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-393DFA1C384683C848B6",
-    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-015\"}",
-    "dedupe_key": "393dfa1c384683c848b67fc8d5cbeca2d51d44c2cdbfba62bbbe7f43586c6c93",
+    "memory_id": "MEM-QC-0E708874DD1E02FE1214",
+    "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
     "not_evidence": true,
     "record_type": "question_card",
     "external_qc_id": "QC-20260710-015",
@@ -737,8 +786,11 @@
         "603398"
       ]
     },
-    "semantic_intent": "seed:QC-20260710-015",
-    "dimensions": [],
+    "semantic_intent": "stock_observation_windows",
+    "dimensions": [
+      "episode",
+      "price"
+    ],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,

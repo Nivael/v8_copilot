@@ -21,8 +21,9 @@ P3.1 不包含 SQLite、repository、写 API、聊天持久化或 UI 写操作�
 - `dedupe_key = sha256(canonical_key)`；`memory_id` 由对象前缀和该摘要生成。
 - 自然语言问题、展示标题、run ID、AnswerCard ID 与 ResearchResponse ID 不进入目标对象 key。
 - 不同来源使用 `MemoryLink` 多对一回链，不通过复制知识对象保存来源。
-- 固定 `QC-20260710-*` 以 seed ID 锚定 canonical identity；`QC-CAND-*` 仅作来源候选，
-  不会成为 Memory ID。
+- 固定 `QC-20260710-*` 保留为外部迁移身份，但不进入 canonical key；15 张 seed 通过
+  `fixtures/seed_migration/semantic_mapping.json` 补齐 intent/dimensions 后，与在线问题
+  使用同一语义公式。`QC-CAND-*` 仅作来源候选，不会成为 Memory ID。
 
 `ResearchRunRef` 保存 route、snapshot/as-of、request/response/answer contract versions，
 并用 `sha256-canonical-json-v1` 内容摘要固定当次来源上下文；run/AnswerCard identity
@@ -68,6 +69,14 @@ code registry。草案必须提供 proposed executor identity，且只能是不�
 - 第一次导入 15 created；第二次导入 0 created / 15 existing；
 - 保留组合 scope、旧 `debt_ref_status`、固定 QC ID、状态、view、source 和债卡引用；
 - 用户问法通过 source alias/link 保存，不覆盖 seed canonical question。
+- 每张 seed 与同 scope/intent/dimensions/time 的在线问题得到相同 dedupe key；15 张 seed
+  自身的语义 key 保持唯一。
+
+## FeedbackEvent
+
+反馈类型固定为 `useful`、`not_useful`、`scope_error`、`missing_evidence`、
+`wording_issue`、`other`；目标支持 ResearchRun、AnswerCard、ResearchResponse 和
+QuestionCard。反馈只追加事件和回链，不改写历史回答。
 
 ## 消费与导出
 

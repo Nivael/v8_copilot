@@ -52,6 +52,87 @@ STAMP = datetime(2026, 7, 11, 0, 0, tzinfo=timezone.utc)
 SEED_PATH = ROOT / "evals/question_card_seeds_v0.jsonl"
 SEED_SHA256 = "d98583e8d651ce8cf4cae41e87cfca342142b814f675833e43c174f4964fd559"
 
+SEED_SEMANTICS: dict[str, dict[str, Any]] = {
+    "QC-20260710-001": {
+        "object": {"kind": "stock", "ref": "任意"},
+        "intent": "st_status_reason_and_key_nodes",
+        "dimensions": ["st_status", "announcement", "episode"],
+    },
+    "QC-20260710-002": {
+        "object": {"kind": "stock_to_universe", "ref": "任意"},
+        "intent": "historical_case_similarity",
+        "dimensions": ["episode_sequence", "event_type", "price_path"],
+    },
+    "QC-20260710-003": {
+        "object": {"kind": "stock", "ref": "任意"},
+        "intent": "lens_applicability_and_standing",
+        "dimensions": ["lens_kind", "validation_status", "rejected_boundary"],
+    },
+    "QC-20260710-004": {
+        "object": {"kind": "stock_event", "ref": "任意"},
+        "intent": "stock_event_multi_dimension_window",
+        "dimensions": [
+            "announcement", "price", "share_capital", "shareholder_count",
+            "regulatory_action",
+        ],
+    },
+    "QC-20260710-005": {
+        "object": {"kind": "lens", "ref": "任意"},
+        "intent": "lens_evidence_audit",
+        "dimensions": ["evidence_grade", "sample_n", "counterexample", "data_gap"],
+    },
+    "QC-20260710-006": {
+        "object": {"kind": "stock_or_episode", "ref": "任意"},
+        "intent": "st_shareholder_count_change",
+        "dimensions": ["shareholder_count"],
+    },
+    "QC-20260710-007": {
+        "object": {"kind": "stock_or_episode", "ref": "任意"},
+        "intent": "st_announcement_density",
+        "dimensions": ["announcement_density"],
+    },
+    "QC-20260710-008": {
+        "object": {"kind": "stock_event", "ref": "任意"},
+        "intent": "stock_event_data_summary",
+        "dimensions": ["multi_table_summary"],
+    },
+    "QC-20260710-009": {
+        "object": {"kind": "episode_type", "ref": "restructuring"},
+        "intent": "restructuring_stage_timing",
+        "dimensions": ["episode_transition", "elapsed_days"],
+    },
+    "QC-20260710-010": {
+        "object": {"kind": "cohort", "ref": "重整招募"},
+        "intent": "restructuring_recruitment_next_node_timing",
+        "dimensions": ["next_announcement", "stage"],
+    },
+    "QC-20260710-011": {
+        "object": {"kind": "cohort", "ref": "重整招募"},
+        "intent": "restructuring_recruitment_next_node_timing",
+        "dimensions": ["next_announcement", "province", "stage"],
+    },
+    "QC-20260710-012": {
+        "object": {"kind": "cohort", "ref": "重整"},
+        "intent": "restructuring_path_isolation",
+        "dimensions": ["out_of_court", "in_court", "elapsed_days"],
+    },
+    "QC-20260710-013": {
+        "object": {"kind": "universe", "ref": "ST panel"},
+        "intent": "st_microcap_two_week_distribution",
+        "dimensions": ["market_cap_cohort", "two_week_return"],
+    },
+    "QC-20260710-014": {
+        "object": {"kind": "universe", "ref": "ST panel"},
+        "intent": "st_market_relative_two_week_distribution",
+        "dimensions": ["market_index", "two_week_excess_return"],
+    },
+    "QC-20260710-015": {
+        "object": {"kind": "stock", "ref": "603398"},
+        "intent": "stock_observation_windows",
+        "dimensions": ["price", "episode"],
+    },
+}
+
 PROTECTED_CONTRACT_CHECKSUMS = {
     "contracts/v8_answer_contract_v0/schema.json": "985acc1697bd28ded3a0f5d598fa6c3db4389f4fe9509555c727da9ab81e3ed3",
     "contracts/v8_copilot_api_contract_v0/manifest.json": "570796a69ddc13636d76ff297e2144b1f5189f2b17bf9426e5fcac4bdfd4ff49",
@@ -92,16 +173,23 @@ def seed_rows() -> list[dict[str, Any]]:
     seed_bytes = SEED_PATH.read_bytes()
     if sha256(seed_bytes).hexdigest() != SEED_SHA256:
         raise RuntimeError("question-card seed checksum drifted")
-    return [json.loads(line) for line in seed_bytes.decode("utf-8").splitlines()]
+    rows = [json.loads(line) for line in seed_bytes.decode("utf-8").splitlines()]
+    if {row["id"] for row in rows} != set(SEED_SEMANTICS):
+        raise RuntimeError("seed semantic mapping does not cover the frozen seed exactly")
+    return rows
 
 
 def migrate_seed(row: dict[str, Any]) -> QuestionCard:
     debt_ref = row["debt_ref"] or None
+    semantics = SEED_SEMANTICS[row["id"]]
+    if semantics["object"] != row["object"]:
+        raise RuntimeError(f"seed semantic scope drifted for {row['id']}")
     return build_question_card(
         external_qc_id=row["id"],
         canonical_question=row["question"],
         scope=ObjectScope(kind=row["object"]["kind"], refs=[row["object"]["ref"]]),
-        semantic_intent=f"seed:{row['id']}",
+        semantic_intent=semantics["intent"],
+        dimensions=semantics["dimensions"],
         aliases=[],
         needs_data=row["needs_data"],
         research_status=row["status"],
@@ -210,10 +298,10 @@ def valid_objects() -> dict[str, Any]:
         provenance_refs=common_provenance,
     )
     feedback = build_feedback_event(
-        feedback_kind="missing_context",
-        target_type="research_response",
-        target_ref="response-fixture-001",
-        feedback_text="需要补充事件日期。",
+        feedback_kind="scope_error",
+        target_type="research_run",
+        target_ref="run-fixture-001",
+        feedback_text="对象范围应限定到该事件窗口。",
         status="accepted",
         created_at=STAMP,
         updated_at=STAMP,
@@ -294,6 +382,31 @@ def valid_objects() -> dict[str, Any]:
     }
 
 
+def feedback_taxonomy_fixtures() -> list[dict[str, Any]]:
+    cases = [
+        ("useful", "research_run", "run-feedback-001"),
+        ("not_useful", "answer_card", "answer-feedback-001"),
+        ("scope_error", "research_response", "response-feedback-001"),
+        ("missing_evidence", "question_card", "MEM-QC-FEEDBACK-001"),
+        ("wording_issue", "research_run", "run-feedback-002"),
+        ("other", "answer_card", "answer-feedback-002"),
+    ]
+    return [
+        build_feedback_event(
+            feedback_kind=feedback_kind,
+            target_type=target_type,
+            target_ref=target_ref,
+            feedback_text=f"fixture:{feedback_kind}",
+            status="accepted",
+            created_at=STAMP,
+            updated_at=STAMP,
+            source_refs=[source("user_question", f"feedback:{feedback_kind}")],
+            provenance_refs=[provenance("user_feedback", f"feedback:{feedback_kind}")],
+        ).model_dump(mode="json")
+        for feedback_kind, target_type, target_ref in cases
+    ]
+
+
 def key_fixtures() -> dict[str, Any]:
     base = {
         "scope": ObjectScope(kind="stock", refs=["603398.SH"]),
@@ -321,6 +434,37 @@ def key_fixtures() -> dict[str, Any]:
             source("answer_card", "answer-999", "603398 后续有哪些公开节点值得观察？")
         ],
         **{key: value for key, value in base.items() if key not in {"needs_data", "view"}},
+    )
+    seed_equivalent = build_question_card(
+        external_qc_id="QC-20260710-015",
+        canonical_question="沐邦(603398)平台整理两个月该看哪些窗口？",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        semantic_intent="stock_observation_windows",
+        dimensions=["price", "episode"],
+        needs_data=["daily_prices", "episode_index"],
+        research_status="answerable",
+        view="checklist",
+        original_source="slice",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("seed_fixture", "evals/question_card_seeds_v0.jsonl")],
+        provenance_refs=[provenance("seed_fixture", "evals/question_card_seeds_v0.jsonl")],
+    )
+    online_equivalent = build_question_card(
+        canonical_question="603398 后续观察哪些公开窗口？",
+        scope=ObjectScope(kind="stock", refs=["SH.603398"]),
+        semantic_intent="stock_observation_windows",
+        dimensions=["episode", "price"],
+        needs_data=["runtime_availability"],
+        research_status="answerable",
+        view="query",
+        original_source="user",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("research_run", "run-seed-equivalent")],
+        provenance_refs=[provenance("research_response", "response-seed-equivalent")],
     )
     array_a = build_question_card(
         canonical_question="节点窗口",
@@ -522,10 +666,49 @@ def key_fixtures() -> dict[str, Any]:
         source_refs=[source("human_review", "review-c")],
         provenance_refs=[provenance("contract_fixture", "key-fixtures")],
     )
+    feedback_a = build_feedback_event(
+        feedback_kind="wording_issue",
+        target_type="research_run",
+        target_ref="run-key-001",
+        feedback_text="措辞过强",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("user_question", "feedback-key-a")],
+        provenance_refs=[provenance("user_feedback", "feedback-key")],
+    )
+    feedback_same_target = build_feedback_event(
+        feedback_kind="wording_issue",
+        target_type="research_run",
+        target_ref="run-key-001",
+        feedback_text="应该降低结论强度",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("user_question", "feedback-key-b")],
+        provenance_refs=[provenance("user_feedback", "feedback-key")],
+    )
+    feedback_other_run = build_feedback_event(
+        feedback_kind="wording_issue",
+        target_type="research_run",
+        target_ref="run-key-002",
+        feedback_text="措辞过强",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("user_question", "feedback-key-c")],
+        provenance_refs=[provenance("user_feedback", "feedback-key")],
+    )
     return {
         "synonym_different_runs": {
             "first": synonym_a.model_dump(mode="json"),
             "second": synonym_b.model_dump(mode="json"),
+            "expect_same_dedupe_key": True,
+            "expect_different_source_refs": True,
+        },
+        "seed_and_online_semantic_equivalence": {
+            "first": seed_equivalent.model_dump(mode="json"),
+            "second": online_equivalent.model_dump(mode="json"),
             "expect_same_dedupe_key": True,
             "expect_different_source_refs": True,
         },
@@ -574,6 +757,17 @@ def key_fixtures() -> dict[str, Any]:
             "second": review_other_unit.model_dump(mode="json"),
             "expect_same_dedupe_key": False,
         },
+        "feedback_same_target_changed_wording": {
+            "first": feedback_a.model_dump(mode="json"),
+            "second": feedback_same_target.model_dump(mode="json"),
+            "expect_same_dedupe_key": True,
+            "expect_different_source_refs": True,
+        },
+        "feedback_different_research_run": {
+            "first": feedback_a.model_dump(mode="json"),
+            "second": feedback_other_run.model_dump(mode="json"),
+            "expect_same_dedupe_key": False,
+        },
         "llm_title_changes": {
             "semantic_record": synonym_a.model_dump(mode="json"),
             "llm_titles": ["可能爆发", "后续观察窗口", "完全不同的展示标题"],
@@ -612,6 +806,8 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
     result_overlap["existing"] = list(result_overlap["created"])
     result_without_merged = valid["sedimentation_result"].model_dump(mode="json")
     result_without_merged.pop("merged")
+    legacy_feedback_kind = valid["feedback_event"].model_dump(mode="json")
+    legacy_feedback_kind["feedback_kind"] = "missing_context"
     return {
         "missing_source_refs": {
             "model": "QuestionCard", "payload": no_source, "schema_must_reject": True,
@@ -629,6 +825,11 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
         },
         "tampered_dedupe_key": {"model": "QuestionCard", "payload": bad_identity},
         "timezone_naive": {"model": "QuestionCard", "payload": naive_time},
+        "feedback_legacy_kind": {
+            "model": "FeedbackEvent",
+            "payload": legacy_feedback_kind,
+            "schema_must_reject": True,
+        },
         "draft_template_executable": {"model": "QueryTemplateRecord", "payload": draft},
         "unassigned_debt_with_ref": {"model": "DataDebtCard", "payload": unassigned},
         "research_run_missing_route": {
@@ -774,6 +975,7 @@ def main() -> None:
     for name, value in valid.items():
         dump(VALID / f"{name}.json", value)
     dump(FIXTURES / "key_cases.json", key_fixtures())
+    dump(FIXTURES / "feedback_taxonomy.json", feedback_taxonomy_fixtures())
     dump(FIXTURES / "query_template_records.json", query_template_records())
     dump(
         FIXTURES / "status_transitions.json",
@@ -835,6 +1037,7 @@ def main() -> None:
 
     MIGRATION.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(SEED_PATH, MIGRATION / "question_card_seeds_v0.jsonl")
+    dump(MIGRATION / "semantic_mapping.json", SEED_SEMANTICS)
     dump(MIGRATION / "expected_records.json", [item.model_dump(mode="json") for item in migrated])
     first_links = [
         build_memory_link(

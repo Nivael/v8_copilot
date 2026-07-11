@@ -1,0 +1,32 @@
+{
+  "model": "FeedbackEvent",
+  "payload": {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback-fixture-001",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback-fixture-001"
+      }
+    ],
+    "memory_id": "MEM-FB-57A154C66F29EB75DDFA",
+    "canonical_key": "{\"feedback_kind\":\"scope_error\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-fixture-001\",\"target_type\":\"research_run\"}",
+    "dedupe_key": "57a154c66f29eb75ddfa3aeff92e7aca7e55716a0c3dcbcb84c277645976fbc2",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "missing_context",
+    "target_type": "research_run",
+    "target_ref": "run-fixture-001",
+    "feedback_text": "对象范围应限定到该事件窗口。"
+  },
+  "schema_must_reject": true
+}

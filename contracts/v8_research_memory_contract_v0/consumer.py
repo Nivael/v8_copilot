@@ -28,6 +28,9 @@ from research_memory_contract import (
     ReviewItem,
     SedimentationResult,
     StatusTransition,
+    SourceRef,
+    ProvenanceRef,
+    build_question_card,
     public_contract_schema,
 )
 
@@ -152,6 +155,7 @@ def validate_key_cases() -> None:
     cases = read_json(HERE / "fixtures/key_cases.json")
     model_for_case = {
         "synonym_different_runs": QuestionCard,
+        "seed_and_online_semantic_equivalence": QuestionCard,
         "same_gap_different_scope": DataDebtCard,
         "assigned_debt_same_ref_changed_description": DataDebtCard,
         "assigned_debt_different_ref": DataDebtCard,
@@ -161,6 +165,8 @@ def validate_key_cases() -> None:
         "query_template_semantic_collision_guard": QueryTemplateRecord,
         "review_same_decision_unit_changed_package": ReviewItem,
         "review_different_decision_unit": ReviewItem,
+        "feedback_same_target_changed_wording": FeedbackEvent,
+        "feedback_different_research_run": FeedbackEvent,
     }
     for name, model in model_for_case.items():
         case = cases[name]
@@ -195,8 +201,12 @@ def validate_seed_migration() -> None:
         validate_public_payload(row)
     assert len(source_rows) == len(records) == manifest["seed_count"] == 15
     by_external_id = {record.external_qc_id: record for record in records}
+    semantics = read_json(fixture_dir / "semantic_mapping.json")
+    assert set(semantics) == set(by_external_id)
+    assert len({record.dedupe_key for record in records}) == len(records)
     for row in source_rows:
         record = by_external_id[row["id"]]
+        semantic = semantics[row["id"]]
         assert record.canonical_question == row["question"]
         assert record.scope.kind == row["object"]["kind"]
         assert record.research_status == row["status"]
@@ -204,6 +214,34 @@ def validate_seed_migration() -> None:
         assert record.external_debt_ref == (row["debt_ref"] or None)
         assert record.debt_ref_status == row["debt_ref_status"]
         assert record.original_source == row["source"]
+        assert record.semantic_intent == semantic["intent"]
+        assert record.dimensions == sorted(semantic["dimensions"])
+        online_equivalent = build_question_card(
+            canonical_question="equivalent online wording",
+            scope=record.scope,
+            semantic_intent=record.semantic_intent,
+            dimensions=record.dimensions,
+            time_scope=record.time_scope,
+            needs_data=["runtime_availability_may_differ"],
+            research_status=record.research_status,
+            view="query",
+            original_source="user",
+            debt_ref_status="not_required",
+            status="candidate",
+            created_at=record.created_at,
+            updated_at=record.updated_at,
+            source_refs=[
+                SourceRef(source_type="research_run", source_ref=f"online:{row['id']}")
+            ],
+            provenance_refs=[
+                ProvenanceRef(
+                    provenance_type="research_response",
+                    provenance_ref=f"online:{row['id']}",
+                )
+            ],
+        )
+        assert online_equivalent.dedupe_key == record.dedupe_key
+        assert row["id"].casefold() not in record.canonical_key
 
     first = SedimentationResult.model_validate(read_json(fixture_dir / "first_import_result.json"))
     second = SedimentationResult.model_validate(read_json(fixture_dir / "second_import_result.json"))
@@ -235,6 +273,24 @@ def validate_query_template_registry() -> None:
         assert record.not_evidence is True
         assert record.executor_ref is not None
         assert record.executor_ref.executor_key == registry[record.template_id]["executor_key"]
+
+
+def validate_feedback_taxonomy() -> None:
+    payloads = read_json(HERE / "fixtures/feedback_taxonomy.json")
+    events = [FeedbackEvent.model_validate(payload) for payload in payloads]
+    for payload in payloads:
+        validate_public_payload(payload)
+    assert {event.feedback_kind for event in events} == {
+        "useful",
+        "not_useful",
+        "scope_error",
+        "missing_evidence",
+        "wording_issue",
+        "other",
+    }
+    assert {"research_run", "answer_card"} <= {
+        event.target_type for event in events
+    }
 
 
 def validate_review_capacity_fixture() -> None:
@@ -279,6 +335,7 @@ def validate_all() -> None:
     validate_key_cases()
     validate_seed_migration()
     validate_query_template_registry()
+    validate_feedback_taxonomy()
     validate_review_capacity_fixture()
     validate_transition_fixtures()
     validate_protected_contract_checksums()

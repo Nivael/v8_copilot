@@ -295,7 +295,6 @@ class QuestionCard(MemoryEntity):
     @model_validator(mode="after")
     def validate_identity_and_debt(self) -> "QuestionCard":
         expected = question_card_key(
-            external_qc_id=self.external_qc_id,
             scope=self.scope,
             semantic_intent=self.semantic_intent,
             dimensions=self.dimensions,
@@ -492,8 +491,17 @@ class ReviewItem(MemoryEntity):
 
 class FeedbackEvent(MemoryEntity):
     record_type: Literal["feedback_event"]
-    feedback_kind: Literal["useful", "inaccurate", "missing_data", "missing_context", "other"]
-    target_type: Literal["answer_card", "research_response", "question_card"]
+    feedback_kind: Literal[
+        "useful",
+        "not_useful",
+        "scope_error",
+        "missing_evidence",
+        "wording_issue",
+        "other",
+    ]
+    target_type: Literal[
+        "research_run", "answer_card", "research_response", "question_card"
+    ]
     target_ref: str = Field(min_length=1, max_length=256)
     feedback_text: str | None = Field(default=None, max_length=4000)
 
@@ -655,16 +663,11 @@ def _validate_identity(entity: MemoryEntity, canonical_key: str, prefix: str) ->
 
 def question_card_key(
     *,
-    external_qc_id: str | None,
     scope: ObjectScope,
     semantic_intent: str,
     dimensions: list[str],
     time_scope: TimeScope,
 ) -> str:
-    if external_qc_id and not external_qc_id.startswith("QC-CAND-"):
-        return canonical_key(
-            "question_card", seed_id=normalize_token(external_qc_id)
-        )
     return canonical_key(
         "question_card",
         object_scope=scope.canonical,
@@ -796,7 +799,6 @@ def build_question_card(
     actual_dimensions = normalize_many(dimensions or [])
     actual_time = time_scope or TimeScope()
     key = question_card_key(
-        external_qc_id=external_qc_id,
         scope=scope,
         semantic_intent=semantic_intent,
         dimensions=actual_dimensions,
@@ -961,8 +963,17 @@ def build_review_item(
 
 def build_feedback_event(
     *,
-    feedback_kind: Literal["useful", "inaccurate", "missing_data", "missing_context", "other"],
-    target_type: Literal["answer_card", "research_response", "question_card"],
+    feedback_kind: Literal[
+        "useful",
+        "not_useful",
+        "scope_error",
+        "missing_evidence",
+        "wording_issue",
+        "other",
+    ],
+    target_type: Literal[
+        "research_run", "answer_card", "research_response", "question_card"
+    ],
     target_ref: str,
     status: MemoryStatus,
     created_at: datetime,

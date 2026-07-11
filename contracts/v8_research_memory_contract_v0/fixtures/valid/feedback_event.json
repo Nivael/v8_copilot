@@ -16,13 +16,13 @@
       "provenance_ref": "feedback-fixture-001"
     }
   ],
-  "memory_id": "MEM-FB-C93B0770FC09A75D848D",
-  "canonical_key": "{\"feedback_kind\":\"missing_context\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"response-fixture-001\",\"target_type\":\"research_response\"}",
-  "dedupe_key": "c93b0770fc09a75d848d5e88872420599e5edfbe6cd02f698a91fbebeb04a8c8",
+  "memory_id": "MEM-FB-57A154C66F29EB75DDFA",
+  "canonical_key": "{\"feedback_kind\":\"scope_error\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-fixture-001\",\"target_type\":\"research_run\"}",
+  "dedupe_key": "57a154c66f29eb75ddfa3aeff92e7aca7e55716a0c3dcbcb84c277645976fbc2",
   "not_evidence": true,
   "record_type": "feedback_event",
-  "feedback_kind": "missing_context",
-  "target_type": "research_response",
-  "target_ref": "response-fixture-001",
-  "feedback_text": "需要补充事件日期。"
+  "feedback_kind": "scope_error",
+  "target_type": "research_run",
+  "target_ref": "run-fixture-001",
+  "feedback_text": "对象范围应限定到该事件窗口。"
 }

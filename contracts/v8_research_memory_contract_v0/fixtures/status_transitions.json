@@ -31,7 +31,7 @@
     "actor_type": "human",
     "context": "online",
     "reason": "review confirmed duplicate",
-    "merge_target_id": "MEM-QC-F72393760136B2BA1EFE"
+    "merge_target_id": "MEM-QC-67122C077D9DC94AC739"
   },
   "valid_seed_migration_acceptance": {
     "record_type": "status_transition",

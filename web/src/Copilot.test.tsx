@@ -1,4 +1,4 @@
-import {fireEvent,render,screen} from '@testing-library/react'
+import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {Link,MemoryRouter} from 'react-router-dom'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {Copilot,EvidenceNavigation,QuestionDrawer} from './Copilot'
@@ -69,6 +69,7 @@ describe('Copilot evidence loops',()=>{
 })
 
 afterEach(()=>{
+  cleanup()
   vi.restoreAllMocks()
-  localStorage.clear()
+  window.localStorage.clear()
 })

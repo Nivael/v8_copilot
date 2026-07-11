@@ -1,0 +1,61 @@
+{
+  "model": "QuestionCard",
+  "payload": {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "candidate",
+    "created_at": "2026-07-11T00:00:00",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "research_response",
+        "source_ref": "response-fixture-001",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "research_response",
+        "provenance_ref": "response-fixture-001"
+      }
+    ],
+    "memory_id": "MEM-QC-7F87212D392B5D1C27ED",
+    "canonical_key": "{\"dimensions\":[\"announcement\",\"episode\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_event\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"after\":10,\"before\":10,\"semantics\":\"event_window\"}}",
+    "dedupe_key": "7f87212d392b5d1c27ed1a780895315f50c406ddc62d63ddb64a92ab6b712085",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": null,
+    "canonical_question": "603398 某节点前后有哪些可回链变化？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_event",
+      "refs": [
+        "603398"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "stock_event_window",
+    "dimensions": [
+      "announcement",
+      "episode",
+      "price"
+    ],
+    "time_scope": {
+      "semantics": "event_window",
+      "start": null,
+      "end": null,
+      "before": 10,
+      "after": 10
+    },
+    "needs_data": [
+      "daily_prices",
+      "episode_index"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "user",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  }
+}

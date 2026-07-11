@@ -1,0 +1,174 @@
+{
+  "QC-20260710-001": {
+    "object": {
+      "kind": "stock",
+      "ref": "任意"
+    },
+    "intent": "st_status_reason_and_key_nodes",
+    "dimensions": [
+      "st_status",
+      "announcement",
+      "episode"
+    ]
+  },
+  "QC-20260710-002": {
+    "object": {
+      "kind": "stock_to_universe",
+      "ref": "任意"
+    },
+    "intent": "historical_case_similarity",
+    "dimensions": [
+      "episode_sequence",
+      "event_type",
+      "price_path"
+    ]
+  },
+  "QC-20260710-003": {
+    "object": {
+      "kind": "stock",
+      "ref": "任意"
+    },
+    "intent": "lens_applicability_and_standing",
+    "dimensions": [
+      "lens_kind",
+      "validation_status",
+      "rejected_boundary"
+    ]
+  },
+  "QC-20260710-004": {
+    "object": {
+      "kind": "stock_event",
+      "ref": "任意"
+    },
+    "intent": "stock_event_multi_dimension_window",
+    "dimensions": [
+      "announcement",
+      "price",
+      "share_capital",
+      "shareholder_count",
+      "regulatory_action"
+    ]
+  },
+  "QC-20260710-005": {
+    "object": {
+      "kind": "lens",
+      "ref": "任意"
+    },
+    "intent": "lens_evidence_audit",
+    "dimensions": [
+      "evidence_grade",
+      "sample_n",
+      "counterexample",
+      "data_gap"
+    ]
+  },
+  "QC-20260710-006": {
+    "object": {
+      "kind": "stock_or_episode",
+      "ref": "任意"
+    },
+    "intent": "st_shareholder_count_change",
+    "dimensions": [
+      "shareholder_count"
+    ]
+  },
+  "QC-20260710-007": {
+    "object": {
+      "kind": "stock_or_episode",
+      "ref": "任意"
+    },
+    "intent": "st_announcement_density",
+    "dimensions": [
+      "announcement_density"
+    ]
+  },
+  "QC-20260710-008": {
+    "object": {
+      "kind": "stock_event",
+      "ref": "任意"
+    },
+    "intent": "stock_event_data_summary",
+    "dimensions": [
+      "multi_table_summary"
+    ]
+  },
+  "QC-20260710-009": {
+    "object": {
+      "kind": "episode_type",
+      "ref": "restructuring"
+    },
+    "intent": "restructuring_stage_timing",
+    "dimensions": [
+      "episode_transition",
+      "elapsed_days"
+    ]
+  },
+  "QC-20260710-010": {
+    "object": {
+      "kind": "cohort",
+      "ref": "重整招募"
+    },
+    "intent": "restructuring_recruitment_next_node_timing",
+    "dimensions": [
+      "next_announcement",
+      "stage"
+    ]
+  },
+  "QC-20260710-011": {
+    "object": {
+      "kind": "cohort",
+      "ref": "重整招募"
+    },
+    "intent": "restructuring_recruitment_next_node_timing",
+    "dimensions": [
+      "next_announcement",
+      "province",
+      "stage"
+    ]
+  },
+  "QC-20260710-012": {
+    "object": {
+      "kind": "cohort",
+      "ref": "重整"
+    },
+    "intent": "restructuring_path_isolation",
+    "dimensions": [
+      "out_of_court",
+      "in_court",
+      "elapsed_days"
+    ]
+  },
+  "QC-20260710-013": {
+    "object": {
+      "kind": "universe",
+      "ref": "ST panel"
+    },
+    "intent": "st_microcap_two_week_distribution",
+    "dimensions": [
+      "market_cap_cohort",
+      "two_week_return"
+    ]
+  },
+  "QC-20260710-014": {
+    "object": {
+      "kind": "universe",
+      "ref": "ST panel"
+    },
+    "intent": "st_market_relative_two_week_distribution",
+    "dimensions": [
+      "market_index",
+      "two_week_excess_return"
+    ]
+  },
+  "QC-20260710-015": {
+    "object": {
+      "kind": "stock",
+      "ref": "603398"
+    },
+    "intent": "stock_observation_windows",
+    "dimensions": [
+      "price",
+      "episode"
+    ]
+  }
+}

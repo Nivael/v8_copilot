@@ -1,0 +1,12 @@
+{
+  "model": "StatusTransition",
+  "payload": {
+    "record_type": "status_transition",
+    "object_type": "question_card",
+    "from_status": "closed",
+    "to_status": "accepted",
+    "actor_type": "human",
+    "context": "online",
+    "reason": "illegal reopen"
+  }
+}

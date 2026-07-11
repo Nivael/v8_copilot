@@ -1,0 +1,10 @@
+{
+  "record_type": "status_transition",
+  "object_type": "question_card",
+  "from_status": "candidate",
+  "to_status": "accepted",
+  "actor_type": "human",
+  "context": "online",
+  "reason": "review accepted",
+  "merge_target_id": null
+}

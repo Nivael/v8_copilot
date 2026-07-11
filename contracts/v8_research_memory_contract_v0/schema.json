@@ -1,0 +1,1831 @@
+{
+  "$defs": {
+    "DataDebtCard": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "provenance_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "canonical_key": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Key",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        },
+        "not_evidence": {
+          "const": true,
+          "title": "Not Evidence",
+          "type": "boolean"
+        },
+        "record_type": {
+          "const": "data_debt",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "gap_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Gap Id",
+          "type": "string"
+        },
+        "gap_summary": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Gap Summary",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/ObjectScope"
+        },
+        "time_scope": {
+          "$ref": "#/$defs/TimeScope"
+        },
+        "missing_assets": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Missing Assets",
+          "type": "array"
+        },
+        "missing_fields": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Missing Fields",
+          "type": "array"
+        },
+        "blocked_question_card_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Blocked Question Card Refs",
+          "type": "array"
+        },
+        "owner": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Owner",
+          "type": "string"
+        },
+        "external_debt_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "External Debt Ref"
+        },
+        "debt_ref_status": {
+          "enum": [
+            "assigned",
+            "needs_assignment"
+          ],
+          "title": "Debt Ref Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "created_at",
+        "updated_at",
+        "source_refs",
+        "provenance_refs",
+        "memory_id",
+        "canonical_key",
+        "dedupe_key",
+        "not_evidence",
+        "record_type",
+        "gap_id",
+        "gap_summary",
+        "scope",
+        "time_scope",
+        "missing_assets",
+        "missing_fields",
+        "blocked_question_card_refs",
+        "owner",
+        "debt_ref_status"
+      ],
+      "title": "DataDebtCard",
+      "type": "object"
+    },
+    "ExecutorRef": {
+      "additionalProperties": false,
+      "properties": {
+        "registry_contract_version": {
+          "pattern": "^v8_query_template_contract_v[0-9]+$",
+          "title": "Registry Contract Version",
+          "type": "string"
+        },
+        "template_id": {
+          "pattern": "^QT-[0-9]{3}$",
+          "title": "Template Id",
+          "type": "string"
+        },
+        "executor_key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Executor Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "registry_contract_version",
+        "template_id",
+        "executor_key"
+      ],
+      "title": "ExecutorRef",
+      "type": "object"
+    },
+    "FeedbackEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "provenance_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "canonical_key": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Key",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        },
+        "not_evidence": {
+          "const": true,
+          "title": "Not Evidence",
+          "type": "boolean"
+        },
+        "record_type": {
+          "const": "feedback_event",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "feedback_kind": {
+          "enum": [
+            "useful",
+            "not_useful",
+            "scope_error",
+            "missing_evidence",
+            "wording_issue",
+            "other"
+          ],
+          "title": "Feedback Kind",
+          "type": "string"
+        },
+        "target_type": {
+          "enum": [
+            "research_run",
+            "answer_card",
+            "research_response",
+            "question_card"
+          ],
+          "title": "Target Type",
+          "type": "string"
+        },
+        "target_ref": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Target Ref",
+          "type": "string"
+        },
+        "feedback_text": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feedback Text"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "created_at",
+        "updated_at",
+        "source_refs",
+        "provenance_refs",
+        "memory_id",
+        "canonical_key",
+        "dedupe_key",
+        "not_evidence",
+        "record_type",
+        "feedback_kind",
+        "target_type",
+        "target_ref"
+      ],
+      "title": "FeedbackEvent",
+      "type": "object"
+    },
+    "IgnoredDisposition": {
+      "additionalProperties": false,
+      "properties": {
+        "object_ref": {
+          "$ref": "#/$defs/MemoryObjectRef"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "object_ref",
+        "reason"
+      ],
+      "title": "IgnoredDisposition",
+      "type": "object"
+    },
+    "MemoryLink": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "provenance_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "record_type": {
+          "const": "memory_link",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "link_id": {
+          "pattern": "^MEM-LK-[A-F0-9]{20}$",
+          "title": "Link Id",
+          "type": "string"
+        },
+        "canonical_key": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Key",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "derived_from",
+            "alias_of",
+            "review_of",
+            "feedback_on",
+            "merged_into",
+            "sedimented_from"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "user_question",
+            "research_run",
+            "answer_card",
+            "research_response",
+            "human_review",
+            "post_v7_backlog",
+            "seed_fixture",
+            "query_template_registry",
+            "feedback_event",
+            "system_gap"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "target_type": {
+          "enum": [
+            "question_card",
+            "data_debt",
+            "query_template",
+            "review_item",
+            "feedback_event"
+          ],
+          "title": "Target Type",
+          "type": "string"
+        },
+        "target_memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Target Memory Id",
+          "type": "string"
+        },
+        "not_evidence": {
+          "const": true,
+          "title": "Not Evidence",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "created_at",
+        "updated_at",
+        "source_refs",
+        "provenance_refs",
+        "record_type",
+        "link_id",
+        "canonical_key",
+        "dedupe_key",
+        "relation",
+        "source_type",
+        "source_ref",
+        "target_type",
+        "target_memory_id",
+        "not_evidence"
+      ],
+      "title": "MemoryLink",
+      "type": "object"
+    },
+    "MemoryObjectRef": {
+      "additionalProperties": false,
+      "properties": {
+        "object_type": {
+          "enum": [
+            "question_card",
+            "data_debt",
+            "query_template",
+            "review_item",
+            "feedback_event"
+          ],
+          "title": "Object Type",
+          "type": "string"
+        },
+        "memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "object_type",
+        "memory_id",
+        "dedupe_key"
+      ],
+      "title": "MemoryObjectRef",
+      "type": "object"
+    },
+    "MergeDisposition": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/MemoryObjectRef"
+        },
+        "target": {
+          "$ref": "#/$defs/MemoryObjectRef"
+        },
+        "review_item_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Review Item Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "review_item_id"
+      ],
+      "title": "MergeDisposition",
+      "type": "object"
+    },
+    "ObjectScope": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "stock",
+            "stock_event",
+            "stock_to_universe",
+            "stock_or_episode",
+            "episode_type",
+            "cluster",
+            "lens_cluster",
+            "lens",
+            "cohort",
+            "universe",
+            "unknown"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "refs"
+      ],
+      "title": "ObjectScope",
+      "type": "object"
+    },
+    "ProvenanceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "provenance_type": {
+          "enum": [
+            "contract_fixture",
+            "seed_fixture",
+            "research_response",
+            "answer_card",
+            "review_decision",
+            "query_template_registry",
+            "user_feedback",
+            "research_source"
+          ],
+          "title": "Provenance Type",
+          "type": "string"
+        },
+        "provenance_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Provenance Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provenance_type",
+        "provenance_ref"
+      ],
+      "title": "ProvenanceRef",
+      "type": "object"
+    },
+    "ProvisionalQuestionIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_version": {
+          "const": "v8_provisional_question_identity_v0",
+          "title": "Identity Version",
+          "type": "string"
+        },
+        "normalization_version": {
+          "const": "nfkc-whitespace-casefold-v1",
+          "title": "Normalization Version",
+          "type": "string"
+        },
+        "question_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Question Fingerprint",
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity_version",
+        "normalization_version",
+        "question_fingerprint"
+      ],
+      "title": "ProvisionalQuestionIdentity",
+      "type": "object"
+    },
+    "QueryParameterSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "value_type": {
+          "enum": [
+            "string",
+            "integer",
+            "number",
+            "boolean",
+            "date",
+            "string_list"
+          ],
+          "title": "Value Type",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "allowed_values": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Allowed Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "value_type"
+      ],
+      "title": "QueryParameterSpec",
+      "type": "object"
+    },
+    "QueryTemplateRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "provenance_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "canonical_key": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Key",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        },
+        "not_evidence": {
+          "const": true,
+          "title": "Not Evidence",
+          "type": "boolean"
+        },
+        "record_type": {
+          "const": "query_template",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "template_id": {
+          "pattern": "^QT-[0-9]{3}$",
+          "title": "Template Id",
+          "type": "string"
+        },
+        "definition_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Definition Version",
+          "type": "string"
+        },
+        "question_pattern": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Question Pattern",
+          "type": "string"
+        },
+        "parameter_schema": {
+          "items": {
+            "$ref": "#/$defs/QueryParameterSpec"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Parameter Schema",
+          "type": "array"
+        },
+        "outcome_semantics": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Outcome Semantics",
+          "type": "array"
+        },
+        "caveats": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Caveats",
+          "type": "array"
+        },
+        "executor_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExecutorRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "proposed_executor_ref": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proposed Executor Ref"
+        },
+        "executable": {
+          "title": "Executable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "created_at",
+        "updated_at",
+        "source_refs",
+        "provenance_refs",
+        "memory_id",
+        "canonical_key",
+        "dedupe_key",
+        "not_evidence",
+        "record_type",
+        "template_id",
+        "definition_version",
+        "question_pattern",
+        "parameter_schema",
+        "outcome_semantics",
+        "caveats",
+        "executable"
+      ],
+      "title": "QueryTemplateRecord",
+      "type": "object"
+    },
+    "QuestionCard": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "provenance_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "canonical_key": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Key",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        },
+        "not_evidence": {
+          "const": true,
+          "title": "Not Evidence",
+          "type": "boolean"
+        },
+        "record_type": {
+          "const": "question_card",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "external_qc_id": {
+          "anyOf": [
+            {
+              "pattern": "^QC-(?:[0-9]{8}-[0-9]{3}|CAND-[a-f0-9]{12})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "External Qc Id"
+        },
+        "canonical_question": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Question",
+          "type": "string"
+        },
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Aliases",
+          "type": "array"
+        },
+        "scope": {
+          "$ref": "#/$defs/ObjectScope"
+        },
+        "identity_kind": {
+          "enum": [
+            "semantic",
+            "provisional_unknown"
+          ],
+          "title": "Identity Kind",
+          "type": "string"
+        },
+        "provisional_identity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvisionalQuestionIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "semantic_registry_version": {
+          "const": "v8_question_semantic_registry_v0",
+          "title": "Semantic Registry Version",
+          "type": "string"
+        },
+        "semantic_intent": {
+          "$ref": "#/$defs/QuestionIntent"
+        },
+        "dimensions": {
+          "items": {
+            "$ref": "#/$defs/QuestionDimension"
+          },
+          "maxItems": 50,
+          "title": "Dimensions",
+          "type": "array"
+        },
+        "time_scope": {
+          "$ref": "#/$defs/TimeScope"
+        },
+        "needs_data": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "title": "Needs Data",
+          "type": "array"
+        },
+        "research_status": {
+          "enum": [
+            "answerable",
+            "needs_data",
+            "needs_review"
+          ],
+          "title": "Research Status",
+          "type": "string"
+        },
+        "view": {
+          "enum": [
+            "evidence",
+            "query",
+            "checklist",
+            "methodology",
+            "data_debt"
+          ],
+          "title": "View",
+          "type": "string"
+        },
+        "original_source": {
+          "enum": [
+            "user",
+            "human_review",
+            "slice",
+            "system_gap",
+            "post_v7_backlog"
+          ],
+          "title": "Original Source",
+          "type": "string"
+        },
+        "external_debt_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "External Debt Ref"
+        },
+        "debt_ref_status": {
+          "enum": [
+            "assigned",
+            "needs_assignment",
+            "not_required"
+          ],
+          "title": "Debt Ref Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "created_at",
+        "updated_at",
+        "source_refs",
+        "provenance_refs",
+        "memory_id",
+        "canonical_key",
+        "dedupe_key",
+        "not_evidence",
+        "record_type",
+        "canonical_question",
+        "scope",
+        "identity_kind",
+        "semantic_registry_version",
+        "semantic_intent",
+        "dimensions",
+        "time_scope",
+        "needs_data",
+        "research_status",
+        "view",
+        "original_source",
+        "debt_ref_status"
+      ],
+      "title": "QuestionCard",
+      "type": "object"
+    },
+    "QuestionDimension": {
+      "enum": [
+        "st_status",
+        "announcement",
+        "episode",
+        "episode_sequence",
+        "event_type",
+        "price_path",
+        "lens_kind",
+        "validation_status",
+        "rejected_boundary",
+        "price",
+        "share_capital",
+        "shareholder_count",
+        "regulatory_action",
+        "evidence_grade",
+        "sample_n",
+        "counterexample",
+        "data_gap",
+        "announcement_density",
+        "multi_table_summary",
+        "episode_transition",
+        "elapsed_days",
+        "next_announcement",
+        "stage",
+        "province",
+        "out_of_court",
+        "in_court",
+        "market_cap_cohort",
+        "two_week_return",
+        "market_index",
+        "two_week_excess_return"
+      ],
+      "title": "QuestionDimension",
+      "type": "string"
+    },
+    "QuestionIntent": {
+      "enum": [
+        "st_status_reason_and_key_nodes",
+        "historical_case_similarity",
+        "lens_applicability_and_standing",
+        "stock_event_multi_dimension_window",
+        "lens_evidence_audit",
+        "st_shareholder_count_change",
+        "st_announcement_density",
+        "stock_event_data_summary",
+        "restructuring_stage_timing",
+        "restructuring_recruitment_next_node_timing",
+        "restructuring_path_isolation",
+        "st_microcap_two_week_distribution",
+        "st_market_relative_two_week_distribution",
+        "stock_observation_windows",
+        "stock_event_window",
+        "event_window",
+        "unknown_research_question"
+      ],
+      "title": "QuestionIntent",
+      "type": "string"
+    },
+    "ResearchRouteRef": {
+      "additionalProperties": false,
+      "properties": {
+        "route": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Route",
+          "type": "string"
+        },
+        "status": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Status",
+          "type": "string"
+        },
+        "view": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "View",
+          "type": "string"
+        }
+      },
+      "required": [
+        "route",
+        "status",
+        "view"
+      ],
+      "title": "ResearchRouteRef",
+      "type": "object"
+    },
+    "ResearchRunRef": {
+      "additionalProperties": false,
+      "description": "Non-knowledge source identity. It is never used in target entity dedupe.",
+      "properties": {
+        "record_type": {
+          "const": "research_run_ref",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "run_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "research_response_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Research Response Id",
+          "type": "string"
+        },
+        "answer_card_id": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer Card Id"
+        },
+        "request_contract_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Contract Version",
+          "type": "string"
+        },
+        "response_contract_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Response Contract Version",
+          "type": "string"
+        },
+        "answer_contract_version": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer Contract Version"
+        },
+        "route": {
+          "$ref": "#/$defs/ResearchRouteRef"
+        },
+        "snapshot_as_of": {
+          "format": "date-time",
+          "title": "Snapshot As Of",
+          "type": "string"
+        },
+        "snapshot_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Snapshot Refs",
+          "type": "array"
+        },
+        "content_digest_algorithm": {
+          "const": "sha256-canonical-json-v1",
+          "title": "Content Digest Algorithm",
+          "type": "string"
+        },
+        "content_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Content Digest",
+          "type": "string"
+        },
+        "content_summary": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Content Summary",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record_type",
+        "contract_version",
+        "run_id",
+        "request_id",
+        "research_response_id",
+        "request_contract_version",
+        "response_contract_version",
+        "route",
+        "snapshot_as_of",
+        "snapshot_refs",
+        "content_digest_algorithm",
+        "content_digest",
+        "content_summary",
+        "created_at"
+      ],
+      "title": "ResearchRunRef",
+      "type": "object"
+    },
+    "ReviewItem": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "provenance_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "memory_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "canonical_key": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Canonical Key",
+          "type": "string"
+        },
+        "dedupe_key": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dedupe Key",
+          "type": "string"
+        },
+        "not_evidence": {
+          "const": true,
+          "title": "Not Evidence",
+          "type": "boolean"
+        },
+        "record_type": {
+          "const": "review_item",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "uncertainty_type": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Uncertainty Type",
+          "type": "string"
+        },
+        "subject_ref": {
+          "$ref": "#/$defs/ReviewSubjectRef"
+        },
+        "decision_unit": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Decision Unit",
+          "type": "string"
+        },
+        "evidence_package_refs": {
+          "items": {
+            "$ref": "#/$defs/ProvenanceRef"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence Package Refs",
+          "type": "array"
+        },
+        "recommended_action": {
+          "enum": [
+            "accept_candidate",
+            "ignore_candidate",
+            "assign_data_debt",
+            "merge_after_review",
+            "request_more_evidence",
+            "review_template"
+          ],
+          "title": "Recommended Action",
+          "type": "string"
+        },
+        "priority": {
+          "default": 0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "active": {
+          "default": true,
+          "title": "Active",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "created_at",
+        "updated_at",
+        "source_refs",
+        "provenance_refs",
+        "memory_id",
+        "canonical_key",
+        "dedupe_key",
+        "not_evidence",
+        "record_type",
+        "uncertainty_type",
+        "subject_ref",
+        "decision_unit",
+        "evidence_package_refs",
+        "recommended_action"
+      ],
+      "title": "ReviewItem",
+      "type": "object"
+    },
+    "ReviewSubjectRef": {
+      "additionalProperties": false,
+      "properties": {
+        "subject_type": {
+          "enum": [
+            "question_card",
+            "data_debt",
+            "query_template",
+            "dedupe_pair",
+            "feedback_event"
+          ],
+          "title": "Subject Type",
+          "type": "string"
+        },
+        "subject_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Subject Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject_type",
+        "subject_id"
+      ],
+      "title": "ReviewSubjectRef",
+      "type": "object"
+    },
+    "SedimentationResult": {
+      "additionalProperties": false,
+      "description": "Non-persistent result of a future repository operation.",
+      "properties": {
+        "record_type": {
+          "const": "sedimentation_result",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "v8_research_memory_contract_v0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "operation_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "created": {
+          "items": {
+            "$ref": "#/$defs/MemoryObjectRef"
+          },
+          "maxItems": 1000,
+          "title": "Created",
+          "type": "array"
+        },
+        "existing": {
+          "items": {
+            "$ref": "#/$defs/MemoryObjectRef"
+          },
+          "maxItems": 1000,
+          "title": "Existing",
+          "type": "array"
+        },
+        "merged": {
+          "items": {
+            "$ref": "#/$defs/MergeDisposition"
+          },
+          "maxItems": 1000,
+          "title": "Merged",
+          "type": "array"
+        },
+        "ignored": {
+          "items": {
+            "$ref": "#/$defs/IgnoredDisposition"
+          },
+          "maxItems": 1000,
+          "title": "Ignored",
+          "type": "array"
+        },
+        "created_links": {
+          "items": {
+            "$ref": "#/$defs/MemoryLink"
+          },
+          "maxItems": 5000,
+          "title": "Created Links",
+          "type": "array"
+        },
+        "completed_at": {
+          "format": "date-time",
+          "title": "Completed At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record_type",
+        "contract_version",
+        "operation_id",
+        "created",
+        "existing",
+        "merged",
+        "ignored",
+        "created_links",
+        "completed_at"
+      ],
+      "title": "SedimentationResult",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "source_type": {
+          "enum": [
+            "user_question",
+            "research_run",
+            "answer_card",
+            "research_response",
+            "human_review",
+            "post_v7_backlog",
+            "seed_fixture",
+            "query_template_registry",
+            "feedback_event",
+            "system_gap"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "source_alias": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Alias"
+        }
+      },
+      "required": [
+        "source_type",
+        "source_ref"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "StatusTransition": {
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {
+          "const": "status_transition",
+          "title": "Record Type",
+          "type": "string"
+        },
+        "object_type": {
+          "enum": [
+            "question_card",
+            "data_debt",
+            "query_template",
+            "review_item",
+            "feedback_event"
+          ],
+          "title": "Object Type",
+          "type": "string"
+        },
+        "from_status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "From Status",
+          "type": "string"
+        },
+        "to_status": {
+          "enum": [
+            "candidate",
+            "accepted",
+            "ignored",
+            "merged",
+            "blocked",
+            "closed"
+          ],
+          "title": "To Status",
+          "type": "string"
+        },
+        "actor_type": {
+          "enum": [
+            "system",
+            "human",
+            "migration",
+            "llm"
+          ],
+          "title": "Actor Type",
+          "type": "string"
+        },
+        "context": {
+          "enum": [
+            "online",
+            "seed_bootstrap",
+            "maintenance"
+          ],
+          "title": "Context",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "merge_target_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Merge Target Id"
+        }
+      },
+      "required": [
+        "record_type",
+        "object_type",
+        "from_status",
+        "to_status",
+        "actor_type",
+        "context",
+        "reason"
+      ],
+      "title": "StatusTransition",
+      "type": "object"
+    },
+    "TimeScope": {
+      "additionalProperties": false,
+      "properties": {
+        "semantics": {
+          "default": "not_applicable",
+          "enum": [
+            "not_applicable",
+            "as_of",
+            "event_window",
+            "calendar_range",
+            "trading_day_window"
+          ],
+          "title": "Semantics",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "before": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Before"
+        },
+        "after": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "After"
+        }
+      },
+      "title": "TimeScope",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "data_debt": "#/$defs/DataDebtCard",
+      "feedback_event": "#/$defs/FeedbackEvent",
+      "memory_link": "#/$defs/MemoryLink",
+      "query_template": "#/$defs/QueryTemplateRecord",
+      "question_card": "#/$defs/QuestionCard",
+      "research_run_ref": "#/$defs/ResearchRunRef",
+      "review_item": "#/$defs/ReviewItem",
+      "sedimentation_result": "#/$defs/SedimentationResult",
+      "status_transition": "#/$defs/StatusTransition"
+    },
+    "propertyName": "record_type"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ResearchRunRef"
+    },
+    {
+      "$ref": "#/$defs/QuestionCard"
+    },
+    {
+      "$ref": "#/$defs/DataDebtCard"
+    },
+    {
+      "$ref": "#/$defs/QueryTemplateRecord"
+    },
+    {
+      "$ref": "#/$defs/ReviewItem"
+    },
+    {
+      "$ref": "#/$defs/FeedbackEvent"
+    },
+    {
+      "$ref": "#/$defs/MemoryLink"
+    },
+    {
+      "$ref": "#/$defs/StatusTransition"
+    },
+    {
+      "$ref": "#/$defs/SedimentationResult"
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v8_research_memory_contract_v0",
+  "title": "v8 Research Memory Contract v0"
+}

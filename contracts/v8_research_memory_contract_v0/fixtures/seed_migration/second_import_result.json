@@ -1,0 +1,87 @@
+{
+  "record_type": "sedimentation_result",
+  "contract_version": "v8_research_memory_contract_v0",
+  "operation_id": "seed-import-second",
+  "created": [],
+  "existing": [
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-2347419156F1BB97A17F",
+      "dedupe_key": "2347419156f1bb97a17f55b5c53be43641f46c76432f437f45998b994c988972"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-045E0D88911C8BF8D257",
+      "dedupe_key": "045e0d88911c8bf8d2577b5c7a6d60fa55bc1416cabfd905885caa90543cd8c2"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-D8B1CEF6AA7104FB7BF5",
+      "dedupe_key": "d8b1cef6aa7104fb7bf5f9ab61f959da03ef55496b198ba5fd9f75d0b6a8941c"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-FF1C0DA136D7EC1FBE11",
+      "dedupe_key": "ff1c0da136d7ec1fbe11cbc0f7f3bd34bfe05a3bca22df888f5c6cec65082ff4"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-D69FFC33F4BD3E02F5C9",
+      "dedupe_key": "d69ffc33f4bd3e02f5c90e7d28d55276299969f622cb94466f0ee22728408e4f"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-C43E12E4EC14B4C075D2",
+      "dedupe_key": "c43e12e4ec14b4c075d2c5be87335e51c863c946924e9073bcb6d0f550b20499"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-ED974762233CAD9029A6",
+      "dedupe_key": "ed974762233cad9029a6c47fb30251fc6a68a019c11b8626ab658eb573fcf2eb"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-F77718BA1C2F82D86A13",
+      "dedupe_key": "f77718ba1c2f82d86a134d30042de20f947df893c4999ca7759590193722e711"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-4769CC35BA6161ADBBD9",
+      "dedupe_key": "4769cc35ba6161adbbd9fef7f56e44e0625619a3e363e531feb11bcea9669b6b"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-E0E6FF095C5930A0A971",
+      "dedupe_key": "e0e6ff095c5930a0a971c8f37c51918df30bc22bb363c1e2da7b07385bc8e299"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-7EDACE6C50891895C8E5",
+      "dedupe_key": "7edace6c50891895c8e5c626bcbf036f2938ee8a62f708045599975660d9b887"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-BCA5D5195EBA9036D882",
+      "dedupe_key": "bca5d5195eba9036d8821b2580e35f9238e4c6aa0fda2fdf78311ebcbb1b352e"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-69EC096B89F4ABA615CC",
+      "dedupe_key": "69ec096b89f4aba615ccdafa55a6d6438b1f2a42caa93cefd2dc09040d7cd450"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-B5A89932C4AA937285AA",
+      "dedupe_key": "b5a89932c4aa937285aac4c1ef2f027520a681935255ed5087b134c9de73e90e"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8"
+    }
+  ],
+  "merged": [],
+  "ignored": [],
+  "created_links": [],
+  "completed_at": "2026-07-11T00:00:00Z"
+}

@@ -1,0 +1,56 @@
+{
+  "model": "SedimentationResult",
+  "payload": {
+    "record_type": "sedimentation_result",
+    "contract_version": "v8_research_memory_contract_v0",
+    "operation_id": "sedimentation-fixture-001",
+    "created": [
+      {
+        "object_type": "question_card",
+        "memory_id": "MEM-QC-7F87212D392B5D1C27ED",
+        "dedupe_key": "7f87212d392b5d1c27ed1a780895315f50c406ddc62d63ddb64a92ab6b712085"
+      }
+    ],
+    "existing": [
+      {
+        "object_type": "question_card",
+        "memory_id": "MEM-QC-7F87212D392B5D1C27ED",
+        "dedupe_key": "7f87212d392b5d1c27ed1a780895315f50c406ddc62d63ddb64a92ab6b712085"
+      }
+    ],
+    "merged": [],
+    "ignored": [],
+    "created_links": [
+      {
+        "contract_version": "v8_research_memory_contract_v0",
+        "status": "accepted",
+        "created_at": "2026-07-11T00:00:00Z",
+        "updated_at": "2026-07-11T00:00:00Z",
+        "source_refs": [
+          {
+            "source_type": "research_response",
+            "source_ref": "response-fixture-001",
+            "source_alias": null
+          }
+        ],
+        "provenance_refs": [
+          {
+            "provenance_type": "research_response",
+            "provenance_ref": "response-fixture-001"
+          }
+        ],
+        "record_type": "memory_link",
+        "link_id": "MEM-LK-89F21AC76A02864557C2",
+        "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"derived_from\",\"source_ref\":\"response-fixture-001\",\"source_type\":\"research_response\",\"target\":\"mem-qc-7f87212d392b5d1c27ed\",\"target_type\":\"question_card\"}",
+        "dedupe_key": "89f21ac76a02864557c29c66fe57287db624c7514ee07a3787673b57fa9de1c2",
+        "relation": "derived_from",
+        "source_type": "research_response",
+        "source_ref": "response-fixture-001",
+        "target_type": "question_card",
+        "target_memory_id": "MEM-QC-7F87212D392B5D1C27ED",
+        "not_evidence": true
+      }
+    ],
+    "completed_at": "2026-07-11T00:00:00Z"
+  }
+}

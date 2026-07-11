@@ -1,0 +1,26 @@
+{
+  "model": "ResearchRunRef",
+  "payload": {
+    "record_type": "research_run_ref",
+    "contract_version": "v8_research_memory_contract_v0",
+    "run_id": "run-fixture-001",
+    "request_id": "request-fixture-001",
+    "research_response_id": "response-fixture-001",
+    "answer_card_id": "answer-card-fixture-001",
+    "request_contract_version": "v8_copilot_api_contract_v0",
+    "response_contract_version": "v8_copilot_api_contract_v1",
+    "answer_contract_version": "v8_answer_contract_v0",
+    "snapshot_as_of": "2026-07-11T00:00:00Z",
+    "snapshot_refs": [
+      {
+        "provenance_type": "research_response",
+        "provenance_ref": "response-fixture-001"
+      }
+    ],
+    "content_digest_algorithm": "sha256-canonical-json-v1",
+    "content_digest": "1b235a1f3b161169f48f478f8c0f9aaaf04b89bda276bdaab9e8109714729a22",
+    "content_summary": "Validated fixture response for a stock event window.",
+    "created_at": "2026-07-11T00:00:00Z"
+  },
+  "schema_must_reject": true
+}

@@ -1,0 +1,1685 @@
+{
+  "synonym_different_runs": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-001",
+          "source_alias": "沐邦接下来该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "answer_card",
+          "source_ref": "answer-999",
+          "source_alias": "603398 后续有哪些公开节点值得观察？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "different_availability_note"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "seed_and_online_semantic_equivalence": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": "QC-20260710-015",
+      "canonical_question": "沐邦(603398)平台整理两个月该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "slice",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-seed-equivalent",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-seed-equivalent"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "603398 后续观察哪些公开窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "runtime_availability"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "registered_semantic_alias_equivalence": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-seed-equivalent",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-seed-equivalent"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "603398 后续观察哪些公开窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "runtime_availability"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-registry-alias",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-registry-alias"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "603398 后续监控哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "runtime_availability"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "provisional_unknown_retry_stability": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-a"
+        }
+      ],
+      "memory_id": "MEM-QC-12ECEE4FE1337DC45D65",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "12ecee4fe1337dc45d65916c9e7490b0dbb6e4af97920ceafd65dbbf5bf1141c",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "这家公司有没有海外诉讼？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-a-retry",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-a-retry"
+        }
+      ],
+      "memory_id": "MEM-QC-12ECEE4FE1337DC45D65",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "12ecee4fe1337dc45d65916c9e7490b0dbb6e4af97920ceafd65dbbf5bf1141c",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "这家公司有没有海外诉讼？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "provisional_unknown_question_separation": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-a"
+        }
+      ],
+      "memory_id": "MEM-QC-12ECEE4FE1337DC45D65",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "12ecee4fe1337dc45d65916c9e7490b0dbb6e4af97920ceafd65dbbf5bf1141c",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "这家公司有没有海外诉讼？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-b"
+        }
+      ],
+      "memory_id": "MEM-QC-672B03767653250BC5FC",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"3cd04a6a0151c43f47f60524208cc6ff8da04c2aff6703d3e8217c539e8a9f20\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "672b03767653250bc5fc663d24da2df4d097d8c50a1f88e886e2ccdea8400820",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "为什么审计师辞职？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "3cd04a6a0151c43f47f60524208cc6ff8da04c2aff6703d3e8217c539e8a9f20"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "same_gap_different_scope": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "gap-stock",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-492C15D6F62B130E43BC",
+      "canonical_key": "{\"kind\":\"data_debt\",\"missing_assets\":[\"asset_a\"],\"missing_fields\":[\"field_a\"],\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]}}",
+      "dedupe_key": "492c15d6f62b130e43bc556183a0b7fe48faaeddc088550d07d3bf4740cf6df9",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "same-gap",
+      "gap_summary": "same gap",
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "asset_a"
+      ],
+      "missing_fields": [
+        "field_a"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-003"
+      ],
+      "owner": "unassigned",
+      "external_debt_ref": null,
+      "debt_ref_status": "needs_assignment"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "gap-universe",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4A40F768A5A3B55FD491",
+      "canonical_key": "{\"kind\":\"data_debt\",\"missing_assets\":[\"asset_a\"],\"missing_fields\":[\"field_a\"],\"object_scope\":{\"kind\":\"universe\",\"refs\":[\"st panel\"]}}",
+      "dedupe_key": "4a40f768a5a3b55fd491aa622ed70f6de76f52b9ba811bf9577ff993dc3e5a7d",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "same-gap",
+      "gap_summary": "same gap",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "asset_a"
+      ],
+      "missing_fields": [
+        "field_a"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-003"
+      ],
+      "owner": "unassigned",
+      "external_debt_ref": null,
+      "debt_ref_status": "needs_assignment"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "assigned_debt_same_ref_changed_description": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4D643CAD131778579C5A",
+      "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "market-index-a",
+      "gap_summary": "first wording",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "market_index_daily_series"
+      ],
+      "missing_fields": [
+        "close",
+        "trade_date"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-014"
+      ],
+      "owner": "data-engineering",
+      "external_debt_ref": "D-051C",
+      "debt_ref_status": "assigned"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4D643CAD131778579C5A",
+      "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "changed-gap-label",
+      "gap_summary": "changed wording and fields",
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "different_asset"
+      ],
+      "missing_fields": [
+        "different_field"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-001"
+      ],
+      "owner": "another-owner",
+      "external_debt_ref": "D-051C",
+      "debt_ref_status": "assigned"
+    },
+    "expect_same_dedupe_key": true
+  },
+  "assigned_debt_different_ref": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4D643CAD131778579C5A",
+      "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "market-index-a",
+      "gap_summary": "first wording",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "market_index_daily_series"
+      ],
+      "missing_fields": [
+        "close",
+        "trade_date"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-014"
+      ],
+      "owner": "data-engineering",
+      "external_debt_ref": "D-051C",
+      "debt_ref_status": "assigned"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-other",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-76695F176B4952B2D338",
+      "canonical_key": "{\"debt_ref\":\"D-051D\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "76695f176b4952b2d33801f3b26945bf7d55b6b12dc93f5214f4d84990052009",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "market-index-a",
+      "gap_summary": "another debt",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "market_index_daily_series"
+      ],
+      "missing_fields": [
+        "close",
+        "trade_date"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-014"
+      ],
+      "owner": "data-engineering",
+      "external_debt_ref": "D-051D",
+      "debt_ref_status": "assigned"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "normalized_arrays_and_symbols": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-array-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-array"
+        }
+      ],
+      "memory_id": "MEM-QC-170AC03CD41CF3C8894B",
+      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "170ac03cd41cf3c8894b7e41bdda06425e3b74389ddf588f7e13b88ffbfcc3bd",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "节点窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_event_window",
+      "dimensions": [
+        "announcement",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-array-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-array"
+        }
+      ],
+      "memory_id": "MEM-QC-170AC03CD41CF3C8894B",
+      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "170ac03cd41cf3c8894b7e41bdda06425e3b74389ddf588f7e13b88ffbfcc3bd",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "节点窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_event_window",
+      "dimensions": [
+        "announcement",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true
+  },
+  "different_time_semantics": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-time-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-BC12536CC03C52F0799A",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"after\":10,\"before\":0,\"semantics\":\"trading_day_window\"}}",
+      "dedupe_key": "bc12536cc03c52f0799a50c44cbfa666e4840190bee1d93a242979d5a78e8323",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "十日窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "trading_day_window",
+        "start": null,
+        "end": null,
+        "before": 0,
+        "after": 10
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-time-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-B640F5F410B6D0AA305F",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"after\":14,\"before\":0,\"semantics\":\"trading_day_window\"}}",
+      "dedupe_key": "b640f5f410b6d0aa305f7f4645bd25de43edd06b0142759b66ef28034188118e",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "十四日窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "trading_day_window",
+        "start": null,
+        "end": null,
+        "before": 0,
+        "after": 14
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "different_dimensions": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-001",
+          "source_alias": "沐邦接下来该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-dimension",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-FA0FDC1C771B0C562FDD",
+      "canonical_key": "{\"dimensions\":[\"shareholder_count\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "fa0fdc1c771b0c562fdd489a6d9f2e9b9b884ced1540b70afb1cb2aa5eabb770",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "不同分析维度",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "shareholder_count"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "query_template_semantic_collision_guard": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "template-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-QT-A1D5EF8F68617E141505",
+      "canonical_key": "{\"executor_ref\":{\"proposed\":\"proposal:event-timing\"},\"kind\":\"query_template\",\"outcome_semantics\":[\"event_timing\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"symbol\",\"required\":true,\"value_type\":\"string\"}]}",
+      "dedupe_key": "a1d5ef8f68617e141505e67a7cde3cd4f736366299c3b5ec6215be226143361e",
+      "not_evidence": true,
+      "record_type": "query_template",
+      "template_id": "QT-999",
+      "definition_version": "draft-v1",
+      "question_pattern": "draft one",
+      "parameter_schema": [
+        {
+          "name": "symbol",
+          "value_type": "string",
+          "required": true,
+          "allowed_values": []
+        }
+      ],
+      "outcome_semantics": [
+        "event_timing"
+      ],
+      "caveats": [
+        "not evidence"
+      ],
+      "executor_ref": null,
+      "proposed_executor_ref": "proposal:event-timing",
+      "executable": false
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "template-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-QT-A7E6D0C2D78F745916E0",
+      "canonical_key": "{\"executor_ref\":{\"proposed\":\"proposal:event-timing\"},\"kind\":\"query_template\",\"outcome_semantics\":[\"distribution\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"cohort\",\"required\":true,\"value_type\":\"string\"}]}",
+      "dedupe_key": "a7e6d0c2d78f745916e0e7473f473f7036ed9fa31e07a42ddf0ac919accf37c5",
+      "not_evidence": true,
+      "record_type": "query_template",
+      "template_id": "QT-999",
+      "definition_version": "draft-v1",
+      "question_pattern": "draft two",
+      "parameter_schema": [
+        {
+          "name": "cohort",
+          "value_type": "string",
+          "required": true,
+          "allowed_values": []
+        }
+      ],
+      "outcome_semantics": [
+        "distribution"
+      ],
+      "caveats": [
+        "not evidence"
+      ],
+      "executor_ref": null,
+      "proposed_executor_ref": "proposal:event-timing",
+      "executable": false
+    },
+    "expect_same_dedupe_key": false
+  },
+  "review_same_decision_unit_changed_package": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-3DB6374D75F7EF0AC16C",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3db6374d75f7ef0ac16c1505421a4541a1474bf77c27369fcae3a21b2d3df4b7",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
+      },
+      "decision_unit": "one_question_candidate",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-a"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-3DB6374D75F7EF0AC16C",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3db6374d75f7ef0ac16c1505421a4541a1474bf77c27369fcae3a21b2d3df4b7",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
+      },
+      "decision_unit": "one_question_candidate",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-b"
+        }
+      ],
+      "recommended_action": "request_more_evidence",
+      "priority": 0,
+      "active": true
+    },
+    "expect_same_dedupe_key": true
+  },
+  "review_different_decision_unit": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-3DB6374D75F7EF0AC16C",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3db6374d75f7ef0ac16c1505421a4541a1474bf77c27369fcae3a21b2d3df4b7",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
+      },
+      "decision_unit": "one_question_candidate",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-a"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-c",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-88454B6601A5CE297903",
+      "canonical_key": "{\"decision_unit\":\"question_and_scope_pair\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "88454b6601a5ce297903bd77834335542c45458399fd04305d9d2e5eb208e863",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
+      },
+      "decision_unit": "question_and_scope_pair",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-a"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
+    },
+    "expect_same_dedupe_key": false
+  },
+  "feedback_same_target_changed_wording": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "user_question",
+          "source_ref": "feedback-key-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "user_feedback",
+          "provenance_ref": "feedback-key"
+        }
+      ],
+      "memory_id": "MEM-FB-B68FD63F715EFE51CB58",
+      "canonical_key": "{\"feedback_kind\":\"wording_issue\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-key-001\",\"target_type\":\"research_run\"}",
+      "dedupe_key": "b68fd63f715efe51cb58286e46dd91c26c2630ae5c62b69a126f9828993fa154",
+      "not_evidence": true,
+      "record_type": "feedback_event",
+      "feedback_kind": "wording_issue",
+      "target_type": "research_run",
+      "target_ref": "run-key-001",
+      "feedback_text": "措辞过强"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "user_question",
+          "source_ref": "feedback-key-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "user_feedback",
+          "provenance_ref": "feedback-key"
+        }
+      ],
+      "memory_id": "MEM-FB-B68FD63F715EFE51CB58",
+      "canonical_key": "{\"feedback_kind\":\"wording_issue\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-key-001\",\"target_type\":\"research_run\"}",
+      "dedupe_key": "b68fd63f715efe51cb58286e46dd91c26c2630ae5c62b69a126f9828993fa154",
+      "not_evidence": true,
+      "record_type": "feedback_event",
+      "feedback_kind": "wording_issue",
+      "target_type": "research_run",
+      "target_ref": "run-key-001",
+      "feedback_text": "应该降低结论强度"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "feedback_different_research_run": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "user_question",
+          "source_ref": "feedback-key-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "user_feedback",
+          "provenance_ref": "feedback-key"
+        }
+      ],
+      "memory_id": "MEM-FB-B68FD63F715EFE51CB58",
+      "canonical_key": "{\"feedback_kind\":\"wording_issue\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-key-001\",\"target_type\":\"research_run\"}",
+      "dedupe_key": "b68fd63f715efe51cb58286e46dd91c26c2630ae5c62b69a126f9828993fa154",
+      "not_evidence": true,
+      "record_type": "feedback_event",
+      "feedback_kind": "wording_issue",
+      "target_type": "research_run",
+      "target_ref": "run-key-001",
+      "feedback_text": "措辞过强"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "user_question",
+          "source_ref": "feedback-key-c",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "user_feedback",
+          "provenance_ref": "feedback-key"
+        }
+      ],
+      "memory_id": "MEM-FB-3AB5DA52DC6B4EBD00CA",
+      "canonical_key": "{\"feedback_kind\":\"wording_issue\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-key-002\",\"target_type\":\"research_run\"}",
+      "dedupe_key": "3ab5da52dc6b4ebd00ca6269415a415c5be25a6f6bafbf181dfde502784ee184",
+      "not_evidence": true,
+      "record_type": "feedback_event",
+      "feedback_kind": "wording_issue",
+      "target_type": "research_run",
+      "target_ref": "run-key-002",
+      "feedback_text": "措辞过强"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "llm_title_changes": {
+    "semantic_record": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-001",
+          "source_alias": "沐邦接下来该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "llm_titles": [
+      "可能爆发",
+      "后续观察窗口",
+      "完全不同的展示标题"
+    ],
+    "expected_dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+    "title_is_not_contract_input": true
+  }
+}

@@ -1,0 +1,170 @@
+[
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback:useful",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback:useful"
+      }
+    ],
+    "memory_id": "MEM-FB-9499F53D70A63C977BDA",
+    "canonical_key": "{\"feedback_kind\":\"useful\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-feedback-001\",\"target_type\":\"research_run\"}",
+    "dedupe_key": "9499f53d70a63c977bdaebf4290c6aaa2b1f71d08d4f7d548846d9d0c29d5054",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "useful",
+    "target_type": "research_run",
+    "target_ref": "run-feedback-001",
+    "feedback_text": "fixture:useful"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback:not_useful",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback:not_useful"
+      }
+    ],
+    "memory_id": "MEM-FB-C5170110CF1B573A25A4",
+    "canonical_key": "{\"feedback_kind\":\"not_useful\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"answer-feedback-001\",\"target_type\":\"answer_card\"}",
+    "dedupe_key": "c5170110cf1b573a25a4da6fd7b4bba5b67fb34eec43767c0abc53a4a43598b5",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "not_useful",
+    "target_type": "answer_card",
+    "target_ref": "answer-feedback-001",
+    "feedback_text": "fixture:not_useful"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback:scope_error",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback:scope_error"
+      }
+    ],
+    "memory_id": "MEM-FB-A78CA108D46068B3BE1D",
+    "canonical_key": "{\"feedback_kind\":\"scope_error\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"response-feedback-001\",\"target_type\":\"research_response\"}",
+    "dedupe_key": "a78ca108d46068b3be1d712bb8dee703ee84f517b875b118f00306e51d1bea5b",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "scope_error",
+    "target_type": "research_response",
+    "target_ref": "response-feedback-001",
+    "feedback_text": "fixture:scope_error"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback:missing_evidence",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback:missing_evidence"
+      }
+    ],
+    "memory_id": "MEM-FB-614191AD7059944FB0BD",
+    "canonical_key": "{\"feedback_kind\":\"missing_evidence\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"mem-qc-feedback-001\",\"target_type\":\"question_card\"}",
+    "dedupe_key": "614191ad7059944fb0bd7c5ee541979f35df59ca706bcffe5560ba38df0f8195",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "missing_evidence",
+    "target_type": "question_card",
+    "target_ref": "MEM-QC-FEEDBACK-001",
+    "feedback_text": "fixture:missing_evidence"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback:wording_issue",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback:wording_issue"
+      }
+    ],
+    "memory_id": "MEM-FB-98EED0B2DD19C8598795",
+    "canonical_key": "{\"feedback_kind\":\"wording_issue\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"run-feedback-002\",\"target_type\":\"research_run\"}",
+    "dedupe_key": "98eed0b2dd19c859879547362d312b484aa1a64e479e106c781de3666ccf6cca",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "wording_issue",
+    "target_type": "research_run",
+    "target_ref": "run-feedback-002",
+    "feedback_text": "fixture:wording_issue"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "user_question",
+        "source_ref": "feedback:other",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "user_feedback",
+        "provenance_ref": "feedback:other"
+      }
+    ],
+    "memory_id": "MEM-FB-651170DD2E7A22A5E3EB",
+    "canonical_key": "{\"feedback_kind\":\"other\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"answer-feedback-002\",\"target_type\":\"answer_card\"}",
+    "dedupe_key": "651170dd2e7a22a5e3eb2df3d7f613458b71f248d4a1859f21fec48eca25b12f",
+    "not_evidence": true,
+    "record_type": "feedback_event",
+    "feedback_kind": "other",
+    "target_type": "answer_card",
+    "target_ref": "answer-feedback-002",
+    "feedback_text": "fixture:other"
+  }
+]

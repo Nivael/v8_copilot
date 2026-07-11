@@ -1,0 +1,52 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "status": "accepted",
+  "created_at": "2026-07-11T00:00:00Z",
+  "updated_at": "2026-07-11T00:00:00Z",
+  "source_refs": [
+    {
+      "source_type": "system_gap",
+      "source_ref": "gap:market_index_daily_series",
+      "source_alias": null
+    }
+  ],
+  "provenance_refs": [
+    {
+      "provenance_type": "contract_fixture",
+      "provenance_ref": "D-053"
+    }
+  ],
+  "memory_id": "MEM-DD-4D643CAD131778579C5A",
+  "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+  "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+  "not_evidence": true,
+  "record_type": "data_debt",
+  "gap_id": "market_index_daily_series",
+  "gap_summary": "缺少可按交易日对齐的大盘指数日线。",
+  "scope": {
+    "kind": "universe",
+    "refs": [
+      "st panel"
+    ]
+  },
+  "time_scope": {
+    "semantics": "not_applicable",
+    "start": null,
+    "end": null,
+    "before": null,
+    "after": null
+  },
+  "missing_assets": [
+    "market_index_daily_series"
+  ],
+  "missing_fields": [
+    "index_close",
+    "trade_date"
+  ],
+  "blocked_question_card_refs": [
+    "qc-20260710-014"
+  ],
+  "owner": "data-engineering",
+  "external_debt_ref": "D-051C",
+  "debt_ref_status": "assigned"
+}

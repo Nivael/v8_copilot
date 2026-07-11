@@ -1,0 +1,56 @@
+{
+  "model": "DataDebtCard",
+  "payload": {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "candidate",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "system_gap",
+        "source_ref": "QC-20260710-003",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-DD-89C1EA19CCDBFAC82123",
+    "canonical_key": "{\"kind\":\"data_debt\",\"missing_assets\":[\"release_lens_boundary_catalog\"],\"missing_fields\":[\"rejection_reason\",\"standing\"],\"object_scope\":{\"kind\":\"lens\",\"refs\":[\"任意\"]}}",
+    "dedupe_key": "89c1ea19ccdbfac82123a042b36a9863889bd1693593f6eaef76733f0bb62fb7",
+    "not_evidence": true,
+    "record_type": "data_debt",
+    "gap_id": "release_lens_boundary_catalog",
+    "gap_summary": "缺少可查询的 lens standing/rejected 边界目录。",
+    "scope": {
+      "kind": "lens",
+      "refs": [
+        "任意"
+      ]
+    },
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "missing_assets": [
+      "release_lens_boundary_catalog"
+    ],
+    "missing_fields": [
+      "rejection_reason",
+      "standing"
+    ],
+    "blocked_question_card_refs": [
+      "qc-20260710-003",
+      "qc-20260710-005"
+    ],
+    "external_debt_ref": null,
+    "debt_ref_status": "needs_assignment"
+  },
+  "schema_must_reject": true
+}

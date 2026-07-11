@@ -1,0 +1,856 @@
+[
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "这只票为什么 ST？关键节点是什么？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-2347419156F1BB97A17F",
+    "canonical_key": "{\"dimensions\":[\"announcement\",\"episode\",\"st_status\"],\"intent\":\"st_status_reason_and_key_nodes\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "2347419156f1bb97a17f55b5c53be43641f46c76432f437f45998b994c988972",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-001",
+    "canonical_question": "这只票为什么 ST？关键节点是什么？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "st_status_reason_and_key_nodes",
+    "dimensions": [
+      "announcement",
+      "episode",
+      "st_status"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "company_announcements",
+      "episode_index",
+      "st_status_history"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "它像历史上哪些 case？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-045E0D88911C8BF8D257",
+    "canonical_key": "{\"dimensions\":[\"episode_sequence\",\"event_type\",\"price_path\"],\"intent\":\"historical_case_similarity\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_to_universe\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "045e0d88911c8bf8d2577b5c7a6d60fa55bc1416cabfd905885caa90543cd8c2",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-002",
+    "canonical_question": "它像历史上哪些 case？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_to_universe",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "historical_case_similarity",
+    "dimensions": [
+      "episode_sequence",
+      "event_type",
+      "price_path"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "episode_index(type组合/事件序列/价格路径)"
+    ],
+    "research_status": "needs_review",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "哪些 lens 能解释它，哪些只是视角，哪些历史上站不住？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-D8B1CEF6AA7104FB7BF5",
+    "canonical_key": "{\"dimensions\":[\"lens_kind\",\"rejected_boundary\",\"validation_status\"],\"intent\":\"lens_applicability_and_standing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "d8b1cef6aa7104fb7bf5f9ab61f959da03ef55496b198ba5fd9f75d0b6a8941c",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-003",
+    "canonical_question": "哪些 lens 能解释它，哪些只是视角，哪些历史上站不住？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "lens_applicability_and_standing",
+    "dimensions": [
+      "lens_kind",
+      "rejected_boundary",
+      "validation_status"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "release_library_v1(evidence/methodology/rejected)"
+    ],
+    "research_status": "needs_data",
+    "view": "evidence",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "needs_assignment"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "某节点前后，公告/价格/股本/股东人数/监管动作发生了什么？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-FF1C0DA136D7EC1FBE11",
+    "canonical_key": "{\"dimensions\":[\"announcement\",\"price\",\"regulatory_action\",\"share_capital\",\"shareholder_count\"],\"intent\":\"stock_event_multi_dimension_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_event\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "ff1c0da136d7ec1fbe11cbc0f7f3bd34bfe05a3bca22df888f5c6cec65082ff4",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-004",
+    "canonical_question": "某节点前后，公告/价格/股本/股东人数/监管动作发生了什么？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_event",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "stock_event_multi_dimension_window",
+    "dimensions": [
+      "announcement",
+      "price",
+      "regulatory_action",
+      "share_capital",
+      "shareholder_count"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "c09_exact_fields",
+      "company_announcements",
+      "daily_prices",
+      "shareholder_count_pilot",
+      "st_status_history"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "这个判断的证据等级/N/反例/数据缺口是什么？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-D69FFC33F4BD3E02F5C9",
+    "canonical_key": "{\"dimensions\":[\"counterexample\",\"data_gap\",\"evidence_grade\",\"sample_n\"],\"intent\":\"lens_evidence_audit\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"lens\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "d69ffc33f4bd3e02f5c90e7d28d55276299969f622cb94466f0ee22728408e4f",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-005",
+    "canonical_question": "这个判断的证据等级/N/反例/数据缺口是什么？",
+    "aliases": [],
+    "scope": {
+      "kind": "lens",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "lens_evidence_audit",
+    "dimensions": [
+      "counterexample",
+      "data_gap",
+      "evidence_grade",
+      "sample_n"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "release_library_v1(evidence_grade/sample_n/counterexample_shape/caveats)"
+    ],
+    "research_status": "needs_data",
+    "view": "evidence",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "needs_assignment"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "ST 前后股东人数变化是否异常？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-C43E12E4EC14B4C075D2",
+    "canonical_key": "{\"dimensions\":[\"shareholder_count\"],\"intent\":\"st_shareholder_count_change\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_or_episode\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "c43e12e4ec14b4c075d2c5be87335e51c863c946924e9073bcb6d0f550b20499",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-006",
+    "canonical_question": "ST 前后股东人数变化是否异常？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_or_episode",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "st_shareholder_count_change",
+    "dimensions": [
+      "shareholder_count"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "shareholder_count(65股pilot only)"
+    ],
+    "research_status": "needs_data",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": "D-021",
+    "debt_ref_status": "assigned"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "ST 前后公告密度有没有异常？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-ED974762233CAD9029A6",
+    "canonical_key": "{\"dimensions\":[\"announcement_density\"],\"intent\":\"st_announcement_density\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_or_episode\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "ed974762233cad9029a6c47fb30251fc6a68a019c11b8626ab658eb573fcf2eb",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-007",
+    "canonical_question": "ST 前后公告密度有没有异常？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_or_episode",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "st_announcement_density",
+    "dimensions": [
+      "announcement_density"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "company_announcements"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "某些重要时间节点的数据汇总是什么？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-F77718BA1C2F82D86A13",
+    "canonical_key": "{\"dimensions\":[\"multi_table_summary\"],\"intent\":\"stock_event_data_summary\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_event\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "f77718ba1c2f82d86a134d30042de20f947df893c4999ca7759590193722e711",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-008",
+    "canonical_question": "某些重要时间节点的数据汇总是什么？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_event",
+      "refs": [
+        "任意"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "stock_event_data_summary",
+    "dimensions": [
+      "multi_table_summary"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "multi_table_join"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "这类重整路径历史上通常多久进入下一阶段？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-4769CC35BA6161ADBBD9",
+    "canonical_key": "{\"dimensions\":[\"elapsed_days\",\"episode_transition\"],\"intent\":\"restructuring_stage_timing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"episode_type\",\"refs\":[\"restructuring\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "4769cc35ba6161adbbd9fef7f56e44e0625619a3e363e531feb11bcea9669b6b",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-009",
+    "canonical_question": "这类重整路径历史上通常多久进入下一阶段？",
+    "aliases": [],
+    "scope": {
+      "kind": "episode_type",
+      "refs": [
+        "restructuring"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "restructuring_stage_timing",
+    "dimensions": [
+      "elapsed_days",
+      "episode_transition"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "episode_index"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "human_review",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "庭外重组+公开招募后下一个公告节点多久？按阶段分层？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-E0E6FF095C5930A0A971",
+    "canonical_key": "{\"dimensions\":[\"next_announcement\",\"stage\"],\"intent\":\"restructuring_recruitment_next_node_timing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"cohort\",\"refs\":[\"重整招募\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "e0e6ff095c5930a0a971c8f37c51918df30bc22bb363c1e2da7b07385bc8e299",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-010",
+    "canonical_question": "庭外重组+公开招募后下一个公告节点多久？按阶段分层？",
+    "aliases": [],
+    "scope": {
+      "kind": "cohort",
+      "refs": [
+        "重整招募"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "restructuring_recruitment_next_node_timing",
+    "dimensions": [
+      "next_announcement",
+      "stage"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "episode_index"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "slice",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "同一问题按省份分层如何？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-7EDACE6C50891895C8E5",
+    "canonical_key": "{\"dimensions\":[\"next_announcement\",\"province\",\"stage\"],\"intent\":\"restructuring_recruitment_next_node_timing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"cohort\",\"refs\":[\"重整招募\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "7edace6c50891895c8e5c626bcbf036f2938ee8a62f708045599975660d9b887",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-011",
+    "canonical_question": "同一问题按省份分层如何？",
+    "aliases": [],
+    "scope": {
+      "kind": "cohort",
+      "refs": [
+        "重整招募"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "restructuring_recruitment_next_node_timing",
+    "dimensions": [
+      "next_announcement",
+      "province",
+      "stage"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "symbol_to_province_mapping"
+    ],
+    "research_status": "needs_data",
+    "view": "data_debt",
+    "original_source": "slice",
+    "external_debt_ref": "D-051A",
+    "debt_ref_status": "assigned"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "能否隔离庭外重组（vs 庭内）？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-BCA5D5195EBA9036D882",
+    "canonical_key": "{\"dimensions\":[\"elapsed_days\",\"in_court\",\"out_of_court\"],\"intent\":\"restructuring_path_isolation\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"cohort\",\"refs\":[\"重整\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "bca5d5195eba9036d8821b2580e35f9238e4c6aa0fda2fdf78311ebcbb1b352e",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-012",
+    "canonical_question": "能否隔离庭外重组（vs 庭内）？",
+    "aliases": [],
+    "scope": {
+      "kind": "cohort",
+      "refs": [
+        "重整"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "restructuring_path_isolation",
+    "dimensions": [
+      "elapsed_days",
+      "in_court",
+      "out_of_court"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "out_of_court_or_in_court_flag"
+    ],
+    "research_status": "needs_data",
+    "view": "data_debt",
+    "original_source": "slice",
+    "external_debt_ref": "D-051B",
+    "debt_ref_status": "assigned"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "ST/微盘两周异动分布？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-69EC096B89F4ABA615CC",
+    "canonical_key": "{\"dimensions\":[\"market_cap_cohort\",\"two_week_return\"],\"intent\":\"st_microcap_two_week_distribution\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"universe\",\"refs\":[\"st panel\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "69ec096b89f4aba615ccdafa55a6d6438b1f2a42caa93cefd2dc09040d7cd450",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-013",
+    "canonical_question": "ST/微盘两周异动分布？",
+    "aliases": [],
+    "scope": {
+      "kind": "universe",
+      "refs": [
+        "st panel"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "st_microcap_two_week_distribution",
+    "dimensions": [
+      "market_cap_cohort",
+      "two_week_return"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "as_of_market_cap"
+    ],
+    "research_status": "needs_data",
+    "view": "data_debt",
+    "original_source": "slice",
+    "external_debt_ref": "C14",
+    "debt_ref_status": "assigned"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "ST 相对大盘两周异动？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-B5A89932C4AA937285AA",
+    "canonical_key": "{\"dimensions\":[\"market_index\",\"two_week_excess_return\"],\"intent\":\"st_market_relative_two_week_distribution\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"universe\",\"refs\":[\"st panel\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "b5a89932c4aa937285aac4c1ef2f027520a681935255ed5087b134c9de73e90e",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-014",
+    "canonical_question": "ST 相对大盘两周异动？",
+    "aliases": [],
+    "scope": {
+      "kind": "universe",
+      "refs": [
+        "st panel"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "st_market_relative_two_week_distribution",
+    "dimensions": [
+      "market_index",
+      "two_week_excess_return"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "market_index_daily_series"
+    ],
+    "research_status": "needs_data",
+    "view": "data_debt",
+    "original_source": "slice",
+    "external_debt_ref": "D-051C",
+    "debt_ref_status": "assigned"
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "seed_fixture",
+        "source_ref": "evals/question_card_seeds_v0.jsonl",
+        "source_alias": "沐邦(603398)平台整理两个月该看哪些窗口？"
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "seed_fixture",
+        "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+      }
+    ],
+    "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+    "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+    "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+    "not_evidence": true,
+    "record_type": "question_card",
+    "external_qc_id": "QC-20260710-015",
+    "canonical_question": "沐邦(603398)平台整理两个月该看哪些窗口？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock",
+      "refs": [
+        "603398"
+      ]
+    },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
+    "semantic_registry_version": "v8_question_semantic_registry_v0",
+    "semantic_intent": "stock_observation_windows",
+    "dimensions": [
+      "episode",
+      "price"
+    ],
+    "time_scope": {
+      "semantics": "not_applicable",
+      "start": null,
+      "end": null,
+      "before": null,
+      "after": null
+    },
+    "needs_data": [
+      "daily_prices",
+      "episode_index"
+    ],
+    "research_status": "answerable",
+    "view": "checklist",
+    "original_source": "slice",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  }
+]

@@ -706,11 +706,26 @@ def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, win
                 fam[d.get("episode_type", "?")] = fam.get(d.get("episode_type", "?"), 0) + 1
     top = sorted(fam.items(), key=lambda x: -x[1])[:5]
     body = [
-        _row("risk_warning_window", **{"该看的窗口": "退市风险警示节点串", "依据": "delisting_terminal_path"}),
-        _row("restructuring_window", **{"该看的窗口": "预重整/重整进展节点", "依据": "restructuring_path"}),
-        _row("volatility_window", **{"该看的窗口": "均线回踩/短窗波动收敛", "依据": "C17 lens（波动收敛，非上涨信号）"}),
-        _row("controller_window", **{"该看的窗口": "控股股东司法处置节点", "依据": "control_or_investor 冻结/拍卖/过户"}),
-        _row("abnormal_move_window", **{"该看的窗口": "交易异常波动公告", "依据": "平台被打破的即时标记"}),
+        _row("risk_warning_window", **{
+            "该看的窗口": "退市风险警示节点串",
+            "依据": "风险警示、可能终止上市及撤销风险警示的正式公告",
+        }),
+        _row("restructuring_window", **{
+            "该看的窗口": "预重整与重整推进",
+            "依据": "预重整启动、重整进展、投资人招募及协议节点",
+        }),
+        _row("volatility_window", **{
+            "该看的窗口": "短窗波动是否继续收敛",
+            "依据": "前复权价格的短窗形态；只描述波动，不解释方向",
+        }),
+        _row("controller_window", **{
+            "该看的窗口": "控股股东与控制权处置",
+            "依据": "冻结、拍卖、过户及控制权变更的正式公告",
+        }),
+        _row("abnormal_move_window", **{
+            "该看的窗口": "交易异常波动与平台变化",
+            "依据": "异常波动公告及价格区间被打破的日期",
+        }),
     ]
     # ---- lens binding ----
     invs = []
@@ -731,7 +746,7 @@ def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, win
         view="checklist", as_of=limiting_as_of(
             price_snapshot.as_of, episode_snapshot.as_of, _REGISTRY.frozen_at
         ),
-        sample_scope=f"{symbol} 单票：{n_nodes} 个已分类 episode 节点；节点族 top: " +
+        sample_scope=f"{symbol} 单票：{n_nodes} 个已分类事件节点；近期节点构成：" +
                      ", ".join(f"{k}×{v}" for k, v in top),
         evidence_grade="anecdotal_support",
         episode_index_version=episode_snapshot.version,

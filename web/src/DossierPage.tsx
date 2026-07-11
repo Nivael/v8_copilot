@@ -95,6 +95,12 @@ function Content({symbol}: {symbol: string}) {
           提问<ExternalLink size={14}/>
         </Link>
       </header>
+      <section className="freshness-strip" aria-label="数据新鲜度">
+        <div><span>价格截至</span><strong>{data.display_labels.price_data_as_of ?? data.as_of}</strong></div>
+        <div><span>公告截至</span><strong>{data.display_labels.announcement_data_as_of ?? '无记录'}</strong></div>
+        <div><span>公告刷新检查</span><strong>{data.display_labels.announcement_refresh_checked_at ?? '未接入'}</strong></div>
+        <div><span>M6 索引截至</span><strong>{data.display_labels.episode_index_as_of ?? '未记录'}</strong></div>
+      </section>
       <div className="dossier-grid">
         <section className="market">
           <header>
@@ -102,7 +108,7 @@ function Content({symbol}: {symbol: string}) {
               <p className="eyebrow">前复权收盘价</p>
               <h2>价格与公告节点</h2>
             </div>
-            <span>{data.price_series.length.toLocaleString('zh-CN')} 个交易日</span>
+            <span>{data.display_labels.event_count ?? `${data.events.length} 个节点`} · {data.price_series.length.toLocaleString('zh-CN')} 个交易日</span>
           </header>
           <InteractivePriceChart data={data} selected={selected} onSelect={select}/>
         </section>

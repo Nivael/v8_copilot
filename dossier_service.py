@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime
 
 from api_contract import (
     DateRange,
@@ -20,8 +20,11 @@ from api_contract import (
 from answer_engine import (
     BASE_DB,
     EPISODE_INDEX,
+    EPISODE_MANIFEST,
 )
 from lens_binding import LensRegistry
+from settings import ANNOUNCEMENT_REFRESH_DIR
+from snapshot_metadata import load_episode_snapshot, load_table_snapshot
 
 
 class DossierNotFoundError(LookupError):
@@ -163,6 +166,102 @@ def _load_events(symbol: str) -> list[DossierEvent]:
     return events
 
 
+def _announcement_lane(title: str) -> tuple[str, str]:
+    """Group unclassified announcements for display without creating an episode."""
+    groups = (
+        ("restructuring", ("重整", "预重整", "重组", "投资人", "公开招募")),
+        ("st_risk", ("风险警示", "退市", "终止上市", "撤销风险警示")),
+        ("control", ("控制权", "股东", "股权", "拍卖", "质押", "冻结")),
+        ("regulatory", ("立案", "处罚", "问询", "监管", "谴责", "纪律处分")),
+    )
+    for lane_id, terms in groups:
+        if any(term in title for term in terms):
+            return lane_id, f"{LANES[lane_id]['label']}（公告标题辅助分组）"
+    return "financial", "其他正式公告（尚未分类）"
+
+
+def _refresh_rows(symbol: str) -> tuple[list[dict], str | None]:
+    path = ANNOUNCEMENT_REFRESH_DIR / f"{symbol}.json"
+    if not path.exists():
+        return [], None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"公告增量快照 JSON 非法: {path}: {exc}") from exc
+    if payload.get("source") != "cninfo" or str(payload.get("symbol")) != symbol:
+        raise ValueError(f"公告增量快照来源或股票代码不合法: {path}")
+    records = payload.get("records")
+    if not isinstance(records, list):
+        raise ValueError(f"公告增量快照缺 records list: {path}")
+    checked_at = datetime.fromtimestamp(path.stat().st_mtime).date().isoformat()
+    return [row for row in records if isinstance(row, dict)], checked_at
+
+
+def _append_official_announcements(
+    symbol: str,
+    events: list[DossierEvent],
+) -> dict[str, str | int | None]:
+    """Merge the official announcement inventory with M6-classified anchors."""
+    base_snapshot = load_table_snapshot(
+        BASE_DB, table="company_announcements", date_column="announcement_date"
+    )
+    with sqlite3.connect(f"file:{BASE_DB}?mode=ro", uri=True) as connection:
+        base_rows = connection.execute(
+            "select announcement_id,announcement_date,title from company_announcements "
+            "where symbol=? order by announcement_date,announcement_id",
+            (symbol,),
+        ).fetchall()
+
+    merged: dict[str, tuple[str, str]] = {
+        str(announcement_id): (str(announcement_date)[:10], str(title))
+        for announcement_id, announcement_date, title in base_rows
+        if announcement_id and announcement_date
+    }
+    refresh_rows, refresh_checked_at = _refresh_rows(symbol)
+    for row in refresh_rows:
+        announcement_id = str(row.get("announcement_id") or "").strip()
+        announcement_date = str(row.get("announcement_date") or "")[:10]
+        title = str(row.get("title") or "").strip()
+        if not announcement_id or not announcement_date or not title:
+            raise ValueError(f"公告增量快照存在缺字段记录: {symbol}")
+        merged[announcement_id] = (announcement_date, title)
+
+    existing_ids = {event.event_id for event in events}
+    existing_date_titles = {(event.date.isoformat(), event.title) for event in events}
+    classified_count = len(events)
+    for announcement_id, (announcement_date, title) in merged.items():
+        event_id = f"announcement:{announcement_id}"
+        if event_id in existing_ids or (announcement_date, title) in existing_date_titles:
+            continue
+        lane_id, lane_label = _announcement_lane(title)
+        events.append(DossierEvent(
+            event_id=event_id,
+            date=date.fromisoformat(announcement_date),
+            title=title,
+            episode_type="other_event_path",
+            episode_label="正式公告（尚未纳入 M6 事件段）",
+            subtype="announcement_unclassified",
+            subtype_label="正式公告，尚未分类",
+            timeline_lane=lane_id,
+            timeline_label=lane_label,
+            provenance_refs=[event_id],
+            related_lens_ids=[],
+        ))
+    events.sort(key=lambda event: (event.date, event.event_id))
+    announcement_as_of = max(
+        (announcement_date for announcement_date, _ in merged.values()),
+        default=None,
+    )
+    return {
+        "official_count": len(merged),
+        "classified_count": classified_count,
+        "base_as_of": base_snapshot.as_of,
+        "announcement_as_of": announcement_as_of,
+        "refresh_checked_at": refresh_checked_at,
+        "refresh_count": len(refresh_rows),
+    }
+
+
 def _append_announcement_focus(
     symbol: str,
     event_id: str | None,
@@ -212,13 +311,16 @@ def _dossier_lens_summaries(events: list[DossierEvent]) -> tuple[list[DossierLen
     narrow evidence/case lenses require an explicit title-level trigger.
     """
     registry = LensRegistry()
+    classified_events = [
+        event for event in events if event.subtype != "announcement_unclassified"
+    ]
     selected: list[tuple[str, str]] = []
-    if any(event.timeline_lane == "control" for event in events):
+    if any(event.timeline_lane == "control" for event in classified_events):
         selected.extend([
             ("RL-C-002", "股东行为与拍卖节点的核查框架"),
             ("RL-C-003", "控制权结构变化的核查框架"),
         ])
-    titles = "\n".join(event.title for event in events)
+    titles = "\n".join(event.title for event in classified_events)
     if "共益债" in titles or "公益债" in titles:
         selected.append(("RL-B-002", "共益债相关个案材料，仅作个案支持"))
     if "重大资产重组" in titles or "资产注入" in titles:
@@ -274,6 +376,7 @@ def build_stock_dossier(
         for start_date, end_date, status_name, status_type, source in status_rows
     ]
     events = _load_events(symbol)
+    announcement_stats = _append_official_announcements(symbol, events)
     _append_announcement_focus(symbol, announcement_focus, events)
 
     lane_events: dict[str, list[str]] = defaultdict(list)
@@ -290,6 +393,27 @@ def build_stock_dossier(
 
     lens_summaries, library_size = _dossier_lens_summaries(events)
 
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
+    data_gaps = [
+        DossierDataGap(
+            gap_id="shareholder_count_full_coverage",
+            display_label="股东人数全量覆盖尚未完成",
+            debt_ref="D-021",
+        ),
+        DossierDataGap(
+            gap_id="exact_equity_timeline",
+            display_label="精确股权与控制权字段覆盖仍有限",
+        ),
+    ]
+    if announcement_stats["refresh_checked_at"] is None:
+        data_gaps.append(DossierDataGap(
+            gap_id="announcement_incremental_refresh",
+            display_label=(
+                f"公告主快照截至 {announcement_stats['base_as_of']}；"
+                "之后的正式披露尚未接入增量快照"
+            ),
+        ))
+
     return StockDossierPayload(
         symbol=symbol,
         display_name=_display_name(status_rows),
@@ -299,21 +423,20 @@ def build_stock_dossier(
         events=events,
         timeline_lanes=timeline_lanes,
         lens_summaries=lens_summaries,
-        data_gaps=[
-            DossierDataGap(
-                gap_id="shareholder_count_full_coverage",
-                display_label="股东人数全量覆盖尚未完成",
-                debt_ref="D-021",
-            ),
-            DossierDataGap(
-                gap_id="exact_equity_timeline",
-                display_label="精确股权与控制权字段覆盖仍有限",
-            ),
-        ],
+        data_gaps=data_gaps,
         display_labels={
             "price_adjustment": "前复权",
-            "event_count": f"{len(events)} 个已分类公告节点",
-            "source_boundary": "本地只读历史快照",
+            "event_count": (
+                f"{announcement_stats['official_count']} 条正式公告 · "
+                f"{announcement_stats['classified_count']} 个 M6 已分类节点"
+            ),
+            "official_announcement_count": str(announcement_stats["official_count"]),
+            "classified_event_count": str(announcement_stats["classified_count"]),
+            "price_data_as_of": price_series[-1].date.isoformat(),
+            "announcement_data_as_of": str(announcement_stats["announcement_as_of"] or "无记录"),
+            "announcement_refresh_checked_at": str(announcement_stats["refresh_checked_at"] or "未接入"),
+            "episode_index_as_of": episode_snapshot.as_of,
+            "source_boundary": "冻结主快照 + 经校验的 CNINFO 本地增量快照（如有）",
             "lens_library_size": f"冻结库 {library_size} 条",
         },
         research_context=ResearchContext(
@@ -324,7 +447,10 @@ def build_stock_dossier(
         provenance=[
             "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices",
             "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::st_status_history",
+            "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::company_announcements",
             "shared_data/v7/episode_index_v0/episode_index.jsonl",
             "shared_data/v7/release_library_v1/release_library.json",
+            *([f"local_data/v8_copilot/announcement_refresh/{symbol}.json"]
+              if announcement_stats["refresh_checked_at"] else []),
         ],
     )

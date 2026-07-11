@@ -1,0 +1,6 @@
+{
+  "answer_contract": "v8_answer_contract_v0",
+  "compatibility": "additive_response",
+  "contract_version": "v8_copilot_api_contract_v2",
+  "request_contract": "v8_copilot_api_contract_v0"
+}

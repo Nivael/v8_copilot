@@ -36,7 +36,8 @@ const LANE_COLORS: Record<string, string> = {
 const IMPORTANT_EVENT_TERMS = [
   '预重整', '重整进展', '退市风险警示', '终止上市', '撤销风险警示',
   '行政处罚', '立案', '司法拍卖', '控制权', '权益变动', '资金占用',
-  '审计意见', '审计报告否定意见',
+  '审计意见', '审计报告否定意见', '公开招募', '重整投资人', '申请重整',
+  '公开谴责', '风险提示',
 ]
 
 function isImportantEvent(event: EventNode): boolean {
@@ -103,10 +104,11 @@ function markersFor(
 }
 
 function EventNavigator({
-  data, visible, enabledLanes, importantOnly, selected, onToggleLane, onToggleImportant, onSelect,
+  data, visible, lastPriceDate, enabledLanes, importantOnly, selected, onToggleLane, onToggleImportant, onSelect,
 }: {
   data: Dossier
   visible: VisibleRange
+  lastPriceDate: string
   enabledLanes: Set<string>
   importantOnly: boolean
   selected: EventNode | null
@@ -114,6 +116,9 @@ function EventNavigator({
   onToggleImportant: () => void
   onSelect: (node: EventNode) => void
 }) {
+  const postPriceEvents = useMemo(() => data.events
+    .filter(event => event.date > lastPriceDate)
+    .sort((a, b) => b.date.localeCompare(a.date)), [data.events, lastPriceDate])
   const visibleEvents = useMemo(() => data.events
     .filter(event => enabledLanes.has(event.timeline_lane))
     .filter(event => !importantOnly || isImportantEvent(event))
@@ -122,6 +127,30 @@ function EventNavigator({
 
   return (
     <section className="event-navigator" aria-label="当前时间窗公告节点">
+      {postPriceEvents.length > 0 && (
+        <section className="post-price-events" aria-label="价格截止后公告">
+          <header>
+            <div><h3>价格截止后的正式公告</h3><p>晚于 {lastPriceDate}，不能与同期价格联读</p></div>
+            <strong>{postPriceEvents.length} 条</strong>
+          </header>
+          <div className="event-list">
+            {postPriceEvents.slice(0, 12).map(event => (
+              <button
+                type="button"
+                className={selected?.event_id === event.event_id ? 'selected' : ''}
+                onClick={() => onSelect(event)}
+                key={event.event_id}
+              >
+                <time>{event.date}</time>
+                <span className="event-kind" style={{'--lane-color': LANE_COLORS[event.timeline_lane] ?? '#53606f'} as React.CSSProperties}>
+                  {event.timeline_label}
+                </span>
+                <strong>{event.title}</strong>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
       <header>
         <div>
           <h3>当前时间窗事件</h3>
@@ -161,7 +190,7 @@ function EventNavigator({
             <strong>{event.title}</strong>
           </button>
         ))}
-        {visibleEvents.length === 0 && <p className="event-empty">当前时间窗没有已分类节点。拖动图表或切换事件类型继续查看。</p>}
+        {visibleEvents.length === 0 && <p className="event-empty">当前时间窗没有符合筛选条件的正式公告。拖动图表或切换类型继续查看。</p>}
         {visibleEvents.length > 24 && <p className="event-overflow">另有 {visibleEvents.length - 24} 个节点；缩小时间范围可逐条查看。</p>}
       </div>
     </section>
@@ -302,6 +331,7 @@ export function InteractivePriceChart({data, selected, onSelect}: {
       <EventNavigator
         data={data}
         visible={{from: visible.from || firstDate, to: visible.to || lastDate}}
+        lastPriceDate={lastDate}
         enabledLanes={enabledLanes}
         importantOnly={importantOnly}
         selected={selected}

@@ -41,4 +41,26 @@ describe('App',()=>{
     fireEvent.click(screen.getByRole('button',{name:'财报与公告'}))
     expect(screen.getByRole('button',{name:'财报与公告'})).toHaveAttribute('aria-pressed','true')
   })
+
+  it('keeps announcements newer than the price snapshot visible and separated',async()=>{
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({
+      symbol:'300123',display_name:'ST亚光',as_of:'2026-06-26',
+      price_series:[{date:'2026-06-26',close:6.2}],status_intervals:[],events:[{
+        event_id:'announcement:1225415538',date:'2026-07-08',title:'关于公开招募和遴选重整投资人的公告',
+        episode_type:'other_event_path',episode_label:'正式公告（尚未纳入 M6 事件段）',
+        subtype:'announcement_unclassified',subtype_label:'正式公告，尚未分类',timeline_lane:'restructuring',
+        timeline_label:'重整与预重整（公告标题辅助分组）',provenance_refs:['announcement:1225415538'],related_lens_ids:[],
+      }],
+      timeline_lanes:[{lane_id:'restructuring',label:'重整与预重整',event_ids:['announcement:1225415538']}],
+      lens_summaries:[],data_gaps:[],display_labels:{
+        event_count:'1 条正式公告 · 0 个 M6 已分类节点',price_data_as_of:'2026-06-26',
+        announcement_data_as_of:'2026-07-08',announcement_refresh_checked_at:'2026-07-12',episode_index_as_of:'2026-07-07',
+      },provenance:[],
+    }),{status:200,headers:{'Content-Type':'application/json'}}))
+    render(<MemoryRouter initialEntries={['/stocks/300123']}><App/></MemoryRouter>)
+
+    expect(await screen.findByRole('region',{name:'价格截止后公告'})).toBeInTheDocument()
+    expect(screen.getByText('晚于 2026-06-26，不能与同期价格联读')).toBeInTheDocument()
+    expect(screen.getByRole('button',{name:/2026-07-08.*公开招募和遴选重整投资人/})).toBeInTheDocument()
+  })
 })

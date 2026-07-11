@@ -250,6 +250,43 @@ a {
   font-size:13px
 }
 
+.boundary-rewrite {
+  margin-top:28px;
+  padding:26px 0 30px;
+  border-block:1px solid var(--border)
+}
+
+.boundary-rewrite h2 {
+  max-width:720px;
+  margin:7px 0 10px;
+  color:#111827;
+  font-size:22px;
+  line-height:1.4
+}
+
+.boundary-rewrite>p:not(.eyebrow) {
+  max-width:680px;
+  color:#596273;
+  font-size:15px;
+  line-height:1.7
+}
+
+.boundary-rewrite button {
+  max-width:100%;
+  margin-top:14px;
+  padding:10px 12px;
+  border:1px solid #b7c8da;
+  border-radius:5px;
+  background:#f4f8fc;
+  color:#234c73;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  text-align:left;
+  cursor:pointer
+}
+
 .answer-grid {
   display:grid;
   grid-template-columns:minmax(0,1fr) 310px;
@@ -1277,6 +1314,66 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   text-wrap:pretty
 }
 
+.analysis-direct {
+  max-width:720px;
+  margin:0 0 26px;
+  color:#17202b;
+  font-size:19px;
+  font-weight:530;
+  line-height:1.75;
+  text-wrap:pretty
+}
+
+.reasoning-chain {
+  max-width:720px;
+  margin:0 0 26px
+}
+
+.reasoning-chain h3 {
+  margin:0 0 13px;
+  color:#475467;
+  font-size:13px;
+  font-weight:600
+}
+
+.reasoning-chain ol {
+  margin:0;
+  padding:0;
+  list-style:none
+}
+
+.reasoning-chain li {
+  display:grid;
+  grid-template-columns:28px minmax(0,1fr);
+  gap:12px;
+  padding:13px 0;
+  border-top:1px solid #e8eaed
+}
+
+.reasoning-chain li>span {
+  width:24px;
+  height:24px;
+  border:1px solid #cbd2da;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#596273;
+  font:11px ui-monospace
+}
+
+.reasoning-chain strong {
+  color:#253142;
+  font-size:14px;
+  font-weight:620
+}
+
+.reasoning-chain p {
+  margin:5px 0 0;
+  color:#394556;
+  font-size:15px;
+  line-height:1.7
+}
+
 .analysis-basis {
   display:grid;
   grid-template-columns:auto minmax(0,1fr);
@@ -1499,6 +1596,42 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   grid-template-columns:minmax(0,1fr) 340px
 }
 
+.freshness-strip {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border-bottom:1px solid var(--border)
+}
+
+.freshness-strip>div {
+  min-width:0;
+  padding:13px 16px;
+  border-right:1px solid var(--border)
+}
+
+.freshness-strip>div:first-child {
+  padding-left:0
+}
+
+.freshness-strip>div:last-child {
+  border-right:0
+}
+
+.freshness-strip span,.freshness-strip strong {
+  display:block
+}
+
+.freshness-strip span {
+  margin-bottom:4px;
+  color:#697386;
+  font-size:11px
+}
+
+.freshness-strip strong {
+  color:#263241;
+  font:12px ui-monospace;
+  overflow-wrap:anywhere
+}
+
 .market {
   padding:30px 30px 38px 0
 }
@@ -1563,6 +1696,46 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
 .event-navigator {
   margin-top:18px;
   border-top:1px solid var(--border)
+}
+
+.post-price-events {
+  margin-top:18px;
+  border:1px solid #e3c98d;
+  background:#fffaf0
+}
+
+.post-price-events>header {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  padding:13px 14px;
+  border-bottom:1px solid #ead8ad
+}
+
+.post-price-events>header h3 {
+  color:#5d4719
+}
+
+.post-price-events>header p {
+  margin:4px 0 0;
+  color:#806a3e;
+  font-size:12px
+}
+
+.post-price-events>header>strong {
+  color:#755a23;
+  font:12px ui-monospace;
+  white-space:nowrap
+}
+
+.post-price-events .event-list {
+  max-height:250px;
+  border:0
+}
+
+.post-price-events .event-list>button {
+  background:#fffdf8
 }
 
 .event-navigator>header {
@@ -1797,6 +1970,13 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
     font-size:16px;
     line-height:1.75
   }
+  .analysis-direct {
+    font-size:17px
+  }
+  .reasoning-chain li {
+    grid-template-columns:24px minmax(0,1fr);
+    gap:9px
+  }
   .analysis-basis {
     grid-template-columns:1fr
   }
@@ -1831,6 +2011,19 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   }
   .dossier-head {
     align-items:flex-start
+  }
+  .freshness-strip {
+    grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+  .freshness-strip>div {
+    padding:11px 10px;
+    border-bottom:1px solid var(--border)
+  }
+  .freshness-strip>div:first-child {
+    padding-left:0
+  }
+  .freshness-strip>div:nth-child(2) {
+    border-right:0
   }
   .chart-toolbar {
     grid-template-columns:1fr auto

@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from trading_boundary import is_trading_advice_request
+
 
 @dataclass(frozen=True)
 class RoutePrediction:
@@ -64,12 +66,7 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
 
     # Product boundary outranks missing context: a forbidden request stays
     # forbidden even when the referenced stock or event is ambiguous.
-    if _has_any(text, [
-        "能买吗", "该买", "买入", "卖出", "目标价", "仓位", "加仓", "减仓",
-        "最值得买", "推荐买", "抄底", "割肉", "满仓", "交易信号", "埋伏",
-        "上车", "买点", "卖点", "止损", "止盈", "持有还是", "继续持有",
-        "会涨停",
-    ]):
+    if is_trading_advice_request(raw_question):
         return _prediction(
             "refuse_or_rewrite",
             "boundary",

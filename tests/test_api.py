@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 import api as api_module
+import dossier_service
 import httpx
 from api import SPAStaticFiles
 from answer_engine import BASE_DB, EPISODE_INDEX
@@ -39,9 +40,9 @@ def test_health_exposes_contracts_and_read_only_mode(monkeypatch) -> None:
     assert response.status_code == 200
     assert response.json() == {
         "status": "ok",
-        "api_contract_version": "v8_copilot_api_contract_v1",
+        "api_contract_version": "v8_copilot_api_contract_v2",
         "request_contract_version": "v8_copilot_api_contract_v0",
-        "response_contract_version": "v8_copilot_api_contract_v1",
+        "response_contract_version": "v8_copilot_api_contract_v2",
         "answer_contract_version": "v8_answer_contract_v0",
         "llm_available": False,
         "database_mode": "read_only",
@@ -73,9 +74,10 @@ def test_answers_endpoint_returns_validated_answer_card() -> None:
 
     assert response.status_code == 200
     body = response.json()
-    assert body["contract_version"] == "v8_copilot_api_contract_v1"
+    assert body["contract_version"] == "v8_copilot_api_contract_v2"
     assert body["answer_card"]["contract_version"] == "v8_answer_contract_v0"
     assert [row["中位(天)"] for row in body["answer_card"]["body_rows"]] == [4, 10, 14]
+    assert body["narrative"]["direct_answer"]["backing"]
     schema = json.loads((
         Path(__file__).resolve().parents[1]
         / "contracts/v8_answer_contract_v0/schema.json"
@@ -174,7 +176,7 @@ def test_stream_failure_returns_safe_error_event(monkeypatch) -> None:
     rows = [json.loads(line) for line in response.text.splitlines()]
     assert rows == [
         {
-            "contract_version": "v8_copilot_api_contract_v1",
+                "contract_version": "v8_copilot_api_contract_v2",
             "request_id": "req-api-test",
             "sequence": 1,
             "event": "error",
@@ -198,12 +200,15 @@ def test_dossier_endpoint_uses_real_read_only_sources() -> None:
     assert body["symbol"] == "603398"
     assert body["as_of"] == "2026-06-26"
     assert len(body["price_series"]) == 1982
-    assert len(body["events"]) >= 150
+    assert len(body["events"]) >= 300
     assert len({event["event_id"] for event in body["events"]}) == len(body["events"])
     assert {item["release_id"] for item in body["lens_summaries"]} == {
         "RL-C-002", "RL-C-003",
     }
     assert body["display_labels"]["lens_library_size"] == "冻结库 9 条"
+    assert "条正式公告" in body["display_labels"]["event_count"]
+    assert "个 M6 已分类节点" in body["display_labels"]["event_count"]
+    assert body["display_labels"]["announcement_data_as_of"]
     assert "RL-A-003" not in {item["release_id"] for item in body["lens_summaries"]}
     assert all("episode_label" in event for event in body["events"])
 
@@ -235,12 +240,45 @@ def test_dossier_announcement_focus_is_resolved_from_sqlite_not_url_metadata() -
         if item["event_id"] == "announcement:1221661091"
     )
     assert event["title"] == "江西沐邦高科股份有限公司关于董事会、监事会延期换届选举的提示性公告"
-    assert event["episode_label"] == "公开公告（未纳入事件段）"
+    assert event["episode_label"] == "正式公告（尚未纳入 M6 事件段）"
     assert all(item["event_id"] != "announcement:FAKE" for item in fake.json()["events"])
     assert sum(
         item["event_id"] == "announcement:1221766612"
         for item in bare.json()["events"]
     ) == 1
+
+
+def test_dossier_merges_cninfo_refresh_without_promoting_title_to_lens(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setattr(dossier_service, "ANNOUNCEMENT_REFRESH_DIR", tmp_path)
+    (tmp_path / "300068.json").write_text(json.dumps({
+        "symbol": "300068",
+        "source": "cninfo",
+        "count": 1,
+        "records": [{
+            "announcement_id": "TEST-CNINFO-1",
+            "announcement_date": "2026-07-08",
+            "title": "关于重大资产重组事项的提示性公告",
+        }],
+    }, ensure_ascii=False), encoding="utf-8")
+
+    response = api_request("GET", "/api/v1/stocks/300068/dossier")
+
+    assert response.status_code == 200
+    body = response.json()
+    event = next(
+        item for item in body["events"]
+        if item["event_id"] == "announcement:TEST-CNINFO-1"
+    )
+    assert event["subtype"] == "announcement_unclassified"
+    assert event["episode_label"] == "正式公告（尚未纳入 M6 事件段）"
+    assert event["timeline_lane"] == "restructuring"
+    assert "RL-C-004" not in {
+        item["release_id"] for item in body["lens_summaries"]
+    }
+    assert body["display_labels"]["announcement_data_as_of"] == "2026-07-08"
 
 
 def test_cors_is_restricted_to_local_vite_origins() -> None:

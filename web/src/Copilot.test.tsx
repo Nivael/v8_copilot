@@ -35,6 +35,17 @@ const answeredResponse:Response={
   },
 }
 
+const narrativeResponse:Response={
+  ...answeredResponse,
+  narrative:{
+    direct_answer:{text:'当前能确认风险警示状态，但具体原因仍需回到公告原文。',backing:[{kind:'query_row',ref:'status-row-1'}]},
+    reasoning_steps:[{title:'先确认状态区间',text:'风险警示状态已记录。',backing:[{kind:'query_row',ref:'status-row-1'}]}],
+    uncertainties:[{text:'状态名称不能自动解释触发原因。',backing:[{kind:'query_row',ref:'status-row-1'}]}],
+    watch_items:[],
+    basis_note:'本题没有匹配到适用的冻结 Lens；查询结果只作为描述性证据。',
+  },
+}
+
 describe('Copilot evidence loops',()=>{
   it('renders all seven navigable evidence reference kinds',()=>{
     render(<MemoryRouter><EvidenceNavigation items={response.navigation_refs} selectedId="nav-provenance"/></MemoryRouter>)
@@ -98,6 +109,43 @@ describe('Copilot evidence loops',()=>{
     fireEvent.click(screen.getByRole('button',{name:'查看证据与来源'}))
     expect(screen.getByRole('complementary',{name:'证据与来源'})).toBeInTheDocument()
     expect(screen.getByText(/status-row-1/)).toBeInTheDocument()
+  })
+
+  it('renders a direct answer and ordered reasoning chain from narrative v2',async()=>{
+    const stream={request_id:'req-2',sequence:1,event:'completed',payload:{response:narrativeResponse}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(`${JSON.stringify(stream)}\n`,{
+      status:200,headers:{'Content-Type':'application/x-ndjson'},
+    }))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    fireEvent.change(screen.getByRole('textbox',{name:'研究问题'}),{target:{value:'为什么 ST？'}})
+    fireEvent.keyDown(screen.getByRole('textbox',{name:'研究问题'}),{key:'Enter'})
+
+    expect(await screen.findByText('当前能确认风险警示状态，但具体原因仍需回到公告原文。')).toBeInTheDocument()
+    expect(screen.getByRole('heading',{name:'判断依据'})).toBeInTheDocument()
+    expect(screen.getByText('先确认状态区间')).toBeInTheDocument()
+    expect(screen.getByText('状态名称不能自动解释触发原因。')).toBeInTheDocument()
+    expect(screen.queryByText(/status-row-1/)).not.toBeInTheDocument()
+  })
+
+  it('shows a safe research rewrite for split trading wording',async()=>{
+    const boundary:Response={
+      ...response,route:{route:'refuse_or_rewrite'},question_cards:[],data_debt_candidates:[],
+      boundary_rewrite:{
+        message:'不能判断是否应采取买卖、持有或仓位行动。',
+        rewritten_question:'603398 接下来该看哪些窗口？',
+        why:'系统可以分析公开事实和观察窗口，但不会给出交易指令。',
+      },
+    }
+    const stream={request_id:'req-3',sequence:1,event:'completed',payload:{response:boundary}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(`${JSON.stringify(stream)}\n`,{
+      status:200,headers:{'Content-Type':'application/x-ndjson'},
+    }))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    fireEvent.change(screen.getByRole('textbox',{name:'研究问题'}),{target:{value:'现在能买沐邦吗？'}})
+    fireEvent.keyDown(screen.getByRole('textbox',{name:'研究问题'}),{key:'Enter'})
+
+    expect(await screen.findByRole('heading',{name:'不能判断是否应采取买卖、持有或仓位行动。'})).toBeInTheDocument()
+    expect(screen.getByRole('button',{name:/改问：603398 接下来该看哪些窗口/})).toBeInTheDocument()
   })
 })
 

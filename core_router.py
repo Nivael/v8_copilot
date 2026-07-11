@@ -9,6 +9,7 @@ from api_contract import (
 )
 from evals.deterministic_router_v0 import route_question
 from stock_resolver import resolve_stock
+from trading_boundary import is_trading_advice_request
 
 
 def _infer_object(request: ResearchRequest) -> ResearchObject:
@@ -28,7 +29,7 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
     research_object = _infer_object(request)
 
     intent = "research_question"
-    if any(term in question for term in ("能买吗", "目标价", "仓位", "买入", "卖出")):
+    if is_trading_advice_request(request.question):
         intent = "trading_advice_boundary"
     elif any(term in question for term in ("多久", "下一个节点", "下一阶段")):
         intent = "event_timing"

@@ -85,11 +85,16 @@ const labels:Record<string,string>={
   delisting_risk_warning:'退市风险警示',
   announcement_unclassified:'其他公开公告',
   st_status_fetched_at:'ST 生命周期抓取时间',
+  st_evidence_generated_at:'ST 触发公告证据生成日',
   st_status_history:'ST 生命周期记录',
   case_note_only:'个案记录边界',
   unclassified:'未纳入事件段分类',
   price_data_as_of:'价格数据截至',
   company_announcements_as_of:'公告数据截至',
+  shareholder_count_as_of:'股东人数数据截至',
+  equity_timeline_as_of:'股权时间线截至',
+  shareholder_count:'股东人数',
+  capital_structure:'股本结构',
   episode_index_as_of:'事件段索引截至',
   release_library_frozen_at:'Lens 库冻结时间',
   data_debt_registry_as_of:'数据债台账截至',
@@ -217,6 +222,7 @@ const phraseLabels:Array<[RegExp,string]>= [
   [/\beffect digest\b/gi,'历史效应摘要'],
   [/\bcalendar-regime\b/gi,'日历窗口'],
   [/\bepisode\b/gi,'事件段'],
+  [/\bpilot\b/gi,'试点样本'],
 ]
 
 function formatText(value:string):string{
@@ -229,6 +235,12 @@ function formatText(value:string):string{
     ? `v5 公告库：公司公告（${value.split('[')[1]?.split(']')[0] ?? '指定股票'}）`
     : 'v5 公告库：公司公告'
   if(value.includes('st_stocks_v5_backup.sqlite3::st_status_history'))return 'v5 ST 生命周期表'
+  if(value.includes('shareholder_count.sqlite3::shareholder_count_snapshots'))return value.includes('[')
+    ? `v7 股东人数试点（${value.split('[')[1]?.split(']')[0] ?? '指定股票'}）`
+    : 'v7 股东人数试点'
+  if(value.includes('shareholder_count.sqlite3::equity_timeline_events'))return value.includes('[')
+    ? `v7 股权事件试点（${value.split('[')[1]?.split(']')[0] ?? '指定股票'}）`
+    : 'v7 股权事件试点'
   if(value.includes('v7_worksite/coordination/debt_cards/D-051A_province_mapping.md'))return '数据债卡 D-051A：省份映射'
   if(value==='shared_data/v7/episode_index_v0/episode_index.jsonl')return 'M6 事件段索引 v0'
   if(value==='shared_data/v7/release_library_v1/release_library.json')return 'v7.4 冻结 Lens 库 v1'

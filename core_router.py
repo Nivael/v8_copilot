@@ -1,8 +1,6 @@
 """Deterministic interpretation and final routing for the W1 API."""
 from __future__ import annotations
 
-import re
-
 from api_contract import (
     QuestionInterpretation,
     ResearchObject,
@@ -10,10 +8,7 @@ from api_contract import (
     RouteDecision,
 )
 from evals.deterministic_router_v0 import route_question
-
-
-_SYMBOL_RE = re.compile(r"(?<![0-9])([0-9]{6})(?![0-9])")
-_KNOWN_NAMES = {"沐邦": "603398"}
+from stock_resolver import resolve_stock
 
 
 def _infer_object(request: ResearchRequest) -> ResearchObject:
@@ -21,12 +16,9 @@ def _infer_object(request: ResearchRequest) -> ResearchObject:
         return request.object
     if request.context and request.context.symbol:
         return ResearchObject(kind="stock", ref=request.context.symbol)
-    symbol_match = _SYMBOL_RE.search(request.question)
-    if symbol_match:
-        return ResearchObject(kind="stock", ref=symbol_match.group(1))
-    for name, symbol in _KNOWN_NAMES.items():
-        if name in request.question:
-            return ResearchObject(kind="stock", ref=symbol)
+    resolution = resolve_stock(request.question)
+    if resolution:
+        return ResearchObject(kind="stock", ref=resolution.symbol)
     return ResearchObject(kind="unknown", ref="unknown")
 
 
@@ -46,7 +38,7 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         intent = "observation_checklist"
     elif any(term in question for term in ("相似案例", "哪些case", "哪些案例")):
         intent = "similarity_review"
-    elif "为什么st" in question:
+    elif any(term in question for term in ("为什么st", "为什么被st", "为何st", "st原因")):
         intent = "st_status_timeline"
 
     dimensions: list[str] = []
@@ -56,8 +48,11 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         "相对大盘": "market_relative",
         "微盘": "market_cap_cohort",
         "股东人数": "shareholder_count",
+        "股权": "equity",
+        "股本": "capital_structure",
         "公告": "announcement",
         "价格": "price",
+        "股价": "price",
         "控制权": "control_structure",
     }
     for term, dimension in dimension_terms.items():

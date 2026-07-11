@@ -100,6 +100,22 @@ describe('display labels',()=>{
     expect(show('D-051A')).toBe('D-051A')
   })
 
+  it('localizes new answerability freshness and pilot provenance',()=>{
+    const text=show({
+      st_evidence_generated_at:'2026-06-28',
+      shareholder_count_as_of:'2026-06-30',
+      dimension:'shareholder_count',
+      source:'shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3::shareholder_count_snapshots[603398]',
+    })
+
+    expect(text).toContain('ST 触发公告证据生成日')
+    expect(text).toContain('股东人数数据截至')
+    expect(text).toContain('股东人数')
+    expect(text).toContain('v7 股东人数试点（603398）')
+    expect(text).not.toContain('shareholder_count')
+    expect(text).not.toContain('shared_data/')
+  })
+
   it('preserves unregistered evidence boundary text without dropping facts',()=>{
     const text=show(
       'Unregistered evidence note: threshold 0.73; N=12; counterexample boundary: effect reverses after shock-window thinning.',

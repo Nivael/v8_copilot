@@ -54,6 +54,15 @@ def orchestrate(request: ResearchRequest) -> ResearchResponseV1:
     """Patchable API boundary used by JSON and NDJSON endpoints."""
     return enrich_response_v1(request, orchestrate_optional_llm(request))
 
+
+def orchestrate_deterministic(request: ResearchRequest) -> ResearchResponseV1:
+    """Return the validated local answer without waiting for an LLM provider."""
+    local_request = request.model_copy(update={"llm_mode": "off"})
+    return enrich_response_v1(
+        local_request,
+        orchestrate_optional_llm(local_request),
+    )
+
 app = FastAPI(
     title="ST Research Copilot API",
     version="0.1.0",
@@ -103,14 +112,54 @@ def _ndjson_stream(request: ResearchRequest) -> Iterator[str]:
     if request.request_id is None:
         request_with_id = request.model_copy(update={"request_id": f"req-{uuid4().hex}"})
     try:
-        response = orchestrate(request_with_id)
-        for event in stream_events_v1(request_with_id, response):
-            yield event.model_dump_json() + "\n"
+        deterministic = orchestrate_deterministic(request_with_id)
+        deterministic_events = stream_events_v1(request_with_id, deterministic)
+        sequence = 0
+
+        def emit(event: ResearchStreamEventV1) -> str:
+            nonlocal sequence
+            sequence += 1
+            return event.model_copy(update={"sequence": sequence}).model_dump_json() + "\n"
+
+        if request_with_id.llm_mode == "off" or deterministic.answer_card is None:
+            for event in deterministic_events:
+                if event.event == "answer_card":
+                    event = event.model_copy(update={"payload": {
+                        "answer_card": deterministic.answer_card,
+                        "response": deterministic.model_dump(mode="json"),
+                    }})
+                yield emit(event)
+            return
+
+        for event in deterministic_events:
+            if event.event not in {"accepted", "interpreted", "routed", "answer_card"}:
+                continue
+            if event.event == "answer_card":
+                event = event.model_copy(update={"payload": {
+                    "answer_card": deterministic.answer_card,
+                    "response": deterministic.model_dump(mode="json"),
+                }})
+            yield emit(event)
+
+        try:
+            enriched = orchestrate(request_with_id)
+        except Exception:
+            logger.exception("LLM enrichment failed after deterministic answer")
+            enriched = deterministic.model_copy(update={
+                "degraded": True,
+                "degraded_reasons": [
+                    *deterministic.degraded_reasons,
+                    "LLM 分析叙述不可用，已保留确定性证据菜单。",
+                ],
+            })
+        for event in stream_events_v1(request_with_id, enriched):
+            if event.event in {"claim_block", "degraded", "completed"}:
+                yield emit(event)
     except Exception:
         logger.exception("deterministic answer stream failed")
         event = ResearchStreamEventV1(
             request_id=request_with_id.request_id or "req-error",
-            sequence=1,
+            sequence=locals().get("sequence", 0) + 1,
             event="error",
             payload={"code": "stream_failed", "message": "研究内核执行失败。"},
         )

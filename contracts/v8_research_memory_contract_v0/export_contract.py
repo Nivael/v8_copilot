@@ -16,6 +16,9 @@ sys.path.insert(0, str(ROOT))
 from query_templates import TEMPLATES  # noqa: E402
 from research_memory_contract import (  # noqa: E402
     RESEARCH_MEMORY_CONTRACT_VERSION,
+    QUESTION_SEMANTIC_REGISTRY_VERSION,
+    QUESTION_DIMENSION_ALIASES,
+    QUESTION_INTENT_ALIASES,
     REVIEW_ACTIVE_LIMIT,
     STATUS_TRANSITIONS,
     DataDebtCard,
@@ -24,7 +27,9 @@ from research_memory_contract import (  # noqa: E402
     ObjectScope,
     ProvenanceRef,
     QueryParameterSpec,
+    QuestionDimension,
     QuestionCard,
+    QuestionIntent,
     ResearchRouteRef,
     ResearchRunRef,
     ReviewSubjectRef,
@@ -153,6 +158,23 @@ def dump(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def question_semantic_registry_payload() -> dict[str, Any]:
+    return {
+        "registry_version": QUESTION_SEMANTIC_REGISTRY_VERSION,
+        "intents": sorted(item.value for item in QuestionIntent),
+        "dimensions": sorted(item.value for item in QuestionDimension),
+        "intent_aliases": {
+            alias: target.value for alias, target in sorted(QUESTION_INTENT_ALIASES.items())
+        },
+        "dimension_aliases": {
+            alias: target.value
+            for alias, target in sorted(QUESTION_DIMENSION_ALIASES.items())
+        },
+        "unknown_value_policy": "reject",
+        "mapping_authority": "deterministic_sedimenter",
+    }
+
+
 def source(source_type: str, source_ref: str, alias: str | None = None) -> SourceRef:
     return SourceRef(source_type=source_type, source_ref=source_ref, source_alias=alias)
 
@@ -227,6 +249,21 @@ def valid_objects() -> dict[str, Any]:
         source_refs=common_source,
         provenance_refs=common_provenance,
         time_scope=TimeScope(semantics="event_window", before=10, after=10),
+    )
+    backlog_question = build_question_card(
+        canonical_question="post-v7 backlog 中待复核的 lens 边界问题",
+        scope=ObjectScope(kind="stock", refs=["任意"]),
+        semantic_intent="lens_applicability_and_standing",
+        dimensions=["lens_kind", "validation_status", "rejected_boundary"],
+        needs_data=["release_library_v1"],
+        research_status="needs_review",
+        view="evidence",
+        original_source="post_v7_backlog",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("post_v7_backlog", "post-v7:C06-boundary-review")],
+        provenance_refs=[provenance("contract_fixture", "D-053")],
     )
     debt = build_data_debt_card(
         gap_id="market_index_daily_series",
@@ -370,6 +407,7 @@ def valid_objects() -> dict[str, Any]:
     )
     return {
         "question_card": question,
+        "question_card_post_v7_backlog": backlog_question,
         "data_debt_assigned": debt,
         "data_debt_unassigned": debt_unassigned,
         "query_template_record": template,
@@ -465,6 +503,21 @@ def key_fixtures() -> dict[str, Any]:
         updated_at=STAMP,
         source_refs=[source("research_run", "run-seed-equivalent")],
         provenance_refs=[provenance("research_response", "response-seed-equivalent")],
+    )
+    registry_alias_equivalent = build_question_card(
+        canonical_question="603398 后续监控哪些窗口？",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        semantic_intent="stock_monitoring_windows",
+        dimensions=["daily_prices", "episode_index"],
+        needs_data=["runtime_availability"],
+        research_status="answerable",
+        view="query",
+        original_source="user",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("research_run", "run-registry-alias")],
+        provenance_refs=[provenance("research_response", "response-registry-alias")],
     )
     array_a = build_question_card(
         canonical_question="节点窗口",
@@ -712,6 +765,12 @@ def key_fixtures() -> dict[str, Any]:
             "expect_same_dedupe_key": True,
             "expect_different_source_refs": True,
         },
+        "registered_semantic_alias_equivalence": {
+            "first": online_equivalent.model_dump(mode="json"),
+            "second": registry_alias_equivalent.model_dump(mode="json"),
+            "expect_same_dedupe_key": True,
+            "expect_different_source_refs": True,
+        },
         "same_gap_different_scope": {
             "first": debt_stock.model_dump(mode="json"),
             "second": debt_universe.model_dump(mode="json"),
@@ -783,6 +842,14 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
     no_provenance = {**question, "provenance_refs": []}
     question_without_dimensions = dict(question)
     question_without_dimensions.pop("dimensions")
+    question_unknown_intent = dict(question)
+    question_unknown_intent["semantic_intent"] = "llm_freeform_intent"
+    question_unknown_dimension = dict(question)
+    question_unknown_dimension["dimensions"] = ["llm_freeform_dimension"]
+    question_unknown_registry = dict(question)
+    question_unknown_registry["semantic_registry_version"] = "unversioned"
+    question_backlog_without_source = dict(question)
+    question_backlog_without_source["original_source"] = "post_v7_backlog"
     evidence_identity = {**question, "evidence_grade": "supported"}
     bad_identity = {**question, "dedupe_key": "0" * 64}
     naive_time = {**question, "created_at": "2026-07-11T00:00:00"}
@@ -819,6 +886,25 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "model": "QuestionCard",
             "payload": question_without_dimensions,
             "schema_must_reject": True,
+        },
+        "question_unknown_intent": {
+            "model": "QuestionCard",
+            "payload": question_unknown_intent,
+            "schema_must_reject": True,
+        },
+        "question_unknown_dimension": {
+            "model": "QuestionCard",
+            "payload": question_unknown_dimension,
+            "schema_must_reject": True,
+        },
+        "question_unknown_semantic_registry": {
+            "model": "QuestionCard",
+            "payload": question_unknown_registry,
+            "schema_must_reject": True,
+        },
+        "question_backlog_without_matching_source": {
+            "model": "QuestionCard",
+            "payload": question_backlog_without_source,
         },
         "evidence_identity_forbidden": {
             "model": "QuestionCard", "payload": evidence_identity, "schema_must_reject": True,
@@ -888,7 +974,7 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "payload": {
                 "record_type": "status_transition",
                 "object_type": "question_card",
-                "from_status": "accepted",
+                "from_status": "candidate",
                 "to_status": "merged",
                 "actor_type": "system",
                 "context": "online",
@@ -971,6 +1057,7 @@ def main() -> None:
     migrated = [migrate_seed(row) for row in rows]
     valid = valid_objects()
 
+    dump(HERE / "question_semantic_registry.json", question_semantic_registry_payload())
     dump(HERE / "schema.json", public_contract_schema())
     for name, value in valid.items():
         dump(VALID / f"{name}.json", value)
@@ -989,6 +1076,16 @@ def main() -> None:
                 actor_type="human",
                 context="online",
                 reason="review confirmed duplicate",
+                merge_target_id=migrated[0].memory_id,
+            ).model_dump(mode="json"),
+            "valid_human_candidate_merge": StatusTransition(
+                record_type="status_transition",
+                object_type="question_card",
+                from_status="candidate",
+                to_status="merged",
+                actor_type="human",
+                context="online",
+                reason="human review matched an existing semantic object",
                 merge_target_id=migrated[0].memory_id,
             ).model_dump(mode="json"),
             "valid_seed_migration_acceptance": StatusTransition(
@@ -1108,6 +1205,7 @@ def main() -> None:
             "schema_entrypoint": "record_type_discriminated_union",
             "python_types": "research_memory_contract.py",
             "canonical_key_encoding": "sorted_compact_json_utf8",
+            "question_semantic_registry": "question_semantic_registry.json",
             "seed_sha256": SEED_SHA256,
             "seed_count": 15,
             "persistent_entities": [

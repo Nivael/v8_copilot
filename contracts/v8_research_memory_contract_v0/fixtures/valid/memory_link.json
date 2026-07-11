@@ -17,13 +17,13 @@
     }
   ],
   "record_type": "memory_link",
-  "link_id": "MEM-LK-E78654B6159029F5645F",
-  "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"derived_from\",\"source_ref\":\"response-fixture-001\",\"source_type\":\"research_response\",\"target\":\"mem-qc-7813a67c9033ba112b0b\",\"target_type\":\"question_card\"}",
-  "dedupe_key": "e78654b6159029f5645f5c3064af2092eea2df4ef6d82e690d34a7b493254d8b",
+  "link_id": "MEM-LK-89F21AC76A02864557C2",
+  "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"derived_from\",\"source_ref\":\"response-fixture-001\",\"source_type\":\"research_response\",\"target\":\"mem-qc-7f87212d392b5d1c27ed\",\"target_type\":\"question_card\"}",
+  "dedupe_key": "89f21ac76a02864557c29c66fe57287db624c7514ee07a3787673b57fa9de1c2",
   "relation": "derived_from",
   "source_type": "research_response",
   "source_ref": "response-fixture-001",
   "target_type": "question_card",
-  "target_memory_id": "MEM-QC-7813A67C9033BA112B0B",
+  "target_memory_id": "MEM-QC-7F87212D392B5D1C27ED",
   "not_evidence": true
 }

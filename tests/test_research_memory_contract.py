@@ -11,6 +11,7 @@ from jsonschema.exceptions import ValidationError as JsonSchemaValidationError
 from pydantic import ValidationError
 
 from research_memory_contract import (
+    QUESTION_SEMANTIC_REGISTRY_VERSION,
     STATUS_TRANSITIONS,
     DataDebtCard,
     ExecutorRef,
@@ -183,6 +184,73 @@ def test_fixed_seed_and_online_question_share_semantic_identity() -> None:
     assert seed.memory_id == online.memory_id
     assert "qc-20260710-015" not in seed.canonical_key
     assert json.loads(seed.canonical_key)["intent"] == "stock_observation_windows"
+
+
+def test_registered_question_semantic_aliases_collapse_to_same_key() -> None:
+    common = {
+        "canonical_question": "观察窗口",
+        "scope": ObjectScope(kind="stock", refs=["603398"]),
+        "research_status": "answerable",
+        "view": "checklist",
+        "original_source": "user",
+        "status": "candidate",
+        "created_at": STAMP,
+        "updated_at": STAMP,
+        "source_refs": source("semantic-alias"),
+        "provenance_refs": provenance("semantic-alias"),
+    }
+    canonical = build_question_card(
+        semantic_intent="stock_observation_windows",
+        dimensions=["price", "episode"],
+        **common,
+    )
+    aliases = build_question_card(
+        semantic_intent="stock_monitoring_windows",
+        dimensions=["daily_prices", "episode_index"],
+        **common,
+    )
+
+    assert canonical.dedupe_key == aliases.dedupe_key
+    assert aliases.semantic_intent.value == "stock_observation_windows"
+    assert [item.value for item in aliases.dimensions] == ["episode", "price"]
+    assert aliases.semantic_registry_version == QUESTION_SEMANTIC_REGISTRY_VERSION
+
+
+@pytest.mark.parametrize(
+    ("intent", "dimensions", "message"),
+    [
+        ("llm_freeform_intent", ["price"], "unknown question intent"),
+        ("stock_observation_windows", ["llm_freeform_dimension"], "unknown question dimension"),
+    ],
+)
+def test_question_builder_rejects_unknown_semantics(
+    intent: str, dimensions: list[str], message: str
+) -> None:
+    with pytest.raises(ValueError, match=message):
+        build_question_card(
+            canonical_question="unknown semantic input",
+            scope=ObjectScope(kind="stock", refs=["603398"]),
+            semantic_intent=intent,
+            dimensions=dimensions,
+            research_status="needs_review",
+            view="query",
+            original_source="user",
+            status="candidate",
+            created_at=STAMP,
+            updated_at=STAMP,
+            source_refs=source("unknown-semantic"),
+            provenance_refs=provenance("unknown-semantic"),
+        )
+
+
+def test_post_v7_backlog_question_source_is_lossless() -> None:
+    payload = json.loads(
+        (CONTRACT / "fixtures/valid/question_card_post_v7_backlog.json").read_text()
+    )
+    card = QuestionCard.model_validate(payload)
+
+    assert card.original_source == "post_v7_backlog"
+    assert card.source_refs[0].source_type == "post_v7_backlog"
 
 
 def test_fixed_seed_id_rejects_non_seed_source() -> None:
@@ -431,6 +499,21 @@ def test_transition_table_covers_all_states_and_blocks_automatic_merge() -> None
             reason="automatic merge",
             merge_target_id="MEM-QC-TARGET",
         )
+
+
+def test_human_can_merge_candidate_directly() -> None:
+    transition = StatusTransition(
+        record_type="status_transition",
+        object_type="question_card",
+        from_status="candidate",
+        to_status="merged",
+        actor_type="human",
+        context="online",
+        reason="human matched existing question",
+        merge_target_id="MEM-QC-TARGET",
+    )
+
+    assert transition.to_status == "merged"
 
 
 @pytest.mark.parametrize(

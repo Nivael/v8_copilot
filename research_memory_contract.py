@@ -9,6 +9,7 @@ import json
 import re
 import unicodedata
 from datetime import datetime
+from enum import Enum
 from hashlib import sha256
 from typing import Annotated, Any, Literal
 
@@ -16,12 +17,16 @@ from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, field_validator,
 
 
 RESEARCH_MEMORY_CONTRACT_VERSION = "v8_research_memory_contract_v0"
+QUESTION_SEMANTIC_REGISTRY_VERSION = "v8_question_semantic_registry_v0"
 REVIEW_ACTIVE_LIMIT = 20
 
 MemoryStatus = Literal["candidate", "accepted", "ignored", "merged", "blocked", "closed"]
 ResearchStatus = Literal["answerable", "needs_data", "needs_review"]
 QuestionView = Literal["evidence", "query", "checklist", "methodology", "data_debt"]
 DebtRefStatus = Literal["assigned", "needs_assignment", "not_required"]
+QuestionOriginalSource = Literal[
+    "user", "human_review", "slice", "system_gap", "post_v7_backlog"
+]
 ObjectKind = Literal[
     "stock",
     "stock_event",
@@ -62,6 +67,75 @@ MemoryObjectType = Literal[
 ]
 
 
+class QuestionIntent(str, Enum):
+    ST_STATUS_REASON_AND_KEY_NODES = "st_status_reason_and_key_nodes"
+    HISTORICAL_CASE_SIMILARITY = "historical_case_similarity"
+    LENS_APPLICABILITY_AND_STANDING = "lens_applicability_and_standing"
+    STOCK_EVENT_MULTI_DIMENSION_WINDOW = "stock_event_multi_dimension_window"
+    LENS_EVIDENCE_AUDIT = "lens_evidence_audit"
+    ST_SHAREHOLDER_COUNT_CHANGE = "st_shareholder_count_change"
+    ST_ANNOUNCEMENT_DENSITY = "st_announcement_density"
+    STOCK_EVENT_DATA_SUMMARY = "stock_event_data_summary"
+    RESTRUCTURING_STAGE_TIMING = "restructuring_stage_timing"
+    RESTRUCTURING_RECRUITMENT_NEXT_NODE_TIMING = (
+        "restructuring_recruitment_next_node_timing"
+    )
+    RESTRUCTURING_PATH_ISOLATION = "restructuring_path_isolation"
+    ST_MICROCAP_TWO_WEEK_DISTRIBUTION = "st_microcap_two_week_distribution"
+    ST_MARKET_RELATIVE_TWO_WEEK_DISTRIBUTION = (
+        "st_market_relative_two_week_distribution"
+    )
+    STOCK_OBSERVATION_WINDOWS = "stock_observation_windows"
+    STOCK_EVENT_WINDOW = "stock_event_window"
+    EVENT_WINDOW = "event_window"
+    UNKNOWN_RESEARCH_QUESTION = "unknown_research_question"
+
+
+class QuestionDimension(str, Enum):
+    ST_STATUS = "st_status"
+    ANNOUNCEMENT = "announcement"
+    EPISODE = "episode"
+    EPISODE_SEQUENCE = "episode_sequence"
+    EVENT_TYPE = "event_type"
+    PRICE_PATH = "price_path"
+    LENS_KIND = "lens_kind"
+    VALIDATION_STATUS = "validation_status"
+    REJECTED_BOUNDARY = "rejected_boundary"
+    PRICE = "price"
+    SHARE_CAPITAL = "share_capital"
+    SHAREHOLDER_COUNT = "shareholder_count"
+    REGULATORY_ACTION = "regulatory_action"
+    EVIDENCE_GRADE = "evidence_grade"
+    SAMPLE_N = "sample_n"
+    COUNTEREXAMPLE = "counterexample"
+    DATA_GAP = "data_gap"
+    ANNOUNCEMENT_DENSITY = "announcement_density"
+    MULTI_TABLE_SUMMARY = "multi_table_summary"
+    EPISODE_TRANSITION = "episode_transition"
+    ELAPSED_DAYS = "elapsed_days"
+    NEXT_ANNOUNCEMENT = "next_announcement"
+    STAGE = "stage"
+    PROVINCE = "province"
+    OUT_OF_COURT = "out_of_court"
+    IN_COURT = "in_court"
+    MARKET_CAP_COHORT = "market_cap_cohort"
+    TWO_WEEK_RETURN = "two_week_return"
+    MARKET_INDEX = "market_index"
+    TWO_WEEK_EXCESS_RETURN = "two_week_excess_return"
+
+
+QUESTION_INTENT_ALIASES: dict[str, QuestionIntent] = {
+    "stock_monitoring_windows": QuestionIntent.STOCK_OBSERVATION_WINDOWS,
+    "stock_watch_windows": QuestionIntent.STOCK_OBSERVATION_WINDOWS,
+}
+QUESTION_DIMENSION_ALIASES: dict[str, QuestionDimension] = {
+    "daily_price": QuestionDimension.PRICE,
+    "daily_prices": QuestionDimension.PRICE,
+    "episode_index": QuestionDimension.EPISODE,
+    "announcements": QuestionDimension.ANNOUNCEMENT,
+}
+
+
 class StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
@@ -84,6 +158,39 @@ def normalize_symbol(value: str) -> str:
 
 def normalize_token(value: str) -> str:
     return normalize_text(value).casefold()
+
+
+def canonical_question_intent(value: str | QuestionIntent) -> QuestionIntent:
+    token = normalize_token(value.value if isinstance(value, QuestionIntent) else value)
+    if token in QUESTION_INTENT_ALIASES:
+        return QUESTION_INTENT_ALIASES[token]
+    try:
+        return QuestionIntent(token)
+    except ValueError as exc:
+        raise ValueError(
+            f"unknown question intent for {QUESTION_SEMANTIC_REGISTRY_VERSION}: {token}"
+        ) from exc
+
+
+def canonical_question_dimensions(
+    values: list[str | QuestionDimension],
+) -> list[QuestionDimension]:
+    canonical: set[QuestionDimension] = set()
+    for value in values:
+        token = normalize_token(
+            value.value if isinstance(value, QuestionDimension) else value
+        )
+        if token in QUESTION_DIMENSION_ALIASES:
+            canonical.add(QUESTION_DIMENSION_ALIASES[token])
+            continue
+        try:
+            canonical.add(QuestionDimension(token))
+        except ValueError as exc:
+            raise ValueError(
+                "unknown question dimension for "
+                f"{QUESTION_SEMANTIC_REGISTRY_VERSION}: {token}"
+            ) from exc
+    return sorted(canonical, key=lambda item: item.value)
 
 
 def normalize_many(values: list[str], *, symbols: bool = False) -> list[str]:
@@ -260,13 +367,14 @@ class QuestionCard(MemoryEntity):
     canonical_question: str = Field(min_length=1, max_length=4000)
     aliases: list[str] = Field(default_factory=list, max_length=100)
     scope: ObjectScope
-    semantic_intent: str = Field(min_length=1, max_length=256)
-    dimensions: list[str] = Field(max_length=50)
+    semantic_registry_version: Literal[QUESTION_SEMANTIC_REGISTRY_VERSION]
+    semantic_intent: QuestionIntent
+    dimensions: list[QuestionDimension] = Field(max_length=50)
     time_scope: TimeScope
     needs_data: list[str] = Field(max_length=50)
     research_status: ResearchStatus
     view: QuestionView
-    original_source: Literal["user", "human_review", "slice", "system_gap"]
+    original_source: QuestionOriginalSource
     external_debt_ref: str | None = Field(default=None, max_length=128)
     debt_ref_status: DebtRefStatus
 
@@ -282,7 +390,14 @@ class QuestionCard(MemoryEntity):
                 result.append(normalized)
         return result
 
-    @field_validator("dimensions", "needs_data")
+    @field_validator("dimensions")
+    @classmethod
+    def normalize_dimensions(
+        cls, value: list[QuestionDimension]
+    ) -> list[QuestionDimension]:
+        return sorted(set(value), key=lambda item: item.value)
+
+    @field_validator("needs_data")
     @classmethod
     def normalize_needs_data(cls, value: list[str]) -> list[str]:
         return normalize_many(value)
@@ -296,6 +411,7 @@ class QuestionCard(MemoryEntity):
     def validate_identity_and_debt(self) -> "QuestionCard":
         expected = question_card_key(
             scope=self.scope,
+            semantic_registry_version=self.semantic_registry_version,
             semantic_intent=self.semantic_intent,
             dimensions=self.dimensions,
             time_scope=self.time_scope,
@@ -308,6 +424,12 @@ class QuestionCard(MemoryEntity):
                 ref.provenance_type == "seed_fixture" for ref in self.provenance_refs
             ):
                 raise ValueError("fixed QC identity requires seed_fixture provenance")
+        if self.original_source == "post_v7_backlog" and not any(
+            ref.source_type == "post_v7_backlog" for ref in self.source_refs
+        ):
+            raise ValueError(
+                "post_v7_backlog original_source requires a matching source ref"
+            )
         if self.external_debt_ref and self.debt_ref_status != "assigned":
             raise ValueError("external_debt_ref requires debt_ref_status=assigned")
         if self.debt_ref_status == "assigned" and not self.external_debt_ref:
@@ -591,7 +713,7 @@ class StatusTransition(StrictModel):
 
 
 STATUS_TRANSITIONS: dict[MemoryStatus, tuple[MemoryStatus, ...]] = {
-    "candidate": ("accepted", "ignored", "blocked", "closed"),
+    "candidate": ("accepted", "ignored", "merged", "blocked", "closed"),
     "accepted": ("blocked", "merged", "closed"),
     "blocked": ("candidate", "accepted", "closed"),
     "ignored": ("candidate", "closed"),
@@ -664,15 +786,17 @@ def _validate_identity(entity: MemoryEntity, canonical_key: str, prefix: str) ->
 def question_card_key(
     *,
     scope: ObjectScope,
-    semantic_intent: str,
-    dimensions: list[str],
+    semantic_registry_version: str,
+    semantic_intent: QuestionIntent,
+    dimensions: list[QuestionDimension],
     time_scope: TimeScope,
 ) -> str:
     return canonical_key(
         "question_card",
+        semantic_registry_version=semantic_registry_version,
         object_scope=scope.canonical,
-        intent=normalize_token(semantic_intent),
-        dimensions=normalize_many(dimensions),
+        intent=semantic_intent.value,
+        dimensions=[item.value for item in dimensions],
         time_scope_semantics=time_scope.canonical,
     )
 
@@ -778,10 +902,10 @@ def build_question_card(
     *,
     canonical_question: str,
     scope: ObjectScope,
-    semantic_intent: str,
+    semantic_intent: str | QuestionIntent,
     research_status: ResearchStatus,
     view: QuestionView,
-    original_source: Literal["user", "human_review", "slice", "system_gap"],
+    original_source: QuestionOriginalSource,
     status: MemoryStatus,
     created_at: datetime,
     updated_at: datetime,
@@ -789,18 +913,25 @@ def build_question_card(
     provenance_refs: list[ProvenanceRef],
     external_qc_id: str | None = None,
     aliases: list[str] | None = None,
-    dimensions: list[str] | None = None,
+    semantic_registry_version: str = QUESTION_SEMANTIC_REGISTRY_VERSION,
+    dimensions: list[str | QuestionDimension] | None = None,
     needs_data: list[str] | None = None,
     time_scope: TimeScope | None = None,
     external_debt_ref: str | None = None,
     debt_ref_status: DebtRefStatus = "not_required",
 ) -> QuestionCard:
+    if semantic_registry_version != QUESTION_SEMANTIC_REGISTRY_VERSION:
+        raise ValueError(
+            f"unsupported question semantic registry: {semantic_registry_version}"
+        )
     actual_needs = normalize_many(needs_data or [])
-    actual_dimensions = normalize_many(dimensions or [])
+    actual_intent = canonical_question_intent(semantic_intent)
+    actual_dimensions = canonical_question_dimensions(dimensions or [])
     actual_time = time_scope or TimeScope()
     key = question_card_key(
         scope=scope,
-        semantic_intent=semantic_intent,
+        semantic_registry_version=semantic_registry_version,
+        semantic_intent=actual_intent,
         dimensions=actual_dimensions,
         time_scope=actual_time,
     )
@@ -811,7 +942,8 @@ def build_question_card(
         canonical_question=canonical_question,
         aliases=aliases or [],
         scope=scope,
-        semantic_intent=semantic_intent,
+        semantic_registry_version=semantic_registry_version,
+        semantic_intent=actual_intent,
         dimensions=actual_dimensions,
         time_scope=actual_time,
         needs_data=actual_needs,

@@ -41,17 +41,24 @@ P3.1 不包含 SQLite、repository、写 API、聊天持久化或 UI 写操作�
   草案使用显式 `proposed_executor_ref`。
 - ReviewItem：`review + uncertainty_type + subject_ref + decision_unit`。
 
+QuestionCard 的 intent/dimensions 由 `question_semantic_registry.json` 冻结。持久对象只接受
+registry canonical enum；builder 可把已登记 alias（例如 `stock_monitoring_windows`、
+`daily_prices`、`episode_index`）确定性映射为 canonical 值，未知值直接失败。registry
+version 进入 canonical key，LLM/router 的自由命名不能直接成为持久语义。
+
 ## 生命周期
 
 通用状态为 `candidate`、`accepted`、`ignored`、`merged`、`blocked`、`closed`。
 合法 transition 表在 `fixtures/status_transitions.json`。在线候选的 accepted/ignored 和
-所有 merge 必须由人审决定；LLM 不能改变状态。冻结 seed 只通过显式
+所有 merge 必须由人审决定；人工可将 candidate 直接合并到既有对象，system/LLM
+不得自动合并。冻结 seed 只通过显式
 `actor_type=migration + context=seed_bootstrap` 路径进入 accepted。Review queue 的 active
 上限为 20；P3.1 只冻结这一语义，P3.2 repository 负责原子容量检查。
 
 QuestionCard 的 Memory lifecycle `status` 与原研究路由状态 `research_status` 分离。
 这样可以无损保存 `answerable`、`needs_data`、`needs_review`，也可保留尚未分配
 外部债卡编号的 `debt_ref_status=needs_assignment`。
+受控导入的 post-v7 backlog 使用 `original_source=post_v7_backlog` 并保留同类型 source ref。
 
 ## QueryTemplate
 

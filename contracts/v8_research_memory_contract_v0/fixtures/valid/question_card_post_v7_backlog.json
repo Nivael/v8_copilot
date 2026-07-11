@@ -1,0 +1,55 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "status": "candidate",
+  "created_at": "2026-07-11T00:00:00Z",
+  "updated_at": "2026-07-11T00:00:00Z",
+  "source_refs": [
+    {
+      "source_type": "post_v7_backlog",
+      "source_ref": "post-v7:C06-boundary-review",
+      "source_alias": null
+    }
+  ],
+  "provenance_refs": [
+    {
+      "provenance_type": "contract_fixture",
+      "provenance_ref": "D-053"
+    }
+  ],
+  "memory_id": "MEM-QC-D8B1CEF6AA7104FB7BF5",
+  "canonical_key": "{\"dimensions\":[\"lens_kind\",\"rejected_boundary\",\"validation_status\"],\"intent\":\"lens_applicability_and_standing\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"任意\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+  "dedupe_key": "d8b1cef6aa7104fb7bf5f9ab61f959da03ef55496b198ba5fd9f75d0b6a8941c",
+  "not_evidence": true,
+  "record_type": "question_card",
+  "external_qc_id": null,
+  "canonical_question": "post-v7 backlog 中待复核的 lens 边界问题",
+  "aliases": [],
+  "scope": {
+    "kind": "stock",
+    "refs": [
+      "任意"
+    ]
+  },
+  "semantic_registry_version": "v8_question_semantic_registry_v0",
+  "semantic_intent": "lens_applicability_and_standing",
+  "dimensions": [
+    "lens_kind",
+    "rejected_boundary",
+    "validation_status"
+  ],
+  "time_scope": {
+    "semantics": "not_applicable",
+    "start": null,
+    "end": null,
+    "before": null,
+    "after": null
+  },
+  "needs_data": [
+    "release_library_v1"
+  ],
+  "research_status": "needs_review",
+  "view": "evidence",
+  "original_source": "post_v7_backlog",
+  "external_debt_ref": null,
+  "debt_ref_status": "not_required"
+}

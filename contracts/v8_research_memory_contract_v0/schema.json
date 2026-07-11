@@ -947,15 +947,17 @@
         "scope": {
           "$ref": "#/$defs/ObjectScope"
         },
-        "semantic_intent": {
-          "maxLength": 256,
-          "minLength": 1,
-          "title": "Semantic Intent",
+        "semantic_registry_version": {
+          "const": "v8_question_semantic_registry_v0",
+          "title": "Semantic Registry Version",
           "type": "string"
+        },
+        "semantic_intent": {
+          "$ref": "#/$defs/QuestionIntent"
         },
         "dimensions": {
           "items": {
-            "type": "string"
+            "$ref": "#/$defs/QuestionDimension"
           },
           "maxItems": 50,
           "title": "Dimensions",
@@ -997,7 +999,8 @@
             "user",
             "human_review",
             "slice",
-            "system_gap"
+            "system_gap",
+            "post_v7_backlog"
           ],
           "title": "Original Source",
           "type": "string"
@@ -1039,6 +1042,7 @@
         "record_type",
         "canonical_question",
         "scope",
+        "semantic_registry_version",
         "semantic_intent",
         "dimensions",
         "time_scope",
@@ -1050,6 +1054,65 @@
       ],
       "title": "QuestionCard",
       "type": "object"
+    },
+    "QuestionDimension": {
+      "enum": [
+        "st_status",
+        "announcement",
+        "episode",
+        "episode_sequence",
+        "event_type",
+        "price_path",
+        "lens_kind",
+        "validation_status",
+        "rejected_boundary",
+        "price",
+        "share_capital",
+        "shareholder_count",
+        "regulatory_action",
+        "evidence_grade",
+        "sample_n",
+        "counterexample",
+        "data_gap",
+        "announcement_density",
+        "multi_table_summary",
+        "episode_transition",
+        "elapsed_days",
+        "next_announcement",
+        "stage",
+        "province",
+        "out_of_court",
+        "in_court",
+        "market_cap_cohort",
+        "two_week_return",
+        "market_index",
+        "two_week_excess_return"
+      ],
+      "title": "QuestionDimension",
+      "type": "string"
+    },
+    "QuestionIntent": {
+      "enum": [
+        "st_status_reason_and_key_nodes",
+        "historical_case_similarity",
+        "lens_applicability_and_standing",
+        "stock_event_multi_dimension_window",
+        "lens_evidence_audit",
+        "st_shareholder_count_change",
+        "st_announcement_density",
+        "stock_event_data_summary",
+        "restructuring_stage_timing",
+        "restructuring_recruitment_next_node_timing",
+        "restructuring_path_isolation",
+        "st_microcap_two_week_distribution",
+        "st_market_relative_two_week_distribution",
+        "stock_observation_windows",
+        "stock_event_window",
+        "event_window",
+        "unknown_research_question"
+      ],
+      "title": "QuestionIntent",
+      "type": "string"
     },
     "ResearchRouteRef": {
       "additionalProperties": false,

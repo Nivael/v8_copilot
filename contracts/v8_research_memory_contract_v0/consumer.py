@@ -17,13 +17,18 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from research_memory_contract import (
+    QUESTION_DIMENSION_ALIASES,
+    QUESTION_INTENT_ALIASES,
+    QUESTION_SEMANTIC_REGISTRY_VERSION,
     REVIEW_ACTIVE_LIMIT,
     DataDebtCard,
     FeedbackEvent,
     MemoryLink,
     PUBLIC_MEMORY_ADAPTER,
     QueryTemplateRecord,
+    QuestionDimension,
     QuestionCard,
+    QuestionIntent,
     ResearchRunRef,
     ReviewItem,
     SedimentationResult,
@@ -49,6 +54,7 @@ MODEL_BY_NAME: dict[str, type[BaseModel]] = {
 
 VALID_FIXTURES = {
     "question_card.json": QuestionCard,
+    "question_card_post_v7_backlog.json": QuestionCard,
     "data_debt_assigned.json": DataDebtCard,
     "data_debt_unassigned.json": DataDebtCard,
     "query_template_record.json": QueryTemplateRecord,
@@ -61,6 +67,7 @@ VALID_FIXTURES = {
 }
 DEFINITION_BY_FIXTURE = {
     "question_card.json": "QuestionCard",
+    "question_card_post_v7_backlog.json": "QuestionCard",
     "data_debt_assigned.json": "DataDebtCard",
     "data_debt_unassigned.json": "DataDebtCard",
     "query_template_record.json": "QueryTemplateRecord",
@@ -156,6 +163,7 @@ def validate_key_cases() -> None:
     model_for_case = {
         "synonym_different_runs": QuestionCard,
         "seed_and_online_semantic_equivalence": QuestionCard,
+        "registered_semantic_alias_equivalence": QuestionCard,
         "same_gap_different_scope": DataDebtCard,
         "assigned_debt_same_ref_changed_description": DataDebtCard,
         "assigned_debt_different_ref": DataDebtCard,
@@ -214,8 +222,10 @@ def validate_seed_migration() -> None:
         assert record.external_debt_ref == (row["debt_ref"] or None)
         assert record.debt_ref_status == row["debt_ref_status"]
         assert record.original_source == row["source"]
-        assert record.semantic_intent == semantic["intent"]
-        assert record.dimensions == sorted(semantic["dimensions"])
+        assert record.semantic_intent.value == semantic["intent"]
+        assert [item.value for item in record.dimensions] == sorted(
+            semantic["dimensions"]
+        )
         online_equivalent = build_question_card(
             canonical_question="equivalent online wording",
             scope=record.scope,
@@ -275,6 +285,29 @@ def validate_query_template_registry() -> None:
         assert record.executor_ref.executor_key == registry[record.template_id]["executor_key"]
 
 
+def validate_question_semantic_registry() -> None:
+    registry = read_json(HERE / "question_semantic_registry.json")
+    assert registry["registry_version"] == QUESTION_SEMANTIC_REGISTRY_VERSION
+    assert set(registry["intents"]) == {item.value for item in QuestionIntent}
+    assert set(registry["dimensions"]) == {item.value for item in QuestionDimension}
+    assert registry["intent_aliases"] == {
+        alias: target.value for alias, target in QUESTION_INTENT_ALIASES.items()
+    }
+    assert registry["dimension_aliases"] == {
+        alias: target.value for alias, target in QUESTION_DIMENSION_ALIASES.items()
+    }
+    assert registry["unknown_value_policy"] == "reject"
+    assert registry["mapping_authority"] == "deterministic_sedimenter"
+
+
+def validate_post_v7_backlog_fixture() -> None:
+    payload = read_json(HERE / "fixtures/valid/question_card_post_v7_backlog.json")
+    card = QuestionCard.model_validate(payload)
+    validate_public_payload(payload)
+    assert card.original_source == "post_v7_backlog"
+    assert any(ref.source_type == "post_v7_backlog" for ref in card.source_refs)
+
+
 def validate_feedback_taxonomy() -> None:
     payloads = read_json(HERE / "fixtures/feedback_taxonomy.json")
     events = [FeedbackEvent.model_validate(payload) for payload in payloads]
@@ -322,7 +355,11 @@ def validate_route_seed_coverage() -> None:
 
 def validate_transition_fixtures() -> None:
     fixture = read_json(HERE / "fixtures/status_transitions.json")
-    for name in ("valid_human_merge", "valid_seed_migration_acceptance"):
+    for name in (
+        "valid_human_merge",
+        "valid_human_candidate_merge",
+        "valid_seed_migration_acceptance",
+    ):
         payload = fixture[name]
         validate_public_payload(payload)
         StatusTransition.model_validate(payload)
@@ -335,6 +372,8 @@ def validate_all() -> None:
     validate_key_cases()
     validate_seed_migration()
     validate_query_template_registry()
+    validate_question_semantic_registry()
+    validate_post_v7_backlog_fixture()
     validate_feedback_taxonomy()
     validate_review_capacity_fixture()
     validate_transition_fixtures()

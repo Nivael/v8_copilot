@@ -18,9 +18,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -32,6 +32,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -72,9 +73,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -86,6 +87,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -129,9 +131,9 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": "QC-20260710-015",
@@ -143,6 +145,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -183,9 +186,9 @@
           "provenance_ref": "response-seed-equivalent"
         }
       ],
-      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -197,6 +200,119 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "runtime_availability"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "registered_semantic_alias_equivalence": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-seed-equivalent",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-seed-equivalent"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "603398 后续观察哪些公开窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "runtime_availability"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-registry-alias",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-registry-alias"
+        }
+      ],
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "603398 后续监控哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -558,9 +674,9 @@
           "provenance_ref": "response-array"
         }
       ],
-      "memory_id": "MEM-QC-3DCA610CD74A0868D7F0",
-      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "3dca610cd74a0868d7f04b0171de8ef5512d5a6067f0019207e87ec5b9c0df88",
+      "memory_id": "MEM-QC-170AC03CD41CF3C8894B",
+      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "170ac03cd41cf3c8894b7e41bdda06425e3b74389ddf588f7e13b88ffbfcc3bd",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -572,6 +688,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_event_window",
       "dimensions": [
         "announcement",
@@ -612,9 +729,9 @@
           "provenance_ref": "response-array"
         }
       ],
-      "memory_id": "MEM-QC-3DCA610CD74A0868D7F0",
-      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "3dca610cd74a0868d7f04b0171de8ef5512d5a6067f0019207e87ec5b9c0df88",
+      "memory_id": "MEM-QC-170AC03CD41CF3C8894B",
+      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "170ac03cd41cf3c8894b7e41bdda06425e3b74389ddf588f7e13b88ffbfcc3bd",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -626,6 +743,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_event_window",
       "dimensions": [
         "announcement",
@@ -669,9 +787,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-4B5B45136165CA2C4AD7",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"after\":10,\"before\":0,\"semantics\":\"trading_day_window\"}}",
-      "dedupe_key": "4b5b45136165ca2c4ad796c46d2070c6d8970fa15fd33e28aa301839a405d2f0",
+      "memory_id": "MEM-QC-BC12536CC03C52F0799A",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"after\":10,\"before\":0,\"semantics\":\"trading_day_window\"}}",
+      "dedupe_key": "bc12536cc03c52f0799a50c44cbfa666e4840190bee1d93a242979d5a78e8323",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -683,6 +801,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -723,9 +842,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-BADD9AF3760FAAC6621D",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"after\":14,\"before\":0,\"semantics\":\"trading_day_window\"}}",
-      "dedupe_key": "badd9af3760faac6621d491fb104fe5537f93a71ad7b88ebf1d331d1527fc8a9",
+      "memory_id": "MEM-QC-B640F5F410B6D0AA305F",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"after\":14,\"before\":0,\"semantics\":\"trading_day_window\"}}",
+      "dedupe_key": "b640f5f410b6d0aa305f7f4645bd25de43edd06b0142759b66ef28034188118e",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -737,6 +856,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -780,9 +900,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -794,6 +914,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -834,9 +955,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-CC528F2648827FADA186",
-      "canonical_key": "{\"dimensions\":[\"shareholder_count\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "cc528f2648827fada186b4ba6aa57a1c7ac58560864e253437a14a4474d0c6f3",
+      "memory_id": "MEM-QC-FA0FDC1C771B0C562FDD",
+      "canonical_key": "{\"dimensions\":[\"shareholder_count\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "fa0fdc1c771b0c562fdd489a6d9f2e9b9b884ced1540b70afb1cb2aa5eabb770",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -848,6 +969,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "shareholder_count"
@@ -981,15 +1103,15 @@
           "provenance_ref": "key-fixtures"
         }
       ],
-      "memory_id": "MEM-RV-95ECEAE4B90998389F5B",
-      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
-      "dedupe_key": "95eceae4b90998389f5b7b1066eda12d0652b13848715ca74e0b46b24cb65734",
+      "memory_id": "MEM-RV-3DB6374D75F7EF0AC16C",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3db6374d75f7ef0ac16c1505421a4541a1474bf77c27369fcae3a21b2d3df4b7",
       "not_evidence": true,
       "record_type": "review_item",
       "uncertainty_type": "question_semantic_identity",
       "subject_ref": {
         "subject_type": "question_card",
-        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
       },
       "decision_unit": "one_question_candidate",
       "evidence_package_refs": [
@@ -1020,15 +1142,15 @@
           "provenance_ref": "key-fixtures"
         }
       ],
-      "memory_id": "MEM-RV-95ECEAE4B90998389F5B",
-      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
-      "dedupe_key": "95eceae4b90998389f5b7b1066eda12d0652b13848715ca74e0b46b24cb65734",
+      "memory_id": "MEM-RV-3DB6374D75F7EF0AC16C",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3db6374d75f7ef0ac16c1505421a4541a1474bf77c27369fcae3a21b2d3df4b7",
       "not_evidence": true,
       "record_type": "review_item",
       "uncertainty_type": "question_semantic_identity",
       "subject_ref": {
         "subject_type": "question_card",
-        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
       },
       "decision_unit": "one_question_candidate",
       "evidence_package_refs": [
@@ -1062,15 +1184,15 @@
           "provenance_ref": "key-fixtures"
         }
       ],
-      "memory_id": "MEM-RV-95ECEAE4B90998389F5B",
-      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
-      "dedupe_key": "95eceae4b90998389f5b7b1066eda12d0652b13848715ca74e0b46b24cb65734",
+      "memory_id": "MEM-RV-3DB6374D75F7EF0AC16C",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3db6374d75f7ef0ac16c1505421a4541a1474bf77c27369fcae3a21b2d3df4b7",
       "not_evidence": true,
       "record_type": "review_item",
       "uncertainty_type": "question_semantic_identity",
       "subject_ref": {
         "subject_type": "question_card",
-        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
       },
       "decision_unit": "one_question_candidate",
       "evidence_package_refs": [
@@ -1101,15 +1223,15 @@
           "provenance_ref": "key-fixtures"
         }
       ],
-      "memory_id": "MEM-RV-9170A73D7F3A7541C4DB",
-      "canonical_key": "{\"decision_unit\":\"question_and_scope_pair\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
-      "dedupe_key": "9170a73d7f3a7541c4dba2c7a9a2666fb88f1577a864f5d15371f13c3a008dfa",
+      "memory_id": "MEM-RV-88454B6601A5CE297903",
+      "canonical_key": "{\"decision_unit\":\"question_and_scope_pair\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-bf926cc8319643cd8c15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "88454b6601a5ce297903bd77834335542c45458399fd04305d9d2e5eb208e863",
       "not_evidence": true,
       "record_type": "review_item",
       "uncertainty_type": "question_semantic_identity",
       "subject_ref": {
         "subject_type": "question_card",
-        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+        "subject_id": "MEM-QC-BF926CC8319643CD8C15"
       },
       "decision_unit": "question_and_scope_pair",
       "evidence_package_refs": [
@@ -1262,9 +1384,9 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
-      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
-      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "memory_id": "MEM-QC-BF926CC8319643CD8C15",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"semantic_registry_version\":\"v8_question_semantic_registry_v0\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
       "not_evidence": true,
       "record_type": "question_card",
       "external_qc_id": null,
@@ -1276,6 +1398,7 @@
           "603398"
         ]
       },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
         "episode",
@@ -1303,7 +1426,7 @@
       "后续观察窗口",
       "完全不同的展示标题"
     ],
-    "expected_dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+    "expected_dedupe_key": "bf926cc8319643cd8c15fc5c465a4919eb37272d652cf6d57f3ef0c00fb981b8",
     "title_is_not_contract_input": true
   }
 }

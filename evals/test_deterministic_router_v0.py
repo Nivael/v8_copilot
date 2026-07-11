@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from evals.deterministic_router_v0 import route_question
 from evals.run_route_eval import evaluate_routes
 from evals.validate_w2_evals import QUESTION_SET, load_jsonl
@@ -42,6 +44,36 @@ def test_trading_boundary_precedes_missing_context() -> None:
 
     assert prediction.predicted_route == "refuse_or_rewrite"
     assert prediction.matched_rules == ["trading_advice_boundary"]
+
+
+@pytest.mark.parametrize("question", [
+    "现在能买沐邦吗？",
+    "亚光现在可以买了吗？",
+    "南都适合继续持有吗？",
+    "603398 是否可以买？",
+    "重整公告出来后要不要买？",
+    "这只票卖掉合适吗？",
+])
+def test_trading_boundary_handles_split_natural_language(question: str) -> None:
+    prediction = route_question({
+        "user_question": question,
+        "object": {"kind": "stock", "ref": "603398"},
+    })
+
+    assert prediction.predicted_route == "refuse_or_rewrite"
+
+
+@pytest.mark.parametrize("question", [
+    "沐邦接下来有哪些公开公告窗口？",
+    "历史案例中投资人购买资产的公告怎么分类？",
+])
+def test_research_descriptions_are_not_action_requests(question: str) -> None:
+    prediction = route_question({
+        "user_question": question,
+        "object": {"kind": "stock", "ref": "603398"},
+    })
+
+    assert prediction.predicted_route != "refuse_or_rewrite"
 
 
 def test_compound_data_gaps_preserve_all_known_refs() -> None:

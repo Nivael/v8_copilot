@@ -29,6 +29,11 @@ const hiddenTokens=[
 ]
 
 describe('display labels',()=>{
+  it('localizes current ST status source labels',()=>{
+    expect(show('current_name_prefix_st')).toBe('当前简称含 ST')
+    expect(show('other_risk_warning')).toBe('其他风险警示')
+  })
+
   it('hides raw taxonomy and English wording notes in nested values',()=>{
     const text=show({
       evidence_grade:'aggregate_weak',

@@ -8,7 +8,8 @@ import {ask} from './api'
 import {questionLink, readContext, readNavigationFocus} from './context'
 import {show} from './display'
 import type {
-  AnswerCard, Claim, NavigationRef, QuestionCard, ResearchContext, Response, StreamEvent,
+  AnswerCard, Claim, NavigationRef, QuestionCard, ResearchContext, ResearchNarrative,
+  Response, StreamEvent,
 } from './types'
 
 /** 空状态示例：覆盖稳定回答矩阵的各类合法路径，让内测用户知道能问什么。 */
@@ -93,9 +94,10 @@ function EvidenceTables({rows}: {rows: Array<Record<string, unknown>>}) {
   )
 }
 
-function ReadableAnalysis({card, claims, onOpenEvidence}: {
+function ReadableAnalysis({card, claims, narrative, onOpenEvidence}: {
   card: AnswerCard
   claims: Claim[]
+  narrative?: ResearchNarrative | null
   onOpenEvidence: () => void
 }) {
   const primary = claims.filter(claim => claim.claim_type === 'fact' || claim.claim_type === 'inference')
@@ -115,29 +117,50 @@ function ReadableAnalysis({card, claims, onOpenEvidence}: {
           <PanelRightOpen size={16}/>查看证据与来源
         </button>
       </header>
-      <div className="analysis-copy">
-        {readablePrimary.map((claim, index) => (
-          <p key={`${claim.backing.ref}-${index}`}>{show(claim.text)}</p>
-        ))}
-      </div>
+      {narrative
+        ? (
+          <>
+            <p className="analysis-direct">{show(narrative.direct_answer.text)}</p>
+            {narrative.reasoning_steps.length > 0 && (
+              <section className="reasoning-chain">
+                <h3>判断依据</h3>
+                <ol>{narrative.reasoning_steps.map((step, index) => (
+                  <li key={`${step.title}-${index}`}>
+                    <span>{index + 1}</span>
+                    <div><strong>{show(step.title)}</strong><p>{show(step.text)}</p></div>
+                  </li>
+                ))}</ol>
+              </section>
+            )}
+          </>
+        )
+        : (
+          <div className="analysis-copy">
+            {readablePrimary.map((claim, index) => (
+              <p key={`${claim.backing.ref}-${index}`}>{show(claim.text)}</p>
+            ))}
+          </div>
+        )}
       <div className="analysis-basis">
         <span>{show(card.evidence_grade)}</span>
-        <p>
-          {card.lens_invocations.length > 0
-            ? `本题调用 ${card.lens_invocations.length} 条适用的冻结 Lens；其余内容来自可回链的本地查询。`
-            : '本题没有匹配到适用的冻结 Lens；以下内容按描述性查询呈现，不升级为历史先验。'}
-        </p>
+        <p>{narrative?.basis_note ?? (card.lens_invocations.length > 0
+          ? `本题调用 ${card.lens_invocations.length} 条适用的冻结 Lens；其余内容来自可回链的本地查询。`
+          : '本题没有匹配到适用的冻结 Lens；以下内容按描述性查询呈现，不升级为历史先验。')}</p>
       </div>
-      {limits.length > 0 && (
+      {(narrative?.uncertainties.length || limits.length > 0) && (
         <section className="analysis-limits">
           <h3>需要保留的不确定性</h3>
-          <ul>{limits.map((claim, index) => <li key={`${claim.backing.ref}-limit-${index}`}>{show(claim.text)}</li>)}</ul>
+          <ul>{(narrative?.uncertainties ?? limits).map((item, index) => (
+            <li key={`limit-${index}`}>{show(item.text)}</li>
+          ))}</ul>
         </section>
       )}
-      {nextQuestions.length > 0 && (
+      {(narrative?.watch_items.length || nextQuestions.length > 0) && (
         <section className="analysis-next">
-          <h3>下一步应继续核查</h3>
-          <ul>{nextQuestions.map((claim, index) => <li key={`${claim.backing.ref}-next-${index}`}>{show(claim.text)}</li>)}</ul>
+          <h3>接下来观察什么</h3>
+          <ul>{(narrative?.watch_items ?? nextQuestions).map((item, index) => (
+            <li key={`next-${index}`}>{show(item.text)}</li>
+          ))}</ul>
         </section>
       )}
     </section>
@@ -336,9 +359,10 @@ export function QuestionDrawer({response, selectedId, currentContext = {}}: {
   )
 }
 
-function Answer({card, claims, navigation, onOpenEvidence}: {
+function Answer({card, claims, narrative, navigation, onOpenEvidence}: {
   card: AnswerCard
   claims: Claim[]
+  narrative?: ResearchNarrative | null
   navigation: NavigationRef[]
   onOpenEvidence: () => void
 }) {
@@ -356,7 +380,7 @@ function Answer({card, claims, navigation, onOpenEvidence}: {
         <b className={`grade grade-${card.evidence_grade}`}>{show(card.evidence_grade)}</b>
         <span>{show(card.sample_scope)}</span>
       </div>
-      <ReadableAnalysis card={card} claims={claims.length ? claims : card.analysis_claims} onOpenEvidence={onOpenEvidence}/>
+      <ReadableAnalysis card={card} claims={claims.length ? claims : card.analysis_claims} narrative={narrative} onOpenEvidence={onOpenEvidence}/>
       <footer className="answer-foot">
         <span>{card.body_rows.length} 行查询证据</span>
         <span>{card.lens_invocations.length} 条 Lens 命中</span>
@@ -553,10 +577,26 @@ export function Copilot() {
         ))}
         {response && !response.answer_card && (
           <>
-            <div className="fallback">
-              <p className="eyebrow">{show(response.route.route)}</p>
-              <h2>{show(response.gaps[0]?.description ?? '当前没有可执行的证据路径')}</h2>
-            </div>
+            {response.boundary_rewrite
+              ? (
+                <section className="boundary-rewrite">
+                  <p className="eyebrow">研究边界</p>
+                  <h2>{response.boundary_rewrite.message}</h2>
+                  <p>{response.boundary_rewrite.why}</p>
+                  <button type="button" onClick={() => {
+                    setQuestion(response.boundary_rewrite!.rewritten_question)
+                    void runQuestion(response.boundary_rewrite!.rewritten_question)
+                  }}>
+                    改问：{response.boundary_rewrite.rewritten_question}<ArrowRight size={15}/>
+                  </button>
+                </section>
+              )
+              : (
+                <div className="fallback">
+                  <p className="eyebrow">{show(response.route.route)}</p>
+                  <h2>{show(response.gaps[0]?.description ?? '当前没有可执行的证据路径')}</h2>
+                </div>
+              )}
             <QuestionDrawer response={response} selectedId={selectedNavigation?.id} currentContext={context}/>
           </>
         )}
@@ -567,6 +607,7 @@ export function Copilot() {
             <Answer
               card={response.answer_card}
               claims={response.claims}
+              narrative={response.narrative}
               navigation={response.navigation_refs}
               onOpenEvidence={() => setEvidenceOpen(true)}
             />

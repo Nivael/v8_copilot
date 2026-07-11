@@ -9,5 +9,6 @@
 __pycache__/
 *.py[cod]
 out/
+output/playwright/
 ui/dossier_*.html
 local_secrets/

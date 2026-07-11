@@ -18,16 +18,17 @@ from api_contract import (
     RouteDecision,
     StockDossierPayload,
 )
-from api_contract_v1 import (
-    API_CONTRACT_VERSION_V1,
-    ResearchResponseV1,
-    ResearchStreamEventV1,
+from api_contract_v2 import (
+    API_CONTRACT_VERSION_V2,
+    ResearchResponseV2,
+    ResearchStreamEventV2,
 )
 from answer_engine import CONTRACT_VERSION as ANSWER_CONTRACT_VERSION
 from dossier_service import DossierNotFoundError, build_stock_dossier
 from llm_adapter import openai_configured, orchestrate_optional_llm
 from orchestrator import route_only
-from orchestrator_v1 import enrich_response_v1, stream_events_v1
+from orchestrator_v1 import enrich_response_v1
+from orchestrator_v2 import enrich_response_v2, stream_events_v2
 
 
 logger = logging.getLogger(__name__)
@@ -50,18 +51,20 @@ class SPAStaticFiles(StaticFiles):
             return await super().get_response("index.html", scope)
 
 
-def orchestrate(request: ResearchRequest) -> ResearchResponseV1:
+def orchestrate(request: ResearchRequest) -> ResearchResponseV2:
     """Patchable API boundary used by JSON and NDJSON endpoints."""
-    return enrich_response_v1(request, orchestrate_optional_llm(request))
+    response_v1 = enrich_response_v1(request, orchestrate_optional_llm(request))
+    return enrich_response_v2(request, response_v1)
 
 
-def orchestrate_deterministic(request: ResearchRequest) -> ResearchResponseV1:
+def orchestrate_deterministic(request: ResearchRequest) -> ResearchResponseV2:
     """Return the validated local answer without waiting for an LLM provider."""
     local_request = request.model_copy(update={"llm_mode": "off"})
-    return enrich_response_v1(
+    response_v1 = enrich_response_v1(
         local_request,
         orchestrate_optional_llm(local_request),
     )
+    return enrich_response_v2(local_request, response_v1)
 
 app = FastAPI(
     title="ST Research Copilot API",
@@ -81,9 +84,9 @@ app.add_middleware(
 def health() -> dict[str, object]:
     return {
         "status": "ok",
-        "api_contract_version": API_CONTRACT_VERSION_V1,
+        "api_contract_version": API_CONTRACT_VERSION_V2,
         "request_contract_version": API_CONTRACT_VERSION,
-        "response_contract_version": API_CONTRACT_VERSION_V1,
+        "response_contract_version": API_CONTRACT_VERSION_V2,
         "answer_contract_version": ANSWER_CONTRACT_VERSION,
         "llm_available": openai_configured(),
         "database_mode": "read_only",
@@ -95,8 +98,8 @@ def route(request: ResearchRequest) -> RouteDecision:
     return route_only(request)
 
 
-@app.post("/api/v1/answers", response_model=ResearchResponseV1)
-def answers(request: ResearchRequest) -> ResearchResponseV1:
+@app.post("/api/v1/answers", response_model=ResearchResponseV2)
+def answers(request: ResearchRequest) -> ResearchResponseV2:
     try:
         return orchestrate(request)
     except (FileNotFoundError, ValueError) as exc:
@@ -113,10 +116,10 @@ def _ndjson_stream(request: ResearchRequest) -> Iterator[str]:
         request_with_id = request.model_copy(update={"request_id": f"req-{uuid4().hex}"})
     try:
         deterministic = orchestrate_deterministic(request_with_id)
-        deterministic_events = stream_events_v1(request_with_id, deterministic)
+        deterministic_events = stream_events_v2(request_with_id, deterministic)
         sequence = 0
 
-        def emit(event: ResearchStreamEventV1) -> str:
+        def emit(event: ResearchStreamEventV2) -> str:
             nonlocal sequence
             sequence += 1
             return event.model_copy(update={"sequence": sequence}).model_dump_json() + "\n"
@@ -152,12 +155,12 @@ def _ndjson_stream(request: ResearchRequest) -> Iterator[str]:
                     "LLM 分析叙述不可用，已保留确定性证据菜单。",
                 ],
             })
-        for event in stream_events_v1(request_with_id, enriched):
+        for event in stream_events_v2(request_with_id, enriched):
             if event.event in {"claim_block", "degraded", "completed"}:
                 yield emit(event)
     except Exception:
         logger.exception("deterministic answer stream failed")
-        event = ResearchStreamEventV1(
+        event = ResearchStreamEventV2(
             request_id=request_with_id.request_id or "req-error",
             sequence=locals().get("sequence", 0) + 1,
             event="error",

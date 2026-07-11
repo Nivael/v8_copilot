@@ -163,6 +163,18 @@ def test_boundary_request_has_safe_rewrite_reason() -> None:
     assert response.route.reason == "该请求属于行动指令边界，已改写为可验证的研究问题。"
 
 
+def test_split_boundary_wording_is_refused_before_stock_overview() -> None:
+    response = orchestrate(request(
+        "现在能买沐邦吗？",
+        kind="stock",
+        ref="603398",
+    ))
+
+    assert response.interpretation.intent == "trading_advice_boundary"
+    assert response.route.route == "refuse_or_rewrite"
+    assert response.answer_card is None
+
+
 def test_auto_llm_mode_returns_deterministic_result_with_degraded_marker() -> None:
     response = orchestrate(request(
         "沐邦接下来该看哪些窗口？",

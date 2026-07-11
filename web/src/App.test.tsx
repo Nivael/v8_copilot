@@ -1,4 +1,4 @@
-import {render,screen} from '@testing-library/react'
+import {fireEvent,render,screen} from '@testing-library/react'
 import {MemoryRouter} from 'react-router-dom'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {App} from './App'
@@ -33,5 +33,12 @@ describe('App',()=>{
     expect(screen.queryByText('虚构公告')).not.toBeInTheDocument()
     expect(screen.getByText('公开公告（未纳入事件段）')).toBeInTheDocument()
     expect(screen.getByRole('link',{name:'就此提问'}).getAttribute('href')).toContain('object_kind=stock_event')
+    expect(screen.getByRole('button',{name:'1年'})).toHaveAttribute('aria-pressed','true')
+    expect(screen.getByRole('checkbox',{name:'仅重点节点'})).toBeChecked()
+    fireEvent.click(screen.getByRole('button',{name:'3月'}))
+    expect(screen.getByRole('button',{name:'3月'})).toHaveAttribute('aria-pressed','true')
+    expect(screen.getByRole('button',{name:'财报与公告'})).toHaveAttribute('aria-pressed','false')
+    fireEvent.click(screen.getByRole('button',{name:'财报与公告'}))
+    expect(screen.getByRole('button',{name:'财报与公告'})).toHaveAttribute('aria-pressed','true')
   })
 })

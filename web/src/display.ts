@@ -83,6 +83,7 @@ const labels:Record<string,string>={
   restructuring_progress_update:'重整或预重整进展',
   risk_warning_removal_application:'申请撤销风险警示',
   delisting_risk_warning:'退市风险警示',
+  '*ST':'退市风险警示',
   announcement_unclassified:'其他公开公告',
   st_status_fetched_at:'ST 生命周期抓取时间',
   st_evidence_generated_at:'ST 触发公告证据生成日',

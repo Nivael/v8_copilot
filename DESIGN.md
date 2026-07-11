@@ -1,7 +1,7 @@
 # v8_copilot DESIGN.md — ST Research Copilot 界面设计原则
 
-日期：2026-07-10
-状态：P1.5 spike 设计依据（配合 D-053 候选）。
+日期：2026-07-12
+状态：P2 可读研究工作台设计基线。
 定位：v8 不是普通 dashboard，核心是 **问答 + 证据链 + 时间线**。不做营销页。
 
 ## 1. 设计北极星
@@ -11,13 +11,16 @@ Vercel / Geist / shadcn 那种：**克制、清晰、高信息密度**。黑白�
 
 ## 2. 独有原则：诚实分层可见（Honesty made visible）
 
-这是 v8 区别于普通 dashboard 的核心视觉主张，落 D-008「证据 100% 可见」：
+这是 v8 区别于普通 dashboard 的核心视觉主张，落 D-008「证据 100% 可见」。
+“可见”指一键可达、可完整审阅，不等于把内部 ID 和原始表格塞进主分析：
 
 - **证据等级一眼可辨**：evidence-backed 的答案、case-note、lens_gap 的答案*长得就不一样*。
   用徽章区分 `evidence / weak / anecdotal / query / lens_gap / data_debt`。
-- **lens invocation 是明面元数据**，不藏在点击后面：每张卡显示它调用了哪些 RL-* record、各自 kind、贡献了哪节。
-- **缺口不美化**：data_debt / lens_gap 用专门 callout 样式，不用顺滑 prose 糊过去。
-- **新鲜度常驻**：library version、episode 版本、data as-of 作为角标常显。
+- **主分析先讲人话**：正文只保留可连续阅读的事实、推断、不确定性和下一步核查，不显示 backing ID。
+- **证据独立审阅**：Lens invocation、查询行、出处、新鲜度、data debt 和 backing 全部进入“证据与来源”模块，一次操作即可打开。
+- **缺口不美化**：正文说明它如何限制分析；工程 ID 和完整台账信息留在证据模块。
+- **新鲜度分层**：主答案常显回答 as-of；各 source 的 freshness 在证据模块完整展示。
+- **Lens 不为填充而调用**：冻结 v1 只有 9 条记录。没有适用 Lens 时明确写 0 命中，不把通用数据查询包装成 Lens 结论。
 
 ## 3. 视觉 token
 
@@ -30,16 +33,17 @@ Vercel / Geist / shadcn 那种：**克制、清晰、高信息密度**。黑白�
 
 ## 4. 两个核心页面（frame）
 
-### 4.1 主面板 / Copilot（P1.5 后做）
+### 4.1 主面板 / Copilot
 - 顶部：股票/问题输入框，像大模型网站一样直接问。
-- 中间：回答流，逐张生成 AnswerCard（三段式 + lens invocation chips + caveat）。
-- 右侧：Evidence Inspector —— lens_invocations、source freshness、data_debt、原文回链。
-- 侧栏/底部：自动沉淀的 QuestionCards。
+- 中间：人话回答，按“能确认什么 / 不确定性 / 下一步核查”组织；正文 16-17px、行高不低于 1.7。
+- 右侧或移动端全屏：Evidence Inspector —— backing、查询行、lens invocation、source freshness、data debt、原文回链。
+- 底部折叠区：自动沉淀的 QuestionCards，不与主答案争夺第一屏。
 
-### 4.2 个股面板 / Stock Dossier（P1.5 spike 先做）
+### 4.2 个股面板 / Stock Dossier
 - 顶部：股票状态、ST 生命周期、最新 as-of、library 版本。
-- 主区：**股价图为主角**，重要公告节点打点、可点击/定位。
-- 下方：多条 timeline lane（重整 / ST 风险 / 控制权·股东 / 监管 / 财报·资金）。
+- 主区：**股价图为主角**，支持滚轮/触控缩放、拖动平移和 3月/6月/1年/3年/全部区间预设。
+- 公告节点按当前可见时间窗同步，默认只显示重点节点；可按重整、ST 风险、控制权、监管、财报筛选。
+- 缩远时限制图上 marker 数量，完整节点保留在当前窗口事件列表，避免公告盖住价格走势。
 - 右侧：点任意节点 → 打开节点详情、provenance、相关 lens，并可一键"围绕此节点提问"。
 
 ## 5. 联动：共享 ResearchContext
@@ -52,6 +56,8 @@ ResearchContext = symbol + date_range + selected_event + selected_lenses + activ
 个股页点节点 → 回主面板继续问。个股面板与 AnswerCard 是**同一套证据的两个视图**
 （共享 object + 节点时间线 + as-of + provenance），这也是"面板不是凭空设计，而是从证据面板自然长出来"的原因。
 
-## 6. spike 不做
+## 6. 交互参考与实现边界
 
-不接 LLM、不做服务/登录、不做全股票、不做写操作。只验产品形态与数据联动。
+- 图表交互采用 TradingView Lightweight Charts，使用其可见时间范围、缩放/平移和 series marker API。
+- 只读研究库边界不变；图表筛选和问答展示不写研究数据库。
+- 事件“重点”只影响默认展示密度，不改变 episode 分类、不生成研究结论；用户可以关闭筛选查看全部已分类节点。

@@ -1,4 +1,4 @@
-import {KeyboardEvent, useEffect, useMemo, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {
   AlertTriangle, ArrowLeft, CalendarDays, Database, ExternalLink,
   LoaderCircle, MessageSquareText,
@@ -7,117 +7,8 @@ import {Link, useLocation, useNavigate, useParams} from 'react-router-dom'
 import {getDossier} from './api'
 import {questionLink} from './context'
 import {show} from './display'
+import {InteractivePriceChart} from './InteractivePriceChart'
 import type {Dossier, EventNode} from './types'
-
-const W = 1040
-const H = 320
-const P = {l: 54, r: 18, t: 18, b: 30}
-const tm = (value: string) => new Date(`${value.slice(0, 10)}T00:00:00`).getTime()
-
-function PriceChart({data, selected, onSelect}: {
-  data: Dossier
-  selected: EventNode | null
-  onSelect: (node: EventNode) => void
-}) {
-  const geometry = useMemo(() => {
-    const xs = data.price_series.map(point => tm(point.date))
-    const ys = data.price_series.map(point => point.close)
-    const minX = Math.min(...xs)
-    const maxX = Math.max(...xs)
-    const minY = Math.min(...ys)
-    const maxY = Math.max(...ys)
-    const x = (value: number) => P.l + (value - minX) / Math.max(1, maxX - minX) * (W - P.l - P.r)
-    const y = (value: number) => P.t + (1 - (value - minY) / Math.max(.01, maxY - minY)) * (H - P.t - P.b)
-    const points = data.price_series
-      .map(point => `${x(tm(point.date)).toFixed(1)},${y(point.close).toFixed(1)}`)
-      .join(' ')
-    const nodes = data.events.map(node => {
-      let nearest = data.price_series[0]
-      let distance = Math.abs(tm(nearest.date) - tm(node.date))
-      for (const point of data.price_series) {
-        const candidate = Math.abs(tm(point.date) - tm(node.date))
-        if (candidate < distance) {
-          nearest = point
-          distance = candidate
-        }
-      }
-      return {node, cx: x(tm(node.date)), cy: y(nearest.close)}
-    }).filter(placed => placed.cx >= P.l && placed.cx <= W - P.r)
-    return {minY, maxY, points, nodes}
-  }, [data])
-
-  const onKey = (event: KeyboardEvent<SVGCircleElement>, node: EventNode) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      onSelect(node)
-    }
-  }
-
-  return (
-    <div className="chart-scroll" tabIndex={0}>
-      <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="group" aria-label="股价与公告节点">
-        {[0, 1, 2, 3, 4].map(index => {
-          const value = geometry.minY + (geometry.maxY - geometry.minY) * index / 4
-          const y = H - P.b - (H - P.t - P.b) * index / 4
-          return (
-            <g key={index}>
-              <line x1={P.l} x2={W - P.r} y1={y} y2={y}/>
-              <text x={P.l - 8} y={y + 4} textAnchor="end">{value.toFixed(1)}</text>
-            </g>
-          )
-        })}
-        <polyline points={geometry.points}/>
-        {geometry.nodes.map(({node, cx, cy}) => (
-          <circle
-            key={node.event_id}
-            cx={cx}
-            cy={cy}
-            r={selected?.event_id === node.event_id ? 5.5 : 3.2}
-            className={selected?.event_id === node.event_id ? 'selected' : ''}
-            tabIndex={0}
-            role="button"
-            aria-label={`${node.date} ${node.title}`}
-            onClick={() => onSelect(node)}
-            onKeyDown={event => onKey(event, node)}
-          />
-        ))}
-      </svg>
-    </div>
-  )
-}
-
-function Timeline({data, selected, onSelect}: {
-  data: Dossier
-  selected: EventNode | null
-  onSelect: (node: EventNode) => void
-}) {
-  const dates = data.events.map(node => tm(node.date))
-  const first = Math.min(...dates)
-  const last = Math.max(...dates)
-  return (
-    <div className="timeline-scroll" tabIndex={0}>
-      <div className="timeline">
-        {data.timeline_lanes.map(lane => (
-          <div className="lane" key={lane.lane_id}>
-            <strong>{lane.label}</strong>
-            <div>
-              {data.events.filter(node => node.timeline_lane === lane.lane_id).map(node => (
-                <button
-                  key={node.event_id}
-                  className={selected?.event_id === node.event_id ? 'selected' : ''}
-                  style={{left: `${(tm(node.date) - first) / Math.max(1, last - first) * 100}%`}}
-                  title={`${node.date} ${node.title}`}
-                  aria-label={`${node.date} ${node.title}`}
-                  onClick={() => onSelect(node)}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 function Detail({symbol, node}: {symbol: string; node: EventNode | null}) {
   if (!node) {
@@ -155,12 +46,20 @@ function Content({symbol}: {symbol: string}) {
   const navigate = useNavigate()
   const search = new URLSearchParams(location.search)
   const selectedId = search.get('event')
+  const initialFocus = useRef(selectedId)
   const [data, setData] = useState<Dossier | null>(null)
   const [error, setError] = useState('')
+  const select = useCallback((node: EventNode) => {
+    const params = new URLSearchParams()
+    params.set('event', node.event_id)
+    params.set('date', node.date)
+    params.set('title', node.title)
+    navigate(`/stocks/${symbol}?${params}`, {replace: true})
+  }, [navigate, symbol])
 
   useEffect(() => {
     const controller = new AbortController()
-    getDossier(symbol, selectedId, controller.signal)
+    getDossier(symbol, initialFocus.current, controller.signal)
       .then(setData)
       .catch(cause => {
         if (!controller.signal.aborted) {
@@ -168,20 +67,15 @@ function Content({symbol}: {symbol: string}) {
         }
       })
     return () => controller.abort()
-  }, [symbol, selectedId])
+  }, [symbol])
 
   if (error) return <div className="page-state error"><AlertTriangle size={20}/>{error}</div>
   if (!data) return <div className="page-state"><LoaderCircle className="spin" size={20}/>正在读取证据</div>
 
   const selected = data.events.find(node => node.event_id === selectedId) ?? null
-  const select = (node: EventNode) => {
-    const params = new URLSearchParams(location.search)
-    params.set('event', node.event_id)
-    params.set('date', node.date)
-    params.set('title', node.title)
-    navigate(`/stocks/${symbol}?${params}`, {replace: true})
-  }
-
+  const statusLabels = Array.from(new Set(data.status_intervals.map(interval => (
+    show(interval.status_type ?? interval.status_name ?? '风险警示')
+  ))))
   return (
     <div className="dossier">
       <header className="dossier-head">
@@ -191,9 +85,7 @@ function Content({symbol}: {symbol: string}) {
           <h1>{data.display_name}</h1>
           <div className="status">
             <b>{data.symbol}</b>
-            {data.status_intervals.map((interval, index) => (
-              <span key={index}>{show(interval.status_name)}</span>
-            ))}
+            {statusLabels.map(label => <span key={label}>{label}</span>)}
           </div>
         </div>
         <Link
@@ -212,23 +104,31 @@ function Content({symbol}: {symbol: string}) {
             </div>
             <span>{data.price_series.length.toLocaleString('zh-CN')} 个交易日</span>
           </header>
-          <PriceChart data={data} selected={selected} onSelect={select}/>
-          <Timeline data={data} selected={selected} onSelect={select}/>
+          <InteractivePriceChart data={data} selected={selected} onSelect={select}/>
         </section>
         <Detail symbol={symbol} node={selected}/>
       </div>
       <section className="lens-band">
         <p className="eyebrow">冻结 Lens 库</p>
-        <h2>相关 Lens</h2>
+        <header className="lens-band-head">
+          <div>
+            <h2>与当前事件路径匹配的 Lens</h2>
+            <p>只显示实际命中的冻结 Lens，不用无关 Lens 填充页面。</p>
+          </div>
+          <span>{data.lens_summaries.length} 条命中 · {data.display_labels.lens_library_size ?? '冻结库'}</span>
+        </header>
         <div>
           {data.lens_summaries.map(summary => (
             <article key={String(summary.release_id)}>
               <strong>{show(summary.release_id)}</strong>
               <span>{show(summary.display_label)}</span>
               <p>{show(summary.contributed_section)}</p>
-              <small>{show(summary.evidence_grade)}</small>
+              <small>{show(summary.evidence_grade || summary.lens_kind)}</small>
             </article>
           ))}
+          {data.lens_summaries.length === 0 && (
+            <p className="lens-empty">当前事件路径没有匹配到可用的冻结 Lens。价格和公告数据仍可查，但不会被包装成已验证历史先验。</p>
+          )}
         </div>
         {data.data_gaps.length > 0 && (
           <aside className="dossier-gaps">

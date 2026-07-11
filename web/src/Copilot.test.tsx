@@ -22,6 +22,19 @@ const response:Response={
   })),
 }
 
+const answeredResponse:Response={
+  ...response,
+  question_cards:[],data_debt_candidates:[],navigation_refs:[],
+  claims:[{text:'状态表确认该股票已进入风险警示区间。',claim_type:'fact',backing:{kind:'query_row',ref:'status-row-1'}}],
+  answer_card:{
+    question:'这只股票为什么被 ST？',object_ref:'stock:603398',view:'query',as_of:'2026-06-26',
+    sample_scope:'1 个状态区间',evidence_grade:'descriptive_query',lens_invocations:[],lens_gap:[],
+    source_freshness:{status:'2026-06-26'},body_rows:[{row_id:'status-row-1',状态:'风险警示'}],
+    analysis_claims:[],data_debt:[],data_debt_refs:[],caveats:['原因仍需回到公告原文。'],
+    provenance:['shared_data/v5/database.sqlite3::st_status_history'],
+  },
+}
+
 describe('Copilot evidence loops',()=>{
   it('renders all seven navigable evidence reference kinds',()=>{
     render(<MemoryRouter><EvidenceNavigation items={response.navigation_refs} selectedId="nav-provenance"/></MemoryRouter>)
@@ -66,6 +79,25 @@ describe('Copilot evidence loops',()=>{
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
     fireEvent.keyDown(composer,{key:'Enter'})
     expect(await screen.findByRole('alert')).toHaveTextContent('研究服务不可用')
+  })
+
+  it('keeps the analysis readable and moves backing ids into the evidence module',async()=>{
+    const stream={request_id:'req-1',sequence:1,event:'completed',payload:{response:answeredResponse}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(`${JSON.stringify(stream)}\n`,{
+      status:200,headers:{'Content-Type':'application/x-ndjson'},
+    }))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    const composer=screen.getByRole('textbox',{name:'研究问题'})
+    fireEvent.change(composer,{target:{value:'这只股票为什么被 ST？'}})
+    fireEvent.keyDown(composer,{key:'Enter'})
+
+    expect(await screen.findByText('状态表确认该股票已进入风险警示区间。')).toBeInTheDocument()
+    expect(screen.getByText('本题没有匹配到适用的冻结 Lens；以下内容按描述性查询呈现，不升级为历史先验。')).toBeInTheDocument()
+    expect(screen.queryByText(/status-row-1/)).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button',{name:'查看证据与来源'}))
+    expect(screen.getByRole('complementary',{name:'证据与来源'})).toBeInTheDocument()
+    expect(screen.getByText(/status-row-1/)).toBeInTheDocument()
   })
 })
 

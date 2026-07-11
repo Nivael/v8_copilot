@@ -18,10 +18,11 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-EAEE3F5712D86B70168F",
-      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=checklist",
-      "dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "沐邦接下来该看哪些窗口？",
       "aliases": [],
@@ -32,6 +33,10 @@
         ]
       },
       "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
       "time_scope": {
         "semantics": "not_applicable",
         "start": null,
@@ -67,10 +72,11 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-EAEE3F5712D86B70168F",
-      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=checklist",
-      "dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "沐邦接下来该看哪些窗口？",
       "aliases": [],
@@ -81,6 +87,10 @@
         ]
       },
       "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
       "time_scope": {
         "semantics": "not_applicable",
         "start": null,
@@ -89,11 +99,10 @@
         "after": null
       },
       "needs_data": [
-        "daily_prices",
-        "episode_index"
+        "different_availability_note"
       ],
       "research_status": "answerable",
-      "view": "checklist",
+      "view": "query",
       "original_source": "user",
       "external_debt_ref": null,
       "debt_ref_status": "not_required"
@@ -120,10 +129,11 @@
           "provenance_ref": "key-fixtures"
         }
       ],
-      "memory_id": "MEM-DD-966D053FCFABBC248148",
-      "canonical_key": "data_debt|gap_id=same-gap|required_fields=[field_a]|scope=stock:603398|time=not_applicable",
-      "dedupe_key": "966d053fcfabbc248148d70ede70c0070491db3076095a8cd120cb4c02cda159",
+      "memory_id": "MEM-DD-492C15D6F62B130E43BC",
+      "canonical_key": "{\"kind\":\"data_debt\",\"missing_assets\":[\"asset_a\"],\"missing_fields\":[\"field_a\"],\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]}}",
+      "dedupe_key": "492c15d6f62b130e43bc556183a0b7fe48faaeddc088550d07d3bf4740cf6df9",
       "not_evidence": true,
+      "record_type": "data_debt",
       "gap_id": "same-gap",
       "gap_summary": "same gap",
       "scope": {
@@ -139,9 +149,16 @@
         "before": null,
         "after": null
       },
-      "required_fields": [
+      "missing_assets": [
+        "asset_a"
+      ],
+      "missing_fields": [
         "field_a"
       ],
+      "blocked_question_card_refs": [
+        "qc-20260710-003"
+      ],
+      "owner": "unassigned",
       "external_debt_ref": null,
       "debt_ref_status": "needs_assignment"
     },
@@ -163,10 +180,11 @@
           "provenance_ref": "key-fixtures"
         }
       ],
-      "memory_id": "MEM-DD-8AD1A62B9B0E77D73CE5",
-      "canonical_key": "data_debt|gap_id=same-gap|required_fields=[field_a]|scope=universe:st panel|time=not_applicable",
-      "dedupe_key": "8ad1a62b9b0e77d73ce52ba5ace3e4ba8490d90f44456367537fa62919fac21d",
+      "memory_id": "MEM-DD-4A40F768A5A3B55FD491",
+      "canonical_key": "{\"kind\":\"data_debt\",\"missing_assets\":[\"asset_a\"],\"missing_fields\":[\"field_a\"],\"object_scope\":{\"kind\":\"universe\",\"refs\":[\"st panel\"]}}",
+      "dedupe_key": "4a40f768a5a3b55fd491aa622ed70f6de76f52b9ba811bf9577ff993dc3e5a7d",
       "not_evidence": true,
+      "record_type": "data_debt",
       "gap_id": "same-gap",
       "gap_summary": "same gap",
       "scope": {
@@ -182,11 +200,231 @@
         "before": null,
         "after": null
       },
-      "required_fields": [
+      "missing_assets": [
+        "asset_a"
+      ],
+      "missing_fields": [
         "field_a"
       ],
+      "blocked_question_card_refs": [
+        "qc-20260710-003"
+      ],
+      "owner": "unassigned",
       "external_debt_ref": null,
       "debt_ref_status": "needs_assignment"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "assigned_debt_same_ref_changed_description": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4D643CAD131778579C5A",
+      "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "market-index-a",
+      "gap_summary": "first wording",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "market_index_daily_series"
+      ],
+      "missing_fields": [
+        "close",
+        "trade_date"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-014"
+      ],
+      "owner": "data-engineering",
+      "external_debt_ref": "D-051C",
+      "debt_ref_status": "assigned"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4D643CAD131778579C5A",
+      "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "changed-gap-label",
+      "gap_summary": "changed wording and fields",
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "different_asset"
+      ],
+      "missing_fields": [
+        "different_field"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-001"
+      ],
+      "owner": "another-owner",
+      "external_debt_ref": "D-051C",
+      "debt_ref_status": "assigned"
+    },
+    "expect_same_dedupe_key": true
+  },
+  "assigned_debt_different_ref": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-4D643CAD131778579C5A",
+      "canonical_key": "{\"debt_ref\":\"D-051C\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "4d643cad131778579c5a9df083d7e4aa71a4f64bcd93d19d2e949ee015cf0f6b",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "market-index-a",
+      "gap_summary": "first wording",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "market_index_daily_series"
+      ],
+      "missing_fields": [
+        "close",
+        "trade_date"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-014"
+      ],
+      "owner": "data-engineering",
+      "external_debt_ref": "D-051C",
+      "debt_ref_status": "assigned"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "assigned-other",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-76695F176B4952B2D338",
+      "canonical_key": "{\"debt_ref\":\"D-051D\",\"kind\":\"data_debt\"}",
+      "dedupe_key": "76695f176b4952b2d33801f3b26945bf7d55b6b12dc93f5214f4d84990052009",
+      "not_evidence": true,
+      "record_type": "data_debt",
+      "gap_id": "market-index-a",
+      "gap_summary": "another debt",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "missing_assets": [
+        "market_index_daily_series"
+      ],
+      "missing_fields": [
+        "close",
+        "trade_date"
+      ],
+      "blocked_question_card_refs": [
+        "qc-20260710-014"
+      ],
+      "owner": "data-engineering",
+      "external_debt_ref": "D-051D",
+      "debt_ref_status": "assigned"
     },
     "expect_same_dedupe_key": false
   },
@@ -209,10 +447,11 @@
           "provenance_ref": "response-array"
         }
       ],
-      "memory_id": "MEM-QC-AD49912C4640CBD589A8",
-      "canonical_key": "question_card|intent=stock_event_window|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=query",
-      "dedupe_key": "ad49912c4640cbd589a80bb4151afa826ada53f51f55ad46679fe67049688123",
+      "memory_id": "MEM-QC-3DCA610CD74A0868D7F0",
+      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "3dca610cd74a0868d7f04b0171de8ef5512d5a6067f0019207e87ec5b9c0df88",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "节点窗口",
       "aliases": [],
@@ -223,6 +462,10 @@
         ]
       },
       "semantic_intent": "stock_event_window",
+      "dimensions": [
+        "announcement",
+        "price"
+      ],
       "time_scope": {
         "semantics": "not_applicable",
         "start": null,
@@ -258,10 +501,11 @@
           "provenance_ref": "response-array"
         }
       ],
-      "memory_id": "MEM-QC-AD49912C4640CBD589A8",
-      "canonical_key": "question_card|intent=stock_event_window|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=query",
-      "dedupe_key": "ad49912c4640cbd589a80bb4151afa826ada53f51f55ad46679fe67049688123",
+      "memory_id": "MEM-QC-3DCA610CD74A0868D7F0",
+      "canonical_key": "{\"dimensions\":[\"announcement\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "3dca610cd74a0868d7f04b0171de8ef5512d5a6067f0019207e87ec5b9c0df88",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "节点窗口",
       "aliases": [],
@@ -272,6 +516,10 @@
         ]
       },
       "semantic_intent": "stock_event_window",
+      "dimensions": [
+        "announcement",
+        "price"
+      ],
       "time_scope": {
         "semantics": "not_applicable",
         "start": null,
@@ -310,10 +558,11 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-A8948DED3C124B3EB52E",
-      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=trading_day_window;before=0;after=10|view=checklist",
-      "dedupe_key": "a8948ded3c124b3eb52efe5e80b2d026b81d8b02f55618b8e83db325698127fe",
+      "memory_id": "MEM-QC-4B5B45136165CA2C4AD7",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"after\":10,\"before\":0,\"semantics\":\"trading_day_window\"}}",
+      "dedupe_key": "4b5b45136165ca2c4ad796c46d2070c6d8970fa15fd33e28aa301839a405d2f0",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "十日窗口",
       "aliases": [],
@@ -324,6 +573,10 @@
         ]
       },
       "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
       "time_scope": {
         "semantics": "trading_day_window",
         "start": null,
@@ -359,10 +612,11 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-1D7DB8F6BCDDAAE28E16",
-      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=trading_day_window;before=0;after=14|view=checklist",
-      "dedupe_key": "1d7db8f6bcddaae28e16c4b021a3d49992a191f509625c2ce8929bb9cecf30c2",
+      "memory_id": "MEM-QC-BADD9AF3760FAAC6621D",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"after\":14,\"before\":0,\"semantics\":\"trading_day_window\"}}",
+      "dedupe_key": "badd9af3760faac6621d491fb104fe5537f93a71ad7b88ebf1d331d1527fc8a9",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "十四日窗口",
       "aliases": [],
@@ -373,6 +627,10 @@
         ]
       },
       "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
       "time_scope": {
         "semantics": "trading_day_window",
         "start": null,
@@ -389,6 +647,369 @@
       "original_source": "user",
       "external_debt_ref": null,
       "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "different_dimensions": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-001",
+          "source_alias": "沐邦接下来该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-dimension",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-CC528F2648827FADA186",
+      "canonical_key": "{\"dimensions\":[\"shareholder_count\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "cc528f2648827fada186b4ba6aa57a1c7ac58560864e253437a14a4474d0c6f3",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "不同分析维度",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "shareholder_count"
+      ],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "query_template_semantic_collision_guard": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "template-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-QT-A1D5EF8F68617E141505",
+      "canonical_key": "{\"executor_ref\":{\"proposed\":\"proposal:event-timing\"},\"kind\":\"query_template\",\"outcome_semantics\":[\"event_timing\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"symbol\",\"required\":true,\"value_type\":\"string\"}]}",
+      "dedupe_key": "a1d5ef8f68617e141505e67a7cde3cd4f736366299c3b5ec6215be226143361e",
+      "not_evidence": true,
+      "record_type": "query_template",
+      "template_id": "QT-999",
+      "definition_version": "draft-v1",
+      "question_pattern": "draft one",
+      "parameter_schema": [
+        {
+          "name": "symbol",
+          "value_type": "string",
+          "required": true,
+          "allowed_values": []
+        }
+      ],
+      "outcome_semantics": [
+        "event_timing"
+      ],
+      "caveats": [
+        "not evidence"
+      ],
+      "executor_ref": null,
+      "proposed_executor_ref": "proposal:event-timing",
+      "executable": false
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "template-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-QT-A7E6D0C2D78F745916E0",
+      "canonical_key": "{\"executor_ref\":{\"proposed\":\"proposal:event-timing\"},\"kind\":\"query_template\",\"outcome_semantics\":[\"distribution\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"cohort\",\"required\":true,\"value_type\":\"string\"}]}",
+      "dedupe_key": "a7e6d0c2d78f745916e0e7473f473f7036ed9fa31e07a42ddf0ac919accf37c5",
+      "not_evidence": true,
+      "record_type": "query_template",
+      "template_id": "QT-999",
+      "definition_version": "draft-v1",
+      "question_pattern": "draft two",
+      "parameter_schema": [
+        {
+          "name": "cohort",
+          "value_type": "string",
+          "required": true,
+          "allowed_values": []
+        }
+      ],
+      "outcome_semantics": [
+        "distribution"
+      ],
+      "caveats": [
+        "not evidence"
+      ],
+      "executor_ref": null,
+      "proposed_executor_ref": "proposal:event-timing",
+      "executable": false
+    },
+    "expect_same_dedupe_key": false
+  },
+  "review_same_decision_unit_changed_package": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-95ECEAE4B90998389F5B",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "95eceae4b90998389f5b7b1066eda12d0652b13848715ca74e0b46b24cb65734",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+      },
+      "decision_unit": "one_question_candidate",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-a"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-95ECEAE4B90998389F5B",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "95eceae4b90998389f5b7b1066eda12d0652b13848715ca74e0b46b24cb65734",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+      },
+      "decision_unit": "one_question_candidate",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-b"
+        }
+      ],
+      "recommended_action": "request_more_evidence",
+      "priority": 0,
+      "active": true
+    },
+    "expect_same_dedupe_key": true
+  },
+  "review_different_decision_unit": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-95ECEAE4B90998389F5B",
+      "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "95eceae4b90998389f5b7b1066eda12d0652b13848715ca74e0b46b24cb65734",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+      },
+      "decision_unit": "one_question_candidate",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-a"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-c",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-RV-9170A73D7F3A7541C4DB",
+      "canonical_key": "{\"decision_unit\":\"question_and_scope_pair\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-0e708874dd1e02fe1214\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "9170a73d7f3a7541c4dba2c7a9a2666fb88f1577a864f5d15371f13c3a008dfa",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-0E708874DD1E02FE1214"
+      },
+      "decision_unit": "question_and_scope_pair",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-a"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
     },
     "expect_same_dedupe_key": false
   },
@@ -411,10 +1032,11 @@
           "provenance_ref": "response-001"
         }
       ],
-      "memory_id": "MEM-QC-EAEE3F5712D86B70168F",
-      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=checklist",
-      "dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+      "memory_id": "MEM-QC-0E708874DD1E02FE1214",
+      "canonical_key": "{\"dimensions\":[\"episode\",\"price\"],\"intent\":\"stock_observation_windows\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
       "not_evidence": true,
+      "record_type": "question_card",
       "external_qc_id": null,
       "canonical_question": "沐邦接下来该看哪些窗口？",
       "aliases": [],
@@ -425,6 +1047,10 @@
         ]
       },
       "semantic_intent": "stock_observation_windows",
+      "dimensions": [
+        "episode",
+        "price"
+      ],
       "time_scope": {
         "semantics": "not_applicable",
         "start": null,
@@ -447,7 +1073,7 @@
       "后续观察窗口",
       "完全不同的展示标题"
     ],
-    "expected_dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+    "expected_dedupe_key": "0e708874dd1e02fe121419a6cf34826e28bcf912c3d184779ae6606226c5ceeb",
     "title_is_not_contract_input": true
   }
 }

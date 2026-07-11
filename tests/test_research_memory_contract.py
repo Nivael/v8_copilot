@@ -6,20 +6,29 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import ValidationError as JsonSchemaValidationError
 from pydantic import ValidationError
 
 from research_memory_contract import (
     STATUS_TRANSITIONS,
     DataDebtCard,
+    ExecutorRef,
     ObjectScope,
     ProvenanceRef,
+    QueryParameterSpec,
+    ResearchRunRef,
+    ReviewItem,
+    SedimentationResult,
     QuestionCard,
     SourceRef,
     StatusTransition,
     TimeScope,
     build_data_debt_card,
+    build_query_template_record,
     build_question_card,
     normalize_symbol,
+    public_contract_schema,
 )
 
 
@@ -79,6 +88,7 @@ def test_natural_language_and_run_identity_do_not_enter_question_dedupe() -> Non
     base = {
         "scope": ObjectScope(kind="stock", refs=["603398.SH"]),
         "semantic_intent": "stock_observation_windows",
+        "dimensions": ["price", "episode"],
         "needs_data": ["episode_index", "daily_prices"],
         "research_status": "answerable",
         "view": "checklist",
@@ -95,6 +105,8 @@ def test_natural_language_and_run_identity_do_not_enter_question_dedupe() -> Non
     )
     second = build_question_card(
         canonical_question="沐邦后面看什么？",
+        needs_data=["changed_availability_note"],
+        view="query",
         source_refs=[
             SourceRef(
                 source_type="answer_card",
@@ -102,7 +114,7 @@ def test_natural_language_and_run_identity_do_not_enter_question_dedupe() -> Non
                 source_alias="603398 有哪些公开观察窗口？",
             )
         ],
-        **base,
+        **{key: value for key, value in base.items() if key not in {"needs_data", "view"}},
     )
 
     assert first.memory_id == second.memory_id
@@ -159,7 +171,9 @@ def test_fixed_seed_identity_uses_qc_id_not_question_wording() -> None:
     )
 
     assert first.dedupe_key == second.dedupe_key
-    assert first.canonical_key == "question_card|seed_id=qc-20260710-015"
+    assert first.canonical_key == (
+        '{"kind":"question_card","seed_id":"qc-20260710-015"}'
+    )
 
 
 def test_fixed_seed_id_rejects_non_seed_source() -> None:
@@ -184,7 +198,10 @@ def test_same_gap_with_different_scope_does_not_merge() -> None:
     common = {
         "gap_id": "missing-market-series",
         "gap_summary": "missing data",
-        "required_fields": ["trade_date", "close"],
+        "missing_assets": ["market_index_daily_series"],
+        "missing_fields": ["trade_date", "close"],
+        "blocked_question_card_refs": ["QC-20260710-014"],
+        "owner": "unassigned",
         "debt_ref_status": "needs_assignment",
         "status": "candidate",
         "created_at": STAMP,
@@ -196,6 +213,90 @@ def test_same_gap_with_different_scope_does_not_merge() -> None:
     universe = build_data_debt_card(scope=ObjectScope(kind="universe", refs=["ST panel"]), **common)
 
     assert stock.dedupe_key != universe.dedupe_key
+
+
+def test_assigned_data_debt_key_is_anchored_only_by_debt_ref() -> None:
+    common = {
+        "debt_ref_status": "assigned",
+        "status": "accepted",
+        "created_at": STAMP,
+        "updated_at": STAMP,
+        "source_refs": [SourceRef(source_type="system_gap", source_ref="gap")],
+        "provenance_refs": [
+            ProvenanceRef(provenance_type="contract_fixture", provenance_ref="test")
+        ],
+    }
+    first = build_data_debt_card(
+        gap_id="gap-a",
+        gap_summary="first description",
+        scope=ObjectScope(kind="universe", refs=["ST panel"]),
+        missing_assets=["market_index_daily_series"],
+        missing_fields=["trade_date", "close"],
+        blocked_question_card_refs=["QC-20260710-014"],
+        owner="owner-a",
+        external_debt_ref="D-051C",
+        **common,
+    )
+    changed = build_data_debt_card(
+        gap_id="gap-b",
+        gap_summary="changed description",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        missing_assets=["different_asset"],
+        missing_fields=["different_field"],
+        blocked_question_card_refs=["QC-20260710-001"],
+        owner="owner-b",
+        external_debt_ref="d-051c",
+        **common,
+    )
+    other_ref = build_data_debt_card(
+        gap_id="gap-a",
+        gap_summary="first description",
+        scope=ObjectScope(kind="universe", refs=["ST panel"]),
+        missing_assets=["market_index_daily_series"],
+        missing_fields=["trade_date", "close"],
+        blocked_question_card_refs=["QC-20260710-014"],
+        owner="owner-a",
+        external_debt_ref="D-051D",
+        **common,
+    )
+
+    assert first.dedupe_key == changed.dedupe_key
+    assert first.memory_id == changed.memory_id
+    assert first.dedupe_key != other_ref.dedupe_key
+
+
+def test_query_template_key_uses_executor_parameters_and_outcomes() -> None:
+    common = {
+        "template_id": "QT-999",
+        "definition_version": "draft-v1",
+        "question_pattern": "display text does not define identity",
+        "caveats": ["not evidence"],
+        "proposed_executor_ref": "proposal:window-query",
+        "status": "candidate",
+        "created_at": STAMP,
+        "updated_at": STAMP,
+        "source_refs": [SourceRef(source_type="human_review", source_ref="template")],
+        "provenance_refs": [
+            ProvenanceRef(provenance_type="contract_fixture", provenance_ref="test")
+        ],
+    }
+    first = build_query_template_record(
+        parameter_schema=[QueryParameterSpec(name="symbol", value_type="string")],
+        outcome_semantics=["event_timing"],
+        **common,
+    )
+    changed_parameters = build_query_template_record(
+        parameter_schema=[QueryParameterSpec(name="cohort", value_type="string")],
+        outcome_semantics=["event_timing"],
+        **common,
+    )
+    changed_outcome = build_query_template_record(
+        parameter_schema=[QueryParameterSpec(name="symbol", value_type="string")],
+        outcome_semantics=["distribution"],
+        **common,
+    )
+
+    assert len({first.dedupe_key, changed_parameters.dedupe_key, changed_outcome.dedupe_key}) == 3
 
 
 def test_time_scope_semantics_are_identity_bearing() -> None:
@@ -264,13 +365,80 @@ def test_transition_table_covers_all_states_and_blocks_automatic_merge() -> None
     }
     with pytest.raises(ValidationError, match="human actor"):
         StatusTransition(
+            record_type="status_transition",
             object_type="question_card",
             from_status="accepted",
             to_status="merged",
             actor_type="system",
+            context="online",
             reason="automatic merge",
             merge_target_id="MEM-QC-TARGET",
         )
+
+
+@pytest.mark.parametrize(
+    ("to_status", "actor_type", "message"),
+    [
+        ("accepted", "system", "acceptance requires"),
+        ("ignored", "system", "ignore requires"),
+        ("blocked", "llm", "LLM cannot"),
+    ],
+)
+def test_online_candidate_status_decisions_require_human(
+    to_status: str, actor_type: str, message: str
+) -> None:
+    with pytest.raises(ValidationError, match=message):
+        StatusTransition(
+            record_type="status_transition",
+            object_type="question_card",
+            from_status="candidate",
+            to_status=to_status,
+            actor_type=actor_type,
+            context="online",
+            reason="forbidden automated decision",
+        )
+
+
+def test_seed_acceptance_has_explicit_migration_path() -> None:
+    transition = StatusTransition(
+        record_type="status_transition",
+        object_type="question_card",
+        from_status="candidate",
+        to_status="accepted",
+        actor_type="migration",
+        context="seed_bootstrap",
+        reason="controlled frozen seed import",
+    )
+
+    assert transition.actor_type == "migration"
+    assert transition.context == "seed_bootstrap"
+
+
+def test_public_root_schema_rejects_empty_and_resolves_all_public_fixtures() -> None:
+    validator = Draft202012Validator(public_contract_schema())
+    with pytest.raises(JsonSchemaValidationError):
+        validator.validate({})
+
+    for path in sorted((CONTRACT / "fixtures/valid").glob("*.json")):
+        validator.validate(json.loads(path.read_text()))
+
+
+def test_source_and_review_objects_expose_frozen_context_fields() -> None:
+    valid = CONTRACT / "fixtures/valid"
+    run = ResearchRunRef.model_validate(json.loads((valid / "research_run_ref.json").read_text()))
+    review = ReviewItem.model_validate(json.loads((valid / "review_item.json").read_text()))
+    result = SedimentationResult.model_validate(
+        json.loads((valid / "sedimentation_result.json").read_text())
+    )
+
+    assert run.route.route == "answer_query"
+    assert run.snapshot_refs and run.content_digest
+    assert run.content_digest_algorithm == "sha256-canonical-json-v1"
+    assert run.request_contract_version and run.response_contract_version
+    assert review.uncertainty_type and review.decision_unit
+    assert review.evidence_package_refs and review.recommended_action
+    assert len(result.created) == 1
+    assert result.existing == result.merged == result.ignored == []
 
 
 def test_contract_models_reject_evidence_identity_and_naive_timestamps() -> None:

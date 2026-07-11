@@ -1,26 +1,786 @@
 {
   "max_active_items": 20,
-  "active_item_ids": [
-    "MEM-RV-7BB0A6C5F40E8C3DB51A",
-    "MEM-RV-D7342D768141CDFDFDD1",
-    "MEM-RV-9887910429E52357F867",
-    "MEM-RV-E471B12B053AC1FF89A6",
-    "MEM-RV-2D4CAA9B2016E5D4B1B3",
-    "MEM-RV-FAA0E3CB2D982D2D147B",
-    "MEM-RV-7E8C21539472C06D2D20",
-    "MEM-RV-5D449E5C785A4A8D9C5B",
-    "MEM-RV-A334A208B78EB9DB47DB",
-    "MEM-RV-DF2364EE37E877793E28",
-    "MEM-RV-5560A243DF6A6A8207AB",
-    "MEM-RV-11B2A526BB7808C15C93",
-    "MEM-RV-D774C2F0F9AE414052C7",
-    "MEM-RV-D485942785AABEB67DE4",
-    "MEM-RV-D2DA66874CA7ED7E0E58",
-    "MEM-RV-EE9516F65C718AB3113E",
-    "MEM-RV-1E15815F80C91626B880",
-    "MEM-RV-745C87D77D5948CB749A",
-    "MEM-RV-A59CBD8B38E148CAD0E3",
-    "MEM-RV-62AE7CC6828433D6E460"
+  "active_items": [
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-00",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-72BDDCFA7F03B4912726",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-00\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-00\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "72bddcfa7f03b4912726b4db49d012569cbb7072e72fccd083b4cd65a548b571",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-00"
+      },
+      "decision_unit": "question-candidate-00",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-00"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 0,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-01",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-CC2B3FF9FA9BDF097768",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-01\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-01\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "cc2b3ff9fa9bdf0977688c65de15ceec5154e82d6d8158fa862d833f488b92d2",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-01"
+      },
+      "decision_unit": "question-candidate-01",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-01"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 1,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-02",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-17AD8043F385A196A842",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-02\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-02\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "17ad8043f385a196a84269f8bfad3b56262377cfc008c9e0013cb93d37af4654",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-02"
+      },
+      "decision_unit": "question-candidate-02",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-02"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 2,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-03",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-9F53B79BD202F372CAE4",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-03\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-03\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "9f53b79bd202f372cae4b1c95e49ffb1aac27f13dfe6085e8a4f0c32266ee021",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-03"
+      },
+      "decision_unit": "question-candidate-03",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-03"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 3,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-04",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-F67726A921CE6BBFCCD8",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-04\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-04\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "f67726a921ce6bbfccd86376a5e27af991cde408f859c63a74b1468f171cc31f",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-04"
+      },
+      "decision_unit": "question-candidate-04",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-04"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 4,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-05",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-2DB38601037682E50496",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-05\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-05\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "2db38601037682e5049654df2c716bd25ecf17b7bed52d96f7da3cdfd975fdf4",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-05"
+      },
+      "decision_unit": "question-candidate-05",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-05"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 5,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-06",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-731FFB92CF3A6BA1A1A2",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-06\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-06\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "731ffb92cf3a6ba1a1a2c612464e2088d1bfb6189e46a102caf45c4ad3630eb6",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-06"
+      },
+      "decision_unit": "question-candidate-06",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-06"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 6,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-07",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-79B38D6E134BAB039646",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-07\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-07\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "79b38d6e134bab039646b280f0553b175aaa606b2d59b19c65ca803ac522ba6b",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-07"
+      },
+      "decision_unit": "question-candidate-07",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-07"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 7,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-08",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-7392A0CFD955BEE0DCCA",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-08\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-08\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "7392a0cfd955bee0dcca90cd563704436b10af7e02310b7eb947675d94ccc1a0",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-08"
+      },
+      "decision_unit": "question-candidate-08",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-08"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 8,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-09",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-1FD2322C2708D0FA647B",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-09\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-09\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "1fd2322c2708d0fa647b60c069636be150676b55122f5c2a03b083b380423b6a",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-09"
+      },
+      "decision_unit": "question-candidate-09",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-09"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 9,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-10",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-DA8DC87BB8BA6A6E30A8",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-10\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-10\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "da8dc87bb8ba6a6e30a8f392eb3902e136e2b38cff62af7cff8473fa15c0bc33",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-10"
+      },
+      "decision_unit": "question-candidate-10",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-10"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 10,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-11",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-79B6018DC2CFC5FB1B02",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-11\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-11\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "79b6018dc2cfc5fb1b02c1e4cd2d65bf2fda89e1cd8a081acb7dcce25f5ae84e",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-11"
+      },
+      "decision_unit": "question-candidate-11",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-11"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 11,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-12",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-35A8B2528BEDCC63522A",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-12\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-12\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "35a8b2528bedcc63522ade54bd3df4a5cd78b77cebb917bd76896c34b6f030ca",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-12"
+      },
+      "decision_unit": "question-candidate-12",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-12"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 12,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-13",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-3B92C7DFF8FFF567AF10",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-13\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-13\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "3b92c7dff8fff567af100b7c741ccd7a14966cb1d3e63c681d9e8e6668e63744",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-13"
+      },
+      "decision_unit": "question-candidate-13",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-13"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 13,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-14",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-1DBB788AF35A2D9FC413",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-14\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-14\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "1dbb788af35a2d9fc413130c92ee0bceaec4bed968ec038f1308aa65d47a704e",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-14"
+      },
+      "decision_unit": "question-candidate-14",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-14"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 14,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-15",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-008175309CB52908E9FD",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-15\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-15\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "008175309cb52908e9fd0474d98637a1780213afbf17a89c3a568b2fd0336200",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-15"
+      },
+      "decision_unit": "question-candidate-15",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-15"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 15,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-16",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-4801E74F60570606A565",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-16\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-16\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "4801e74f60570606a56548c7df7bcf3599b85b528f41390e38c4c69af4a0c57a",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-16"
+      },
+      "decision_unit": "question-candidate-16",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-16"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 16,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-17",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-1599941318229D3AA2B7",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-17\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-17\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "1599941318229d3aa2b7c96de6b006c266a5ae045c66f95d5faccf25a5c0d119",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-17"
+      },
+      "decision_unit": "question-candidate-17",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-17"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 17,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-18",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-A0225ABA27E63B29A085",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-18\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-18\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "a0225aba27e63b29a085b40972fb4726087fe81e01a33c5448602aa2cdbf7431",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-18"
+      },
+      "decision_unit": "question-candidate-18",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-18"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 18,
+      "active": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "human_review",
+          "source_ref": "review-capacity-19",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity"
+        }
+      ],
+      "memory_id": "MEM-RV-99202F358206E8F95811",
+      "canonical_key": "{\"decision_unit\":\"question-candidate-19\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-capacity-19\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+      "dedupe_key": "99202f358206e8f9581101c983ac0761f896ade0fa17688470410ad31cc5359a",
+      "not_evidence": true,
+      "record_type": "review_item",
+      "uncertainty_type": "question_semantic_identity",
+      "subject_ref": {
+        "subject_type": "question_card",
+        "subject_id": "MEM-QC-CAPACITY-19"
+      },
+      "decision_unit": "question-candidate-19",
+      "evidence_package_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "review-capacity-19"
+        }
+      ],
+      "recommended_action": "accept_candidate",
+      "priority": 19,
+      "active": true
+    }
   ],
   "repository_must_reject_active_count_above": 20
 }

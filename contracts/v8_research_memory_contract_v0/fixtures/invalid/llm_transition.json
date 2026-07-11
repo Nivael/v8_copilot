@@ -3,10 +3,10 @@
   "payload": {
     "record_type": "status_transition",
     "object_type": "question_card",
-    "from_status": "closed",
-    "to_status": "accepted",
-    "actor_type": "human",
+    "from_status": "candidate",
+    "to_status": "blocked",
+    "actor_type": "llm",
     "context": "online",
-    "reason": "illegal reopen"
+    "reason": "LLM status decision"
   }
 }

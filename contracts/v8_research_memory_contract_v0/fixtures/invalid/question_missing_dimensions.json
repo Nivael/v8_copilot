@@ -33,11 +33,6 @@
       ]
     },
     "semantic_intent": "stock_event_window",
-    "dimensions": [
-      "announcement",
-      "episode",
-      "price"
-    ],
     "time_scope": {
       "semantics": "event_window",
       "start": null,
@@ -53,8 +48,7 @@
     "view": "query",
     "original_source": "user",
     "external_debt_ref": null,
-    "debt_ref_status": "not_required",
-    "evidence_grade": "supported"
+    "debt_ref_status": "not_required"
   },
   "schema_must_reject": true
 }

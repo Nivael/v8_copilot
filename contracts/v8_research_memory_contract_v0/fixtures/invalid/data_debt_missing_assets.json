@@ -38,9 +38,7 @@
       "before": null,
       "after": null
     },
-    "missing_assets": [
-      "release_lens_boundary_catalog"
-    ],
+    "missing_assets": [],
     "missing_fields": [
       "rejection_reason",
       "standing"
@@ -50,7 +48,8 @@
       "qc-20260710-005"
     ],
     "owner": "unassigned",
-    "external_debt_ref": "D-FAKE",
+    "external_debt_ref": null,
     "debt_ref_status": "needs_assignment"
-  }
+  },
+  "schema_must_reject": true
 }

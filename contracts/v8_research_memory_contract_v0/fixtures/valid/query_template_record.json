@@ -16,15 +16,21 @@
       "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
     }
   ],
-  "memory_id": "MEM-QT-3B37CDE323B8F7B425A0",
-  "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-001",
-  "dedupe_key": "3b37cde323b8f7b425a0ac42d6d1036a65f6c35d406b49199f8f18f9dc42b897",
+  "memory_id": "MEM-QT-71A6B4B1628BD5371539",
+  "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"next_node_timing\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-001\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"event_next_node_timing\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"episode_type\",\"required\":true,\"value_type\":\"string\"}]}",
+  "dedupe_key": "71a6b4b1628bd5371539892ace4ee8824965ecac293d151037938d13cac33061",
   "not_evidence": true,
+  "record_type": "query_template",
   "template_id": "QT-001",
   "definition_version": "v8_query_template_contract_v0",
   "question_pattern": "某事件后下一个节点多久",
-  "parameter_semantics": [
-    "episode_type"
+  "parameter_schema": [
+    {
+      "name": "episode_type",
+      "value_type": "string",
+      "required": true,
+      "allowed_values": []
+    }
   ],
   "outcome_semantics": [
     "event_next_node_timing"
@@ -37,5 +43,6 @@
     "template_id": "QT-001",
     "executor_key": "next_node_timing"
   },
+  "proposed_executor_ref": null,
   "executable": true
 }

@@ -7,7 +7,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema.exceptions import ValidationError as JsonSchemaValidationError
 from pydantic import BaseModel, ValidationError
 
 
@@ -20,6 +21,7 @@ from research_memory_contract import (
     DataDebtCard,
     FeedbackEvent,
     MemoryLink,
+    PUBLIC_MEMORY_ADAPTER,
     QueryTemplateRecord,
     QuestionCard,
     ResearchRunRef,
@@ -54,6 +56,18 @@ VALID_FIXTURES = {
     "status_transition.json": StatusTransition,
     "sedimentation_result.json": SedimentationResult,
 }
+DEFINITION_BY_FIXTURE = {
+    "question_card.json": "QuestionCard",
+    "data_debt_assigned.json": "DataDebtCard",
+    "data_debt_unassigned.json": "DataDebtCard",
+    "query_template_record.json": "QueryTemplateRecord",
+    "review_item.json": "ReviewItem",
+    "feedback_event.json": "FeedbackEvent",
+    "memory_link.json": "MemoryLink",
+    "research_run_ref.json": "ResearchRunRef",
+    "status_transition.json": "StatusTransition",
+    "sedimentation_result.json": "SedimentationResult",
+}
 
 
 def read_json(path: Path) -> Any:
@@ -64,27 +78,74 @@ def file_sha256(path: Path) -> str:
     return sha256(path.read_bytes()).hexdigest()
 
 
+def validate_public_payload(payload: dict[str, Any]) -> None:
+    schema = read_json(HERE / "schema.json")
+    Draft202012Validator(schema, format_checker=FormatChecker()).validate(payload)
+    PUBLIC_MEMORY_ADAPTER.validate_python(payload)
+
+
 def validate_schema() -> None:
     committed = read_json(HERE / "schema.json")
     assert committed == public_contract_schema(), "committed schema differs from Python types"
     Draft202012Validator.check_schema(committed)
+    validator = Draft202012Validator(committed, format_checker=FormatChecker())
+    try:
+        validator.validate({})
+    except JsonSchemaValidationError:
+        pass
+    else:
+        raise AssertionError("public root schema unexpectedly accepted an empty object")
+    question = read_json(HERE / "fixtures/valid/question_card.json")
+    for required_field in ("record_type", "contract_version", "not_evidence"):
+        missing = dict(question)
+        missing.pop(required_field)
+        try:
+            validator.validate(missing)
+        except JsonSchemaValidationError:
+            continue
+        raise AssertionError(f"public root schema allowed missing {required_field}")
 
 
 def validate_valid_fixtures() -> None:
     fixture_dir = HERE / "fixtures/valid"
+    validator = Draft202012Validator(
+        read_json(HERE / "schema.json"), format_checker=FormatChecker()
+    )
     for filename, model in VALID_FIXTURES.items():
-        model.model_validate(read_json(fixture_dir / filename))
+        payload = read_json(fixture_dir / filename)
+        validator.validate(payload)
+        definition_schema = {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$defs": read_json(HERE / "schema.json")["$defs"],
+            "$ref": f"#/$defs/{DEFINITION_BY_FIXTURE[filename]}",
+        }
+        Draft202012Validator(
+            definition_schema, format_checker=FormatChecker()
+        ).validate(payload)
+        PUBLIC_MEMORY_ADAPTER.validate_python(payload)
+        model.model_validate(payload)
 
 
 def validate_invalid_fixtures() -> None:
+    validator = Draft202012Validator(
+        read_json(HERE / "schema.json"), format_checker=FormatChecker()
+    )
     for path in sorted((HERE / "fixtures/invalid").glob("*.json")):
         case = read_json(path)
         model = MODEL_BY_NAME[case["model"]]
+        schema_rejected = False
+        try:
+            validator.validate(case["payload"])
+        except JsonSchemaValidationError:
+            schema_rejected = True
+        pydantic_rejected = False
         try:
             model.model_validate(case["payload"])
         except ValidationError:
-            continue
-        raise AssertionError(f"invalid fixture unexpectedly passed: {path.name}")
+            pydantic_rejected = True
+        assert pydantic_rejected, f"invalid fixture passed Pydantic: {path.name}"
+        if case.get("schema_must_reject"):
+            assert schema_rejected, f"invalid fixture passed JSON Schema: {path.name}"
 
 
 def validate_key_cases() -> None:
@@ -92,13 +153,21 @@ def validate_key_cases() -> None:
     model_for_case = {
         "synonym_different_runs": QuestionCard,
         "same_gap_different_scope": DataDebtCard,
+        "assigned_debt_same_ref_changed_description": DataDebtCard,
+        "assigned_debt_different_ref": DataDebtCard,
         "normalized_arrays_and_symbols": QuestionCard,
         "different_time_semantics": QuestionCard,
+        "different_dimensions": QuestionCard,
+        "query_template_semantic_collision_guard": QueryTemplateRecord,
+        "review_same_decision_unit_changed_package": ReviewItem,
+        "review_different_decision_unit": ReviewItem,
     }
     for name, model in model_for_case.items():
         case = cases[name]
         first = model.model_validate(case["first"])
         second = model.model_validate(case["second"])
+        validate_public_payload(case["first"])
+        validate_public_payload(case["second"])
         actual_same = first.dedupe_key == second.dedupe_key
         assert actual_same is case["expect_same_dedupe_key"], name
         if case.get("expect_different_source_refs"):
@@ -106,6 +175,7 @@ def validate_key_cases() -> None:
 
     title_case = cases["llm_title_changes"]
     card = QuestionCard.model_validate(title_case["semantic_record"])
+    validate_public_payload(title_case["semantic_record"])
     assert title_case["title_is_not_contract_input"] is True
     assert card.dedupe_key == title_case["expected_dedupe_key"]
 
@@ -119,7 +189,10 @@ def validate_seed_migration() -> None:
     assert file_sha256(fixture_seed) == manifest["seed_sha256"]
 
     source_rows = [json.loads(line) for line in source_seed.read_text(encoding="utf-8").splitlines()]
-    records = [QuestionCard.model_validate(row) for row in read_json(fixture_dir / "expected_records.json")]
+    record_payloads = read_json(fixture_dir / "expected_records.json")
+    records = [QuestionCard.model_validate(row) for row in record_payloads]
+    for row in record_payloads:
+        validate_public_payload(row)
     assert len(source_rows) == len(records) == manifest["seed_count"] == 15
     by_external_id = {record.external_qc_id: record for record in records}
     for row in source_rows:
@@ -134,9 +207,13 @@ def validate_seed_migration() -> None:
 
     first = SedimentationResult.model_validate(read_json(fixture_dir / "first_import_result.json"))
     second = SedimentationResult.model_validate(read_json(fixture_dir / "second_import_result.json"))
-    assert len(first.created_ids) == 15 and not first.existing_ids
-    assert not second.created_ids and len(second.existing_ids) == 15
-    assert first.created_ids == second.existing_ids
+    validate_public_payload(first.model_dump(mode="json"))
+    validate_public_payload(second.model_dump(mode="json"))
+    assert len(first.created) == 15 and not first.existing
+    assert not first.merged and not first.ignored
+    assert not second.created and len(second.existing) == 15
+    assert not second.merged and not second.ignored
+    assert first.created == second.existing
 
 
 def validate_query_template_registry() -> None:
@@ -144,10 +221,13 @@ def validate_query_template_registry() -> None:
         row["template_id"]: row
         for row in read_json(ROOT / "contracts/v8_query_template_contract_v0/registry.json")
     }
+    record_payloads = read_json(HERE / "fixtures/query_template_records.json")
     records = [
         QueryTemplateRecord.model_validate(row)
-        for row in read_json(HERE / "fixtures/query_template_records.json")
+        for row in record_payloads
     ]
+    for row in record_payloads:
+        validate_public_payload(row)
     assert {record.template_id for record in records} == set(registry) == {
         f"QT-{index:03d}" for index in range(1, 9)
     }
@@ -160,8 +240,12 @@ def validate_query_template_registry() -> None:
 def validate_review_capacity_fixture() -> None:
     fixture = read_json(HERE / "fixtures/review_capacity.json")
     assert fixture["max_active_items"] == REVIEW_ACTIVE_LIMIT == 20
-    assert len(fixture["active_item_ids"]) == REVIEW_ACTIVE_LIMIT
-    assert len(set(fixture["active_item_ids"])) == REVIEW_ACTIVE_LIMIT
+    items = [ReviewItem.model_validate(item) for item in fixture["active_items"]]
+    for item in fixture["active_items"]:
+        validate_public_payload(item)
+    assert len(items) == REVIEW_ACTIVE_LIMIT
+    assert all(item.active for item in items)
+    assert len({item.memory_id for item in items}) == REVIEW_ACTIVE_LIMIT
 
 
 def validate_protected_contract_checksums() -> None:
@@ -180,6 +264,14 @@ def validate_route_seed_coverage() -> None:
     assert route_refs == seed_ids
 
 
+def validate_transition_fixtures() -> None:
+    fixture = read_json(HERE / "fixtures/status_transitions.json")
+    for name in ("valid_human_merge", "valid_seed_migration_acceptance"):
+        payload = fixture[name]
+        validate_public_payload(payload)
+        StatusTransition.model_validate(payload)
+
+
 def validate_all() -> None:
     validate_schema()
     validate_valid_fixtures()
@@ -188,6 +280,7 @@ def validate_all() -> None:
     validate_seed_migration()
     validate_query_template_registry()
     validate_review_capacity_fixture()
+    validate_transition_fixtures()
     validate_protected_contract_checksums()
     validate_route_seed_coverage()
 

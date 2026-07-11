@@ -16,10 +16,11 @@
       "provenance_ref": "feedback-fixture-001"
     }
   ],
-  "memory_id": "MEM-FB-ABC0AC2EA49A8626DE26",
-  "canonical_key": "feedback_event|feedback_kind=missing_context|occurred_at=2026-07-11t00:00:00+00:00|target=response-fixture-001|target_type=research_response",
-  "dedupe_key": "abc0ac2ea49a8626de26c6531ca3975473611e3647fc2916df2f4a362ef5bdb1",
+  "memory_id": "MEM-FB-C93B0770FC09A75D848D",
+  "canonical_key": "{\"feedback_kind\":\"missing_context\",\"kind\":\"feedback_event\",\"occurred_at\":\"2026-07-11T00:00:00+00:00\",\"target\":\"response-fixture-001\",\"target_type\":\"research_response\"}",
+  "dedupe_key": "c93b0770fc09a75d848d5e88872420599e5edfbe6cd02f698a91fbebeb04a8c8",
   "not_evidence": true,
+  "record_type": "feedback_event",
   "feedback_kind": "missing_context",
   "target_type": "research_response",
   "target_ref": "response-fixture-001",

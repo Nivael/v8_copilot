@@ -20,10 +20,14 @@ from research_memory_contract import (  # noqa: E402
     STATUS_TRANSITIONS,
     DataDebtCard,
     ExecutorRef,
+    MemoryObjectRef,
     ObjectScope,
     ProvenanceRef,
+    QueryParameterSpec,
     QuestionCard,
+    ResearchRouteRef,
     ResearchRunRef,
+    ReviewSubjectRef,
     SedimentationResult,
     SourceRef,
     StatusTransition,
@@ -34,6 +38,7 @@ from research_memory_contract import (  # noqa: E402
     build_query_template_record,
     build_question_card,
     build_review_item,
+    canonical_json,
     public_contract_schema,
 )
 
@@ -73,6 +78,14 @@ def source(source_type: str, source_ref: str, alias: str | None = None) -> Sourc
 
 def provenance(kind: str, ref: str) -> ProvenanceRef:
     return ProvenanceRef(provenance_type=kind, provenance_ref=ref)
+
+
+def object_ref(object_type: str, item: Any) -> MemoryObjectRef:
+    return MemoryObjectRef(
+        object_type=object_type,
+        memory_id=item.memory_id,
+        dedupe_key=item.dedupe_key,
+    )
 
 
 def seed_rows() -> list[dict[str, Any]]:
@@ -115,6 +128,7 @@ def valid_objects() -> dict[str, Any]:
         canonical_question="603398 某节点前后有哪些可回链变化？",
         scope=ObjectScope(kind="stock_event", refs=["SH.603398", "603398.SH"]),
         semantic_intent="stock_event_window",
+        dimensions=["announcement", "price", "episode"],
         needs_data=["daily_prices", "episode_index", "daily_prices"],
         research_status="answerable",
         view="query",
@@ -130,7 +144,10 @@ def valid_objects() -> dict[str, Any]:
         gap_id="market_index_daily_series",
         gap_summary="缺少可按交易日对齐的大盘指数日线。",
         scope=ObjectScope(kind="universe", refs=["ST panel"]),
-        required_fields=["trade_date", "index_close", "trade_date"],
+        missing_assets=["market_index_daily_series"],
+        missing_fields=["trade_date", "index_close", "trade_date"],
+        blocked_question_card_refs=["QC-20260710-014"],
+        owner="data-engineering",
         external_debt_ref="D-051C",
         debt_ref_status="assigned",
         status="accepted",
@@ -143,7 +160,10 @@ def valid_objects() -> dict[str, Any]:
         gap_id="release_lens_boundary_catalog",
         gap_summary="缺少可查询的 lens standing/rejected 边界目录。",
         scope=ObjectScope(kind="lens", refs=["任意"]),
-        required_fields=["standing", "rejection_reason"],
+        missing_assets=["release_lens_boundary_catalog"],
+        missing_fields=["standing", "rejection_reason"],
+        blocked_question_card_refs=["QC-20260710-003", "QC-20260710-005"],
+        owner="unassigned",
         debt_ref_status="needs_assignment",
         status="candidate",
         created_at=STAMP,
@@ -155,7 +175,9 @@ def valid_objects() -> dict[str, Any]:
         template_id="QT-001",
         definition_version="v8_query_template_contract_v0",
         question_pattern="某事件后下一个节点多久",
-        parameter_semantics=["episode_type"],
+        parameter_schema=[
+            QueryParameterSpec(name="episode_type", value_type="string", required=True)
+        ],
         outcome_semantics=["event_next_node_timing"],
         caveats=["不同节点定义必须并列展示"],
         executor_ref=ExecutorRef(
@@ -173,9 +195,13 @@ def valid_objects() -> dict[str, Any]:
         ],
     )
     review = build_review_item(
-        review_kind="question_acceptance",
-        target_type="question_card",
-        target_memory_id=question.memory_id,
+        uncertainty_type="question_semantic_identity",
+        subject_ref=ReviewSubjectRef(
+            subject_type="question_card", subject_id=question.memory_id
+        ),
+        decision_unit="one_question_candidate",
+        evidence_package_refs=common_provenance,
+        recommended_action="accept_candidate",
         priority=10,
         status="candidate",
         created_at=STAMP,
@@ -207,23 +233,50 @@ def valid_objects() -> dict[str, Any]:
         provenance_refs=common_provenance,
     )
     run = ResearchRunRef(
+        record_type="research_run_ref",
+        contract_version=RESEARCH_MEMORY_CONTRACT_VERSION,
         run_id="run-fixture-001",
         request_id="request-fixture-001",
         answer_card_id="answer-card-fixture-001",
         research_response_id="response-fixture-001",
-        recorded_at=STAMP,
+        request_contract_version="v8_copilot_api_contract_v0",
+        response_contract_version="v8_copilot_api_contract_v1",
+        answer_contract_version="v8_answer_contract_v0",
+        route=ResearchRouteRef(route="answer_query", status="answerable", view="query"),
+        snapshot_as_of=STAMP,
+        snapshot_refs=common_provenance,
+        content_digest_algorithm="sha256-canonical-json-v1",
+        content_digest=sha256(
+            canonical_json(
+                {"research_response_id": "response-fixture-001"}
+            ).encode("utf-8")
+        ).hexdigest(),
+        content_summary="Validated fixture response for a stock event window.",
+        created_at=STAMP,
     )
     transition = StatusTransition(
+        record_type="status_transition",
         object_type="question_card",
         from_status="candidate",
         to_status="accepted",
         actor_type="human",
+        context="online",
         reason="review accepted",
     )
     result = SedimentationResult(
+        record_type="sedimentation_result",
+        contract_version=RESEARCH_MEMORY_CONTRACT_VERSION,
         operation_id="sedimentation-fixture-001",
-        created_ids=[question.memory_id],
-        existing_ids=[],
+        created=[
+            MemoryObjectRef(
+                object_type="question_card",
+                memory_id=question.memory_id,
+                dedupe_key=question.dedupe_key,
+            )
+        ],
+        existing=[],
+        merged=[],
+        ignored=[],
         created_links=[link],
         completed_at=STAMP,
     )
@@ -245,6 +298,7 @@ def key_fixtures() -> dict[str, Any]:
     base = {
         "scope": ObjectScope(kind="stock", refs=["603398.SH"]),
         "semantic_intent": "stock_observation_windows",
+        "dimensions": ["price", "episode"],
         "needs_data": ["episode_index", "daily_prices"],
         "research_status": "answerable",
         "view": "checklist",
@@ -261,15 +315,18 @@ def key_fixtures() -> dict[str, Any]:
     )
     synonym_b = build_question_card(
         canonical_question="沐邦接下来该看哪些窗口？",
+        needs_data=["different_availability_note"],
+        view="query",
         source_refs=[
             source("answer_card", "answer-999", "603398 后续有哪些公开节点值得观察？")
         ],
-        **base,
+        **{key: value for key, value in base.items() if key not in {"needs_data", "view"}},
     )
     array_a = build_question_card(
         canonical_question="节点窗口",
         scope=ObjectScope(kind="stock", refs=["SH.603398", "603398.SH"]),
         semantic_intent="stock_event_window",
+        dimensions=["price", "announcement", "price"],
         needs_data=["episode_index", "daily_prices", "episode_index"],
         research_status="answerable",
         view="query",
@@ -284,6 +341,7 @@ def key_fixtures() -> dict[str, Any]:
         canonical_question="节点窗口",
         scope=ObjectScope(kind="stock", refs=["603398"]),
         semantic_intent="stock_event_window",
+        dimensions=["announcement", "price"],
         needs_data=["daily_prices", "episode_index"],
         research_status="answerable",
         view="query",
@@ -298,7 +356,10 @@ def key_fixtures() -> dict[str, Any]:
         gap_id="same-gap",
         gap_summary="same gap",
         scope=ObjectScope(kind="stock", refs=["603398"]),
-        required_fields=["field_a"],
+        missing_assets=["asset_a"],
+        missing_fields=["field_a"],
+        blocked_question_card_refs=["QC-20260710-003"],
+        owner="unassigned",
         debt_ref_status="needs_assignment",
         status="candidate",
         created_at=STAMP,
@@ -310,12 +371,63 @@ def key_fixtures() -> dict[str, Any]:
         gap_id="same-gap",
         gap_summary="same gap",
         scope=ObjectScope(kind="universe", refs=["ST panel"]),
-        required_fields=["field_a"],
+        missing_assets=["asset_a"],
+        missing_fields=["field_a"],
+        blocked_question_card_refs=["QC-20260710-003"],
+        owner="unassigned",
         debt_ref_status="needs_assignment",
         status="candidate",
         created_at=STAMP,
         updated_at=STAMP,
         source_refs=[source("system_gap", "gap-universe")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    assigned_a = build_data_debt_card(
+        gap_id="market-index-a",
+        gap_summary="first wording",
+        scope=ObjectScope(kind="universe", refs=["ST panel"]),
+        missing_assets=["market_index_daily_series"],
+        missing_fields=["trade_date", "close"],
+        blocked_question_card_refs=["QC-20260710-014"],
+        owner="data-engineering",
+        external_debt_ref="D-051C",
+        debt_ref_status="assigned",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("system_gap", "assigned-a")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    assigned_b = build_data_debt_card(
+        gap_id="changed-gap-label",
+        gap_summary="changed wording and fields",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        missing_assets=["different_asset"],
+        missing_fields=["different_field"],
+        blocked_question_card_refs=["QC-20260710-001"],
+        owner="another-owner",
+        external_debt_ref="d-051c",
+        debt_ref_status="assigned",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("system_gap", "assigned-b")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    assigned_other = build_data_debt_card(
+        gap_id="market-index-a",
+        gap_summary="another debt",
+        scope=ObjectScope(kind="universe", refs=["ST panel"]),
+        missing_assets=["market_index_daily_series"],
+        missing_fields=["trade_date", "close"],
+        blocked_question_card_refs=["QC-20260710-014"],
+        owner="data-engineering",
+        external_debt_ref="D-051D",
+        debt_ref_status="assigned",
+        status="accepted",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("system_gap", "assigned-other")],
         provenance_refs=[provenance("contract_fixture", "key-fixtures")],
     )
     time_a = build_question_card(
@@ -330,6 +442,86 @@ def key_fixtures() -> dict[str, Any]:
         source_refs=[source("research_run", "run-time-b")],
         **base,
     )
+    dimension_other = build_question_card(
+        canonical_question="不同分析维度",
+        dimensions=["shareholder_count"],
+        source_refs=[source("research_run", "run-dimension")],
+        **{key: value for key, value in base.items() if key != "dimensions"},
+    )
+    template_a = build_query_template_record(
+        template_id="QT-999",
+        definition_version="draft-v1",
+        question_pattern="draft one",
+        parameter_schema=[
+            QueryParameterSpec(name="symbol", value_type="string", required=True)
+        ],
+        outcome_semantics=["event_timing"],
+        caveats=["not evidence"],
+        proposed_executor_ref="proposal:event-timing",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("human_review", "template-a")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    template_b = build_query_template_record(
+        template_id="QT-999",
+        definition_version="draft-v1",
+        question_pattern="draft two",
+        parameter_schema=[
+            QueryParameterSpec(name="cohort", value_type="string", required=True)
+        ],
+        outcome_semantics=["distribution"],
+        caveats=["not evidence"],
+        proposed_executor_ref="proposal:event-timing",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("human_review", "template-b")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    review_a = build_review_item(
+        uncertainty_type="question_semantic_identity",
+        subject_ref=ReviewSubjectRef(
+            subject_type="question_card", subject_id=synonym_a.memory_id
+        ),
+        decision_unit="one_question_candidate",
+        evidence_package_refs=[provenance("research_response", "response-a")],
+        recommended_action="accept_candidate",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("human_review", "review-a")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    review_same_identity = build_review_item(
+        uncertainty_type="question_semantic_identity",
+        subject_ref=ReviewSubjectRef(
+            subject_type="question_card", subject_id=synonym_a.memory_id
+        ),
+        decision_unit="one_question_candidate",
+        evidence_package_refs=[provenance("research_response", "response-b")],
+        recommended_action="request_more_evidence",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("human_review", "review-b")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
+    review_other_unit = build_review_item(
+        uncertainty_type="question_semantic_identity",
+        subject_ref=ReviewSubjectRef(
+            subject_type="question_card", subject_id=synonym_a.memory_id
+        ),
+        decision_unit="question_and_scope_pair",
+        evidence_package_refs=[provenance("research_response", "response-a")],
+        recommended_action="accept_candidate",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("human_review", "review-c")],
+        provenance_refs=[provenance("contract_fixture", "key-fixtures")],
+    )
     return {
         "synonym_different_runs": {
             "first": synonym_a.model_dump(mode="json"),
@@ -342,6 +534,16 @@ def key_fixtures() -> dict[str, Any]:
             "second": debt_universe.model_dump(mode="json"),
             "expect_same_dedupe_key": False,
         },
+        "assigned_debt_same_ref_changed_description": {
+            "first": assigned_a.model_dump(mode="json"),
+            "second": assigned_b.model_dump(mode="json"),
+            "expect_same_dedupe_key": True,
+        },
+        "assigned_debt_different_ref": {
+            "first": assigned_a.model_dump(mode="json"),
+            "second": assigned_other.model_dump(mode="json"),
+            "expect_same_dedupe_key": False,
+        },
         "normalized_arrays_and_symbols": {
             "first": array_a.model_dump(mode="json"),
             "second": array_b.model_dump(mode="json"),
@@ -350,6 +552,26 @@ def key_fixtures() -> dict[str, Any]:
         "different_time_semantics": {
             "first": time_a.model_dump(mode="json"),
             "second": time_b.model_dump(mode="json"),
+            "expect_same_dedupe_key": False,
+        },
+        "different_dimensions": {
+            "first": synonym_a.model_dump(mode="json"),
+            "second": dimension_other.model_dump(mode="json"),
+            "expect_same_dedupe_key": False,
+        },
+        "query_template_semantic_collision_guard": {
+            "first": template_a.model_dump(mode="json"),
+            "second": template_b.model_dump(mode="json"),
+            "expect_same_dedupe_key": False,
+        },
+        "review_same_decision_unit_changed_package": {
+            "first": review_a.model_dump(mode="json"),
+            "second": review_same_identity.model_dump(mode="json"),
+            "expect_same_dedupe_key": True,
+        },
+        "review_different_decision_unit": {
+            "first": review_a.model_dump(mode="json"),
+            "second": review_other_unit.model_dump(mode="json"),
             "expect_same_dedupe_key": False,
         },
         "llm_title_changes": {
@@ -365,6 +587,8 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
     question = valid["question_card"].model_dump(mode="json")
     no_source = {**question, "source_refs": []}
     no_provenance = {**question, "provenance_refs": []}
+    question_without_dimensions = dict(question)
+    question_without_dimensions.pop("dimensions")
     evidence_identity = {**question, "evidence_grade": "supported"}
     bad_identity = {**question, "dedupe_key": "0" * 64}
     naive_time = {**question, "created_at": "2026-07-11T00:00:00"}
@@ -372,33 +596,139 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
     draft.update({"status": "candidate", "executable": True})
     unassigned = valid["data_debt_unassigned"].model_dump(mode="json")
     unassigned["external_debt_ref"] = "D-FAKE"
+    run_without_route = valid["research_run_ref"].model_dump(mode="json")
+    run_without_route.pop("route")
+    debt_without_assets = valid["data_debt_unassigned"].model_dump(mode="json")
+    debt_without_assets["missing_assets"] = []
+    debt_without_owner = valid["data_debt_unassigned"].model_dump(mode="json")
+    debt_without_owner.pop("owner")
+    debt_without_blocked_refs = valid["data_debt_unassigned"].model_dump(mode="json")
+    debt_without_blocked_refs.pop("blocked_question_card_refs")
+    review_without_evidence = valid["review_item"].model_dump(mode="json")
+    review_without_evidence["evidence_package_refs"] = []
+    review_without_action = valid["review_item"].model_dump(mode="json")
+    review_without_action.pop("recommended_action")
+    result_overlap = valid["sedimentation_result"].model_dump(mode="json")
+    result_overlap["existing"] = list(result_overlap["created"])
+    result_without_merged = valid["sedimentation_result"].model_dump(mode="json")
+    result_without_merged.pop("merged")
     return {
-        "missing_source_refs": {"model": "QuestionCard", "payload": no_source},
-        "missing_provenance_refs": {"model": "QuestionCard", "payload": no_provenance},
-        "evidence_identity_forbidden": {"model": "QuestionCard", "payload": evidence_identity},
+        "missing_source_refs": {
+            "model": "QuestionCard", "payload": no_source, "schema_must_reject": True,
+        },
+        "missing_provenance_refs": {
+            "model": "QuestionCard", "payload": no_provenance, "schema_must_reject": True,
+        },
+        "question_missing_dimensions": {
+            "model": "QuestionCard",
+            "payload": question_without_dimensions,
+            "schema_must_reject": True,
+        },
+        "evidence_identity_forbidden": {
+            "model": "QuestionCard", "payload": evidence_identity, "schema_must_reject": True,
+        },
         "tampered_dedupe_key": {"model": "QuestionCard", "payload": bad_identity},
         "timezone_naive": {"model": "QuestionCard", "payload": naive_time},
         "draft_template_executable": {"model": "QueryTemplateRecord", "payload": draft},
         "unassigned_debt_with_ref": {"model": "DataDebtCard", "payload": unassigned},
+        "research_run_missing_route": {
+            "model": "ResearchRunRef",
+            "payload": run_without_route,
+            "schema_must_reject": True,
+        },
+        "data_debt_missing_assets": {
+            "model": "DataDebtCard",
+            "payload": debt_without_assets,
+            "schema_must_reject": True,
+        },
+        "data_debt_missing_owner": {
+            "model": "DataDebtCard",
+            "payload": debt_without_owner,
+            "schema_must_reject": True,
+        },
+        "data_debt_missing_blocked_refs": {
+            "model": "DataDebtCard",
+            "payload": debt_without_blocked_refs,
+            "schema_must_reject": True,
+        },
+        "review_missing_evidence_package": {
+            "model": "ReviewItem",
+            "payload": review_without_evidence,
+            "schema_must_reject": True,
+        },
+        "review_missing_recommended_action": {
+            "model": "ReviewItem",
+            "payload": review_without_action,
+            "schema_must_reject": True,
+        },
+        "sedimentation_partition_overlap": {
+            "model": "SedimentationResult",
+            "payload": result_overlap,
+        },
+        "sedimentation_missing_merged_partition": {
+            "model": "SedimentationResult",
+            "payload": result_without_merged,
+            "schema_must_reject": True,
+        },
         "illegal_transition": {
             "model": "StatusTransition",
             "payload": {
+                "record_type": "status_transition",
                 "object_type": "question_card",
                 "from_status": "closed",
                 "to_status": "accepted",
                 "actor_type": "human",
+                "context": "online",
                 "reason": "illegal reopen",
             },
         },
         "automatic_merge": {
             "model": "StatusTransition",
             "payload": {
+                "record_type": "status_transition",
                 "object_type": "question_card",
                 "from_status": "accepted",
                 "to_status": "merged",
                 "actor_type": "system",
+                "context": "online",
                 "reason": "automatic similarity merge",
                 "merge_target_id": "MEM-QC-TARGET",
+            },
+        },
+        "system_accept_candidate": {
+            "model": "StatusTransition",
+            "payload": {
+                "record_type": "status_transition",
+                "object_type": "question_card",
+                "from_status": "candidate",
+                "to_status": "accepted",
+                "actor_type": "system",
+                "context": "online",
+                "reason": "automatic accept",
+            },
+        },
+        "system_ignore_candidate": {
+            "model": "StatusTransition",
+            "payload": {
+                "record_type": "status_transition",
+                "object_type": "question_card",
+                "from_status": "candidate",
+                "to_status": "ignored",
+                "actor_type": "system",
+                "context": "online",
+                "reason": "automatic ignore",
+            },
+        },
+        "llm_transition": {
+            "model": "StatusTransition",
+            "payload": {
+                "record_type": "status_transition",
+                "object_type": "question_card",
+                "from_status": "candidate",
+                "to_status": "blocked",
+                "actor_type": "llm",
+                "context": "online",
+                "reason": "LLM status decision",
             },
         },
     }
@@ -411,7 +741,10 @@ def query_template_records() -> list[dict[str, Any]]:
             template_id=template.template_id,
             definition_version=template.contract_version,
             question_pattern=template.question_pattern,
-            parameter_semantics=template.required_inputs,
+            parameter_schema=[
+                QueryParameterSpec(name=name, value_type="string", required=True)
+                for name in template.required_inputs
+            ],
             outcome_semantics=[template.query_intent, *template.definition_variants],
             caveats=template.default_caveats,
             executor_ref=ExecutorRef(
@@ -447,21 +780,39 @@ def main() -> None:
         {
             "transition_table": {key: list(value) for key, value in STATUS_TRANSITIONS.items()},
             "valid_human_merge": StatusTransition(
+                record_type="status_transition",
                 object_type="question_card",
                 from_status="accepted",
                 to_status="merged",
                 actor_type="human",
+                context="online",
                 reason="review confirmed duplicate",
                 merge_target_id=migrated[0].memory_id,
             ).model_dump(mode="json"),
+            "valid_seed_migration_acceptance": StatusTransition(
+                record_type="status_transition",
+                object_type="question_card",
+                from_status="candidate",
+                to_status="accepted",
+                actor_type="migration",
+                context="seed_bootstrap",
+                reason="controlled import of frozen question-card seed",
+            ).model_dump(mode="json"),
         },
     )
-    review_ids = []
+    review_items = []
     for index in range(REVIEW_ACTIVE_LIMIT):
         item = build_review_item(
-            review_kind="question_acceptance",
-            target_type="question_card",
-            target_memory_id=f"MEM-QC-CAPACITY-{index:02d}",
+            uncertainty_type="question_semantic_identity",
+            subject_ref=ReviewSubjectRef(
+                subject_type="question_card",
+                subject_id=f"MEM-QC-CAPACITY-{index:02d}",
+            ),
+            decision_unit=f"question-candidate-{index:02d}",
+            evidence_package_refs=[
+                provenance("contract_fixture", f"review-capacity-{index:02d}")
+            ],
+            recommended_action="accept_candidate",
             priority=index,
             status="candidate",
             created_at=STAMP,
@@ -469,12 +820,12 @@ def main() -> None:
             source_refs=[source("human_review", f"review-capacity-{index:02d}")],
             provenance_refs=[provenance("contract_fixture", "review-capacity")],
         )
-        review_ids.append(item.memory_id)
+        review_items.append(item)
     dump(
         FIXTURES / "review_capacity.json",
         {
             "max_active_items": REVIEW_ACTIVE_LIMIT,
-            "active_item_ids": review_ids,
+            "active_items": [item.model_dump(mode="json") for item in review_items],
             "repository_must_reject_active_count_above": REVIEW_ACTIVE_LIMIT,
         },
     )
@@ -503,9 +854,13 @@ def main() -> None:
     dump(
         MIGRATION / "first_import_result.json",
         SedimentationResult(
+            record_type="sedimentation_result",
+            contract_version=RESEARCH_MEMORY_CONTRACT_VERSION,
             operation_id="seed-import-first",
-            created_ids=[item.memory_id for item in migrated],
-            existing_ids=[],
+            created=[object_ref("question_card", item) for item in migrated],
+            existing=[],
+            merged=[],
+            ignored=[],
             created_links=first_links,
             completed_at=STAMP,
         ),
@@ -513,9 +868,13 @@ def main() -> None:
     dump(
         MIGRATION / "second_import_result.json",
         SedimentationResult(
+            record_type="sedimentation_result",
+            contract_version=RESEARCH_MEMORY_CONTRACT_VERSION,
             operation_id="seed-import-second",
-            created_ids=[],
-            existing_ids=[item.memory_id for item in migrated],
+            created=[],
+            existing=[object_ref("question_card", item) for item in migrated],
+            merged=[],
+            ignored=[],
             created_links=[],
             completed_at=STAMP,
         ),
@@ -543,7 +902,9 @@ def main() -> None:
             "contract_version": RESEARCH_MEMORY_CONTRACT_VERSION,
             "decision": "D-053",
             "schema": "schema.json",
+            "schema_entrypoint": "record_type_discriminated_union",
             "python_types": "research_memory_contract.py",
+            "canonical_key_encoding": "sorted_compact_json_utf8",
             "seed_sha256": SEED_SHA256,
             "seed_count": 15,
             "persistent_entities": [

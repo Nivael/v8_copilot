@@ -17,10 +17,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-F3F31303477E10BAF65F",
-    "canonical_key": "question_card|seed_id=qc-20260710-001",
-    "dedupe_key": "f3f31303477e10baf65f3b6efbbb90c1a60ae1a490a7841fe248c6b8890d0832",
+    "memory_id": "MEM-QC-F72393760136B2BA1EFE",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-001\"}",
+    "dedupe_key": "f72393760136b2ba1efefeb46e801751db8d763a37d70a539d1f7c4e3420b2a4",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-001",
     "canonical_question": "这只票为什么 ST？关键节点是什么？",
     "aliases": [],
@@ -31,6 +32,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-001",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -67,10 +69,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-DEF3C3B20805743B2DDF",
-    "canonical_key": "question_card|seed_id=qc-20260710-002",
-    "dedupe_key": "def3c3b20805743b2ddf0f06b49f8feefb0f8f46635cafbbb527344df21d6595",
+    "memory_id": "MEM-QC-B792E3EA9F910AC0643E",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-002\"}",
+    "dedupe_key": "b792e3ea9f910ac0643e701f7d282ec938b3bf887bc547f62fa8a2b7247a5f1c",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-002",
     "canonical_question": "它像历史上哪些 case？",
     "aliases": [],
@@ -81,6 +84,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-002",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -115,10 +119,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-864125DCCEF5BF900E16",
-    "canonical_key": "question_card|seed_id=qc-20260710-003",
-    "dedupe_key": "864125dccef5bf900e16653b92e60f37b16fb6aa4fca758ce4db38d8bf76a4ad",
+    "memory_id": "MEM-QC-2E39B96FDF53D1617FC3",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-003\"}",
+    "dedupe_key": "2e39b96fdf53d1617fc3ab87354831c9711a0388bd718cd4c7de2a10bcb8ed8c",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-003",
     "canonical_question": "哪些 lens 能解释它，哪些只是视角，哪些历史上站不住？",
     "aliases": [],
@@ -129,6 +134,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-003",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -163,10 +169,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-298FFAE01F28AB8E6BB9",
-    "canonical_key": "question_card|seed_id=qc-20260710-004",
-    "dedupe_key": "298ffae01f28ab8e6bb936cea33c258a8eb5f71502dd50d941cc5bf1a0d47b9b",
+    "memory_id": "MEM-QC-2C5BBCAB98168C7FE61D",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-004\"}",
+    "dedupe_key": "2c5bbcab98168c7fe61d4ad8f17b42b9a2305ffeb742dc8bd5622dbe8c273cec",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-004",
     "canonical_question": "某节点前后，公告/价格/股本/股东人数/监管动作发生了什么？",
     "aliases": [],
@@ -177,6 +184,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-004",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -215,10 +223,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-8527C283229A83D81C6D",
-    "canonical_key": "question_card|seed_id=qc-20260710-005",
-    "dedupe_key": "8527c283229a83d81c6d76c483d919acd5ac8283245668b8c7c18851b60dd96b",
+    "memory_id": "MEM-QC-760253DF86E57A7F8123",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-005\"}",
+    "dedupe_key": "760253df86e57a7f8123caaef23918e3f2cb54f2e155548217448cba14ce73f8",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-005",
     "canonical_question": "这个判断的证据等级/N/反例/数据缺口是什么？",
     "aliases": [],
@@ -229,6 +238,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-005",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -263,10 +273,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-A955FC91A4AC6080F39D",
-    "canonical_key": "question_card|seed_id=qc-20260710-006",
-    "dedupe_key": "a955fc91a4ac6080f39d1eaed11c0a13ef27a6a7874f7774ec3cb5e062fb64cc",
+    "memory_id": "MEM-QC-3AF287E6EF0ED71A5DF2",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-006\"}",
+    "dedupe_key": "3af287e6ef0ed71a5df2dd21e29bb52419d7cdf7ab5b87914fb2d5e485712863",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-006",
     "canonical_question": "ST 前后股东人数变化是否异常？",
     "aliases": [],
@@ -277,6 +288,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-006",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -311,10 +323,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-0A1D239D1CC520FC8445",
-    "canonical_key": "question_card|seed_id=qc-20260710-007",
-    "dedupe_key": "0a1d239d1cc520fc8445688658c76e2cdf14e8fcb5c4bcb253c2623ea035dcd6",
+    "memory_id": "MEM-QC-C60A2CD7284D55BD74AD",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-007\"}",
+    "dedupe_key": "c60a2cd7284d55bd74ad5fd9a1778ed902c5f4e44734d46a4416e19b2503a95f",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-007",
     "canonical_question": "ST 前后公告密度有没有异常？",
     "aliases": [],
@@ -325,6 +338,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-007",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -359,10 +373,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-2EB70D2B048FB6A31B73",
-    "canonical_key": "question_card|seed_id=qc-20260710-008",
-    "dedupe_key": "2eb70d2b048fb6a31b735828f5eea854b035ab463536d9a4e4a51b33a3324a36",
+    "memory_id": "MEM-QC-98396D209252E4D5E256",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-008\"}",
+    "dedupe_key": "98396d209252e4d5e2563040fc851cdfbb66fc61c190503195cdeabbe2e6a9b9",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-008",
     "canonical_question": "某些重要时间节点的数据汇总是什么？",
     "aliases": [],
@@ -373,6 +388,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-008",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -407,10 +423,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-F2FA169636DAE5FB58FC",
-    "canonical_key": "question_card|seed_id=qc-20260710-009",
-    "dedupe_key": "f2fa169636dae5fb58fc6751eda1d07f1f3ad79aa5fb4481da46383186927d42",
+    "memory_id": "MEM-QC-6F7672D8FD9BD1CE3CB1",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-009\"}",
+    "dedupe_key": "6f7672d8fd9bd1ce3cb1badf72badfdb41339fbf71ec422318630fcc0de5d8d8",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-009",
     "canonical_question": "这类重整路径历史上通常多久进入下一阶段？",
     "aliases": [],
@@ -421,6 +438,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-009",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -455,10 +473,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-CBACC01D0D486526CA67",
-    "canonical_key": "question_card|seed_id=qc-20260710-010",
-    "dedupe_key": "cbacc01d0d486526ca6739d8e5b5a7fd3f7854977f505a8b4c9249bafde1349d",
+    "memory_id": "MEM-QC-F5DF942C6A7DA7CFD56E",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-010\"}",
+    "dedupe_key": "f5df942c6a7da7cfd56ec197dac0c6ad40bdc85b165e448295ef7de4edaf7124",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-010",
     "canonical_question": "庭外重组+公开招募后下一个公告节点多久？按阶段分层？",
     "aliases": [],
@@ -469,6 +488,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-010",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -503,10 +523,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-AF5718318A9E27B6F339",
-    "canonical_key": "question_card|seed_id=qc-20260710-011",
-    "dedupe_key": "af5718318a9e27b6f339aa5ecb364a14aa0a8aa1b3cec41cd6add1d8c655e827",
+    "memory_id": "MEM-QC-1F7A62D0AEDBEF2FE906",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-011\"}",
+    "dedupe_key": "1f7a62d0aedbef2fe90664481d06e0d21eebc6b54d189a4ef7855f9fc0a061dd",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-011",
     "canonical_question": "同一问题按省份分层如何？",
     "aliases": [],
@@ -517,6 +538,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-011",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -551,10 +573,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-5C32D739297D8C2C529D",
-    "canonical_key": "question_card|seed_id=qc-20260710-012",
-    "dedupe_key": "5c32d739297d8c2c529d199d0c1f55ae899fec78f5d4fcd3640b6632d5718095",
+    "memory_id": "MEM-QC-D97EE94BDAF8AFAC8A58",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-012\"}",
+    "dedupe_key": "d97ee94bdaf8afac8a5875f6a0bb5fa5c089ddd96142e8515eedcba1c84f8968",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-012",
     "canonical_question": "能否隔离庭外重组（vs 庭内）？",
     "aliases": [],
@@ -565,6 +588,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-012",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -599,10 +623,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-1098BDA0CD98F2C3F801",
-    "canonical_key": "question_card|seed_id=qc-20260710-013",
-    "dedupe_key": "1098bda0cd98f2c3f8015afada7c6101fc22450f837ca740b9102625982ec8a0",
+    "memory_id": "MEM-QC-B9A74994D528E91CE25E",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-013\"}",
+    "dedupe_key": "b9a74994d528e91ce25ef808713b527a8d67d13689a89e55ebe886b0a36288b9",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-013",
     "canonical_question": "ST/微盘两周异动分布？",
     "aliases": [],
@@ -613,6 +638,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-013",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -647,10 +673,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-E63859ACF4FC3A2D7388",
-    "canonical_key": "question_card|seed_id=qc-20260710-014",
-    "dedupe_key": "e63859acf4fc3a2d7388bb998472e113e4bdc72997a2eee4068a13b57f08b0fb",
+    "memory_id": "MEM-QC-5148A332A77F2C4D9A09",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-014\"}",
+    "dedupe_key": "5148a332a77f2c4d9a0959d538a8827d5a4e2643c8f30a475297416d7ec915a0",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-014",
     "canonical_question": "ST 相对大盘两周异动？",
     "aliases": [],
@@ -661,6 +688,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-014",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,
@@ -695,10 +723,11 @@
         "provenance_ref": "evals/question_card_seeds_v0.jsonl"
       }
     ],
-    "memory_id": "MEM-QC-A0591EC2E702062B0CA9",
-    "canonical_key": "question_card|seed_id=qc-20260710-015",
-    "dedupe_key": "a0591ec2e702062b0ca92b88367344a7f7aa9484c78c84feeaceec963b152c4e",
+    "memory_id": "MEM-QC-393DFA1C384683C848B6",
+    "canonical_key": "{\"kind\":\"question_card\",\"seed_id\":\"qc-20260710-015\"}",
+    "dedupe_key": "393dfa1c384683c848b67fc8d5cbeca2d51d44c2cdbfba62bbbe7f43586c6c93",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": "QC-20260710-015",
     "canonical_question": "沐邦(603398)平台整理两个月该看哪些窗口？",
     "aliases": [],
@@ -709,6 +738,7 @@
       ]
     },
     "semantic_intent": "seed:QC-20260710-015",
+    "dimensions": [],
     "time_scope": {
       "semantics": "not_applicable",
       "start": null,

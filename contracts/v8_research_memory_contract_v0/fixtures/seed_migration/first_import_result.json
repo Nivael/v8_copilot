@@ -1,24 +1,87 @@
 {
+  "record_type": "sedimentation_result",
   "contract_version": "v8_research_memory_contract_v0",
   "operation_id": "seed-import-first",
-  "created_ids": [
-    "MEM-QC-F3F31303477E10BAF65F",
-    "MEM-QC-DEF3C3B20805743B2DDF",
-    "MEM-QC-864125DCCEF5BF900E16",
-    "MEM-QC-298FFAE01F28AB8E6BB9",
-    "MEM-QC-8527C283229A83D81C6D",
-    "MEM-QC-A955FC91A4AC6080F39D",
-    "MEM-QC-0A1D239D1CC520FC8445",
-    "MEM-QC-2EB70D2B048FB6A31B73",
-    "MEM-QC-F2FA169636DAE5FB58FC",
-    "MEM-QC-CBACC01D0D486526CA67",
-    "MEM-QC-AF5718318A9E27B6F339",
-    "MEM-QC-5C32D739297D8C2C529D",
-    "MEM-QC-1098BDA0CD98F2C3F801",
-    "MEM-QC-E63859ACF4FC3A2D7388",
-    "MEM-QC-A0591EC2E702062B0CA9"
+  "created": [
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-F72393760136B2BA1EFE",
+      "dedupe_key": "f72393760136b2ba1efefeb46e801751db8d763a37d70a539d1f7c4e3420b2a4"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-B792E3EA9F910AC0643E",
+      "dedupe_key": "b792e3ea9f910ac0643e701f7d282ec938b3bf887bc547f62fa8a2b7247a5f1c"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-2E39B96FDF53D1617FC3",
+      "dedupe_key": "2e39b96fdf53d1617fc3ab87354831c9711a0388bd718cd4c7de2a10bcb8ed8c"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-2C5BBCAB98168C7FE61D",
+      "dedupe_key": "2c5bbcab98168c7fe61d4ad8f17b42b9a2305ffeb742dc8bd5622dbe8c273cec"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-760253DF86E57A7F8123",
+      "dedupe_key": "760253df86e57a7f8123caaef23918e3f2cb54f2e155548217448cba14ce73f8"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-3AF287E6EF0ED71A5DF2",
+      "dedupe_key": "3af287e6ef0ed71a5df2dd21e29bb52419d7cdf7ab5b87914fb2d5e485712863"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-C60A2CD7284D55BD74AD",
+      "dedupe_key": "c60a2cd7284d55bd74ad5fd9a1778ed902c5f4e44734d46a4416e19b2503a95f"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-98396D209252E4D5E256",
+      "dedupe_key": "98396d209252e4d5e2563040fc851cdfbb66fc61c190503195cdeabbe2e6a9b9"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-6F7672D8FD9BD1CE3CB1",
+      "dedupe_key": "6f7672d8fd9bd1ce3cb1badf72badfdb41339fbf71ec422318630fcc0de5d8d8"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-F5DF942C6A7DA7CFD56E",
+      "dedupe_key": "f5df942c6a7da7cfd56ec197dac0c6ad40bdc85b165e448295ef7de4edaf7124"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-1F7A62D0AEDBEF2FE906",
+      "dedupe_key": "1f7a62d0aedbef2fe90664481d06e0d21eebc6b54d189a4ef7855f9fc0a061dd"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-D97EE94BDAF8AFAC8A58",
+      "dedupe_key": "d97ee94bdaf8afac8a5875f6a0bb5fa5c089ddd96142e8515eedcba1c84f8968"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-B9A74994D528E91CE25E",
+      "dedupe_key": "b9a74994d528e91ce25ef808713b527a8d67d13689a89e55ebe886b0a36288b9"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-5148A332A77F2C4D9A09",
+      "dedupe_key": "5148a332a77f2c4d9a0959d538a8827d5a4e2643c8f30a475297416d7ec915a0"
+    },
+    {
+      "object_type": "question_card",
+      "memory_id": "MEM-QC-393DFA1C384683C848B6",
+      "dedupe_key": "393dfa1c384683c848b67fc8d5cbeca2d51d44c2cdbfba62bbbe7f43586c6c93"
+    }
   ],
-  "existing_ids": [],
+  "existing": [],
+  "merged": [],
+  "ignored": [],
   "created_links": [
     {
       "contract_version": "v8_research_memory_contract_v0",
@@ -38,14 +101,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-3BBA968552025CFBF559",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#1|source_type=seed_fixture|target=mem-qc-f3f31303477e10baf65f|target_type=question_card",
-      "dedupe_key": "3bba968552025cfbf5596189d180252dd31b25d2fcb1098f158b71c2ab3b1838",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-52E7E3F69DF715550BD9",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#1\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-f72393760136b2ba1efe\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "52e7e3f69df715550bd905a545f069855fd9b40ee23839bf8099db00becb0fd5",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#1",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-F3F31303477E10BAF65F",
+      "target_memory_id": "MEM-QC-F72393760136B2BA1EFE",
       "not_evidence": true
     },
     {
@@ -66,14 +130,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-218AC408F9040FFB0ED3",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#2|source_type=seed_fixture|target=mem-qc-def3c3b20805743b2ddf|target_type=question_card",
-      "dedupe_key": "218ac408f9040ffb0ed3a68d67198ab6812ac1221bdb6625ee49c90fe0b185d9",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-963982680D2C1CAE93C5",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#2\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-b792e3ea9f910ac0643e\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "963982680d2c1cae93c5378eb61b1dfdfdc1a32882af95e50b088f68d81c95af",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#2",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-DEF3C3B20805743B2DDF",
+      "target_memory_id": "MEM-QC-B792E3EA9F910AC0643E",
       "not_evidence": true
     },
     {
@@ -94,14 +159,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-7DC6116A173E01527C5E",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#3|source_type=seed_fixture|target=mem-qc-864125dccef5bf900e16|target_type=question_card",
-      "dedupe_key": "7dc6116a173e01527c5e9897c6c3bcefddf28180f6f8b368ef3e611e3d7f111f",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-877264F2A8DE3FC7182A",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#3\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-2e39b96fdf53d1617fc3\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "877264f2a8de3fc7182a3ed79ef339c2f7158ec5f5b238cb0f7a1556c478e36f",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#3",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-864125DCCEF5BF900E16",
+      "target_memory_id": "MEM-QC-2E39B96FDF53D1617FC3",
       "not_evidence": true
     },
     {
@@ -122,14 +188,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-4728414985EB35B1918F",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#4|source_type=seed_fixture|target=mem-qc-298ffae01f28ab8e6bb9|target_type=question_card",
-      "dedupe_key": "4728414985eb35b1918fef25351b0fde2e0db84f971dd3211b878be074278bf5",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-540B3D1CF1D57514AF3E",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#4\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-2c5bbcab98168c7fe61d\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "540b3d1cf1d57514af3ee26f462d430a786264967df7b29b1599686d759e7923",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#4",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-298FFAE01F28AB8E6BB9",
+      "target_memory_id": "MEM-QC-2C5BBCAB98168C7FE61D",
       "not_evidence": true
     },
     {
@@ -150,14 +217,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-8DA6C2C224381C06E694",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#5|source_type=seed_fixture|target=mem-qc-8527c283229a83d81c6d|target_type=question_card",
-      "dedupe_key": "8da6c2c224381c06e694e3ee2da7e43b3d6966f529fe46ec20b74f854f1e925e",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-4D802439616A8BE17180",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#5\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-760253df86e57a7f8123\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "4d802439616a8be171806b46448ff811f651556319a3af7dcec25bbda62cdcb6",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#5",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-8527C283229A83D81C6D",
+      "target_memory_id": "MEM-QC-760253DF86E57A7F8123",
       "not_evidence": true
     },
     {
@@ -178,14 +246,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-7A128D403D2CE54A0BF2",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#6|source_type=seed_fixture|target=mem-qc-a955fc91a4ac6080f39d|target_type=question_card",
-      "dedupe_key": "7a128d403d2ce54a0bf25e95b6c49ec4ce2f45940c3c93ab1f8d14eded7a6ba4",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-BDECCCBDE54603247D58",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#6\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-3af287e6ef0ed71a5df2\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "bdecccbde54603247d58d477167ad4956a4dc2e6ab43c604b44f4681b4f16853",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#6",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-A955FC91A4AC6080F39D",
+      "target_memory_id": "MEM-QC-3AF287E6EF0ED71A5DF2",
       "not_evidence": true
     },
     {
@@ -206,14 +275,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-FD3ECB54292744528763",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#7|source_type=seed_fixture|target=mem-qc-0a1d239d1cc520fc8445|target_type=question_card",
-      "dedupe_key": "fd3ecb54292744528763e6a942d9395a415da0cbd81fae63c81737ef17c28e1a",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-65259C0C55E7E0E3A787",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#7\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-c60a2cd7284d55bd74ad\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "65259c0c55e7e0e3a787f64c3c76968502141973b34e006f1c1fc2fdd5833f46",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#7",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-0A1D239D1CC520FC8445",
+      "target_memory_id": "MEM-QC-C60A2CD7284D55BD74AD",
       "not_evidence": true
     },
     {
@@ -234,14 +304,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-9A10EF21AADB096BEB5E",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#8|source_type=seed_fixture|target=mem-qc-2eb70d2b048fb6a31b73|target_type=question_card",
-      "dedupe_key": "9a10ef21aadb096beb5e8d9f15418507a8660d654272a36f621ac68dc76c1f10",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-E1C02F40F997E5308429",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#8\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-98396d209252e4d5e256\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "e1c02f40f997e530842976111b0bf76fb0cbc36caab206e9ae9842af1171492b",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#8",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-2EB70D2B048FB6A31B73",
+      "target_memory_id": "MEM-QC-98396D209252E4D5E256",
       "not_evidence": true
     },
     {
@@ -262,14 +333,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-8B3050E5F8F4B69A49FA",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#9|source_type=seed_fixture|target=mem-qc-f2fa169636dae5fb58fc|target_type=question_card",
-      "dedupe_key": "8b3050e5f8f4b69a49faac6d77e36161a71624a3f4aad2a8cc9cd94c1f232199",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-D0BBF6FEFF3C89119C65",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#9\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-6f7672d8fd9bd1ce3cb1\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "d0bbf6feff3c89119c6573559f39b7670e630d6109eda0635719f5fef739367a",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#9",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-F2FA169636DAE5FB58FC",
+      "target_memory_id": "MEM-QC-6F7672D8FD9BD1CE3CB1",
       "not_evidence": true
     },
     {
@@ -290,14 +362,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-441B1CE6AD4F4C4F9976",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#10|source_type=seed_fixture|target=mem-qc-cbacc01d0d486526ca67|target_type=question_card",
-      "dedupe_key": "441b1ce6ad4f4c4f99768e552a7d9c592a4b64295f1b08b2c66bf215939b28c8",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-859215B44C8E6AF65505",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#10\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-f5df942c6a7da7cfd56e\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "859215b44c8e6af6550548feb87703078cf39fbdcee2a916694b412593f3ea1c",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#10",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-CBACC01D0D486526CA67",
+      "target_memory_id": "MEM-QC-F5DF942C6A7DA7CFD56E",
       "not_evidence": true
     },
     {
@@ -318,14 +391,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-39B0D7AAE8DA560E1E70",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#11|source_type=seed_fixture|target=mem-qc-af5718318a9e27b6f339|target_type=question_card",
-      "dedupe_key": "39b0d7aae8da560e1e7057df98b12791293d94c30d8f148e59529c273e6b61f0",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-6F227D4395E7BA430F7C",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#11\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-1f7a62d0aedbef2fe906\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "6f227d4395e7ba430f7c275fffa4fa6282abb1b77092f9b79119038f151aea2c",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#11",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-AF5718318A9E27B6F339",
+      "target_memory_id": "MEM-QC-1F7A62D0AEDBEF2FE906",
       "not_evidence": true
     },
     {
@@ -346,14 +420,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-694CB35DC693551D41D2",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#12|source_type=seed_fixture|target=mem-qc-5c32d739297d8c2c529d|target_type=question_card",
-      "dedupe_key": "694cb35dc693551d41d2c06dadc410302d8ba7346d2b9d0ff130b744368c0696",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-2B74232482C2679BADCD",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#12\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-d97ee94bdaf8afac8a58\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "2b74232482c2679badcd076bafe7a7661d84e67187ffca0fd60384eb9f53bfa0",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#12",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-5C32D739297D8C2C529D",
+      "target_memory_id": "MEM-QC-D97EE94BDAF8AFAC8A58",
       "not_evidence": true
     },
     {
@@ -374,14 +449,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-F4A1CEC637332C3FA7E2",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#13|source_type=seed_fixture|target=mem-qc-1098bda0cd98f2c3f801|target_type=question_card",
-      "dedupe_key": "f4a1cec637332c3fa7e2f7550c5b9906551196d220ee5cbaf816d01198fb8c16",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-5B792F0E5FB29A46B7BF",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#13\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-b9a74994d528e91ce25e\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "5b792f0e5fb29a46b7bf5bad0de4f538a740aa0da83dcac645323a0a8d8c0756",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#13",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-1098BDA0CD98F2C3F801",
+      "target_memory_id": "MEM-QC-B9A74994D528E91CE25E",
       "not_evidence": true
     },
     {
@@ -402,14 +478,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-09A8AAF720EC55E55E57",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#14|source_type=seed_fixture|target=mem-qc-e63859acf4fc3a2d7388|target_type=question_card",
-      "dedupe_key": "09a8aaf720ec55e55e57d367d8025ac9f5e531fbc6e77709c73276b5a6c16585",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-56EC7CC09CA07EACBD40",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#14\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-5148a332a77f2c4d9a09\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "56ec7cc09ca07eacbd4053506d3ecd757ba5a68647a3f8eac0ee6acb49074d48",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#14",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-E63859ACF4FC3A2D7388",
+      "target_memory_id": "MEM-QC-5148A332A77F2C4D9A09",
       "not_evidence": true
     },
     {
@@ -430,14 +507,15 @@
           "provenance_ref": "evals/question_card_seeds_v0.jsonl"
         }
       ],
-      "link_id": "MEM-LK-55B1B6E724DEBCECD9E6",
-      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#15|source_type=seed_fixture|target=mem-qc-a0591ec2e702062b0ca9|target_type=question_card",
-      "dedupe_key": "55b1b6e724debcecd9e6086ce397f286bd812070a69ace278b03fa60887f34b6",
+      "record_type": "memory_link",
+      "link_id": "MEM-LK-023CA968F71067EBA40E",
+      "canonical_key": "{\"kind\":\"memory_link\",\"relation\":\"sedimented_from\",\"source_ref\":\"evals/question_card_seeds_v0.jsonl#15\",\"source_type\":\"seed_fixture\",\"target\":\"mem-qc-393dfa1c384683c848b6\",\"target_type\":\"question_card\"}",
+      "dedupe_key": "023ca968f71067eba40eb91d9fa0446143002dad41d2846184472503acb9b91a",
       "relation": "sedimented_from",
       "source_type": "seed_fixture",
       "source_ref": "evals/question_card_seeds_v0.jsonl#15",
       "target_type": "question_card",
-      "target_memory_id": "MEM-QC-A0591EC2E702062B0CA9",
+      "target_memory_id": "MEM-QC-393DFA1C384683C848B6",
       "not_evidence": true
     }
   ],

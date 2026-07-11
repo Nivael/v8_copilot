@@ -49,8 +49,8 @@
       "qc-20260710-003",
       "qc-20260710-005"
     ],
-    "owner": "unassigned",
-    "external_debt_ref": "D-FAKE",
+    "external_debt_ref": null,
     "debt_ref_status": "needs_assignment"
-  }
+  },
+  "schema_must_reject": true
 }

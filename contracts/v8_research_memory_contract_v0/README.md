@@ -17,22 +17,36 @@ P3.1 不包含 SQLite、repository、写 API、聊天持久化或 UI 写操作�
 持久对象携带 `memory_id`、`canonical_key` 和 `dedupe_key`。调用方提交结构化语义，
 由 `build_*` 工厂生成三者；LLM 不提交 ID、key 或 lifecycle `status`。
 
-- `canonical_key` 只由对象类型、结构化 intent、scope、字段集合、时间语义或版本化
-  registry identity 组成。
+- `canonical_key` 是字段排序固定的规范 JSON；数组先去重排序，股票代码和枚举先规范化。
 - `dedupe_key = sha256(canonical_key)`；`memory_id` 由对象前缀和该摘要生成。
 - 自然语言问题、展示标题、run ID、AnswerCard ID 与 ResearchResponse ID 不进入目标对象 key。
 - 不同来源使用 `MemoryLink` 多对一回链，不通过复制知识对象保存来源。
 - 固定 `QC-20260710-*` 以 seed ID 锚定 canonical identity；`QC-CAND-*` 仅作来源候选，
   不会成为 Memory ID。
 
+`ResearchRunRef` 保存 route、snapshot/as-of、request/response/answer contract versions，
+并用 `sha256-canonical-json-v1` 内容摘要固定当次来源上下文；run/AnswerCard identity
+仍只进入 source link，不进入任何目标对象 key。
+
 股票代码、数组顺序和重复项在 key 前规范化；时间窗口语义保留在 key 中。
+
+冻结的实体 key 公式为：
+
+- QuestionCard：`kind + object_scope + intent + dimensions + time_scope_semantics`；
+  `view` 与 `needs_data` 仅描述当前回答能力，不进入 key。
+- assigned DataDebt：`data_debt + external_debt_ref`；同一正式债号不会因字段描述变化而分裂。
+- unassigned DataDebt：`data_debt + object_scope + missing_assets + missing_fields`。
+- QueryTemplate：`query_template + executor_ref + parameter_schema + outcome_semantics`；
+  草案使用显式 `proposed_executor_ref`。
+- ReviewItem：`review + uncertainty_type + subject_ref + decision_unit`。
 
 ## 生命周期
 
 通用状态为 `candidate`、`accepted`、`ignored`、`merged`、`blocked`、`closed`。
-合法 transition 表在 `fixtures/status_transitions.json`。`merged` 只能由人审明确指定
-目标，禁止系统自动合并。Review queue 的 active 上限为 20；P3.1 只冻结这一语义，
-P3.2 repository 负责原子容量检查。
+合法 transition 表在 `fixtures/status_transitions.json`。在线候选的 accepted/ignored 和
+所有 merge 必须由人审决定；LLM 不能改变状态。冻结 seed 只通过显式
+`actor_type=migration + context=seed_bootstrap` 路径进入 accepted。Review queue 的 active
+上限为 20；P3.1 只冻结这一语义，P3.2 repository 负责原子容量检查。
 
 QuestionCard 的 Memory lifecycle `status` 与原研究路由状态 `research_status` 分离。
 这样可以无损保存 `answerable`、`needs_data`、`needs_review`，也可保留尚未分配
@@ -41,8 +55,9 @@ QuestionCard 的 Memory lifecycle `status` 与原研究路由状态 `research_st
 ## QueryTemplate
 
 QT-001 到 QT-008 保留现有 ID 和 `not_evidence=true`。Memory record 保存 lifecycle、
-来源、parameter/outcome semantics 与 caveat；`executor_ref` 只引用版本化 code registry。
-草案只能是不可执行的 `candidate`。执行定义仍以
+来源、`parameter_schema`、outcome semantics 与 caveat；`executor_ref` 只引用版本化
+code registry。草案必须提供 proposed executor identity，且只能是不可执行的
+`candidate`。执行定义仍以
 `contracts/v8_query_template_contract_v0/registry.json` 为真相源。
 
 ## Seed migration
@@ -63,5 +78,6 @@ python contracts/v8_research_memory_contract_v0/export_contract.py
 ```
 
 W0/W2/W3 可调用 `consumer.validate_all()` 校验 schema、正负 fixtures、seed 幂等语义、
-QT registry、route QC 覆盖和冻结契约 checksum。`schema.json` 只从 Python types 生成，
-不得手写第二份定义。
+QT registry、route QC 覆盖和冻结契约 checksum。根 schema 是带 `record_type`
+discriminator 的公共 union，拒绝空对象；每个 fixture 同时经过根 JSON Schema 和
+Pydantic 语义校验。`schema.json` 只从 Python types 生成，不得手写第二份定义。

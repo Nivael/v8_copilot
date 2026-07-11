@@ -17,15 +17,21 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-3B37CDE323B8F7B425A0",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-001",
-    "dedupe_key": "3b37cde323b8f7b425a0ac42d6d1036a65f6c35d406b49199f8f18f9dc42b897",
+    "memory_id": "MEM-QT-0287CAF427644009541B",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"next_node_timing\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-001\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"event_next_node_timing\",\"next_any_announcement\",\"next_classified_event\",\"next_stage_milestone\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"episode_type\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "0287caf427644009541b82903530d40e7125afbedc9dca040d29107bdc45be4d",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-001",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "某事件后下一个节点多久",
-    "parameter_semantics": [
-      "episode_type"
+    "parameter_schema": [
+      {
+        "name": "episode_type",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "event_next_node_timing",
@@ -41,6 +47,7 @@
       "template_id": "QT-001",
       "executor_key": "next_node_timing"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -61,17 +68,33 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-60B70A8CF9B9D2BCC57F",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-002",
-    "dedupe_key": "60b70a8cf9b9d2bcc57fb518bf59a507bf8c09f2700b9fd9628aba544685c11a",
+    "memory_id": "MEM-QT-D081E9BE725EC8E21CB0",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"stock_event_window\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-002\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"stock_event_window\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"event_date\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"event_id\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"symbol\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "d081e9be725ec8e21cb01b44c95e988d200c229602e0054fccacb565b89f73d8",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-002",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "某节点前后公告、价格和 episode 发生了什么",
-    "parameter_semantics": [
-      "event_date",
-      "event_id",
-      "symbol"
+    "parameter_schema": [
+      {
+        "name": "event_date",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "event_id",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "symbol",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "stock_event_window"
@@ -84,6 +107,7 @@
       "template_id": "QT-002",
       "executor_key": "stock_event_window"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -104,15 +128,21 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-4CD2E4E86953425FB66A",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-003",
-    "dedupe_key": "4cd2e4e86953425fb66af2dea8a9bcf98c093f1a74ee89a00504aa3a3f01e6d0",
+    "memory_id": "MEM-QT-A05C6E70BD52364EEF79",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"st_status_timeline\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-003\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"st_status_timeline\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"symbol\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "a05c6e70bd52364eef79639597b962418f90daedb81f252fe265084bcd3d1426",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-003",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "某股票 ST 前后时间线",
-    "parameter_semantics": [
-      "symbol"
+    "parameter_schema": [
+      {
+        "name": "symbol",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "st_status_timeline"
@@ -125,6 +155,7 @@
       "template_id": "QT-003",
       "executor_key": "st_status_timeline"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -145,16 +176,27 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-04E4CBBBE763F665056F",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-004",
-    "dedupe_key": "04e4cbbbe763f665056fc0a5bc2c5db9db976b0143dcef64dc94a693fcef5617",
+    "memory_id": "MEM-QT-90F07D62A2777B09E796",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"two_week_distribution\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-004\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"cohort_two_week_distribution\",\"t_plus_10_trading_days\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"cohort\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"daily_prices\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "90f07d62a2777b09e7961becdca4d3bf4091b811ed73a68b1c8ae9a4a8af342d",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-004",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "某 cohort 两周分布",
-    "parameter_semantics": [
-      "cohort",
-      "daily_prices"
+    "parameter_schema": [
+      {
+        "name": "cohort",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "daily_prices",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "cohort_two_week_distribution",
@@ -168,6 +210,7 @@
       "template_id": "QT-004",
       "executor_key": "two_week_distribution"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -188,15 +231,21 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-D83740604C9EE46B6A75",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-005",
-    "dedupe_key": "d83740604c9ee46b6a752a3e2d2bb1278a026933ebf407668667ba70d85e25c8",
+    "memory_id": "MEM-QT-8B089FB2151CA10FCFF9",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"data_debt\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-005\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"data_debt_exit\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"debt_ref\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "8b089fb2151ca10fcff9789d9e9c83039025b784f92de3619df525ea07b20787",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-005",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "字段缺失时生成标准 data-debt 出口",
-    "parameter_semantics": [
-      "debt_ref"
+    "parameter_schema": [
+      {
+        "name": "debt_ref",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "data_debt_exit"
@@ -209,6 +258,7 @@
       "template_id": "QT-005",
       "executor_key": "data_debt"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -229,17 +279,33 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-4E6395E1964CC9DEBC11",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-006",
-    "dedupe_key": "4e6395e1964cc9debc119d7d30ca9148e327ecd4a562eaff0f1c5e19a07fb19f",
+    "memory_id": "MEM-QT-B183910A2DF37082E0DF",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"observation_checklist\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-006\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"stock_observation_windows\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"daily_prices\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"episode_index\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"symbol\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "b183910a2df37082e0df531a2e22936bb379c75a9ae0f6f253c4e2606a475ae5",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-006",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "单票当前应观察哪些公开窗口",
-    "parameter_semantics": [
-      "daily_prices",
-      "episode_index",
-      "symbol"
+    "parameter_schema": [
+      {
+        "name": "daily_prices",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "episode_index",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "symbol",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "stock_observation_windows"
@@ -252,6 +318,7 @@
       "template_id": "QT-006",
       "executor_key": "observation_checklist"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -272,15 +339,21 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-D61870F594DB8C329C4D",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-007",
-    "dedupe_key": "d61870f594db8c329c4df2175090c47c4283a872ee591fb6006d7376f48cd98e",
+    "memory_id": "MEM-QT-4B169B9C1164B53A5315",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"release_lens_detail\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-007\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"release_lens_detail\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"release_id\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "4b169b9c1164b53a5315d422f977aca2613832e180aaa5296e580738b017cee8",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-007",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "读取 frozen release lens 的证据字段",
-    "parameter_semantics": [
-      "release_id"
+    "parameter_schema": [
+      {
+        "name": "release_id",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "release_lens_detail"
@@ -293,6 +366,7 @@
       "template_id": "QT-007",
       "executor_key": "release_lens_detail"
     },
+    "proposed_executor_ref": null,
     "executable": true
   },
   {
@@ -313,15 +387,21 @@
         "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
       }
     ],
-    "memory_id": "MEM-QT-53E5FE7C1C5713FC5444",
-    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-008",
-    "dedupe_key": "53e5fe7c1c5713fc5444fa37a1a75e54b3918e166ea62235fca1ac7e7a2ba148",
+    "memory_id": "MEM-QT-BD998582EA59A822817B",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"control_methodology\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-008\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"control_structure_methodology\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"lens_cluster\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "bd998582ea59a822817bbc61499d6abd9bcceed89c966a29d91834139228777f",
     "not_evidence": true,
+    "record_type": "query_template",
     "template_id": "QT-008",
     "definition_version": "v8_query_template_contract_v0",
     "question_pattern": "读取控制权与股东行为方法论框架",
-    "parameter_semantics": [
-      "lens_cluster"
+    "parameter_schema": [
+      {
+        "name": "lens_cluster",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
     ],
     "outcome_semantics": [
       "control_structure_methodology"
@@ -334,6 +414,7 @@
       "template_id": "QT-008",
       "executor_key": "control_methodology"
     },
+    "proposed_executor_ref": null,
     "executable": true
   }
 ]

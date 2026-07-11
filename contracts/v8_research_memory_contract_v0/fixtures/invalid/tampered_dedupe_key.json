@@ -18,10 +18,11 @@
         "provenance_ref": "response-fixture-001"
       }
     ],
-    "memory_id": "MEM-QC-10752D5DFACFBFB1D227",
-    "canonical_key": "question_card|intent=stock_event_window|needs_data=[daily_prices,episode_index]|scope=stock_event:603398|time=event_window;before=10;after=10|view=query",
+    "memory_id": "MEM-QC-7813A67C9033BA112B0B",
+    "canonical_key": "{\"dimensions\":[\"announcement\",\"episode\",\"price\"],\"intent\":\"stock_event_window\",\"kind\":\"question_card\",\"object_scope\":{\"kind\":\"stock_event\",\"refs\":[\"603398\"]},\"time_scope_semantics\":{\"after\":10,\"before\":10,\"semantics\":\"event_window\"}}",
     "dedupe_key": "0000000000000000000000000000000000000000000000000000000000000000",
     "not_evidence": true,
+    "record_type": "question_card",
     "external_qc_id": null,
     "canonical_question": "603398 某节点前后有哪些可回链变化？",
     "aliases": [],
@@ -32,6 +33,11 @@
       ]
     },
     "semantic_intent": "stock_event_window",
+    "dimensions": [
+      "announcement",
+      "episode",
+      "price"
+    ],
     "time_scope": {
       "semantics": "event_window",
       "start": null,

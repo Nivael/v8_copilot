@@ -16,13 +16,24 @@
       "provenance_ref": "response-fixture-001"
     }
   ],
-  "memory_id": "MEM-RV-0FE20AA8DD81040FBD76",
-  "canonical_key": "review_item|review_kind=question_acceptance|target=mem-qc-10752d5dfacfbfb1d227|target_type=question_card",
-  "dedupe_key": "0fe20aa8dd81040fbd766eb9f6588583dad6ee92168608caa9f99d398e69c987",
+  "memory_id": "MEM-RV-B383B5ACC4C07B40D8EB",
+  "canonical_key": "{\"decision_unit\":\"one_question_candidate\",\"kind\":\"review\",\"subject_ref\":{\"subject_id\":\"mem-qc-7813a67c9033ba112b0b\",\"subject_type\":\"question_card\"},\"uncertainty_type\":\"question_semantic_identity\"}",
+  "dedupe_key": "b383b5acc4c07b40d8ebe5cb81165d73e389412d7e69dfb37cc4ce7dfd5d58bb",
   "not_evidence": true,
-  "review_kind": "question_acceptance",
-  "target_type": "question_card",
-  "target_memory_id": "MEM-QC-10752D5DFACFBFB1D227",
+  "record_type": "review_item",
+  "uncertainty_type": "question_semantic_identity",
+  "subject_ref": {
+    "subject_type": "question_card",
+    "subject_id": "MEM-QC-7813A67C9033BA112B0B"
+  },
+  "decision_unit": "one_question_candidate",
+  "evidence_package_refs": [
+    {
+      "provenance_type": "research_response",
+      "provenance_ref": "response-fixture-001"
+    }
+  ],
+  "recommended_action": "accept_candidate",
   "priority": 10,
   "active": true
 }

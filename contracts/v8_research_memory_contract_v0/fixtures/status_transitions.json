@@ -24,11 +24,23 @@
     "closed": []
   },
   "valid_human_merge": {
+    "record_type": "status_transition",
     "object_type": "question_card",
     "from_status": "accepted",
     "to_status": "merged",
     "actor_type": "human",
+    "context": "online",
     "reason": "review confirmed duplicate",
-    "merge_target_id": "MEM-QC-F3F31303477E10BAF65F"
+    "merge_target_id": "MEM-QC-F72393760136B2BA1EFE"
+  },
+  "valid_seed_migration_acceptance": {
+    "record_type": "status_transition",
+    "object_type": "question_card",
+    "from_status": "candidate",
+    "to_status": "accepted",
+    "actor_type": "migration",
+    "context": "seed_bootstrap",
+    "reason": "controlled import of frozen question-card seed",
+    "merge_target_id": null
   }
 }

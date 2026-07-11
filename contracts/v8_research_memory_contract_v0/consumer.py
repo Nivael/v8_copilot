@@ -20,6 +20,8 @@ from research_memory_contract import (
     QUESTION_DIMENSION_ALIASES,
     QUESTION_INTENT_ALIASES,
     QUESTION_SEMANTIC_REGISTRY_VERSION,
+    PROVISIONAL_QUESTION_IDENTITY_VERSION,
+    PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
     REVIEW_ACTIVE_LIMIT,
     DataDebtCard,
     FeedbackEvent,
@@ -55,6 +57,7 @@ MODEL_BY_NAME: dict[str, type[BaseModel]] = {
 VALID_FIXTURES = {
     "question_card.json": QuestionCard,
     "question_card_post_v7_backlog.json": QuestionCard,
+    "question_card_provisional_unknown.json": QuestionCard,
     "data_debt_assigned.json": DataDebtCard,
     "data_debt_unassigned.json": DataDebtCard,
     "query_template_record.json": QueryTemplateRecord,
@@ -68,6 +71,7 @@ VALID_FIXTURES = {
 DEFINITION_BY_FIXTURE = {
     "question_card.json": "QuestionCard",
     "question_card_post_v7_backlog.json": "QuestionCard",
+    "question_card_provisional_unknown.json": "QuestionCard",
     "data_debt_assigned.json": "DataDebtCard",
     "data_debt_unassigned.json": "DataDebtCard",
     "query_template_record.json": "QueryTemplateRecord",
@@ -164,6 +168,8 @@ def validate_key_cases() -> None:
         "synonym_different_runs": QuestionCard,
         "seed_and_online_semantic_equivalence": QuestionCard,
         "registered_semantic_alias_equivalence": QuestionCard,
+        "provisional_unknown_retry_stability": QuestionCard,
+        "provisional_unknown_question_separation": QuestionCard,
         "same_gap_different_scope": DataDebtCard,
         "assigned_debt_same_ref_changed_description": DataDebtCard,
         "assigned_debt_different_ref": DataDebtCard,
@@ -297,6 +303,15 @@ def validate_question_semantic_registry() -> None:
         alias: target.value for alias, target in QUESTION_DIMENSION_ALIASES.items()
     }
     assert registry["unknown_value_policy"] == "reject"
+    assert registry["unknown_question_intake"] == {
+        "intent": "unknown_research_question",
+        "identity_kind": "provisional_unknown",
+        "identity_version": PROVISIONAL_QUESTION_IDENTITY_VERSION,
+        "normalization_version": PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
+        "builder_status": "candidate",
+        "human_merge_terminal_status": "merged",
+        "required_research_status": "needs_review",
+    }
     assert registry["mapping_authority"] == "deterministic_sedimenter"
 
 
@@ -306,6 +321,21 @@ def validate_post_v7_backlog_fixture() -> None:
     validate_public_payload(payload)
     assert card.original_source == "post_v7_backlog"
     assert any(ref.source_type == "post_v7_backlog" for ref in card.source_refs)
+
+
+def validate_provisional_unknown_fixture() -> None:
+    payload = read_json(
+        HERE / "fixtures/valid/question_card_provisional_unknown.json"
+    )
+    card = QuestionCard.model_validate(payload)
+    validate_public_payload(payload)
+    assert card.identity_kind == "provisional_unknown"
+    assert card.provisional_identity is not None
+    assert card.status == "candidate"
+    assert card.research_status == "needs_review"
+    canonical = json.loads(card.canonical_key)
+    assert canonical["kind"] == "provisional_question"
+    assert "normalized_question" not in canonical
 
 
 def validate_feedback_taxonomy() -> None:
@@ -374,6 +404,7 @@ def validate_all() -> None:
     validate_query_template_registry()
     validate_question_semantic_registry()
     validate_post_v7_backlog_fixture()
+    validate_provisional_unknown_fixture()
     validate_feedback_taxonomy()
     validate_review_capacity_fixture()
     validate_transition_fixtures()

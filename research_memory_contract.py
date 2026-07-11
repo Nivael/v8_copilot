@@ -18,6 +18,8 @@ from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, field_validator,
 
 RESEARCH_MEMORY_CONTRACT_VERSION = "v8_research_memory_contract_v0"
 QUESTION_SEMANTIC_REGISTRY_VERSION = "v8_question_semantic_registry_v0"
+PROVISIONAL_QUESTION_IDENTITY_VERSION = "v8_provisional_question_identity_v0"
+PROVISIONAL_QUESTION_NORMALIZATION_VERSION = "nfkc-whitespace-casefold-v1"
 REVIEW_ACTIVE_LIMIT = 20
 
 MemoryStatus = Literal["candidate", "accepted", "ignored", "merged", "blocked", "closed"]
@@ -193,6 +195,20 @@ def canonical_question_dimensions(
     return sorted(canonical, key=lambda item: item.value)
 
 
+def provisional_question_fingerprint(question: str) -> str:
+    normalized = normalize_token(question)
+    if not normalized:
+        raise ValueError("provisional question requires non-empty normalized text")
+    payload = canonical_json(
+        {
+            "identity_version": PROVISIONAL_QUESTION_IDENTITY_VERSION,
+            "normalization_version": PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
+            "normalized_question": normalized,
+        }
+    )
+    return sha256(payload.encode("utf-8")).hexdigest()
+
+
 def normalize_many(values: list[str], *, symbols: bool = False) -> list[str]:
     normalizer = normalize_symbol if symbols else normalize_token
     return sorted({normalizer(value) for value in values if normalize_text(value)})
@@ -287,6 +303,20 @@ class TimeScope(StrictModel):
         return parts
 
 
+class ProvisionalQuestionIdentity(StrictModel):
+    identity_version: Literal[PROVISIONAL_QUESTION_IDENTITY_VERSION]
+    normalization_version: Literal[PROVISIONAL_QUESTION_NORMALIZATION_VERSION]
+    question_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+
+def build_provisional_question_identity(question: str) -> ProvisionalQuestionIdentity:
+    return ProvisionalQuestionIdentity(
+        identity_version=PROVISIONAL_QUESTION_IDENTITY_VERSION,
+        normalization_version=PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
+        question_fingerprint=provisional_question_fingerprint(question),
+    )
+
+
 class SourceRef(StrictModel):
     source_type: SourceType
     source_ref: str = Field(min_length=1, max_length=1000)
@@ -367,6 +397,8 @@ class QuestionCard(MemoryEntity):
     canonical_question: str = Field(min_length=1, max_length=4000)
     aliases: list[str] = Field(default_factory=list, max_length=100)
     scope: ObjectScope
+    identity_kind: Literal["semantic", "provisional_unknown"]
+    provisional_identity: ProvisionalQuestionIdentity | None = None
     semantic_registry_version: Literal[QUESTION_SEMANTIC_REGISTRY_VERSION]
     semantic_intent: QuestionIntent
     dimensions: list[QuestionDimension] = Field(max_length=50)
@@ -411,12 +443,38 @@ class QuestionCard(MemoryEntity):
     def validate_identity_and_debt(self) -> "QuestionCard":
         expected = question_card_key(
             scope=self.scope,
+            identity_kind=self.identity_kind,
+            provisional_identity=self.provisional_identity,
             semantic_registry_version=self.semantic_registry_version,
             semantic_intent=self.semantic_intent,
             dimensions=self.dimensions,
             time_scope=self.time_scope,
         )
         _validate_identity(self, expected, "MEM-QC")
+        is_unknown = self.semantic_intent == QuestionIntent.UNKNOWN_RESEARCH_QUESTION
+        if is_unknown:
+            if self.identity_kind != "provisional_unknown" or not self.provisional_identity:
+                raise ValueError("unknown question requires provisional_unknown identity")
+            expected_fingerprint = provisional_question_fingerprint(
+                self.canonical_question
+            )
+            if self.provisional_identity.question_fingerprint != expected_fingerprint:
+                raise ValueError(
+                    "provisional question fingerprint does not match canonical question"
+                )
+            if self.dimensions:
+                raise ValueError("provisional unknown question cannot carry dimensions")
+            if self.status not in {"candidate", "merged"} or self.research_status != "needs_review":
+                raise ValueError(
+                    "provisional unknown question must remain needs_review and may only "
+                    "be candidate or human-merged"
+                )
+            if self.debt_ref_status != "not_required" or self.external_debt_ref:
+                raise ValueError("provisional unknown question cannot bind data debt")
+        elif self.identity_kind != "semantic" or self.provisional_identity is not None:
+            raise ValueError(
+                "classified question must use semantic identity without provisional fields"
+            )
         if self.external_qc_id and not self.external_qc_id.startswith("QC-CAND-"):
             if not any(ref.source_type == "seed_fixture" for ref in self.source_refs):
                 raise ValueError("fixed QC identity requires a seed_fixture source")
@@ -786,11 +844,26 @@ def _validate_identity(entity: MemoryEntity, canonical_key: str, prefix: str) ->
 def question_card_key(
     *,
     scope: ObjectScope,
+    identity_kind: Literal["semantic", "provisional_unknown"],
+    provisional_identity: ProvisionalQuestionIdentity | None,
     semantic_registry_version: str,
     semantic_intent: QuestionIntent,
     dimensions: list[QuestionDimension],
     time_scope: TimeScope,
 ) -> str:
+    if identity_kind == "provisional_unknown":
+        if provisional_identity is None:
+            raise ValueError("provisional unknown key requires provisional identity")
+        return canonical_key(
+            "provisional_question",
+            identity_version=provisional_identity.identity_version,
+            normalization_version=provisional_identity.normalization_version,
+            object_scope=scope.canonical,
+            question_fingerprint=provisional_identity.question_fingerprint,
+            time_scope_semantics=time_scope.canonical,
+        )
+    if provisional_identity is not None:
+        raise ValueError("semantic question key cannot carry provisional identity")
     return canonical_key(
         "question_card",
         semantic_registry_version=semantic_registry_version,
@@ -928,8 +1001,27 @@ def build_question_card(
     actual_intent = canonical_question_intent(semantic_intent)
     actual_dimensions = canonical_question_dimensions(dimensions or [])
     actual_time = time_scope or TimeScope()
+    is_unknown = actual_intent == QuestionIntent.UNKNOWN_RESEARCH_QUESTION
+    if is_unknown:
+        if actual_dimensions:
+            raise ValueError("provisional unknown question cannot carry dimensions")
+        if status != "candidate" or research_status != "needs_review":
+            raise ValueError(
+                "provisional unknown question must remain candidate and needs_review"
+            )
+        if debt_ref_status != "not_required" or external_debt_ref:
+            raise ValueError("provisional unknown question cannot bind data debt")
+        identity_kind: Literal["semantic", "provisional_unknown"] = (
+            "provisional_unknown"
+        )
+        provisional_identity = build_provisional_question_identity(canonical_question)
+    else:
+        identity_kind = "semantic"
+        provisional_identity = None
     key = question_card_key(
         scope=scope,
+        identity_kind=identity_kind,
+        provisional_identity=provisional_identity,
         semantic_registry_version=semantic_registry_version,
         semantic_intent=actual_intent,
         dimensions=actual_dimensions,
@@ -942,6 +1034,8 @@ def build_question_card(
         canonical_question=canonical_question,
         aliases=aliases or [],
         scope=scope,
+        identity_kind=identity_kind,
+        provisional_identity=provisional_identity,
         semantic_registry_version=semantic_registry_version,
         semantic_intent=actual_intent,
         dimensions=actual_dimensions,

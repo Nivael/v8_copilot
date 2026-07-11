@@ -32,6 +32,8 @@
         "603398"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "llm_freeform_intent",
     "dimensions": [

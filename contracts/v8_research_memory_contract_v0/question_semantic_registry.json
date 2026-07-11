@@ -62,5 +62,14 @@
     "episode_index": "episode"
   },
   "unknown_value_policy": "reject",
+  "unknown_question_intake": {
+    "intent": "unknown_research_question",
+    "identity_kind": "provisional_unknown",
+    "identity_version": "v8_provisional_question_identity_v0",
+    "normalization_version": "nfkc-whitespace-casefold-v1",
+    "builder_status": "candidate",
+    "human_merge_terminal_status": "merged",
+    "required_research_status": "needs_review"
+  },
   "mapping_authority": "deterministic_sedimenter"
 }

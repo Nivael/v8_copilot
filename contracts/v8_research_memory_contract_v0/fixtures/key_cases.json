@@ -32,6 +32,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -87,6 +89,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -145,6 +149,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -200,6 +206,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -258,6 +266,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -312,6 +322,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -336,6 +348,233 @@
     },
     "expect_same_dedupe_key": true,
     "expect_different_source_refs": true
+  },
+  "provisional_unknown_retry_stability": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-a"
+        }
+      ],
+      "memory_id": "MEM-QC-12ECEE4FE1337DC45D65",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "12ecee4fe1337dc45d65916c9e7490b0dbb6e4af97920ceafd65dbbf5bf1141c",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "这家公司有没有海外诉讼？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-a-retry",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-a-retry"
+        }
+      ],
+      "memory_id": "MEM-QC-12ECEE4FE1337DC45D65",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "12ecee4fe1337dc45d65916c9e7490b0dbb6e4af97920ceafd65dbbf5bf1141c",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "这家公司有没有海外诉讼？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "provisional_unknown_question_separation": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-a"
+        }
+      ],
+      "memory_id": "MEM-QC-12ECEE4FE1337DC45D65",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "12ecee4fe1337dc45d65916c9e7490b0dbb6e4af97920ceafd65dbbf5bf1141c",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "这家公司有没有海外诉讼？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "f4e09a65fbf769d282b3b364ca743c46ea281a63964e17c7e00408fc02815c72"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-unknown-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-unknown-b"
+        }
+      ],
+      "memory_id": "MEM-QC-672B03767653250BC5FC",
+      "canonical_key": "{\"identity_version\":\"v8_provisional_question_identity_v0\",\"kind\":\"provisional_question\",\"normalization_version\":\"nfkc-whitespace-casefold-v1\",\"object_scope\":{\"kind\":\"stock\",\"refs\":[\"603398\"]},\"question_fingerprint\":\"3cd04a6a0151c43f47f60524208cc6ff8da04c2aff6703d3e8217c539e8a9f20\",\"time_scope_semantics\":{\"semantics\":\"not_applicable\"}}",
+      "dedupe_key": "672b03767653250bc5fc663d24da2df4d097d8c50a1f88e886e2ccdea8400820",
+      "not_evidence": true,
+      "record_type": "question_card",
+      "external_qc_id": null,
+      "canonical_question": "为什么审计师辞职？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "identity_kind": "provisional_unknown",
+      "provisional_identity": {
+        "identity_version": "v8_provisional_question_identity_v0",
+        "normalization_version": "nfkc-whitespace-casefold-v1",
+        "question_fingerprint": "3cd04a6a0151c43f47f60524208cc6ff8da04c2aff6703d3e8217c539e8a9f20"
+      },
+      "semantic_registry_version": "v8_question_semantic_registry_v0",
+      "semantic_intent": "unknown_research_question",
+      "dimensions": [],
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [],
+      "research_status": "needs_review",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
   },
   "same_gap_different_scope": {
     "first": {
@@ -688,6 +927,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_event_window",
       "dimensions": [
@@ -743,6 +984,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_event_window",
       "dimensions": [
@@ -801,6 +1044,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -856,6 +1101,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -914,6 +1161,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -969,6 +1218,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [
@@ -1398,6 +1649,8 @@
           "603398"
         ]
       },
+      "identity_kind": "semantic",
+      "provisional_identity": null,
       "semantic_registry_version": "v8_question_semantic_registry_v0",
       "semantic_intent": "stock_observation_windows",
       "dimensions": [

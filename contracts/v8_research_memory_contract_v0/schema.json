@@ -629,6 +629,33 @@
       "title": "ProvenanceRef",
       "type": "object"
     },
+    "ProvisionalQuestionIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_version": {
+          "const": "v8_provisional_question_identity_v0",
+          "title": "Identity Version",
+          "type": "string"
+        },
+        "normalization_version": {
+          "const": "nfkc-whitespace-casefold-v1",
+          "title": "Normalization Version",
+          "type": "string"
+        },
+        "question_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Question Fingerprint",
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity_version",
+        "normalization_version",
+        "question_fingerprint"
+      ],
+      "title": "ProvisionalQuestionIdentity",
+      "type": "object"
+    },
     "QueryParameterSpec": {
       "additionalProperties": false,
       "properties": {
@@ -947,6 +974,25 @@
         "scope": {
           "$ref": "#/$defs/ObjectScope"
         },
+        "identity_kind": {
+          "enum": [
+            "semantic",
+            "provisional_unknown"
+          ],
+          "title": "Identity Kind",
+          "type": "string"
+        },
+        "provisional_identity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvisionalQuestionIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "semantic_registry_version": {
           "const": "v8_question_semantic_registry_v0",
           "title": "Semantic Registry Version",
@@ -1042,6 +1088,7 @@
         "record_type",
         "canonical_question",
         "scope",
+        "identity_kind",
         "semantic_registry_version",
         "semantic_intent",
         "dimensions",

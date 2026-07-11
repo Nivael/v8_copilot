@@ -31,6 +31,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "st_status_reason_and_key_nodes",
     "dimensions": [
@@ -88,6 +90,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "historical_case_similarity",
     "dimensions": [
@@ -143,6 +147,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "lens_applicability_and_standing",
     "dimensions": [
@@ -198,6 +204,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "stock_event_multi_dimension_window",
     "dimensions": [
@@ -259,6 +267,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "lens_evidence_audit",
     "dimensions": [
@@ -315,6 +325,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "st_shareholder_count_change",
     "dimensions": [
@@ -368,6 +380,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "st_announcement_density",
     "dimensions": [
@@ -421,6 +435,8 @@
         "任意"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "stock_event_data_summary",
     "dimensions": [
@@ -474,6 +490,8 @@
         "restructuring"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "restructuring_stage_timing",
     "dimensions": [
@@ -528,6 +546,8 @@
         "重整招募"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "restructuring_recruitment_next_node_timing",
     "dimensions": [
@@ -582,6 +602,8 @@
         "重整招募"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "restructuring_recruitment_next_node_timing",
     "dimensions": [
@@ -637,6 +659,8 @@
         "重整"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "restructuring_path_isolation",
     "dimensions": [
@@ -692,6 +716,8 @@
         "st panel"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "st_microcap_two_week_distribution",
     "dimensions": [
@@ -746,6 +772,8 @@
         "st panel"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "st_market_relative_two_week_distribution",
     "dimensions": [
@@ -800,6 +828,8 @@
         "603398"
       ]
     },
+    "identity_kind": "semantic",
+    "provisional_identity": null,
     "semantic_registry_version": "v8_question_semantic_registry_v0",
     "semantic_intent": "stock_observation_windows",
     "dimensions": [

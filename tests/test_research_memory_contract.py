@@ -147,6 +147,81 @@ def test_qc_candidate_is_source_only_not_memory_identity() -> None:
 
     assert card.memory_id.startswith("MEM-QC-")
     assert "QC-CAND" not in card.canonical_key
+    assert card.identity_kind == "provisional_unknown"
+    assert card.provisional_identity is not None
+    assert json.loads(card.canonical_key)["kind"] == "provisional_question"
+
+
+def test_provisional_unknown_retry_is_stable_and_different_questions_separate() -> None:
+    common = {
+        "scope": ObjectScope(kind="stock", refs=["603398"]),
+        "semantic_intent": "unknown_research_question",
+        "dimensions": [],
+        "research_status": "needs_review",
+        "view": "query",
+        "original_source": "user",
+        "status": "candidate",
+        "created_at": STAMP,
+        "updated_at": STAMP,
+        "source_refs": source("unknown-question"),
+        "provenance_refs": provenance("unknown-question"),
+    }
+    lawsuit = build_question_card(
+        canonical_question="这家公司有没有海外诉讼？", **common
+    )
+    retry = build_question_card(
+        canonical_question="  这家公司有没有海外诉讼？  ", **common
+    )
+    auditor = build_question_card(canonical_question="为什么审计师辞职？", **common)
+
+    assert lawsuit.dedupe_key == retry.dedupe_key
+    assert lawsuit.dedupe_key != auditor.dedupe_key
+    assert "这家公司" not in lawsuit.canonical_key
+    assert lawsuit.provisional_identity.question_fingerprint in lawsuit.canonical_key
+
+
+@pytest.mark.parametrize(
+    ("status", "research_status"),
+    [("accepted", "needs_review"), ("candidate", "answerable")],
+)
+def test_unclassified_provisional_question_cannot_advance(
+    status: str, research_status: str
+) -> None:
+    with pytest.raises(ValueError, match="must remain candidate and needs_review"):
+        build_question_card(
+            canonical_question="这家公司有没有海外诉讼？",
+            scope=ObjectScope(kind="stock", refs=["603398"]),
+            semantic_intent="unknown_research_question",
+            dimensions=[],
+            research_status=research_status,
+            view="query",
+            original_source="user",
+            status=status,
+            created_at=STAMP,
+            updated_at=STAMP,
+            source_refs=source("unknown-lifecycle"),
+            provenance_refs=provenance("unknown-lifecycle"),
+        )
+
+
+def test_provisional_question_accepts_only_human_merged_terminal_state() -> None:
+    payload = json.loads(
+        (CONTRACT / "fixtures/valid/question_card_provisional_unknown.json").read_text()
+    )
+    payload["status"] = "merged"
+    merged = QuestionCard.model_validate(payload)
+
+    transition = StatusTransition(
+        record_type="status_transition",
+        object_type="question_card",
+        from_status="candidate",
+        to_status="merged",
+        actor_type="human",
+        context="online",
+        reason="classified into formal semantic question",
+        merge_target_id="MEM-QC-CLASSIFIED",
+    )
+    assert merged.status == transition.to_status == "merged"
 
 
 def test_fixed_seed_and_online_question_share_semantic_identity() -> None:
@@ -492,7 +567,7 @@ def test_transition_table_covers_all_states_and_blocks_automatic_merge() -> None
         StatusTransition(
             record_type="status_transition",
             object_type="question_card",
-            from_status="accepted",
+            from_status="candidate",
             to_status="merged",
             actor_type="system",
             context="online",

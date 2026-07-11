@@ -46,6 +46,16 @@ registry canonical enum；builder 可把已登记 alias（例如 `stock_monitori
 `daily_prices`、`episode_index`）确定性映射为 canonical 值，未知值直接失败。registry
 version 进入 canonical key，LLM/router 的自由命名不能直接成为持久语义。
 
+`unknown_research_question` 不使用上述正式语义 key。它进入独立的 provisional intake：
+
+- `identity_kind=provisional_unknown`；
+- 以 `nfkc-whitespace-casefold-v1` 规范化原始问题，再生成 SHA-256 fingerprint；
+- key 只保存 provisional 版本、scope、fingerprint 和时间语义，不保存原始自然语言；
+- 相同重试稳定同键，不同未知问题不会自动合并；
+- builder 只能创建 `candidate + needs_review`，不得绑定 data debt 或进入 accepted；
+- 分类后生成新的正式 semantic QuestionCard，原 provisional 卡只能通过 human transition
+  进入 terminal `merged`（或保持 candidate 等待处理）。
+
 ## 生命周期
 
 通用状态为 `candidate`、`accepted`、`ignored`、`merged`、`blocked`、`closed`。

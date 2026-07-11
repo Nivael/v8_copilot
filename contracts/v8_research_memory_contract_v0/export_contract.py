@@ -17,6 +17,8 @@ from query_templates import TEMPLATES  # noqa: E402
 from research_memory_contract import (  # noqa: E402
     RESEARCH_MEMORY_CONTRACT_VERSION,
     QUESTION_SEMANTIC_REGISTRY_VERSION,
+    PROVISIONAL_QUESTION_IDENTITY_VERSION,
+    PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
     QUESTION_DIMENSION_ALIASES,
     QUESTION_INTENT_ALIASES,
     REVIEW_ACTIVE_LIMIT,
@@ -171,6 +173,15 @@ def question_semantic_registry_payload() -> dict[str, Any]:
             for alias, target in sorted(QUESTION_DIMENSION_ALIASES.items())
         },
         "unknown_value_policy": "reject",
+        "unknown_question_intake": {
+            "intent": "unknown_research_question",
+            "identity_kind": "provisional_unknown",
+            "identity_version": PROVISIONAL_QUESTION_IDENTITY_VERSION,
+            "normalization_version": PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
+            "builder_status": "candidate",
+            "human_merge_terminal_status": "merged",
+            "required_research_status": "needs_review",
+        },
         "mapping_authority": "deterministic_sedimenter",
     }
 
@@ -264,6 +275,21 @@ def valid_objects() -> dict[str, Any]:
         updated_at=STAMP,
         source_refs=[source("post_v7_backlog", "post-v7:C06-boundary-review")],
         provenance_refs=[provenance("contract_fixture", "D-053")],
+    )
+    provisional_question = build_question_card(
+        canonical_question="这家公司有没有海外诉讼？",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        semantic_intent="unknown_research_question",
+        dimensions=[],
+        needs_data=[],
+        research_status="needs_review",
+        view="query",
+        original_source="user",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("research_run", "run-provisional-001")],
+        provenance_refs=[provenance("research_response", "response-provisional-001")],
     )
     debt = build_data_debt_card(
         gap_id="market_index_daily_series",
@@ -408,6 +434,7 @@ def valid_objects() -> dict[str, Any]:
     return {
         "question_card": question,
         "question_card_post_v7_backlog": backlog_question,
+        "question_card_provisional_unknown": provisional_question,
         "data_debt_assigned": debt,
         "data_debt_unassigned": debt_unassigned,
         "query_template_record": template,
@@ -518,6 +545,48 @@ def key_fixtures() -> dict[str, Any]:
         updated_at=STAMP,
         source_refs=[source("research_run", "run-registry-alias")],
         provenance_refs=[provenance("research_response", "response-registry-alias")],
+    )
+    provisional_lawsuit = build_question_card(
+        canonical_question="这家公司有没有海外诉讼？",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        semantic_intent="unknown_research_question",
+        dimensions=[],
+        research_status="needs_review",
+        view="query",
+        original_source="user",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("research_run", "run-unknown-a")],
+        provenance_refs=[provenance("research_response", "response-unknown-a")],
+    )
+    provisional_lawsuit_retry = build_question_card(
+        canonical_question="  这家公司有没有海外诉讼？  ",
+        scope=ObjectScope(kind="stock", refs=["SH.603398"]),
+        semantic_intent="unknown_research_question",
+        dimensions=[],
+        research_status="needs_review",
+        view="query",
+        original_source="user",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("research_run", "run-unknown-a-retry")],
+        provenance_refs=[provenance("research_response", "response-unknown-a-retry")],
+    )
+    provisional_auditor = build_question_card(
+        canonical_question="为什么审计师辞职？",
+        scope=ObjectScope(kind="stock", refs=["603398"]),
+        semantic_intent="unknown_research_question",
+        dimensions=[],
+        research_status="needs_review",
+        view="query",
+        original_source="user",
+        status="candidate",
+        created_at=STAMP,
+        updated_at=STAMP,
+        source_refs=[source("research_run", "run-unknown-b")],
+        provenance_refs=[provenance("research_response", "response-unknown-b")],
     )
     array_a = build_question_card(
         canonical_question="节点窗口",
@@ -771,6 +840,17 @@ def key_fixtures() -> dict[str, Any]:
             "expect_same_dedupe_key": True,
             "expect_different_source_refs": True,
         },
+        "provisional_unknown_retry_stability": {
+            "first": provisional_lawsuit.model_dump(mode="json"),
+            "second": provisional_lawsuit_retry.model_dump(mode="json"),
+            "expect_same_dedupe_key": True,
+            "expect_different_source_refs": True,
+        },
+        "provisional_unknown_question_separation": {
+            "first": provisional_lawsuit.model_dump(mode="json"),
+            "second": provisional_auditor.model_dump(mode="json"),
+            "expect_same_dedupe_key": False,
+        },
         "same_gap_different_scope": {
             "first": debt_stock.model_dump(mode="json"),
             "second": debt_universe.model_dump(mode="json"),
@@ -850,6 +930,17 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
     question_unknown_registry["semantic_registry_version"] = "unversioned"
     question_backlog_without_source = dict(question)
     question_backlog_without_source["original_source"] = "post_v7_backlog"
+    provisional = valid["question_card_provisional_unknown"].model_dump(mode="json")
+    provisional_accepted = dict(provisional)
+    provisional_accepted["status"] = "accepted"
+    provisional_answerable = dict(provisional)
+    provisional_answerable["research_status"] = "answerable"
+    provisional_missing_identity = dict(provisional)
+    provisional_missing_identity["provisional_identity"] = None
+    provisional_tampered_fingerprint = json.loads(json.dumps(provisional))
+    provisional_tampered_fingerprint["provisional_identity"]["question_fingerprint"] = (
+        "0" * 64
+    )
     evidence_identity = {**question, "evidence_grade": "supported"}
     bad_identity = {**question, "dedupe_key": "0" * 64}
     naive_time = {**question, "created_at": "2026-07-11T00:00:00"}
@@ -905,6 +996,22 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
         "question_backlog_without_matching_source": {
             "model": "QuestionCard",
             "payload": question_backlog_without_source,
+        },
+        "provisional_unknown_accepted": {
+            "model": "QuestionCard",
+            "payload": provisional_accepted,
+        },
+        "provisional_unknown_answerable": {
+            "model": "QuestionCard",
+            "payload": provisional_answerable,
+        },
+        "provisional_unknown_missing_identity": {
+            "model": "QuestionCard",
+            "payload": provisional_missing_identity,
+        },
+        "provisional_unknown_tampered_fingerprint": {
+            "model": "QuestionCard",
+            "payload": provisional_tampered_fingerprint,
         },
         "evidence_identity_forbidden": {
             "model": "QuestionCard", "payload": evidence_identity, "schema_must_reject": True,

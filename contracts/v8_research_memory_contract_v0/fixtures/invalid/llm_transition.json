@@ -4,7 +4,7 @@
     "record_type": "status_transition",
     "object_type": "question_card",
     "from_status": "candidate",
-    "to_status": "blocked",
+    "to_status": "ignored",
     "actor_type": "llm",
     "context": "online",
     "reason": "LLM status decision"

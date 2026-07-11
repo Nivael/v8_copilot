@@ -44,6 +44,16 @@
     "reason": "human review matched an existing semantic object",
     "merge_target_id": "MEM-QC-2347419156F1BB97A17F"
   },
+  "valid_human_candidate_ignore": {
+    "record_type": "status_transition",
+    "object_type": "question_card",
+    "from_status": "candidate",
+    "to_status": "ignored",
+    "actor_type": "human",
+    "context": "online",
+    "reason": "human review dismissed the provisional question",
+    "merge_target_id": null
+  },
   "valid_seed_migration_acceptance": {
     "record_type": "status_transition",
     "object_type": "question_card",

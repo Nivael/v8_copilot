@@ -54,7 +54,8 @@ version 进入 canonical key，LLM/router 的自由命名不能直接成为持�
 - 相同重试稳定同键，不同未知问题不会自动合并；
 - builder 只能创建 `candidate + needs_review`，不得绑定 data debt 或进入 accepted；
 - 分类后生成新的正式 semantic QuestionCard，原 provisional 卡只能通过 human transition
-  进入 terminal `merged`（或保持 candidate 等待处理）。
+  进入 terminal `merged`；人工驳回则进入 terminal `ignored`。system/LLM 不得执行
+  这两个终态转换。
 
 ## 生命周期
 

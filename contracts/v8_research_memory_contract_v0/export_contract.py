@@ -179,7 +179,7 @@ def question_semantic_registry_payload() -> dict[str, Any]:
             "identity_version": PROVISIONAL_QUESTION_IDENTITY_VERSION,
             "normalization_version": PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
             "builder_status": "candidate",
-            "human_merge_terminal_status": "merged",
+            "human_terminal_statuses": ["ignored", "merged"],
             "required_research_status": "needs_review",
         },
         "mapping_authority": "deterministic_sedimenter",
@@ -290,6 +290,9 @@ def valid_objects() -> dict[str, Any]:
         updated_at=STAMP,
         source_refs=[source("research_run", "run-provisional-001")],
         provenance_refs=[provenance("research_response", "response-provisional-001")],
+    )
+    provisional_ignored = QuestionCard.model_validate(
+        {**provisional_question.model_dump(mode="json"), "status": "ignored"}
     )
     debt = build_data_debt_card(
         gap_id="market_index_daily_series",
@@ -435,6 +438,7 @@ def valid_objects() -> dict[str, Any]:
         "question_card": question,
         "question_card_post_v7_backlog": backlog_question,
         "question_card_provisional_unknown": provisional_question,
+        "question_card_provisional_ignored": provisional_ignored,
         "data_debt_assigned": debt,
         "data_debt_unassigned": debt_unassigned,
         "query_template_record": template,
@@ -1119,7 +1123,7 @@ def invalid_payloads(valid: dict[str, Any]) -> dict[str, dict[str, Any]]:
                 "record_type": "status_transition",
                 "object_type": "question_card",
                 "from_status": "candidate",
-                "to_status": "blocked",
+                "to_status": "ignored",
                 "actor_type": "llm",
                 "context": "online",
                 "reason": "LLM status decision",
@@ -1194,6 +1198,15 @@ def main() -> None:
                 context="online",
                 reason="human review matched an existing semantic object",
                 merge_target_id=migrated[0].memory_id,
+            ).model_dump(mode="json"),
+            "valid_human_candidate_ignore": StatusTransition(
+                record_type="status_transition",
+                object_type="question_card",
+                from_status="candidate",
+                to_status="ignored",
+                actor_type="human",
+                context="online",
+                reason="human review dismissed the provisional question",
             ).model_dump(mode="json"),
             "valid_seed_migration_acceptance": StatusTransition(
                 record_type="status_transition",

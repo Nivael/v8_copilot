@@ -204,24 +204,30 @@ def test_unclassified_provisional_question_cannot_advance(
         )
 
 
-def test_provisional_question_accepts_only_human_merged_terminal_state() -> None:
+@pytest.mark.parametrize(
+    ("terminal_status", "merge_target_id"),
+    [("merged", "MEM-QC-CLASSIFIED"), ("ignored", None)],
+)
+def test_provisional_question_accepts_human_terminal_states(
+    terminal_status: str, merge_target_id: str | None
+) -> None:
     payload = json.loads(
         (CONTRACT / "fixtures/valid/question_card_provisional_unknown.json").read_text()
     )
-    payload["status"] = "merged"
-    merged = QuestionCard.model_validate(payload)
+    payload["status"] = terminal_status
+    terminal_card = QuestionCard.model_validate(payload)
 
     transition = StatusTransition(
         record_type="status_transition",
         object_type="question_card",
         from_status="candidate",
-        to_status="merged",
+        to_status=terminal_status,
         actor_type="human",
         context="online",
-        reason="classified into formal semantic question",
-        merge_target_id="MEM-QC-CLASSIFIED",
+        reason="human resolved provisional question",
+        merge_target_id=merge_target_id,
     )
-    assert merged.status == transition.to_status == "merged"
+    assert terminal_card.status == transition.to_status == terminal_status
 
 
 def test_fixed_seed_and_online_question_share_semantic_identity() -> None:
@@ -596,7 +602,7 @@ def test_human_can_merge_candidate_directly() -> None:
     [
         ("accepted", "system", "acceptance requires"),
         ("ignored", "system", "ignore requires"),
-        ("blocked", "llm", "LLM cannot"),
+        ("ignored", "llm", "LLM cannot"),
     ],
 )
 def test_online_candidate_status_decisions_require_human(

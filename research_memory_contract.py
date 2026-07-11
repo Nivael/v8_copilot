@@ -464,10 +464,13 @@ class QuestionCard(MemoryEntity):
                 )
             if self.dimensions:
                 raise ValueError("provisional unknown question cannot carry dimensions")
-            if self.status not in {"candidate", "merged"} or self.research_status != "needs_review":
+            if (
+                self.status not in {"candidate", "merged", "ignored"}
+                or self.research_status != "needs_review"
+            ):
                 raise ValueError(
                     "provisional unknown question must remain needs_review and may only "
-                    "be candidate or human-merged"
+                    "be candidate, human-merged, or human-ignored"
                 )
             if self.debt_ref_status != "not_required" or self.external_debt_ref:
                 raise ValueError("provisional unknown question cannot bind data debt")

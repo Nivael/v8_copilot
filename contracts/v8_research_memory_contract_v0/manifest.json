@@ -69,6 +69,7 @@
     "fixtures/valid/query_template_record.json",
     "fixtures/valid/question_card.json",
     "fixtures/valid/question_card_post_v7_backlog.json",
+    "fixtures/valid/question_card_provisional_ignored.json",
     "fixtures/valid/question_card_provisional_unknown.json",
     "fixtures/valid/research_run_ref.json",
     "fixtures/valid/review_item.json",

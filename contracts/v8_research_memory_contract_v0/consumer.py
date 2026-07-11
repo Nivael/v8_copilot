@@ -58,6 +58,7 @@ VALID_FIXTURES = {
     "question_card.json": QuestionCard,
     "question_card_post_v7_backlog.json": QuestionCard,
     "question_card_provisional_unknown.json": QuestionCard,
+    "question_card_provisional_ignored.json": QuestionCard,
     "data_debt_assigned.json": DataDebtCard,
     "data_debt_unassigned.json": DataDebtCard,
     "query_template_record.json": QueryTemplateRecord,
@@ -72,6 +73,7 @@ DEFINITION_BY_FIXTURE = {
     "question_card.json": "QuestionCard",
     "question_card_post_v7_backlog.json": "QuestionCard",
     "question_card_provisional_unknown.json": "QuestionCard",
+    "question_card_provisional_ignored.json": "QuestionCard",
     "data_debt_assigned.json": "DataDebtCard",
     "data_debt_unassigned.json": "DataDebtCard",
     "query_template_record.json": "QueryTemplateRecord",
@@ -309,7 +311,7 @@ def validate_question_semantic_registry() -> None:
         "identity_version": PROVISIONAL_QUESTION_IDENTITY_VERSION,
         "normalization_version": PROVISIONAL_QUESTION_NORMALIZATION_VERSION,
         "builder_status": "candidate",
-        "human_merge_terminal_status": "merged",
+        "human_terminal_statuses": ["ignored", "merged"],
         "required_research_status": "needs_review",
     }
     assert registry["mapping_authority"] == "deterministic_sedimenter"
@@ -336,6 +338,18 @@ def validate_provisional_unknown_fixture() -> None:
     canonical = json.loads(card.canonical_key)
     assert canonical["kind"] == "provisional_question"
     assert "normalized_question" not in canonical
+    ignored_payload = read_json(
+        HERE / "fixtures/valid/question_card_provisional_ignored.json"
+    )
+    ignored = QuestionCard.model_validate(ignored_payload)
+    validate_public_payload(ignored_payload)
+    transition = StatusTransition.model_validate(
+        read_json(HERE / "fixtures/status_transitions.json")[
+            "valid_human_candidate_ignore"
+        ]
+    )
+    assert ignored.status == transition.to_status == "ignored"
+    assert transition.actor_type == "human"
 
 
 def validate_feedback_taxonomy() -> None:
@@ -388,6 +402,7 @@ def validate_transition_fixtures() -> None:
     for name in (
         "valid_human_merge",
         "valid_human_candidate_merge",
+        "valid_human_candidate_ignore",
         "valid_seed_migration_acceptance",
     ):
         payload = fixture[name]

@@ -1,7 +1,8 @@
-import {fireEvent,render,screen} from '@testing-library/react'
+import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {Link,MemoryRouter} from 'react-router-dom'
-import {describe,expect,it} from 'vitest'
+import {afterEach,describe,expect,it,vi} from 'vitest'
 import {Copilot,EvidenceNavigation,QuestionDrawer} from './Copilot'
+import {show} from './display'
 import type {NavigationKind,Response} from './types'
 
 const kinds:NavigationKind[]=['stock','date','announcement','episode','lens','provenance','data_debt']
@@ -25,7 +26,7 @@ describe('Copilot evidence loops',()=>{
   it('renders all seven navigable evidence reference kinds',()=>{
     render(<MemoryRouter><EvidenceNavigation items={response.navigation_refs} selectedId="nav-provenance"/></MemoryRouter>)
     expect(screen.getAllByRole('link')).toHaveLength(7)
-    kinds.forEach(kind=>expect(screen.getByText(`label-${kind}`)).toBeInTheDocument())
+    kinds.forEach(kind=>expect(screen.getByText(show(`label-${kind}`))).toBeInTheDocument())
     expect(screen.getByText('label-provenance').closest('a')).toHaveAttribute('aria-current','location')
   })
 
@@ -46,4 +47,30 @@ describe('Copilot evidence loops',()=>{
     fireEvent.click(screen.getByRole('link',{name:'切换问题'}))
     expect(screen.getByRole('textbox',{name:'研究问题'})).toHaveValue('新问题')
   })
+
+  it('offers starter questions and submits one on click',async()=>{
+    vi.spyOn(globalThis,'fetch').mockRejectedValue(new Error('研究服务不可用'))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    expect(screen.getByText('还没想好？这些问题覆盖了系统的各类合法回答路径：')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button',{name:/为什么ST/}))
+    expect(screen.getByRole('textbox',{name:'研究问题'})).toHaveValue('沐邦为什么ST？关键节点是什么？')
+    expect(await screen.findByRole('alert')).toHaveTextContent('研究服务不可用')
+  })
+
+  it('submits on Enter and keeps Shift+Enter as newline',async()=>{
+    vi.spyOn(globalThis,'fetch').mockRejectedValue(new Error('研究服务不可用'))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    const composer=screen.getByRole('textbox',{name:'研究问题'})
+    fireEvent.change(composer,{target:{value:'ST面板自身两周涨跌分布如何？'}})
+    fireEvent.keyDown(composer,{key:'Enter',shiftKey:true})
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    fireEvent.keyDown(composer,{key:'Enter'})
+    expect(await screen.findByRole('alert')).toHaveTextContent('研究服务不可用')
+  })
+})
+
+afterEach(()=>{
+  cleanup()
+  vi.restoreAllMocks()
+  window.localStorage.clear()
 })

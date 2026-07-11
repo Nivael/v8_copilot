@@ -1,7 +1,7 @@
 # v8 Batch 2 Closeout Progress
 
-Status: implementation and QA complete in `codex/v8-batch2-closeout`; integration
-commit to canonical `master` remains.
+Status: complete. Reviewed closeout commit `3c28002` is integrated into canonical
+`master`, and canonical smoke QA has passed.
 
 ## Baseline
 
@@ -77,9 +77,11 @@ commit to canonical `master` remains.
 - Four read-only review rounds completed; all reported correctness and navigation
   findings were fixed and regression-tested.
 
-## Remaining closeout gate
+## Closure
 
-1. Commit the isolated branch, integrate it to canonical `master`, and rerun the
-   final smoke commands from the canonical repository.
+- Isolated branch committed and fast-forwarded into canonical `master`.
+- Canonical Python suite, 50-question route eval, 10-case fault matrix, frontend
+  tests, lint, and production build all passed after integration.
+- Canonical worktree was clean after the final smoke run.
 
-Batch 3 must not start until this integration gate passes.
+Batch 2 is closed. Batch 3 may start from canonical `master`.

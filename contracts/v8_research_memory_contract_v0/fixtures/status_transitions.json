@@ -1,0 +1,34 @@
+{
+  "transition_table": {
+    "candidate": [
+      "accepted",
+      "ignored",
+      "blocked",
+      "closed"
+    ],
+    "accepted": [
+      "blocked",
+      "merged",
+      "closed"
+    ],
+    "blocked": [
+      "candidate",
+      "accepted",
+      "closed"
+    ],
+    "ignored": [
+      "candidate",
+      "closed"
+    ],
+    "merged": [],
+    "closed": []
+  },
+  "valid_human_merge": {
+    "object_type": "question_card",
+    "from_status": "accepted",
+    "to_status": "merged",
+    "actor_type": "human",
+    "reason": "review confirmed duplicate",
+    "merge_target_id": "MEM-QC-F3F31303477E10BAF65F"
+  }
+}

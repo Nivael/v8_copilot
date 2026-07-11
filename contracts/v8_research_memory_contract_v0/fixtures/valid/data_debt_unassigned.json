@@ -1,0 +1,44 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "status": "candidate",
+  "created_at": "2026-07-11T00:00:00Z",
+  "updated_at": "2026-07-11T00:00:00Z",
+  "source_refs": [
+    {
+      "source_type": "system_gap",
+      "source_ref": "QC-20260710-003",
+      "source_alias": null
+    }
+  ],
+  "provenance_refs": [
+    {
+      "provenance_type": "seed_fixture",
+      "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+    }
+  ],
+  "memory_id": "MEM-DD-061118A0BE0A2DC47660",
+  "canonical_key": "data_debt|gap_id=release_lens_boundary_catalog|required_fields=[rejection_reason,standing]|scope=lens:任意|time=not_applicable",
+  "dedupe_key": "061118a0be0a2dc476604d4c63c8c0234864ccbbeb04eafafd96526a68b14a69",
+  "not_evidence": true,
+  "gap_id": "release_lens_boundary_catalog",
+  "gap_summary": "缺少可查询的 lens standing/rejected 边界目录。",
+  "scope": {
+    "kind": "lens",
+    "refs": [
+      "任意"
+    ]
+  },
+  "time_scope": {
+    "semantics": "not_applicable",
+    "start": null,
+    "end": null,
+    "before": null,
+    "after": null
+  },
+  "required_fields": [
+    "rejection_reason",
+    "standing"
+  ],
+  "external_debt_ref": null,
+  "debt_ref_status": "needs_assignment"
+}

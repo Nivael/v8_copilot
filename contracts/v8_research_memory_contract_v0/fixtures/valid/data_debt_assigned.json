@@ -1,0 +1,44 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "status": "accepted",
+  "created_at": "2026-07-11T00:00:00Z",
+  "updated_at": "2026-07-11T00:00:00Z",
+  "source_refs": [
+    {
+      "source_type": "system_gap",
+      "source_ref": "gap:market_index_daily_series",
+      "source_alias": null
+    }
+  ],
+  "provenance_refs": [
+    {
+      "provenance_type": "contract_fixture",
+      "provenance_ref": "D-053"
+    }
+  ],
+  "memory_id": "MEM-DD-FA6A202CFA853CAE1D1E",
+  "canonical_key": "data_debt|gap_id=market_index_daily_series|required_fields=[index_close,trade_date]|scope=universe:st panel|time=not_applicable",
+  "dedupe_key": "fa6a202cfa853cae1d1e71a192d0e8a1ff07de5f68fef93e921e9bf9f4ac2307",
+  "not_evidence": true,
+  "gap_id": "market_index_daily_series",
+  "gap_summary": "缺少可按交易日对齐的大盘指数日线。",
+  "scope": {
+    "kind": "universe",
+    "refs": [
+      "st panel"
+    ]
+  },
+  "time_scope": {
+    "semantics": "not_applicable",
+    "start": null,
+    "end": null,
+    "before": null,
+    "after": null
+  },
+  "required_fields": [
+    "index_close",
+    "trade_date"
+  ],
+  "external_debt_ref": "D-051C",
+  "debt_ref_status": "assigned"
+}

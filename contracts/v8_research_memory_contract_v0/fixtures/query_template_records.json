@@ -1,0 +1,339 @@
+[
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-001",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-3B37CDE323B8F7B425A0",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-001",
+    "dedupe_key": "3b37cde323b8f7b425a0ac42d6d1036a65f6c35d406b49199f8f18f9dc42b897",
+    "not_evidence": true,
+    "template_id": "QT-001",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "某事件后下一个节点多久",
+    "parameter_semantics": [
+      "episode_type"
+    ],
+    "outcome_semantics": [
+      "event_next_node_timing",
+      "next_any_announcement",
+      "next_classified_event",
+      "next_stage_milestone"
+    ],
+    "caveats": [
+      "不同节点定义必须并列展示"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-001",
+      "executor_key": "next_node_timing"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-002",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-60B70A8CF9B9D2BCC57F",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-002",
+    "dedupe_key": "60b70a8cf9b9d2bcc57fb518bf59a507bf8c09f2700b9fd9628aba544685c11a",
+    "not_evidence": true,
+    "template_id": "QT-002",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "某节点前后公告、价格和 episode 发生了什么",
+    "parameter_semantics": [
+      "event_date",
+      "event_id",
+      "symbol"
+    ],
+    "outcome_semantics": [
+      "stock_event_window"
+    ],
+    "caveats": [
+      "只描述可回链的历史窗口"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-002",
+      "executor_key": "stock_event_window"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-003",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-4CD2E4E86953425FB66A",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-003",
+    "dedupe_key": "4cd2e4e86953425fb66af2dea8a9bcf98c093f1a74ee89a00504aa3a3f01e6d0",
+    "not_evidence": true,
+    "template_id": "QT-003",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "某股票 ST 前后时间线",
+    "parameter_semantics": [
+      "symbol"
+    ],
+    "outcome_semantics": [
+      "st_status_timeline"
+    ],
+    "caveats": [
+      "状态名称不能替代触发原因公告"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-003",
+      "executor_key": "st_status_timeline"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-004",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-04E4CBBBE763F665056F",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-004",
+    "dedupe_key": "04e4cbbbe763f665056fc0a5bc2c5db9db976b0143dcef64dc94a693fcef5617",
+    "not_evidence": true,
+    "template_id": "QT-004",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "某 cohort 两周分布",
+    "parameter_semantics": [
+      "cohort",
+      "daily_prices"
+    ],
+    "outcome_semantics": [
+      "cohort_two_week_distribution",
+      "t_plus_10_trading_days"
+    ],
+    "caveats": [
+      "横截面分布不构成交易阈值"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-004",
+      "executor_key": "two_week_distribution"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-005",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-D83740604C9EE46B6A75",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-005",
+    "dedupe_key": "d83740604c9ee46b6a752a3e2d2bb1278a026933ebf407668667ba70d85e25c8",
+    "not_evidence": true,
+    "template_id": "QT-005",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "字段缺失时生成标准 data-debt 出口",
+    "parameter_semantics": [
+      "debt_ref"
+    ],
+    "outcome_semantics": [
+      "data_debt_exit"
+    ],
+    "caveats": [
+      "缺字段时不得生成替代结论"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-005",
+      "executor_key": "data_debt"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-006",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-4E6395E1964CC9DEBC11",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-006",
+    "dedupe_key": "4e6395e1964cc9debc119d7d30ca9148e327ecd4a562eaff0f1c5e19a07fb19f",
+    "not_evidence": true,
+    "template_id": "QT-006",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "单票当前应观察哪些公开窗口",
+    "parameter_semantics": [
+      "daily_prices",
+      "episode_index",
+      "symbol"
+    ],
+    "outcome_semantics": [
+      "stock_observation_windows"
+    ],
+    "caveats": [
+      "观察窗口不预测方向或期限"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-006",
+      "executor_key": "observation_checklist"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-007",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-D61870F594DB8C329C4D",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-007",
+    "dedupe_key": "d61870f594db8c329c4df2175090c47c4283a872ee591fb6006d7376f48cd98e",
+    "not_evidence": true,
+    "template_id": "QT-007",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "读取 frozen release lens 的证据字段",
+    "parameter_semantics": [
+      "release_id"
+    ],
+    "outcome_semantics": [
+      "release_lens_detail"
+    ],
+    "caveats": [
+      "历史先验不自动成为可交易信号"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-007",
+      "executor_key": "release_lens_detail"
+    },
+    "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-008",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-53E5FE7C1C5713FC5444",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-008",
+    "dedupe_key": "53e5fe7c1c5713fc5444fa37a1a75e54b3918e166ea62235fca1ac7e7a2ba148",
+    "not_evidence": true,
+    "template_id": "QT-008",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "读取控制权与股东行为方法论框架",
+    "parameter_semantics": [
+      "lens_cluster"
+    ],
+    "outcome_semantics": [
+      "control_structure_methodology"
+    ],
+    "caveats": [
+      "methodology 不得升级为 evidence"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-008",
+      "executor_key": "control_methodology"
+    },
+    "executable": true
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "model": "StatusTransition",
+  "payload": {
+    "object_type": "question_card",
+    "from_status": "accepted",
+    "to_status": "merged",
+    "actor_type": "system",
+    "reason": "automatic similarity merge",
+    "merge_target_id": "MEM-QC-TARGET"
+  }
+}

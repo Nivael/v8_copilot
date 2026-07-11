@@ -1,0 +1,453 @@
+{
+  "synonym_different_runs": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-001",
+          "source_alias": "沐邦接下来该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-EAEE3F5712D86B70168F",
+      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=checklist",
+      "dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "answer_card",
+          "source_ref": "answer-999",
+          "source_alias": "603398 后续有哪些公开节点值得观察？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-EAEE3F5712D86B70168F",
+      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=checklist",
+      "dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true,
+    "expect_different_source_refs": true
+  },
+  "same_gap_different_scope": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "gap-stock",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-966D053FCFABBC248148",
+      "canonical_key": "data_debt|gap_id=same-gap|required_fields=[field_a]|scope=stock:603398|time=not_applicable",
+      "dedupe_key": "966d053fcfabbc248148d70ede70c0070491db3076095a8cd120cb4c02cda159",
+      "not_evidence": true,
+      "gap_id": "same-gap",
+      "gap_summary": "same gap",
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "required_fields": [
+        "field_a"
+      ],
+      "external_debt_ref": null,
+      "debt_ref_status": "needs_assignment"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "system_gap",
+          "source_ref": "gap-universe",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "contract_fixture",
+          "provenance_ref": "key-fixtures"
+        }
+      ],
+      "memory_id": "MEM-DD-8AD1A62B9B0E77D73CE5",
+      "canonical_key": "data_debt|gap_id=same-gap|required_fields=[field_a]|scope=universe:st panel|time=not_applicable",
+      "dedupe_key": "8ad1a62b9b0e77d73ce52ba5ace3e4ba8490d90f44456367537fa62919fac21d",
+      "not_evidence": true,
+      "gap_id": "same-gap",
+      "gap_summary": "same gap",
+      "scope": {
+        "kind": "universe",
+        "refs": [
+          "st panel"
+        ]
+      },
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "required_fields": [
+        "field_a"
+      ],
+      "external_debt_ref": null,
+      "debt_ref_status": "needs_assignment"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "normalized_arrays_and_symbols": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-array-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-array"
+        }
+      ],
+      "memory_id": "MEM-QC-AD49912C4640CBD589A8",
+      "canonical_key": "question_card|intent=stock_event_window|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=query",
+      "dedupe_key": "ad49912c4640cbd589a80bb4151afa826ada53f51f55ad46679fe67049688123",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "节点窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_event_window",
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-array-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-array"
+        }
+      ],
+      "memory_id": "MEM-QC-AD49912C4640CBD589A8",
+      "canonical_key": "question_card|intent=stock_event_window|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=query",
+      "dedupe_key": "ad49912c4640cbd589a80bb4151afa826ada53f51f55ad46679fe67049688123",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "节点窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_event_window",
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "query",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": true
+  },
+  "different_time_semantics": {
+    "first": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-time-a",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-A8948DED3C124B3EB52E",
+      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=trading_day_window;before=0;after=10|view=checklist",
+      "dedupe_key": "a8948ded3c124b3eb52efe5e80b2d026b81d8b02f55618b8e83db325698127fe",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "十日窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "time_scope": {
+        "semantics": "trading_day_window",
+        "start": null,
+        "end": null,
+        "before": 0,
+        "after": 10
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "second": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-time-b",
+          "source_alias": null
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-1D7DB8F6BCDDAAE28E16",
+      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=trading_day_window;before=0;after=14|view=checklist",
+      "dedupe_key": "1d7db8f6bcddaae28e16c4b021a3d49992a191f509625c2ce8929bb9cecf30c2",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "十四日窗口",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "time_scope": {
+        "semantics": "trading_day_window",
+        "start": null,
+        "end": null,
+        "before": 0,
+        "after": 14
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "expect_same_dedupe_key": false
+  },
+  "llm_title_changes": {
+    "semantic_record": {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "candidate",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "research_run",
+          "source_ref": "run-001",
+          "source_alias": "沐邦接下来该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "research_response",
+          "provenance_ref": "response-001"
+        }
+      ],
+      "memory_id": "MEM-QC-EAEE3F5712D86B70168F",
+      "canonical_key": "question_card|intent=stock_observation_windows|needs_data=[daily_prices,episode_index]|scope=stock:603398|time=not_applicable|view=checklist",
+      "dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+      "not_evidence": true,
+      "external_qc_id": null,
+      "canonical_question": "沐邦接下来该看哪些窗口？",
+      "aliases": [],
+      "scope": {
+        "kind": "stock",
+        "refs": [
+          "603398"
+        ]
+      },
+      "semantic_intent": "stock_observation_windows",
+      "time_scope": {
+        "semantics": "not_applicable",
+        "start": null,
+        "end": null,
+        "before": null,
+        "after": null
+      },
+      "needs_data": [
+        "daily_prices",
+        "episode_index"
+      ],
+      "research_status": "answerable",
+      "view": "checklist",
+      "original_source": "user",
+      "external_debt_ref": null,
+      "debt_ref_status": "not_required"
+    },
+    "llm_titles": [
+      "可能爆发",
+      "后续观察窗口",
+      "完全不同的展示标题"
+    ],
+    "expected_dedupe_key": "eaee3f5712d86b70168f53d20b8297630cd8de93b63903e018ad757709cdf762",
+    "title_is_not_contract_input": true
+  }
+}

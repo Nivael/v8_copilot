@@ -1,0 +1,44 @@
+{
+  "model": "QueryTemplateRecord",
+  "payload": {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "candidate",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-001",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-3B37CDE323B8F7B425A0",
+    "canonical_key": "query_template|definition_version=v8_query_template_contract_v0|template_id=qt-001",
+    "dedupe_key": "3b37cde323b8f7b425a0ac42d6d1036a65f6c35d406b49199f8f18f9dc42b897",
+    "not_evidence": true,
+    "template_id": "QT-001",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "某事件后下一个节点多久",
+    "parameter_semantics": [
+      "episode_type"
+    ],
+    "outcome_semantics": [
+      "event_next_node_timing"
+    ],
+    "caveats": [
+      "不同节点定义必须并列展示"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-001",
+      "executor_key": "next_node_timing"
+    },
+    "executable": true
+  }
+}

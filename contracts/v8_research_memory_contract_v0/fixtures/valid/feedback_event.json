@@ -1,0 +1,27 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "status": "accepted",
+  "created_at": "2026-07-11T00:00:00Z",
+  "updated_at": "2026-07-11T00:00:00Z",
+  "source_refs": [
+    {
+      "source_type": "user_question",
+      "source_ref": "feedback-fixture-001",
+      "source_alias": null
+    }
+  ],
+  "provenance_refs": [
+    {
+      "provenance_type": "user_feedback",
+      "provenance_ref": "feedback-fixture-001"
+    }
+  ],
+  "memory_id": "MEM-FB-ABC0AC2EA49A8626DE26",
+  "canonical_key": "feedback_event|feedback_kind=missing_context|occurred_at=2026-07-11t00:00:00+00:00|target=response-fixture-001|target_type=research_response",
+  "dedupe_key": "abc0ac2ea49a8626de26c6531ca3975473611e3647fc2916df2f4a362ef5bdb1",
+  "not_evidence": true,
+  "feedback_kind": "missing_context",
+  "target_type": "research_response",
+  "target_ref": "response-fixture-001",
+  "feedback_text": "需要补充事件日期。"
+}

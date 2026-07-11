@@ -1,0 +1,47 @@
+{
+  "model": "QuestionCard",
+  "payload": {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "candidate",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "research_response",
+        "source_ref": "response-fixture-001",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [],
+    "memory_id": "MEM-QC-10752D5DFACFBFB1D227",
+    "canonical_key": "question_card|intent=stock_event_window|needs_data=[daily_prices,episode_index]|scope=stock_event:603398|time=event_window;before=10;after=10|view=query",
+    "dedupe_key": "10752d5dfacfbfb1d227be7d97d097bbde3108745f9b4f602463ffbfe9c128cd",
+    "not_evidence": true,
+    "external_qc_id": null,
+    "canonical_question": "603398 某节点前后有哪些可回链变化？",
+    "aliases": [],
+    "scope": {
+      "kind": "stock_event",
+      "refs": [
+        "603398"
+      ]
+    },
+    "semantic_intent": "stock_event_window",
+    "time_scope": {
+      "semantics": "event_window",
+      "start": null,
+      "end": null,
+      "before": 10,
+      "after": 10
+    },
+    "needs_data": [
+      "daily_prices",
+      "episode_index"
+    ],
+    "research_status": "answerable",
+    "view": "query",
+    "original_source": "user",
+    "external_debt_ref": null,
+    "debt_ref_status": "not_required"
+  }
+}

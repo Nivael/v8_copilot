@@ -1,0 +1,28 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "status": "candidate",
+  "created_at": "2026-07-11T00:00:00Z",
+  "updated_at": "2026-07-11T00:00:00Z",
+  "source_refs": [
+    {
+      "source_type": "research_response",
+      "source_ref": "response-fixture-001",
+      "source_alias": null
+    }
+  ],
+  "provenance_refs": [
+    {
+      "provenance_type": "research_response",
+      "provenance_ref": "response-fixture-001"
+    }
+  ],
+  "memory_id": "MEM-RV-0FE20AA8DD81040FBD76",
+  "canonical_key": "review_item|review_kind=question_acceptance|target=mem-qc-10752d5dfacfbfb1d227|target_type=question_card",
+  "dedupe_key": "0fe20aa8dd81040fbd766eb9f6588583dad6ee92168608caa9f99d398e69c987",
+  "not_evidence": true,
+  "review_kind": "question_acceptance",
+  "target_type": "question_card",
+  "target_memory_id": "MEM-QC-10752D5DFACFBFB1D227",
+  "priority": 10,
+  "active": true
+}

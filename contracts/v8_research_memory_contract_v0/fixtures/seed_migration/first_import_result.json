@@ -1,0 +1,445 @@
+{
+  "contract_version": "v8_research_memory_contract_v0",
+  "operation_id": "seed-import-first",
+  "created_ids": [
+    "MEM-QC-F3F31303477E10BAF65F",
+    "MEM-QC-DEF3C3B20805743B2DDF",
+    "MEM-QC-864125DCCEF5BF900E16",
+    "MEM-QC-298FFAE01F28AB8E6BB9",
+    "MEM-QC-8527C283229A83D81C6D",
+    "MEM-QC-A955FC91A4AC6080F39D",
+    "MEM-QC-0A1D239D1CC520FC8445",
+    "MEM-QC-2EB70D2B048FB6A31B73",
+    "MEM-QC-F2FA169636DAE5FB58FC",
+    "MEM-QC-CBACC01D0D486526CA67",
+    "MEM-QC-AF5718318A9E27B6F339",
+    "MEM-QC-5C32D739297D8C2C529D",
+    "MEM-QC-1098BDA0CD98F2C3F801",
+    "MEM-QC-E63859ACF4FC3A2D7388",
+    "MEM-QC-A0591EC2E702062B0CA9"
+  ],
+  "existing_ids": [],
+  "created_links": [
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "这只票为什么 ST？关键节点是什么？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-3BBA968552025CFBF559",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#1|source_type=seed_fixture|target=mem-qc-f3f31303477e10baf65f|target_type=question_card",
+      "dedupe_key": "3bba968552025cfbf5596189d180252dd31b25d2fcb1098f158b71c2ab3b1838",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#1",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-F3F31303477E10BAF65F",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "它像历史上哪些 case？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-218AC408F9040FFB0ED3",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#2|source_type=seed_fixture|target=mem-qc-def3c3b20805743b2ddf|target_type=question_card",
+      "dedupe_key": "218ac408f9040ffb0ed3a68d67198ab6812ac1221bdb6625ee49c90fe0b185d9",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#2",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-DEF3C3B20805743B2DDF",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "哪些 lens 能解释它，哪些只是视角，哪些历史上站不住？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-7DC6116A173E01527C5E",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#3|source_type=seed_fixture|target=mem-qc-864125dccef5bf900e16|target_type=question_card",
+      "dedupe_key": "7dc6116a173e01527c5e9897c6c3bcefddf28180f6f8b368ef3e611e3d7f111f",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#3",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-864125DCCEF5BF900E16",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "某节点前后，公告/价格/股本/股东人数/监管动作发生了什么？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-4728414985EB35B1918F",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#4|source_type=seed_fixture|target=mem-qc-298ffae01f28ab8e6bb9|target_type=question_card",
+      "dedupe_key": "4728414985eb35b1918fef25351b0fde2e0db84f971dd3211b878be074278bf5",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#4",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-298FFAE01F28AB8E6BB9",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "这个判断的证据等级/N/反例/数据缺口是什么？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-8DA6C2C224381C06E694",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#5|source_type=seed_fixture|target=mem-qc-8527c283229a83d81c6d|target_type=question_card",
+      "dedupe_key": "8da6c2c224381c06e694e3ee2da7e43b3d6966f529fe46ec20b74f854f1e925e",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#5",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-8527C283229A83D81C6D",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "ST 前后股东人数变化是否异常？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-7A128D403D2CE54A0BF2",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#6|source_type=seed_fixture|target=mem-qc-a955fc91a4ac6080f39d|target_type=question_card",
+      "dedupe_key": "7a128d403d2ce54a0bf25e95b6c49ec4ce2f45940c3c93ab1f8d14eded7a6ba4",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#6",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-A955FC91A4AC6080F39D",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "ST 前后公告密度有没有异常？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-FD3ECB54292744528763",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#7|source_type=seed_fixture|target=mem-qc-0a1d239d1cc520fc8445|target_type=question_card",
+      "dedupe_key": "fd3ecb54292744528763e6a942d9395a415da0cbd81fae63c81737ef17c28e1a",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#7",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-0A1D239D1CC520FC8445",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "某些重要时间节点的数据汇总是什么？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-9A10EF21AADB096BEB5E",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#8|source_type=seed_fixture|target=mem-qc-2eb70d2b048fb6a31b73|target_type=question_card",
+      "dedupe_key": "9a10ef21aadb096beb5e8d9f15418507a8660d654272a36f621ac68dc76c1f10",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#8",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-2EB70D2B048FB6A31B73",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "这类重整路径历史上通常多久进入下一阶段？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-8B3050E5F8F4B69A49FA",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#9|source_type=seed_fixture|target=mem-qc-f2fa169636dae5fb58fc|target_type=question_card",
+      "dedupe_key": "8b3050e5f8f4b69a49faac6d77e36161a71624a3f4aad2a8cc9cd94c1f232199",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#9",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-F2FA169636DAE5FB58FC",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "庭外重组+公开招募后下一个公告节点多久？按阶段分层？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-441B1CE6AD4F4C4F9976",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#10|source_type=seed_fixture|target=mem-qc-cbacc01d0d486526ca67|target_type=question_card",
+      "dedupe_key": "441b1ce6ad4f4c4f99768e552a7d9c592a4b64295f1b08b2c66bf215939b28c8",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#10",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-CBACC01D0D486526CA67",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "同一问题按省份分层如何？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-39B0D7AAE8DA560E1E70",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#11|source_type=seed_fixture|target=mem-qc-af5718318a9e27b6f339|target_type=question_card",
+      "dedupe_key": "39b0d7aae8da560e1e7057df98b12791293d94c30d8f148e59529c273e6b61f0",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#11",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-AF5718318A9E27B6F339",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "能否隔离庭外重组（vs 庭内）？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-694CB35DC693551D41D2",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#12|source_type=seed_fixture|target=mem-qc-5c32d739297d8c2c529d|target_type=question_card",
+      "dedupe_key": "694cb35dc693551d41d2c06dadc410302d8ba7346d2b9d0ff130b744368c0696",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#12",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-5C32D739297D8C2C529D",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "ST/微盘两周异动分布？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-F4A1CEC637332C3FA7E2",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#13|source_type=seed_fixture|target=mem-qc-1098bda0cd98f2c3f801|target_type=question_card",
+      "dedupe_key": "f4a1cec637332c3fa7e2f7550c5b9906551196d220ee5cbaf816d01198fb8c16",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#13",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-1098BDA0CD98F2C3F801",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "ST 相对大盘两周异动？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-09A8AAF720EC55E55E57",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#14|source_type=seed_fixture|target=mem-qc-e63859acf4fc3a2d7388|target_type=question_card",
+      "dedupe_key": "09a8aaf720ec55e55e57d367d8025ac9f5e531fbc6e77709c73276b5a6c16585",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#14",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-E63859ACF4FC3A2D7388",
+      "not_evidence": true
+    },
+    {
+      "contract_version": "v8_research_memory_contract_v0",
+      "status": "accepted",
+      "created_at": "2026-07-11T00:00:00Z",
+      "updated_at": "2026-07-11T00:00:00Z",
+      "source_refs": [
+        {
+          "source_type": "seed_fixture",
+          "source_ref": "evals/question_card_seeds_v0.jsonl",
+          "source_alias": "沐邦(603398)平台整理两个月该看哪些窗口？"
+        }
+      ],
+      "provenance_refs": [
+        {
+          "provenance_type": "seed_fixture",
+          "provenance_ref": "evals/question_card_seeds_v0.jsonl"
+        }
+      ],
+      "link_id": "MEM-LK-55B1B6E724DEBCECD9E6",
+      "canonical_key": "memory_link|relation=sedimented_from|source_ref=evals/question_card_seeds_v0.jsonl#15|source_type=seed_fixture|target=mem-qc-a0591ec2e702062b0ca9|target_type=question_card",
+      "dedupe_key": "55b1b6e724debcecd9e6086ce397f286bd812070a69ace278b03fa60887f34b6",
+      "relation": "sedimented_from",
+      "source_type": "seed_fixture",
+      "source_ref": "evals/question_card_seeds_v0.jsonl#15",
+      "target_type": "question_card",
+      "target_memory_id": "MEM-QC-A0591EC2E702062B0CA9",
+      "not_evidence": true
+    }
+  ],
+  "completed_at": "2026-07-11T00:00:00Z"
+}

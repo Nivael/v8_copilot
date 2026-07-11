@@ -2,6 +2,7 @@ import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {Link,MemoryRouter} from 'react-router-dom'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {Copilot,EvidenceNavigation,QuestionDrawer} from './Copilot'
+import {show} from './display'
 import type {NavigationKind,Response} from './types'
 
 const kinds:NavigationKind[]=['stock','date','announcement','episode','lens','provenance','data_debt']
@@ -25,7 +26,7 @@ describe('Copilot evidence loops',()=>{
   it('renders all seven navigable evidence reference kinds',()=>{
     render(<MemoryRouter><EvidenceNavigation items={response.navigation_refs} selectedId="nav-provenance"/></MemoryRouter>)
     expect(screen.getAllByRole('link')).toHaveLength(7)
-    kinds.forEach(kind=>expect(screen.getByText(`label-${kind}`)).toBeInTheDocument())
+    kinds.forEach(kind=>expect(screen.getByText(show(`label-${kind}`))).toBeInTheDocument())
     expect(screen.getByText('label-provenance').closest('a')).toHaveAttribute('aria-current','location')
   })
 

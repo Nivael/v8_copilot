@@ -218,7 +218,7 @@ function Content({symbol}: {symbol: string}) {
         <Detail symbol={symbol} node={selected}/>
       </div>
       <section className="lens-band">
-        <p className="eyebrow">Release library</p>
+        <p className="eyebrow">冻结 Lens 库</p>
         <h2>相关 Lens</h2>
         <div>
           {data.lens_summaries.map(summary => (

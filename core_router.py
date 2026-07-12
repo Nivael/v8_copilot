@@ -35,6 +35,10 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         intent = "event_timing"
     elif any(term in question for term in ("哪些月份", "月份效应", "证据等级", "反例")):
         intent = "evidence_review"
+    elif any(term in question for term in (
+        "说了什么", "公告内容", "为什么被申请", "是否已经", "有没有", "签订了吗",
+    )):
+        intent = "announcement_fact_query"
     elif any(term in question for term in ("哪些窗口", "爆发点", "平台")):
         intent = "observation_checklist"
     elif any(term in question for term in ("相似案例", "哪些case", "哪些案例")):
@@ -52,8 +56,12 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         "股权": "equity",
         "股本": "capital_structure",
         "公告": "announcement",
+        "投资协议": "announcement",
+        "公开招募": "announcement",
+        "预重整": "announcement",
         "价格": "price",
         "股价": "price",
+        "换手率": "price",
         "控制权": "control_structure",
     }
     for term, dimension in dimension_terms.items():

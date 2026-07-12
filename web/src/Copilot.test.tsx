@@ -147,6 +147,32 @@ describe('Copilot evidence loops',()=>{
     expect(await screen.findByRole('heading',{name:'不能判断是否应采取买卖、持有或仓位行动。'})).toBeInTheDocument()
     expect(screen.getByRole('button',{name:/改问：603398 接下来该看哪些窗口/})).toBeInTheDocument()
   })
+
+  it('renders official announcement URLs as review links',async()=>{
+    const announcementResponse:Response={
+      ...narrativeResponse,
+      answer_card:{
+        ...narrativeResponse.answer_card!,
+        body_rows:[{
+          row_id:'announcement-row-1',记录类型:'近期官方公告',标题:'公告标题',
+          原文链接:'https://static.cninfo.com.cn/example.pdf',
+        }],
+      },
+    }
+    const stream={request_id:'req-4',sequence:1,event:'completed',payload:{response:announcementResponse}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(`${JSON.stringify(stream)}\n`,{
+      status:200,headers:{'Content-Type':'application/x-ndjson'},
+    }))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    fireEvent.change(screen.getByRole('textbox',{name:'研究问题'}),{target:{value:'最近公告是什么？'}})
+    fireEvent.keyDown(screen.getByRole('textbox',{name:'研究问题'}),{key:'Enter'})
+    await screen.findByText('当前能确认风险警示状态，但具体原因仍需回到公告原文。')
+    fireEvent.click(screen.getByRole('button',{name:'查看证据与来源'}))
+
+    const source=screen.getByRole('link',{name:'打开原文'})
+    expect(source).toHaveAttribute('href','https://static.cninfo.com.cn/example.pdf')
+    expect(source).toHaveAttribute('target','_blank')
+  })
 })
 
 afterEach(()=>{

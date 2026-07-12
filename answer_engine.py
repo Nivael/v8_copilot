@@ -18,14 +18,16 @@ v8 ST Research Copilot — Answer Engine（P1，lens-invocation 脊梁版）
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 import statistics
 from dataclasses import dataclass, field, asdict
 from datetime import date, timedelta
 from typing import Any, Iterable
 
+from announcement_inventory import OfficialAnnouncement, load_announcement_inventory
 from lens_binding import LensRegistry, LensInvocation, LensGap
-from settings import DATA_ROOT
+from settings import ANNOUNCEMENT_REFRESH_DIR, DATA_ROOT
 from snapshot_metadata import (
     limiting_as_of,
     load_episode_snapshot,
@@ -327,7 +329,11 @@ def _row(row_id: str, **values: Any) -> dict[str, Any]:
 
 # ================= card builders (through the lens binding spine) =================
 
-def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitment") -> AnswerCard:
+def card_next_node_gap(
+    trigger_subtype: str = "restructuring_investor_recruitment",
+    *,
+    include_out_of_court_debt: bool = False,
+) -> AnswerCard:
     """#01 重整招募→下一节点。lens：重整方法论框架贡献 caveat；无 evidence lens → lens_gap 沉淀。"""
     episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
     announcement_snapshot = load_table_snapshot(
@@ -381,7 +387,32 @@ def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitmen
     gaps = [LensGap(gap_id="restructuring_timing_evidence",
                     missing_for="重整阶段时点分布的验证证据",
                     sediment_as="question_card:QC-20260710-009",
-                    note="现有 release library 无验证重整阶段 timing 的 evidence_lens；分布为 query 视图。")]
+                    note="冻结 Lens 库没有经过验证的重整阶段等待期证据；当前分布仅为描述性查询。")]
+    debts: list[DataDebtRow] = []
+    provenance = [
+        "shared_data/v7/episode_index_v0/episode_index.jsonl",
+        "shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements",
+    ]
+    freshness = {
+        "episode_index_as_of": episode_snapshot.as_of,
+        "company_announcements_as_of": announcement_snapshot.as_of,
+    }
+    if include_out_of_court_debt:
+        debts.append(DataDebtRow(
+            gap="庭外/庭内重整标记",
+            affects="庭外重组子样本的单独等待期分布",
+            debt_ref="D-051B",
+        ))
+        gaps.append(LensGap(
+            gap_id="out_of_court_timing_stratification",
+            missing_for="庭外重组子样本等待期分层",
+            sediment_as="data_debt:D-051B",
+            note="总体重整招募分布可答；当前不能把样本可靠筛成庭外/庭内。",
+        ))
+        provenance.append(
+            "v7_worksite/coordination/debt_cards/D-051B_out_of_court_flag.md"
+        )
+        freshness["data_debt_registry_as_of"] = "2026-07-10"
     body_rows = [
         row("next_any_announcement", "下一个任意公告", _stats(g_any)),
         row("next_classified_restructuring", "下一个已分类重整节点", _stats(g_classified)),
@@ -399,10 +430,7 @@ def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitmen
         data_snapshot_as_of=limiting_as_of(
             episode_snapshot.as_of, announcement_snapshot.as_of
         ),
-        source_freshness={
-            "episode_index_as_of": episode_snapshot.as_of,
-            "company_announcements_as_of": announcement_snapshot.as_of,
-        },
+        source_freshness=freshness,
         lens_invocations=invs, lens_gap=gaps,
         body_rows=body_rows,
         analysis_claims=[
@@ -410,12 +438,18 @@ def card_next_node_gap(trigger_subtype: str = "restructuring_investor_recruitmen
                 text="“下一个节点”定义不同会得到不同等待期，答案保留三种口径。",
                 claim_type="caveat",
                 backing=BackingRef(kind="lens_gap", ref="restructuring_timing_evidence"),
-            )
+            ),
+            *([AnalysisClaim(
+                text="总体分布可答，但当前不能单独筛出庭外重组子样本。",
+                claim_type="data_gap",
+                backing=BackingRef(kind="data_debt", ref="D-051B"),
+            )] if include_out_of_court_debt else []),
         ],
+        data_debt=debts,
+        data_debt_refs=[debt.debt_ref for debt in debts],
         caveats=FIXED_CAVEATS + [
             "『平均多久』无单一答案：节点定义不同，中位数可差数倍——三口径并列，由提问者选。"],
-        provenance=["shared_data/v7/episode_index_v0/episode_index.jsonl",
-                    "shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements"])
+        provenance=provenance)
 
 
 def card_two_week_move(
@@ -717,6 +751,7 @@ def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, win
         _row("volatility_window", **{
             "该看的窗口": "短窗波动是否继续收敛",
             "依据": "前复权价格的短窗形态；只描述波动，不解释方向",
+            "当前机械平台段": latest or "未检出",
         }),
         _row("controller_window", **{
             "该看的窗口": "控股股东与控制权处置",
@@ -1031,6 +1066,7 @@ def card_stock_research_overview(
     requested = set(dimensions)
     card = card_st_status_timeline(symbol)
     card.question = question
+    matched_announcements: list[OfficialAnnouncement] = []
 
     if requested & {"shareholder_count", "equity", "capital_structure", "control_structure"}:
         control_records = _REGISTRY.candidate_lenses(
@@ -1044,21 +1080,69 @@ def card_stock_research_overview(
         )
 
     if not requested or "announcement" in requested:
-        announcement_snapshot = load_table_snapshot(
-            BASE_DB, table="company_announcements", date_column="announcement_date"
+        inventory = load_announcement_inventory(
+            symbol=symbol,
+            base_db=BASE_DB,
+            refresh_dir=ANNOUNCEMENT_REFRESH_DIR,
         )
-        with _db() as connection:
-            announcements = connection.execute(
-                "select announcement_id,announcement_date,title from company_announcements "
-                "where symbol=? order by announcement_date desc,announcement_id desc limit 8",
-                (symbol,),
-            ).fetchall()
+        normalized_question = "".join(question.lower().split())
+        full_dates = {
+            f"{year}-{int(month):02d}-{int(day):02d}"
+            for year, month, day in re.findall(
+                r"(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})日?",
+                normalized_question,
+            )
+        }
+        month_days = {
+            f"-{int(month):02d}-{int(day):02d}"
+            for month, day in re.findall(r"(?<!\d)(\d{1,2})月(\d{1,2})日", normalized_question)
+        }
+        if full_dates:
+            month_days = set()
+        term_groups = (
+            ("投资协议", ("投资协议", "重整投资协议")),
+            ("公开招募", ("公开招募", "招募", "重整投资人")),
+            ("预重整", ("预重整",)),
+            ("重整", ("重整",)),
+            ("风险警示", ("风险警示",)),
+        )
+        if "投资协议" in normalized_question and "重整" in normalized_question:
+            required_term_groups = (("投资协议",), ("重整",))
+        else:
+            first_terms = next(
+                (terms for marker, terms in term_groups if marker in normalized_question),
+                (),
+            )
+            required_term_groups = (first_terms,) if first_terms else ()
+        search_terms = tuple(
+            term for group in required_term_groups for term in group
+        )
+
+        def matches_question(record: OfficialAnnouncement) -> bool:
+            date_matches = (
+                not full_dates and not month_days
+                or record.announcement_date in full_dates
+                or any(record.announcement_date.endswith(item) for item in month_days)
+            )
+            title_matches = not required_term_groups or all(
+                any(term in record.title for term in group)
+                for group in required_term_groups
+            )
+            return date_matches and title_matches
+
+        matched_announcements = [
+            record for record in inventory.records if matches_question(record)
+        ] if full_dates or month_days or search_terms else []
+        selected_announcements = list(dict.fromkeys([
+            *matched_announcements,
+            *inventory.records[:8],
+        ]))[:8]
         existing_ids = {
             str(row.get("公告编号")) for row in card.body_rows if row.get("公告编号")
         }
         official_row_ids: list[str] = []
-        for index, (announcement_id, announcement_date, title) in enumerate(announcements, 1):
-            if str(announcement_id) in existing_ids:
+        for index, record in enumerate(selected_announcements, 1):
+            if record.announcement_id in existing_ids:
                 continue
             row_id = f"recent_official_announcement_{index:02d}"
             official_row_ids.append(row_id)
@@ -1066,21 +1150,59 @@ def card_stock_research_overview(
                 row_id,
                 **{
                     "记录类型": "近期官方公告",
-                    "公告编号": str(announcement_id),
-                    "日期": str(announcement_date)[:10],
-                    "标题": str(title),
+                    "公告编号": record.announcement_id,
+                    "日期": record.announcement_date,
+                    "标题": record.title,
+                    "来源范围": (
+                        "CNINFO 本地增量快照"
+                        if record.source == "cninfo_local_refresh"
+                        else "冻结 v5 公告快照"
+                    ),
+                    "原文链接": record.url or "当前快照未记录链接",
+                    "正文状态": "已采集" if record.body_available else "未采集，仅可核对标题与日期",
+                },
+            ))
+        if full_dates or month_days or search_terms:
+            latest_match = matched_announcements[0] if matched_announcements else None
+            card.body_rows.append(_row(
+                "announcement_query_summary",
+                **{
+                    "记录类型": "题面公告检索",
+                    "检索日期": (
+                        ", ".join(sorted(full_dates))
+                        if full_dates
+                        else ", ".join(
+                            f"{int(value[1:3])}月{int(value[4:6])}日"
+                            for value in sorted(month_days)
+                        ) or "未限定"
+                    ),
+                    "标题关键词": ", ".join(search_terms) or "未限定",
+                    "标题与日期命中数": len(matched_announcements),
+                    "最近命中": (
+                        f"{latest_match.announcement_date}《{latest_match.title}》"
+                        if latest_match else "未命中"
+                    ),
+                    "检索边界": "检索正式公告标题与日期；正文未采集时不能据此解释公告内容",
                 },
             ))
         if official_row_ids:
             card.analysis_claims.append(AnalysisClaim(
-                text=f"官方公告表提供最近 {len(announcements)} 条披露供逐条核查。",
+                text=f"正式公告清单共 {len(inventory.records)} 条，当前展示最近或题面命中的记录。",
                 claim_type="fact",
                 backing=BackingRef(kind="query_row", ref=official_row_ids[0]),
             ))
-        card.source_freshness["company_announcements_as_of"] = announcement_snapshot.as_of
+        card.source_freshness["company_announcements_as_of"] = inventory.announcement_as_of
+        if inventory.refresh_checked_at:
+            card.source_freshness["announcement_refresh_checked_at"] = (
+                inventory.refresh_checked_at
+            )
         card.provenance.append(
             f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements[{symbol}]"
         )
+        if inventory.refresh_count:
+            card.provenance.append(
+                f"local_data/v8_copilot/announcement_refresh/{symbol}.json"
+            )
 
     if "price" in requested:
         price_snapshot = load_price_snapshot(BASE_DB)
@@ -1115,6 +1237,46 @@ def card_stock_research_overview(
                 claim_type="caveat",
                 backing=BackingRef(kind="query_row", ref="recent_price_window"),
             ))
+            if "后" in question and matched_announcements:
+                event = matched_announcements[0]
+                with _db() as connection:
+                    event_prices = connection.execute(
+                        "select trade_date,close from daily_prices "
+                        "where symbol=? and adjust='qfq' and trade_date>=? "
+                        "order by trade_date limit 11",
+                        (symbol, event.announcement_date),
+                    ).fetchall()
+                coverage: dict[str, Any] = {
+                    "记录类型": "公告后价格覆盖",
+                    "公告日期": event.announcement_date,
+                    "公告标题": event.title,
+                    "价格截至": price_snapshot.as_of,
+                }
+                if event.announcement_date > price_snapshot.as_of or not event_prices:
+                    coverage["结论"] = "价格快照早于该公告，当前无法计算公告后的价格表现"
+                    claim_type = "data_gap"
+                    claim_text = (
+                        f"价格快照截至 {price_snapshot.as_of}，早于 {event.announcement_date} 的公告，"
+                        "当前不能回答公告后的价格表现。"
+                    )
+                else:
+                    base_date, base_close = event_prices[0]
+                    coverage["基准交易日"] = str(base_date)[:10]
+                    coverage["基准收盘"] = round(float(base_close), 2)
+                    for offset in (1, 5, 10):
+                        if len(event_prices) > offset:
+                            coverage[f"T+{offset}变化"] = (
+                                f"{(float(event_prices[offset][1]) / float(base_close) - 1) * 100:.1f}%"
+                            )
+                    coverage["结论"] = "按前复权收盘价机械计算，不解释方向"
+                    claim_type = "caveat"
+                    claim_text = "公告后价格窗口按前复权收盘价机械计算，只描述历史变化。"
+                card.body_rows.append(_row("requested_event_price_window", **coverage))
+                card.analysis_claims.append(AnalysisClaim(
+                    text=claim_text,
+                    claim_type=claim_type,
+                    backing=BackingRef(kind="query_row", ref="requested_event_price_window"),
+                ))
         else:
             gap = LensGap(
                 gap_id="stock_price_coverage",
@@ -1230,8 +1392,41 @@ def card_stock_research_overview(
             f"shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3::equity_timeline_events[{symbol}]"
         )
 
-    card.sample_scope += f"；按题面加载维度：{','.join(sorted(requested)) or '基础概览'}"
-    card.as_of = limiting_as_of(*card.source_freshness.values())
+    dimension_labels = {
+        "announcement": "正式公告",
+        "price": "价格与换手率",
+        "shareholder_count": "股东人数",
+        "equity": "股权事件",
+        "capital_structure": "股本结构",
+        "control_structure": "控制权",
+    }
+    loaded_dimensions = ", ".join(
+        dimension_labels.get(dimension, dimension)
+        for dimension in sorted(requested)
+    ) or "基础概览"
+    card.sample_scope += f"；按题面加载维度：{loaded_dimensions}"
+    relevant_freshness: list[str] = []
+    if "announcement" in requested:
+        relevant_freshness.append(card.source_freshness["company_announcements_as_of"])
+    if "price" in requested:
+        relevant_freshness.append(card.source_freshness["price_data_as_of"])
+    if "shareholder_count" in requested:
+        relevant_freshness.append(card.source_freshness["shareholder_count_as_of"])
+    if requested & {"equity", "capital_structure"} and "equity_timeline_as_of" in card.source_freshness:
+        relevant_freshness.append(card.source_freshness["equity_timeline_as_of"])
+    normalized_question = "".join(question.lower().split())
+    if any(term in normalized_question for term in (
+        "为什么st", "为什么被st", "为何st", "st原因",
+    )):
+        relevant_freshness.extend([
+            card.source_freshness["st_status_fetched_at"],
+            card.source_freshness["st_evidence_generated_at"],
+        ])
+    if any(term in normalized_question for term in ("已分类", "事件节点", "关键节点")):
+        relevant_freshness.append(card.source_freshness["episode_index_as_of"])
+    card.as_of = limiting_as_of(*(
+        relevant_freshness or list(card.source_freshness.values())
+    ))
     card.data_snapshot_as_of = card.as_of
     card.provenance = list(dict.fromkeys(card.provenance))
     return card

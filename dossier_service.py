@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from collections import defaultdict
-from datetime import date, datetime
+from datetime import date
 
 from api_contract import (
     DateRange,
@@ -22,6 +22,7 @@ from answer_engine import (
     EPISODE_INDEX,
     EPISODE_MANIFEST,
 )
+from announcement_inventory import load_announcement_inventory
 from lens_binding import LensRegistry
 from settings import ANNOUNCEMENT_REFRESH_DIR
 from snapshot_metadata import load_episode_snapshot, load_table_snapshot
@@ -180,57 +181,24 @@ def _announcement_lane(title: str) -> tuple[str, str]:
     return "financial", "其他正式公告（尚未分类）"
 
 
-def _refresh_rows(symbol: str) -> tuple[list[dict], str | None]:
-    path = ANNOUNCEMENT_REFRESH_DIR / f"{symbol}.json"
-    if not path.exists():
-        return [], None
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"公告增量快照 JSON 非法: {path}: {exc}") from exc
-    if payload.get("source") != "cninfo" or str(payload.get("symbol")) != symbol:
-        raise ValueError(f"公告增量快照来源或股票代码不合法: {path}")
-    records = payload.get("records")
-    if not isinstance(records, list):
-        raise ValueError(f"公告增量快照缺 records list: {path}")
-    checked_at = datetime.fromtimestamp(path.stat().st_mtime).date().isoformat()
-    return [row for row in records if isinstance(row, dict)], checked_at
-
-
 def _append_official_announcements(
     symbol: str,
     events: list[DossierEvent],
 ) -> dict[str, str | int | None]:
     """Merge the official announcement inventory with M6-classified anchors."""
-    base_snapshot = load_table_snapshot(
-        BASE_DB, table="company_announcements", date_column="announcement_date"
+    inventory = load_announcement_inventory(
+        symbol=symbol,
+        base_db=BASE_DB,
+        refresh_dir=ANNOUNCEMENT_REFRESH_DIR,
     )
-    with sqlite3.connect(f"file:{BASE_DB}?mode=ro", uri=True) as connection:
-        base_rows = connection.execute(
-            "select announcement_id,announcement_date,title from company_announcements "
-            "where symbol=? order by announcement_date,announcement_id",
-            (symbol,),
-        ).fetchall()
-
-    merged: dict[str, tuple[str, str]] = {
-        str(announcement_id): (str(announcement_date)[:10], str(title))
-        for announcement_id, announcement_date, title in base_rows
-        if announcement_id and announcement_date
-    }
-    refresh_rows, refresh_checked_at = _refresh_rows(symbol)
-    for row in refresh_rows:
-        announcement_id = str(row.get("announcement_id") or "").strip()
-        announcement_date = str(row.get("announcement_date") or "")[:10]
-        title = str(row.get("title") or "").strip()
-        if not announcement_id or not announcement_date or not title:
-            raise ValueError(f"公告增量快照存在缺字段记录: {symbol}")
-        merged[announcement_id] = (announcement_date, title)
 
     existing_ids = {event.event_id for event in events}
     existing_date_titles = {(event.date.isoformat(), event.title) for event in events}
     classified_count = len(events)
-    for announcement_id, (announcement_date, title) in merged.items():
-        event_id = f"announcement:{announcement_id}"
+    for record in inventory.records:
+        event_id = f"announcement:{record.announcement_id}"
+        announcement_date = record.announcement_date
+        title = record.title
         if event_id in existing_ids or (announcement_date, title) in existing_date_titles:
             continue
         lane_id, lane_label = _announcement_lane(title)
@@ -248,17 +216,13 @@ def _append_official_announcements(
             related_lens_ids=[],
         ))
     events.sort(key=lambda event: (event.date, event.event_id))
-    announcement_as_of = max(
-        (announcement_date for announcement_date, _ in merged.values()),
-        default=None,
-    )
     return {
-        "official_count": len(merged),
+        "official_count": len(inventory.records),
         "classified_count": classified_count,
-        "base_as_of": base_snapshot.as_of,
-        "announcement_as_of": announcement_as_of,
-        "refresh_checked_at": refresh_checked_at,
-        "refresh_count": len(refresh_rows),
+        "base_as_of": inventory.base_as_of,
+        "announcement_as_of": inventory.announcement_as_of,
+        "refresh_checked_at": inventory.refresh_checked_at,
+        "refresh_count": inventory.refresh_count,
     }
 
 

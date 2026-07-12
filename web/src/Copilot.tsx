@@ -47,6 +47,17 @@ function writeRecent(question: string, current: string[]): string[] {
   return next
 }
 
+function CellValue({value}: {value: unknown}) {
+  if (typeof value === 'string' && /^https?:\/\//.test(value)) {
+    return (
+      <a className="source-url" href={value} target="_blank" rel="noreferrer">
+        打开原文<ExternalLink size={13}/>
+      </a>
+    )
+  }
+  return <>{value == null ? '' : show(value)}</>
+}
+
 function Table({rows}: {rows: Array<Record<string, unknown>>}) {
   const columns = useMemo(
     () => Array.from(new Set(rows.flatMap(Object.keys))).filter(key => key !== 'row_id'),
@@ -63,7 +74,7 @@ function Table({rows}: {rows: Array<Record<string, unknown>>}) {
           {rows.map(row => (
             <tr key={String(row.row_id)}>
               {columns.map(column => (
-                <td key={column}>{row[column] == null ? '' : show(row[column])}</td>
+                <td key={column}><CellValue value={row[column]}/></td>
               ))}
             </tr>
           ))}

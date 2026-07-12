@@ -135,6 +135,21 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
     if _has_any(text, ["董秘", "论坛热度", "热度", "语气"]):
         gap_rules.append("missing_ir_tone_or_forum_heat")
 
+    next_node_question = _has_any(
+        text, ["重整投资人招募", "公开招募", "进入下一阶段", "下一个公告节点"],
+    )
+    if debt_refs == ["D-051B"] and next_node_question:
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            debt_refs=debt_refs,
+            question_refs=["QC-20260710-009", "QC-20260710-010", *q_refs],
+            rules=["restructuring_next_node_query", *gap_rules],
+            note="先给总体 timing 分布；庭外/庭内子样本分层保留数据债。",
+        )
+
     # A hard debt id blocks the requested split even when another part of the
     # question is answerable. Preserve every softer gap on the same prediction.
     if debt_refs:
@@ -234,6 +249,29 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             "lens_invocation_required",
             rules=["control_structure_methodology"],
             note="只作为 methodology/checklist，不升级成 evidence。",
+        )
+
+    announcement_fact_query = object_kind == "stock" and not _has_any(
+        text, [
+            "多久", "下一个节点", "下一阶段", "通常多久", "公告密度",
+            "最晚", "什么时候会", "会开始", "接下来可能",
+        ],
+    ) and (
+        (_has_any(text, ["公告", "预重整", "重整", "投资协议", "公开招募"])
+         and _has_any(text, [
+             "说了什么", "公告后", "为什么被申请", "是否", "有没有", "已经", "签订",
+             "最近有哪些", "发生了什么",
+         ]))
+        or _has_any(text, ["最近公告", "官方公告", "已分类事件节点"])
+    )
+    if announcement_fact_query:
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            rules=["stock_research_overview", "stock_announcement_fact_query"],
+            note="按题面日期和关键词检索正式公告，并保留正文与价格覆盖边界。",
         )
 
     if object_kind == "stock" and (

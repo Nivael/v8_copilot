@@ -60,6 +60,25 @@ uv run python evals/run_fault_injection_eval.py
 The fault matrix is fixed at 10 cases and covers missing/corrupt snapshots,
 freshness mismatch, incomplete provenance, hanging claim backing, and missing
 data-debt identity.
+
+## P2.3 real-question gate
+
+`real_question_answerability_set_v1.jsonl` adds 14 non-demo questions covering
+new ST announcements, announcement/price cutoff conflicts, factual agreement
+searches, readable price summaries, the Mubon platform interval, partial
+data-debt answers, directional Lens boundaries, and multi-stock fallback.
+
+This gate checks required and forbidden Narrative content as well as route,
+symbol, AnswerCard presence, and query-row backing. It therefore detects cases
+where a response is structurally legal but answers the wrong question.
+
+```bash
+uv run python evals/run_real_question_eval_v1.py
+```
+
+The two July 2026 announcement cases require the validated local CNINFO refresh
+snapshots. Missing refresh data is a product freshness failure, not a skipped
+test.
 - Golden assertions: 20 checks against the three original slice AnswerCards.
 - Deterministic router v0: 30/30 route matches against
   `question_routing_set_v0.jsonl`.

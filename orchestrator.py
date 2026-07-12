@@ -63,7 +63,9 @@ def _execute_answer(
 
     if route.route == "answer_query":
         if executor_key == "next_node_timing":
-            card = card_next_node_gap()
+            card = card_next_node_gap(
+                include_out_of_court_debt="D-051B" in route.data_debt_refs,
+            )
         elif executor_key == "stock_event_window":
             symbol = _symbol(request, interpretation)
             selected_event = request.context.selected_event if request.context else None
@@ -85,7 +87,15 @@ def _execute_answer(
         elif executor_key == "st_status_timeline":
             symbol = _symbol(request, interpretation)
             if symbol:
-                card = card_st_status_timeline(symbol)
+                card = (
+                    card_stock_research_overview(
+                        symbol,
+                        request.question,
+                        interpretation.dimensions,
+                    )
+                    if interpretation.dimensions
+                    else card_st_status_timeline(symbol)
+                )
         elif "stock_research_overview" in rules:
             symbol = _symbol(request, interpretation)
             if symbol:
@@ -263,6 +273,22 @@ def orchestrate_with_card(
             "view": "clarify",
             "reason": "当前只读快照未找到该股票，请核对股票代码或对象范围。",
             "matched_rules": [*route.matched_rules, "stock_resolution_gap"],
+            "required_lens_behavior": "not_applicable",
+        })
+    elif (
+        card is None
+        and route.route == "answer_query"
+        and interpretation.object.kind == "unknown"
+    ):
+        route = route.model_copy(update={
+            "route": "clarify",
+            "status": "clarify",
+            "view": "clarify",
+            "reason": (
+                "当前未能绑定单一股票或 cohort；多股票比较请保留比较对象与时间口径，"
+                "等待比较执行器，不能退化为单票概览。"
+            ),
+            "matched_rules": [*route.matched_rules, "multi_object_execution_gap"],
             "required_lens_behavior": "not_applicable",
         })
 

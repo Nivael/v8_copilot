@@ -263,6 +263,13 @@ def test_validated_llm_narrative_becomes_main_api_narrative() -> None:
     assert response_v2.narrative.direct_answer.text.startswith("当前材料应先")
     assert response_v2.narrative.reasoning_steps[0].title == "状态层"
     assert response_v2.llm_used is True
+    uncertainty_text = " ".join(
+        item.text for item in response_v2.narrative.uncertainties
+    )
+    assert "事件索引截至2026-05-25" in uncertainty_text
+    assert "未覆盖ST开始后的信息" in uncertainty_text
+    assert "结构化股东人数和股权/股本时间线" in uncertainty_text
+    assert "不能用全局 pilot 截止日或公告标题补推" in uncertainty_text
 
 
 def _non_directional_comparison_factory(response_model: type, payload: dict) -> dict:

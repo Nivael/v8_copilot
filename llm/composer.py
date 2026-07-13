@@ -426,6 +426,72 @@ def _validated_narrative(
                     kind="query_row", ref=str(stage_row["row_id"])
                 )],
             ))
+
+    narrative_text = " ".join([
+        direct.text,
+        *(item.text for item in steps),
+        *(item.text for item in uncertainties),
+        *(item.text for item in watch_items),
+    ])
+    freshness_row = next((
+        row for row in card.body_rows
+        if row.get("记录类型") == "分析时间边界"
+    ), None)
+    if freshness_row is not None:
+        dated_sources = [
+            ("公告", freshness_row.get("公告截至"), freshness_row.get("公告覆盖ST后")),
+            ("价格", freshness_row.get("价格截至"), freshness_row.get("价格覆盖ST后")),
+            ("事件索引", freshness_row.get("事件索引截至"), freshness_row.get("事件覆盖ST后")),
+        ]
+        dated_sources = [
+            (label, value, coverage)
+            for label, value, coverage in dated_sources if value
+        ]
+        if dated_sources and not all(
+            str(value) in narrative_text for _, value, _ in dated_sources
+        ):
+            source_text = "、".join(
+                f"{label}截至{value}" for label, value, _ in dated_sources
+            )
+            coverage_text = (
+                "；这些来源均未覆盖ST开始后的信息"
+                if all(coverage is False for _, _, coverage in dated_sources)
+                else ""
+            )
+            uncertainties.append(NarrativeStatement(
+                text=(
+                    f"ST状态开始于{freshness_row.get('ST状态开始')}；"
+                    f"{source_text}{coverage_text}。"
+                ),
+                backing=[ApiClaimBacking(
+                    kind="query_row", ref=str(freshness_row["row_id"])
+                )],
+            ))
+
+    gap_by_id = {gap.gap_id: gap for gap in card.lens_gap}
+    shareholder_gap = gap_by_id.get("shareholder_count_coverage")
+    equity_gap = gap_by_id.get("equity_timeline_coverage")
+    if (
+        shareholder_gap is not None
+        and equity_gap is not None
+        and not (
+            "股东人数" in narrative_text
+            and "股权/股本" in narrative_text
+            and any(term in narrative_text for term in (
+                "没有", "缺口", "未覆盖", "无结构化",
+            ))
+        )
+    ):
+        uncertainties.append(NarrativeStatement(
+            text=(
+                "结构化股东人数和股权/股本时间线当前都没有该股票记录；"
+                "这两个维度只能标为覆盖缺口，不能用全局 pilot 截止日或公告标题补推。"
+            ),
+            backing=[
+                ApiClaimBacking(kind="lens_gap", ref=shareholder_gap.gap_id),
+                ApiClaimBacking(kind="lens_gap", ref=equity_gap.gap_id),
+            ],
+        ))
     return ResearchNarrative(
         direct_answer=direct,
         reasoning_steps=steps,

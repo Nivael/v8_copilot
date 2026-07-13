@@ -18,7 +18,9 @@ RouteName = Literal[
     "refuse_or_rewrite",
 ]
 ClaimType = Literal["fact", "inference", "caveat", "question", "data_gap"]
-ComposerBackingKind = Literal["query_row", "lens_invocation"]
+ComposerBackingKind = Literal[
+    "query_row", "lens_invocation", "provenance_ref", "data_debt", "lens_gap",
+]
 ObjectKind = Literal[
     "stock",
     "stock_event",
@@ -86,6 +88,23 @@ class NarrativeDraft(StrictModel):
     """The composer has no unvalidated free-text output channel."""
 
     claims: list[NarrativeClaim] = Field(max_length=24)
+    narrative: "StructuredNarrativeDraft | None" = None
+
+
+class StructuredNarrativeStatement(StrictModel):
+    text: str = Field(min_length=1, max_length=4000)
+    backing: list[ClaimBacking] = Field(min_length=1, max_length=10)
+
+
+class StructuredNarrativeStep(StructuredNarrativeStatement):
+    title: str = Field(min_length=1, max_length=200)
+
+
+class StructuredNarrativeDraft(StrictModel):
+    direct_answer: StructuredNarrativeStatement
+    reasoning_steps: list[StructuredNarrativeStep] = Field(default_factory=list, max_length=12)
+    uncertainties: list[StructuredNarrativeStatement] = Field(default_factory=list, max_length=12)
+    watch_items: list[StructuredNarrativeStatement] = Field(default_factory=list, max_length=12)
 
 
 class BackingEntry(StrictModel):

@@ -37,6 +37,7 @@ const answeredResponse:Response={
 
 const narrativeResponse:Response={
   ...answeredResponse,
+  llm_used:true,
   narrative:{
     direct_answer:{text:'当前能确认风险警示状态，但具体原因仍需回到公告原文。',backing:[{kind:'query_row',ref:'status-row-1'}]},
     reasoning_steps:[{title:'先确认状态区间',text:'风险警示状态已记录。',backing:[{kind:'query_row',ref:'status-row-1'}]}],
@@ -124,6 +125,7 @@ describe('Copilot evidence loops',()=>{
     expect(screen.getByRole('heading',{name:'判断依据'})).toBeInTheDocument()
     expect(screen.getByText('先确认状态区间')).toBeInTheDocument()
     expect(screen.getByText('状态名称不能自动解释触发原因。')).toBeInTheDocument()
+    expect(screen.getByText('LLM 综合分析')).toBeInTheDocument()
     expect(screen.queryByText(/status-row-1/)).not.toBeInTheDocument()
   })
 

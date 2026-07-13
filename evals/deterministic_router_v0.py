@@ -76,6 +76,16 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             note="交易建议/目标价/仓位请求必须拒绝或改写为研究问题。",
         )
 
+    if object_kind == "cohort" and str(obj.get("ref", "")).startswith("comparison:"):
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            rules=["stock_comparison_query"],
+            note="对同一快照下的公开状态、公告、事件和价格维度做并列比较。",
+        )
+
     missing_referent = object_kind == "unknown" and _has_any(
         text, ["那它呢", "它怎么样", "这只票", "这个股票", "这个节点"],
     )
@@ -134,6 +144,19 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
         gap_rules.append("missing_shareholder_count_full_coverage")
     if _has_any(text, ["董秘", "论坛热度", "热度", "语气"]):
         gap_rules.append("missing_ir_tone_or_forum_heat")
+
+    progress_question = object_kind == "stock" and _has_any(
+        text, ["推进到哪一步", "进展到哪一步", "目前到哪一步", "当前阶段", "下一个公告可能", "下一个节点最可能"],
+    ) and _has_any(text, ["重整", "预重整", "公开招募", "招募"])
+    if progress_question:
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            rules=["stock_restructuring_progress_query", *gap_rules],
+            note="先确认个案当前公开里程碑，再展示同类历史后续节点分布。",
+        )
 
     next_node_question = _has_any(
         text, ["重整投资人招募", "公开招募", "进入下一阶段", "下一个公告节点"],

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime
 from pathlib import Path
 
@@ -18,6 +18,7 @@ class OfficialAnnouncement:
     url: str | None
     source: str
     body_available: bool
+    body_text: str | None = None
 
 
 @dataclass(frozen=True)
@@ -75,6 +76,7 @@ def _refresh_records(
             url=url,
             source="cninfo_local_refresh",
             body_available=isinstance(body, str) and bool(body.strip()),
+            body_text=body.strip() if isinstance(body, str) and body.strip() else None,
         ))
     checked_at = datetime.fromtimestamp(path.stat().st_mtime).date().isoformat()
     return records, checked_at
@@ -98,9 +100,13 @@ def load_announcement_inventory(
             for row in connection.execute("pragma table_info(company_announcements)")
         }
         url_expression = "url" if "url" in columns else "null"
+        body_expression = (
+            "case when length(trim(body_text))>0 then 1 else 0 end"
+            if "body_text" in columns else "0"
+        )
         base_rows = connection.execute(
             "select announcement_id,announcement_date,title,"
-            f"{url_expression} from company_announcements where symbol=?",
+            f"{url_expression},{body_expression} from company_announcements where symbol=?",
             (symbol,),
         ).fetchall()
 
@@ -111,13 +117,17 @@ def load_announcement_inventory(
             title=str(title),
             url=_normalize_url(url),
             source="frozen_v5_sqlite",
-            body_available=False,
+            body_available=bool(body_available),
+            body_text=None,
         )
-        for announcement_id, announcement_date, title, url in base_rows
+        for announcement_id, announcement_date, title, url, body_available in base_rows
         if announcement_id and announcement_date and title
     }
     refresh_records, refresh_checked_at = _refresh_records(symbol, refresh_dir)
     for record in refresh_records:
+        existing = merged.get(record.announcement_id)
+        if existing and existing.body_available and not record.body_available:
+            record = replace(record, body_available=True)
         merged[record.announcement_id] = record
     records = tuple(sorted(
         merged.values(),

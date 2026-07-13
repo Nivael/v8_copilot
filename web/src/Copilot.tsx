@@ -105,10 +105,11 @@ function EvidenceTables({rows}: {rows: Array<Record<string, unknown>>}) {
   )
 }
 
-function ReadableAnalysis({card, claims, narrative, onOpenEvidence}: {
+function ReadableAnalysis({card, claims, narrative, llmUsed, onOpenEvidence}: {
   card: AnswerCard
   claims: Claim[]
   narrative?: ResearchNarrative | null
+  llmUsed: boolean
   onOpenEvidence: () => void
 }) {
   const primary = claims.filter(claim => claim.claim_type === 'fact' || claim.claim_type === 'inference')
@@ -121,7 +122,10 @@ function ReadableAnalysis({card, claims, narrative, onOpenEvidence}: {
     <section className="readable-analysis">
       <header>
         <div>
-          <p className="eyebrow">研究回答</p>
+          <div className="analysis-kicker">
+            <p className="eyebrow">研究回答</p>
+            <span className="analysis-mode">{llmUsed ? 'LLM 综合分析' : '本地规则分析'}</span>
+          </div>
           <h2>基于当前本地证据，能确认什么</h2>
         </div>
         <button type="button" className="evidence-button" onClick={onOpenEvidence}>
@@ -370,10 +374,11 @@ export function QuestionDrawer({response, selectedId, currentContext = {}}: {
   )
 }
 
-function Answer({card, claims, narrative, navigation, onOpenEvidence}: {
+function Answer({card, claims, narrative, llmUsed, navigation, onOpenEvidence}: {
   card: AnswerCard
   claims: Claim[]
   narrative?: ResearchNarrative | null
+  llmUsed: boolean
   navigation: NavigationRef[]
   onOpenEvidence: () => void
 }) {
@@ -391,7 +396,7 @@ function Answer({card, claims, narrative, navigation, onOpenEvidence}: {
         <b className={`grade grade-${card.evidence_grade}`}>{show(card.evidence_grade)}</b>
         <span>{show(card.sample_scope)}</span>
       </div>
-      <ReadableAnalysis card={card} claims={claims.length ? claims : card.analysis_claims} narrative={narrative} onOpenEvidence={onOpenEvidence}/>
+      <ReadableAnalysis card={card} claims={claims.length ? claims : card.analysis_claims} narrative={narrative} llmUsed={llmUsed} onOpenEvidence={onOpenEvidence}/>
       <footer className="answer-foot">
         <span>{card.body_rows.length} 行查询证据</span>
         <span>{card.lens_invocations.length} 条 Lens 命中</span>
@@ -619,6 +624,7 @@ export function Copilot() {
               card={response.answer_card}
               claims={response.claims}
               narrative={response.narrative}
+              llmUsed={response.llm_used}
               navigation={response.navigation_refs}
               onOpenEvidence={() => setEvidenceOpen(true)}
             />

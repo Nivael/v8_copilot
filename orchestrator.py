@@ -24,6 +24,8 @@ from answer_engine import (
     card_next_node_gap,
     card_release_lens_evidence,
     card_stock_research_overview,
+    card_stock_restructuring_progress,
+    card_stock_comparison,
     card_st_status_timeline,
     card_stock_event_window,
     card_two_week_move,
@@ -62,7 +64,14 @@ def _execute_answer(
     card: AnswerCard | None = None
 
     if route.route == "answer_query":
-        if executor_key == "next_node_timing":
+        if "stock_comparison_query" in rules:
+            ref = interpretation.object.ref.removeprefix("comparison:")
+            card = card_stock_comparison(ref.split(","), request.question)
+        elif "stock_restructuring_progress_query" in rules:
+            symbol = _symbol(request, interpretation)
+            if symbol:
+                card = card_stock_restructuring_progress(symbol, request.question)
+        elif executor_key == "next_node_timing":
             card = card_next_node_gap(
                 include_out_of_court_debt="D-051B" in route.data_debt_refs,
             )

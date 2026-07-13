@@ -10,7 +10,7 @@ from pydantic import ValidationError
 import llm.config as config_module
 from answer_engine import card_calendar_regime_evidence, card_province_mapping_debt
 from evals.validate_w2_evals import QUESTION_SET, load_jsonl
-from llm.composer import NarrativeComposer
+from llm.composer import NarrativeComposer, _unsupported_numbers
 from llm.parser import QuestionParser
 from llm.providers import FakeLLMProvider, LLMProviderError, OpenAIResponsesProvider
 from llm.schemas import NarrativeDraft, ParsedQuestion
@@ -206,6 +206,7 @@ def test_composer_payload_is_filtered_and_catalogued() -> None:
     assert {entry["kind"] for entry in payload["backing_catalog"]} == {
         "query_row",
         "lens_invocation",
+        "provenance_ref",
     }
 
 
@@ -218,6 +219,59 @@ def test_composer_failure_returns_original_valid_card() -> None:
     assert result.accepted_claims == []
     assert result.degraded_reasons == ["LLM 叙述生成降级: LLMProviderError"]
     result.public_payload()
+
+
+def test_composer_salvages_valid_narrative_when_one_step_fails_backing_gate() -> None:
+    card = card_calendar_regime_evidence()
+    row_id = card.body_rows[0]["row_id"]
+    provider = FakeLLMProvider(responses=[{
+        "claims": [],
+        "narrative": {
+            "direct_answer": {
+                "text": "当前记录只支持历史弱先验。",
+                "backing": [{"kind": "query_row", "ref": row_id}],
+            },
+            "reasoning_steps": [{
+                "title": "非法数字",
+                "text": "这里凭空加入 999999 个样本。",
+                "backing": [{"kind": "query_row", "ref": row_id}],
+            }, {
+                "title": "负数校验",
+                "text": "这里又凭空加入 -999999 个样本。",
+                "backing": [{"kind": "query_row", "ref": row_id}],
+            }, {
+                "title": "目标价判断",
+                "text": "当前记录只支持历史弱先验。",
+                "backing": [{"kind": "query_row", "ref": row_id}],
+            }, {
+                "title": "中文数量校验",
+                "text": "这里凭空加入三个月观察期。",
+                "backing": [{"kind": "query_row", "ref": row_id}],
+            }],
+            "uncertainties": [],
+            "watch_items": [],
+        },
+    }])
+
+    result = NarrativeComposer(provider, model="fake").compose(card)
+
+    assert result.research_narrative is not None
+    assert result.research_narrative.direct_answer.text == "当前记录只支持历史弱先验。"
+    assert result.research_narrative.reasoning_steps == []
+    assert result.degraded_reasons == [
+        "LLM 主叙述有 4 个 statement 未通过 backing 校验，已剔除。"
+    ]
+
+
+def test_numeric_gate_keeps_dates_and_ranges_atomic() -> None:
+    backing = "观察日为 2026-01-05 和 2026-12-31；另有 10 天与 14 天记录。"
+
+    assert _unsupported_numbers("观察日改成 2026-01-31。", backing) == [
+        "date:2026-01-31"
+    ]
+    assert _unsupported_numbers("等待期是 10-14 天。", backing) == [
+        "range:10..14"
+    ]
 
 
 def test_composer_can_return_valid_card_when_no_llm_backing_exists() -> None:

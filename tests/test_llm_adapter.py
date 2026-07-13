@@ -30,11 +30,22 @@ def valid_factory(response_model: type, payload: dict) -> dict:
         }
     if response_model is NarrativeDraft:
         first = payload["backing_catalog"][0]
-        return {"claims": [{
-            "text": "该行保留了历史等待期的样本和分布口径。",
-            "claim_type": "fact",
-            "backing": {"kind": first["kind"], "ref": first["ref"]},
-        }]}
+        return {
+            "claims": [{
+                "text": "该行保留了历史等待期的样本和分布口径。",
+                "claim_type": "fact",
+                "backing": {"kind": first["kind"], "ref": first["ref"]},
+            }],
+            "narrative": {
+                "direct_answer": {
+                    "text": "当前只能按可回链的历史等待期描述。",
+                    "backing": [{"kind": first["kind"], "ref": first["ref"]}],
+                },
+                "reasoning_steps": [],
+                "uncertainties": [],
+                "watch_items": [],
+            },
+        }
     raise AssertionError(response_model)
 
 

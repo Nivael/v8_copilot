@@ -41,12 +41,16 @@ def test_answer_inventory_uses_validated_refresh_without_reading_body(
     assert "必须阅读公告正文" in response.narrative.uncertainties[0].text
 
 
-def test_multi_stock_query_does_not_silently_become_single_stock_answer() -> None:
+def test_multi_stock_query_executes_a_two_stock_comparison() -> None:
     response = ask("比较ST亚光和ST南都最近一个月的公告密度。")
 
-    assert response.route.route == "clarify"
-    assert response.answer_card is None
-    assert "多股票比较" in response.route.reason
+    assert response.route.route == "answer_query"
+    assert response.answer_card is not None
+    assert response.interpretation.object.kind == "cohort"
+    assert response.route.matched_rules == ["stock_comparison_query"]
+    rows = response.answer_card["body_rows"]
+    assert {row["股票"] for row in rows} == {"300123", "300068"}
+    assert all("近30日公告数量(共同截止)" in row for row in rows)
 
 
 def test_answer_card_as_of_tracks_the_dimensions_used_by_the_question() -> None:

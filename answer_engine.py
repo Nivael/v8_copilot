@@ -21,11 +21,17 @@ import json
 import re
 import sqlite3
 import statistics
+from collections import Counter
 from dataclasses import dataclass, field, asdict
 from datetime import date, timedelta
 from typing import Any, Iterable
 
 from announcement_inventory import OfficialAnnouncement, load_announcement_inventory
+from announcement_body import (
+    AnnouncementBodyError,
+    load_announcement_body,
+    relevant_excerpt,
+)
 from lens_binding import LensRegistry, LensInvocation, LensGap
 from settings import ANNOUNCEMENT_REFRESH_DIR, DATA_ROOT
 from snapshot_metadata import (
@@ -1162,6 +1168,62 @@ def card_stock_research_overview(
                     "正文状态": "已采集" if record.body_available else "未采集，仅可核对标题与日期",
                 },
             ))
+        body_focus = any(term in normalized_question for term in (
+            "说了什么", "公告内容", "具体内容", "最新公告", "主要内容",
+        ))
+        body_record = (
+            matched_announcements[0]
+            if matched_announcements
+            else (selected_announcements[0] if body_focus and selected_announcements else None)
+        )
+        if body_record is not None:
+            try:
+                body = load_announcement_body(
+                    body_record, source_db=BASE_DB, allow_network=False
+                )
+                excerpts = relevant_excerpt(body.text, question)
+                card.body_rows.append(_row(
+                    "official_announcement_body_01",
+                    **{
+                        "记录类型": "公告正文证据",
+                        "公告编号": body_record.announcement_id,
+                        "日期": body_record.announcement_date,
+                        "标题": body_record.title,
+                        "正文页数": body.page_count or "原始文本快照",
+                        "正文字符数": len(body.text),
+                        "正文来源": body.source,
+                        "正文证据片段": excerpts or [body.text[:1200]],
+                        "原文链接": body.source_url,
+                    },
+                ))
+                card.analysis_claims.append(AnalysisClaim(
+                    text=(
+                        "已读取本地冻结公告正文；答案中的内容判断只可引用正文证据片段。"
+                        if body.source.startswith("embedded_")
+                        else "已读取本地缓存的官方公告 PDF 正文；答案中的内容判断只可引用正文证据片段。"
+                    ),
+                    claim_type="fact",
+                    backing=BackingRef(kind="query_row", ref="official_announcement_body_01"),
+                ))
+                if body.source == "cache":
+                    card.provenance.append(
+                        "local_data/v8_copilot/announcement_bodies/"
+                        f"{body_record.announcement_id[:4]}/{body_record.announcement_id}.json"
+                    )
+            except AnnouncementBodyError as exc:
+                gap = LensGap(
+                    gap_id="announcement_body_unavailable",
+                    missing_for=f"公告 {body_record.announcement_id} 的可提取正文",
+                    sediment_as="question_card:announcement_body_unavailable",
+                    note=str(exc),
+                )
+                if not any(item.gap_id == gap.gap_id for item in card.lens_gap):
+                    card.lens_gap.append(gap)
+                card.analysis_claims.append(AnalysisClaim(
+                    text="官方公告正文读取失败，当前只能确认标题、日期和原文链接。",
+                    claim_type="data_gap",
+                    backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+                ))
         if full_dates or month_days or search_terms:
             latest_match = matched_announcements[0] if matched_announcements else None
             card.body_rows.append(_row(
@@ -1424,12 +1486,482 @@ def card_stock_research_overview(
         ])
     if any(term in normalized_question for term in ("已分类", "事件节点", "关键节点")):
         relevant_freshness.append(card.source_freshness["episode_index_as_of"])
-    card.as_of = limiting_as_of(*(
-        relevant_freshness or list(card.source_freshness.values())
-    ))
+    if any(term in normalized_question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
+        status_rows = [
+            row for row in card.body_rows if row.get("记录类型") == "状态区间"
+        ]
+        latest_status = status_rows[-1] if status_rows else None
+        if latest_status:
+            status_start = str(latest_status.get("开始日") or "")[:10]
+            announcement_as_of = card.source_freshness.get("company_announcements_as_of", "")
+            price_as_of = card.source_freshness.get("price_data_as_of", "")
+            episode_as_of = card.source_freshness.get("stock_episode_latest_event", "")
+            card.body_rows.append(_row(
+                "analysis_freshness_boundary",
+                **{
+                    "记录类型": "分析时间边界",
+                    "ST状态开始": status_start,
+                    "公告截至": announcement_as_of,
+                    "价格截至": price_as_of,
+                    "事件索引截至": episode_as_of,
+                    "公告覆盖ST后": bool(announcement_as_of and announcement_as_of >= status_start),
+                    "价格覆盖ST后": bool(price_as_of and price_as_of >= status_start),
+                    "事件覆盖ST后": bool(episode_as_of and episode_as_of >= status_start),
+                },
+            ))
+            card.analysis_claims.append(AnalysisClaim(
+                text="个股分析显式区分 ST 状态开始日与各数据源截止日。",
+                claim_type="caveat",
+                backing=BackingRef(kind="query_row", ref="analysis_freshness_boundary"),
+            ))
+    if any(term in normalized_question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
+        analysis_dates = [
+            str(value)[:10]
+            for row in card.body_rows
+            for key, value in row.items()
+            if key in {"开始日", "日期", "截至", "报告期"}
+            and re.fullmatch(r"20\d{2}-\d{2}-\d{2}", str(value)[:10])
+        ]
+        card.as_of = max(analysis_dates) if analysis_dates else limiting_as_of(*card.source_freshness.values())
+    else:
+        card.as_of = limiting_as_of(*(
+            relevant_freshness or list(card.source_freshness.values())
+        ))
     card.data_snapshot_as_of = card.as_of
     card.provenance = list(dict.fromkeys(card.provenance))
     return card
+
+
+def _restructuring_stage(title: str) -> str:
+    if "重整投资协议" in title or ("投资协议" in title and "重整" in title):
+        return "已披露重整投资协议"
+    if "公开招募" in title or "招募重整投资人" in title:
+        return "已公开招募重整投资人"
+    if "重整计划" in title:
+        return "已披露重整计划相关文件"
+    if "裁定受理" in title or "受理重整" in title:
+        return "法院已裁定受理重整"
+    if "预重整" in title and any(term in title for term in ("受理", "决定", "启动")):
+        return "已进入或启动预重整"
+    if "预重整" in title and any(term in title for term in ("进展", "债权申报", "债权人会议")):
+        return "预重整工作推进中"
+    if "被债权人申请" in title or "债权人申请" in title:
+        return "债权人已提出预重整或重整申请"
+    if "重整" in title:
+        return "其他重整进展披露"
+    return "非重整节点"
+
+
+def _historical_next_restructuring_rows(
+    stage: str,
+    *,
+    subject_mode: str = "listed_company",
+) -> list[dict[str, Any]]:
+    next_any: list[tuple[str, int]] = []
+    next_stage_transitions: list[tuple[str, int]] = []
+    triggers: list[tuple[str, str, str]] = []
+    stage_observed_triggers: set[tuple[str, str, str]] = set()
+
+    subsidiary_terms = ("孙公司", "子公司")
+    related_entity_terms = (*subsidiary_terms, "控股股东")
+
+    def subject_matches(title: str) -> bool:
+        if subject_mode == "subsidiary":
+            return any(term in title for term in subsidiary_terms)
+        return not any(term in title for term in related_entity_terms)
+
+    for episode in _iter_episodes():
+        if episode.get("episode_type") != "restructuring_path":
+            continue
+        symbol = str(episode.get("symbol") or "")
+        episode_id = str(episode.get("episode_id") or "")
+        events = sorted(
+            (
+                (str(anchor.get("announcement_date") or anchor.get("anchor_date") or ""),
+                 str(anchor.get("title") or ""))
+                for anchor in episode.get("anchor_events", [])
+            ),
+            key=lambda item: item[0],
+        )
+        eligible = [
+            (index, event_date, title)
+            for index, (event_date, title) in enumerate(events)
+            if _restructuring_stage(title) == stage and subject_matches(title)
+        ]
+        if not eligible:
+            continue
+        # One episode is one case. Use the latest disclosure still in the
+        # current stage so frequent progress notices do not overweight a case.
+        index, event_date, _ = eligible[-1]
+        trigger_key = (episode_id, symbol, event_date)
+        triggers.append(trigger_key)
+        start = _pd(event_date)
+        for next_date, next_title in events[index + 1:]:
+            if not subject_matches(next_title):
+                continue
+            end = _pd(next_date)
+            if not start or not end or end <= start:
+                continue
+            next_stage_label = _restructuring_stage(next_title)
+            if next_stage_label in {stage, "非重整节点"}:
+                continue
+            stage_observed_triggers.add(trigger_key)
+            next_stage_transitions.append((next_stage_label, (end - start).days))
+            break
+
+    def announcement_category(title: str) -> str:
+        stage_label = _restructuring_stage(title)
+        if stage_label != "非重整节点":
+            return stage_label
+        if any(term in title for term in ("诉讼", "仲裁", "冻结")):
+            return "诉讼、仲裁或冻结公告"
+        if any(term in title for term in ("风险", "异常波动", "问询")):
+            return "风险提示或监管公告"
+        if any(term in title for term in ("年度报告", "审计", "业绩")):
+            return "财务报告或审计公告"
+        if any(term in title for term in ("董事", "股东会", "章程")):
+            return "治理事项公告"
+        return "其他正式公告"
+
+    any_observed_triggers: set[tuple[str, str, str]] = set()
+    unique_triggers = set(triggers)
+    with _db() as connection:
+        for episode_id, symbol, event_date in sorted(unique_triggers):
+            row = connection.execute(
+                "select announcement_date,title from company_announcements "
+                "where symbol=? and announcement_date>? order by announcement_date,announcement_id limit 1",
+                (symbol, event_date),
+            ).fetchone()
+            if row:
+                start, end = _pd(event_date), _pd(str(row[0]))
+                if start and end and end > start:
+                    any_observed_triggers.add((episode_id, symbol, event_date))
+                    next_any.append((announcement_category(str(row[1])), (end - start).days))
+
+    rows: list[dict[str, Any]] = []
+    for prefix, label, transitions, observed_triggers in (
+        ("any", "下一个任意正式公告", next_any, any_observed_triggers),
+        ("stage", "下一个不同重整阶段", next_stage_transitions, stage_observed_triggers),
+    ):
+        counts = Counter(category for category, _ in transitions)
+        total = len(transitions)
+        for index, (category, count) in enumerate(counts.most_common(4), 1):
+            waits = [days for candidate, days in transitions if candidate == category]
+            rows.append(_row(
+                f"historical_next_{prefix}_{index:02d}",
+                **{
+                    "记录类型": "同阶段历史后续",
+                    "后续口径": label,
+                    "起点阶段": stage,
+                    "后续类别": category,
+                    "次数": count,
+                    "占可观察后续": f"{count / total * 100:.1f}%" if total else "无样本",
+                    "等待中位数(天)": statistics.median(waits) if waits else "无样本",
+                    "可观察后续总数": total,
+                    "起点事件总数": len(unique_triggers),
+                    "未观察到后续": len(unique_triggers - observed_triggers),
+                },
+            ))
+    return rows
+
+
+def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
+    """Separate a stock's verified public milestone from cohort transitions."""
+    inventory = load_announcement_inventory(
+        symbol=symbol,
+        base_db=BASE_DB,
+        refresh_dir=ANNOUNCEMENT_REFRESH_DIR,
+    )
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
+    all_relevant = [record for record in inventory.records if "重整" in record.title]
+    subsidiary_focus = any(term in question for term in ("孙公司", "子公司", "江西捷锐"))
+    if subsidiary_focus:
+        relevant = [
+            record for record in all_relevant
+            if any(term in record.title for term in ("孙公司", "子公司", "江西捷锐"))
+        ]
+        subject_scope = "子公司或孙公司"
+    else:
+        relevant = [
+            record for record in all_relevant
+            if not any(term in record.title for term in ("孙公司", "子公司", "控股股东"))
+        ]
+        subject_scope = "上市公司本体"
+    current = relevant[0] if relevant else None
+    if current is None:
+        raise StockNotFoundError(f"{symbol} 当前公告清单没有重整节点")
+    stage = _restructuring_stage(current.title)
+    cohort_stage = stage
+    recruitment = [
+        record for record in relevant
+        if "公开招募" in record.title or "招募重整投资人" in record.title
+    ]
+    body = None
+    try:
+        body = load_announcement_body(
+            current, source_db=BASE_DB, allow_network=False
+        )
+        if "启动预重整" in body.text and "尚未收到" in body.text and "受理重整申请" in body.text:
+            stage = "预重整已启动，尚未获法院正式受理重整"
+    except AnnouncementBodyError:
+        body = None
+    rows = [_row(
+        "current_restructuring_milestone",
+        **{
+            "记录类型": "当前公开里程碑",
+            "股票": symbol,
+            "主体范围": subject_scope,
+            "日期": current.announcement_date,
+            "公告清单截至": inventory.announcement_as_of,
+            "标题": current.title,
+            "阶段判断": stage,
+            "公开招募记录": (
+                f"已找到 {len(recruitment)} 条，最近为 {recruitment[0].announcement_date}"
+                if recruitment else "当前正式公告清单未找到公开招募记录"
+            ),
+            "原文链接": current.url or "当前快照未记录链接",
+        },
+    )]
+    if body is not None:
+        rows.append(_row(
+            "current_restructuring_body",
+            **{
+                "记录类型": "当前里程碑正文证据",
+                "公告编号": current.announcement_id,
+                "正文证据片段": relevant_excerpt(body.text, question),
+                "正文页数": body.page_count or "原始文本快照",
+                "正文来源": body.source,
+                "原文链接": body.source_url,
+            },
+        ))
+    historical_rows = _historical_next_restructuring_rows(
+        cohort_stage,
+        subject_mode="subsidiary" if subsidiary_focus else "listed_company",
+    )
+    rows.extend(historical_rows)
+    cands = _REGISTRY.candidate_lenses(
+        clusters=["C04"], topic_terms=["重整", "资产重组", "资产注入"]
+    )
+    invocations = [_REGISTRY.invoke(item, "重整路径的解释边界") for item in cands]
+    gap = LensGap(
+        gap_id="stock_restructuring_transition_evidence",
+        missing_for="该股票当前阶段到下一阶段的验证型预测证据",
+        sediment_as="question_card:stock_restructuring_transition_evidence",
+        note="历史后续类别只作描述性参照，不等于该股票将按同一路径推进。",
+    )
+    claims = [
+        AnalysisClaim(
+            text=f"当前正式公告可确认的里程碑是：{stage}。",
+            claim_type="fact",
+            backing=BackingRef(kind="query_row", ref="current_restructuring_milestone"),
+        ),
+        AnalysisClaim(
+            text="历史后续频率描述同类样本，不是对该股票下一份公告的预测。",
+            claim_type="caveat",
+            backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+        ),
+    ]
+    if historical_rows:
+        claims.append(AnalysisClaim(
+            text="已按当前阶段汇总历史样本中的首个后续分类节点。",
+            claim_type="fact",
+            backing=BackingRef(kind="query_row", ref=historical_rows[0]["row_id"]),
+        ))
+    as_of = limiting_as_of(inventory.announcement_as_of, episode_snapshot.as_of)
+    return AnswerCard(
+        question=question,
+        object_ref=f"stock:{symbol}",
+        view="query",
+        as_of=as_of,
+        sample_scope=(
+            f"{symbol} 正式公告 {len(inventory.records)} 条；{subject_scope}重整标题节点 {len(relevant)} 条；"
+            f"同阶段历史可观察后续 {historical_rows[0]['可观察后续总数'] if historical_rows else 0} 个"
+        ),
+        evidence_grade="descriptive_query",
+        lens_invocations=invocations,
+        lens_gap=[gap],
+        episode_index_version=episode_snapshot.version,
+        data_snapshot_as_of=as_of,
+        source_freshness={
+            "company_announcements_as_of": inventory.announcement_as_of,
+            "episode_index_as_of": episode_snapshot.as_of,
+        },
+        body_rows=rows,
+        analysis_claims=claims,
+        caveats=FIXED_CAVEATS + [
+            "当前阶段只按已公开公告判定；没有公告时不推定法院、债权人或投资人动作。",
+            "历史上更常出现的后续类别不表示本案下一节点的概率。",
+        ],
+        provenance=[
+            f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements[{symbol}]",
+            "shared_data/v7/episode_index_v0/episode_index.jsonl",
+            *( [f"local_data/v8_copilot/announcement_refresh/{symbol}.json"] if inventory.refresh_count else [] ),
+        ],
+    )
+
+
+def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
+    """Compare public dimensions on one explicit, reproducible snapshot."""
+    if len(symbols) != 2 or len(set(symbols)) != 2:
+        raise ValueError("首版股票比较必须提供两只不同股票")
+    price_snapshot = load_price_snapshot(BASE_DB)
+    episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
+    rows: list[dict[str, Any]] = []
+    inventories = [
+        load_announcement_inventory(
+            symbol=symbol,
+            base_db=BASE_DB,
+            refresh_dir=ANNOUNCEMENT_REFRESH_DIR,
+        )
+        for symbol in symbols
+    ]
+    announcement_dates = [inventory.announcement_as_of for inventory in inventories]
+    common_announcement_cutoff = min(announcement_dates)
+    provenance: list[str] = [
+        "shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices",
+        "shared_data/v7/episode_index_v0/episode_index.jsonl",
+    ]
+    actual_information_dates: list[str] = []
+    per_stock_freshness: dict[str, str] = {}
+    for symbol, inventory in zip(symbols, inventories):
+        latest = inventory.records[0] if inventory.records else None
+        comparable_records = [
+            item for item in inventory.records
+            if item.announcement_date <= common_announcement_cutoff
+        ]
+        cutoff_date = _pd(common_announcement_cutoff)
+        window_start = cutoff_date - timedelta(days=29) if cutoff_date else None
+        recent_30d_count = sum(
+            1 for item in comparable_records
+            if window_start and _pd(item.announcement_date) and _pd(item.announcement_date) >= window_start
+        )
+        comparable_latest = comparable_records[0] if comparable_records else None
+        restructurings = [item for item in comparable_records if "重整" in item.title]
+        comparable_restructuring = restructurings[0] if restructurings else None
+        latest_restructuring = next(
+            (item for item in inventory.records if "重整" in item.title), None
+        )
+        with _db() as connection:
+            status = connection.execute(
+                "select start_date,end_date,status_name from st_status_history "
+                "where symbol=? order by start_date desc limit 1",
+                (symbol,),
+            ).fetchone()
+            prices = connection.execute(
+                "select trade_date,close from daily_prices where symbol=? and adjust='qfq' "
+                "order by trade_date desc limit 61",
+                (symbol,),
+            ).fetchall()
+        price_values = list(reversed(prices))
+        latest_price = float(price_values[-1][1]) if price_values else None
+        anchors = sorted(
+            (
+                (str(anchor.get("announcement_date") or anchor.get("anchor_date") or ""),
+                 str(anchor.get("title") or ""), str(episode.get("episode_type") or ""))
+                for episode in _iter_episodes(symbol)
+                for anchor in episode.get("anchor_events", [])
+                if anchor.get("announcement_date") or anchor.get("anchor_date")
+            ),
+            reverse=True,
+        )
+        row: dict[str, Any] = {
+            "记录类型": "股票并列比较",
+            "股票": symbol,
+            "当前ST状态": status[2] if status else "当前快照无记录",
+            "状态开始": str(status[0])[:10] if status else "当前快照无记录",
+            "最近正式公告": (
+                f"{comparable_latest.announcement_date}《{comparable_latest.title}》"
+                if comparable_latest else "共同截止日前无记录"
+            ),
+            "各自最新公告": (
+                f"{latest.announcement_date}《{latest.title}》" if latest else "当前快照无记录"
+            ),
+            "共同公告截止日": common_announcement_cutoff,
+            "正式公告数量(共同截止前)": len(comparable_records),
+            "近30日公告数量(共同截止)": recent_30d_count,
+            "比较模式": "各自最新状态并列；公告数量按共同截止日计算",
+            "最近重整里程碑": (
+                f"{comparable_restructuring.announcement_date}《{comparable_restructuring.title}》；"
+                f"阶段标签：{_restructuring_stage(comparable_restructuring.title)}"
+                if comparable_restructuring else "当前正式公告清单未找到重整节点"
+            ),
+            "各自最新重整里程碑": (
+                f"{latest_restructuring.announcement_date}《{latest_restructuring.title}》；"
+                f"阶段标签：{_restructuring_stage(latest_restructuring.title)}"
+                if latest_restructuring
+                else "当前正式公告清单未找到重整节点"
+            ),
+            "最近分类事件": (
+                f"{anchors[0][0]}《{anchors[0][1]}》" if anchors else "当前快照无记录"
+            ),
+            "价格截至": str(price_values[-1][0])[:10] if price_values else "当前快照无记录",
+            "最新收盘": round(latest_price, 2) if latest_price is not None else "当前快照无记录",
+        }
+        for window in (20, 60):
+            if latest_price is not None and len(price_values) > window:
+                row[f"近{window}日变化"] = (
+                    f"{(latest_price / float(price_values[-window - 1][1]) - 1) * 100:.1f}%"
+                )
+        rows.append(_row(f"comparison_{symbol}", **row))
+        if latest:
+            actual_information_dates.append(latest.announcement_date)
+        if status:
+            actual_information_dates.append(str(status[0])[:10])
+        if price_values:
+            actual_price_date = str(price_values[-1][0])[:10]
+            actual_information_dates.append(actual_price_date)
+            per_stock_freshness[f"price_{symbol}_as_of"] = actual_price_date
+        if anchors:
+            actual_information_dates.append(anchors[0][0])
+            per_stock_freshness[f"episode_{symbol}_latest_event"] = anchors[0][0]
+        provenance.append(
+            f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::company_announcements[{symbol}]"
+        )
+        if inventory.refresh_count:
+            provenance.append(f"local_data/v8_copilot/announcement_refresh/{symbol}.json")
+    gap = LensGap(
+        gap_id="stock_comparison_evidence",
+        missing_for="两只股票跨维度优劣排序的验证证据",
+        sediment_as="question_card:stock_comparison_evidence",
+        note="本卡只做同口径并列，不输出优劣或行动排序。",
+    )
+    as_of = max(actual_information_dates)
+    return AnswerCard(
+        question=question,
+        object_ref="cohort:comparison:" + ",".join(symbols),
+        view="query",
+        as_of=as_of,
+        sample_scope=f"两只股票（{', '.join(symbols)}）的状态、公告、事件与前复权价格并列",
+        evidence_grade="descriptive_query",
+        lens_gap=[gap],
+        episode_index_version=episode_snapshot.version,
+        data_snapshot_as_of=as_of,
+        source_freshness={
+            "price_data_as_of": price_snapshot.as_of,
+            "episode_index_as_of": episode_snapshot.as_of,
+            **per_stock_freshness,
+            **{f"company_announcements_{symbol}_as_of": date for symbol, date in zip(symbols, announcement_dates)},
+        },
+        body_rows=rows,
+        analysis_claims=[
+            AnalysisClaim(
+                text="两只股票已按同一字段集合并列，差异只描述当前快照事实。",
+                claim_type="fact",
+                backing=BackingRef(kind="query_row", ref=rows[0]["row_id"]),
+            ),
+            AnalysisClaim(
+                text="当前没有支持跨股票优劣排序的验证证据。",
+                claim_type="caveat",
+                backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+            ),
+        ],
+        caveats=FIXED_CAVEATS + [
+            "卡片 as_of 是本题纳入的最晚信息日期；公告密度和共同字段比较另用两股都覆盖的共同截止日。",
+            "公告、事件、状态和价格快照可能有不同截止日，逐字段日期必须同时阅读。",
+            "并列比较不构成优劣、方向或行动排序。",
+        ],
+        provenance=list(dict.fromkeys(provenance)),
+    )
 
 
 def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
@@ -1515,6 +2047,7 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
             if event_date:
                 anchors.append((event_date, title, episode_type, announcement_id))
     recent_anchors = sorted(set(anchors), reverse=True)[:8]
+    stock_episode_latest_event = recent_anchors[0][0] if recent_anchors else None
     episode_rows = [
         _row(
             f"recent_episode_node_{index:02d}",
@@ -1579,6 +2112,10 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
             "st_status_fetched_at": str(fetched_at),
             "st_evidence_generated_at": evidence_snapshot.as_of,
             "episode_index_as_of": episode_snapshot.as_of,
+            **(
+                {"stock_episode_latest_event": stock_episode_latest_event}
+                if stock_episode_latest_event else {}
+            ),
         },
         caveats=FIXED_CAVEATS + [
             "生命周期表描述状态区间，不自动解释触发原因；原因解释需回到公告原文。",

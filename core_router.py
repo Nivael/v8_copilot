@@ -8,7 +8,7 @@ from api_contract import (
     RouteDecision,
 )
 from evals.deterministic_router_v0 import route_question
-from stock_resolver import resolve_stock
+from stock_resolver import resolve_stock, resolve_stocks
 from trading_boundary import is_trading_advice_request
 
 
@@ -17,6 +17,12 @@ def _infer_object(request: ResearchRequest) -> ResearchObject:
         return request.object
     if request.context and request.context.symbol:
         return ResearchObject(kind="stock", ref=request.context.symbol)
+    resolutions = resolve_stocks(request.question)
+    if len(resolutions) >= 2:
+        return ResearchObject(
+            kind="cohort",
+            ref="comparison:" + ",".join(item.symbol for item in resolutions),
+        )
     resolution = resolve_stock(request.question)
     if resolution:
         return ResearchObject(kind="stock", ref=resolution.symbol)
@@ -31,6 +37,8 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
     intent = "research_question"
     if is_trading_advice_request(request.question):
         intent = "trading_advice_boundary"
+    elif research_object.kind == "cohort" and research_object.ref.startswith("comparison:"):
+        intent = "stock_comparison"
     elif any(term in question for term in ("多久", "下一个节点", "下一阶段")):
         intent = "event_timing"
     elif any(term in question for term in ("哪些月份", "月份效应", "证据等级", "反例")):
@@ -67,6 +75,14 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
     for term, dimension in dimension_terms.items():
         if term in question:
             dimensions.append(dimension)
+    if research_object.kind == "cohort" and research_object.ref.startswith("comparison:"):
+        dimensions = ["announcement", "price", "stage", "st_lifecycle"]
+    elif research_object.kind == "stock" and any(
+        term in question for term in ("分析一下", "分析下", "综合分析", "整体分析")
+    ):
+        dimensions = list(dict.fromkeys([
+            *dimensions, "announcement", "price", "shareholder_count", "equity",
+        ]))
 
     candidate_topics: list[str] = []
     topic_terms = {

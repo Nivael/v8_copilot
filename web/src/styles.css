@@ -1288,6 +1288,24 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   margin-bottom:22px
 }
 
+.analysis-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.analysis-mode {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .readable-analysis h2 {
   margin:5px 0 0;
   color:#111827;

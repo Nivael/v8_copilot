@@ -97,3 +97,30 @@ def resolve_stock(value: str) -> StockResolution | None:
         return None
     alias, symbol, display_name = strongest[0]
     return StockResolution(symbol, display_name, alias)
+
+
+def resolve_stocks(value: str) -> list[StockResolution]:
+    """Resolve every distinct stock mention in stable textual order."""
+    names = {
+        candidate_symbol: display_name
+        for _, candidate_symbol, display_name in _alias_catalog()
+    }
+    hits: list[tuple[int, int, StockResolution]] = []
+    for match in _SYMBOL_RE.finditer(value):
+        symbol = match.group(1)
+        hits.append((match.start(), -6, StockResolution(symbol, names.get(symbol, symbol), symbol)))
+
+    normalized = normalize_stock_name(value)
+    for alias, symbol, display_name in _alias_catalog():
+        start = normalized.find(alias)
+        if start >= 0:
+            hits.append((start, -len(alias), StockResolution(symbol, display_name, alias)))
+
+    resolved: list[StockResolution] = []
+    seen: set[str] = set()
+    for _, _, item in sorted(hits, key=lambda row: (row[0], row[1], row[2].symbol)):
+        if item.symbol in seen:
+            continue
+        seen.add(item.symbol)
+        resolved.append(item)
+    return resolved

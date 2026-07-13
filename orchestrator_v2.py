@@ -10,6 +10,7 @@ from narrative_builder import build_boundary_rewrite, build_narrative
 def enrich_response_v2(
     request: ResearchRequest,
     response: ResearchResponseV1,
+    narrative_override=None,
 ) -> ResearchResponseV2:
     return ResearchResponseV2(
         request_id=response.request_id,
@@ -17,7 +18,7 @@ def enrich_response_v2(
         route=response.route,
         answer_card=response.answer_card,
         claims=response.claims,
-        narrative=build_narrative(response),
+        narrative=narrative_override or build_narrative(response),
         boundary_rewrite=build_boundary_rewrite(request, response),
         gaps=response.gaps,
         sedimentation_candidates=response.sedimentation_candidates,

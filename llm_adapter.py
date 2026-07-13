@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+from dataclasses import dataclass
 from importlib.util import find_spec
 from typing import cast
 
@@ -13,6 +14,7 @@ from api_contract import (
     VerifiedClaim,
 )
 from llm.composer import NarrativeComposer
+from api_contract_v2 import ResearchNarrative
 from llm.config import load_local_secrets
 from llm.parser import ParsedQuestionResult, QuestionParser
 from llm.providers import (
@@ -21,6 +23,12 @@ from llm.providers import (
     StructuredLLMProvider,
 )
 from orchestrator import orchestrate, orchestrate_with_card
+
+
+@dataclass(frozen=True)
+class LLMOrchestrationResult:
+    response: ResearchResponse
+    narrative: ResearchNarrative | None
 
 
 def _model_for(provider: StructuredLLMProvider, model: str | None) -> str | None:
@@ -32,12 +40,18 @@ def _model_for(provider: StructuredLLMProvider, model: str | None) -> str | None
 def _public_degraded_reasons(
     parser_result: ParsedQuestionResult,
     composer_reasons: list[str],
+    *,
+    composer_has_narrative: bool,
 ) -> list[str]:
     reasons: list[str] = []
     if parser_result.degraded_reasons:
         reasons.append("LLM 问题解释不可用，已使用确定性路由。")
     if composer_reasons:
-        reasons.append("LLM 分析叙述不可用，已保留确定性证据菜单。")
+        reasons.append(
+            "LLM 分析中的部分语句未通过证据校验，已剔除。"
+            if composer_has_narrative
+            else "LLM 分析叙述不可用，已保留确定性证据菜单。"
+        )
     return reasons
 
 
@@ -47,6 +61,15 @@ def orchestrate_with_provider(
     *,
     model: str | None = None,
 ) -> ResearchResponse:
+    return orchestrate_with_provider_result(request, provider, model=model).response
+
+
+def orchestrate_with_provider_result(
+    request: ResearchRequest,
+    provider: StructuredLLMProvider,
+    *,
+    model: str | None = None,
+) -> LLMOrchestrationResult:
     """Use W2 for interpretation/composition while keeping W1 routing final."""
     deterministic_request = request.model_copy(update={"llm_mode": "off"})
     deterministic, card = orchestrate_with_card(deterministic_request)
@@ -67,6 +90,7 @@ def orchestrate_with_provider(
     claims = deterministic.claims
     composer_used = False
     composer_reasons: list[str] = []
+    research_narrative: ResearchNarrative | None = None
     if card is not None:
         composition = NarrativeComposer(
             provider,
@@ -79,6 +103,7 @@ def orchestrate_with_provider(
         ]
         composer_used = composition.llm_used
         composer_reasons = composition.degraded_reasons or []
+        research_narrative = composition.research_narrative
 
     candidates = list(deterministic.sedimentation_candidates)
     if parser_result.compliant_rewrite:
@@ -89,10 +114,16 @@ def orchestrate_with_provider(
 
     reasons = [
         *deterministic.degraded_reasons,
-        *_public_degraded_reasons(parser_result, composer_reasons),
+        *_public_degraded_reasons(
+            parser_result,
+            composer_reasons,
+            composer_has_narrative=research_narrative is not None,
+        ),
     ]
-    llm_used = parser_result.llm_used or composer_used
-    return deterministic.model_copy(update={
+    # Public llm_used describes the narrative visible to the researcher, not
+    # an internal parser call that may have been overruled or discarded.
+    llm_used = composer_used and research_narrative is not None
+    response = deterministic.model_copy(update={
         "interpretation": interpretation,
         "answer_card": answer_card,
         "claims": claims,
@@ -101,6 +132,7 @@ def orchestrate_with_provider(
         "degraded_reasons": reasons,
         "llm_used": llm_used,
     })
+    return LLMOrchestrationResult(response=response, narrative=research_narrative)
 
 
 def openai_configured() -> bool:
@@ -116,6 +148,15 @@ def orchestrate_optional_llm(request: ResearchRequest) -> ResearchResponse:
     if request.llm_mode == "off":
         return orchestrate(request)
     return orchestrate_with_provider(
+        request,
+        cast(StructuredLLMProvider, OpenAIResponsesProvider()),
+    )
+
+
+def orchestrate_optional_llm_result(request: ResearchRequest) -> LLMOrchestrationResult:
+    if request.llm_mode == "off":
+        return LLMOrchestrationResult(response=orchestrate(request), narrative=None)
+    return orchestrate_with_provider_result(
         request,
         cast(StructuredLLMProvider, OpenAIResponsesProvider()),
     )

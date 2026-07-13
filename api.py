@@ -25,7 +25,11 @@ from api_contract_v2 import (
 )
 from answer_engine import CONTRACT_VERSION as ANSWER_CONTRACT_VERSION
 from dossier_service import DossierNotFoundError, build_stock_dossier
-from llm_adapter import openai_configured, orchestrate_optional_llm
+from llm_adapter import (
+    openai_configured,
+    orchestrate_optional_llm,
+    orchestrate_optional_llm_result,
+)
 from orchestrator import route_only
 from orchestrator_v1 import enrich_response_v1
 from orchestrator_v2 import enrich_response_v2, stream_events_v2
@@ -53,8 +57,11 @@ class SPAStaticFiles(StaticFiles):
 
 def orchestrate(request: ResearchRequest) -> ResearchResponseV2:
     """Patchable API boundary used by JSON and NDJSON endpoints."""
-    response_v1 = enrich_response_v1(request, orchestrate_optional_llm(request))
-    return enrich_response_v2(request, response_v1)
+    llm_result = orchestrate_optional_llm_result(request)
+    response_v1 = enrich_response_v1(request, llm_result.response)
+    return enrich_response_v2(
+        request, response_v1, narrative_override=llm_result.narrative
+    )
 
 
 def orchestrate_deterministic(request: ResearchRequest) -> ResearchResponseV2:

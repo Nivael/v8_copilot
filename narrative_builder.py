@@ -203,9 +203,12 @@ def _stock_overview_narrative(
         (row for row in rows if row.get("记录类型") == "题面公告检索"),
         None,
     )
+    official_rows = [row for row in rows if row.get("记录类型") == "近期官方公告"]
     official = next(
-        (row for row in rows if row.get("记录类型") == "近期官方公告"),
-        None,
+        (row for row in official_rows if any(term in str(row.get("标题") or "") for term in (
+            "风险", "异常波动", "重整", "诉讼", "仲裁", "重大", "年度报告", "审计",
+        ))),
+        official_rows[0] if official_rows else None,
     )
     shareholder = next(
         (row for row in rows if row.get("记录类型") == "股东人数"),
@@ -215,6 +218,123 @@ def _stock_overview_narrative(
         (row for row in rows if row.get("记录类型") == "股权事件"),
         None,
     )
+    body = next(
+        (row for row in rows if row.get("记录类型") == "公告正文证据"),
+        None,
+    )
+    boundary = next(
+        (row for row in rows if row.get("记录类型") == "分析时间边界"),
+        None,
+    )
+
+    if body and not price_coverage:
+        excerpts = list(body.get("正文证据片段") or [])
+        preferred_markers = [
+            marker for marker in ("公开招募", "投资协议", "申请人", "债权人", "预重整", "重整")
+            if marker in question
+        ]
+        preferred_markers.extend(["公开招募", "申请人", "债权人", "申请对"])
+        first_fact = next(
+            (item for marker in preferred_markers for item in excerpts if marker in str(item)),
+            excerpts[0] if excerpts else "",
+        )
+        uncertainty = next(
+            (item for item in excerpts if any(term in str(item) for term in ("尚未", "能否", "不确定"))),
+            next((item for item in excerpts if item != first_fact), ""),
+        )
+        direct_text = "；".join(str(item) for item in (first_fact, uncertainty) if item)
+        steps = [NarrativeStep(
+            title=f"正文证据 {index}",
+            text=str(item),
+            backing=[_backing("query_row", _row_id(body))],
+        ) for index, item in enumerate(excerpts[:8], 1)]
+        return ResearchNarrative(
+            direct_answer=NarrativeStatement(
+                text=direct_text or "已取得公告正文，但当前没有抽取到可读证据片段。",
+                backing=[_backing("query_row", _row_id(body))],
+            ),
+            reasoning_steps=steps,
+            uncertainties=[_statement(
+                "正文片段用于回链核对；事项影响和后续进度仍需以后续正式公告为准。",
+                "query_row",
+                _row_id(body),
+            )],
+            watch_items=[],
+            basis_note=_basis_note(card),
+        )
+
+    if any(term in question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
+        status = next((row for row in rows if row.get("记录类型") == "状态区间"), None)
+        episode = next((row for row in rows if row.get("记录类型") == "近期分类节点"), None)
+        backing_rows = [row for row in (status, official, episode, recent_price) if row]
+        direct_parts = []
+        if status:
+            direct_parts.append(f"当前记录的状态为 {status.get('状态')}，起于 {status.get('开始日')}")
+        if official:
+            direct_parts.append(f"最近正式公告是 {official.get('日期')}《{official.get('标题')}》")
+        if recent_price:
+            direct_parts.append(
+                f"价格快照截至 {recent_price.get('截至')}，窗口为 {recent_price.get('窗口最低')} 至 {recent_price.get('窗口最高')}"
+            )
+        steps: list[NarrativeStep] = []
+        if status:
+            steps.append(NarrativeStep(
+                title="先看 ST 生命周期",
+                text=f"状态区间：{status.get('开始日')} 至 {status.get('结束日')}，记录为 {status.get('状态')}。",
+                backing=[_backing("query_row", _row_id(status))],
+            ))
+        if boundary:
+            coverage = (
+                f"公告覆盖ST后={boundary.get('公告覆盖ST后')}，"
+                f"价格覆盖ST后={boundary.get('价格覆盖ST后')}，"
+                f"事件覆盖ST后={boundary.get('事件覆盖ST后')}"
+            )
+            steps.append(NarrativeStep(
+                title="先守住时间边界",
+                text=(
+                    f"ST 状态开始于 {boundary.get('ST状态开始')}；公告截至 {boundary.get('公告截至')}，"
+                    f"价格截至 {boundary.get('价格截至')}，事件索引截至 {boundary.get('事件索引截至')}；{coverage}。"
+                ),
+                backing=[_backing("query_row", _row_id(boundary))],
+            ))
+        if official:
+            steps.append(NarrativeStep(
+                title="再看近期正式披露",
+                text=f"最近正式公告为 {official.get('日期')} 的《{official.get('标题')}》。",
+                backing=[_backing("query_row", _row_id(official))],
+            ))
+        if episode:
+            steps.append(NarrativeStep(
+                title="区分公告与已分类事件",
+                text=f"最近分类节点为 {episode.get('日期')} 的《{episode.get('标题')}》，事件段为 {episode.get('事件段')}。",
+                backing=[_backing("query_row", _row_id(episode))],
+            ))
+        if recent_price:
+            steps.append(NarrativeStep(
+                title="最后核对价格窗口",
+                text="；".join(
+                    f"{key}={value}" for key, value in recent_price.items()
+                    if key in {"截至", "最新收盘", "窗口最低", "窗口最高", "近20日变化", "近60日变化"}
+                ),
+                backing=[_backing("query_row", _row_id(recent_price))],
+            ))
+        uncertainties = [
+            _claim_statement(claim) for claim in claims
+            if claim.claim_type in {"caveat", "data_gap"}
+            and not any(phrase in claim.text for phrase in _AUDIT_PHRASES)
+        ]
+        return ResearchNarrative(
+            direct_answer=NarrativeStatement(
+                text="；".join(direct_parts) or "当前快照提供了多维材料，但没有形成可回链的核心事实。",
+                backing=[_backing("query_row", _row_id(row)) for row in backing_rows] or [
+                    _backing("query_row", _row_id(rows[0]))
+                ],
+            ),
+            reasoning_steps=steps,
+            uncertainties=uncertainties[:8],
+            watch_items=[],
+            basis_note=_basis_note(card),
+        )
 
     if price_coverage:
         direct = _statement(
@@ -378,6 +498,108 @@ def _stock_overview_narrative(
             basis_note=_basis_note(card),
         )
     return _stock_timeline_narrative(card, claims)
+
+
+def _restructuring_progress_narrative(
+    card: dict[str, Any], claims: list[VerifiedClaim]
+) -> ResearchNarrative:
+    rows = list(card.get("body_rows", []))
+    current = next(row for row in rows if row.get("记录类型") == "当前公开里程碑")
+    body = next((row for row in rows if row.get("记录类型") == "当前里程碑正文证据"), None)
+    historical = [row for row in rows if row.get("记录类型") == "同阶段历史后续"]
+    direct = NarrativeStatement(
+        text=(
+            f"当前公开资料能确认到“{current.get('阶段判断')}”："
+            f"{current.get('日期')}《{current.get('标题')}》。"
+            f"{current.get('公开招募记录')}。"
+        ),
+        backing=[_backing("query_row", _row_id(current))],
+    )
+    steps = [NarrativeStep(
+        title="先核对当前个案",
+        text=(
+            f"当前里程碑按正式公告标题判定为“{current.get('阶段判断')}”，"
+            "不能把提问中的阶段假设直接当成已发生事实。"
+        ),
+        backing=[_backing("query_row", _row_id(current))],
+    )]
+    if body:
+        snippets = list(body.get("正文证据片段") or [])
+        if snippets:
+            steps.append(NarrativeStep(
+                title="再读公告正文",
+                text="；".join(str(item) for item in snippets[:3]),
+                backing=[_backing("query_row", _row_id(body))],
+            ))
+    for row in historical[:3]:
+        steps.append(NarrativeStep(
+            title=f"{row.get('后续口径')}：{row.get('后续类别')}",
+            text=(
+                f"同阶段历史可观察后续共 {row.get('可观察后续总数')} 个；"
+                f"该类别出现 {row.get('次数')} 次，占 {row.get('占可观察后续')}，"
+                f"等待中位数 {row.get('等待中位数(天)')} 天。"
+            ),
+            backing=[_backing("query_row", _row_id(row))],
+        ))
+    return ResearchNarrative(
+        direct_answer=direct,
+        reasoning_steps=steps,
+        uncertainties=[
+            _claim_statement(claim) for claim in claims if claim.claim_type in {"caveat", "data_gap"}
+        ][:8],
+        watch_items=[_statement(
+            "后续只在出现法院受理、公开招募、投资协议或重整计划等正式公告时更新阶段。",
+            "query_row",
+            _row_id(current),
+        )],
+        basis_note=_basis_note(card),
+    )
+
+
+def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> ResearchNarrative:
+    rows = [row for row in card.get("body_rows", []) if row.get("记录类型") == "股票并列比较"]
+    if len(rows) != 2:
+        return _generic_narrative(card, claims)
+    left, right = rows
+    dimensions = [
+        ("ST 状态", "当前ST状态"),
+        ("最近公告", "最近正式公告"),
+        ("各自最新公告", "各自最新公告"),
+        ("近30日公告密度", "近30日公告数量(共同截止)"),
+        ("重整里程碑", "最近重整里程碑"),
+        ("各自最新重整进展", "各自最新重整里程碑"),
+        ("分类事件", "最近分类事件"),
+        ("价格窗口", "近20日变化"),
+    ]
+    steps = [NarrativeStep(
+        title=label,
+        text=(
+            f"{left.get('股票')}：{left.get(field, '当前快照无记录')}；"
+            f"{right.get('股票')}：{right.get(field, '当前快照无记录')}。"
+        ),
+        backing=[
+            _backing("query_row", _row_id(left)),
+            _backing("query_row", _row_id(right)),
+        ],
+    ) for label, field in dimensions]
+    return ResearchNarrative(
+        direct_answer=NarrativeStatement(
+            text=(
+                f"{left.get('股票')} 与 {right.get('股票')} 可以在状态、公告、重整节点、"
+                "分类事件和同口径价格窗口上并列；当前材料不支持把这种差异升级成优劣排序。"
+            ),
+            backing=[
+                _backing("query_row", _row_id(left)),
+                _backing("query_row", _row_id(right)),
+            ],
+        ),
+        reasoning_steps=steps,
+        uncertainties=[
+            _claim_statement(claim) for claim in claims if claim.claim_type in {"caveat", "data_gap"}
+        ][:8],
+        watch_items=[],
+        basis_note=_basis_note(card),
+    )
 
 
 def _timing_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> ResearchNarrative:
@@ -565,6 +787,10 @@ def build_narrative(response: ResearchResponseV1) -> ResearchNarrative | None:
         return _checklist_narrative(card)
     if "restructuring_next_node_query" in response.route.matched_rules:
         return _timing_narrative(card, response.claims)
+    if "stock_restructuring_progress_query" in response.route.matched_rules:
+        return _restructuring_progress_narrative(card, response.claims)
+    if "stock_comparison_query" in response.route.matched_rules:
+        return _comparison_narrative(card, response.claims)
     if "st_panel_two_week_distribution" in response.route.matched_rules:
         return _two_week_narrative(card, response.claims)
     if response.route.route == "answer_evidence":

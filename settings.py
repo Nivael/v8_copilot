@@ -11,3 +11,7 @@ ANNOUNCEMENT_REFRESH_DIR = Path(os.environ.get(
     "V8_ANNOUNCEMENT_REFRESH_DIR",
     DATA_ROOT / "local_data" / "v8_copilot" / "announcement_refresh",
 )).expanduser().resolve()
+ANNOUNCEMENT_BODY_CACHE_DIR = Path(os.environ.get(
+    "V8_ANNOUNCEMENT_BODY_CACHE_DIR",
+    DATA_ROOT / "local_data" / "v8_copilot" / "announcement_bodies",
+)).expanduser().resolve()

@@ -35,7 +35,7 @@ def test_answer_inventory_uses_validated_refresh_without_reading_body(
 
     row = next(
         row for row in response.answer_card["body_rows"]
-        if row.get("公告编号") == "TEST-ANSWER-1"
+        if row.get("巨潮公告ID") == "TEST-ANSWER-1"
     )
     assert row["正文状态"] == "未采集，仅可核对标题与日期"
     assert "必须阅读公告正文" in response.narrative.uncertainties[0].text

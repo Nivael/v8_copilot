@@ -25,6 +25,9 @@ _CNINFO_PATH = re.compile(
     r"^/finalpage/(?P<date>20\d{2}-\d{2}-\d{2})/(?P<id>[0-9]+)\.PDF$",
     re.IGNORECASE,
 )
+_OFFICIAL_ANNOUNCEMENT_NUMBER = re.compile(
+    r"公告\s*编号\s*[：:]\s*((?:临\s*)?20\d{2}\s*[-－—–]\s*[A-Za-z0-9]+)"
+)
 
 
 class AnnouncementBodyError(RuntimeError):
@@ -51,13 +54,13 @@ def _validated_url(record: OfficialAnnouncement) -> str:
     if not match:
         raise AnnouncementBodyError("公告原文链接格式不符合 CNINFO PDF 规则")
     if match.group("id") != record.announcement_id:
-        raise AnnouncementBodyError("公告编号与 PDF 链接不一致")
+        raise AnnouncementBodyError("巨潮公告 ID 与 PDF 链接不一致")
     return parsed._replace(scheme="https", netloc="static.cninfo.com.cn").geturl()
 
 
 def _cache_path(record: OfficialAnnouncement, cache_dir: Path) -> Path:
     if not re.fullmatch(r"[0-9]+", record.announcement_id):
-        raise AnnouncementBodyError("公告编号非法")
+        raise AnnouncementBodyError("巨潮公告 ID 非法")
     return cache_dir / record.announcement_id[:4] / f"{record.announcement_id}.json"
 
 
@@ -219,3 +222,12 @@ def relevant_excerpt(text: str, question: str, *, max_sentences: int = 8) -> lis
             scored.append((score, index, sentence[:900]))
     chosen = sorted(sorted(scored, reverse=True)[:max_sentences], key=lambda item: item[1])
     return [sentence for _, _, sentence in chosen]
+
+
+def official_announcement_number(text: str) -> str:
+    """Extract the issuer's formal announcement number, not CNINFO's document ID."""
+    match = _OFFICIAL_ANNOUNCEMENT_NUMBER.search(text)
+    if match is None:
+        return ""
+    value = re.sub(r"\s+", "", match.group(1))
+    return re.sub(r"[－—–]", "-", value)

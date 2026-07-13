@@ -51,7 +51,7 @@ describe('display labels',()=>{
 
     expect(text).toContain('汇总弱证据')
     expect(text).toContain('股票日历窗口样本')
-    expect(text).toContain('公告编号 1221766612')
+    expect(text).toContain('巨潮公告 ID 1221766612')
     expect(text).toContain('重整路径')
     expect(text).toContain('投资人或控制权变化')
     expect(text).toContain('退市风险警示窗口')

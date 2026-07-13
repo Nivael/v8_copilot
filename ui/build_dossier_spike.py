@@ -111,7 +111,7 @@ def _announcement_label(value: str | None) -> str:
     if not value:
         return "无"
     if value.startswith("announcement:"):
-        return f"公告编号 {value.split(':', 1)[1]}"
+        return f"巨潮公告 ID {value.split(':', 1)[1]}"
     return "来源编号已记录"
 
 

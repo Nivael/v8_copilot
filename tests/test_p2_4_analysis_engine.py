@@ -17,6 +17,7 @@ def _fake_body(record, **_kwargs) -> AnnouncementBody:
         source_url=record.url or "https://static.cninfo.com.cn/finalpage/2026-07-08/1225415810.PDF",
         page_count=3,
         text=(
+            "证券代码：300068 证券简称：ST 南都 公告编号：2026-068。"
             "债权人浙江某公司以南都电源不能清偿到期债务为由，向法院申请对公司进行预重整及重整。"
             "截至公告披露日，法院尚未裁定受理申请。公司能否进入预重整或重整程序存在不确定性。"
         ),
@@ -39,7 +40,8 @@ def test_latest_announcement_uses_body_evidence(monkeypatch) -> None:
     assert response.answer_card is not None
     rows = response.answer_card["body_rows"]
     body = next(row for row in rows if row.get("记录类型") == "公告正文证据")
-    assert body["公告编号"] == "1225415810"
+    assert body["巨潮公告ID"] == "1225415810"
+    assert body["公告编号"] == "2026-068"
     assert any("法院尚未裁定受理" in item for item in body["正文证据片段"])
     assert response.narrative is not None
     assert "债权人" in response.narrative.direct_answer.text
@@ -173,7 +175,7 @@ def _llm_factory(response_model: type, payload: dict) -> dict:
                     "backing": [{"kind": first["kind"], "ref": first["ref"]}],
                 },
                 "reasoning_steps": [{
-                    "title": "状态层",
+                    "title": "1. 状态层",
                     "text": "先核对当前状态记录。",
                     "backing": [{"kind": first["kind"], "ref": first["ref"]}],
                 }],
@@ -197,4 +199,5 @@ def test_validated_llm_narrative_becomes_main_api_narrative() -> None:
     assert result.narrative is not None
     assert response_v2.narrative is not None
     assert response_v2.narrative.direct_answer.text.startswith("当前材料应先")
+    assert response_v2.narrative.reasoning_steps[0].title == "状态层"
     assert response_v2.llm_used is True

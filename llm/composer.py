@@ -30,6 +30,7 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须逐维度比较，不得只说数据不足；阶段题必须把当前公开里程碑与历史后续分布分开。
 公告题必须根据公告正文证据片段总结，不得只复述标题。
+巨潮公告ID是披露平台文档标识，不是上市公司正文中的公告编号；只有“公告编号”字段才可称为公告编号。
 不得补造数字、日期、事件、因果或证据等级，不得输出买卖、持有、仓位、目标价或排序建议。
 数量和日期必须原样保留 backing 中的阿拉伯数字，不要改写成新的中文数量表达。
 缺乏 backing 时不要生成该 statement 或 claim。输出只包含结构化字段，不输出 schema 外自由文本。
@@ -260,7 +261,7 @@ def _validated_statement(
         )
     backing = [ApiClaimBacking(kind=item.kind, ref=item.ref) for item in raw_backing]
     if title is not None:
-        return NarrativeStep(title=title, text=text, backing=backing)
+        return NarrativeStep(title=normalized_title, text=text, backing=backing)
     return NarrativeStatement(text=text, backing=backing)
 
 

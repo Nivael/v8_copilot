@@ -232,7 +232,7 @@ const phraseLabels:Array<[RegExp,string]>= [
 
 function formatText(value:string):string{
   if(labels[value])return labels[value]
-  if(value.startsWith('announcement:'))return `公告编号 ${value.split(':')[1]}`
+  if(value.startsWith('announcement:'))return `巨潮公告 ID ${value.split(':')[1]}`
   if(value.includes('st_stocks_v5_backup.sqlite3::daily_prices'))return value.includes('[')
     ? `v5 价格库：前复权日线（${value.split('[')[1]?.split(']')[0] ?? '指定股票'}）`
     : 'v5 价格库：前复权日线'

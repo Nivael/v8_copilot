@@ -30,6 +30,7 @@ from announcement_inventory import OfficialAnnouncement, load_announcement_inven
 from announcement_body import (
     AnnouncementBodyError,
     load_announcement_body,
+    official_announcement_number,
     relevant_excerpt,
 )
 from lens_binding import LensRegistry, LensInvocation, LensGap
@@ -646,7 +647,7 @@ def card_stock_event_window(
         *[
             _row(
                 f"nearby_announcement_{index:02d}",
-                公告编号=str(announcement_id),
+                巨潮公告ID=str(announcement_id),
                 日期=str(announcement_date)[:10],
                 标题=str(title),
                 原文=str(url or ""),
@@ -1144,7 +1145,9 @@ def card_stock_research_overview(
             *inventory.records[:8],
         ]))[:8]
         existing_ids = {
-            str(row.get("公告编号")) for row in card.body_rows if row.get("公告编号")
+            str(row.get("巨潮公告ID"))
+            for row in card.body_rows
+            if row.get("巨潮公告ID")
         }
         official_row_ids: list[str] = []
         for index, record in enumerate(selected_announcements, 1):
@@ -1156,7 +1159,7 @@ def card_stock_research_overview(
                 row_id,
                 **{
                     "记录类型": "近期官方公告",
-                    "公告编号": record.announcement_id,
+                    "巨潮公告ID": record.announcement_id,
                     "日期": record.announcement_date,
                     "标题": record.title,
                     "来源范围": (
@@ -1186,7 +1189,8 @@ def card_stock_research_overview(
                     "official_announcement_body_01",
                     **{
                         "记录类型": "公告正文证据",
-                        "公告编号": body_record.announcement_id,
+                        "巨潮公告ID": body_record.announcement_id,
+                        "公告编号": official_announcement_number(body.text) or "正文未抽取",
                         "日期": body_record.announcement_date,
                         "标题": body_record.title,
                         "正文页数": body.page_count or "原始文本快照",
@@ -1740,7 +1744,7 @@ def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
             "current_restructuring_body",
             **{
                 "记录类型": "当前里程碑正文证据",
-                "公告编号": current.announcement_id,
+                "巨潮公告ID": current.announcement_id,
                 "正文证据片段": relevant_excerpt(body.text, question),
                 "正文页数": body.page_count or "原始文本快照",
                 "正文来源": body.source,
@@ -2055,7 +2059,7 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
                 "记录类型": "触发公告",
                 "状态开始日": start_date,
                 "状态": status_name,
-                "公告编号": announcement_id,
+                "巨潮公告ID": announcement_id,
                 "日期": announcement_date,
                 "标题": title,
                 "匹配说明": match_reason,
@@ -2096,7 +2100,7 @@ def card_st_status_timeline(symbol: str = "603398") -> AnswerCard:
                 "日期": event_date,
                 "标题": title,
                 "事件段": episode_type,
-                "公告编号": announcement_id,
+                "巨潮公告ID": announcement_id,
             },
         )
         for index, (event_date, title, episode_type, announcement_id) in enumerate(recent_anchors, 1)

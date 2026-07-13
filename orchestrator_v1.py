@@ -314,7 +314,7 @@ def _navigation_refs(
             )
 
     for row in card.get("body_rows", []):
-        announcement_id = row.get("公告编号")
+        announcement_id = row.get("巨潮公告ID") or row.get("公告编号")
         announcement_date = row.get("日期")
         if not announcement_id or not announcement_date or not symbol:
             continue

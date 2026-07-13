@@ -1736,6 +1736,8 @@ def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
                 f"已找到 {len(recruitment)} 条，最近为 {recruitment[0].announcement_date}"
                 if recruitment else "当前正式公告清单未找到公开招募记录"
             ),
+            "公开招募证据口径": "仅核查公司正式公告清单",
+            "未覆盖渠道": "破产重整信息平台、管理人发布渠道及其他非公司公告来源",
             "原文链接": current.url or "当前快照未记录链接",
         },
     )]
@@ -1766,6 +1768,12 @@ def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
         sediment_as="question_card:stock_restructuring_transition_evidence",
         note="历史后续类别只作描述性参照，不等于该股票将按同一路径推进。",
     )
+    channel_gap = LensGap(
+        gap_id="restructuring_recruitment_channel_coverage",
+        missing_for="非公司正式公告渠道的公开招募进展",
+        sediment_as="data_debt:restructuring_recruitment_channel_coverage",
+        note="当前 Answer 只读来源未覆盖破产重整信息平台或管理人发布渠道。",
+    )
     claims = [
         AnalysisClaim(
             text=f"当前正式公告可确认的里程碑是：{stage}。",
@@ -1776,6 +1784,14 @@ def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
             text="历史后续频率描述同类样本，不是对该股票下一份公告的预测。",
             claim_type="caveat",
             backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+        ),
+        AnalysisClaim(
+            text=(
+                "本题只核查公司正式公告清单，未覆盖破产重整信息平台、管理人发布渠道"
+                "或其他非公司公告来源；不能据此判断实际公开招募是否已经开始。"
+            ),
+            claim_type="data_gap",
+            backing=BackingRef(kind="lens_gap", ref=channel_gap.gap_id),
         ),
     ]
     if historical_rows:
@@ -1796,7 +1812,7 @@ def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
         ),
         evidence_grade="descriptive_query",
         lens_invocations=invocations,
-        lens_gap=[gap],
+        lens_gap=[gap, channel_gap],
         episode_index_version=episode_snapshot.version,
         data_snapshot_as_of=as_of,
         source_freshness={
@@ -1807,6 +1823,7 @@ def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:
         analysis_claims=claims,
         caveats=FIXED_CAVEATS + [
             "当前阶段只按已公开公告判定；没有公告时不推定法院、债权人或投资人动作。",
+            "正式公告清单未找到记录只说明该来源未披露，不代表其他公开渠道没有相关进展。",
             "历史上更常出现的后续类别不表示本案下一节点的概率。",
         ],
         provenance=[

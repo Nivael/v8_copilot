@@ -29,8 +29,10 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 先直接回答用户真正问的内容，再用 2-6 个有顺序的 reasoning_steps 解释证据如何支持答案；把不能确认的部分放入 uncertainties，把可核查的后续公开节点放入 watch_items。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须逐维度比较，不得只说数据不足；阶段题必须把当前公开里程碑与历史后续分布分开。
+阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
 公告题必须根据公告正文证据片段总结，不得只复述标题。
 巨潮公告ID是披露平台文档标识，不是上市公司正文中的公告编号；只有“公告编号”字段才可称为公告编号。
+某一来源未找到记录，只能表述为该来源口径未找到或未披露；不得扩大成现实中尚未发生。若 backing 标出未覆盖渠道，必须单独说明该覆盖缺口。
 不得补造数字、日期、事件、因果或证据等级，不得输出买卖、持有、仓位、目标价或排序建议。
 数量和日期必须原样保留 backing 中的阿拉伯数字，不要改写成新的中文数量表达。
 缺乏 backing 时不要生成该 statement 或 claim。输出只包含结构化字段，不输出 schema 外自由文本。
@@ -133,6 +135,27 @@ def _unsupported_numbers(text: str, backing_summary: str) -> list[str]:
     return sorted(unsupported)
 
 
+def _unsupported_source_absence(text: str, backing_summary: str) -> str:
+    coverage_markers = (
+        "未覆盖渠道", "非公司正式公告渠道", "未覆盖破产重整信息平台",
+    )
+    if not any(marker in backing_summary for marker in coverage_markers):
+        return ""
+    absence_phrases = (
+        "公开招募尚未推进", "尚未推进到", "尚未公开招募",
+        "尚未启动公开招募", "未开展公开招募", "没有公开招募",
+    )
+    scope_phrases = (
+        "正式公告口径", "正式公告清单", "公司正式公告", "公司公告中",
+    )
+    for clause in re.split(r"[。；：]", text):
+        if any(phrase in clause for phrase in absence_phrases) and not any(
+            scope in clause for scope in scope_phrases
+        ):
+            return clause.strip()
+    return ""
+
+
 def _filtered_card(card: AnswerCard) -> FilteredAnswerCard:
     return FilteredAnswerCard(
         question=card.question,
@@ -232,6 +255,15 @@ def _validated_statement(
               "ctx": {"error": ValueError(f"命中禁用交易措辞: {hit}")}}],
         )
     combined = " ".join(backing_summaries[key] for key in keys)
+    unsupported_absence = _unsupported_source_absence(text, combined)
+    if unsupported_absence:
+        raise ValidationError.from_exception_data(
+            "StructuredNarrativeDraft",
+            [{"type": "value_error", "loc": ("text",), "input": text,
+              "ctx": {"error": ValueError(
+                  f"来源缺失被扩大为现实未发生: {unsupported_absence}"
+              )}}],
+        )
     if title is not None:
         normalized_title = re.sub(
             r"^\s*[一二三四五六七八九十0-9]+[.、：:]\s*", "", title

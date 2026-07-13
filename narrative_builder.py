@@ -514,9 +514,10 @@ def _restructuring_progress_narrative(
         row for row in historical if row.get("后续口径") == "下一个任意正式公告"
     ]
     direct_text = (
-        f"当前公开资料能确认到“{current.get('阶段判断')}”："
+        f"按公司正式公告口径，当前能确认到“{current.get('阶段判断')}”："
         f"{current.get('日期')}《{current.get('标题')}》。"
-        f"{current.get('公开招募记录')}。"
+        f"{current.get('公开招募记录')}；但本题未覆盖{current.get('未覆盖渠道')}，"
+        "不能据此判断实际公开招募是否已经开始。"
     )
     direct_backing = [_backing("query_row", _row_id(current))]
     if stage_historical:
@@ -540,7 +541,8 @@ def _restructuring_progress_narrative(
     steps = [NarrativeStep(
         title="先核对当前个案",
         text=(
-            f"当前里程碑按正式公告标题判定为“{current.get('阶段判断')}”，"
+            f"当前里程碑日期为 {current.get('日期')}，公告清单截至 {current.get('公告清单截至')}；"
+            f"按正式公告标题判定为“{current.get('阶段判断')}”，"
             "不能把提问中的阶段假设直接当成已发生事实。"
         ),
         backing=[_backing("query_row", _row_id(current))],
@@ -573,7 +575,7 @@ def _restructuring_progress_narrative(
             _claim_statement(claim) for claim in claims if claim.claim_type in {"caveat", "data_gap"}
         ][:8],
         watch_items=[_statement(
-            "后续只在出现法院受理、公开招募、投资协议或重整计划等正式公告时更新阶段。",
+            "本系统只在公司正式公告出现法院受理、公开招募、投资协议或重整计划等节点时更新阶段；其他渠道需另行核查。",
             "query_row",
             _row_id(current),
         )],

@@ -62,6 +62,8 @@ def test_mubang_progress_separates_case_stage_from_history(monkeypatch) -> None:
     assert current["主体范围"] == "上市公司本体"
     assert "预重整" in current["阶段判断"]
     assert "未找到公开招募记录" in current["公开招募记录"]
+    assert current["公开招募证据口径"] == "仅核查公司正式公告清单"
+    assert "破产重整信息平台" in current["未覆盖渠道"]
     historical = [row for row in rows if row.get("记录类型") == "同阶段历史后续"]
     assert historical
     stage_rows = [row for row in historical if row["后续口径"] == "下一个不同重整阶段"]
@@ -72,6 +74,11 @@ def test_mubang_progress_separates_case_stage_from_history(monkeypatch) -> None:
     )
     assert response.narrative is not None
     assert "右删失" in response.narrative.direct_answer.text
+    assert "不能据此判断实际公开招募是否已经开始" in response.narrative.direct_answer.text
+    assert any(
+        gap["gap_id"] == "restructuring_recruitment_channel_coverage"
+        for gap in response.answer_card["lens_gap"]
+    )
     assert str(stage_rows[0]["可观察后续总数"]) in response.narrative.direct_answer.text
     assert any(
         "下一个不同重整阶段" in step.title
@@ -201,3 +208,51 @@ def test_validated_llm_narrative_becomes_main_api_narrative() -> None:
     assert response_v2.narrative.direct_answer.text.startswith("当前材料应先")
     assert response_v2.narrative.reasoning_steps[0].title == "状态层"
     assert response_v2.llm_used is True
+
+
+def _overbroad_absence_factory(response_model: type, payload: dict) -> dict:
+    if response_model is ParsedQuestion:
+        return {
+            "normalized_question": payload["question"],
+            "object_kind": "stock",
+            "object_ref": "603398",
+            "intent": "research_question",
+            "time_range": {"start": "", "end": ""},
+            "dimensions": ["restructuring"],
+            "ambiguities": [],
+            "candidate_topics": ["restructuring"],
+            "proposed_route": "answer_query",
+            "compliant_rewrite": "",
+        }
+    if response_model is NarrativeDraft:
+        current = next(
+            item for item in payload["backing_catalog"]
+            if "公开招募证据口径" in item["summary"]
+        )
+        return {
+            "claims": [],
+            "narrative": {
+                "direct_answer": {
+                    "text": "公开招募尚未推进到已公开招募这一步。",
+                    "backing": [{"kind": current["kind"], "ref": current["ref"]}],
+                },
+                "reasoning_steps": [],
+                "uncertainties": [],
+                "watch_items": [],
+            },
+        }
+    raise AssertionError(response_model)
+
+
+def test_llm_cannot_expand_announcement_absence_to_real_world_absence() -> None:
+    request = ResearchRequest(
+        question="沐邦的公开招募推进到哪一步了？下一个节点可能是什么？",
+        llm_mode="auto",
+    )
+    result = orchestrate_with_provider_result(
+        request, FakeLLMProvider(response_factory=_overbroad_absence_factory)
+    )
+
+    assert result.narrative is None
+    assert result.response.llm_used is False
+    assert any("LLM 分析叙述不可用" in reason for reason in result.response.degraded_reasons)

@@ -106,6 +106,14 @@ def _compact_json(value: object) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
 
 
+def _strip_reasoning_ordinal(text: str) -> str:
+    return re.sub(
+        r"^第[一二三四五六七八九十]+(?:步)?[，、：:\s]*",
+        "",
+        text.strip(),
+    )
+
+
 def _numeric_tokens(text: str) -> set[str]:
     tokens: set[str] = set()
 
@@ -365,11 +373,16 @@ def _validated_narrative(
         accepted = []
         for item in items:
             try:
-                accepted.append(_validated_statement(
+                statement = _validated_statement(
                     item,
                     backing_summaries,
                     title=getattr(item, "title") if with_title else None,
-                ))
+                )
+                if with_title:
+                    statement = statement.model_copy(update={
+                        "text": _strip_reasoning_ordinal(statement.text),
+                    })
+                accepted.append(statement)
             except ValidationError:
                 rejected += 1
         return accepted
@@ -393,6 +406,16 @@ def _validated_narrative(
             and str(censored) in uncertainty_text
             and ("右删失" in uncertainty_text or "未观察到后续" in uncertainty_text)
         ):
+            overlapping_numbers = {str(starts), str(observed), str(censored)}
+            uncertainties = [
+                item for item in uncertainties
+                if not (
+                    overlapping_numbers <= set(re.findall(r"\d+", item.text))
+                    and any(term in item.text for term in (
+                        "阶段转换", "阶段转移", "阶段类别", "历史样本",
+                    ))
+                )
+            ]
             uncertainties.append(NarrativeStatement(
                 text=(
                     f"历史阶段转移按 episode case 去重：{starts} 个起点中，"

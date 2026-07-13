@@ -3,6 +3,7 @@ from __future__ import annotations
 from api_contract import ResearchRequest
 from announcement_body import AnnouncementBody
 from api import orchestrate
+from llm.composer import _strip_reasoning_ordinal
 from llm.providers import FakeLLMProvider
 from llm.schemas import NarrativeDraft, ParsedQuestion
 from llm_adapter import orchestrate_with_provider_result
@@ -445,6 +446,11 @@ def _scoped_restructuring_factory(response_model: type, payload: dict) -> dict:
             item for item in payload["backing_catalog"]
             if "公开招募证据口径" in item["summary"]
         )
+        stage = next(
+            item for item in payload["backing_catalog"]
+            if "可观察后续总数" in item["summary"]
+            and "未观察到后续" in item["summary"]
+        )
         return {
             "claims": [],
             "narrative": {
@@ -453,7 +459,13 @@ def _scoped_restructuring_factory(response_model: type, payload: dict) -> dict:
                     "backing": [{"kind": current["kind"], "ref": current["ref"]}],
                 },
                 "reasoning_steps": [],
-                "uncertainties": [],
+                "uncertainties": [{
+                    "text": (
+                        "历史阶段转换统计的起点总数为98，可观察后续为64，"
+                        "未观察到后续为34，阶段类别比例以64个样本为分母。"
+                    ),
+                    "backing": [{"kind": stage["kind"], "ref": stage["ref"]}],
+                }],
                 "watch_items": [],
             },
         }
@@ -492,3 +504,13 @@ def test_llm_restructuring_narrative_always_exposes_censoring_denominator() -> N
     assert "64 个观察到" in censoring.text
     assert "34 个" in censoring.text
     assert "可观察到后续的 case 为分母" in censoring.text
+    assert sum(
+        all(value in item.text for value in ("98", "64", "34"))
+        for item in result.narrative.uncertainties
+    ) == 1
+
+
+def test_reasoning_step_text_does_not_keep_llm_ordinal_prefix() -> None:
+    assert _strip_reasoning_ordinal("第二，风险线索需要分层阅读。") == (
+        "风险线索需要分层阅读。"
+    )

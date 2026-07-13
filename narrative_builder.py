@@ -11,6 +11,7 @@ from api_contract_v2 import (
     NarrativeStep,
     ResearchNarrative,
 )
+from research_judgments import comparison_density_focus, comparison_phase_insight
 
 
 _AUDIT_PHRASES = (
@@ -592,11 +593,7 @@ def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> 
         _backing("query_row", _row_id(left)),
         _backing("query_row", _row_id(right)),
     ]
-    question = "".join(str(card.get("question") or "").lower().split())
-    density_focus = any(term in question for term in (
-        "公告密度", "公告数量", "公告数", "最近一个月公告", "近30日公告",
-    ))
-    if density_focus:
+    if comparison_density_focus(str(card.get("question") or "")):
         cutoff = left.get("共同公告截止日")
         left_count = left.get("近30日公告数量(共同截止)")
         right_count = right.get("近30日公告数量(共同截止)")
@@ -642,30 +639,14 @@ def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> 
             basis_note=_basis_note(card),
         )
 
-    def stage_label(row: dict[str, Any]) -> str:
-        value = str(row.get("各自最新上市公司本体重整里程碑") or "当前快照无记录")
-        return value.rsplit("阶段标签：", 1)[-1] if "阶段标签：" in value else value
-
-    def stage_rank(label: str) -> int | None:
-        if "法院已裁定受理重整" in label:
-            return 3
-        if any(term in label for term in ("已进入或启动预重整", "预重整工作推进中")):
-            return 2
-        if "债权人已提出预重整或重整申请" in label:
-            return 1
-        return None
-
-    left_stage, right_stage = stage_label(left), stage_label(right)
-    left_rank, right_rank = stage_rank(left_stage), stage_rank(right_stage)
-    if left_rank is not None and right_rank is not None and left_rank != right_rank:
-        later = left if left_rank > right_rank else right
-        earlier = right if left_rank > right_rank else left
-        phase_judgment = (
-            f"在上市公司本体的公开司法程序维度，{later.get('股票')}的公开程序层级"
-            f"比{earlier.get('股票')}更深入"
-        )
-    else:
-        phase_judgment = "两者当前公开重整节点不能仅凭阶段标签拉开明确先后"
+    insight = comparison_phase_insight(rows)
+    if insight is None:
+        return _generic_narrative(card, claims)
+    left_label, right_label = insight.left_label, insight.right_label
+    left_stage, right_stage = insight.left_stage, insight.right_stage
+    phase_judgment = insight.directional_judgment or (
+        "两者当前公开重整节点不能仅凭阶段标签拉开明确先后"
+    )
 
     def price_direction(value: object) -> str:
         try:
@@ -692,16 +673,16 @@ def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> 
 
     left_change, right_change = left.get("近20日变化"), right.get("近20日变化")
     price_context = (
-        f"价格快照中两者近20日方向不同（{left.get('股票')}{price_direction(left_change)}，"
-        f"{right.get('股票')}{price_direction(right_change)}）"
+        f"价格快照中两者近20日方向不同（{left_label}{price_direction(left_change)}，"
+        f"{right_label}{price_direction(right_change)}）"
         if left_change and right_change else "价格快照覆盖不足"
     )
     steps = [
         NarrativeStep(
             title="先看最实质的程序差异",
             text=(
-                f"{left.get('股票')}的各自最新上市公司本体节点为“{left_stage}”；"
-                f"{right.get('股票')}为“{right_stage}”。{phase_judgment}。"
+                f"{left_label}的各自最新上市公司本体节点为“{left_stage}”；"
+                f"{right_label}为“{right_stage}”。{phase_judgment}。"
             ),
             backing=shared_backing,
         ),
@@ -709,8 +690,8 @@ def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> 
             title="再分清时间与主体口径",
             text=(
                 f"公告数量只能比较到共同截止日 {left.get('共同公告截止日')}；各自最新节点则保留各自日期。"
-                f"关联主体事项也必须与上市公司本体分开：{left.get('股票')}{related_summary(left)}；"
-                f"{right.get('股票')}{related_summary(right)}。"
+                f"关联主体事项也必须与上市公司本体分开：{left_label}{related_summary(left)}；"
+                f"{right_label}{related_summary(right)}。"
             ),
             backing=shared_backing,
         ),
@@ -726,9 +707,9 @@ def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> 
     return ResearchNarrative(
         direct_answer=NarrativeStatement(
             text=(
-                f"如果重点是重整进度，{phase_judgment}：{left.get('股票')}当前公开节点为“{left_stage}”，"
-                f"{right.get('股票')}为“{right_stage}”。这说明两者公开程序位置不同，"
-                "不代表重整成功率或投资价值存在同方向差异；公告数量和价格表现只应放在背景层阅读。"
+                f"如果重点是重整进度，{phase_judgment}：{left_label}当前公开节点为“{left_stage}”，"
+                f"{right_label}为“{right_stage}”。这说明两者公开程序位置不同，"
+                "不能据此推断重整成功率或投资价值；公告数量和价格表现只应放在背景层阅读。"
             ),
             backing=shared_backing,
         ),

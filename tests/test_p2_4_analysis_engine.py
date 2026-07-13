@@ -106,10 +106,10 @@ def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
     assert "孙公司" in mubang["各自最新关联主体重整事项"]
     assert response.narrative is not None
     assert len(response.narrative.reasoning_steps) == 3
-    assert "公开司法程序维度" in response.narrative.direct_answer.text
-    assert "公开程序层级" in response.narrative.direct_answer.text
+    assert "公开程序维度" in response.narrative.direct_answer.text
+    assert "公开节点" in response.narrative.direct_answer.text
     assert "更深入" in response.narrative.direct_answer.text
-    assert "不代表重整成功率或投资价值" in response.narrative.direct_answer.text
+    assert "不能据此推断重整成功率或投资价值" in response.narrative.direct_answer.text
     assert "最新收盘" not in response.narrative.direct_answer.text
     assert [step.title for step in response.narrative.reasoning_steps] == [
         "先看最实质的程序差异",
@@ -146,7 +146,7 @@ def test_comparison_judgment_uses_row_values_instead_of_seed_symbols() -> None:
         {"body_rows": rows, "lens_invocations": []}, []
     )
 
-    assert "BBB222的公开程序层级比AAA111更深入" in narrative.direct_answer.text
+    assert "乙的公开节点比甲更深入" in narrative.direct_answer.text
     assert "603398" not in narrative.direct_answer.text
     assert len(narrative.reasoning_steps) == 3
 
@@ -262,6 +262,56 @@ def test_validated_llm_narrative_becomes_main_api_narrative() -> None:
     assert response_v2.narrative.direct_answer.text.startswith("当前材料应先")
     assert response_v2.narrative.reasoning_steps[0].title == "状态层"
     assert response_v2.llm_used is True
+
+
+def _non_directional_comparison_factory(response_model: type, payload: dict) -> dict:
+    if response_model is ParsedQuestion:
+        return {
+            "normalized_question": payload["question"],
+            "object_kind": "cohort",
+            "object_ref": "603398,300068",
+            "intent": "research_question",
+            "time_range": {"start": "", "end": ""},
+            "dimensions": ["restructuring"],
+            "ambiguities": [],
+            "candidate_topics": ["restructuring"],
+            "proposed_route": "answer_query",
+            "compliant_rewrite": "",
+        }
+    if response_model is NarrativeDraft:
+        rows = [
+            item for item in payload["backing_catalog"]
+            if item["kind"] == "query_row" and "股票并列比较" in item["summary"]
+        ]
+        return {
+            "claims": [],
+            "narrative": {
+                "direct_answer": {
+                    "text": "两家公司处于不同公开阶段，但不能据此判断整体优劣。",
+                    "backing": [
+                        {"kind": item["kind"], "ref": item["ref"]} for item in rows
+                    ],
+                },
+                "reasoning_steps": [],
+                "uncertainties": [],
+                "watch_items": [],
+            },
+        }
+    raise AssertionError(response_model)
+
+
+def test_llm_comparison_cannot_replace_directional_judgment_with_difference() -> None:
+    request = ResearchRequest(question="沐邦和南都怎么比较？", llm_mode="auto")
+    result = orchestrate_with_provider_result(
+        request, FakeLLMProvider(response_factory=_non_directional_comparison_factory)
+    )
+
+    assert result.narrative is not None
+    assert result.response.llm_used is True
+    assert result.narrative.direct_answer.text.startswith(
+        "在上市公司本体的公开程序维度，沐邦的公开节点比南都更深入。"
+    )
+    assert "不能据此判断整体优劣" in result.narrative.direct_answer.text
 
 
 def _overbroad_absence_factory(response_model: type, payload: dict) -> dict:

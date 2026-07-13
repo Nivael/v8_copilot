@@ -22,6 +22,7 @@ from llm.schemas import (
     NarrativeClaim,
     NarrativeDraft,
 )
+from research_judgments import comparison_density_focus, comparison_phase_insight
 
 
 COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
@@ -312,6 +313,26 @@ def _validated_narrative(
     except ValidationError:
         return None, 1
     rejected = 0
+
+    insight = comparison_phase_insight(card.body_rows)
+    if (
+        insight is not None
+        and insight.directional_judgment
+        and not comparison_density_focus(card.question)
+        and "更深入" not in direct.text
+    ):
+        row_backings = [
+            ApiClaimBacking(kind="query_row", ref=str(row["row_id"]))
+            for row in card.body_rows
+            if row.get("记录类型") == "股票并列比较" and row.get("row_id")
+        ]
+        backing_by_key = {
+            (item.kind, item.ref): item for item in [*row_backings, *direct.backing]
+        }
+        direct = NarrativeStatement(
+            text=f"{insight.directional_judgment}。{direct.text}",
+            backing=list(backing_by_key.values())[:10],
+        )
 
     def collect(items: list[object], *, with_title: bool = False) -> list:
         nonlocal rejected

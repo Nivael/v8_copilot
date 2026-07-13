@@ -507,13 +507,35 @@ def _restructuring_progress_narrative(
     current = next(row for row in rows if row.get("记录类型") == "当前公开里程碑")
     body = next((row for row in rows if row.get("记录类型") == "当前里程碑正文证据"), None)
     historical = [row for row in rows if row.get("记录类型") == "同阶段历史后续"]
+    stage_historical = [
+        row for row in historical if row.get("后续口径") == "下一个不同重整阶段"
+    ]
+    any_historical = [
+        row for row in historical if row.get("后续口径") == "下一个任意正式公告"
+    ]
+    direct_text = (
+        f"当前公开资料能确认到“{current.get('阶段判断')}”："
+        f"{current.get('日期')}《{current.get('标题')}》。"
+        f"{current.get('公开招募记录')}。"
+    )
+    direct_backing = [_backing("query_row", _row_id(current))]
+    if stage_historical:
+        first_stage = stage_historical[0]
+        stage_categories = "、".join(
+            str(row.get("后续类别")) for row in stage_historical[:2]
+        )
+        direct_text += (
+            f"历史同阶段共 {first_stage.get('起点事件总数')} 个重整案例，"
+            f"其中 {first_stage.get('可观察后续总数')} 个观察到不同阶段后续，"
+            f"{first_stage.get('未观察到后续')} 个截至快照仍属右删失；"
+            f"已观察类别包括{stage_categories}，只作描述性先验。"
+        )
+        direct_backing.extend(
+            _backing("query_row", _row_id(row)) for row in stage_historical[:2]
+        )
     direct = NarrativeStatement(
-        text=(
-            f"当前公开资料能确认到“{current.get('阶段判断')}”："
-            f"{current.get('日期')}《{current.get('标题')}》。"
-            f"{current.get('公开招募记录')}。"
-        ),
-        backing=[_backing("query_row", _row_id(current))],
+        text=direct_text,
+        backing=direct_backing,
     )
     steps = [NarrativeStep(
         title="先核对当前个案",
@@ -531,11 +553,14 @@ def _restructuring_progress_narrative(
                 text="；".join(str(item) for item in snippets[:3]),
                 backing=[_backing("query_row", _row_id(body))],
             ))
-    for row in historical[:3]:
+    displayed_historical = [*stage_historical[:2], *any_historical[:1]]
+    for row in displayed_historical:
         steps.append(NarrativeStep(
             title=f"{row.get('后续口径')}：{row.get('后续类别')}",
             text=(
-                f"同阶段历史可观察后续共 {row.get('可观察后续总数')} 个；"
+                f"同阶段历史起点重整案例共 {row.get('起点事件总数')} 个；"
+                f"其中 {row.get('可观察后续总数')} 个观察到该口径后续，"
+                f"{row.get('未观察到后续')} 个截至快照未观察到后续（右删失）。"
                 f"该类别出现 {row.get('次数')} 次，占 {row.get('占可观察后续')}，"
                 f"等待中位数 {row.get('等待中位数(天)')} 天。"
             ),
@@ -566,8 +591,9 @@ def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> 
         ("最近公告", "最近正式公告"),
         ("各自最新公告", "各自最新公告"),
         ("近30日公告密度", "近30日公告数量(共同截止)"),
-        ("重整里程碑", "最近重整里程碑"),
-        ("各自最新重整进展", "各自最新重整里程碑"),
+        ("上市公司本体重整里程碑（共同截止）", "最近上市公司本体重整里程碑"),
+        ("各自最新上市公司本体重整进展", "各自最新上市公司本体重整里程碑"),
+        ("关联主体重整事项", "各自最新关联主体重整事项"),
         ("分类事件", "最近分类事件"),
         ("价格窗口", "近20日变化"),
     ]

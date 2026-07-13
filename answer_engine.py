@@ -1389,6 +1389,19 @@ def card_stock_research_overview(
                 claim_type="fact",
                 backing=BackingRef(kind="query_row", ref="shareholder_count_01"),
             ))
+        else:
+            gap = LensGap(
+                gap_id="shareholder_count_coverage",
+                missing_for=f"{symbol} 的结构化股东人数快照",
+                sediment_as="question_card:shareholder_count_coverage",
+                note="当前 57 股 pilot 没有该股票记录；不把全局 pilot 截止日当作个股覆盖。",
+            )
+            card.lens_gap.append(gap)
+            card.analysis_claims.append(AnalysisClaim(
+                text="当前股东人数 pilot 没有该股票的结构化记录。",
+                claim_type="data_gap",
+                backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
+            ))
         if "D-021" not in card.data_debt_refs:
             card.data_debt.append(DataDebtRow(
                 gap="股东人数当前只有 57 股 pilot，非全市场完整覆盖",
@@ -1836,10 +1849,30 @@ def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
             if window_start and _pd(item.announcement_date) and _pd(item.announcement_date) >= window_start
         )
         comparable_latest = comparable_records[0] if comparable_records else None
-        restructurings = [item for item in comparable_records if "重整" in item.title]
-        comparable_restructuring = restructurings[0] if restructurings else None
+        related_entity_terms = ("孙公司", "子公司", "控股股东")
+        listed_restructurings = [
+            item for item in comparable_records
+            if "重整" in item.title
+            and not any(term in item.title for term in related_entity_terms)
+        ]
+        comparable_restructuring = (
+            listed_restructurings[0] if listed_restructurings else None
+        )
         latest_restructuring = next(
-            (item for item in inventory.records if "重整" in item.title), None
+            (
+                item for item in inventory.records
+                if "重整" in item.title
+                and not any(term in item.title for term in related_entity_terms)
+            ),
+            None,
+        )
+        latest_related_restructuring = next(
+            (
+                item for item in inventory.records
+                if "重整" in item.title
+                and any(term in item.title for term in related_entity_terms)
+            ),
+            None,
         )
         with _db() as connection:
             status = connection.execute(
@@ -1880,16 +1913,23 @@ def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
             "正式公告数量(共同截止前)": len(comparable_records),
             "近30日公告数量(共同截止)": recent_30d_count,
             "比较模式": "各自最新状态并列；公告数量按共同截止日计算",
-            "最近重整里程碑": (
+            "最近上市公司本体重整里程碑": (
                 f"{comparable_restructuring.announcement_date}《{comparable_restructuring.title}》；"
                 f"阶段标签：{_restructuring_stage(comparable_restructuring.title)}"
-                if comparable_restructuring else "当前正式公告清单未找到重整节点"
+                if comparable_restructuring else "共同截止日前未找到上市公司本体重整节点"
             ),
-            "各自最新重整里程碑": (
+            "各自最新上市公司本体重整里程碑": (
                 f"{latest_restructuring.announcement_date}《{latest_restructuring.title}》；"
                 f"阶段标签：{_restructuring_stage(latest_restructuring.title)}"
                 if latest_restructuring
-                else "当前正式公告清单未找到重整节点"
+                else "当前正式公告清单未找到上市公司本体重整节点"
+            ),
+            "各自最新关联主体重整事项": (
+                f"关联主体（子公司/孙公司/控股股东）："
+                f"{latest_related_restructuring.announcement_date}"
+                f"《{latest_related_restructuring.title}》"
+                if latest_related_restructuring
+                else "当前正式公告清单未找到关联主体重整事项"
             ),
             "最近分类事件": (
                 f"{anchors[0][0]}《{anchors[0][1]}》" if anchors else "当前快照无记录"

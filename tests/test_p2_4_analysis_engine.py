@@ -69,7 +69,12 @@ def test_mubang_progress_separates_case_stage_from_history(monkeypatch) -> None:
         for row in stage_rows
     )
     assert response.narrative is not None
-    assert "下一个" in " ".join(step.title for step in response.narrative.reasoning_steps)
+    assert "右删失" in response.narrative.direct_answer.text
+    assert str(stage_rows[0]["可观察后续总数"]) in response.narrative.direct_answer.text
+    assert any(
+        "下一个不同重整阶段" in step.title
+        for step in response.narrative.reasoning_steps
+    )
 
 
 def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
@@ -83,8 +88,18 @@ def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
     assert response.answer_card["object_ref"] == "cohort:comparison:603398,300068"
     rows = response.answer_card["body_rows"]
     assert {row["股票"] for row in rows} == {"603398", "300068"}
+    mubang = next(row for row in rows if row["股票"] == "603398")
+    assert "2026-02-26" in mubang["最近上市公司本体重整里程碑"]
+    assert "2026-06-17" not in mubang["最近上市公司本体重整里程碑"]
+    assert "2026-06-17" not in mubang["各自最新上市公司本体重整里程碑"]
+    assert "2026-06-17" in mubang["各自最新关联主体重整事项"]
+    assert "孙公司" in mubang["各自最新关联主体重整事项"]
     assert response.narrative is not None
     assert len(response.narrative.reasoning_steps) >= 4
+    assert any(
+        step.title == "关联主体重整事项"
+        for step in response.narrative.reasoning_steps
+    )
     assert response.answer_card["as_of"] == "2026-07-08"
 
 
@@ -100,6 +115,14 @@ def test_generic_wentai_analysis_loads_multiple_dimensions() -> None:
     assert {"状态区间", "近期官方公告", "近期分类节点", "近期价格窗口"} <= row_types
     assert response.narrative is not None
     assert len(response.narrative.reasoning_steps) >= 4
+    assert any(
+        "股东人数 pilot 没有该股票" in item.text
+        for item in response.narrative.uncertainties
+    )
+    assert any(
+        gap["gap_id"] == "shareholder_count_coverage"
+        for gap in response.answer_card["lens_gap"]
+    )
     boundary = next(
         row for row in response.answer_card["body_rows"]
         if row.get("记录类型") == "分析时间边界"

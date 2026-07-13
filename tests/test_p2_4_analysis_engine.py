@@ -272,6 +272,48 @@ def test_validated_llm_narrative_becomes_main_api_narrative() -> None:
     assert "不能用全局 pilot 截止日或公告标题补推" in uncertainty_text
 
 
+def test_llm_retries_when_direct_answer_fails_backing_validation() -> None:
+    narrative_calls = 0
+
+    def factory(response_model: type, payload: dict) -> dict:
+        nonlocal narrative_calls
+        if response_model is ParsedQuestion:
+            return _llm_factory(response_model, payload)
+        if response_model is NarrativeDraft:
+            narrative_calls += 1
+            first = payload["backing_catalog"][0]
+            text = (
+                "截至2030-01-01，当前材料应先核对状态。"
+                if narrative_calls == 1
+                else "当前材料应先核对状态和来源边界。"
+            )
+            if narrative_calls == 2:
+                assert "narrative_correction" in payload
+            return {
+                "claims": [],
+                "narrative": {
+                    "direct_answer": {
+                        "text": text,
+                        "backing": [{"kind": first["kind"], "ref": first["ref"]}],
+                    },
+                    "reasoning_steps": [],
+                    "uncertainties": [],
+                    "watch_items": [],
+                },
+            }
+        raise AssertionError(response_model)
+
+    result = orchestrate_with_provider_result(
+        ResearchRequest(question="分析一下 ST 闻泰", llm_mode="auto"),
+        FakeLLMProvider(response_factory=factory),
+    )
+
+    assert narrative_calls == 2
+    assert result.narrative is not None
+    assert result.response.llm_used is True
+    assert result.narrative.direct_answer.text == "当前材料应先核对状态和来源边界。"
+
+
 def _non_directional_comparison_factory(response_model: type, payload: dict) -> dict:
     if response_model is ParsedQuestion:
         return {

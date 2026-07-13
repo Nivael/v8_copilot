@@ -36,6 +36,7 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须先指出最有解释力的实质差异，再补充口径和边界；允许作有 backing 的单一维度判断，例如哪一方公开程序节点更深入，但不得升级成整体优劣、成功率或投资价值排序。公告条数和价格变化通常只作背景，不得替代对用户真正问题的回答。
 如果 payload 含 required_research_judgment，它是查询证据机械确定的方向性结论；主回答和所有解释都必须与它方向一致，不得说反。
+如果 payload 含 narrative_correction，上一版主回答没有通过 backing 校验；必须删除无法由 backing 原样支持的数字、日期或扩大的缺失结论，重新生成完整 narrative。
 阶段题必须把当前公开里程碑与历史后续分布分开。研究判断不等于预测：可以说明当前阶段差异及其含义，但不能断言未来结果。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
 重整阶段历史比例必须说明 episode case 去重口径、起点总数、可观察后续数和右删失数；阶段类别百分比以可观察后续为分母。
@@ -525,7 +526,10 @@ class NarrativeComposer:
             and not comparison_density_focus(card.question)
         ):
             payload["required_research_judgment"] = insight.directional_judgment
+        backing_summaries = {(entry.kind, entry.ref): entry.summary for entry in catalog}
         draft: NarrativeDraft | None = None
+        research_narrative: ResearchNarrative | None = None
+        rejected_statements = 0
         for attempt in range(2):
             draft = self._provider.generate(
                 response_model=NarrativeDraft,
@@ -534,19 +538,27 @@ class NarrativeComposer:
                 model=resolve_model(self._model),
             )
             contradiction = _comparison_contradiction(card, draft)
-            if not contradiction:
+            if contradiction:
+                if attempt == 0:
+                    payload["direction_correction"] = (
+                        f"上一版把比较方向说反：{contradiction}。"
+                        f"必须改为与 {insight.directional_judgment if insight else ''} 一致。"
+                    )
+                    continue
+                raise LLMProviderError("LLM 比较方向连续两次与查询证据矛盾")
+            research_narrative, rejected_statements = _validated_narrative(
+                card, draft.narrative, backing_summaries
+            )
+            if research_narrative is not None:
                 break
             if attempt == 0:
-                payload["direction_correction"] = (
-                    f"上一版把比较方向说反：{contradiction}。"
-                    f"必须改为与 {insight.directional_judgment if insight else ''} 一致。"
+                payload["narrative_correction"] = (
+                    "上一版 direct_answer 未通过 backing 校验；"
+                    "只使用 backing_catalog 原样支持的事实重新回答。"
                 )
-                continue
-            raise LLMProviderError("LLM 比较方向连续两次与查询证据矛盾")
         if draft is None:
             raise LLMProviderError("LLM 未返回叙述草稿")
 
-        backing_summaries = {(entry.kind, entry.ref): entry.summary for entry in catalog}
         valid_backings = set(backing_summaries)
         accepted: list[AnalysisClaim] = []
         rejected: list[RejectedClaim] = []
@@ -583,9 +595,6 @@ class NarrativeComposer:
                 backing=BackingRef(kind=claim.backing.kind, ref=claim.backing.ref),
             ))
 
-        research_narrative, rejected_statements = _validated_narrative(
-            card, draft.narrative, backing_summaries
-        )
         composed = replace(card, analysis_claims=[*card.analysis_claims, *accepted])
         composed.validate()
         return CompositionResult(

@@ -26,9 +26,11 @@ from llm.schemas import (
 
 COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 你只能根据 filtered_answer_card、backing_catalog 和 evidence_summary 生成 claim blocks 和面向研究者的完整 narrative。
-先直接回答用户真正问的内容，再用 2-6 个有顺序的 reasoning_steps 解释证据如何支持答案；把不能确认的部分放入 uncertainties，把可核查的后续公开节点放入 watch_items。
+先直接回答用户真正问的内容，再用 2-4 个有顺序的 reasoning_steps 解释证据如何支持答案；把不能确认的部分放入 uncertainties，把可核查的后续公开节点放入 watch_items。
+主回答是研究判断，不是字段清单：用 2-4 句人话先给出最重要的 1-3 个结论及其意义。不要为了显得精确而罗列所有日期、数量、收盘价或百分比；非关键数字留在证据层。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
-比较题必须逐维度比较，不得只说数据不足；阶段题必须把当前公开里程碑与历史后续分布分开。
+比较题必须先指出最有解释力的实质差异，再补充口径和边界；允许作有 backing 的单一维度判断，例如哪一方公开程序节点更深入，但不得升级成整体优劣、成功率或投资价值排序。公告条数和价格变化通常只作背景，不得替代对用户真正问题的回答。
+阶段题必须把当前公开里程碑与历史后续分布分开。研究判断不等于预测：可以说明当前阶段差异及其含义，但不能断言未来结果。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
 重整阶段历史比例必须说明 episode case 去重口径、起点总数、可观察后续数和右删失数；阶段类别百分比以可观察后续为分母。
 公告题必须根据公告正文证据片段总结，不得只复述标题。
@@ -325,9 +327,9 @@ def _validated_narrative(
                 rejected += 1
         return accepted
 
-    steps = collect(list(draft.reasoning_steps), with_title=True)
-    uncertainties = collect(list(draft.uncertainties))
-    watch_items = collect(list(draft.watch_items))
+    steps = collect(list(draft.reasoning_steps), with_title=True)[:4]
+    uncertainties = collect(list(draft.uncertainties))[:3]
+    watch_items = collect(list(draft.watch_items))[:3]
     stage_row = next((
         row for row in card.body_rows
         if row.get("记录类型") == "同阶段历史后续"

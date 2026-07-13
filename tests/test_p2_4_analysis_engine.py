@@ -6,6 +6,7 @@ from api import orchestrate
 from llm.providers import FakeLLMProvider
 from llm.schemas import NarrativeDraft, ParsedQuestion
 from llm_adapter import orchestrate_with_provider_result
+from narrative_builder import _comparison_narrative
 from orchestrator_v1 import enrich_response_v1
 from orchestrator_v2 import enrich_response_v2
 
@@ -104,12 +105,65 @@ def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
     assert "2026-06-17" in mubang["各自最新关联主体重整事项"]
     assert "孙公司" in mubang["各自最新关联主体重整事项"]
     assert response.narrative is not None
-    assert len(response.narrative.reasoning_steps) >= 4
-    assert any(
-        step.title == "关联主体重整事项"
-        for step in response.narrative.reasoning_steps
-    )
+    assert len(response.narrative.reasoning_steps) == 3
+    assert "公开司法程序维度" in response.narrative.direct_answer.text
+    assert "公开程序层级" in response.narrative.direct_answer.text
+    assert "更深入" in response.narrative.direct_answer.text
+    assert "不代表重整成功率或投资价值" in response.narrative.direct_answer.text
+    assert "最新收盘" not in response.narrative.direct_answer.text
+    assert [step.title for step in response.narrative.reasoning_steps] == [
+        "先看最实质的程序差异",
+        "再分清时间与主体口径",
+        "其他指标只作背景",
+    ]
     assert response.answer_card["as_of"] == "2026-07-08"
+
+
+def test_comparison_judgment_uses_row_values_instead_of_seed_symbols() -> None:
+    rows = [
+        {
+            "row_id": "comparison_AAA111",
+            "记录类型": "股票并列比较",
+            "股票": "AAA111",
+            "当前ST状态": "ST甲",
+            "共同公告截止日": "2030-01-31",
+            "各自最新上市公司本体重整里程碑": "2030-01-20《申请公告》；阶段标签：债权人已提出预重整或重整申请",
+            "各自最新关联主体重整事项": "当前正式公告清单未找到关联主体重整事项",
+            "近20日变化": "-2.0%",
+        },
+        {
+            "row_id": "comparison_BBB222",
+            "记录类型": "股票并列比较",
+            "股票": "BBB222",
+            "当前ST状态": "*ST乙",
+            "共同公告截止日": "2030-01-31",
+            "各自最新上市公司本体重整里程碑": "2030-01-25《预重整进展》；阶段标签：预重整工作推进中",
+            "各自最新关联主体重整事项": "关联主体（子公司）：2030-01-30《子公司重整》",
+            "近20日变化": "1.0%",
+        },
+    ]
+    narrative = _comparison_narrative(
+        {"body_rows": rows, "lens_invocations": []}, []
+    )
+
+    assert "BBB222的公开程序层级比AAA111更深入" in narrative.direct_answer.text
+    assert "603398" not in narrative.direct_answer.text
+    assert len(narrative.reasoning_steps) == 3
+
+
+def test_comparison_narrative_follows_explicit_density_focus() -> None:
+    response = orchestrate(ResearchRequest(
+        question="比较ST亚光和ST南都最近一个月的公告密度。",
+        llm_mode="off",
+    ))
+
+    assert response.narrative is not None
+    assert "近30日公告密度" in response.narrative.direct_answer.text
+    assert "300068在该窗口披露更频繁" in response.narrative.direct_answer.text
+    assert "重整进度、风险高低或整体优劣" in response.narrative.direct_answer.text
+    assert [step.title for step in response.narrative.reasoning_steps] == [
+        "先统一比较窗口", "再解释数量差异",
+    ]
 
 
 def test_generic_wentai_analysis_loads_multiple_dimensions() -> None:

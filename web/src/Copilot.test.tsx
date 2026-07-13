@@ -1,4 +1,4 @@
-import {cleanup,fireEvent,render,screen} from '@testing-library/react'
+import {act,cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {Link,MemoryRouter} from 'react-router-dom'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {Copilot,EvidenceNavigation,QuestionDrawer} from './Copilot'
@@ -127,6 +127,27 @@ describe('Copilot evidence loops',()=>{
     expect(screen.getByText('状态名称不能自动解释触发原因。')).toBeInTheDocument()
     expect(screen.getByText('LLM 综合分析')).toBeInTheDocument()
     expect(screen.queryByText(/status-row-1/)).not.toBeInTheDocument()
+  })
+
+  it('labels the deterministic stream frame as pending LLM analysis',async()=>{
+    const event={request_id:'req-pending',sequence:1,event:'answer_card',payload:{response:answeredResponse}}
+    let closeStream=()=>{}
+    const body=new ReadableStream<Uint8Array>({
+      start(controller){
+        controller.enqueue(new TextEncoder().encode(`${JSON.stringify(event)}\n`))
+        closeStream=()=>controller.close()
+      },
+    })
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(body,{
+      status:200,headers:{'Content-Type':'application/x-ndjson'},
+    }))
+    render(<MemoryRouter initialEntries={['/']}><Copilot/></MemoryRouter>)
+    fireEvent.change(screen.getByRole('textbox',{name:'研究问题'}),{target:{value:'为什么 ST？'}})
+    fireEvent.keyDown(screen.getByRole('textbox',{name:'研究问题'}),{key:'Enter'})
+
+    expect(await screen.findByText('LLM 综合分析生成中')).toBeInTheDocument()
+    await act(async()=>closeStream())
+    expect(await screen.findByText('本地规则分析')).toBeInTheDocument()
   })
 
   it('shows a safe research rewrite for split trading wording',async()=>{

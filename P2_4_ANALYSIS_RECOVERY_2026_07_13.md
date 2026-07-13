@@ -1,7 +1,7 @@
 # P2.4 Analysis Recovery
 
-Status: implementation, W0 closeout review, and isolated-branch QA are complete; canonical
-integration and post-merge browser acceptance remain.
+Status: implementation, W0 review, canonical integration, local browser acceptance, and post-merge
+QA are complete. A live external OpenAI run was not permitted by the execution environment.
 
 ## Why this recovery exists
 
@@ -72,6 +72,16 @@ P2.4 treats the following questions as hard acceptance cases:
 - Frontend QA passed 5 test files / 23 tests, lint, and production build. `git diff --check`, frozen
   contract diff, secret scan, repository-document path scan, and trading-wording leakage review
   also passed.
-- These are fresh W0 results from the isolated P2.4 worktree; earlier worker results were not used
-  as the closeout verdict. Canonical rebuild/smoke and four-question live browser acceptance remain
-  post-merge gates.
+- Browser-driven review found and fixed three final fallback issues: the stage-transition narrative
+  now exposes 98 episode cases / 64 observed transitions / 34 right-censored cases; comparison keeps
+  a subsidiary restructuring item separate from the listed-company milestone; and missing
+  per-stock shareholder-count coverage is an explicit uncertainty.
+- Post-merge local browser acceptance passed all four hard questions through the real UI/stream/API
+  path with external LLM access disabled. Desktop and 390px layouts had no page overflow, browser
+  console errors/warnings were zero, and no trading wording appeared.
+- Fake Structured Outputs integration tests validate that an accepted LLM narrative becomes the
+  public narrative only with valid backing, and frontend tests validate the visible analysis-mode
+  label. The live external OpenAI smoke/browser call was attempted only after user authorization,
+  but the execution environment denied transmission of workspace-derived evidence; no workaround
+  was used and no live-model success is claimed.
+- These are fresh W0 results; earlier worker results were not used as the closeout verdict.

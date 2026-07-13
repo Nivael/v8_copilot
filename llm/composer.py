@@ -22,7 +22,11 @@ from llm.schemas import (
     NarrativeClaim,
     NarrativeDraft,
 )
-from research_judgments import comparison_density_focus, comparison_phase_insight
+from research_judgments import (
+    comparison_density_focus,
+    comparison_direction_contradiction,
+    comparison_phase_insight,
+)
 
 
 COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
@@ -31,6 +35,7 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 主回答是研究判断，不是字段清单：用 2-4 句人话先给出最重要的 1-3 个结论及其意义。不要为了显得精确而罗列所有日期、数量、收盘价或百分比；非关键数字留在证据层。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须先指出最有解释力的实质差异，再补充口径和边界；允许作有 backing 的单一维度判断，例如哪一方公开程序节点更深入，但不得升级成整体优劣、成功率或投资价值排序。公告条数和价格变化通常只作背景，不得替代对用户真正问题的回答。
+如果 payload 含 required_research_judgment，它是查询证据机械确定的方向性结论；主回答和所有解释都必须与它方向一致，不得说反。
 阶段题必须把当前公开里程碑与历史后续分布分开。研究判断不等于预测：可以说明当前阶段差异及其含义，但不能断言未来结果。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
 重整阶段历史比例必须说明 episode case 去重口径、起点总数、可观察后续数和右删失数；阶段类别百分比以可观察后续为分母。
@@ -74,6 +79,27 @@ class CompositionResult:
             }
             for claim in self.answer_card.analysis_claims
         ]
+
+
+def _comparison_contradiction(card: AnswerCard, draft: NarrativeDraft) -> str:
+    insight = comparison_phase_insight(card.body_rows)
+    if (
+        insight is None
+        or not insight.directional_judgment
+        or comparison_density_focus(card.question)
+        or draft.narrative is None
+    ):
+        return ""
+    statements = [
+        draft.narrative.direct_answer,
+        *draft.narrative.reasoning_steps,
+        *draft.narrative.uncertainties,
+        *draft.narrative.watch_items,
+    ]
+    for statement in statements:
+        if comparison_direction_contradiction(statement.text, insight):
+            return statement.text
+    return ""
 
 
 def _compact_json(value: object) -> str:
@@ -403,12 +429,33 @@ class NarrativeComposer:
             "backing_catalog": [entry.model_dump(mode="json") for entry in catalog],
             "evidence_summary": [entry.summary for entry in catalog],
         }
-        draft = self._provider.generate(
-            response_model=NarrativeDraft,
-            system_prompt=COMPOSER_SYSTEM_PROMPT,
-            payload=payload,
-            model=resolve_model(self._model),
-        )
+        insight = comparison_phase_insight(card.body_rows)
+        if (
+            insight is not None
+            and insight.directional_judgment
+            and not comparison_density_focus(card.question)
+        ):
+            payload["required_research_judgment"] = insight.directional_judgment
+        draft: NarrativeDraft | None = None
+        for attempt in range(2):
+            draft = self._provider.generate(
+                response_model=NarrativeDraft,
+                system_prompt=COMPOSER_SYSTEM_PROMPT,
+                payload=payload,
+                model=resolve_model(self._model),
+            )
+            contradiction = _comparison_contradiction(card, draft)
+            if not contradiction:
+                break
+            if attempt == 0:
+                payload["direction_correction"] = (
+                    f"上一版把比较方向说反：{contradiction}。"
+                    f"必须改为与 {insight.directional_judgment if insight else ''} 一致。"
+                )
+                continue
+            raise LLMProviderError("LLM 比较方向连续两次与查询证据矛盾")
+        if draft is None:
+            raise LLMProviderError("LLM 未返回叙述草稿")
 
         backing_summaries = {(entry.kind, entry.ref): entry.summary for entry in catalog}
         valid_backings = set(backing_summaries)

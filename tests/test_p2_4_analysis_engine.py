@@ -314,6 +314,95 @@ def test_llm_comparison_cannot_replace_directional_judgment_with_difference() ->
     assert "不能据此判断整体优劣" in result.narrative.direct_answer.text
 
 
+def test_llm_comparison_retries_when_direction_is_reversed() -> None:
+    narrative_calls = 0
+
+    def factory(response_model: type, payload: dict) -> dict:
+        nonlocal narrative_calls
+        if response_model is ParsedQuestion:
+            return _non_directional_comparison_factory(response_model, payload)
+        if response_model is NarrativeDraft:
+            narrative_calls += 1
+            rows = [
+                item for item in payload["backing_catalog"]
+                if item["kind"] == "query_row" and "股票并列比较" in item["summary"]
+            ]
+            if narrative_calls == 1:
+                text = "南都当前公开的上市公司本体节点更进一步。"
+            else:
+                assert "direction_correction" in payload
+                text = "沐邦的公开节点比南都更深入，但不能据此判断整体优劣。"
+            return {
+                "claims": [],
+                "narrative": {
+                    "direct_answer": {
+                        "text": text,
+                        "backing": [
+                            {"kind": item["kind"], "ref": item["ref"]}
+                            for item in rows
+                        ],
+                    },
+                    "reasoning_steps": [],
+                    "uncertainties": [],
+                    "watch_items": [],
+                },
+            }
+        raise AssertionError(response_model)
+
+    provider = FakeLLMProvider(response_factory=factory)
+    result = orchestrate_with_provider_result(
+        ResearchRequest(question="沐邦和南都怎么比较？", llm_mode="auto"),
+        provider,
+    )
+
+    assert narrative_calls == 2
+    assert result.narrative is not None
+    assert result.response.llm_used is True
+    assert "沐邦的公开节点比南都更深入" in result.narrative.direct_answer.text
+    assert "南都当前公开的上市公司本体节点更进一步" not in (
+        result.narrative.direct_answer.text
+    )
+
+
+def test_llm_comparison_falls_back_after_repeated_direction_reversal() -> None:
+    def factory(response_model: type, payload: dict) -> dict:
+        if response_model is ParsedQuestion:
+            return _non_directional_comparison_factory(response_model, payload)
+        if response_model is NarrativeDraft:
+            rows = [
+                item for item in payload["backing_catalog"]
+                if item["kind"] == "query_row" and "股票并列比较" in item["summary"]
+            ]
+            return {
+                "claims": [],
+                "narrative": {
+                    "direct_answer": {
+                        "text": "南都当前公开的上市公司本体节点更进一步。",
+                        "backing": [
+                            {"kind": item["kind"], "ref": item["ref"]}
+                            for item in rows
+                        ],
+                    },
+                    "reasoning_steps": [],
+                    "uncertainties": [],
+                    "watch_items": [],
+                },
+            }
+        raise AssertionError(response_model)
+
+    result = orchestrate_with_provider_result(
+        ResearchRequest(question="沐邦和南都怎么比较？", llm_mode="auto"),
+        FakeLLMProvider(response_factory=factory),
+    )
+
+    assert result.narrative is None
+    assert result.response.llm_used is False
+    assert any(
+        "LLM 分析叙述不可用" in reason
+        for reason in result.response.degraded_reasons
+    )
+
+
 def _overbroad_absence_factory(response_model: type, payload: dict) -> dict:
     if response_model is ParsedQuestion:
         return {

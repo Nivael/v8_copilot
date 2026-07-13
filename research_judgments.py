@@ -11,6 +11,8 @@ class ComparisonPhaseInsight:
     right_label: str
     left_stage: str
     right_stage: str
+    later_label: str | None
+    earlier_label: str | None
     directional_judgment: str | None
 
 
@@ -57,6 +59,8 @@ def comparison_phase_insight(
     left_stage, right_stage = _stage_label(left), _stage_label(right)
     left_rank, right_rank = _stage_rank(left_stage), _stage_rank(right_stage)
     directional: str | None = None
+    later_label: str | None = None
+    earlier_label: str | None = None
     if left_rank is not None and right_rank is not None and left_rank != right_rank:
         later_label, earlier_label = (
             (left_label, right_label) if left_rank > right_rank
@@ -71,5 +75,45 @@ def comparison_phase_insight(
         right_label=right_label,
         left_stage=left_stage,
         right_stage=right_stage,
+        later_label=later_label,
+        earlier_label=earlier_label,
         directional_judgment=directional,
     )
+
+
+def comparison_direction_contradiction(
+    text: str,
+    insight: ComparisonPhaseInsight,
+) -> bool:
+    """Detect a directional statement that reverses an evidence-derived order."""
+    later, earlier = insight.later_label, insight.earlier_label
+    if not later or not earlier:
+        return False
+    compact = "".join(str(text or "").split())
+    if f"{later}落后于{earlier}" in compact or f"{later}不如{earlier}" in compact:
+        return True
+    markers = ("更深入", "更进一步", "更靠后", "领先")
+    for marker in markers:
+        offset = 0
+        while True:
+            marker_at = compact.find(marker, offset)
+            if marker_at < 0:
+                break
+            before = compact[:marker_at]
+            later_at, earlier_at = before.rfind(later), before.rfind(earlier)
+            nearest_at = max(later_at, earlier_at)
+            if nearest_at >= 0:
+                nearest = later if later_at > earlier_at else earlier
+                prefix = before[:nearest_at]
+                other_at = earlier_at if nearest == later else later_at
+                is_comparison_object = any(
+                    prefix.endswith(comparator)
+                    for comparator in ("比", "较", "相较于", "相比于")
+                ) and other_at >= 0
+                subject = (
+                    earlier if nearest == later else later
+                ) if is_comparison_object else nearest
+                if subject == earlier:
+                    return True
+            offset = marker_at + len(marker)
+    return False

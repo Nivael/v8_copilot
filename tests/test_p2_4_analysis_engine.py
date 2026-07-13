@@ -244,6 +244,29 @@ def _overbroad_absence_factory(response_model: type, payload: dict) -> dict:
     raise AssertionError(response_model)
 
 
+def _scoped_restructuring_factory(response_model: type, payload: dict) -> dict:
+    if response_model is ParsedQuestion:
+        return _overbroad_absence_factory(response_model, payload)
+    if response_model is NarrativeDraft:
+        current = next(
+            item for item in payload["backing_catalog"]
+            if "公开招募证据口径" in item["summary"]
+        )
+        return {
+            "claims": [],
+            "narrative": {
+                "direct_answer": {
+                    "text": "公司正式公告清单未找到公开招募记录，其他渠道未覆盖。",
+                    "backing": [{"kind": current["kind"], "ref": current["ref"]}],
+                },
+                "reasoning_steps": [],
+                "uncertainties": [],
+                "watch_items": [],
+            },
+        }
+    raise AssertionError(response_model)
+
+
 def test_llm_cannot_expand_announcement_absence_to_real_world_absence() -> None:
     request = ResearchRequest(
         question="沐邦的公开招募推进到哪一步了？下一个节点可能是什么？",
@@ -256,3 +279,23 @@ def test_llm_cannot_expand_announcement_absence_to_real_world_absence() -> None:
     assert result.narrative is None
     assert result.response.llm_used is False
     assert any("LLM 分析叙述不可用" in reason for reason in result.response.degraded_reasons)
+
+
+def test_llm_restructuring_narrative_always_exposes_censoring_denominator() -> None:
+    request = ResearchRequest(
+        question="沐邦的公开招募推进到哪一步了？下一个节点可能是什么？",
+        llm_mode="auto",
+    )
+    result = orchestrate_with_provider_result(
+        request, FakeLLMProvider(response_factory=_scoped_restructuring_factory)
+    )
+
+    assert result.narrative is not None
+    censoring = next(
+        item for item in result.narrative.uncertainties if "右删失" in item.text
+    )
+    assert "episode case 去重" in censoring.text
+    assert "98 个起点" in censoring.text
+    assert "64 个观察到" in censoring.text
+    assert "34 个" in censoring.text
+    assert "可观察到后续的 case 为分母" in censoring.text

@@ -30,6 +30,7 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须逐维度比较，不得只说数据不足；阶段题必须把当前公开里程碑与历史后续分布分开。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
+重整阶段历史比例必须说明 episode case 去重口径、起点总数、可观察后续数和右删失数；阶段类别百分比以可观察后续为分母。
 公告题必须根据公告正文证据片段总结，不得只复述标题。
 巨潮公告ID是披露平台文档标识，不是上市公司正文中的公告编号；只有“公告编号”字段才可称为公告编号。
 某一来源未找到记录，只能表述为该来源口径未找到或未披露；不得扩大成现实中尚未发生。若 backing 标出未覆盖渠道，必须单独说明该覆盖缺口。
@@ -327,6 +328,32 @@ def _validated_narrative(
     steps = collect(list(draft.reasoning_steps), with_title=True)
     uncertainties = collect(list(draft.uncertainties))
     watch_items = collect(list(draft.watch_items))
+    stage_row = next((
+        row for row in card.body_rows
+        if row.get("记录类型") == "同阶段历史后续"
+        and row.get("后续口径") == "下一个不同重整阶段"
+    ), None)
+    if stage_row is not None:
+        uncertainty_text = " ".join(item.text for item in uncertainties)
+        observed = stage_row.get("可观察后续总数")
+        censored = stage_row.get("未观察到后续")
+        starts = stage_row.get("起点事件总数")
+        if not (
+            "episode" in uncertainty_text
+            and str(observed) in uncertainty_text
+            and str(censored) in uncertainty_text
+            and ("右删失" in uncertainty_text or "未观察到后续" in uncertainty_text)
+        ):
+            uncertainties.append(NarrativeStatement(
+                text=(
+                    f"历史阶段转移按 episode case 去重：{starts} 个起点中，"
+                    f"{observed} 个观察到不同阶段后续，{censored} 个截至快照仍未观察到后续"
+                    "（右删失）；阶段类别百分比以可观察到后续的 case 为分母。"
+                ),
+                backing=[ApiClaimBacking(
+                    kind="query_row", ref=str(stage_row["row_id"])
+                )],
+            ))
     return ResearchNarrative(
         direct_answer=direct,
         reasoning_steps=steps,

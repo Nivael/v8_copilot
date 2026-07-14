@@ -12,10 +12,12 @@ from api_contract_v2 import ResearchNarrative
 from llm_adapter import orchestrate_optional_llm
 from orchestrator_v1 import enrich_response_v1
 from orchestrator_v2 import enrich_response_v2
+from freshness_manifest import load_freshness_manifest
+from settings import FRESHNESS_MANIFEST_PATH
 
 
-EVIDENCE_PACK_VERSION = "v8_evidence_pack_v0"
-VALIDATION_REPORT_VERSION = "v8_research_validation_report_v0"
+EVIDENCE_PACK_VERSION = "v8_evidence_pack_v1"
+VALIDATION_REPORT_VERSION = "v8_research_validation_report_v1"
 
 
 class StrictModel(BaseModel):
@@ -41,6 +43,8 @@ class EvidencePack(StrictModel):
     question_scope: dict[str, Any]
     query_plan_id: str
     rows: list[dict[str, Any]]
+    lens_invocations: list[dict[str, Any]]
+    freshness_manifest: dict[str, Any]
     source_freshness: dict[str, str]
     provenance: list[str]
     coverage_gaps: list[dict[str, Any]]
@@ -65,6 +69,33 @@ class EvidencePack(StrictModel):
 
 class ResearchDraft(StrictModel):
     narrative: ResearchNarrative
+    decision_audit: "DecisionAudit | None" = None
+
+
+class DecisionFactor(StrictModel):
+    factor_id: str = Field(pattern=r"^[a-z0-9][a-z0-9_-]{1,63}$")
+    label: str = Field(min_length=1, max_length=120)
+    direction: Literal["supports", "weakens", "limits", "context"]
+    importance: Literal["decisive", "high", "medium", "low"]
+    rationale: str = Field(min_length=1, max_length=1200)
+    backing: list[ClaimBacking] = Field(min_length=1, max_length=20)
+
+
+class DecisionAlternative(StrictModel):
+    label: str = Field(min_length=1, max_length=160)
+    disposition: Literal["selected", "rejected", "unresolved"]
+    reason: str = Field(min_length=1, max_length=1200)
+    backing: list[ClaimBacking] = Field(min_length=1, max_length=20)
+
+
+class DecisionAudit(StrictModel):
+    weighting_method: Literal["ordinal_evidence_weighting_v0"] = "ordinal_evidence_weighting_v0"
+    judgment: str = Field(min_length=1, max_length=1200)
+    judgment_backing: list[ClaimBacking] = Field(min_length=1, max_length=20)
+    confidence: Literal["high", "medium", "low", "insufficient"]
+    factors: list[DecisionFactor] = Field(min_length=1, max_length=20)
+    alternatives: list[DecisionAlternative] = Field(default_factory=list, max_length=12)
+    not_hidden_chain_of_thought: Literal[True] = True
 
 
 class ValidationIssue(StrictModel):
@@ -77,9 +108,12 @@ class ValidationReport(StrictModel):
     contract_version: Literal[VALIDATION_REPORT_VERSION] = VALIDATION_REPORT_VERSION
     valid: bool
     pack_id: str
+    pack_digest: str = Field(pattern=r"^[a-f0-9]{64}$")
+    draft_digest: str = Field(pattern=r"^[a-f0-9]{64}$")
     issues: list[ValidationIssue] = Field(default_factory=list)
     checked_statements: int = Field(ge=0)
     checked_backings: int = Field(ge=0)
+    decision_audit_status: Literal["complete", "not_provided"] = "not_provided"
 
 
 class DraftValidationRequest(StrictModel):
@@ -136,6 +170,21 @@ def _applicable_experiences(question: str, *, repository=None) -> list[Applicabl
     ]
 
 
+def _current_freshness_manifest() -> dict[str, Any]:
+    if not FRESHNESS_MANIFEST_PATH.is_file():
+        return {"status": "not_published", "manifest_id": "", "coverage_gaps": [
+            "数据维护窗口尚未发布统一 freshness manifest。"
+        ]}
+    try:
+        manifest = load_freshness_manifest(FRESHNESS_MANIFEST_PATH)
+        return manifest.model_dump(mode="json")
+    except (OSError, ValueError) as exc:
+        return {
+            "status": "invalid", "manifest_id": "",
+            "coverage_gaps": [f"统一 freshness manifest 无法校验: {exc}"],
+        }
+
+
 def build_evidence_pack(
     request: ResearchRequest,
     *,
@@ -164,6 +213,8 @@ def build_evidence_pack(
         },
         "query_plan_id": query_plan_id,
         "rows": list(card.get("body_rows", [])),
+        "lens_invocations": list(card.get("lens_invocations", [])),
+        "freshness_manifest": _current_freshness_manifest(),
         "source_freshness": dict(card.get("source_freshness", {})),
         "provenance": list(card.get("provenance", [])),
         "coverage_gaps": gaps,
@@ -220,9 +271,11 @@ def validate_research_draft(pack: EvidencePack, draft: ResearchDraft) -> Validat
         *draft.narrative.watch_items,
     ]
     checked_backings = 0
-    for statement in statements:
+
+    def check_statement(text: str, backings: list[ClaimBacking]) -> None:
+        nonlocal checked_backings
         summaries: list[str] = []
-        for backing in statement.backing:
+        for backing in backings:
             checked_backings += 1
             key = f"{backing.kind}:{backing.ref}"
             summary = pack.validation_catalog.get(key)
@@ -230,26 +283,36 @@ def validate_research_draft(pack: EvidencePack, draft: ResearchDraft) -> Validat
                 issues.append(ValidationIssue(
                     code="missing_backing",
                     message=f"backing 不在 EvidencePack: {key}",
-                    statement=statement.text,
+                    statement=text,
                 ))
             else:
                 summaries.append(summary)
-        forbidden = [term for term in LLM_FORBIDDEN_WORDING if term in statement.text]
+        forbidden = [term for term in LLM_FORBIDDEN_WORDING if term in text]
         if forbidden:
             issues.append(ValidationIssue(
                 code="forbidden_wording",
                 message=f"命中禁用交易措辞: {forbidden}",
-                statement=statement.text,
+                statement=text,
             ))
         if summaries:
             supported = _numeric_tokens(" ".join(summaries))
-            unsupported = sorted(_numeric_tokens(statement.text) - supported)
+            unsupported = sorted(_numeric_tokens(text) - supported)
             if unsupported:
                 issues.append(ValidationIssue(
                     code="unsupported_number_or_date",
                     message=f"数字或日期没有被引用 backing 支持: {unsupported}",
-                    statement=statement.text,
+                    statement=text,
                 ))
+
+    for statement in statements:
+        check_statement(statement.text, statement.backing)
+    audit = draft.decision_audit
+    if audit is not None:
+        check_statement(audit.judgment, audit.judgment_backing)
+        for factor in audit.factors:
+            check_statement(f"{factor.label}：{factor.rationale}", factor.backing)
+        for alternative in audit.alternatives:
+            check_statement(f"{alternative.label}：{alternative.reason}", alternative.backing)
     direct = draft.narrative.direct_answer.text.strip()
     if direct.startswith(("本分析", "本题", "查询结果", "描述性查询")):
         issues.append(ValidationIssue(
@@ -260,7 +323,13 @@ def validate_research_draft(pack: EvidencePack, draft: ResearchDraft) -> Validat
     return ValidationReport(
         valid=not issues,
         pack_id=pack.pack_id,
+        pack_digest=pack.pack_digest,
+        draft_digest=_digest(draft.model_dump(mode="json")),
         issues=issues,
-        checked_statements=len(statements),
+        checked_statements=(
+            len(statements)
+            + (1 + len(audit.factors) + len(audit.alternatives) if audit else 0)
+        ),
         checked_backings=checked_backings,
+        decision_audit_status="complete" if audit else "not_provided",
     )

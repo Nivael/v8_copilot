@@ -29,7 +29,7 @@ Act as the primary research host. Use the deterministic v8 engine as a fact tool
 
 3. Inspect `question_scope`, `applicable_experiences`, `rows`, `source_freshness`, `coverage_gaps`, `allowed_claims`, and `forbidden_inferences`. If evidence is insufficient, report the specific materialization or coverage gap; do not substitute a nearby statistic.
 
-4. Write a structured draft following [draft-format.md](references/draft-format.md). Make the first paragraph answer the actual question in plain language. Put technical precision into reasoning or evidence, not the opening.
+4. Write a structured draft following [draft-format.md](references/draft-format.md). Make the first paragraph answer the actual question in plain language. Put technical precision into reasoning or evidence, not the opening. Include the required ordinal `decision_audit`: judgment, evidence-backed factors, importance, direction, alternatives, confidence and boundaries.
 
 5. Validate before answering:
 
@@ -37,11 +37,16 @@ Act as the primary research host. Use the deterministic v8 engine as a fact tool
 
    If validation fails, fix the draft and validate again. Do not silently drop the central judgment and present a hollow answer.
 
-6. Record a valid run in the separate local ledger:
+6. Record a valid run in the separate local ledger. Recording persists the exact
+   EvidencePack, structured draft, validation report and decision audit for `/runs`:
 
    `python research_workbench.py record --pack <pack.json> --draft <draft.json> --validation <validation.json> --surface codex_desktop`
 
 7. Return the human-readable answer. Lead with the outcome, then give only the reasoning needed to understand it. Separate uncertainty and coverage gaps.
+
+The run audit is the user-visible explanation boundary. Never claim to expose hidden
+model chain-of-thought. Explain the decision through cited factors and ordinal
+importance; do not manufacture numeric weights.
 
 ## Experience handling
 

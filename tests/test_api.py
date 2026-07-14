@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import json
 from pathlib import Path
 
@@ -188,6 +189,27 @@ def test_run_feedback_creates_generic_candidate_not_question_memory(monkeypatch,
     assert candidate["experience_type"] == "presentation_rule"
     assert candidate["not_evidence"] is True
     assert "两只股票怎么比较" not in candidate["value_summary"]
+
+
+def test_persisted_evidence_pack_is_available_for_run_audit(monkeypatch, tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    monkeypatch.setattr(api_module, "research_run_ledger", ledger)
+    content = {
+        "rows": [{"row_id": "row-1"}],
+        "lens_invocations": [{"release_id": "RL-1"}],
+        "coverage_gaps": [],
+    }
+    digest = hashlib.sha256(json.dumps(
+        content, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str,
+    ).encode("utf-8")).hexdigest()
+    pack = ledger.store_evidence_pack({
+        **content, "pack_id": f"EP-{digest[:20].upper()}", "pack_digest": digest,
+    })
+
+    response = api_request("GET", f"/api/v1/research/evidence/{pack.pack_id}")
+
+    assert response.status_code == 200
+    assert response.json()["payload"]["rows"][0]["row_id"] == "row-1"
 
 
 def test_stream_answers_non_seed_stock_name_with_real_backing(monkeypatch) -> None:

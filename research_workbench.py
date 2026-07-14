@@ -37,6 +37,15 @@ def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _digest(value: dict) -> str:
+    import hashlib
+
+    canonical = json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str,
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def _render_answer(draft: ResearchDraft) -> str:
     narrative = draft.narrative
     parts = [narrative.direct_answer.text]
@@ -131,8 +140,16 @@ def main() -> int:
         pack = EvidencePack.model_validate(_read_json(args.pack))
         draft = ResearchDraft.model_validate(_read_json(args.draft))
         report = ValidationReport.model_validate(_read_json(args.validation))
-        if not report.valid or report.pack_id != pack.pack_id:
+        if (
+            not report.valid
+            or report.pack_id != pack.pack_id
+            or report.pack_digest != pack.pack_digest
+            or report.draft_digest != _digest(draft.model_dump(mode="json"))
+        ):
             raise SystemExit("refusing to record an invalid or mismatched answer")
+        if draft.decision_audit is None:
+            raise SystemExit("refusing to record without a structured decision_audit")
+        ledger.store_evidence_pack(pack.model_dump(mode="json"))
         scope = pack.question_scope
         record_value = ledger.record(ResearchRunCreate(
             request_id=str(pack.deterministic_response.get("request_id") or pack.pack_id),
@@ -141,6 +158,8 @@ def main() -> int:
             object_refs=[str(scope["object"].get("ref") or "unknown")],
             evidence_pack_ids=[pack.pack_id],
             final_answer=_render_answer(draft),
+            research_draft=draft.model_dump(mode="json"),
+            decision_audit=draft.decision_audit.model_dump(mode="json"),
             validation_report=report.model_dump(mode="json"),
             source_freshness=pack.source_freshness,
             tool_calls=[pack.query_plan_id, "validate_research_draft"],

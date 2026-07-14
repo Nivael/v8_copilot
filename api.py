@@ -49,6 +49,7 @@ from orchestrator import route_only
 from orchestrator_v1 import enrich_response_v1
 from orchestrator_v2 import enrich_response_v2, stream_events_v2
 from research_repository import (
+    EvidencePackAuditRecord,
     ExperienceRepository,
     ResearchRunCreate,
     ResearchRunLedger,
@@ -262,6 +263,29 @@ def record_research_run(request: ResearchRunCreate) -> ResearchRunRecord:
 @app.get("/api/v1/research/runs", response_model=list[ResearchRunRecord])
 def list_research_runs(limit: int = Query(default=50, ge=1, le=200)) -> list[ResearchRunRecord]:
     return research_run_ledger.list(limit=limit)
+
+
+@app.get("/api/v1/research/runs/{run_id}", response_model=ResearchRunRecord)
+def get_research_run(
+    run_id: str = Path(pattern=r"^RUN-[A-F0-9]{24}$"),
+) -> ResearchRunRecord:
+    try:
+        return research_run_ledger.get(run_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="research run 不存在") from exc
+
+
+@app.get(
+    "/api/v1/research/evidence/{pack_id}",
+    response_model=EvidencePackAuditRecord,
+)
+def get_research_evidence_pack(
+    pack_id: str = Path(pattern=r"^EP-[A-F0-9]{20}$"),
+) -> EvidencePackAuditRecord:
+    try:
+        return research_run_ledger.get_evidence_pack(pack_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="EvidencePack 尚未持久化") from exc
 
 
 @app.post("/api/v1/research/runs/{run_id}/feedback")

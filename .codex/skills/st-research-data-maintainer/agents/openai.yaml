@@ -1,0 +1,4 @@
+interface:
+  display_name: "ST Data Maintainer"
+  short_description: "独立更新价格与公告，并发布严格 freshness manifest"
+  default_prompt: "Use $st-research-data-maintainer to refresh the declared ST research universe and publish a strict freshness manifest. Do not answer research questions."

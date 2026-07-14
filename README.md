@@ -58,8 +58,9 @@ uv run python run_api.py
 Codex 工作台增量接口：
 
 - `POST /api/v1/research/evidence` — 只读生成 EvidencePack；
+- `GET /api/v1/research/evidence/{pack_id}` — 读取已随运行持久化的完整 EvidencePack；
 - `POST /api/v1/research/validate` — 校验 Codex 结构化研究稿；
-- `POST/GET /api/v1/research/runs` — 写入或读取独立运行审计库；
+- `POST/GET /api/v1/research/runs` 与 `GET /api/v1/research/runs/{run_id}` — 写入或读取独立运行审计库；
 - `POST /api/v1/research/runs/{run_id}/feedback` — 绑定反馈并按新颖性生成经验候选；
 - `POST /api/v1/experiences/candidates` 与 `GET /api/v1/experiences` — 候选写入与经验检索；
 - `POST /api/v1/experiences/{experience_id}/review` — 人工审阅状态转换。
@@ -112,6 +113,12 @@ uv run python run_api.py
 追溯。开发模式可运行 `npm run dev`，Vite 将 `/api` 代理到本地 FastAPI。旧问答位于
 `/legacy`，个股节点通过 ResearchContext URL 回到该兼容入口继续提问。
 
+固定的数据维护任务、研究任务和审计面板分工见 [OPERATING_MODEL.md](OPERATING_MODEL.md)。
+数据维护入口为 `data_maintenance.py`：公告增量必须先验证再提升，完成上游更新后生成
+`local_data/v8_copilot/freshness_manifest.json`。新 Codex 运行会把完整 EvidencePack、结构化
+draft 和 ordinal 判断审计持久化；在 `/runs` 点击 Pack ID 可查看数据库行、Lens、backing
+与 coverage gap。
+
 ## 契约与文件
 
 - `lens_binding.py` — **脊梁**：LensRegistry（只读加载 pinned v1 库）+ candidate_lenses（按主题标签/cluster 精确匹配）+ LensInvocation + LensGap。
@@ -133,6 +140,7 @@ uv run python run_api.py
 - `research_repository.py` — 独立 Research Run Ledger 与 Experience Repository。
 - `experience_contract.py` / `experience_distiller.py` — 非证据经验契约、人工晋级闸门和候选提炼。
 - `research_workbench.py` — 项目 skill 使用的本地 CLI。
+- `data_maintenance.py` / `freshness_manifest.py` — 独立数据维护边界与统一 freshness manifest。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。

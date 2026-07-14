@@ -1,5 +1,6 @@
 import type {
-  Dossier, Experience, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
+  Dossier, EvidencePackAuditRecord, Experience, ExperienceStatus, ResearchContext,
+  ResearchRun, StreamEvent,
 } from './types'
 
 export function parseNdjson(buffer: string, chunk: string) {
@@ -81,5 +82,14 @@ export async function reviewExperience(
 export async function getResearchRuns(signal?: AbortSignal): Promise<ResearchRun[]> {
   const response = await fetch('/api/v1/research/runs?limit=100', {signal})
   if (!response.ok) throw new Error(`运行审计服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getEvidencePack(
+  packId:string,
+  signal?:AbortSignal,
+):Promise<EvidencePackAuditRecord> {
+  const response=await fetch(`/api/v1/research/evidence/${encodeURIComponent(packId)}`,{signal})
+  if(!response.ok)throw new Error(`EvidencePack 服务返回 ${response.status}`)
   return response.json()
 }

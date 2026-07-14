@@ -43,6 +43,8 @@ class ResearchRunCreate(StrictModel):
     object_refs: list[str] = Field(default_factory=list, max_length=20)
     evidence_pack_ids: list[str] = Field(min_length=1, max_length=20)
     final_answer: str = Field(min_length=1, max_length=20000)
+    research_draft: dict[str, Any] = Field(default_factory=dict)
+    decision_audit: dict[str, Any] = Field(default_factory=dict)
     validation_report: dict[str, Any]
     source_freshness: dict[str, str]
     tool_calls: list[str] = Field(default_factory=list, max_length=100)
@@ -60,6 +62,13 @@ class ResearchRunRecord(ResearchRunCreate):
     run_id: str = Field(pattern=r"^RUN-[A-F0-9]{24}$")
     created_at: str
     experience_candidate_ids: list[str] = Field(default_factory=list)
+
+
+class EvidencePackAuditRecord(StrictModel):
+    pack_id: str = Field(pattern=r"^EP-[A-F0-9]{20}$")
+    pack_digest: str = Field(pattern=r"^[a-f0-9]{64}$")
+    payload: dict[str, Any]
+    created_at: str
 
 
 class ResearchRunLedger:
@@ -80,6 +89,8 @@ class ResearchRunLedger:
                 object_refs_json text not null,
                 evidence_pack_ids_json text not null,
                 final_answer text not null,
+                research_draft_json text not null default '{}',
+                decision_audit_json text not null default '{}',
                 validation_report_json text not null,
                 source_freshness_json text not null,
                 tool_calls_json text not null,
@@ -108,12 +119,33 @@ class ResearchRunLedger:
                 created_at text not null,
                 primary key (run_id, experience_id, relation)
             );
+            create table if not exists evidence_packs (
+                pack_id text primary key,
+                pack_digest text not null,
+                payload_json text not null,
+                created_at text not null
+            );
         """)
+        columns = {
+            str(row[1]) for row in connection.execute("pragma table_info(research_runs)")
+        }
+        if "research_draft_json" not in columns:
+            connection.execute(
+                "alter table research_runs add column research_draft_json text not null default '{}'"
+            )
+        if "decision_audit_json" not in columns:
+            connection.execute(
+                "alter table research_runs add column decision_audit_json text not null default '{}'"
+            )
         return connection
 
     def _connect_readonly(self) -> sqlite3.Connection | None:
         if not self.path.is_file():
             return None
+        # Existing local ledgers are migrated in place before the read-only handle
+        # is opened. Missing ledgers remain missing, so a read never creates one.
+        with self._connect():
+            pass
         connection = sqlite3.connect(f"file:{self.path}?mode=ro", uri=True)
         connection.row_factory = sqlite3.Row
         return connection
@@ -125,11 +157,17 @@ class ResearchRunLedger:
         completed_at = value.completed_at or created_at
         with self._connect() as connection:
             connection.execute(
-                "insert into research_runs values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                "insert into research_runs ("
+                "run_id,request_id,question_text,normalized_intent,object_refs_json,"
+                "evidence_pack_ids_json,final_answer,research_draft_json,decision_audit_json,"
+                "validation_report_json,source_freshness_json,tool_calls_json,experience_hits_json,"
+                "agent_surface,model,config_digest,thread_id,turn_id,started_at,completed_at,created_at"
+                ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (
                     run_id, value.request_id, value.question_text,
                     value.normalized_intent, _json(value.object_refs),
                     _json(value.evidence_pack_ids), value.final_answer,
+                    _json(value.research_draft), _json(value.decision_audit),
                     _json(value.validation_report), _json(value.source_freshness),
                     _json(value.tool_calls), _json(value.experience_hits),
                     value.agent_surface, value.model, value.config_digest,
@@ -144,6 +182,53 @@ class ResearchRunLedger:
             "completed_at": completed_at,
         })
         return ResearchRunRecord.model_validate(payload)
+
+    def store_evidence_pack(self, payload: dict[str, Any]) -> EvidencePackAuditRecord:
+        pack_id = str(payload.get("pack_id") or "")
+        pack_digest = str(payload.get("pack_digest") or "")
+        if not pack_id.startswith("EP-") or len(pack_id) != 23:
+            raise ValueError("EvidencePack pack_id 非法")
+        if len(pack_digest) != 64 or any(char not in "0123456789abcdef" for char in pack_digest):
+            raise ValueError("EvidencePack pack_digest 非法")
+        digest_payload = {key: value for key, value in payload.items() if key not in {"pack_id", "pack_digest"}}
+        actual_digest = hashlib.sha256(_json(digest_payload).encode("utf-8")).hexdigest()
+        if actual_digest != pack_digest or pack_id != f"EP-{actual_digest[:20].upper()}":
+            raise ValueError("EvidencePack digest 或 pack_id 与内容不匹配")
+        created_at = _now()
+        with self._connect() as connection:
+            existing = connection.execute(
+                "select pack_digest,payload_json,created_at from evidence_packs where pack_id=?",
+                (pack_id,),
+            ).fetchone()
+            if existing is not None:
+                if str(existing["pack_digest"]) != pack_digest or _loads(existing["payload_json"]) != payload:
+                    raise ValueError("同 pack_id 的 EvidencePack 内容不一致")
+                return EvidencePackAuditRecord(
+                    pack_id=pack_id, pack_digest=pack_digest,
+                    payload=payload, created_at=str(existing["created_at"]),
+                )
+            connection.execute(
+                "insert into evidence_packs values (?,?,?,?)",
+                (pack_id, pack_digest, _json(payload), created_at),
+            )
+        return EvidencePackAuditRecord(
+            pack_id=pack_id, pack_digest=pack_digest, payload=payload, created_at=created_at,
+        )
+
+    def get_evidence_pack(self, pack_id: str) -> EvidencePackAuditRecord:
+        connection = self._connect_readonly()
+        if connection is None:
+            raise KeyError(pack_id)
+        with connection:
+            row = connection.execute(
+                "select * from evidence_packs where pack_id=?", (pack_id,)
+            ).fetchone()
+        if row is None:
+            raise KeyError(pack_id)
+        return EvidencePackAuditRecord(
+            pack_id=str(row["pack_id"]), pack_digest=str(row["pack_digest"]),
+            payload=_loads(row["payload_json"]), created_at=str(row["created_at"]),
+        )
 
     def add_feedback(
         self,
@@ -186,6 +271,21 @@ class ResearchRunLedger:
             ).fetchall()
         return [self._record(row) for row in rows]
 
+    def get(self, run_id: str) -> ResearchRunRecord:
+        connection = self._connect_readonly()
+        if connection is None:
+            raise KeyError(run_id)
+        with connection:
+            row = connection.execute(
+                "select r.*, coalesce((select json_group_array(experience_id) "
+                "from run_experience_links l where l.run_id=r.run_id), '[]') as candidates "
+                "from research_runs r where run_id=?",
+                (run_id,),
+            ).fetchone()
+        if row is None:
+            raise KeyError(run_id)
+        return self._record(row)
+
     @staticmethod
     def _record(row: sqlite3.Row) -> ResearchRunRecord:
         return ResearchRunRecord(
@@ -194,6 +294,8 @@ class ResearchRunLedger:
             object_refs=_loads(row["object_refs_json"]),
             evidence_pack_ids=_loads(row["evidence_pack_ids_json"]),
             final_answer=row["final_answer"],
+            research_draft=_loads(row["research_draft_json"]),
+            decision_audit=_loads(row["decision_audit_json"]),
             validation_report=_loads(row["validation_report_json"]),
             source_freshness=_loads(row["source_freshness_json"]),
             tool_calls=_loads(row["tool_calls_json"]),

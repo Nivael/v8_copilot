@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import hashlib
+import json
+
 import pytest
 
 from experience_contract import (
@@ -33,6 +36,13 @@ def candidate(*, source: str = "RUN-AAAAAAAAAAAAAAAAAAAAAAAA") -> ExperienceCand
         validation_refs=["regression:readability"],
         source_run_refs=[source],
     )
+
+
+def evidence_pack_payload(**content) -> dict:
+    digest = hashlib.sha256(json.dumps(
+        content, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str,
+    ).encode("utf-8")).hexdigest()
+    return {**content, "pack_id": f"EP-{digest[:20].upper()}", "pack_digest": digest}
 
 
 def test_experience_proposal_dedupes_and_merges_source_runs(tmp_path) -> None:
@@ -127,3 +137,38 @@ def test_routine_positive_feedback_does_not_create_experience() -> None:
         "RUN-AAAAAAAAAAAAAAAAAAAAAAAA",
         ExperienceFeedbackRequest(feedback_text="这版可以", category="presentation"),
     ) is None
+
+
+def test_run_ledger_persists_immutable_evidence_pack_and_decision_audit(tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    pack = evidence_pack_payload(rows=[{"row_id": "row-1", "value": "fact"}])
+    stored = ledger.store_evidence_pack(pack)
+    run = ledger.record(ResearchRunCreate(
+        request_id="req-audit",
+        question_text="当前阶段是什么？",
+        normalized_intent="stage",
+        object_refs=["603398"],
+        evidence_pack_ids=[stored.pack_id],
+        final_answer="当前公开阶段可确认。",
+        research_draft={"narrative": {"direct_answer": {"text": "当前公开阶段可确认。"}}},
+        decision_audit={
+            "weighting_method": "ordinal_evidence_weighting_v0",
+            "judgment": "当前公开阶段可确认。",
+            "judgment_backing": [{"kind": "query_row", "ref": "row-1"}],
+            "confidence": "high",
+            "factors": [],
+            "alternatives": [],
+            "not_hidden_chain_of_thought": True,
+        },
+        validation_report={"valid": True},
+        source_freshness={"announcements": "2024-01-03"},
+        agent_surface="codex_desktop",
+    ))
+
+    assert ledger.get_evidence_pack(stored.pack_id).payload["rows"][0]["row_id"] == "row-1"
+    assert ledger.get(run.run_id).decision_audit["confidence"] == "high"
+    assert ledger.list()[0].research_draft["narrative"]["direct_answer"]["text"]
+
+    changed = {**pack, "rows": [{"row_id": "row-1", "value": "tampered"}]}
+    with pytest.raises(ValueError, match="不匹配"):
+        ledger.store_evidence_pack(changed)

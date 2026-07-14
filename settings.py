@@ -27,3 +27,7 @@ EXPERIENCE_REPOSITORY_DB = Path(os.environ.get(
     "V8_EXPERIENCE_REPOSITORY_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "experience_repository.sqlite3",
 )).expanduser().resolve()
+FRESHNESS_MANIFEST_PATH = Path(os.environ.get(
+    "V8_FRESHNESS_MANIFEST_PATH",
+    DATA_ROOT / "local_data" / "v8_copilot" / "freshness_manifest.json",
+)).expanduser().resolve()

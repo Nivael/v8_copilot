@@ -119,6 +119,8 @@ export interface ResearchRun {
   object_refs:string[]
   evidence_pack_ids:string[]
   final_answer:string
+  research_draft:Record<string,unknown>
+  decision_audit:DecisionAudit|Record<string,never>
   validation_report:{valid?:boolean;issues?:Array<Record<string,unknown>>}
   source_freshness:Record<string,string>
   tool_calls:string[]
@@ -131,5 +133,64 @@ export interface ResearchRun {
   turn_id:string
   started_at:string
   completed_at:string
+  created_at:string
+}
+
+export interface EvidenceBacking {
+  kind:string
+  ref:string
+}
+
+export interface DecisionFactor {
+  factor_id:string
+  label:string
+  direction:'supports'|'weakens'|'limits'|'context'
+  importance:'decisive'|'high'|'medium'|'low'
+  rationale:string
+  backing:EvidenceBacking[]
+}
+
+export interface DecisionAlternative {
+  label:string
+  disposition:'selected'|'rejected'|'unresolved'
+  reason:string
+  backing:EvidenceBacking[]
+}
+
+export interface DecisionAudit {
+  weighting_method:'ordinal_evidence_weighting_v0'
+  judgment:string
+  judgment_backing:EvidenceBacking[]
+  confidence:'high'|'medium'|'low'|'insufficient'
+  factors:DecisionFactor[]
+  alternatives:DecisionAlternative[]
+  not_hidden_chain_of_thought:true
+}
+
+export interface EvidencePackPayload {
+  contract_version:string
+  pack_id:string
+  pack_digest:string
+  question_scope:Record<string,unknown>
+  query_plan_id:string
+  rows:Array<Record<string,unknown>>
+  lens_invocations:Array<Record<string,unknown>>
+  freshness_manifest:Record<string,unknown>
+  source_freshness:Record<string,string>
+  provenance:string[]
+  coverage_gaps:Array<Record<string,unknown>>
+  definitions:string[]
+  allowed_claims:Array<Record<string,unknown>>
+  forbidden_inferences:string[]
+  validation_catalog:Record<string,string>
+  applicable_experiences:Array<Record<string,unknown>>
+  deterministic_response:Record<string,unknown>
+  not_evidence:false
+}
+
+export interface EvidencePackAuditRecord {
+  pack_id:string
+  pack_digest:string
+  payload:EvidencePackPayload
   created_at:string
 }

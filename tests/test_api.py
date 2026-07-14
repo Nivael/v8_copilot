@@ -10,6 +10,7 @@ from answer_engine import BASE_DB, EPISODE_INDEX
 from fastapi import FastAPI
 from jsonschema import Draft202012Validator
 from lens_binding import RELEASE_LIBRARY
+from research_repository import ExperienceRepository, ResearchRunLedger
 
 
 def api_request(method: str, url: str, **kwargs) -> httpx.Response:
@@ -30,6 +31,25 @@ def payload(question: str, *, kind: str = "stock", ref: str = "603398") -> dict:
         "question": question,
         "object": {"kind": kind, "ref": ref},
         "llm_mode": "off",
+    }
+
+
+def experience_candidate_payload() -> dict:
+    return {
+        "experience_type": "presentation_rule",
+        "title": "主回答先给判断",
+        "value_summary": "把精度下沉到依据与证据层。",
+        "trigger_conditions": ["比较问题"],
+        "scope": ["comparison"],
+        "required_inputs": ["evidence_pack"],
+        "query_plan": ["识别实质差异"],
+        "definitions": ["主回答可独立读懂"],
+        "answer_rubric": ["首段直接回答"],
+        "anti_patterns": ["字段清单开头"],
+        "coverage_boundaries": ["不改变证据等级"],
+        "validation_refs": ["regression:readability"],
+        "source_run_refs": ["migration:test"],
+        "supersedes": [],
     }
 
 
@@ -83,6 +103,91 @@ def test_answers_endpoint_returns_validated_answer_card() -> None:
         / "contracts/v8_answer_contract_v0/schema.json"
     ).read_text(encoding="utf-8"))
     Draft202012Validator(schema).validate(body["answer_card"])
+
+
+def test_research_gateway_and_validator_round_trip() -> None:
+    response = api_request(
+        "POST",
+        "/api/v1/research/evidence",
+        json={"question": "沐邦和南都怎么比较？", "llm_mode": "off"},
+    )
+
+    assert response.status_code == 200
+    pack = response.json()
+    assert pack["pack_id"].startswith("EP-")
+    assert pack["rows"]
+    assert pack["not_evidence"] is False
+
+    validated = api_request(
+        "POST",
+        "/api/v1/research/validate",
+        json={
+            "evidence_pack": pack,
+            "draft": {"narrative": pack["deterministic_response"]["narrative"]},
+        },
+    )
+    assert validated.status_code == 200
+    assert validated.json()["valid"] is True
+
+
+def test_experience_review_requires_human_and_filters_status(monkeypatch, tmp_path) -> None:
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    monkeypatch.setattr(api_module, "experience_repository", repository)
+    created = api_request(
+        "POST", "/api/v1/experiences/candidates", json=experience_candidate_payload()
+    )
+
+    assert created.status_code == 201
+    experience_id = created.json()["experience_id"]
+    rejected = api_request(
+        "POST",
+        f"/api/v1/experiences/{experience_id}/review",
+        json={"action": "accept", "actor_type": "codex", "reviewed_by": "codex"},
+    )
+    assert rejected.status_code == 403
+
+    accepted = api_request(
+        "POST",
+        f"/api/v1/experiences/{experience_id}/review",
+        json={"action": "accept", "actor_type": "human", "reviewed_by": "owner"},
+    )
+    assert accepted.status_code == 200
+    assert accepted.json()["status"] == "accepted"
+    listed = api_request("GET", "/api/v1/experiences?status=accepted")
+    assert [row["experience_id"] for row in listed.json()] == [experience_id]
+
+
+def test_run_feedback_creates_generic_candidate_not_question_memory(monkeypatch, tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    monkeypatch.setattr(api_module, "research_run_ledger", ledger)
+    monkeypatch.setattr(api_module, "experience_repository", repository)
+    run = api_request("POST", "/api/v1/research/runs", json={
+        "request_id": "req-api-run",
+        "question_text": "两只股票怎么比较？",
+        "normalized_intent": "stock_comparison",
+        "object_refs": ["comparison"],
+        "evidence_pack_ids": ["EP-AAAAAAAAAAAAAAAAAAAA"],
+        "final_answer": "先给实质差异。",
+        "validation_report": {"valid": True},
+        "source_freshness": {"announcement": "2026-07-08"},
+        "agent_surface": "codex_desktop",
+    })
+    assert run.status_code == 201
+
+    feedback = api_request(
+        "POST",
+        f"/api/v1/research/runs/{run.json()['run_id']}/feedback",
+        json={
+            "feedback_text": "总览先说实质差异，不要从系统口径开始。",
+            "category": "presentation",
+            "submitted_by": "owner",
+        },
+    )
+    candidate = feedback.json()["experience_candidate"]
+    assert candidate["experience_type"] == "presentation_rule"
+    assert candidate["not_evidence"] is True
+    assert "两只股票怎么比较" not in candidate["value_summary"]
 
 
 def test_stream_answers_non_seed_stock_name_with_real_backing(monkeypatch) -> None:

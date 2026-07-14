@@ -6,7 +6,7 @@ from collections.abc import Iterator
 from pathlib import Path as FilePath
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException, Path, Query
+from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -25,6 +25,21 @@ from api_contract_v2 import (
 )
 from answer_engine import CONTRACT_VERSION as ANSWER_CONTRACT_VERSION
 from dossier_service import DossierNotFoundError, build_stock_dossier
+from evidence_gateway import (
+    DraftValidationRequest,
+    EvidencePack,
+    ValidationReport,
+    build_evidence_pack,
+    validate_research_draft,
+)
+from experience_contract import (
+    ExperienceCandidateInput,
+    ExperienceFeedbackRequest,
+    ExperienceRecord,
+    ExperienceReviewRequest,
+    ExperienceStatus,
+)
+from experience_distiller import distill_feedback
 from llm_adapter import (
     openai_configured,
     orchestrate_optional_llm,
@@ -33,9 +48,18 @@ from llm_adapter import (
 from orchestrator import route_only
 from orchestrator_v1 import enrich_response_v1
 from orchestrator_v2 import enrich_response_v2, stream_events_v2
+from research_repository import (
+    ExperienceRepository,
+    ResearchRunCreate,
+    ResearchRunLedger,
+    ResearchRunRecord,
+)
+from settings import EXPERIENCE_REPOSITORY_DB, RESEARCH_RUN_LEDGER_DB
 
 
 logger = logging.getLogger(__name__)
+experience_repository = ExperienceRepository(EXPERIENCE_REPOSITORY_DB)
+research_run_ledger = ResearchRunLedger(RESEARCH_RUN_LEDGER_DB)
 
 
 class SPAStaticFiles(StaticFiles):
@@ -203,6 +227,109 @@ def stock_dossier(
             status_code=500,
             detail={"code": "dossier_invalid", "message": "个股材料校验失败。"},
         ) from exc
+
+
+@app.post("/api/v1/research/evidence", response_model=EvidencePack)
+def research_evidence(request: ResearchRequest) -> EvidencePack:
+    """Build a self-contained EvidencePack without network or research DB writes."""
+    try:
+        return build_evidence_pack(
+            request.model_copy(update={"llm_mode": "off"}),
+            experience_repository=experience_repository,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        logger.exception("evidence gateway execution failed")
+        raise HTTPException(
+            status_code=500,
+            detail={"code": "evidence_gateway_failed", "message": "只读证据网关执行失败。"},
+        ) from exc
+
+
+@app.post("/api/v1/research/validate", response_model=ValidationReport)
+def research_validate(request: DraftValidationRequest) -> ValidationReport:
+    return validate_research_draft(request.evidence_pack, request.draft)
+
+
+@app.post(
+    "/api/v1/research/runs",
+    response_model=ResearchRunRecord,
+    status_code=status.HTTP_201_CREATED,
+)
+def record_research_run(request: ResearchRunCreate) -> ResearchRunRecord:
+    return research_run_ledger.record(request)
+
+
+@app.get("/api/v1/research/runs", response_model=list[ResearchRunRecord])
+def list_research_runs(limit: int = Query(default=50, ge=1, le=200)) -> list[ResearchRunRecord]:
+    return research_run_ledger.list(limit=limit)
+
+
+@app.post("/api/v1/research/runs/{run_id}/feedback")
+def add_research_feedback(
+    request: ExperienceFeedbackRequest,
+    run_id: str = Path(pattern=r"^RUN-[A-F0-9]{24}$"),
+) -> dict[str, object]:
+    try:
+        feedback_id = research_run_ledger.add_feedback(
+            run_id,
+            category=request.category,
+            feedback_text=request.feedback_text,
+            submitted_by=request.submitted_by,
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="research run 不存在") from exc
+    candidate_input = distill_feedback(run_id, request)
+    candidate = None
+    if candidate_input is not None:
+        candidate = experience_repository.propose(candidate_input)
+        research_run_ledger.link_experience(run_id, candidate.experience_id, "candidate_source")
+    return {
+        "feedback_id": feedback_id,
+        "experience_candidate": candidate.model_dump(mode="json") if candidate else None,
+    }
+
+
+@app.post(
+    "/api/v1/experiences/candidates",
+    response_model=ExperienceRecord,
+    status_code=status.HTTP_201_CREATED,
+)
+def propose_experience(request: ExperienceCandidateInput) -> ExperienceRecord:
+    """Codex and deterministic distillers may only create candidate records."""
+    return experience_repository.propose(request)
+
+
+@app.get("/api/v1/experiences", response_model=list[ExperienceRecord])
+def list_experiences(
+    experience_status: ExperienceStatus | None = Query(default=None, alias="status"),
+    limit: int = Query(default=100, ge=1, le=300),
+) -> list[ExperienceRecord]:
+    return experience_repository.list(status=experience_status, limit=limit)
+
+
+@app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)
+def get_experience(
+    experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),
+) -> ExperienceRecord:
+    try:
+        return experience_repository.get(experience_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="experience 不存在") from exc
+
+
+@app.post("/api/v1/experiences/{experience_id}/review", response_model=ExperienceRecord)
+def review_experience(
+    request: ExperienceReviewRequest,
+    experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),
+) -> ExperienceRecord:
+    try:
+        return experience_repository.review(experience_id, request)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="experience 不存在") from exc
+    except PermissionError as exc:
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 _WEB_DIST = FilePath(__file__).resolve().parent / "web/dist"

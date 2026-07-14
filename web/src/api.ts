@@ -1,4 +1,6 @@
-import type {Dossier, ResearchContext, StreamEvent} from './types'
+import type {
+  Dossier, Experience, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
+} from './types'
 
 export function parseNdjson(buffer: string, chunk: string) {
   const lines = `${buffer}${chunk}`.split('\n')
@@ -50,5 +52,34 @@ export async function getDossier(
   const query = announcementFocus ? `?announcement_focus=${encodeURIComponent(announcementFocus)}` : ''
   const response = await fetch(`/api/v1/stocks/${encodeURIComponent(symbol)}/dossier${query}`, {signal})
   if (!response.ok) throw new Error(`个股证据服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getExperiences(
+  status?: ExperienceStatus,
+  signal?: AbortSignal,
+): Promise<Experience[]> {
+  const query = status ? `?status=${encodeURIComponent(status)}` : ''
+  const response = await fetch(`/api/v1/experiences${query}`, {signal})
+  if (!response.ok) throw new Error(`经验服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function reviewExperience(
+  experienceId: string,
+  action: 'accept'|'ignore'|'block'|'close',
+): Promise<Experience> {
+  const response = await fetch(`/api/v1/experiences/${encodeURIComponent(experienceId)}/review`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({action, actor_type: 'human', reviewed_by: 'owner', note: ''}),
+  })
+  if (!response.ok) throw new Error(`经验审阅返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getResearchRuns(signal?: AbortSignal): Promise<ResearchRun[]> {
+  const response = await fetch('/api/v1/research/runs?limit=100', {signal})
+  if (!response.ok) throw new Error(`运行审计服务返回 ${response.status}`)
   return response.json()
 }

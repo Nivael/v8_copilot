@@ -48,5 +48,5 @@ export function questionLink(context:ResearchContext,question:string) {
   }
   context.selected_lenses?.forEach(lens=>params.append('lens',lens))
   params.set('question',question)
-  return `/?${params}`
+  return `/legacy?${params}`
 }

@@ -19,3 +19,11 @@ RECRUITMENT_DEADLINE_MATERIALIZATION = Path(os.environ.get(
     "V8_RECRUITMENT_DEADLINE_MATERIALIZATION",
     DATA_ROOT / "local_data" / "v8_copilot" / "recruitment_deadlines.json",
 )).expanduser().resolve()
+RESEARCH_RUN_LEDGER_DB = Path(os.environ.get(
+    "V8_RESEARCH_RUN_LEDGER_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "research_run_ledger.sqlite3",
+)).expanduser().resolve()
+EXPERIENCE_REPOSITORY_DB = Path(os.environ.get(
+    "V8_EXPERIENCE_REPOSITORY_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "experience_repository.sqlite3",
+)).expanduser().resolve()

@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {ask, parseNdjson} from './api'
+import {ask, getExperiences, parseNdjson, reviewExperience} from './api'
 
 describe('NDJSON', () => {
   afterEach(() => vi.restoreAllMocks())
@@ -26,5 +26,18 @@ describe('NDJSON', () => {
     expect(body.object).toEqual({kind: 'episode_type', ref: 'restructuring'})
     expect(body.context).toEqual({selected_episode: 'restructuring_path'})
     expect(body.context.object_scope).toBeUndefined()
+  })
+
+  it('uses explicit human review for experience acceptance', async () => {
+    const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({}),{status:200}))
+    await reviewExperience('EXP-AAAAAAAAAAAAAAAAAAAA','accept')
+    const init=fetchMock.mock.calls[0][1] as RequestInit
+    expect(JSON.parse(String(init.body))).toMatchObject({action:'accept',actor_type:'human',reviewed_by:'owner'})
+  })
+
+  it('filters the experience repository by status', async () => {
+    const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response('[]',{status:200}))
+    await getExperiences('candidate')
+    expect(fetchMock.mock.calls[0][0]).toBe('/api/v1/experiences?status=candidate')
   })
 })

@@ -82,3 +82,54 @@ export interface Response {
 }
 export interface EventNode { event_id:string; date:string; title:string; episode_type:string; episode_label:string; subtype?:string|null; subtype_label:string; timeline_lane:string; timeline_label:string; provenance_refs:string[]; related_lens_ids:string[] }
 export interface Dossier { symbol:string; display_name:string; as_of:string; price_series:Array<{date:string;close:number}>; status_intervals:Array<Record<string,string|null>>; events:EventNode[]; timeline_lanes:Array<{lane_id:string;label:string;event_ids:string[]}>; lens_summaries:Array<Record<string,string|string[]>>; data_gaps:Array<Record<string,string|null>>; display_labels:Record<string,string>; provenance:string[] }
+
+export type ExperienceStatus = 'candidate'|'accepted'|'ignored'|'merged'|'blocked'|'closed'|'superseded'
+export type ExperienceType = 'routing_rule'|'query_plan'|'definition'|'coverage_boundary'|'reasoning_rule'|'presentation_rule'|'anti_pattern'|'materialization_recipe'|'regression_case'
+
+export interface Experience {
+  contract_version:string
+  experience_id:string
+  experience_version:number
+  status:ExperienceStatus
+  experience_type:ExperienceType
+  title:string
+  value_summary:string
+  trigger_conditions:string[]
+  scope:string[]
+  required_inputs:string[]
+  query_plan:string[]
+  definitions:string[]
+  answer_rubric:string[]
+  anti_patterns:string[]
+  coverage_boundaries:string[]
+  validation_refs:string[]
+  source_run_refs:string[]
+  supersedes:string[]
+  created_at:string
+  reviewed_at?:string|null
+  reviewed_by?:string|null
+  not_evidence:true
+}
+
+export interface ResearchRun {
+  run_id:string
+  request_id:string
+  question_text:string
+  normalized_intent:string
+  object_refs:string[]
+  evidence_pack_ids:string[]
+  final_answer:string
+  validation_report:{valid?:boolean;issues?:Array<Record<string,unknown>>}
+  source_freshness:Record<string,string>
+  tool_calls:string[]
+  experience_hits:string[]
+  experience_candidate_ids:string[]
+  agent_surface:string
+  model:string
+  config_digest:string
+  thread_id:string
+  turn_id:string
+  started_at:string
+  completed_at:string
+  created_at:string
+}

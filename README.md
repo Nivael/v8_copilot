@@ -1,7 +1,10 @@
-# v8_copilot — ST Research Copilot Core/API
+# v8_copilot — ST Research Codex Workbench
 
-独立、只读的证据化问答引擎。v8 消费层第一条腿（"回答问题"）的可运行骨架。
+独立、只读的证据研究内核，以及由 Codex 主持的本地研究工作台。
 产品定义由 D-052 和统一版 v8 PRD 管理；本仓只保留可执行实现、版本化契约和验收资产。
+
+主交互入口是项目级 `st-research-codex` skill。旧问答 API 和 Web composer 保留为兼容、
+fallback 与回归面，不再承担默认研究主持人职责。
 
 ## 脊梁（D-052 修正案）
 
@@ -52,6 +55,33 @@ uv run python run_api.py
 - `POST /api/v1/answers/stream`
 - `GET /api/v1/stocks/{symbol}/dossier`
 
+Codex 工作台增量接口：
+
+- `POST /api/v1/research/evidence` — 只读生成 EvidencePack；
+- `POST /api/v1/research/validate` — 校验 Codex 结构化研究稿；
+- `POST/GET /api/v1/research/runs` — 写入或读取独立运行审计库；
+- `POST /api/v1/research/runs/{run_id}/feedback` — 绑定反馈并按新颖性生成经验候选；
+- `POST /api/v1/experiences/candidates` 与 `GET /api/v1/experiences` — 候选写入与经验检索；
+- `POST /api/v1/experiences/{experience_id}/review` — 人工审阅状态转换。
+
+Evidence Gateway 只读研究 SQLite 和本地材料化缓存，不联网、不写研究数据库。运行审计与
+经验库分别使用 local-only SQLite；两者均不是研究证据库。`accepted` 经验仍标记
+`not_evidence=true`，后续使用时必须重新查询最新事实。
+
+## Codex 主路径
+
+项目 skill 位于 `.codex/skills/st-research-codex/`。从仓库根目录运行工作台：
+
+```bash
+uv run python research_workbench.py experiences --status accepted
+uv run python research_workbench.py evidence --question '研究问题' --output /tmp/st-pack.json
+uv run python research_workbench.py validate --pack /tmp/st-pack.json --draft /tmp/st-draft.json --output /tmp/st-validation.json
+uv run python research_workbench.py record --pack /tmp/st-pack.json --draft /tmp/st-draft.json --validation /tmp/st-validation.json
+```
+
+只有显式 `record`、`feedback`、`propose`、seed 或人工 review 会写独立本地库。普通成功回答
+不会自动生成经验；Codex 和后台规则也不能把 candidate 升级为 accepted。
+
 `/answers/stream` 使用 NDJSON，只发送完整、已验证的领域事件：`accepted`、
 `interpreted`、`routed`、`answer_card`、`claim_block`、`degraded`、`completed`、
 `error`。不转发模型 token delta。
@@ -68,7 +98,7 @@ The current HTTP boundary accepts `v8_copilot_api_contract_v0` requests and
 returns `v8_copilot_api_contract_v1` responses. This is an explicit request /
 response split, not a claim that v1 responses validate as v0.
 
-React 主面板和个股面板位于 `web/`：
+React 经验中心、兼容问答、运行审计和个股面板位于 `web/`：
 
 ```bash
 cd web
@@ -78,8 +108,9 @@ cd ..
 uv run python run_api.py
 ```
 
-打开 `http://127.0.0.1:8765`。开发模式可运行 `npm run dev`，Vite 将 `/api` 代理到
-本地 FastAPI。个股节点通过 ResearchContext URL 回到主面板继续提问，聊天不持久化。
+打开 `http://127.0.0.1:8765`。首页只展示可复用经验；原始问题和回答仅在次级运行审计中
+追溯。开发模式可运行 `npm run dev`，Vite 将 `/api` 代理到本地 FastAPI。旧问答位于
+`/legacy`，个股节点通过 ResearchContext URL 回到该兼容入口继续提问。
 
 ## 契约与文件
 
@@ -98,7 +129,11 @@ uv run python run_api.py
 - `dossier_service.py` — 只读个股价格、状态、事件、时间线和 lens payload。
 - `llm/` — Structured Outputs parser/composer、provider、schema 和 backing 门。
 - `llm_adapter.py` — W1 API 与 W2 LLM 边界之间的薄集成层。
-- `web/` — React/Vite 主面板、个股面板和 ResearchContext 联动。
+- `evidence_gateway.py` — AnswerCard 到 EvidencePack 的只读适配和 Codex draft 校验。
+- `research_repository.py` — 独立 Research Run Ledger 与 Experience Repository。
+- `experience_contract.py` / `experience_distiller.py` — 非证据经验契约、人工晋级闸门和候选提炼。
+- `research_workbench.py` — 项目 skill 使用的本地 CLI。
+- `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。
 - `out/` — 生成的答案卡（JSON + 人话 Markdown）。
@@ -130,7 +165,8 @@ Batch 2 W1 另验证：
 - dossier 读取 1982 个价格点、162 个去重事件、5 条时间线和 3 条 lens 摘要；
 - API 和 dossier 不写研究数据库。
 
-## Batch 2 边界
+## 兼容边界
 
-W1 单写共享契约和 Core/API。任何新事实字段先进入确定性 Core 和 AnswerCard，再暴露
-给 LLM/UI；W2/W3 不直接修改 `contracts/`。问题卡和知识晋升本批次只生成候选，不持久化。
+冻结 AnswerCard、API、QuestionCard、QueryTemplate 和 Research Memory contracts 保持不变。
+任何新事实字段仍先进入确定性 Core 和 AnswerCard。经验契约是消费侧增量对象；候选可持久化，
+但只有 owner 的人工 review 才能接受，且接受后仍不是证据。

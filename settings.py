@@ -15,3 +15,7 @@ ANNOUNCEMENT_BODY_CACHE_DIR = Path(os.environ.get(
     "V8_ANNOUNCEMENT_BODY_CACHE_DIR",
     DATA_ROOT / "local_data" / "v8_copilot" / "announcement_bodies",
 )).expanduser().resolve()
+RECRUITMENT_DEADLINE_MATERIALIZATION = Path(os.environ.get(
+    "V8_RECRUITMENT_DEADLINE_MATERIALIZATION",
+    DATA_ROOT / "local_data" / "v8_copilot" / "recruitment_deadlines.json",
+)).expanduser().resolve()

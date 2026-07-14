@@ -801,6 +801,112 @@ def _two_week_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> Re
     )
 
 
+def _recruitment_precedent_narrative(
+    card: dict[str, Any],
+    claims: list[VerifiedClaim],
+) -> ResearchNarrative:
+    rows = [row for row in card.get("body_rows", []) if _row_id(row)]
+    summary = next(
+        (row for row in rows if row.get("记录类型") == "招募截止前连续跌停先例汇总"),
+        None,
+    )
+    if summary is None:
+        raise ValueError("recruitment precedent narrative 缺汇总行")
+    precedents = [
+        row for row in rows if row.get("记录类型") == "招募截止前连续跌停先例"
+    ]
+    covered = int(summary.get("截止日与价格完整覆盖") or 0)
+    precedent_count = int(summary.get("观察到连续跌停先例") or 0)
+    if precedent_count and precedents:
+        first = precedents[0]
+        direct = NarrativeStatement(
+            text=(
+                f"有。在本地截止日和价格路径完整覆盖的 {covered} 个上市公司本体 ST 招募案例中，"
+                f"有 {precedent_count} 个在报名截止前出现至少两个相邻交易日收盘跌停。"
+                f"例如 {first.get('股票')} 在 {first.get('连续交易日')} 连续 "
+                f"{first.get('最长连续跌停')} 个交易日跌停；其招募公告日为 "
+                f"{first.get('招募公告日')}，报名截止日为 {first.get('报名截止日')}。"
+            ),
+            backing=[
+                _backing("query_row", _row_id(summary)),
+                _backing("query_row", _row_id(first)),
+            ],
+        )
+    else:
+        direct = _statement(
+            (
+                f"在当前截止日和价格路径完整覆盖的 {covered} 个案例中，"
+                "没有观察到按本题口径定义的连续跌停；这不能扩展为全市场不存在先例。"
+            ),
+            "query_row",
+            _row_id(summary),
+        )
+
+    steps = [NarrativeStep(
+        title="先固定检索口径",
+        text=str(summary.get("连续跌停定义")),
+        backing=[_backing("query_row", _row_id(summary))],
+    ), NarrativeStep(
+        title="再看有效样本",
+        text=(
+            f"材料化案例 {summary.get('材料化招募案例')} 个，其中招募时处于 ST 且"
+            f"截止日与价格路径完整覆盖 {covered} 个；正文提取失败 "
+            f"{summary.get('正文提取失败')} 个。"
+        ),
+        backing=[_backing("query_row", _row_id(summary))],
+    )]
+    if len(precedents) > 1:
+        examples = "；".join(
+            f"{row.get('股票')}（{row.get('最长连续跌停')}个交易日）"
+            for row in precedents[:4]
+        )
+        steps.append(NarrativeStep(
+            title="已观察到的先例",
+            text=examples + "。",
+            backing=[
+                _backing("query_row", _row_id(row)) for row in precedents[:4]
+            ],
+        ))
+
+    premise = next(
+        (row for row in rows if row.get("记录类型") == "题面当日价格前提"),
+        None,
+    )
+    uncertainties = [
+        _claim_statement(claim) for claim in claims
+        if claim.claim_type in {"caveat", "data_gap"}
+        and not (premise and "题面所述" in claim.text)
+        and not (premise and "当前招募截止日" in claim.text)
+    ]
+    if premise and not premise.get("本地是否覆盖"):
+        uncertainties.insert(0, _statement(
+            (
+                f"题面所述 {premise.get('题面日期')} 跌停晚于本地价格截止日 "
+                f"{premise.get('本地价格截至')}，这里只把它作为未独立核验的提问前提。"
+            ),
+            "query_row",
+            _row_id(premise),
+        ))
+    if premise and premise.get("本地是否验证处于招募截止前") == "未验证":
+        uncertainties.append(_statement(
+            "当前个案的招募截止日未进入公司公告口径材料化；题面所述“截止前”也未由本卡独立核验。",
+            "query_row",
+            _row_id(premise),
+        ))
+    uncertainties.append(_statement(
+        "历史先例回答的是“是否出现过”，不说明当前个案的后续价格或重整结果。",
+        "query_row",
+        _row_id(summary),
+    ))
+    return ResearchNarrative(
+        direct_answer=direct,
+        reasoning_steps=steps,
+        uncertainties=uncertainties[:6],
+        watch_items=[],
+        basis_note=_basis_note(card),
+    )
+
+
 def _evidence_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> ResearchNarrative:
     rows = [row for row in card.get("body_rows", []) if _row_id(row)]
     if not rows:
@@ -908,6 +1014,8 @@ def build_narrative(response: ResearchResponseV1) -> ResearchNarrative | None:
         return None
     if response.route.route == "answer_checklist":
         return _checklist_narrative(card)
+    if "recruitment_deadline_price_precedent_query" in response.route.matched_rules:
+        return _recruitment_precedent_narrative(card, response.claims)
     if "restructuring_next_node_query" in response.route.matched_rules:
         return _timing_narrative(card, response.claims)
     if "stock_restructuring_progress_query" in response.route.matched_rules:

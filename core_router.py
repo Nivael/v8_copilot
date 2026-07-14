@@ -39,6 +39,11 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         intent = "trading_advice_boundary"
     elif research_object.kind == "cohort" and research_object.ref.startswith("comparison:"):
         intent = "stock_comparison"
+    elif (
+        any(term in question for term in ("先例", "历史上", "出现过"))
+        and any(term in question for term in ("截止前", "截止日", "报名期限"))
+    ):
+        intent = "historical_event_window_precedent"
     elif any(term in question for term in ("多久", "下一个节点", "下一阶段")):
         intent = "event_timing"
     elif any(term in question for term in ("哪些月份", "月份效应", "证据等级", "反例")):
@@ -66,9 +71,11 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         "公告": "announcement",
         "投资协议": "announcement",
         "公开招募": "announcement",
+        "截止": "announcement",
         "预重整": "announcement",
         "价格": "price",
         "股价": "price",
+        "跌停": "price",
         "换手率": "price",
         "控制权": "control_structure",
     }

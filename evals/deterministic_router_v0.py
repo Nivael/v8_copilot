@@ -120,6 +120,22 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             note="相似案例方法未冻结，先进入 review。",
         )
 
+    recruitment_price_precedent = (
+        _has_any(text, ["公开招募", "招募重整投资人", "重整投资人招募"])
+        and _has_any(text, ["截止前", "截止日", "报名截止", "招募截止", "报名期限"])
+        and _has_any(text, ["跌停", "连续下跌"])
+        and _has_any(text, ["先例", "历史上", "有没有", "出现过"])
+    )
+    if recruitment_price_precedent:
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            rules=["recruitment_deadline_price_precedent_query"],
+            note="按已验证报名截止日连接逐交易日价格，检索招募窗口内连续跌停先例。",
+        )
+
     debt_refs: list[str] = []
     q_refs: list[str] = []
     gap_rules: list[str] = []

@@ -88,6 +88,31 @@ def test_mubang_progress_separates_case_stage_from_history(monkeypatch) -> None:
     )
 
 
+def test_recruitment_deadline_limit_down_precedent_uses_dedicated_route() -> None:
+    response = orchestrate(ResearchRequest(
+        question="沐邦今天7月14号跌停，有在公开招募截止前连续跌停的先例吗？",
+        llm_mode="off",
+    ))
+
+    assert response.route.matched_rules == [
+        "recruitment_deadline_price_precedent_query"
+    ]
+    assert response.interpretation.intent == "historical_event_window_precedent"
+    assert response.answer_card is not None
+    row_types = {row["记录类型"] for row in response.answer_card["body_rows"]}
+    assert "招募截止前连续跌停先例汇总" in row_types
+    assert "题面当日价格前提" in row_types
+    premise = next(
+        row for row in response.answer_card["body_rows"]
+        if row["记录类型"] == "题面当日价格前提"
+    )
+    assert premise["本地是否验证处于招募截止前"] == "未验证"
+    assert "M6" not in response.answer_card["sample_scope"]
+    assert response.narrative is not None
+    assert "报名截止前" in response.narrative.direct_answer.text
+    assert any("未独立核验" in item.text for item in response.narrative.uncertainties)
+
+
 def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
     response = orchestrate(ResearchRequest(
         question="沐邦和南都怎么比较",

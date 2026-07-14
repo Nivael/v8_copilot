@@ -22,6 +22,7 @@ from answer_engine import (
     card_control_structure_methodology,
     card_data_debt,
     card_next_node_gap,
+    card_recruitment_limit_down_precedent,
     card_release_lens_evidence,
     card_stock_research_overview,
     card_stock_restructuring_progress,
@@ -64,7 +65,12 @@ def _execute_answer(
     card: AnswerCard | None = None
 
     if route.route == "answer_query":
-        if "stock_comparison_query" in rules:
+        if "recruitment_deadline_price_precedent_query" in rules:
+            card = card_recruitment_limit_down_precedent(
+                _symbol(request, interpretation),
+                request.question,
+            )
+        elif "stock_comparison_query" in rules:
             ref = interpretation.object.ref.removeprefix("comparison:")
             card = card_stock_comparison(ref.split(","), request.question)
         elif "stock_restructuring_progress_query" in rules:

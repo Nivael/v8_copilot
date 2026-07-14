@@ -34,7 +34,16 @@ from announcement_body import (
     relevant_excerpt,
 )
 from lens_binding import LensRegistry, LensInvocation, LensGap
-from settings import ANNOUNCEMENT_REFRESH_DIR, DATA_ROOT
+from recruitment_precedent import (
+    RecruitmentMaterializationError,
+    analyze_recruitment_precedents,
+    load_recruitment_deadlines,
+)
+from settings import (
+    ANNOUNCEMENT_REFRESH_DIR,
+    DATA_ROOT,
+    RECRUITMENT_DEADLINE_MATERIALIZATION,
+)
 from snapshot_metadata import (
     limiting_as_of,
     load_episode_snapshot,
@@ -457,6 +466,201 @@ def card_next_node_gap(
         caveats=FIXED_CAVEATS + [
             "『平均多久』无单一答案：节点定义不同，中位数可差数倍——三口径并列，由提问者选。"],
         provenance=provenance)
+
+
+def _question_claimed_date(question: str) -> str:
+    normalized = re.sub(r"\s+", "", question)
+    full = re.search(r"(20\d{2})年?(\d{1,2})月(\d{1,2})(?:日|号)?", normalized)
+    if full:
+        try:
+            return date(int(full.group(1)), int(full.group(2)), int(full.group(3))).isoformat()
+        except ValueError:
+            return ""
+    short = re.search(r"(\d{1,2})月(\d{1,2})(?:日|号)", normalized)
+    if short:
+        try:
+            return date(date.today().year, int(short.group(1)), int(short.group(2))).isoformat()
+        except ValueError:
+            return ""
+    return ""
+
+
+def card_recruitment_limit_down_precedent(
+    symbol: str | None,
+    question: str,
+) -> AnswerCard:
+    """Answer recruitment-deadline × consecutive-limit-down precedent questions."""
+    price_snapshot = load_price_snapshot(BASE_DB)
+    materialization_error = ""
+    payload: dict[str, Any] = {}
+    try:
+        cases, payload = load_recruitment_deadlines(
+            RECRUITMENT_DEADLINE_MATERIALIZATION
+        )
+    except RecruitmentMaterializationError as exc:
+        cases = []
+        materialization_error = str(exc)
+
+    precedents, counts = analyze_recruitment_precedents(
+        BASE_DB,
+        cases,
+        price_as_of=price_snapshot.as_of,
+    )
+    rows: list[dict[str, Any]] = []
+    claimed_date = _question_claimed_date(question)
+    current_deadlines = sorted(
+        case.recruitment_deadline for case in cases
+        if symbol and case.symbol == symbol and case.subject_scope == "listed_company"
+    )
+    if claimed_date:
+        rows.append(_row(
+            "question_price_premise",
+            **{
+                "记录类型": "题面当日价格前提",
+                "股票": symbol or "题面未绑定股票",
+                "题面日期": claimed_date,
+                "题面陈述": "当日跌停" if "跌停" in question else "当日价格异动",
+                "本地价格截至": price_snapshot.as_of,
+                "本地是否覆盖": claimed_date <= price_snapshot.as_of,
+                "本地公司公告口径招募截止日": (
+                    current_deadlines[-1] if current_deadlines else "未材料化"
+                ),
+                "本地是否验证处于招募截止前": (
+                    claimed_date <= current_deadlines[-1]
+                    if current_deadlines else "未验证"
+                ),
+                "处理方式": (
+                    "当前价格与招募窗口单独核对，不纳入历史样本计算"
+                    if claimed_date <= price_snapshot.as_of and current_deadlines
+                    else "当前价格或招募窗口作为未独立核验前提，不纳入历史样本计算"
+                ),
+            },
+        ))
+
+    summary_id = "recruitment_limit_down_summary"
+    rows.append(_row(
+        summary_id,
+        **{
+            "记录类型": "招募截止前连续跌停先例汇总",
+            "材料化招募案例": len(cases),
+            "上市公司本体案例": counts["listed_company_cases"],
+            "招募时处于ST案例": counts["st_eligible_cases"],
+            "截止日与价格完整覆盖": counts["price_covered_cases"],
+            "观察到连续跌停先例": counts["precedent_cases"],
+            "连续跌停定义": "招募公告日至报名截止日之间，至少2个相邻交易日收盘跌停",
+            "跌停识别": "ST区间内日涨跌幅不高于-4.8%（含价格取整容差）",
+            "价格截至": price_snapshot.as_of,
+            "截止日晚于价格快照": counts["future_deadline_cases"],
+            "价格路径不完整": counts["incomplete_price_cases"],
+            "正文提取失败": int(payload.get("failure_count") or 0),
+            "材料化状态": materialization_error or "已读取本地截止日材料化文件",
+        },
+    ))
+    for index, precedent in enumerate(precedents[:12], 1):
+        display_stock = (
+            f"{precedent['stock_name']}（{precedent['symbol']}）"
+            if precedent.get("stock_name") else precedent["symbol"]
+        )
+        rows.append(_row(
+            f"recruitment_limit_down_precedent_{index:02d}",
+            **{
+                "记录类型": "招募截止前连续跌停先例",
+                "股票": display_stock,
+                "招募公告日": precedent["announcement_date"],
+                "报名截止日": precedent["recruitment_deadline"],
+                "最长连续跌停": precedent["run_length"],
+                "连续交易日": "、".join(precedent["run_dates"]),
+                "窗口内跌停交易日": precedent["limit_down_days"],
+                "巨潮公告ID": precedent["announcement_id"],
+                "公告标题": precedent["title"],
+                "原文链接": precedent["source_url"],
+            },
+        ))
+
+    gap = LensGap(
+        gap_id="recruitment_deadline_limit_down_evidence",
+        missing_for="招募截止日前连续跌停与后续结果之间的验证型关系",
+        sediment_as="question_card:recruitment_deadline_limit_down_precedent",
+        note="本卡只回答历史上是否出现过该组合事件，不把先例解释成后续方向或结果。",
+    )
+    gaps = [gap]
+    claims = [AnalysisClaim(
+        text=(
+            f"在截止日和价格路径完整覆盖的 {counts['price_covered_cases']} 个案例中，"
+            f"观察到 {counts['precedent_cases']} 个招募截止前连续跌停先例。"
+        ),
+        claim_type="fact",
+        backing=BackingRef(kind="query_row", ref=summary_id),
+    )]
+    if materialization_error:
+        claims.append(AnalysisClaim(
+            text="公开招募截止日尚未完成本地材料化，当前不能把公告日当作截止日替代计算。",
+            claim_type="data_gap",
+            backing=BackingRef(kind="query_row", ref=summary_id),
+        ))
+    if claimed_date and claimed_date > price_snapshot.as_of:
+        claims.append(AnalysisClaim(
+            text=(
+                f"题面所述 {claimed_date} 价格状态晚于本地价格截止日 "
+                f"{price_snapshot.as_of}，本卡不独立确认该陈述。"
+            ),
+            claim_type="caveat",
+            backing=BackingRef(kind="query_row", ref="question_price_premise"),
+        ))
+    if symbol and not current_deadlines:
+        channel_gap = LensGap(
+            gap_id="current_recruitment_deadline_channel_coverage",
+            missing_for=f"{symbol} 在非公司公告渠道披露的当前招募截止日",
+            sediment_as="data_debt:restructuring_recruitment_channel_coverage",
+            note="截止日材料化只覆盖正式公司公告；破产重整信息平台和管理人渠道未纳入。",
+        )
+        gaps.append(channel_gap)
+        claims.append(AnalysisClaim(
+            text=(
+                f"本地公司公告口径没有材料化 {symbol} 的当前招募截止日，"
+                "不能独立确认题面日期是否仍处于招募窗口。"
+            ),
+            claim_type="data_gap",
+            backing=BackingRef(kind="lens_gap", ref=channel_gap.gap_id),
+        ))
+
+    materialization_as_of = max(
+        (case.announcement_date for case in cases),
+        default=price_snapshot.as_of,
+    )
+    as_of = limiting_as_of(price_snapshot.as_of, materialization_as_of)
+    provenance = [
+        "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices",
+        "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::st_status_history",
+    ]
+    if not materialization_error:
+        provenance.append("local_data/v8_copilot/recruitment_deadlines.json")
+    return AnswerCard(
+        question=question,
+        object_ref=(
+            f"stock:{symbol};cohort:listed-company-recruitment-windows"
+            if symbol else "cohort:listed-company-recruitment-windows"
+        ),
+        view="query",
+        as_of=as_of,
+        sample_scope=(
+            f"{counts['price_covered_cases']} 个已验证报名截止日且价格路径完整的上市公司本体 ST 招募案例"
+        ),
+        evidence_grade="descriptive_query",
+        lens_gap=gaps,
+        data_snapshot_as_of=as_of,
+        source_freshness={
+            "price_data_as_of": price_snapshot.as_of,
+            "recruitment_announcement_materialization_as_of": materialization_as_of,
+        },
+        body_rows=rows,
+        analysis_claims=claims,
+        caveats=FIXED_CAVEATS + [
+            "先例仅表示历史组合事件出现过，不说明当前个案会延续同一路径。",
+            "连续跌停按相邻交易日定义，不按自然日定义。",
+        ],
+        provenance=provenance,
+    )
 
 
 def card_two_week_move(

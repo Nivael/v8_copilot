@@ -1,0 +1,10 @@
+{
+  "contract_version": "v8_accepted_experience_registry_v1",
+  "registry_version": "v1",
+  "registry_digest": "0303ff2dd39969ff5637a8b2478be43e38e1aa6ec569dd1765a8166e8c617892",
+  "exported_at": "2026-07-15T06:04:56.878642+00:00",
+  "accepted_count": 0,
+  "records": [],
+  "ordinary_success_auto_capture": false,
+  "not_evidence": true
+}

@@ -1,6 +1,6 @@
 # ST Research Codex Research Orchestrator 重构 PRD
 
-状态：Approved；Phase 1–3 基线已实现
+状态：Approved；Phase 1–3 与经验治理增量已实现
 日期：2026-07-14
 目标版本：v8 后续增量重构
 范围：研究入口、证据工具、回答校验、经验沉淀与经验面板
@@ -11,6 +11,9 @@
 - 已增加分离的 Research Run Ledger、Experience Repository、反馈提炼和人工晋级闸门；
 - Web 首页已改为经验中心，旧问答移到兼容入口，原始问答只在次级运行审计显示；
 - 核心五题已通过 EvidencePack → Codex 研究稿 → validator → run ledger 的真实闭环；
+- 已增加 Tushare/CNINFO 可恢复增量维护、逐源逐股 checkpoint 和统一 freshness manifest；
+- 已增加选择性联网 acquisition plan；联网当前事实必须先进入新的 EvidencePack，离线机制结果保持可复现；
+- 已增加 accepted registry 去敏版本化导出、经验冲突检测、30 天到期复验和回归失败自动 blocked；
 - Phase 4 Codex SDK 仍是质量对比 gate，未被提前设为默认；
 - Phase 5 legacy 退役需经过连续稳定运行，当前保留一键回退面。
 
@@ -26,7 +29,7 @@
 4. 每次真实研究运行自动进入审计运行日志，但原始问题和一次性回答不会自动成为经验。
 5. 只有经过抽象、可复现验证和人工接受的经验，才进入正式经验库并在面板中可见。
 6. 研究数据库继续只读；经验、反馈和运行日志写入独立存储，不进入研究事实数据库。
-7. Answer 路径继续禁止联网和写研究数据库；联网获取只允许发生在独立材料化任务中。
+7. API answer 路径继续不隐式联网或写研究数据库；Codex 研究窗口可按 acquisition plan 补查当前外部事实，但必须先材料化为带来源的 EvidencePack 项，不能直接流入回答。
 8. 冻结 contracts 保持不变。新能力通过独立的经验契约和适配层增量实现。
 
 ## 2. 背景与问题
@@ -134,12 +137,13 @@ Codex 负责研究判断；v8 工具负责事实、计算和校验。任何一�
 2. Codex 解析对象、意图、时间和所需维度。
 3. Codex 检索适用的已接受经验，只读取方法，不读取旧答案作为事实。
 4. Codex 调用只读研究工具获取证据包。
-5. 如证据不足，Codex选择：调整本地查询、明确缺口，或提出独立材料化需求。
-6. Codex形成直接回答、判断依据、不确定性和后续观察项。
-7. 校验器验证 backing、数字、日期、来源、新鲜度和边界措辞。
-8. Codex向用户返回最终回答。
-9. 系统自动写入 Research Run Ledger。
-10. 只有发现可复用的新方法或失败模式时，系统才生成 Experience Candidate。
+5. acquisition plan 判断是否需要补最新公告、当前公司资料、法院/管理人渠道或当天市场事实。
+6. 如需联网，外部事实带 URL、发布时间、抓取时间和覆盖说明进入新的 EvidencePack；历史机制计算仍只读本地版本化数据。
+7. Codex形成直接回答、判断依据、不确定性和后续观察项。
+8. 校验器验证 backing、数字、日期、来源、新鲜度和边界措辞。
+9. Codex向用户返回最终回答。
+10. 系统自动写入 Research Run Ledger。
+11. 只有发现可复用的新方法或失败模式时，系统才生成 Experience Candidate。
 
 ### 5.3 用户反馈流程
 
@@ -293,6 +297,8 @@ EvidencePack 是 Codex 和确定性研究层之间的新适配对象，至少包
 - `question_scope`
 - `query_plan_id`
 - `rows`
+- `lens_invocations`
+- `external_evidence`
 - `source_freshness`
 - `provenance`
 - `coverage_gaps`
@@ -302,6 +308,8 @@ EvidencePack 是 Codex 和确定性研究层之间的新适配对象，至少包
 - `validation_refs`
 
 EvidencePack 可以由现有 AnswerCard 适配产生。首阶段不删除 AnswerCard，也不修改其冻结契约。
+
+`external_evidence` 只描述当前外部事实，必须标记 `not_mechanism_evidence=true`。它可以补充本地快照之后的新事实，但不能覆盖 episode、Lens、历史分布或事件窗口等本地计算结果。
 
 ### 7.4 Answer Validator
 
@@ -755,24 +763,22 @@ P1：
 - 经验中心候选审阅；
 - accepted experience 检索与引用。
 
-P2：
+P2（已实现基础治理）：
 
 - Codex SDK pilot；
 - 自动线程恢复；
 - 经验冲突检测；
 - accepted registry 导出和跨环境同步。
 
-## 18. 待确认决策
+当前已完成冲突检测、去敏 registry 导出、定期复验和失败自动 blocked；跨环境自动同步仍不在本地单用户版本的必需范围。
 
-以下决策不阻塞 Phase 0/1：
+## 18. 已确定的运行决策
 
-1. Codex SDK 是否最终替代当前 Codex 任务作为默认入口；
-2. accepted experience registry 是否随仓库版本化，还是只保留本地并定期导出；
-3. 经验审阅是否增加自然语言快捷操作，还是只允许面板按钮；
-4. 运行日志保留周期和归档策略；
-5. accepted experience 的定期复验频率。
-
-推荐默认值：当前 Codex 任务先行；local-only SQLite 保存运行和候选；accepted experience 导出为去敏、版本化 registry；状态变更以面板人工操作为准。
+1. 当前 Codex 任务继续作为默认研究入口，SDK 只保留为后续质量 gate；
+2. local-only SQLite 保存运行、候选与治理状态，accepted experience 另导出为去敏、内容寻址的 v1 registry；
+3. 接受仍只允许 owner 在面板明确操作；blocking conflict 会阻止接受；
+4. accepted experience 默认每 30 天复验一次；回归失败自动 blocked；
+5. 普通成功回答不自动沉淀为经验。
 
 ## 19. Done 定义
 

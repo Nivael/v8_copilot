@@ -86,6 +86,7 @@ def _fixtures(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(module, "ANNOUNCEMENT_BODY_CACHE_DIR", tmp_path / "bodies")
     monkeypatch.setattr(module, "SHAREHOLDER_DB", shareholder)
     monkeypatch.setattr(module, "RECRUITMENT_DEADLINE_MATERIALIZATION", recruitment)
+    monkeypatch.setattr(module, "DATA_MAINTENANCE_DB", tmp_path / "maintenance.sqlite3")
 
 
 def test_manifest_is_ready_only_for_declared_current_scope(monkeypatch, tmp_path) -> None:

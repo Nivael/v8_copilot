@@ -1,4 +1,4 @@
 interface:
   display_name: "ST Research Codex"
-  short_description: "以只读本地证据、多轮查询和强校验完成可审计的 ST 研究分析"
-  default_prompt: "Use $st-research-codex to research this ST question with fresh local evidence and a validated, human-readable answer."
+  short_description: "融合本地机制证据与受控联网事实，完成可审计的 ST 研究分析"
+  default_prompt: "Use $st-research-codex to combine reproducible local evidence with selectively acquired current facts in one validated EvidencePack."

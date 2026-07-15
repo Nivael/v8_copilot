@@ -40,6 +40,12 @@ from experience_contract import (
     ExperienceStatus,
 )
 from experience_distiller import distill_feedback
+from experience_governance import (
+    ExperienceGovernanceRepository,
+    detect_experience_conflicts,
+    export_accepted_registry,
+    governance_status,
+)
 from llm_adapter import (
     openai_configured,
     orchestrate_optional_llm,
@@ -55,12 +61,24 @@ from research_repository import (
     ResearchRunLedger,
     ResearchRunRecord,
 )
-from settings import EXPERIENCE_REPOSITORY_DB, RESEARCH_RUN_LEDGER_DB
+from settings import (
+    ACCEPTED_EXPERIENCE_REGISTRY_PATH,
+    EXPERIENCE_GOVERNANCE_DB,
+    EXPERIENCE_REPOSITORY_DB,
+    RESEARCH_RUN_LEDGER_DB,
+)
 
 
 logger = logging.getLogger(__name__)
 experience_repository = ExperienceRepository(EXPERIENCE_REPOSITORY_DB)
 research_run_ledger = ResearchRunLedger(RESEARCH_RUN_LEDGER_DB)
+experience_governance_repository = ExperienceGovernanceRepository(EXPERIENCE_GOVERNANCE_DB)
+
+
+def _accepted_registry_output() -> FilePath:
+    if experience_repository.path == EXPERIENCE_REPOSITORY_DB:
+        return ACCEPTED_EXPERIENCE_REGISTRY_PATH
+    return experience_repository.path.parent / "accepted_experiences_v1.json"
 
 
 class SPAStaticFiles(StaticFiles):
@@ -331,6 +349,11 @@ def list_experiences(
     return experience_repository.list(status=experience_status, limit=limit)
 
 
+@app.get("/api/v1/experience-governance/status")
+def get_experience_governance_status() -> dict[str, object]:
+    return governance_status(experience_repository, experience_governance_repository)
+
+
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)
 def get_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),
@@ -347,7 +370,23 @@ def review_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),
 ) -> ExperienceRecord:
     try:
-        return experience_repository.review(experience_id, request)
+        current = experience_repository.get(experience_id)
+        if request.action == "accept":
+            active = experience_repository.list(status=ExperienceStatus.ACCEPTED, limit=1000)
+            blocking = [
+                conflict for conflict in detect_experience_conflicts([*active, current])
+                if conflict.severity == "blocking" and experience_id in {
+                    conflict.left_experience_id, conflict.right_experience_id,
+                }
+            ]
+            if blocking:
+                raise ValueError(f"经验存在 blocking conflict: {blocking[0].detail}")
+        updated = experience_repository.review(experience_id, request)
+        if current.status == ExperienceStatus.ACCEPTED or updated.status == ExperienceStatus.ACCEPTED:
+            export_accepted_registry(
+                experience_repository, output=_accepted_registry_output(),
+            )
+        return updated
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="experience 不存在") from exc
     except PermissionError as exc:

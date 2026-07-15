@@ -22,6 +22,7 @@ from lens_binding import RELEASE_LIBRARY
 from settings import (
     ANNOUNCEMENT_BODY_CACHE_DIR,
     ANNOUNCEMENT_REFRESH_DIR,
+    DATA_MAINTENANCE_DB,
     FRESHNESS_MANIFEST_PATH,
     RECRUITMENT_DEADLINE_MATERIALIZATION,
 )
@@ -82,6 +83,24 @@ def _sqlite_count(database: Path, table: str, expression: str = "count(*)") -> i
         return int(connection.execute(f"select {expression} from {table}").fetchone()[0])
 
 
+def _maintenance_checkpoints(source_id: str, symbols: list[str]) -> dict[str, dict[str, Any]]:
+    if not DATA_MAINTENANCE_DB.is_file() or not symbols:
+        return {}
+    placeholders = ",".join("?" for _ in symbols)
+    try:
+        with sqlite3.connect(f"file:{DATA_MAINTENANCE_DB}?mode=ro", uri=True) as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                f"select symbol,checked_through,observed_as_of,status,last_attempted_at,"
+                f"last_success_at,rows_seen,rows_written,error from refresh_checkpoints "
+                f"where source_id=? and symbol in ({placeholders})",
+                [source_id, *symbols],
+            ).fetchall()
+        return {str(row["symbol"]): dict(row) for row in rows}
+    except sqlite3.Error:
+        return {}
+
+
 def _price_source(expected: str, symbols: list[str]) -> SourceFreshness:
     try:
         snapshot = load_price_snapshot(BASE_DB)
@@ -105,23 +124,30 @@ def _price_source(expected: str, symbols: list[str]) -> SourceFreshness:
             )
         else:
             status = "observed"
+        checkpoints = _maintenance_checkpoints("tushare_daily_qfq", symbols)
         return SourceFreshness(
             source_id="daily_prices",
             label="前复权日线价格",
             source_ref="shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices",
             status=status,
-            as_of=snapshot.as_of,
+            as_of=(
+                min(per_symbol.values())
+                if symbols and len(per_symbol) == len(symbols)
+                else snapshot.as_of
+            ),
             checked_at=_mtime_date(BASE_DB),
             expected_through=expected,
             row_count=snapshot.row_count,
             coverage_count=snapshot.symbol_count,
             details={
                 "min_date": snapshot.min_date,
+                "global_as_of": snapshot.as_of,
                 "return_observations": snapshot.return_observation_count,
                 "requested_symbols": symbols,
                 "per_symbol_as_of": per_symbol,
                 "missing_symbols": missing,
                 "stale_symbols": stale,
+                "maintenance_checkpoints": checkpoints,
             },
         )
     except Exception as exc:
@@ -147,7 +173,8 @@ def _announcement_overlay() -> tuple[int, int, str, str, dict[str, str], list[st
             rows = payload.get("records")
             if payload.get("source") != "cninfo" or not symbol or not isinstance(rows, list):
                 raise ValueError("source/symbol/records 不合法")
-            checked_at = _mtime_date(path)
+            checked_at = str(payload.get("checked_through") or "")[:10] or _mtime_date(path)
+            checked_at = _iso_date(checked_at, field=f"{symbol}.checked_through")
             symbol_checks[symbol] = checked_at
             latest_check = max(latest_check, checked_at)
             record_count += len(rows)
@@ -178,6 +205,7 @@ def _announcement_source(expected_check: str, symbols: list[str]) -> SourceFresh
             status = "current"
         else:
             status = "observed"
+        checkpoints = _maintenance_checkpoints("cninfo_announcements", symbols)
         return SourceFreshness(
             source_id="company_announcements",
             label="公司正式公告",
@@ -195,6 +223,7 @@ def _announcement_source(expected_check: str, symbols: list[str]) -> SourceFresh
                 "requested_symbols": symbols,
                 "missing_refresh_symbols": missing,
                 "stale_refresh_symbols": stale,
+                "maintenance_checkpoints": checkpoints,
             },
             notes=errors,
         )
@@ -337,6 +366,52 @@ def _shareholder_source() -> SourceFreshness:
         )
 
 
+def _maintenance_source(symbols: list[str]) -> SourceFreshness:
+    if not DATA_MAINTENANCE_DB.is_file():
+        return SourceFreshness(
+            source_id="maintenance_checkpoints", label="数据更新 checkpoint",
+            source_ref="local_data/v8_copilot/data_maintenance.sqlite3",
+            status="missing", notes=["尚未运行可恢复增量维护器。"],
+        )
+    try:
+        with sqlite3.connect(f"file:{DATA_MAINTENANCE_DB}?mode=ro", uri=True) as connection:
+            suffix = ""
+            parameters: list[str] = []
+            if symbols:
+                placeholders = ",".join("?" for _ in symbols)
+                suffix = f" where symbol in ({placeholders})"
+                parameters = symbols
+            row = connection.execute(
+                "select count(*),max(last_attempted_at),max(last_success_at) "
+                f"from refresh_checkpoints{suffix}",
+                parameters,
+            ).fetchone()
+            failed_where = f"{suffix} and" if suffix else " where"
+            failed = int(connection.execute(
+                f"select count(*) from refresh_checkpoints{failed_where} status='failed'",
+                parameters,
+            ).fetchone()[0])
+        return SourceFreshness(
+            source_id="maintenance_checkpoints", label="数据更新 checkpoint",
+            source_ref="local_data/v8_copilot/data_maintenance.sqlite3",
+            status="error" if failed else "observed",
+            checked_at=str(row[1] or "")[:10], row_count=int(row[0]),
+            coverage_count=int(row[0]),
+            details={
+                "requested_symbols": symbols,
+                "last_success_at": str(row[2] or ""),
+                "failed_checkpoints": failed,
+            },
+            notes=["存在失败 checkpoint；上次成功游标已保留。"] if failed else [],
+        )
+    except sqlite3.Error as exc:
+        return SourceFreshness(
+            source_id="maintenance_checkpoints", label="数据更新 checkpoint",
+            source_ref="local_data/v8_copilot/data_maintenance.sqlite3",
+            status="error", notes=[str(exc)],
+        )
+
+
 def build_freshness_manifest(
     *,
     expected_price_through: str = "",
@@ -359,6 +434,7 @@ def build_freshness_manifest(
         _episode_source(),
         _lens_source(),
         _shareholder_source(),
+        _maintenance_source(symbols),
         _optional_json_source(
             "recruitment_deadlines", "公开招募截止日材料化",
             RECRUITMENT_DEADLINE_MATERIALIZATION,

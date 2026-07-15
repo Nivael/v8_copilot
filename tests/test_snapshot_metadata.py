@@ -8,8 +8,33 @@ from snapshot_metadata import (
     SnapshotContractError,
     limiting_as_of,
     load_episode_snapshot,
+    load_price_snapshot,
     load_table_snapshot,
 )
+
+
+def test_price_snapshot_can_be_scoped_to_one_symbol(tmp_path: Path) -> None:
+    database = tmp_path / "prices.sqlite3"
+    with sqlite3.connect(database) as connection:
+        connection.execute(
+            "create table daily_prices (symbol text, trade_date text, close real, adjust text)"
+        )
+        for day in range(1, 13):
+            connection.execute(
+                "insert into daily_prices values (?,?,?,?)",
+                ("000001", f"2026-07-{day:02d}", float(day), "qfq"),
+            )
+        for day in range(1, 16):
+            connection.execute(
+                "insert into daily_prices values (?,?,?,?)",
+                ("000002", f"2026-07-{day:02d}", float(day), "qfq"),
+            )
+
+    snapshot = load_price_snapshot(database, symbol="000001")
+
+    assert snapshot.as_of == "2026-07-12"
+    assert snapshot.symbol_count == 1
+    assert snapshot.row_count == 12
 
 
 def test_table_snapshot_rejects_malformed_dates(tmp_path: Path) -> None:

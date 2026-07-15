@@ -1,8 +1,8 @@
 import {BookOpenCheck, Filter, RefreshCw, Sparkles} from 'lucide-react'
 import {useCallback, useEffect, useState} from 'react'
-import {getExperiences, reviewExperience} from './api'
+import {getExperienceGovernanceStatus, getExperiences, reviewExperience} from './api'
 import {ExperienceCard} from './ExperienceCard'
-import type {Experience, ExperienceStatus} from './types'
+import type {Experience, ExperienceGovernanceStatus, ExperienceStatus} from './types'
 
 const FILTERS: Array<{value:ExperienceStatus;label:string}> = [
   {value:'candidate',label:'待审经验'},
@@ -15,6 +15,7 @@ const FILTERS: Array<{value:ExperienceStatus;label:string}> = [
 export function ExperienceCenter() {
   const [status,setStatus]=useState<ExperienceStatus>('candidate')
   const [experiences,setExperiences]=useState<Experience[]>([])
+  const [governance,setGovernance]=useState<ExperienceGovernanceStatus|null>(null)
   const [loading,setLoading]=useState(true)
   const [error,setError]=useState('')
   const [busyId,setBusyId]=useState('')
@@ -22,7 +23,13 @@ export function ExperienceCenter() {
   const load=useCallback(async(signal?:AbortSignal)=>{
     setLoading(true)
     setError('')
-    try{setExperiences(await getExperiences(status,signal))}
+    try{
+      const [rows,governanceStatus]=await Promise.all([
+        getExperiences(status,signal),getExperienceGovernanceStatus(signal),
+      ])
+      setExperiences(rows)
+      setGovernance(governanceStatus)
+    }
     catch(reason){if(!(reason instanceof DOMException&&reason.name==='AbortError'))setError('经验中心暂时无法读取本地经验库。')}
     finally{if(!signal?.aborted)setLoading(false)}
   },[status])
@@ -53,6 +60,13 @@ export function ExperienceCenter() {
         </div>
         <div className="experience-principle"><BookOpenCheck size={20}/><strong>经验不是证据</strong><span>每次使用都会重新查询最新本地材料</span></div>
       </section>
+
+      {governance&&<section className="governance-strip" aria-label="经验治理状态">
+        <div><strong>{governance.accepted_count}</strong><span>accepted</span></div>
+        <div><strong>{governance.blocked_count}</strong><span>blocked</span></div>
+        <div><strong>{governance.conflicts.filter(item=>item.severity==='blocking').length}</strong><span>blocking conflicts</span></div>
+        <p>普通成功回答不会自动沉淀；accepted 会版本化导出并按期复验。</p>
+      </section>}
 
       <section className="experience-toolbar" aria-label="经验状态筛选">
         <div><Filter size={15}/>{FILTERS.map(item=>(

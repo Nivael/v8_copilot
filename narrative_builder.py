@@ -338,8 +338,20 @@ def _stock_overview_narrative(
         )
 
     if price_coverage:
+        observed_changes = [
+            f"{key}为{value}"
+            for key, value in price_coverage.items()
+            if str(key).startswith("T+") and str(key).endswith("变化")
+        ]
+        direct_text = str(price_coverage.get("结论"))
+        if observed_changes:
+            direct_text = (
+                f"以 {price_coverage.get('基准交易日')} 前复权收盘"
+                f" {price_coverage.get('基准收盘')} 为基准，"
+                f"{'，'.join(observed_changes)}；{direct_text}。"
+            )
         direct = _statement(
-            str(price_coverage.get("结论")),
+            direct_text,
             "query_row",
             _row_id(price_coverage),
         )
@@ -357,11 +369,18 @@ def _stock_overview_narrative(
                 text=f"已记录 {official.get('日期')} 的《{official.get('标题')}》。",
                 backing=[_backing("query_row", _row_id(official))],
             ))
-        uncertainties = [_statement(
-            "价格数据未覆盖公告之后的交易日时，不能用公告前的价格替代事件后表现。",
-            "query_row",
-            _row_id(price_coverage),
-        )]
+        if observed_changes:
+            uncertainties = [_statement(
+                "只报告当前价格快照已经覆盖的交易日；尚未覆盖的后续窗口不作补推。",
+                "query_row",
+                _row_id(price_coverage),
+            )]
+        else:
+            uncertainties = [_statement(
+                "价格数据未覆盖公告之后的交易日时，不能用公告前的价格替代事件后表现。",
+                "query_row",
+                _row_id(price_coverage),
+            )]
         return ResearchNarrative(
             direct_answer=direct,
             reasoning_steps=steps,
@@ -482,6 +501,39 @@ def _stock_overview_narrative(
             ),
             reasoning_steps=[],
             uncertainties=[],
+            watch_items=[],
+            basis_note=_basis_note(card),
+        )
+
+    episode_rows = [
+        row for row in rows if row.get("记录类型") == "近期分类节点"
+    ]
+    if official and episode_rows and any(
+        term in question for term in ("哪些公告", "分类事件", "事件节点")
+    ):
+        official_summary = "；".join(
+            f"{row.get('日期')}《{row.get('标题')}》" for row in official_rows[:3]
+        )
+        episode_summary = "；".join(
+            f"{row.get('日期')}《{row.get('标题')}》" for row in episode_rows[:3]
+        )
+        backing_rows = [*official_rows[:3], *episode_rows[:3]]
+        return ResearchNarrative(
+            direct_answer=NarrativeStatement(
+                text=(
+                    f"正式公告库存最近包括：{official_summary}。"
+                    f"已分类事件索引最近包括：{episode_summary}。"
+                ),
+                backing=[
+                    _backing("query_row", _row_id(row)) for row in backing_rows
+                ],
+            ),
+            reasoning_steps=[],
+            uncertainties=[_statement(
+                "公告库存与已分类事件索引覆盖范围不同；未分类公告不能自动视为没有研究价值。",
+                "query_row",
+                _row_id(official),
+            )],
             watch_items=[],
             basis_note=_basis_note(card),
         )

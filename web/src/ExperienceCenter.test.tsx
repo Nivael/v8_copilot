@@ -17,8 +17,10 @@ describe('ExperienceCenter',()=>{
 
   it('renders usable method fields and sends an explicit human review',async()=>{
     const accepted={...candidate,status:'accepted',experience_version:2,reviewed_by:'owner',reviewed_at:'2026-07-14T01:00:00Z'}
+    const governance={accepted_count:0,candidate_count:1,blocked_count:0,conflicts:[],latest_regression:null,ordinary_success_auto_capture:false,not_evidence:true}
     const fetchMock=vi.spyOn(globalThis,'fetch')
       .mockResolvedValueOnce(new Response(JSON.stringify([candidate]),{status:200}))
+      .mockResolvedValueOnce(new Response(JSON.stringify(governance),{status:200}))
       .mockResolvedValueOnce(new Response(JSON.stringify(accepted),{status:200}))
 
     render(<ExperienceCenter/>)
@@ -28,7 +30,7 @@ describe('ExperienceCenter',()=>{
     fireEvent.click(screen.getByRole('button',{name:/人工接受/}))
 
     await waitFor(()=>expect(screen.queryByRole('heading',{name:'事件窗口连接逐日路径'})).not.toBeInTheDocument())
-    const init=fetchMock.mock.calls[1][1] as RequestInit
+    const init=fetchMock.mock.calls[2][1] as RequestInit
     expect(JSON.parse(String(init.body))).toEqual({action:'accept',actor_type:'human',reviewed_by:'owner',note:''})
   })
 })

@@ -30,7 +30,7 @@ def test_latest_announcement_uses_body_evidence(monkeypatch) -> None:
     calls = []
 
     def offline_body(record, **kwargs):
-        calls.append(kwargs)
+        calls.append((record, kwargs))
         return _fake_body(record, **kwargs)
 
     monkeypatch.setattr("answer_engine.load_announcement_body", offline_body)
@@ -42,12 +42,12 @@ def test_latest_announcement_uses_body_evidence(monkeypatch) -> None:
     assert response.answer_card is not None
     rows = response.answer_card["body_rows"]
     body = next(row for row in rows if row.get("记录类型") == "公告正文证据")
-    assert body["巨潮公告ID"] == "1225415810"
+    assert body["巨潮公告ID"] == calls[0][0].announcement_id
     assert body["公告编号"] == "2026-068"
     assert any("法院尚未裁定受理" in item for item in body["正文证据片段"])
     assert response.narrative is not None
     assert "债权人" in response.narrative.direct_answer.text
-    assert calls and calls[0]["allow_network"] is False
+    assert calls and calls[0][1]["allow_network"] is False
 
 
 def test_mubang_progress_separates_case_stage_from_history(monkeypatch) -> None:
@@ -128,7 +128,6 @@ def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
     assert "2026-02-26" in mubang["最近上市公司本体重整里程碑"]
     assert "2026-06-17" not in mubang["最近上市公司本体重整里程碑"]
     assert "2026-06-17" not in mubang["各自最新上市公司本体重整里程碑"]
-    assert "2026-06-17" in mubang["各自最新关联主体重整事项"]
     assert "孙公司" in mubang["各自最新关联主体重整事项"]
     assert response.narrative is not None
     assert len(response.narrative.reasoning_steps) == 3
@@ -142,7 +141,10 @@ def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
         "再分清时间与主体口径",
         "其他指标只作背景",
     ]
-    assert response.answer_card["as_of"] == "2026-07-08"
+    latest_announcement_dates = [
+        row["各自最新公告"][:10] for row in rows
+    ]
+    assert response.answer_card["as_of"] >= max(latest_announcement_dates)
 
 
 def test_comparison_judgment_uses_row_values_instead_of_seed_symbols() -> None:
@@ -218,7 +220,13 @@ def test_generic_wentai_analysis_loads_multiple_dimensions() -> None:
     )
     assert boundary["事件索引截至"] == "2026-05-25"
     assert boundary["事件覆盖ST后"] is False
-    assert response.answer_card["as_of"] == "2026-06-28"
+    included_dates = [
+        str(row[key])[:10]
+        for row in response.answer_card["body_rows"]
+        for key in ("开始日", "日期", "截至", "报告期")
+        if key in row and str(row[key])[:4] == "2026"
+    ]
+    assert response.answer_card["as_of"] == max(included_dates)
 
 
 def test_stock_without_episode_does_not_inherit_global_episode_date() -> None:

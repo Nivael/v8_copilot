@@ -1,4 +1,4 @@
 interface:
   display_name: "ST Data Maintainer"
-  short_description: "独立更新价格与公告，并发布严格 freshness manifest"
-  default_prompt: "Use $st-research-data-maintainer to refresh the declared ST research universe and publish a strict freshness manifest. Do not answer research questions."
+  short_description: "用 Tushare 与 CNINFO 可恢复增量更新并发布 freshness"
+  default_prompt: "Use $st-research-data-maintainer to resume Tushare price and CNINFO announcement refreshes for the declared universe and publish a strict freshness manifest."

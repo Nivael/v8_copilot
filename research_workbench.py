@@ -12,9 +12,12 @@ from pathlib import Path
 from api_contract import ResearchObject, ResearchRequest
 from evidence_gateway import (
     EvidencePack,
+    ExternalEvidenceInput,
     ResearchDraft,
     ValidationReport,
+    augment_evidence_pack,
     build_evidence_pack,
+    plan_evidence_acquisition,
     validate_research_draft,
 )
 from experience_contract import ExperienceCandidateInput, ExperienceFeedbackRequest, ExperienceStatus
@@ -81,6 +84,15 @@ def main() -> int:
     validate.add_argument("--draft", type=Path, required=True)
     validate.add_argument("--output", type=Path)
 
+    network_plan = sub.add_parser("network-plan")
+    network_plan.add_argument("--pack", type=Path, required=True)
+    network_plan.add_argument("--output", type=Path)
+
+    augment = sub.add_parser("augment")
+    augment.add_argument("--pack", type=Path, required=True)
+    augment.add_argument("--external-evidence", type=Path, required=True)
+    augment.add_argument("--output", type=Path, required=True)
+
     record = sub.add_parser("record")
     record.add_argument("--pack", type=Path, required=True)
     record.add_argument("--draft", type=Path, required=True)
@@ -135,6 +147,23 @@ def main() -> int:
         report = validate_research_draft(pack, draft)
         _write_or_print(report.model_dump(mode="json"), args.output)
         return 0 if report.valid else 2
+
+    if args.command == "network-plan":
+        pack = EvidencePack.model_validate(_read_json(args.pack))
+        plan = plan_evidence_acquisition(pack)
+        _write_or_print(plan.model_dump(mode="json"), args.output)
+        return 0
+
+    if args.command == "augment":
+        pack = EvidencePack.model_validate(_read_json(args.pack))
+        raw = json.loads(args.external_evidence.read_text(encoding="utf-8"))
+        rows = raw if isinstance(raw, list) else raw.get("items")
+        if not isinstance(rows, list):
+            raise SystemExit("external evidence 必须是 list 或包含 items list")
+        inputs = [ExternalEvidenceInput.model_validate(row) for row in rows]
+        augmented = augment_evidence_pack(pack, inputs)
+        _write_or_print(augmented.model_dump(mode="json"), args.output)
+        return 0
 
     if args.command == "record":
         pack = EvidencePack.model_validate(_read_json(args.pack))

@@ -491,6 +491,9 @@ def card_recruitment_limit_down_precedent(
 ) -> AnswerCard:
     """Answer recruitment-deadline × consecutive-limit-down precedent questions."""
     price_snapshot = load_price_snapshot(BASE_DB)
+    current_price_snapshot = (
+        load_price_snapshot(BASE_DB, symbol=symbol) if symbol else price_snapshot
+    )
     materialization_error = ""
     payload: dict[str, Any] = {}
     try:
@@ -520,8 +523,8 @@ def card_recruitment_limit_down_precedent(
                 "股票": symbol or "题面未绑定股票",
                 "题面日期": claimed_date,
                 "题面陈述": "当日跌停" if "跌停" in question else "当日价格异动",
-                "本地价格截至": price_snapshot.as_of,
-                "本地是否覆盖": claimed_date <= price_snapshot.as_of,
+                "本地价格截至": current_price_snapshot.as_of,
+                "本地是否覆盖": claimed_date <= current_price_snapshot.as_of,
                 "本地公司公告口径招募截止日": (
                     current_deadlines[-1] if current_deadlines else "未材料化"
                 ),
@@ -531,7 +534,7 @@ def card_recruitment_limit_down_precedent(
                 ),
                 "处理方式": (
                     "当前价格与招募窗口单独核对，不纳入历史样本计算"
-                    if claimed_date <= price_snapshot.as_of and current_deadlines
+                    if claimed_date <= current_price_snapshot.as_of and current_deadlines
                     else "当前价格或招募窗口作为未独立核验前提，不纳入历史样本计算"
                 ),
             },
@@ -598,11 +601,11 @@ def card_recruitment_limit_down_precedent(
             claim_type="data_gap",
             backing=BackingRef(kind="query_row", ref=summary_id),
         ))
-    if claimed_date and claimed_date > price_snapshot.as_of:
+    if claimed_date and claimed_date > current_price_snapshot.as_of:
         claims.append(AnalysisClaim(
             text=(
                 f"题面所述 {claimed_date} 价格状态晚于本地价格截止日 "
-                f"{price_snapshot.as_of}，本卡不独立确认该陈述。"
+                f"{current_price_snapshot.as_of}，本卡不独立确认该陈述。"
             ),
             claim_type="caveat",
             backing=BackingRef(kind="query_row", ref="question_price_premise"),
@@ -651,6 +654,10 @@ def card_recruitment_limit_down_precedent(
         data_snapshot_as_of=as_of,
         source_freshness={
             "price_data_as_of": price_snapshot.as_of,
+            **(
+                {f"price_{symbol}_as_of": current_price_snapshot.as_of}
+                if symbol else {}
+            ),
             "recruitment_announcement_materialization_as_of": materialization_as_of,
         },
         body_rows=rows,
@@ -749,9 +756,13 @@ def card_stock_event_window(
     requested_date = _pd(event_date)
     if requested_date is None:
         raise EventNotFoundError("事件窗口缺 event_date")
-    price_snapshot = load_price_snapshot(BASE_DB)
+    price_snapshot = load_price_snapshot(BASE_DB, symbol=symbol)
     announcement_snapshot = load_table_snapshot(
-        BASE_DB, table="company_announcements", date_column="announcement_date"
+        BASE_DB,
+        table="company_announcements",
+        date_column="announcement_date",
+        where_sql="symbol=?",
+        parameters=(symbol,),
     )
     episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
 
@@ -926,7 +937,6 @@ def card_stock_event_window(
 def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, window: int = 42) -> AnswerCard:
     """#03 沐邦平台整理。lens：C17 短窗波动收敛(evidence, C17 wording 边界) + 股东行为/控制权 methodology。"""
     import numpy as np, pandas as pd
-    price_snapshot = load_price_snapshot(BASE_DB)
     episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
     con = _db()
     p = pd.read_sql("select trade_date,close from daily_prices where symbol=? and adjust='qfq' order by trade_date",
@@ -934,6 +944,7 @@ def card_consolidation_checklist(symbol: str = "603398", band: float = 0.25, win
     con.close()
     if p.empty:
         raise StockNotFoundError(f"当前快照无股票 {symbol} 的 qfq 价格数据")
+    price_snapshot = load_price_snapshot(BASE_DB, symbol=symbol)
     p["trade_date"] = pd.to_datetime(p["trade_date"]); p = p.set_index("trade_date")
     rng = (p["close"].rolling(window).max() - p["close"].rolling(window).min()) / p["close"].rolling(window).mean()
     plat = p[rng < band]
@@ -1475,7 +1486,6 @@ def card_stock_research_overview(
             )
 
     if "price" in requested:
-        price_snapshot = load_price_snapshot(BASE_DB)
         with _db() as connection:
             prices = connection.execute(
                 "select trade_date,close,turnover_rate from daily_prices "
@@ -1484,6 +1494,7 @@ def card_stock_research_overview(
             ).fetchall()
         prices = list(reversed(prices))
         if prices:
+            price_snapshot = load_price_snapshot(BASE_DB, symbol=symbol)
             latest_date, latest_close, _ = prices[-1]
             values = [float(row[1]) for row in prices]
             price_row: dict[str, Any] = {
@@ -1547,6 +1558,7 @@ def card_stock_research_overview(
                     claim_type=claim_type,
                     backing=BackingRef(kind="query_row", ref="requested_event_price_window"),
                 ))
+            card.source_freshness["price_data_as_of"] = price_snapshot.as_of
         else:
             gap = LensGap(
                 gap_id="stock_price_coverage",
@@ -1560,7 +1572,6 @@ def card_stock_research_overview(
                 claim_type="data_gap",
                 backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
             ))
-        card.source_freshness["price_data_as_of"] = price_snapshot.as_of
         card.provenance.append(
             f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices[{symbol}]"
         )
@@ -2042,7 +2053,6 @@ def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
     """Compare public dimensions on one explicit, reproducible snapshot."""
     if len(symbols) != 2 or len(set(symbols)) != 2:
         raise ValueError("首版股票比较必须提供两只不同股票")
-    price_snapshot = load_price_snapshot(BASE_DB)
     episode_snapshot = load_episode_snapshot(EPISODE_INDEX, EPISODE_MANIFEST)
     rows: list[dict[str, Any]] = []
     inventories = [
@@ -2061,6 +2071,7 @@ def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
     ]
     actual_information_dates: list[str] = []
     per_stock_freshness: dict[str, str] = {}
+    price_dates: list[str] = []
     for symbol, inventory in zip(symbols, inventories):
         latest = inventory.records[0] if inventory.records else None
         comparable_records = [
@@ -2175,6 +2186,7 @@ def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
         if price_values:
             actual_price_date = str(price_values[-1][0])[:10]
             actual_information_dates.append(actual_price_date)
+            price_dates.append(actual_price_date)
             per_stock_freshness[f"price_{symbol}_as_of"] = actual_price_date
         if anchors:
             actual_information_dates.append(anchors[0][0])
@@ -2202,7 +2214,7 @@ def card_stock_comparison(symbols: list[str], question: str) -> AnswerCard:
         episode_index_version=episode_snapshot.version,
         data_snapshot_as_of=as_of,
         source_freshness={
-            "price_data_as_of": price_snapshot.as_of,
+            **({"price_data_as_of": min(price_dates)} if price_dates else {}),
             "episode_index_as_of": episode_snapshot.as_of,
             **per_stock_freshness,
             **{f"company_announcements_{symbol}_as_of": date for symbol, date in zip(symbols, announcement_dates)},

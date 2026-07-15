@@ -111,6 +111,16 @@ export interface Experience {
   not_evidence:true
 }
 
+export interface ExperienceGovernanceStatus {
+  accepted_count:number
+  candidate_count:number
+  blocked_count:number
+  conflicts:Array<{conflict_id:string;kind:string;severity:'blocking'|'review';detail:string}>
+  latest_regression:Record<string,unknown>|null
+  ordinary_success_auto_capture:false
+  not_evidence:true
+}
+
 export interface ResearchRun {
   run_id:string
   request_id:string
@@ -175,6 +185,7 @@ export interface EvidencePackPayload {
   query_plan_id:string
   rows:Array<Record<string,unknown>>
   lens_invocations:Array<Record<string,unknown>>
+  external_evidence:Array<Record<string,unknown>>
   freshness_manifest:Record<string,unknown>
   source_freshness:Record<string,string>
   provenance:string[]

@@ -114,10 +114,12 @@ uv run python run_api.py
 `/legacy`，个股节点通过 ResearchContext URL 回到该兼容入口继续提问。
 
 固定的数据维护任务、研究任务和审计面板分工见 [OPERATING_MODEL.md](OPERATING_MODEL.md)。
-数据维护入口为 `data_maintenance.py`：公告增量必须先验证再提升，完成上游更新后生成
-`local_data/v8_copilot/freshness_manifest.json`。新 Codex 运行会把完整 EvidencePack、结构化
-draft 和 ordinal 判断审计持久化；在 `/runs` 点击 Pack ID 可查看数据库行、Lens、backing
-与 coverage gap。
+选择性联网与离线机制的边界见 [SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md](SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md)。
+数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
+checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
+新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
+点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为
+`experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
 
 ## 契约与文件
 
@@ -139,8 +141,9 @@ draft 和 ordinal 判断审计持久化；在 `/runs` 点击 Pack ID 可查看�
 - `evidence_gateway.py` — AnswerCard 到 EvidencePack 的只读适配和 Codex draft 校验。
 - `research_repository.py` — 独立 Research Run Ledger 与 Experience Repository。
 - `experience_contract.py` / `experience_distiller.py` — 非证据经验契约、人工晋级闸门和候选提炼。
+- `experience_governance.py` / `experience_registry/` — 去敏 registry、冲突检测和定期回归治理。
 - `research_workbench.py` — 项目 skill 使用的本地 CLI。
-- `data_maintenance.py` / `freshness_manifest.py` — 独立数据维护边界与统一 freshness manifest。
+- `data_maintenance.py` / `data_refresh.py` / `freshness_manifest.py` — Tushare/CNINFO 可恢复增量维护与统一 freshness manifest。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。

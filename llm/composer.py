@@ -454,10 +454,11 @@ def _validated_narrative(
             source_text = "、".join(
                 f"{label}截至{value}" for label, value, _ in dated_sources
             )
-            coverage_text = (
-                "；这些来源均未覆盖ST开始后的信息"
-                if all(coverage is False for _, _, coverage in dated_sources)
-                else ""
+            uncovered = [
+                label for label, _, coverage in dated_sources if coverage is False
+            ]
+            coverage_text = "".join(
+                f"；{label}未覆盖ST开始后的信息" for label in uncovered
             )
             uncertainties.append(NarrativeStatement(
                 text=(

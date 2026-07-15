@@ -55,6 +55,10 @@ Create JSON with a `narrative` and a structured `decision_audit`:
 
 Allowed backing kinds are `query_row`, `lens_invocation`, `provenance_ref`, `data_debt`, and `lens_gap`. Every reference must exist in `validation_catalog`.
 
+For an external fact, use `{"kind":"provenance_ref","ref":"<EXT-id>:<fact-id>"}`.
+External facts may establish current published facts only; they cannot back a local
+historical distribution, Lens result, episode calculation, or price-path calculation.
+
 Rules:
 
 - Give the conclusion before the data plumbing.

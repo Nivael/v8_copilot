@@ -15,7 +15,7 @@ describe('RunAudit',()=>{
           contract_version:'v8_evidence_pack_v1',pack_id:'EP-AAAAAAAAAAAAAAAAAAAA',pack_digest:'a'.repeat(64),
           question_scope:{},query_plan_id:'comparison',rows:[{row_id:'row-1',stage:'预重整'}],
           lens_invocations:[{release_id:'RL-1',contributed_section:'historical context'}],
-          freshness_manifest:{manifest_id:'FM-AAAAAAAAAAAAAAAAAAAA',overall_status:'ready'},
+          freshness_manifest:{manifest_id:'FM-AAAAAAAAAAAAAAAAAAAA',overall_status:'ready'},external_evidence:[],
           source_freshness:{announcements:'2026-07-08'},provenance:['db'],
           coverage_gaps:[{gap_id:'G-1',note:'管理人渠道未覆盖'}],definitions:[],allowed_claims:[],
           forbidden_inferences:['不得预测'],validation_catalog:{},applicable_experiences:[],

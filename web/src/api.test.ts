@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {ask, getExperiences, parseNdjson, reviewExperience} from './api'
+import {ask, getExperienceGovernanceStatus, getExperiences, parseNdjson, reviewExperience} from './api'
 
 describe('NDJSON', () => {
   afterEach(() => vi.restoreAllMocks())
@@ -39,5 +39,11 @@ describe('NDJSON', () => {
     const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response('[]',{status:200}))
     await getExperiences('candidate')
     expect(fetchMock.mock.calls[0][0]).toBe('/api/v1/experiences?status=candidate')
+  })
+
+  it('loads experience governance status', async () => {
+    const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response('{}',{status:200}))
+    await getExperienceGovernanceStatus()
+    expect(fetchMock.mock.calls[0][0]).toBe('/api/v1/experience-governance/status')
   })
 })

@@ -1,5 +1,5 @@
 import type {
-  Dossier, EvidencePackAuditRecord, Experience, ExperienceStatus, ResearchContext,
+  Dossier, EvidencePackAuditRecord, Experience, ExperienceGovernanceStatus, ExperienceStatus, ResearchContext,
   ResearchRun, StreamEvent,
 } from './types'
 
@@ -76,6 +76,14 @@ export async function reviewExperience(
     body: JSON.stringify({action, actor_type: 'human', reviewed_by: 'owner', note: ''}),
   })
   if (!response.ok) throw new Error(`经验审阅返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getExperienceGovernanceStatus(
+  signal?:AbortSignal,
+):Promise<ExperienceGovernanceStatus> {
+  const response=await fetch('/api/v1/experience-governance/status',{signal})
+  if(!response.ok)throw new Error(`经验治理服务返回 ${response.status}`)
   return response.json()
 }
 

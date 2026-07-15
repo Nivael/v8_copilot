@@ -95,13 +95,22 @@ def load_table_snapshot(
 def load_price_snapshot(
     database: Path,
     *,
+    symbol: str | None = None,
     expected_as_of: str | None = None,
 ) -> PriceSnapshot:
+    where_sql = "adjust='qfq'"
+    parameters: tuple[object, ...] = ()
+    if symbol is not None:
+        if not isinstance(symbol, str) or not symbol.isdigit() or len(symbol) != 6:
+            raise SnapshotContractError(f"股票代码非法: {symbol!r}")
+        where_sql += " and symbol=?"
+        parameters = (symbol,)
     base = load_table_snapshot(
         database,
         table="daily_prices",
         date_column="trade_date",
-        where_sql="adjust='qfq'",
+        where_sql=where_sql,
+        parameters=parameters,
         expected_as_of=expected_as_of,
     )
     with _connect_read_only(database) as connection:
@@ -114,11 +123,13 @@ def load_price_snapshot(
                 f"daily_prices 缺必需字段: {', '.join(sorted(missing))}"
             )
         symbol_count = int(connection.execute(
-            "select count(distinct symbol) from daily_prices where adjust='qfq'"
+            f"select count(distinct symbol) from daily_prices where {where_sql}",
+            parameters,
         ).fetchone()[0])
         return_count = int(connection.execute(
             "select coalesce(sum(case when n > 10 then n - 10 else 0 end), 0) "
-            "from (select count(*) n from daily_prices where adjust='qfq' group by symbol)"
+            f"from (select count(*) n from daily_prices where {where_sql} group by symbol)",
+            parameters,
         ).fetchone()[0])
     if symbol_count <= 0 or return_count <= 0:
         raise SnapshotContractError("daily_prices qfq 快照缺少可计算的股票或两周收益观测")

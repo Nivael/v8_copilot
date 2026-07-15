@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import datetime, timezone
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -16,7 +17,7 @@ from freshness_manifest import load_freshness_manifest
 from settings import FRESHNESS_MANIFEST_PATH
 
 
-EVIDENCE_PACK_VERSION = "v8_evidence_pack_v1"
+EVIDENCE_PACK_VERSION = "v8_evidence_pack_v2"
 VALIDATION_REPORT_VERSION = "v8_research_validation_report_v1"
 
 
@@ -36,6 +37,43 @@ class ApplicableExperience(StrictModel):
     not_evidence: Literal[True] = True
 
 
+class ExternalEvidenceFactInput(StrictModel):
+    fact_id: str = Field(pattern=r"^[a-z0-9][a-z0-9_-]{1,63}$")
+    text: str = Field(min_length=1, max_length=2000)
+
+
+class ExternalEvidenceInput(StrictModel):
+    source_kind: Literal[
+        "official_announcement", "official_exchange_or_regulator",
+        "official_court_or_administrator", "official_company_profile",
+        "official_financial_report", "market_data_provider",
+    ]
+    source_mode: Literal["verified_materialization", "live_web_observation"]
+    subject_ref: str = Field(min_length=1, max_length=128)
+    title: str = Field(min_length=1, max_length=500)
+    source_url: str = Field(pattern=r"^https?://", max_length=2000)
+    published_at: str = ""
+    fetched_at: str
+    coverage_note: str = Field(min_length=1, max_length=1200)
+    facts: list[ExternalEvidenceFactInput] = Field(min_length=1, max_length=30)
+
+
+class ExternalEvidenceItem(ExternalEvidenceInput):
+    evidence_id: str = Field(pattern=r"^EXT-[A-F0-9]{20}$")
+    content_digest: str = Field(pattern=r"^[a-f0-9]{64}$")
+    not_mechanism_evidence: Literal[True] = True
+
+
+class EvidenceAcquisitionPlan(StrictModel):
+    online_fact_lookup: bool
+    online_purposes: list[str]
+    offline_mechanisms: list[str]
+    reasons: list[str]
+    synthesis_rule: Literal[
+        "external_facts_and_local_mechanisms_must_share_one_validated_evidence_pack"
+    ] = "external_facts_and_local_mechanisms_must_share_one_validated_evidence_pack"
+
+
 class EvidencePack(StrictModel):
     contract_version: Literal[EVIDENCE_PACK_VERSION] = EVIDENCE_PACK_VERSION
     pack_id: str = Field(pattern=r"^EP-[A-F0-9]{20}$")
@@ -44,6 +82,7 @@ class EvidencePack(StrictModel):
     query_plan_id: str
     rows: list[dict[str, Any]]
     lens_invocations: list[dict[str, Any]]
+    external_evidence: list[ExternalEvidenceItem] = Field(default_factory=list)
     freshness_manifest: dict[str, Any]
     source_freshness: dict[str, str]
     provenance: list[str]
@@ -214,6 +253,7 @@ def build_evidence_pack(
         "query_plan_id": query_plan_id,
         "rows": list(card.get("body_rows", [])),
         "lens_invocations": list(card.get("lens_invocations", [])),
+        "external_evidence": [],
         "freshness_manifest": _current_freshness_manifest(),
         "source_freshness": dict(card.get("source_freshness", {})),
         "provenance": list(card.get("provenance", [])),
@@ -248,6 +288,110 @@ def build_evidence_pack(
         **payload,
         "pack_id": f"EP-{digest[:20].upper()}",
         "pack_digest": digest,
+    })
+
+
+def plan_evidence_acquisition(pack: EvidencePack) -> EvidenceAcquisitionPlan:
+    """Decide whether current factual acquisition may use the network.
+
+    Online lookup supplements current facts only.  Cohorts, episodes, Lens results,
+    path calculations and other mechanism outputs always remain local/reproducible.
+    """
+    question = str(pack.question_scope.get("question") or "")
+    gaps_text = _canonical_json({
+        "coverage_gaps": pack.coverage_gaps,
+        "freshness_manifest": pack.freshness_manifest,
+    })
+    purposes: list[str] = []
+    if any(term in question for term in ("最新公告", "公告说了什么", "最新披露")):
+        purposes.append("latest_official_announcement")
+    if any(term in question for term in ("基本面", "财务", "主营", "公司资料", "股东户数")):
+        purposes.append("current_company_fundamentals")
+    if any(term in question for term in ("公开招募", "管理人", "破产重整", "法院", "截止日")):
+        purposes.append("official_proceeding_channel")
+    if any(term in question for term in ("今天", "当前价格", "跌停", "涨停")):
+        purposes.append("current_market_fact")
+    if any(term in gaps_text for term in ("未覆盖", "其他渠道", "尚未材料化", "stale", "freshness")):
+        purposes.append("declared_coverage_gap")
+    purposes = list(dict.fromkeys(purposes))
+    reasons = []
+    if purposes:
+        reasons.append("问题包含当前事实或本地 EvidencePack 已声明来源覆盖缺口。")
+    else:
+        reasons.append("本题没有识别到必须补充的当前外部事实，优先保持完全可复现。")
+    return EvidenceAcquisitionPlan(
+        online_fact_lookup=bool(purposes),
+        online_purposes=purposes,
+        offline_mechanisms=[
+            "database_rows", "episode_and_case_deduplication", "lens_invocations",
+            "historical_distributions", "event_window_and_price_path_calculations",
+        ],
+        reasons=reasons,
+    )
+
+
+def augment_evidence_pack(
+    pack: EvidencePack,
+    external_inputs: list[ExternalEvidenceInput],
+) -> EvidencePack:
+    """Bind separately acquired online facts into a new immutable EvidencePack."""
+    if not external_inputs:
+        return pack
+    items = list(pack.external_evidence)
+    catalog = dict(pack.validation_catalog)
+    provenance = list(pack.provenance)
+    source_freshness = dict(pack.source_freshness)
+    existing_ids = {item.evidence_id for item in items}
+    for value in external_inputs:
+        try:
+            fetched_at = datetime.fromisoformat(value.fetched_at.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ValueError(f"external fetched_at 非法: {value.fetched_at!r}") from exc
+        if fetched_at.tzinfo is None:
+            raise ValueError("external fetched_at 必须带时区")
+        if fetched_at > datetime.now(timezone.utc):
+            raise ValueError("external fetched_at 不能晚于当前时间")
+        if value.published_at:
+            try:
+                datetime.fromisoformat(value.published_at.replace("Z", "+00:00"))
+            except ValueError as exc:
+                raise ValueError(
+                    f"external published_at 非法: {value.published_at!r}"
+                ) from exc
+        content = value.model_dump(mode="json")
+        digest = _digest(content)
+        evidence_id = f"EXT-{digest[:20].upper()}"
+        item = ExternalEvidenceItem(
+            **content, evidence_id=evidence_id, content_digest=digest,
+        )
+        if evidence_id not in existing_ids:
+            items.append(item)
+            existing_ids.add(evidence_id)
+        if value.source_url not in provenance:
+            provenance.append(value.source_url)
+        source_freshness[f"external:{evidence_id}"] = value.fetched_at
+        for fact in value.facts:
+            catalog[f"provenance_ref:{evidence_id}:{fact.fact_id}"] = _canonical_json({
+                "fact": fact.text,
+                "title": value.title,
+                "subject_ref": value.subject_ref,
+                "source_kind": value.source_kind,
+                "source_mode": value.source_mode,
+                "source_url": value.source_url,
+                "published_at": value.published_at,
+                "fetched_at": value.fetched_at,
+                "coverage_note": value.coverage_note,
+            })
+    payload = pack.model_dump(mode="json", exclude={"pack_id", "pack_digest"})
+    payload.update({
+        "external_evidence": [item.model_dump(mode="json") for item in items],
+        "validation_catalog": catalog,
+        "provenance": provenance,
+        "source_freshness": source_freshness,
+    })
+    digest = _digest(payload)
+    return EvidencePack.model_validate({
+        **payload, "pack_id": f"EP-{digest[:20].upper()}", "pack_digest": digest,
     })
 
 

@@ -11,8 +11,11 @@ from evidence_gateway import (
     DecisionAudit,
     DecisionFactor,
     EvidencePack,
+    ExternalEvidenceInput,
     ResearchDraft,
     build_evidence_pack,
+    augment_evidence_pack,
+    plan_evidence_acquisition,
     validate_research_draft,
 )
 
@@ -111,3 +114,61 @@ def test_validator_audits_ordinal_decision_factors_against_pack() -> None:
     assert report.valid is True
     assert report.decision_audit_status == "complete"
     assert report.checked_backings >= 3
+
+
+def test_network_plan_keeps_mechanisms_local_and_augments_pack_with_auditable_fact() -> None:
+    pack = build_evidence_pack(ResearchRequest(
+        question="沐邦的公开招募最新推进到哪一步？",
+        llm_mode="off",
+    ))
+    plan = plan_evidence_acquisition(pack)
+    external = ExternalEvidenceInput(
+        source_kind="official_court_or_administrator",
+        source_mode="live_web_observation",
+        subject_ref="603398",
+        title="管理人公开招募说明",
+        source_url="https://example.gov.cn/restructuring/603398",
+        published_at="2026-07-14",
+        fetched_at="2026-07-15T00:00:00+00:00",
+        coverage_note="只补充管理人渠道当前事实，不替代本地历史样本计算。",
+        facts=[{"fact_id": "deadline", "text": "公开招募截止日为2026-07-20。"}],
+    )
+
+    augmented = augment_evidence_pack(pack, [external])
+    item = augmented.external_evidence[0]
+    backing = {"kind": "provenance_ref", "ref": f"{item.evidence_id}:deadline"}
+    draft = ResearchDraft(narrative=ResearchNarrative(
+        direct_answer=NarrativeStatement(
+            text="管理人渠道列明的公开招募截止日为2026-07-20。",
+            backing=[backing],
+        ),
+        basis_note="联网事实与本地机制证据先合入同一 EvidencePack。",
+    ))
+    report = validate_research_draft(augmented, draft)
+
+    assert plan.online_fact_lookup is True
+    assert "episode_and_case_deduplication" in plan.offline_mechanisms
+    assert augmented.pack_id != pack.pack_id
+    assert augmented.external_evidence[0].not_mechanism_evidence is True
+    assert report.valid is True
+
+
+def test_external_evidence_rejects_unparseable_publication_time() -> None:
+    pack = build_evidence_pack(ResearchRequest(
+        question="沐邦的公开招募最新推进到哪一步？",
+        llm_mode="off",
+    ))
+    external = ExternalEvidenceInput(
+        source_kind="official_court_or_administrator",
+        source_mode="live_web_observation",
+        subject_ref="603398",
+        title="管理人公开招募说明",
+        source_url="https://example.gov.cn/restructuring/603398",
+        published_at="不确定",
+        fetched_at="2026-07-15T00:00:00+00:00",
+        coverage_note="仅补当前事实。",
+        facts=[{"fact_id": "status", "text": "已发布招募说明。"}],
+    )
+
+    with pytest.raises(ValueError, match="published_at 非法"):
+        augment_evidence_pack(pack, [external])

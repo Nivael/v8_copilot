@@ -7,7 +7,7 @@ describe('App',()=>{
   afterEach(()=>vi.restoreAllMocks())
 
   it('opens on reusable experience instead of raw question history',async()=>{
-    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify([{
+    const experiences=[{
       contract_version:'v8_research_experience_contract_v0',experience_id:'EXP-AAAAAAAAAAAAAAAAAAAA',
       experience_version:1,status:'candidate',experience_type:'presentation_rule',title:'主回答先给判断',
       value_summary:'总览先回答实质差异。',trigger_conditions:['比较问题'],scope:['comparison'],
@@ -15,7 +15,12 @@ describe('App',()=>{
       answer_rubric:['首段直接回答'],anti_patterns:['字段清单开头'],coverage_boundaries:['不改变证据强度'],
       validation_refs:['regression:readability'],source_run_refs:['migration:p2.4'],supersedes:[],
       created_at:'2026-07-14T00:00:00Z',reviewed_at:null,reviewed_by:null,not_evidence:true,
-    }]),{status:200,headers:{'Content-Type':'application/json'}}))
+    }]
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify(
+      String(input).includes('experience-governance')
+        ? {accepted_count:0,candidate_count:1,blocked_count:0,conflicts:[],latest_regression:null,ordinary_success_auto_capture:false,not_evidence:true}
+        : experiences,
+    ),{status:200,headers:{'Content-Type':'application/json'}}))
     render(<MemoryRouter initialEntries={['/']}><App/></MemoryRouter>)
     expect(await screen.findByRole('heading',{name:'经验中心'})).toBeInTheDocument()
     expect(await screen.findByRole('heading',{name:'主回答先给判断'})).toBeInTheDocument()

@@ -46,25 +46,26 @@
 ## P3 — 市场与 ST 板块基准
 
 - [x] 中证全指已回填 2016-01-04 至 2026-07-20 共 2,560 点并进入 market-context manifest。
+- [x] 中证2000 `932000.CSI` 已作为 canonical size/style reference 加入同一 pool；源端实际历史从发布日期 2023-08-11 起，至 2026-07-20 共 710 点。
 - [x] `stock_st` 历史 membership 已回填 333,858 行、2,399 个源日期；实际源起点为 2016-08-09。发现并复查 25 个源内交易日空洞，连续区间从 2021-03-17 开始，历史状态明确为 `partial`。
 - [x] 用逐日 membership + qfq returns 物化 `st_equal_weight_v1`：2021-03-17 至 2026-07-20，共 1,295 个交易日。
 - [x] 用真实结果冻结当前 ready 门槛为 95%；最近连续 13 个交易日达标，最近 10 日最低覆盖率 96.23%。低覆盖历史点保留但不得作为 ready 证据。
-- [x] 增加 market-context manifest `MC-01868C4AD4FC1F0E9F95`、方法版本 provenance、当前/历史双层状态和缺口清单。
+- [x] 增加 market-context manifest `MC-F15756CDF3490173508B`、三基准 required pool、共同窗口（2023-08-11 起）、方法版本 provenance、当前/历史双层状态和缺口清单。
 - [ ] 选一个外部厂商 ST 指数做 shadow sanity check；标记 `context_only`。
 - [x] 检验停牌/缺价不填 0、无有效收益不伪造、按当日名单计算、周末名单不生成指数点等边界；上市首日和移入/移出语义由逐日 membership 自然落位。
 
 外部旁证不阻塞 canonical 指数：东财公开行情端点本轮连续返回空响应，Tushare `ths_daily` 当前账号无权限；在拿到稳定授权接口前保持 pending，不能把网页展示值写成正式序列。
 
-验证记录：P2/P3 相关 30 项聚焦测试全绿（含 universe 基础测试）；Python 全套仅有 5 个失败，已逐项在未改动的 master 复现，均为真实数据刷新后的硬编码日期/既有叙事断言；Web 29 项全绿。worktree 未安装独立 `node_modules`，Web 回归在同一提交基线的主工作树依赖环境执行。
+验证记录：P2/P3 相关 32 项聚焦测试全绿（含 universe 基础测试和三基准 required-pool 门）；Python 全套仅有 5 个失败，已逐项在未改动的 master 复现，均为真实数据刷新后的硬编码日期/既有叙事断言；Web 29 项全绿。worktree 未安装独立 `node_modules`，Web 回归在同一提交基线的主工作树依赖环境执行。
 
 验收：不存在用当前 209 只倒算历史的路径；任意指数点都可追到当日名单和有效成员数。
 
 ## P4 — 答案卡与 dossier 消费
 
 - [ ] 新增统一交易日窗口对齐器。
-- [ ] 输出 stock、ST、market 三条窗口收益。
-- [ ] 输出 stock−ST、stock−market、ST−market 三条百分点差。
-- [ ] 图表同时显示个股、ST 指数和大盘归一化曲线。
+- [ ] 输出 stock、ST、CSI2000、market 四条窗口收益。
+- [ ] 输出 stock−ST、stock−CSI2000、ST−CSI2000、stock−market、ST−market 等职责明确的百分点差。
+- [ ] 图表同时显示个股、ST 指数、中证2000和大盘归一化曲线。
 - [ ] 缺端点或低 coverage 时降级为 evidence gap，不插值、不伪造 alpha。
 - [ ] provenance 包含 universe snapshot、benchmark definition、series as-of。
 - [ ] 增加 API contract 新版本（仅当现有 body rows 无法无损表达时）。

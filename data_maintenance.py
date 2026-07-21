@@ -28,7 +28,7 @@ from freshness_manifest import (
     write_freshness_manifest,
 )
 from market_context import (
-    BROAD_MARKET,
+    PROVIDER_BENCHMARKS,
     HistoricalStMembershipService,
     MarketContextRepository,
     MarketContextService,
@@ -271,6 +271,13 @@ def main() -> int:
     refresh_benchmarks.add_argument("--through", required=True)
     refresh_benchmarks.add_argument("--env-file", type=Path)
     refresh_benchmarks.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+    refresh_benchmarks.add_argument(
+        "--benchmark-id",
+        action="append",
+        choices=[item.benchmark_id for item in PROVIDER_BENCHMARKS],
+        default=[],
+        help="可重复；省略时刷新 pool 中全部 provider benchmark",
+    )
 
     backfill_membership = sub.add_parser("backfill-membership")
     backfill_membership.add_argument("--start-date", required=True)
@@ -344,18 +351,30 @@ def main() -> int:
     if args.command == "refresh-benchmarks":
         _load_env_file(args.env_file)
         repository = MarketContextRepository(args.database)
-        points = MarketContextService(
+        service = MarketContextService(
             provider=TushareHttpClient(), repository=repository,
-        ).refresh_provider_index(
-            definition=BROAD_MARKET,
-            start_date=args.start_date,
-            end_date=args.through,
         )
-        lower, upper, count = repository.bounds(BROAD_MARKET.benchmark_id)
+        selected = set(args.benchmark_id)
+        definitions = [
+            item for item in PROVIDER_BENCHMARKS
+            if not selected or item.benchmark_id in selected
+        ]
+        summaries = []
+        for definition in definitions:
+            points = service.refresh_provider_index(
+                definition=definition,
+                start_date=args.start_date,
+                end_date=args.through,
+            )
+            lower, upper, count = repository.bounds(definition.benchmark_id)
+            summaries.append({
+                "benchmark_id": definition.benchmark_id,
+                "provider_code": definition.provider_code,
+                "rows_seen": len(points),
+                "stored_bounds": {"start": lower, "end": upper, "count": count},
+            })
         print(json.dumps({
-            "benchmark_id": BROAD_MARKET.benchmark_id,
-            "rows_seen": len(points),
-            "stored_bounds": {"start": lower, "end": upper, "count": count},
+            "benchmarks": summaries,
             "database": str(args.database),
         }, ensure_ascii=False, indent=2))
         return 0

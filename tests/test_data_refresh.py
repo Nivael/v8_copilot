@@ -157,11 +157,18 @@ def test_tushare_client_exposes_st_universe_and_index_boundaries(monkeypatch) ->
     client.fetch_index_daily(
         ts_code="000985.CSI", start_date="2026-07-01", end_date="2026-07-20"
     )
+    client.fetch_index_daily(
+        ts_code="932000.CSI", start_date="2026-07-01", end_date="2026-07-20"
+    )
 
     assert calls[0][0:2] == ("stock_st", {"trade_date": "20260720"})
     assert calls[1][0] == "index_daily"
     assert calls[1][1] == {
         "ts_code": "000985.CSI", "start_date": "20260701", "end_date": "20260720"
+    }
+    assert calls[2][0] == "index_daily"
+    assert calls[2][1] == {
+        "ts_code": "932000.CSI", "start_date": "20260701", "end_date": "20260720"
     }
 
 

@@ -4,6 +4,8 @@ import sqlite3
 
 from market_context import (
     BROAD_MARKET,
+    CANONICAL_BENCHMARK_POOL,
+    CSI_2000,
     BenchmarkDefinition,
     BenchmarkPoint,
     HistoricalStMembershipService,
@@ -73,6 +75,39 @@ def test_provider_benchmark_is_normalized_and_persisted(tmp_path) -> None:
     assert points[0].trade_date == "2026-07-20"
     assert points[0].pct_change == -1.6
     assert repository.bounds("csi_all_share") == ("2026-07-20", "2026-07-20", 1)
+
+
+class FakeCsi2000Provider:
+    def fetch_index_daily(self, *, ts_code: str, start_date: str, end_date: str):
+        assert ts_code == "932000.CSI"
+        return [{
+            "ts_code": ts_code,
+            "trade_date": "20260720",
+            "open": 3200,
+            "high": 3210,
+            "low": 3100,
+            "close": 3120,
+            "pct_chg": -2.5,
+        }]
+
+
+def test_csi_2000_is_a_canonical_size_reference_in_the_same_pool(tmp_path) -> None:
+    repository = MarketContextRepository(tmp_path / "market.sqlite3")
+    points = MarketContextService(
+        provider=FakeCsi2000Provider(), repository=repository
+    ).refresh_provider_index(
+        definition=CSI_2000,
+        start_date="2026-07-20",
+        end_date="2026-07-20",
+    )
+
+    assert points[0].benchmark_id == "csi_2000"
+    assert repository.bounds("csi_2000") == ("2026-07-20", "2026-07-20", 1)
+    assert [item.benchmark_id for item in CANONICAL_BENCHMARK_POOL] == [
+        "st_equal_weight_v1", "csi_2000", "csi_all_share",
+    ]
+    assert CSI_2000.kind == "size"
+    assert "净流入" in "".join(CSI_2000.notes)
 
 
 def test_benchmark_methodology_cannot_change_in_place(tmp_path) -> None:
@@ -250,6 +285,71 @@ def test_incremental_st_materialization_continues_prior_index_level(tmp_path) ->
 
     assert first[0].close == 900.0
     assert second[0].close == 990.0
+
+
+def test_market_manifest_requires_all_three_pool_references_for_current_ready(
+    tmp_path,
+) -> None:
+    dates = [
+        "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10",
+        "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16",
+        "2026-07-17", "2026-07-20",
+    ]
+    repository = MarketContextRepository(tmp_path / "market.sqlite3")
+    repository.upsert(definition=BROAD_MARKET, points=[
+        BenchmarkPoint(
+            benchmark_id=BROAD_MARKET.benchmark_id,
+            trade_date=day,
+            close=5000,
+            pct_change=-1,
+            source=BROAD_MARKET.provider,
+        )
+        for day in dates
+    ])
+    HistoricalStMembershipService(
+        provider=FakeMembershipProvider([
+            _membership_row(day, "000001") for day in reversed(dates)
+        ]),
+        repository=repository,
+    ).backfill(start_date=dates[0], end_date=dates[-1], page_size=100)
+    prices = tmp_path / "prices.sqlite3"
+    with sqlite3.connect(prices) as connection:
+        connection.execute(
+            "create table daily_prices "
+            "(symbol text, trade_date text, adjust text, pct_change real)"
+        )
+        connection.executemany(
+            "insert into daily_prices values ('000001',?,'qfq',-1.0)",
+            [(day,) for day in dates],
+        )
+    repository.materialize_st_equal_weight(
+        price_database=prices, start_date=dates[0], end_date=dates[-1]
+    )
+
+    before = build_market_context_manifest(repository=repository)
+    repository.upsert(definition=CSI_2000, points=[
+        BenchmarkPoint(
+            benchmark_id=CSI_2000.benchmark_id,
+            trade_date=day,
+            close=3000,
+            pct_change=-1.2,
+            source=CSI_2000.provider,
+        )
+        for day in dates
+    ])
+    after = build_market_context_manifest(repository=repository)
+
+    assert before["current_status"] == "gaps"
+    assert after["current_status"] == "ready"
+    assert after["current_required_benchmarks"] == [
+        "st_equal_weight_v1", "csi_2000", "csi_all_share",
+    ]
+    assert [item["benchmark_id"] for item in after["benchmark_pool"]] == [
+        "st_equal_weight_v1", "csi_2000", "csi_all_share",
+    ]
+    assert after["pool_common_window"] == {
+        "start": "2026-07-07", "end": "2026-07-20",
+    }
 
 
 class DateMembershipProvider:

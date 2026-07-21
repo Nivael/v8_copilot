@@ -73,10 +73,13 @@ python data_maintenance.py market-context-status \
   --coverage-threshold 0.95
 ```
 
-正式市场语境由中证全指和“逐日 ST membership + qfq 个股收益”物化的
-`st_equal_weight_v1` 共同组成；不得用今天的成分股倒算历史。截至 2026-07-20，market-context
+`refresh-benchmarks` 默认同时刷新中证全指和中证2000；也可重复传
+`--benchmark-id csi_all_share` / `--benchmark-id csi_2000` 做定向恢复。正式市场语境 pool 由
+中证全指、中证2000和“逐日 ST membership + qfq 个股收益”物化的 `st_equal_weight_v1`
+共同组成；不得用今天的成分股倒算历史，也不得把中证2000价格涨跌表述成资金净流入金额。截至 2026-07-20，market-context
 当前状态 ready，但因源端早期日期空洞和历史价格覆盖不足，历史状态为 partial，连续区间从
-2021-03-17 开始。日常增量不应覆盖或隐去这个历史边界。
+2021-03-17 开始；包含中证2000的完整 pool 共同窗口从其正式发布日期 2023-08-11 开始。
+日常增量不应覆盖或隐去这些历史边界。
 
 ## 窗口二：研究问答
 

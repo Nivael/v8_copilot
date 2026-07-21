@@ -122,7 +122,9 @@ checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot
 展开批量范围；中证全指和内部 ST 等权研究指数使用独立 market-context 数据面，不与个股基础库混表。
 P2/P3 已完成真实数据验收：209 只全量严格 manifest 为 `FM-D836EE706EAA2BDE08DC`；
-market-context manifest 为 `MC-01868C4AD4FC1F0E9F95`，最新区间 ready、历史区间 partial。
+market-context pool 包含 ST 等权、中证2000和中证全指；manifest 为
+`MC-F15756CDF3490173508B`，最新区间 ready、历史区间 partial，三基准共同窗口从
+2023-08-11 开始。
 答案卡消费三序列与相对收益仍属于 P4，不能因为数据面 ready 就宣称 `D-051C` 已关闭。
 新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
 点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为

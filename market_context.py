@@ -42,6 +42,19 @@ BROAD_MARKET = BenchmarkDefinition(
     notes=["用于大盘方向参照，不代表 ST 风格。"],
 )
 
+CSI_2000 = BenchmarkDefinition(
+    benchmark_id="csi_2000",
+    name="中证2000",
+    kind="size",
+    provider="tushare:index_daily",
+    provider_code="932000.CSI",
+    methodology_version="provider_series_v1",
+    notes=[
+        "用于中小盘风险偏好与资金风格参照。",
+        "价格指数不是资金净流入数据，不得据此陈述净流入金额。",
+    ],
+)
+
 ST_EQUAL_WEIGHT = BenchmarkDefinition(
     benchmark_id="st_equal_weight_v1",
     name="ST 等权研究指数 v1",
@@ -53,6 +66,9 @@ ST_EQUAL_WEIGHT = BenchmarkDefinition(
         "停牌或缺收益的成员不填零；通过 coverage_ratio 明示覆盖率。",
     ],
 )
+
+PROVIDER_BENCHMARKS = (BROAD_MARKET, CSI_2000)
+CANONICAL_BENCHMARK_POOL = (ST_EQUAL_WEIGHT, CSI_2000, BROAD_MARKET)
 
 
 class BenchmarkPoint(StrictModel):
@@ -689,10 +705,34 @@ def build_market_context_manifest(
         (row for row in benchmarks if row["benchmark_id"] == BROAD_MARKET.benchmark_id),
         None,
     )
+    benchmark_by_id = {row["benchmark_id"]: row for row in benchmarks}
+    required_ids = [item.benchmark_id for item in CANONICAL_BENCHMARK_POOL]
+    required_rows = [
+        benchmark_by_id[benchmark_id]
+        for benchmark_id in required_ids
+        if benchmark_id in benchmark_by_id
+    ]
+    required_starts = [row["start"] for row in required_rows if row["start"]]
+    required_ends = [row["end"] for row in required_rows if row["end"]]
+    pool_common_start = (
+        max(required_starts + [continuous_from])
+        if len(required_rows) == len(required_ids)
+        and len(required_starts) == len(required_ids)
+        and continuous_from
+        else ""
+    )
+    pool_common_end = (
+        min(required_ends)
+        if len(required_rows) == len(required_ids)
+        and len(required_ends) == len(required_ids)
+        else ""
+    )
     current_ready = bool(
         st_row and broad_row and declared_end
-        and st_row["end"] == declared_end
-        and broad_row["end"] == declared_end
+        and all(
+            benchmark_by_id.get(benchmark_id, {}).get("end") == declared_end
+            for benchmark_id in required_ids
+        )
         and st_row["current_ready_streak_dates"] >= 10
     )
     payload = {
@@ -702,9 +742,28 @@ def build_market_context_manifest(
         "current_status": "ready" if current_ready else "gaps",
         "historical_status": (
             "partial" if pre_source_trading_dates or missing_trading_dates
+            or (pool_common_start and declared_start and pool_common_start > declared_start)
             or (st_row and st_row["ready_coverage_dates"] < st_row["coverage_observed_dates"])
             else "ready"
         ),
+        "benchmark_pool": [
+            {
+                "benchmark_id": item.benchmark_id,
+                "name": item.name,
+                "kind": item.kind,
+                "evidence_role": item.evidence_role,
+                "provider": item.provider,
+                "provider_code": item.provider_code,
+                "methodology_version": item.methodology_version,
+                "notes": item.notes,
+            }
+            for item in CANONICAL_BENCHMARK_POOL
+        ],
+        "current_required_benchmarks": required_ids,
+        "pool_common_window": {
+            "start": pool_common_start,
+            "end": pool_common_end,
+        },
         "membership": {
             "start": membership_start, "end": membership_end,
             "row_count": membership_rows, "date_count": membership_dates,

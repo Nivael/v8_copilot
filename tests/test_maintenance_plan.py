@@ -4,7 +4,7 @@ import json
 import sqlite3
 
 from maintenance_plan import build_maintenance_plan
-from data_maintenance import _validate_bootstrap_scope
+from data_maintenance import _slice_batch, _validate_bootstrap_scope, _with_retries
 
 
 def _database(path) -> None:
@@ -71,3 +71,28 @@ def test_multi_symbol_batch_rejects_one_global_bootstrap_date() -> None:
         assert "逐股 bootstrap" in str(exc)
     else:
         raise AssertionError("global bootstrap date must be rejected for a batch")
+
+
+def test_batch_slice_is_stable_and_bounded() -> None:
+    symbols = ["000001", "000002", "000003", "000004"]
+
+    assert _slice_batch(symbols, offset=1, size=2) == ["000002", "000003"]
+    assert _slice_batch(symbols, offset=3, size=0) == ["000004"]
+    assert _slice_batch(symbols, offset=4, size=2) == []
+
+
+def test_retry_uses_bounded_exponential_backoff(monkeypatch) -> None:
+    attempts = []
+    sleeps = []
+
+    def operation():
+        attempts.append(len(attempts) + 1)
+        if len(attempts) < 3:
+            raise TimeoutError("temporary")
+        return "ok"
+
+    monkeypatch.setattr("data_maintenance.time.sleep", sleeps.append)
+
+    assert _with_retries(operation, max_attempts=3, backoff_seconds=0.5) == "ok"
+    assert attempts == [1, 2, 3]
+    assert sleeps == [0.5, 1.0]

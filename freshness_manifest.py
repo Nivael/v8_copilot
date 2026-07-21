@@ -29,7 +29,8 @@ from settings import (
 from snapshot_metadata import load_episode_snapshot, load_price_snapshot, load_table_snapshot
 
 
-FRESHNESS_MANIFEST_VERSION = "v8_freshness_manifest_v0"
+FRESHNESS_MANIFEST_VERSION = "v8_freshness_manifest_v1"
+LEGACY_FRESHNESS_MANIFEST_VERSION = "v8_freshness_manifest_v0"
 
 
 class StrictModel(BaseModel):
@@ -51,13 +52,19 @@ class SourceFreshness(StrictModel):
 
 
 class FreshnessManifest(StrictModel):
-    contract_version: Literal[FRESHNESS_MANIFEST_VERSION] = FRESHNESS_MANIFEST_VERSION
+    contract_version: Literal[
+        LEGACY_FRESHNESS_MANIFEST_VERSION, FRESHNESS_MANIFEST_VERSION
+    ] = FRESHNESS_MANIFEST_VERSION
     manifest_id: str = Field(pattern=r"^FM-[A-F0-9]{20}$")
     generated_at: str
     overall_status: Literal["ready", "gaps", "observed"]
     expected_price_through: str = ""
     expected_announcement_checked_through: str = ""
     research_symbols: list[str] = Field(default_factory=list)
+    universe_snapshot_id: str = ""
+    universe_as_of: str = ""
+    universe_content_digest: str = ""
+    universe_member_count: int = Field(default=0, ge=0)
     sources: list[SourceFreshness]
     blocking_gaps: list[str] = Field(default_factory=list)
     coverage_gaps: list[str] = Field(default_factory=list)
@@ -116,23 +123,31 @@ def _price_source(expected: str, symbols: list[str]) -> SourceFreshness:
                         symbols,
                     )
                 }
-        missing = [symbol for symbol in symbols if symbol not in per_symbol]
-        stale = [symbol for symbol in symbols if per_symbol.get(symbol, "") < expected]
+        checkpoints = _maintenance_checkpoints("tushare_daily_qfq", symbols)
+        verified_through = {
+            symbol: max(
+                per_symbol.get(symbol, ""),
+                str(checkpoints.get(symbol, {}).get("checked_through") or "")
+                if checkpoints.get(symbol, {}).get("last_success_at") else "",
+            )
+            for symbol in symbols
+        }
+        missing = [symbol for symbol in symbols if not verified_through.get(symbol)]
+        stale = [symbol for symbol in symbols if verified_through.get(symbol, "") < expected]
         if expected and symbols:
             status: Literal["current", "stale", "observed", "missing", "error"] = (
                 "stale" if missing or stale else "current"
             )
         else:
             status = "observed"
-        checkpoints = _maintenance_checkpoints("tushare_daily_qfq", symbols)
         return SourceFreshness(
             source_id="daily_prices",
             label="前复权日线价格",
             source_ref="shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices",
             status=status,
             as_of=(
-                min(per_symbol.values())
-                if symbols and len(per_symbol) == len(symbols)
+                min(verified_through.values())
+                if symbols and all(verified_through.values())
                 else snapshot.as_of
             ),
             checked_at=_mtime_date(BASE_DB),
@@ -145,6 +160,7 @@ def _price_source(expected: str, symbols: list[str]) -> SourceFreshness:
                 "return_observations": snapshot.return_observation_count,
                 "requested_symbols": symbols,
                 "per_symbol_as_of": per_symbol,
+                "per_symbol_verified_through": verified_through,
                 "missing_symbols": missing,
                 "stale_symbols": stale,
                 "maintenance_checkpoints": checkpoints,
@@ -417,6 +433,7 @@ def build_freshness_manifest(
     expected_price_through: str = "",
     expected_announcement_checked_through: str = "",
     research_symbols: list[str] | None = None,
+    universe_snapshot: Any | None = None,
 ) -> FreshnessManifest:
     expected_price = _iso_date(expected_price_through, field="expected_price_through") if expected_price_through else ""
     expected_announcements = (
@@ -427,6 +444,18 @@ def build_freshness_manifest(
     for symbol in symbols:
         if len(symbol) != 6 or not symbol.isdigit():
             raise ValueError(f"研究股票代码非法: {symbol}")
+    universe = {
+        "snapshot_id": str(getattr(universe_snapshot, "snapshot_id", "")),
+        "as_of": str(getattr(universe_snapshot, "as_of", "")),
+        "content_digest": str(getattr(universe_snapshot, "content_digest", "")),
+        "member_count": int(getattr(universe_snapshot, "member_count", 0)),
+    }
+    if universe_snapshot is not None and sorted(universe_snapshot.symbols) != symbols:
+        coverage_gaps_for_scope = [
+            "manifest 的研究范围是 universe 的一个批次/子集；universe provenance 仅标识任务来源。"
+        ]
+    else:
+        coverage_gaps_for_scope = []
     sources = [
         _price_source(expected_price, symbols),
         _announcement_source(expected_announcements, symbols),
@@ -442,7 +471,7 @@ def build_freshness_manifest(
         ),
     ]
     blocking_gaps: list[str] = []
-    coverage_gaps: list[str] = []
+    coverage_gaps: list[str] = list(coverage_gaps_for_scope)
     critical = {source.source_id: source for source in sources if source.source_id in {"daily_prices", "company_announcements"}}
     if not expected_price:
         coverage_gaps.append("未声明价格应更新到哪个交易日，当前只报告 observed。")
@@ -473,6 +502,10 @@ def build_freshness_manifest(
         "expected_price_through": expected_price,
         "expected_announcement_checked_through": expected_announcements,
         "research_symbols": symbols,
+        "universe_snapshot_id": universe["snapshot_id"],
+        "universe_as_of": universe["as_of"],
+        "universe_content_digest": universe["content_digest"],
+        "universe_member_count": universe["member_count"],
         "sources": [source.model_dump(mode="json") for source in sources],
         "blocking_gaps": blocking_gaps,
         "coverage_gaps": coverage_gaps,

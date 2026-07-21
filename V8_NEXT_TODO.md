@@ -24,34 +24,38 @@
 - [x] 将 2026-07-20 的 209 只名单 materialize 到默认本地 universe 目录（`SU-4228A7C5B06703A022EF`）。
 - [x] 增加 `plan` 命令：只读比较 universe、价格、公告与 checkpoint。
 - [x] 计划输出总数、current/stale/missing、预计 API 调用和 bootstrap 队列。
-- [ ] 把 4 只无价格基线股票单独进入 bootstrap 配置，不给全部 209 只共用全局起始日。
-- [ ] 把 7 只无基础公告股票单独进入 bootstrap 配置。
+- [x] 4 只无价格基线股票已按各自上市日逐股 bootstrap；批次共用全局起始日会被 CLI 拒绝。
+- [x] 7 只无基础公告股票已按各自上市日逐股 bootstrap（3 只北交所本轮官方查询为 0 行，但逐股 checked-through 已成功记录）。
 - [ ] 为退市/暂停上市股票记录 expected terminal date，避免假 freshness gap。
-- [ ] freshness manifest v1 增加 universe snapshot ID、digest、member count。
+- [x] freshness manifest v1 增加 universe snapshot ID、as-of、digest、member count，并兼容读取 v0。
 
 验收：同一个 snapshot 重跑产生完全相同的任务范围；计划阶段不写生产库、不发网络请求。
 
 ## P2 — 全量增量维护
 
-- [ ] 增加 batch size、速率限制、失败重试和 run summary。
-- [ ] 先执行 209 只价格增量刷新到最近交易日。
-- [ ] 核对 qfq basis change，必要时只对受影响股票 full rebase。
-- [ ] 再执行 209 只 CNINFO 公告 checked-through 刷新。
-- [ ] 单股失败后 resume，只重试失败项。
-- [ ] 生成 strict full-universe manifest；保留原三只 research manifest 的独立含义。
-- [ ] 定义日常调度：交易日收盘后 universe → prices/index → announcements → manifests。
+- [x] 增加稳定 batch offset/size、请求间隔、指数退避重试、逐项 progress 和 run summary。
+- [x] 209 只价格已逐股核查到 2026-07-20；4 只新基线完成 bootstrap，暂停/无当日行股票由成功 checkpoint 表达 verified-through，不伪造价格。
+- [x] 核对 qfq basis change；仅受影响股票由既有安全路径自动 full rebase。
+- [x] 209 只 CNINFO 公告已逐股 checked-through 到 2026-07-21；7 只新基线完成独立 bootstrap。
+- [x] 单股失败保留上次成功游标；同 snapshot 可按 batch 或 plan 的失败项 resume。
+- [x] 生成 strict full-universe manifest `FM-D836EE706EAA2BDE08DC`：209/209 价格与公告均 current，且绑定 `SU-4228A7C5B06703A022EF`。
+- [x] 定义日常顺序：交易日收盘后 universe → prices/benchmarks → announcements → manifests → experience verify。
 
 验收：价格/公告分别报告 209 只逐股状态；任何全局 ready 都不能由全库最大日期冒充。
 
 ## P3 — 市场与 ST 板块基准
 
-- [~] 已回填中证全指 2016-01-04 至 2026-07-20 共 2,560 点；增量 checkpoint/manifest 待补。
-- [ ] 回填 2016 年以来每日 ST membership，或用 ST 状态事件优化请求量后再生成逐日快照。
-- [ ] 用逐日 membership + qfq returns 物化 `st_equal_weight_v1`。
-- [ ] 用真实结果校准并冻结 coverage ready 门槛（PRD 初值 95%）。
-- [ ] 增加 benchmark freshness manifest 与方法版本 provenance。
+- [x] 中证全指已回填 2016-01-04 至 2026-07-20 共 2,560 点并进入 market-context manifest。
+- [x] `stock_st` 历史 membership 已回填 333,858 行、2,399 个源日期；实际源起点为 2016-08-09。发现并复查 25 个源内交易日空洞，连续区间从 2021-03-17 开始，历史状态明确为 `partial`。
+- [x] 用逐日 membership + qfq returns 物化 `st_equal_weight_v1`：2021-03-17 至 2026-07-20，共 1,295 个交易日。
+- [x] 用真实结果冻结当前 ready 门槛为 95%；最近连续 13 个交易日达标，最近 10 日最低覆盖率 96.23%。低覆盖历史点保留但不得作为 ready 证据。
+- [x] 增加 market-context manifest `MC-01868C4AD4FC1F0E9F95`、方法版本 provenance、当前/历史双层状态和缺口清单。
 - [ ] 选一个外部厂商 ST 指数做 shadow sanity check；标记 `context_only`。
-- [ ] 检验停牌、上市首日、无前收盘、移入/移出 ST 当日的边界。
+- [x] 检验停牌/缺价不填 0、无有效收益不伪造、按当日名单计算、周末名单不生成指数点等边界；上市首日和移入/移出语义由逐日 membership 自然落位。
+
+外部旁证不阻塞 canonical 指数：东财公开行情端点本轮连续返回空响应，Tushare `ths_daily` 当前账号无权限；在拿到稳定授权接口前保持 pending，不能把网页展示值写成正式序列。
+
+验证记录：P2/P3 相关 30 项聚焦测试全绿（含 universe 基础测试）；Python 全套仅有 5 个失败，已逐项在未改动的 master 复现，均为真实数据刷新后的硬编码日期/既有叙事断言；Web 29 项全绿。worktree 未安装独立 `node_modules`，Web 回归在同一提交基线的主工作树依赖环境执行。
 
 验收：不存在用当前 209 只倒算历史的路径；任意指数点都可追到当日名单和有效成员数。
 
@@ -83,7 +87,7 @@
 
 1. 评审并合入 P0。
 2. 做 P1 dry plan，确认 4 只价格 bootstrap、7 只公告 bootstrap 的边界。
-3. 先跑价格与中证全指，再跑公告。
-4. 历史 membership 与 ST 等权 shadow run。
-5. 答案卡接入并关闭 `D-051C`。
+3. P2 全量维护与 P3 canonical 基准已完成；日常按运行手册增量执行。
+4. 下一步做 P4 答案卡接入并关闭 `D-051C`。
+5. 厂商 ST 指数仅在取得稳定授权接口后补 context-only shadow check。
 6. 再进入 `C14`、SDK 质量门和旧入口退役。

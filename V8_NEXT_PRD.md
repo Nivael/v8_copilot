@@ -1,6 +1,6 @@
 # v8 下一阶段 PRD：全量 ST 数据面与相对市场语境
 
-状态：review draft  
+状态：P2/P3 implemented and validated；P4 待实施
 日期：2026-07-21  
 负责人：Codex commander window  
 实施分支：`codex/universe-benchmark-prd`
@@ -22,11 +22,11 @@ v8 的研究主链已经成立：Codex 是主 LLM，浏览器只承担经验查�
 
 ## 2. 为什么现在只更新三只
 
-当前严格 ready manifest `FM-80BBDB82E86E45DC888E` 的研究范围只有 `000408`、`002289`、`603389`。维护 CLI 也要求显式重复传入 `--symbol`，因此系统只会维护“本次声明的研究范围”，不会自行把数据库里所有股票或名称中带 ST 的股票当作正式 universe。
+迁移时的严格 ready manifest `FM-80BBDB82E86E45DC888E` 研究范围只有 `000408`、`002289`、`603389`。那时维护 CLI 要求显式重复传入 `--symbol`，所以只维护“本次声明的研究范围”，不会自行把数据库里所有股票或名称中带 ST 的股票当作正式 universe。
 
 这个设计最初是安全边界：防止迁移期一条命令误写两百多只股票、把失败请求伪装成全库新鲜度。但它缺少下一层“权威 universe → 批量任务”的控制器，所以停留在三只不是整体架构完善后的刻意安排，而是当前尚未补完的能力。
 
-2026-07-21 的只读盘点结果：
+P1 dry plan 在执行前的盘点结果：
 
 | 项目 | 结果 | 解释 |
 | --- | ---: | --- |
@@ -36,7 +36,7 @@ v8 的研究主链已经成立：Codex 是主 LLM，浏览器只承担经验查�
 | 本地有基础公告 | 202 只 | 7 只在基础库无公告记录 |
 | 基础公告最晚日期 | 2026-06-28 | 新鲜度不能由全库最大值替代逐股核查 |
 
-所以数据问题不是“库里只有三只”，而是“全量名单没有被提升为维护计划，逐股 freshness 也没有汇总为 universe freshness”。
+该缺口现已关闭：209 只均完成逐股价格和 CNINFO 核查，全量严格 manifest 为 `FM-D836EE706EAA2BDE08DC`，绑定 universe `SU-4228A7C5B06703A022EF`。因此“三只”只保留为旧 research-scope manifest 的历史含义，不再是日常维护上限。
 
 ## 3. 产品边界与角色
 
@@ -72,15 +72,16 @@ v8 的研究主链已经成立：Codex 是主 LLM，浏览器只承担经验查�
 | 公告正文按需材料化 | 已完成 | `announcement_body.py` |
 | 外部事实选择性补证 | 已完成 | `SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md` |
 | 经验候选、接受/拒绝、registry | 已完成 | `experience_governance.py`、Experience Center |
-| 按股 Tushare 价格/CNINFO 公告刷新 | 已完成 | `data_refresh.py`、`data_maintenance.py` |
-| 逐源逐股 checkpoint + manifest | 已完成 | 但 research scope 必须手写 symbol |
+| 按股 Tushare 价格/CNINFO 公告刷新 | 已完成并全量验收 | 209/209 到目标日；批次、节流、重试、resume、run summary 已具备 |
+| 逐源逐股 checkpoint + manifest | 已完成并全量验收 | v1 manifest 绑定 universe provenance，不以全库最大日期冒充逐股 freshness |
 | 权威每日 ST universe | 已实现并真实验收 | `SU-4228A7C5B06703A022EF`，2026-07-20，209 只 |
-| universe 自动展开批量任务 | 本分支已实现基础 | `refresh --universe-current` / snapshot |
-| 大盘基准存储与刷新 | 已实现并真实验收 | 中证全指 2016-01-04 至 2026-07-20，共 2,560 点 |
-| 内部 ST 等权指数计算 | 本分支已实现计算核 | 尚未回填历史每日名单与正式物化 |
+| universe 自动展开批量任务 | 已完成并真实验收 | `refresh --universe-current` / snapshot；同 snapshot 重跑范围稳定 |
+| 大盘基准存储与刷新 | 已完成并真实验收 | 中证全指 2016-01-04 至 2026-07-20，共 2,560 点 |
+| 历史 ST membership | 已回填，历史 partial | 333,858 行、2,399 个源日期；源起点 2016-08-09，连续区间自 2021-03-17 |
+| 内部 ST 等权指数 | 已物化，当前 ready | 2021-03-17 至 2026-07-20 共 1,295 点；最近连续 13 日覆盖率 ≥95% |
 | 答案卡相对 ST/大盘指标 | 未完成 | 当前仍登记 `D-051C` |
-| 全量 209 只价格/公告刷新与 universe manifest | 未执行 | 先评审本 PRD，再运行高成本维护任务 |
-| 历史 ST membership 回填 | 未完成 | `stock_st` 可从 2016 年起按交易日查询 |
+| 全量 209 只价格/公告刷新与 universe manifest | 已完成 | `FM-D836EE706EAA2BDE08DC`，价格至 2026-07-20、公告核查至 2026-07-21 |
+| market-context manifest | 已完成 | `MC-01868C4AD4FC1F0E9F95`；当前 ready、历史 partial 分开表达 |
 | 市值/微盘因子 | 未完成 | `C14` 仍是独立数据债 |
 | SDK 质量门与旧入口退役 | 未完成 | 原 PRD Phase 4/5 延续项 |
 
@@ -177,7 +178,7 @@ Universe、价格、公告、基准各自有独立 freshness。只有任务声�
 4. 输出 `member_count`、`valid_member_count`、`coverage_ratio`。
 5. coverage 低于门槛时，指数点可保存但不得作为 ready 证据。
 
-v1 默认建议 ready 门槛为 95%；需用完整历史回填结果校准后冻结。
+v1 ready 门槛已冻结为 95%。真实回填显示历史覆盖率不均，因而采用双层状态：最新连续区间达标则 `current_status=ready`；任何源日期空洞或低覆盖历史点令 `historical_status=partial`。截至 2026-07-20，最新覆盖率为 98.56%，最近连续 13 个交易日达标，最近 10 日最低覆盖率为 96.23%。
 
 ### 8.3 答案中的相对量
 
@@ -241,14 +242,18 @@ v1 默认建议 ready 门槛为 95%；需用完整历史回填结果校准后冻
 - 不用厂商 ST 指数替代透明内部指数。
 - 不在 PRD 评审前直接启动 209 只股票的全历史公告/价格重刷。
 
-## 11. 发布门槛
+## 11. 发布门槛与当前结论
 
 本阶段完成必须同时满足：
 
 1. universe 与 benchmark 聚焦测试通过，全套 Python/Web 回归无新增失败；
 2. 实际 materialize 一份非空的 2026-07-20 universe，数量与源端一致；（已达到：209）
 3. 生成全量 dry plan，并显式列出无基线股票；（已达到：价格 4、公告 7）
-4. 中证全指可增量刷新并进入 market-context manifest；（series 已达到，manifest 待补）
-5. ST 等权指数至少完成一段覆盖率合格的 shadow run，并与一个厂商 ST 指数做方向/量级 sanity check；
+4. 中证全指可增量刷新并进入 market-context manifest；（已达到）
+5. ST 等权指数至少完成一段覆盖率合格的 shadow run；（已达到）厂商旁证因公开端点空响应、当前 Tushare 权限不足而保留为非阻塞 context-only 项；
 6. 答案卡显示相对指标且 `D-051C` 不再出现；
-7. commander window 的运行说明与恢复步骤更新。
+7. commander window 的运行说明与恢复步骤更新。（P2/P3 已达到）
+
+P2/P3 的发布结论：canonical 数据面已经可以日常运行。最近 10 个交易日内部 ST 等权累计收益为 -12.79%，中证全指为 -11.22%，ST 相对大盘弱 1.57 个百分点；该结果验证了“近期不是只有个股下跌，大盘与 ST 板块也明显下跌”的语境需求。它是维护验收数据，不是交易结论。
+
+剩余主阻塞在 P4：答案卡尚未消费三条序列，也尚未输出 stock−ST、stock−market、ST−market，所以 `D-051C` 现在不能关闭。

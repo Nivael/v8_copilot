@@ -43,6 +43,10 @@ MARKET_CONTEXT_DB = Path(os.environ.get(
     "V8_MARKET_CONTEXT_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "market_context_v1.sqlite3",
 )).expanduser().resolve()
+MARKET_CONTEXT_MANIFEST_PATH = Path(os.environ.get(
+    "V8_MARKET_CONTEXT_MANIFEST_PATH",
+    DATA_ROOT / "local_data" / "v8_copilot" / "market_context_manifest_v1.json",
+)).expanduser().resolve()
 EXPERIENCE_GOVERNANCE_DB = Path(os.environ.get(
     "V8_EXPERIENCE_GOVERNANCE_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "experience_governance.sqlite3",

@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import sqlite3
+
 from market_context import (
     BROAD_MARKET,
     BenchmarkDefinition,
+    BenchmarkPoint,
+    HistoricalStMembershipService,
     MarketContextRepository,
     MarketContextService,
+    build_market_context_manifest,
     build_st_equal_weight_points,
 )
 
@@ -88,3 +93,197 @@ def test_benchmark_methodology_cannot_change_in_place(tmp_path) -> None:
         assert "新的 benchmark_id" in str(exc)
     else:
         raise AssertionError("frozen benchmark definition must not change in place")
+
+
+class FakeMembershipProvider:
+    def __init__(self, rows):
+        self.rows = rows
+        self.offsets = []
+
+    def fetch_st_universe_range(
+        self, *, start_date: str, end_date: str, limit: int, offset: int
+    ):
+        self.offsets.append(offset)
+        return self.rows[offset:offset + limit]
+
+
+def _membership_row(day: str, symbol: str) -> dict:
+    return {
+        "ts_code": f"{symbol}.SZ",
+        "name": f"ST {symbol}",
+        "trade_date": day.replace("-", ""),
+        "type": "ST",
+        "type_name": "风险警示板",
+    }
+
+
+def test_historical_membership_backfill_resumes_by_offset(tmp_path) -> None:
+    rows = [
+        _membership_row("2026-07-20", "000001"),
+        _membership_row("2026-07-20", "000002"),
+        _membership_row("2026-07-17", "000001"),
+    ]
+    provider = FakeMembershipProvider(rows)
+    repository = MarketContextRepository(tmp_path / "market.sqlite3")
+    service = HistoricalStMembershipService(provider=provider, repository=repository)
+
+    partial = service.backfill(
+        start_date="2026-07-17", end_date="2026-07-20", page_size=2, max_pages=1
+    )
+    complete = service.backfill(
+        start_date="2026-07-17", end_date="2026-07-20", page_size=2
+    )
+
+    assert partial.status == "partial"
+    assert complete.status == "complete"
+    assert provider.offsets == [0, 2]
+    assert repository.membership_bounds() == ("2026-07-17", "2026-07-20", 3, 2)
+
+
+def test_membership_backfill_migrates_an_existing_benchmark_only_database(tmp_path) -> None:
+    path = tmp_path / "market.sqlite3"
+    with sqlite3.connect(path) as connection:
+        connection.execute(
+            "create table benchmark_definitions (benchmark_id text primary key, "
+            "contract_version text, definition_json text, updated_at text)"
+        )
+    repository = MarketContextRepository(path)
+
+    result = HistoricalStMembershipService(
+        provider=FakeMembershipProvider([_membership_row("2026-07-20", "000001")]),
+        repository=repository,
+    ).backfill(start_date="2026-07-20", end_date="2026-07-20", page_size=10)
+
+    assert result.status == "complete"
+    assert repository.membership_bounds()[2:] == (1, 1)
+
+
+def test_materialized_st_index_joins_daily_membership_to_qfq_returns(tmp_path) -> None:
+    rows = [
+        _membership_row("2026-07-17", "000001"),
+        _membership_row("2026-07-17", "000002"),
+        _membership_row("2026-07-20", "000001"),
+        _membership_row("2026-07-20", "000002"),
+    ]
+    repository = MarketContextRepository(tmp_path / "market.sqlite3")
+    HistoricalStMembershipService(
+        provider=FakeMembershipProvider(rows), repository=repository
+    ).backfill(start_date="2026-07-17", end_date="2026-07-20", page_size=10)
+    prices = tmp_path / "prices.sqlite3"
+    with sqlite3.connect(prices) as connection:
+        connection.executescript("""
+            create table daily_prices (
+                symbol text, trade_date text, adjust text, pct_change real
+            );
+            insert into daily_prices values
+                ('000001','2026-07-17','qfq',-2.0),
+                ('000002','2026-07-17','qfq',0.0),
+                ('000001','2026-07-20','qfq',-3.0);
+        """)
+    repository.upsert(definition=BROAD_MARKET, points=[
+        BenchmarkPoint(
+            benchmark_id=BROAD_MARKET.benchmark_id,
+            trade_date="2026-07-17", close=5000,
+            source=BROAD_MARKET.provider,
+        ),
+        BenchmarkPoint(
+            benchmark_id=BROAD_MARKET.benchmark_id,
+            trade_date="2026-07-20", close=4900,
+            source=BROAD_MARKET.provider,
+        ),
+    ])
+
+    points = repository.materialize_st_equal_weight(
+        price_database=prices,
+        start_date="2026-07-17",
+        end_date="2026-07-20",
+    )
+    manifest = build_market_context_manifest(repository=repository)
+
+    assert [point.pct_change for point in points] == [-1.0, -3.0]
+    assert [point.coverage_ratio for point in points] == [1.0, 0.5]
+    st = next(row for row in manifest["benchmarks"] if row["benchmark_id"] == "st_equal_weight_v1")
+    assert st["ready_coverage_dates"] == 1
+    assert manifest["membership"]["missing_trading_date_count"] == 0
+    assert manifest["membership"]["pre_source_trading_dates"] == 0
+
+
+def test_incremental_st_materialization_continues_prior_index_level(tmp_path) -> None:
+    repository = MarketContextRepository(tmp_path / "market.sqlite3")
+    repository.upsert(definition=BROAD_MARKET, points=[
+        BenchmarkPoint(
+            benchmark_id=BROAD_MARKET.benchmark_id,
+            trade_date=day,
+            close=5000,
+            source=BROAD_MARKET.provider,
+        )
+        for day in ["2026-07-20", "2026-07-21"]
+    ])
+    rows = [
+        _membership_row("2026-07-20", "000001"),
+        _membership_row("2026-07-21", "000001"),
+    ]
+    HistoricalStMembershipService(
+        provider=FakeMembershipProvider(rows), repository=repository
+    ).backfill(start_date="2026-07-20", end_date="2026-07-21", page_size=10)
+    prices = tmp_path / "prices.sqlite3"
+    with sqlite3.connect(prices) as connection:
+        connection.executescript("""
+            create table daily_prices (
+                symbol text, trade_date text, adjust text, pct_change real
+            );
+            insert into daily_prices values
+                ('000001','2026-07-20','qfq',-10.0),
+                ('000001','2026-07-21','qfq',10.0);
+        """)
+
+    first = repository.materialize_st_equal_weight(
+        price_database=prices,
+        start_date="2026-07-20",
+        end_date="2026-07-20",
+    )
+    second = repository.materialize_st_equal_weight(
+        price_database=prices,
+        start_date="2026-07-21",
+        end_date="2026-07-21",
+    )
+
+    assert first[0].close == 900.0
+    assert second[0].close == 990.0
+
+
+class DateMembershipProvider:
+    def fetch_st_universe_range(
+        self, *, start_date: str, end_date: str, limit: int, offset: int
+    ):
+        rows = [_membership_row(start_date, "000001")]
+        return rows[offset:offset + limit]
+
+
+def test_repair_fills_missing_benchmark_trading_date_but_ignores_weekend(tmp_path) -> None:
+    repository = MarketContextRepository(tmp_path / "market.sqlite3")
+    repository.upsert(definition=BROAD_MARKET, points=[
+        BenchmarkPoint(
+            benchmark_id=BROAD_MARKET.benchmark_id,
+            trade_date="2026-07-20", close=4900,
+            source=BROAD_MARKET.provider,
+        ),
+    ])
+    service = HistoricalStMembershipService(
+        provider=DateMembershipProvider(), repository=repository
+    )
+    # Weekend membership is preserved as source history, but is not a benchmark date.
+    service.backfill(
+        start_date="2026-07-19", end_date="2026-07-19", page_size=10
+    )
+
+    result = service.repair_trading_date_gaps(
+        start_date="2026-07-19", end_date="2026-07-20"
+    )
+
+    assert result["requested_dates"] == ["2026-07-20"]
+    assert result["repaired_dates"] == ["2026-07-20"]
+    assert repository.missing_membership_trading_dates(
+        start_date="2026-07-19", end_date="2026-07-20"
+    ) == []
+    build_market_context_manifest,

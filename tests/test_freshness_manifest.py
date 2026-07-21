@@ -4,6 +4,7 @@ import json
 import os
 import sqlite3
 from datetime import datetime
+from types import SimpleNamespace
 
 import data_maintenance
 import freshness_manifest as module
@@ -108,6 +109,30 @@ def test_manifest_is_ready_only_for_declared_current_scope(monkeypatch, tmp_path
     assert load_freshness_manifest(output).manifest_id == manifest.manifest_id
 
 
+def test_manifest_records_full_universe_provenance(monkeypatch, tmp_path) -> None:
+    _fixtures(monkeypatch, tmp_path)
+    snapshot = SimpleNamespace(
+        snapshot_id="SU-" + "A" * 20,
+        as_of="2024-01-03",
+        content_digest="b" * 64,
+        member_count=1,
+        symbols=["603398"],
+    )
+
+    manifest = build_freshness_manifest(
+        expected_price_through="2024-01-03",
+        expected_announcement_checked_through="2024-01-03",
+        research_symbols=["603398"],
+        universe_snapshot=snapshot,
+    )
+
+    assert manifest.contract_version == "v8_freshness_manifest_v1"
+    assert manifest.universe_snapshot_id == snapshot.snapshot_id
+    assert manifest.universe_as_of == "2024-01-03"
+    assert manifest.universe_content_digest == "b" * 64
+    assert manifest.universe_member_count == 1
+
+
 def test_manifest_reports_symbol_coverage_and_price_gaps(monkeypatch, tmp_path) -> None:
     _fixtures(monkeypatch, tmp_path)
 
@@ -122,6 +147,35 @@ def test_manifest_reports_symbol_coverage_and_price_gaps(monkeypatch, tmp_path) 
     assert sources["daily_prices"].status == "stale"
     assert sources["company_announcements"].status == "stale"
     assert sources["company_announcements"].details["missing_refresh_symbols"] == ["300068"]
+
+
+def test_price_checkpoint_marks_suspended_symbol_verified_without_fake_price(monkeypatch, tmp_path) -> None:
+    _fixtures(monkeypatch, tmp_path)
+    state = tmp_path / "maintenance.sqlite3"
+    _sqlite(state, """
+        create table refresh_checkpoints (
+            source_id text, symbol text, checked_through text, observed_as_of text,
+            status text, last_attempted_at text, last_success_at text,
+            rows_seen integer, rows_written integer, metadata_json text, error text
+        );
+        insert into refresh_checkpoints values (
+            'tushare_daily_qfq','300068','2024-01-15','2024-01-10',
+            'success','2024-01-15T01:00:00Z','2024-01-15T01:00:00Z',
+            0,0,'{}',''
+        );
+    """)
+
+    manifest = build_freshness_manifest(
+        expected_price_through="2024-01-15",
+        expected_announcement_checked_through="2024-01-03",
+        research_symbols=["300068"],
+    )
+
+    source = next(item for item in manifest.sources if item.source_id == "daily_prices")
+    assert source.status == "current"
+    assert source.details["missing_symbols"] == []
+    assert source.details["per_symbol_as_of"] == {}
+    assert source.details["per_symbol_verified_through"] == {"300068": "2024-01-15"}
 
 
 def test_announcement_promotion_validates_then_atomically_writes(monkeypatch, tmp_path) -> None:

@@ -35,10 +35,16 @@ python data_maintenance.py refresh \
   --env-file <local-tushare-env> \
   --price-through <YYYY-MM-DD> \
   --announcement-through <YYYY-MM-DD> \
-  --universe-current
+  --universe-current \
+  --batch-size <N> \
+  --request-delay-seconds <seconds> \
+  --max-attempts 3
 ```
 
 仍可重复 `--symbol` 只维护明确的小范围，也可用 `--universe-snapshot <path>` 固定重跑某一批。
+`--batch-offset` 与 `--batch-size` 对排序后的 snapshot 做稳定切片；批次 manifest 不覆盖全量
+manifest。失败项保留 checkpoint，可从相同 offset 或 plan 中列出的失败项继续。网络瞬时失败采用有界
+指数退避，`--request-delay-seconds` 用于供应商节流。
 `python data_maintenance.py checkpoints` 可审计每个来源和股票上次尝试、上次成功、已核查日期、写入行数和失败原因。数据更新后固定调用 `python experience_governance.py verify`；它只执行已到期的 accepted 经验回归。失败保留上次成功游标；`overall_status=ready` 才表示声明范围内达到目标，`gaps` 必须交给研究窗口作为明确数据缺口。
 
 大盘方向基准单独维护，不写入个股价格表：
@@ -48,10 +54,29 @@ python data_maintenance.py refresh-benchmarks \
   --env-file <local-tushare-env> \
   --start-date <YYYY-MM-DD> \
   --through <YYYY-MM-DD>
+
+python data_maintenance.py backfill-membership \
+  --env-file <local-tushare-env> \
+  --start-date <YYYY-MM-DD> \
+  --through <YYYY-MM-DD>
+
+python data_maintenance.py repair-membership-gaps \
+  --env-file <local-tushare-env> \
+  --start-date <YYYY-MM-DD> \
+  --through <YYYY-MM-DD>
+
+python data_maintenance.py materialize-st-index \
+  --start-date <YYYY-MM-DD> \
+  --through <YYYY-MM-DD>
+
+python data_maintenance.py market-context-status \
+  --coverage-threshold 0.95
 ```
 
-当前命令写入中证全指。正式 ST 板块基准是后续由“逐日 ST membership + qfq 个股收益”
-物化的 `st_equal_weight_v1`；不得用今天的成分股倒算历史。
+正式市场语境由中证全指和“逐日 ST membership + qfq 个股收益”物化的
+`st_equal_weight_v1` 共同组成；不得用今天的成分股倒算历史。截至 2026-07-20，market-context
+当前状态 ready，但因源端早期日期空洞和历史价格覆盖不足，历史状态为 partial，连续区间从
+2021-03-17 开始。日常增量不应覆盖或隐去这个历史边界。
 
 ## 窗口二：研究问答
 

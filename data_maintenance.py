@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from pathlib import Path
+from typing import Callable, TypeVar
 
 from answer_engine import BASE_DB
 from data_refresh import (
@@ -25,13 +27,21 @@ from freshness_manifest import (
     load_freshness_manifest,
     write_freshness_manifest,
 )
-from market_context import BROAD_MARKET, MarketContextRepository, MarketContextService
+from market_context import (
+    BROAD_MARKET,
+    HistoricalStMembershipService,
+    MarketContextRepository,
+    MarketContextService,
+    build_market_context_manifest,
+    write_market_context_manifest,
+)
 from maintenance_plan import build_maintenance_plan
 from settings import (
     ANNOUNCEMENT_REFRESH_DIR,
     DATA_MAINTENANCE_DB,
     FRESHNESS_MANIFEST_PATH,
     MARKET_CONTEXT_DB,
+    MARKET_CONTEXT_MANIFEST_PATH,
     ST_UNIVERSE_DIR,
 )
 from universe import StUniverseRepository, StUniverseService, StUniverseSnapshot
@@ -166,6 +176,43 @@ def _validate_bootstrap_scope(
         )
 
 
+def _slice_batch(symbols: list[str], *, offset: int, size: int) -> list[str]:
+    if offset < 0 or size < 0:
+        raise ValueError("--batch-offset/--batch-size 不能为负数")
+    if offset >= len(symbols):
+        return []
+    return symbols[offset:] if size == 0 else symbols[offset:offset + size]
+
+
+def _progress(*, completed: int, total: int, source_id: str, symbol: str, status: str) -> None:
+    print(json.dumps({
+        "progress": {"completed": completed, "total": total},
+        "source_id": source_id,
+        "symbol": symbol,
+        "status": status,
+    }, ensure_ascii=False), flush=True)
+
+
+T = TypeVar("T")
+
+
+def _with_retries(
+    operation: Callable[[], T], *, max_attempts: int, backoff_seconds: float
+) -> T:
+    if max_attempts < 1:
+        raise ValueError("--max-attempts 必须至少为 1")
+    if backoff_seconds < 0:
+        raise ValueError("--retry-backoff-seconds 不能为负数")
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return operation()
+        except Exception:
+            if attempt == max_attempts:
+                raise
+            time.sleep(backoff_seconds * (2 ** (attempt - 1)))
+    raise AssertionError("unreachable")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="ST Research data maintenance boundary")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -189,7 +236,12 @@ def main() -> int:
     refresh.add_argument("--force", action="store_true")
     refresh.add_argument("--skip-prices", action="store_true")
     refresh.add_argument("--skip-announcements", action="store_true")
-    refresh.add_argument("--output", type=Path, default=FRESHNESS_MANIFEST_PATH)
+    refresh.add_argument("--batch-offset", type=int, default=0)
+    refresh.add_argument("--batch-size", type=int, default=0)
+    refresh.add_argument("--request-delay-seconds", type=float, default=0.0)
+    refresh.add_argument("--max-attempts", type=int, default=3)
+    refresh.add_argument("--retry-backoff-seconds", type=float, default=1.0)
+    refresh.add_argument("--output", type=Path)
 
     checkpoints = sub.add_parser("checkpoints")
     checkpoints.add_argument("--state-db", type=Path, default=DATA_MAINTENANCE_DB)
@@ -198,6 +250,8 @@ def main() -> int:
     manifest.add_argument("--expected-price-through", default="")
     manifest.add_argument("--expected-announcement-checked-through", default="")
     manifest.add_argument("--symbol", action="append", default=[])
+    manifest.add_argument("--universe-current", action="store_true")
+    manifest.add_argument("--universe-snapshot", type=Path)
     manifest.add_argument("--output", type=Path, default=FRESHNESS_MANIFEST_PATH)
     manifest.add_argument("--require-ready", action="store_true")
 
@@ -217,6 +271,35 @@ def main() -> int:
     refresh_benchmarks.add_argument("--through", required=True)
     refresh_benchmarks.add_argument("--env-file", type=Path)
     refresh_benchmarks.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+
+    backfill_membership = sub.add_parser("backfill-membership")
+    backfill_membership.add_argument("--start-date", required=True)
+    backfill_membership.add_argument("--through", required=True)
+    backfill_membership.add_argument("--page-size", type=int, default=1000)
+    backfill_membership.add_argument("--max-pages", type=int, default=10000)
+    backfill_membership.add_argument("--env-file", type=Path)
+    backfill_membership.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+
+    repair_membership = sub.add_parser("repair-membership-gaps")
+    repair_membership.add_argument("--start-date", required=True)
+    repair_membership.add_argument("--through", required=True)
+    repair_membership.add_argument("--env-file", type=Path)
+    repair_membership.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+
+    materialize_st_index = sub.add_parser("materialize-st-index")
+    materialize_st_index.add_argument("--start-date", required=True)
+    materialize_st_index.add_argument("--through", required=True)
+    materialize_st_index.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+    materialize_st_index.add_argument(
+        "--manifest", type=Path, default=MARKET_CONTEXT_MANIFEST_PATH
+    )
+
+    market_status = sub.add_parser("market-context-status")
+    market_status.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+    market_status.add_argument(
+        "--manifest", type=Path, default=MARKET_CONTEXT_MANIFEST_PATH
+    )
+    market_status.add_argument("--coverage-threshold", type=float, default=0.95)
 
     plan = sub.add_parser("plan")
     plan.add_argument("--symbol", action="append", default=[])
@@ -276,6 +359,68 @@ def main() -> int:
             "database": str(args.database),
         }, ensure_ascii=False, indent=2))
         return 0
+    if args.command == "backfill-membership":
+        _load_env_file(args.env_file)
+        repository = MarketContextRepository(args.database)
+        result = HistoricalStMembershipService(
+            provider=TushareHttpClient(), repository=repository,
+        ).backfill(
+            start_date=args.start_date,
+            end_date=args.through,
+            page_size=args.page_size,
+            max_pages=args.max_pages,
+            progress=lambda payload: print(
+                json.dumps({"membership_progress": payload}, ensure_ascii=False),
+                flush=True,
+            ),
+        )
+        print(json.dumps(result.model_dump(mode="json"), ensure_ascii=False, indent=2))
+        return 0 if result.status == "complete" else 2
+    if args.command == "repair-membership-gaps":
+        _load_env_file(args.env_file)
+        result = HistoricalStMembershipService(
+            provider=TushareHttpClient(),
+            repository=MarketContextRepository(args.database),
+        ).repair_trading_date_gaps(
+            start_date=args.start_date,
+            end_date=args.through,
+            progress=lambda payload: print(
+                json.dumps({"membership_repair": payload}, ensure_ascii=False),
+                flush=True,
+            ),
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 2 if result["unresolved_dates"] else 0
+    if args.command == "materialize-st-index":
+        repository = MarketContextRepository(args.database)
+        points = repository.materialize_st_equal_weight(
+            price_database=BASE_DB,
+            start_date=args.start_date,
+            end_date=args.through,
+        )
+        context = build_market_context_manifest(repository=repository)
+        write_market_context_manifest(context, args.manifest)
+        print(json.dumps({
+            "benchmark_id": "st_equal_weight_v1",
+            "rows_written": len(points),
+            "start": points[0].trade_date,
+            "end": points[-1].trade_date,
+            "minimum_coverage": min(
+                point.coverage_ratio for point in points
+                if point.coverage_ratio is not None
+            ),
+            "manifest_id": context["manifest_id"],
+            "manifest": str(args.manifest),
+        }, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "market-context-status":
+        context = build_market_context_manifest(
+            repository=MarketContextRepository(args.database),
+            coverage_threshold=args.coverage_threshold,
+        )
+        write_market_context_manifest(context, args.manifest)
+        print(json.dumps(context, ensure_ascii=False, indent=2))
+        return 0
     if args.command == "plan":
         symbols, snapshot = _resolve_scope(args, parser)
         current = build_maintenance_plan(
@@ -291,7 +436,21 @@ def main() -> int:
         print(json.dumps(current.model_dump(mode="json"), ensure_ascii=False, indent=2))
         return 2 if current.warnings else 0
     if args.command == "refresh":
-        symbols = _resolve_symbols(args, parser)
+        full_symbols, universe_snapshot = _resolve_scope(args, parser)
+        try:
+            symbols = _slice_batch(
+                full_symbols, offset=args.batch_offset, size=args.batch_size
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
+        if not symbols:
+            parser.error("批次范围为空")
+        if args.request_delay_seconds < 0:
+            parser.error("--request-delay-seconds 不能为负数")
+        if args.max_attempts < 1:
+            parser.error("--max-attempts 必须至少为 1")
+        if args.retry_backoff_seconds < 0:
+            parser.error("--retry-backoff-seconds 不能为负数")
         if args.skip_prices and args.skip_announcements:
             parser.error("不能同时跳过价格和公告")
         try:
@@ -321,42 +480,96 @@ def main() -> int:
             refresh_dir=ANNOUNCEMENT_REFRESH_DIR, base_database=BASE_DB,
             state=state, provider=CninfoHttpClient(),
         ) if not args.skip_announcements else None
+        total_operations = len(symbols) * (
+            int(price_service is not None) + int(announcement_service is not None)
+        )
+        completed_operations = 0
         for symbol in symbols:
             if price_service is not None:
                 try:
-                    result = price_service.refresh(
-                        symbol=symbol, through=args.price_through,
-                        start_date=args.price_start,
-                        overlap_days=args.price_overlap_days, force=args.force,
+                    result = _with_retries(
+                        lambda: price_service.refresh(
+                            symbol=symbol, through=args.price_through,
+                            start_date=args.price_start,
+                            overlap_days=args.price_overlap_days, force=args.force,
+                        ),
+                        max_attempts=args.max_attempts,
+                        backoff_seconds=args.retry_backoff_seconds,
                     )
                     results.append(result.model_dump(mode="json"))
+                    completed_operations += 1
+                    _progress(
+                        completed=completed_operations, total=total_operations,
+                        source_id=result.source_id, symbol=symbol, status=result.status,
+                    )
                 except Exception as exc:
                     failures.append({
                         "source_id": "tushare_daily_qfq", "symbol": symbol,
                         "error": f"{type(exc).__name__}: {exc}",
                     })
+                    completed_operations += 1
+                    _progress(
+                        completed=completed_operations, total=total_operations,
+                        source_id="tushare_daily_qfq", symbol=symbol, status="failed",
+                    )
+                if args.request_delay_seconds:
+                    time.sleep(args.request_delay_seconds)
             if announcement_service is not None:
                 try:
-                    result = announcement_service.refresh(
-                        symbol=symbol, through=args.announcement_through,
-                        start_date=args.announcement_start,
-                        overlap_days=args.announcement_overlap_days, force=args.force,
+                    result = _with_retries(
+                        lambda: announcement_service.refresh(
+                            symbol=symbol, through=args.announcement_through,
+                            start_date=args.announcement_start,
+                            overlap_days=args.announcement_overlap_days, force=args.force,
+                        ),
+                        max_attempts=args.max_attempts,
+                        backoff_seconds=args.retry_backoff_seconds,
                     )
                     results.append(result.model_dump(mode="json"))
+                    completed_operations += 1
+                    _progress(
+                        completed=completed_operations, total=total_operations,
+                        source_id=result.source_id, symbol=symbol, status=result.status,
+                    )
                 except Exception as exc:
                     failures.append({
                         "source_id": "cninfo_announcements", "symbol": symbol,
                         "error": f"{type(exc).__name__}: {exc}",
                     })
+                    completed_operations += 1
+                    _progress(
+                        completed=completed_operations, total=total_operations,
+                        source_id="cninfo_announcements", symbol=symbol, status="failed",
+                    )
+                if args.request_delay_seconds:
+                    time.sleep(args.request_delay_seconds)
         current = build_freshness_manifest(
             expected_price_through=args.price_through,
             expected_announcement_checked_through=args.announcement_through,
             research_symbols=symbols,
+            universe_snapshot=universe_snapshot,
         )
-        write_freshness_manifest(current, args.output)
+        output = args.output
+        if output is None:
+            if len(symbols) == len(full_symbols):
+                output = FRESHNESS_MANIFEST_PATH
+            else:
+                batch_end = args.batch_offset + len(symbols) - 1
+                output = FRESHNESS_MANIFEST_PATH.with_name(
+                    f"freshness_manifest_batch_{args.batch_offset}_{batch_end}.json"
+                )
+        write_freshness_manifest(current, output)
         print(json.dumps({
             "results": results, "failures": failures,
             "manifest_id": current.manifest_id, "overall_status": current.overall_status,
+            "scope": {
+                "full_symbol_count": len(full_symbols),
+                "batch_offset": args.batch_offset,
+                "batch_size": len(symbols),
+                "request_delay_seconds": args.request_delay_seconds,
+                "max_attempts": args.max_attempts,
+                "output": str(output),
+            },
             "blocking_gaps": current.blocking_gaps, "coverage_gaps": current.coverage_gaps,
         }, ensure_ascii=False, indent=2))
         return 2 if failures or current.overall_status != "ready" else 0
@@ -364,10 +577,15 @@ def main() -> int:
         current = load_freshness_manifest(args.manifest)
         _print_manifest(current, args.manifest)
         return 0
+    manifest_symbols = list(args.symbol)
+    universe_snapshot = None
+    if args.universe_current or args.universe_snapshot:
+        manifest_symbols, universe_snapshot = _resolve_scope(args, parser)
     current = build_freshness_manifest(
         expected_price_through=args.expected_price_through,
         expected_announcement_checked_through=args.expected_announcement_checked_through,
-        research_symbols=args.symbol,
+        research_symbols=manifest_symbols,
+        universe_snapshot=universe_snapshot,
     )
     write_freshness_manifest(current, args.output)
     _print_manifest(current, args.output)

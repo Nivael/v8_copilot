@@ -339,6 +339,35 @@ class TushareHttpClient:
             fields="ts_code,name,trade_date,type,type_name",
         )
 
+    def fetch_st_universe_range(
+        self,
+        *,
+        start_date: str,
+        end_date: str,
+        limit: int = 1000,
+        offset: int = 0,
+    ) -> list[dict[str, Any]]:
+        """Return one stable page of historical daily ST memberships."""
+
+        if not 1 <= limit <= 1000:
+            raise ValueError("stock_st page limit 必须在 1..1000")
+        if offset < 0:
+            raise ValueError("stock_st offset 不能为负数")
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        if start > end:
+            raise ValueError("start_date 不得晚于 end_date")
+        return self._query(
+            "stock_st",
+            params={
+                "start_date": start,
+                "end_date": end,
+                "limit": str(limit),
+                "offset": str(offset),
+            },
+            fields="ts_code,name,trade_date,type,type_name",
+        )
+
     def fetch_index_daily(
         self, *, ts_code: str, start_date: str, end_date: str
     ) -> list[dict[str, Any]]:

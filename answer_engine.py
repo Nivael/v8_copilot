@@ -34,6 +34,7 @@ from announcement_body import (
     relevant_excerpt,
 )
 from lens_binding import LensRegistry, LensInvocation, LensGap
+from market_comparison import MarketComparisonWindow, load_market_comparison
 from recruitment_precedent import (
     RecruitmentMaterializationError,
     analyze_recruitment_precedents,
@@ -341,6 +342,67 @@ def _row(row_id: str, **values: Any) -> dict[str, Any]:
     if not row_id:
         raise ValueError("row_id 不得为空")
     return {"row_id": row_id, **values}
+
+
+def _attach_market_comparison(
+    card: AnswerCard, *, symbol: str | None = None, sessions: int = 10
+) -> MarketComparisonWindow:
+    comparison = load_market_comparison(
+        price_database=BASE_DB,
+        symbol=symbol,
+        sessions=sessions,
+    )
+    summary = comparison.summary_row()
+    card.body_rows.append(summary)
+    card.provenance.extend([
+        "local_data/v8_copilot/market_context_v1.sqlite3::benchmark_daily",
+        "local_data/v8_copilot/market_context_manifest_v1.json"
+        + (f"#{comparison.manifest_id}" if comparison.manifest_id else ""),
+        "local_data/v8_copilot/st_universe/current.json"
+        + (
+            f"#{comparison.universe_snapshot_id}"
+            if comparison.universe_snapshot_id else ""
+        ),
+    ])
+    if comparison.ready:
+        card.body_rows.extend(comparison.series_rows())
+        card.source_freshness["market_context_as_of"] = comparison.end_date
+        card.source_freshness["st_universe_as_of"] = comparison.universe_as_of
+        if comparison.manifest_generated_at:
+            card.source_freshness["market_context_checked_at"] = (
+                comparison.manifest_generated_at[:10]
+            )
+        returns = comparison.returns_pct
+        if symbol:
+            text = (
+                f"同一 {sessions} 交易日窗口内，{symbol} 为 {returns['stock']:.2f}%，"
+                f"ST 等权为 {returns['st_equal_weight_v1']:.2f}%，"
+                f"中证2000为 {returns['csi_2000']:.2f}%，"
+                f"中证全指为 {returns['csi_all_share']:.2f}%。"
+            )
+        else:
+            text = (
+                f"同一 {sessions} 交易日窗口内，ST 等权为 "
+                f"{returns['st_equal_weight_v1']:.2f}%，中证2000为 "
+                f"{returns['csi_2000']:.2f}%，中证全指为 "
+                f"{returns['csi_all_share']:.2f}%。"
+            )
+        card.analysis_claims.append(AnalysisClaim(
+            text=text,
+            claim_type="fact",
+            backing=BackingRef(kind="query_row", ref="market_comparison_summary"),
+        ))
+        card.caveats.append(
+            "相对差为同窗收益的百分点差，只描述历史路径；中证2000价格表现不等于资金净流入。"
+        )
+    else:
+        card.analysis_claims.append(AnalysisClaim(
+            text="当前市场对比窗口存在端点或覆盖缺口，未插值生成相对收益。",
+            claim_type="data_gap",
+            backing=BackingRef(kind="query_row", ref="market_comparison_gap"),
+        ))
+    card.provenance = list(dict.fromkeys(card.provenance))
+    return comparison
 
 
 # ================= card builders (through the lens binding spine) =================
@@ -673,7 +735,7 @@ def card_recruitment_limit_down_precedent(
 def card_two_week_move(
     *, include_market_debt: bool = True, include_microcap_debt: bool = True
 ) -> AnswerCard:
-    """#02 两周异动。无 evidence lens 直接命中『两周横截面异动』→ lens_gap 沉淀 + 两条 data_debt。"""
+    """#02 两周异动：ST 横截面与 canonical market-context pool。"""
     import numpy as np, pandas as pd
     price_snapshot = load_price_snapshot(BASE_DB)
     con = _db()
@@ -698,10 +760,6 @@ def card_two_week_move(
         ),
     ]
     debts: list[DataDebtRow] = []
-    if include_market_debt:
-        debts.append(DataDebtRow(
-            "大盘指数日线序列", "『相对大盘』无真基准，只能 ST-relative 代理", "D-051C"
-        ))
     if include_microcap_debt:
         debts.append(DataDebtRow(
             "as-of 市值/股本", "『微盘』cohort 无法定义（市值字段全空）", "C14"
@@ -713,7 +771,7 @@ def card_two_week_move(
                     sediment_as="question_card:QC-20260710-013",
                     note="release library 仅有月份 calendar-regime(RL-A-001/002) 与 C17 短窗(RL-A-003)，"
                          "均不直接验证『两周横截面异动』；ST 分布为无 lens 背书的 descriptive query。")]
-    return AnswerCard(
+    card = AnswerCard(
         question="ST/微盘相对大盘异动的两周分布如何？",
         object_ref="universe: ST panel (daily_prices qfq)",
         view="query", as_of=price_snapshot.as_of,
@@ -730,11 +788,6 @@ def card_two_week_move(
         body_rows=body, data_debt=debts, data_debt_refs=debt_refs,
         analysis_claims=[
             *([AnalysisClaim(
-                text="相对大盘层缺少大盘指数日线序列。",
-                claim_type="data_gap",
-                backing=BackingRef(kind="data_debt", ref="D-051C"),
-            )] if include_market_debt else []),
-            *([AnalysisClaim(
                 text="微盘分层缺少 as-of 市值或可复算字段。",
                 claim_type="data_gap",
                 backing=BackingRef(kind="data_debt", ref="C14"),
@@ -742,8 +795,13 @@ def card_two_week_move(
         ],
         caveats=FIXED_CAVEATS + [
             "退市股价格可能右截断（生存偏差）；两周=10 交易日口径。",
-            "请求包含相对大盘或微盘分层时，缺失维度明确进入 data debt；ST 面板自身分布仍为描述性 query。"],
+            "微盘分层仍需要 point-in-time 市值；ST 面板横截面分布为描述性 query。"],
         provenance=["shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices"])
+    comparison = _attach_market_comparison(card, sessions=10)
+    if comparison.ready:
+        card.as_of = limiting_as_of(price_snapshot.as_of, comparison.end_date)
+        card.data_snapshot_as_of = card.as_of
+    return card
 
 
 def card_stock_event_window(
@@ -1575,6 +1633,7 @@ def card_stock_research_overview(
         card.provenance.append(
             f"shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices[{symbol}]"
         )
+        _attach_market_comparison(card, symbol=symbol, sessions=10)
 
     if "shareholder_count" in requested:
         shareholder_snapshot = load_table_snapshot(

@@ -1,0 +1,26 @@
+{
+  "answer_cards_path": "out/answer_cards.json",
+  "assertions": [
+    {"card": "slice01_next_node_gap", "path": ["view"], "equals": "query"},
+    {"card": "slice01_next_node_gap", "path": ["object_ref"], "contains": "286"},
+    {"card": "slice01_next_node_gap", "path": ["body_rows", 0, "中位(天)"], "equals": 4.0},
+    {"card": "slice01_next_node_gap", "path": ["body_rows", 1, "中位(天)"], "equals": 10},
+    {"card": "slice01_next_node_gap", "path": ["body_rows", 2, "中位(天)"], "equals": 14},
+    {"card": "slice01_next_node_gap", "path": ["lens_invocations"], "min_len": 1},
+    {"card": "slice01_next_node_gap", "path": ["lens_gap", 0, "sediment_as"], "equals": "question_card:QC-20260710-009"},
+    {"card": "slice02_two_week_move", "path": ["view"], "equals": "query"},
+    {"card": "slice02_two_week_move", "path": ["lens_invocations"], "len": 0},
+    {"card": "slice02_two_week_move", "path": ["lens_gap", 0, "sediment_as"], "equals": "question_card:QC-20260710-013"},
+    {"card": "slice02_two_week_move", "path": ["body_rows", 0, "p05"], "equals": "-15.5%"},
+    {"card": "slice02_two_week_move", "path": ["body_rows", 0, "p50"], "equals": "-0.5%"},
+    {"card": "slice02_two_week_move", "path": ["body_rows", 0, "p95"], "equals": "17.6%"},
+    {"card": "slice02_two_week_move", "path": ["data_debt_refs"], "not_contains": "D-051C"},
+    {"card": "slice02_two_week_move", "path": ["data_debt_refs"], "contains": "C14"},
+    {"card": "slice02_two_week_move", "path": ["body_rows", 2, "记录类型"], "equals": "市场对比摘要"},
+    {"card": "slice03_consolidation_checklist", "path": ["view"], "equals": "checklist"},
+    {"card": "slice03_consolidation_checklist", "path": ["object_ref"], "contains": "stock:603398"},
+    {"card": "slice03_consolidation_checklist", "path": ["sample_scope"], "contains": "162"},
+    {"card": "slice03_consolidation_checklist", "path": ["lens_invocations"], "min_len": 3},
+    {"card": "slice03_consolidation_checklist", "path": ["body_rows"], "min_len": 5}
+  ]
+}

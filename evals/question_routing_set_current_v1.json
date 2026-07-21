@@ -1,0 +1,28 @@
+{
+  "contract_version": "question-routing-current-v1",
+  "base": "question_routing_set_v0.jsonl",
+  "overrides": {
+    "QR-20260710-011": {
+      "expected_route": "answer_query",
+      "expected_status": "answerable",
+      "expected_view": "query",
+      "required_backing": [
+        "query:daily_prices",
+        "query:market_context_pool"
+      ],
+      "required_provenance": [
+        "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices",
+        "local_data/v8_copilot/market_context_v1.sqlite3::benchmark_daily",
+        "local_data/v8_copilot/market_context_manifest_v1.json"
+      ],
+      "required_lens_behavior": "lens_gap_required",
+      "required_data_debt_refs": [],
+      "forbidden_claims": [
+        "用自然日插值",
+        "百分点差就是 alpha",
+        "价格涨跌就是资金净流入"
+      ],
+      "notes": "D-051C closed: answer from the aligned ST/CSI2000/all-share pool."
+    }
+  }
+}

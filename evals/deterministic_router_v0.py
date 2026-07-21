@@ -147,10 +147,11 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
         debt_refs.append("D-051B")
         q_refs.append("QC-20260710-012")
         gap_rules.append("missing_out_of_court_flag")
-    if "相对大盘" in text:
-        debt_refs.append("D-051C")
+    market_relative_question = _has_any(
+        text, ["相对大盘", "相对市场", "中证2000", "板块共振"]
+    )
+    if market_relative_question:
         q_refs.append("QC-20260710-014")
-        gap_rules.append("missing_market_index_series")
     if "微盘" in text:
         debt_refs.append("C14")
         q_refs.append("QC-20260710-013")
@@ -235,6 +236,19 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             question_refs=q_refs,
             rules=gap_rules,
             note="请求包含当前未冻结或覆盖不足的字段。",
+        )
+
+    if market_relative_question and _has_any(
+        text, ["两周", "10个交易日", "十个交易日", "异动", "涨跌", "分布"]
+    ):
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_gap_required",
+            question_refs=["QC-20260710-014"],
+            rules=["st_panel_two_week_distribution"],
+            note="使用 ST 等权、中证2000和中证全指的同交易日窗口回答。",
         )
 
     if _has_any(text, ["哪些lens能解释", "哪些lens"]):

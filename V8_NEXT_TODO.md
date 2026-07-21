@@ -62,14 +62,14 @@
 
 ## P4 — 答案卡与 dossier 消费
 
-- [ ] 新增统一交易日窗口对齐器。
-- [ ] 输出 stock、ST、CSI2000、market 四条窗口收益。
-- [ ] 输出 stock−ST、stock−CSI2000、ST−CSI2000、stock−market、ST−market 等职责明确的百分点差。
-- [ ] 图表同时显示个股、ST 指数、中证2000和大盘归一化曲线。
-- [ ] 缺端点或低 coverage 时降级为 evidence gap，不插值、不伪造 alpha。
-- [ ] provenance 包含 universe snapshot、benchmark definition、series as-of。
-- [ ] 增加 API contract 新版本（仅当现有 body rows 无法无损表达时）。
-- [ ] 关闭 `D-051C` 并保留关闭证据。
+- [x] 新增统一交易日窗口对齐器；以 manifest 终点为读取边界，共用全指交易日端点。
+- [x] 输出 stock、ST、CSI2000、market 四条窗口收益。
+- [x] 输出 stock−ST、stock−CSI2000、ST−CSI2000、stock−market、ST−market 等职责明确的百分点差。
+- [x] 图表同时显示个股、ST 指数、中证2000和大盘归一化曲线。
+- [x] 缺端点、低 coverage 或 universe as-of 不一致时降级为 evidence gap，不插值、不伪造 alpha。
+- [x] provenance 包含 universe snapshot、market-context manifest 内的 benchmark definition、series as-of。
+- [x] 完成 API contract 评审：现有 v0 `body_rows` 可无损表达，故不发布无必要的新版本；行类型已稳定。
+- [x] 关闭 `D-051C` 并在 PRD 第 11 节保留关闭证据；v0 历史验收原件不改写。
 
 验收：针对“最近两周为什么跌这么多”类问题，答案能区分个股问题、ST 风格下跌和全市场下跌。
 
@@ -89,6 +89,6 @@
 1. 评审并合入 P0。
 2. 做 P1 dry plan，确认 4 只价格 bootstrap、7 只公告 bootstrap 的边界。
 3. P2 全量维护与 P3 canonical 基准已完成；日常按运行手册增量执行。
-4. 下一步做 P4 答案卡接入并关闭 `D-051C`。
+4. P4 答案卡和 dossier 市场语境已完成，`D-051C` 已关闭。
 5. 厂商 ST 指数仅在取得稳定授权接口后补 context-only shadow check。
-6. 再进入 `C14`、SDK 质量门和旧入口退役。
+6. 下一步进入 `C14`、SDK 质量门和旧入口退役。

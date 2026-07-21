@@ -63,7 +63,6 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
     dimension_terms = {
         "省份": "province",
         "阶段": "stage",
-        "相对大盘": "market_relative",
         "微盘": "market_cap_cohort",
         "股东人数": "shareholder_count",
         "股权": "equity",
@@ -75,6 +74,16 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
         "预重整": "announcement",
         "价格": "price",
         "股价": "price",
+        "涨跌": "price",
+        "下跌": "price",
+        "跌了": "price",
+        "涨了": "price",
+        "走势": "price",
+        "最近两周": "price",
+        "相对大盘": "market_relative",
+        "相对市场": "market_relative",
+        "中证2000": "market_relative",
+        "板块共振": "market_relative",
         "跌停": "price",
         "换手率": "price",
         "控制权": "control_structure",
@@ -82,6 +91,9 @@ def interpret_request(request: ResearchRequest) -> QuestionInterpretation:
     for term, dimension in dimension_terms.items():
         if term in question:
             dimensions.append(dimension)
+    if "market_relative" in dimensions and "price" not in dimensions:
+        dimensions.append("price")
+    dimensions = list(dict.fromkeys(dimensions))
     if research_object.kind == "cohort" and research_object.ref.startswith("comparison:"):
         dimensions = ["announcement", "price", "stage", "st_lifecycle"]
     elif research_object.kind == "stock" and any(

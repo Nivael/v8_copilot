@@ -121,11 +121,13 @@ uv run python run_api.py
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot
 展开批量范围；中证全指和内部 ST 等权研究指数使用独立 market-context 数据面，不与个股基础库混表。
-P2/P3 已完成真实数据验收：209 只全量严格 manifest 为 `FM-D836EE706EAA2BDE08DC`；
+P2/P3/P4 已完成真实数据验收：209 只全量严格 manifest 为 `FM-D836EE706EAA2BDE08DC`；
 market-context pool 包含 ST 等权、中证2000和中证全指；manifest 为
 `MC-F15756CDF3490173508B`，最新区间 ready、历史区间 partial，三基准共同窗口从
 2023-08-11 开始。
-答案卡消费三序列与相对收益仍属于 P4，不能因为数据面 ready 就宣称 `D-051C` 已关闭。
+答案卡现在按 manifest 终点消费同窗个股、ST 等权、中证2000和中证全指，输出收益、
+百分点差和归一化曲线；缺端点、低覆盖或 universe 日期错位时显式降级。`D-051C`
+已于 2026-07-21 关闭，微盘/市值数据债 `C14` 仍独立存在。
 新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
 点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为
 `experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
@@ -134,6 +136,7 @@ market-context pool 包含 ST 等权、中证2000和中证全指；manifest 为
 
 - `lens_binding.py` — **脊梁**：LensRegistry（只读加载 pinned v1 库）+ candidate_lenses（按主题标签/cluster 精确匹配）+ LensInvocation + LensGap。
 - `answer_engine.py` — AnswerCard、AnalysisClaim/backing、只读数据访问和 card builders。
+- `market_comparison.py` — manifest 约束的只读同窗对齐器、相对收益和 evidence-gap 语义。
 - `contracts/v8_answer_contract_v0/` — W1 单写、W2/W3/LLM 只读的 JSON 契约。
 - `contracts/v8_copilot_api_contract_v0/` — 冻结的 Batch 2 API v0 schema、manifest 和固定 fixtures。
 - `contracts/v8_copilot_api_contract_v1/` — 增量 API v1：typed QuestionCard、QueryTemplate id 和证据导航。

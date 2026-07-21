@@ -11,9 +11,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
 
-QUESTION_SET = EVALS / "question_routing_set_v0.jsonl"
-SEED_SET = EVALS / "question_card_seeds_v0.jsonl"
-GOLDEN = EVALS / "golden_fact_assertions_v0.json"
+QUESTION_SET = EVALS / "question_routing_set_current_v1.json"
+SEED_SET = EVALS / "question_card_seeds_current_v1.json"
+GOLDEN = EVALS / "golden_fact_assertions_v1.json"
 REWRITE_SET = EVALS / "rewrite_routing_set_v0.jsonl"
 
 LEGAL_ROUTES = {
@@ -55,7 +55,7 @@ REQUIRED_ROUTE_COVERAGE = {
     "clarify",
     "refuse_or_rewrite",
 }
-EXPECTED_SEED_STATUS_COUNTS = Counter({"answerable": 7, "needs_data": 7, "needs_review": 1})
+EXPECTED_SEED_STATUS_COUNTS = Counter({"answerable": 8, "needs_data": 6, "needs_review": 1})
 KNOWN_SEED_DEBT_ASSIGNMENT_GAPS = {
     "QC-20260710-003",
     "QC-20260710-005",
@@ -64,6 +64,19 @@ LOCAL_PATH_RE = re.compile(r"/Users/|/home/|/private/var/")
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    if path.suffix == ".json":
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        base = path.with_name(spec["base"])
+        rows = load_jsonl(base)
+        overrides = spec.get("overrides") or {}
+        known_ids = {row.get("id") for row in rows}
+        unknown = sorted(set(overrides) - known_ids)
+        if unknown:
+            raise AssertionError(f"{path.name} overrides unknown ids: {unknown}")
+        return [
+            {**row, **overrides.get(row.get("id"), {})}
+            for row in rows
+        ]
     rows: list[dict[str, Any]] = []
     for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         if not line.strip():
@@ -218,6 +231,8 @@ def validate_golden_assertions(spec: dict[str, Any]) -> None:
             raise AssertionError(f"{aid} expected {assertion['equals']!r}, got {value!r}")
         if "contains" in assertion and assertion["contains"] not in value:
             raise AssertionError(f"{aid} expected to contain {assertion['contains']!r}, got {value!r}")
+        if "not_contains" in assertion and assertion["not_contains"] in value:
+            raise AssertionError(f"{aid} must not contain {assertion['not_contains']!r}, got {value!r}")
         if "len" in assertion and len(value) != assertion["len"]:
             raise AssertionError(f"{aid} expected len {assertion['len']}, got {len(value)}")
         if "min_len" in assertion and len(value) < assertion["min_len"]:

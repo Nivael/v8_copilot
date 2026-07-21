@@ -144,6 +144,27 @@ def test_tushare_client_computes_qfq_from_daily_and_adjustment_factor(monkeypatc
     assert batch.rows[1]["close"] == 21
 
 
+def test_tushare_client_exposes_st_universe_and_index_boundaries(monkeypatch) -> None:
+    client = TushareHttpClient(token="not-a-real-token")
+    calls = []
+
+    def query(api_name, *, params, fields):
+        calls.append((api_name, params, fields))
+        return []
+
+    monkeypatch.setattr(client, "_query", query)
+    client.fetch_st_universe(as_of="2026-07-20")
+    client.fetch_index_daily(
+        ts_code="000985.CSI", start_date="2026-07-01", end_date="2026-07-20"
+    )
+
+    assert calls[0][0:2] == ("stock_st", {"trade_date": "20260720"})
+    assert calls[1][0] == "index_daily"
+    assert calls[1][1] == {
+        "ts_code": "000985.CSI", "start_date": "20260701", "end_date": "20260720"
+    }
+
+
 def test_cninfo_timestamp_is_interpreted_in_exchange_timezone() -> None:
     timestamp = datetime.fromisoformat("2026-07-14T00:30:00+08:00").timestamp() * 1000
 

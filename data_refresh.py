@@ -329,6 +329,32 @@ class TushareHttpClient:
             rows=[unique[key] for key in sorted(unique)], latest_adj_factor=latest_factor,
         )
 
+    def fetch_st_universe(self, *, as_of: str) -> list[dict[str, Any]]:
+        """Return the official risk-warning membership for one trading date."""
+
+        trade_date = _iso_date(as_of, field="as_of").replace("-", "")
+        return self._query(
+            "stock_st",
+            params={"trade_date": trade_date},
+            fields="ts_code,name,trade_date,type,type_name",
+        )
+
+    def fetch_index_daily(
+        self, *, ts_code: str, start_date: str, end_date: str
+    ) -> list[dict[str, Any]]:
+        """Return unadjusted official index daily rows for a declared benchmark."""
+
+        code = str(ts_code).strip().upper()
+        if not re.fullmatch(r"[0-9]{6}\.(?:SH|SZ|CSI)", code):
+            raise ValueError(f"指数代码非法: {ts_code!r}")
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        return self._query(
+            "index_daily",
+            params={"ts_code": code, "start_date": start, "end_date": end},
+            fields="ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+        )
+
     @staticmethod
     def _ts_code(symbol: str) -> str:
         if symbol.startswith(("5", "6", "9")):

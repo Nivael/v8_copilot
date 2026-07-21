@@ -8,7 +8,25 @@
 
 > 使用 `$st-research-data-maintainer`。只负责更新我声明范围内的价格、CNINFO 公告和所需公告正文材料化，最后生成严格 freshness manifest。不要回答研究问题；任何失败或覆盖不全都必须列出。
 
-每天先在这里声明：价格应到哪个已完成交易日、公告核查到哪一天、覆盖哪些股票。维护器固定使用 Tushare 前复权价格和 CNINFO 公告，按 source + symbol 保存成功游标；已核查到目标日时不会重复请求。价格默认回看 7 天并按交易日主键去重，CNINFO 默认回看 14 天并按公告 ID 合并。若最新复权因子变化，价格自动重建该股票完整 qfq 历史，不能用普通增量制造口径断层。
+每天先在这里声明：价格应到哪个已完成交易日、公告核查到哪一天，以及使用哪一个 universe snapshot。维护器固定使用 Tushare 前复权价格和 CNINFO 公告，按 source + symbol 保存成功游标；已核查到目标日时不会重复请求。价格默认回看 7 天并按交易日主键去重，CNINFO 默认回看 14 天并按公告 ID 合并。若最新复权因子变化，价格自动重建该股票完整 qfq 历史，不能用普通增量制造口径断层。
+
+先固化当天权威 ST 名单，再以 snapshot 展开任务：
+
+```bash
+python data_maintenance.py sync-universe \
+  --env-file <local-tushare-env> \
+  --as-of <已完成交易日>
+
+python data_maintenance.py show-universe
+
+python data_maintenance.py plan \
+  --universe-current \
+  --price-through <YYYY-MM-DD> \
+  --announcement-through <YYYY-MM-DD>
+```
+
+snapshot 是 append-only；`removed_symbols` 仅表示移出 ST 名单，不代表退市。首次全量执行必须先按
+[V8_NEXT_TODO.md](V8_NEXT_TODO.md) 完成 dry plan 和无基线股票的独立 bootstrap 配置。
 
 日常命令：
 
@@ -17,10 +35,23 @@ python data_maintenance.py refresh \
   --env-file <local-tushare-env> \
   --price-through <YYYY-MM-DD> \
   --announcement-through <YYYY-MM-DD> \
-  --symbol <六位代码>
+  --universe-current
 ```
 
-重复 `--symbol` 声明完整研究范围。`python data_maintenance.py checkpoints` 可审计每个来源和股票上次尝试、上次成功、已核查日期、写入行数和失败原因。数据更新后固定调用 `python experience_governance.py verify`；它只执行已到期的 accepted 经验回归。失败保留上次成功游标；`overall_status=ready` 才表示声明范围内达到目标，`gaps` 必须交给研究窗口作为明确数据缺口。
+仍可重复 `--symbol` 只维护明确的小范围，也可用 `--universe-snapshot <path>` 固定重跑某一批。
+`python data_maintenance.py checkpoints` 可审计每个来源和股票上次尝试、上次成功、已核查日期、写入行数和失败原因。数据更新后固定调用 `python experience_governance.py verify`；它只执行已到期的 accepted 经验回归。失败保留上次成功游标；`overall_status=ready` 才表示声明范围内达到目标，`gaps` 必须交给研究窗口作为明确数据缺口。
+
+大盘方向基准单独维护，不写入个股价格表：
+
+```bash
+python data_maintenance.py refresh-benchmarks \
+  --env-file <local-tushare-env> \
+  --start-date <YYYY-MM-DD> \
+  --through <YYYY-MM-DD>
+```
+
+当前命令写入中证全指。正式 ST 板块基准是后续由“逐日 ST membership + qfq 个股收益”
+物化的 `st_equal_weight_v1`；不得用今天的成分股倒算历史。
 
 ## 窗口二：研究问答
 

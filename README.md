@@ -115,8 +115,12 @@ uv run python run_api.py
 
 固定的数据维护任务、研究任务和审计面板分工见 [OPERATING_MODEL.md](OPERATING_MODEL.md)。
 选择性联网与离线机制的边界见 [SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md](SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md)。
+全量 ST universe、市场基准和下一阶段能力差距见 [V8_NEXT_PRD.md](V8_NEXT_PRD.md)；
+按阶段验收的执行账见 [V8_NEXT_TODO.md](V8_NEXT_TODO.md)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
+维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot
+展开批量范围；中证全指和内部 ST 等权研究指数使用独立 market-context 数据面，不与个股基础库混表。
 新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
 点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为
 `experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
@@ -144,6 +148,10 @@ checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data
 - `experience_governance.py` / `experience_registry/` — 去敏 registry、冲突检测和定期回归治理。
 - `research_workbench.py` — 项目 skill 使用的本地 CLI。
 - `data_maintenance.py` / `data_refresh.py` / `freshness_manifest.py` — Tushare/CNINFO 可恢复增量维护与统一 freshness manifest。
+- `universe.py` — 权威每日 ST membership、append-only snapshot、digest/diff 与 current pointer。
+- `maintenance_plan.py` — universe 对本地 holdings/checkpoint 的只读差集与 bootstrap 计划。
+- `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
+- `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — 当前完成度、下一阶段架构与有验收条件的工作账。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。

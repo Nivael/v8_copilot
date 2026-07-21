@@ -28,7 +28,8 @@ is kept up to date; this file is only a pointer.
 
 ## Documentation hygiene
 
-- `README.md`, `OPERATING_MODEL.md`, `DESIGN.md`, `SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md`
+- `README.md`, `OPERATING_MODEL.md`, `DESIGN.md`, `SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md`,
+  `V8_NEXT_PRD.md`, and `V8_NEXT_TODO.md`
   are the living reference docs — check for cross-references (`grep -rl
   <filename>`) before assuming any of them is safe to touch or archive.
 - Point-in-time handoff/closeout/PRD-recovery notes (named with a date, e.g.

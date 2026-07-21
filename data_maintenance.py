@@ -25,7 +25,16 @@ from freshness_manifest import (
     load_freshness_manifest,
     write_freshness_manifest,
 )
-from settings import ANNOUNCEMENT_REFRESH_DIR, DATA_MAINTENANCE_DB, FRESHNESS_MANIFEST_PATH
+from market_context import BROAD_MARKET, MarketContextRepository, MarketContextService
+from maintenance_plan import build_maintenance_plan
+from settings import (
+    ANNOUNCEMENT_REFRESH_DIR,
+    DATA_MAINTENANCE_DB,
+    FRESHNESS_MANIFEST_PATH,
+    MARKET_CONTEXT_DB,
+    ST_UNIVERSE_DIR,
+)
+from universe import StUniverseRepository, StUniverseService, StUniverseSnapshot
 
 
 def _promote_announcement(input_path: Path, symbol: str, checked_through: str = "") -> Path:
@@ -118,6 +127,45 @@ def _print_manifest(manifest: FreshnessManifest, output: Path) -> None:
     }, ensure_ascii=False, indent=2))
 
 
+def _resolve_scope(
+    args: argparse.Namespace, parser: argparse.ArgumentParser
+) -> tuple[list[str], StUniverseSnapshot | None]:
+    symbols = set(getattr(args, "symbol", []) or [])
+    snapshot = None
+    snapshot_path = getattr(args, "universe_snapshot", None)
+    if getattr(args, "universe_current", False):
+        snapshot = StUniverseRepository(ST_UNIVERSE_DIR).load_current()
+        if snapshot is None:
+            parser.error("尚无 current ST universe；先运行 sync-universe")
+        symbols.update(snapshot.symbols)
+    if snapshot_path:
+        loaded = StUniverseRepository.load(snapshot_path)
+        if snapshot is not None and snapshot.snapshot_id != loaded.snapshot_id:
+            parser.error("不能同时指定两个不同的 universe snapshot")
+        snapshot = loaded
+        symbols.update(loaded.symbols)
+    for symbol in symbols:
+        if len(symbol) != 6 or not symbol.isdigit():
+            parser.error("--symbol 必须是六位股票代码")
+    if not symbols:
+        parser.error("至少指定一个 --symbol、--universe-current 或 --universe-snapshot")
+    return sorted(symbols), snapshot
+
+
+def _resolve_symbols(args: argparse.Namespace, parser: argparse.ArgumentParser) -> list[str]:
+    return _resolve_scope(args, parser)[0]
+
+
+def _validate_bootstrap_scope(
+    *, symbols: list[str], price_start: str, announcement_start: str
+) -> None:
+    if len(symbols) > 1 and (price_start or announcement_start):
+        raise ValueError(
+            "多股票批次禁止共用 --price-start/--announcement-start；"
+            "无基线股票必须逐股 bootstrap"
+        )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="ST Research data maintenance boundary")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -128,7 +176,9 @@ def main() -> int:
     promote.add_argument("--checked-through", default="")
 
     refresh = sub.add_parser("refresh")
-    refresh.add_argument("--symbol", action="append", required=True)
+    refresh.add_argument("--symbol", action="append", default=[])
+    refresh.add_argument("--universe-current", action="store_true")
+    refresh.add_argument("--universe-snapshot", type=Path)
     refresh.add_argument("--price-through", required=True)
     refresh.add_argument("--announcement-through", required=True)
     refresh.add_argument("--price-start", default="")
@@ -154,6 +204,27 @@ def main() -> int:
     show = sub.add_parser("show")
     show.add_argument("--manifest", type=Path, default=FRESHNESS_MANIFEST_PATH)
 
+    sync_universe = sub.add_parser("sync-universe")
+    sync_universe.add_argument("--as-of", required=True)
+    sync_universe.add_argument("--env-file", type=Path)
+    sync_universe.add_argument("--output-dir", type=Path, default=ST_UNIVERSE_DIR)
+
+    show_universe = sub.add_parser("show-universe")
+    show_universe.add_argument("--universe-dir", type=Path, default=ST_UNIVERSE_DIR)
+
+    refresh_benchmarks = sub.add_parser("refresh-benchmarks")
+    refresh_benchmarks.add_argument("--start-date", required=True)
+    refresh_benchmarks.add_argument("--through", required=True)
+    refresh_benchmarks.add_argument("--env-file", type=Path)
+    refresh_benchmarks.add_argument("--database", type=Path, default=MARKET_CONTEXT_DB)
+
+    plan = sub.add_parser("plan")
+    plan.add_argument("--symbol", action="append", default=[])
+    plan.add_argument("--universe-current", action="store_true")
+    plan.add_argument("--universe-snapshot", type=Path)
+    plan.add_argument("--price-through", required=True)
+    plan.add_argument("--announcement-through", required=True)
+
     args = parser.parse_args()
     if args.command == "promote-announcements":
         if len(args.symbol) != 6 or not args.symbol.isdigit():
@@ -165,13 +236,72 @@ def main() -> int:
         rows = MaintenanceStateRepository(args.state_db).list()
         print(json.dumps([row.model_dump(mode="json") for row in rows], ensure_ascii=False, indent=2))
         return 0
+    if args.command == "sync-universe":
+        _load_env_file(args.env_file)
+        service = StUniverseService(
+            provider=TushareHttpClient(),
+            repository=StUniverseRepository(args.output_dir),
+        )
+        snapshot, destination = service.sync(as_of=args.as_of)
+        print(json.dumps({
+            "snapshot_id": snapshot.snapshot_id,
+            "as_of": snapshot.as_of,
+            "member_count": snapshot.member_count,
+            "added_symbols": snapshot.added_symbols,
+            "removed_symbols": snapshot.removed_symbols,
+            "snapshot": str(destination),
+        }, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "show-universe":
+        current = StUniverseRepository(args.universe_dir).load_current()
+        if current is None:
+            parser.error("尚无 current ST universe")
+        print(json.dumps(current.model_dump(mode="json"), ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "refresh-benchmarks":
+        _load_env_file(args.env_file)
+        repository = MarketContextRepository(args.database)
+        points = MarketContextService(
+            provider=TushareHttpClient(), repository=repository,
+        ).refresh_provider_index(
+            definition=BROAD_MARKET,
+            start_date=args.start_date,
+            end_date=args.through,
+        )
+        lower, upper, count = repository.bounds(BROAD_MARKET.benchmark_id)
+        print(json.dumps({
+            "benchmark_id": BROAD_MARKET.benchmark_id,
+            "rows_seen": len(points),
+            "stored_bounds": {"start": lower, "end": upper, "count": count},
+            "database": str(args.database),
+        }, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "plan":
+        symbols, snapshot = _resolve_scope(args, parser)
+        current = build_maintenance_plan(
+            database=BASE_DB,
+            announcement_refresh_dir=ANNOUNCEMENT_REFRESH_DIR,
+            state_database=DATA_MAINTENANCE_DB,
+            symbols=symbols,
+            price_through=args.price_through,
+            announcement_through=args.announcement_through,
+            universe_snapshot_id=getattr(snapshot, "snapshot_id", ""),
+            universe_as_of=getattr(snapshot, "as_of", ""),
+        )
+        print(json.dumps(current.model_dump(mode="json"), ensure_ascii=False, indent=2))
+        return 2 if current.warnings else 0
     if args.command == "refresh":
-        symbols = sorted(set(args.symbol))
-        for symbol in symbols:
-            if len(symbol) != 6 or not symbol.isdigit():
-                parser.error("--symbol 必须是六位股票代码")
+        symbols = _resolve_symbols(args, parser)
         if args.skip_prices and args.skip_announcements:
             parser.error("不能同时跳过价格和公告")
+        try:
+            _validate_bootstrap_scope(
+                symbols=symbols,
+                price_start=args.price_start,
+                announcement_start=args.announcement_start,
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
         _load_env_file(args.env_file)
         state = MaintenanceStateRepository(DATA_MAINTENANCE_DB)
         results: list[dict] = []

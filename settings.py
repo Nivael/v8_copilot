@@ -35,6 +35,14 @@ DATA_MAINTENANCE_DB = Path(os.environ.get(
     "V8_DATA_MAINTENANCE_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "data_maintenance.sqlite3",
 )).expanduser().resolve()
+ST_UNIVERSE_DIR = Path(os.environ.get(
+    "V8_ST_UNIVERSE_DIR",
+    DATA_ROOT / "local_data" / "v8_copilot" / "st_universe",
+)).expanduser().resolve()
+MARKET_CONTEXT_DB = Path(os.environ.get(
+    "V8_MARKET_CONTEXT_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "market_context_v1.sqlite3",
+)).expanduser().resolve()
 EXPERIENCE_GOVERNANCE_DB = Path(os.environ.get(
     "V8_EXPERIENCE_GOVERNANCE_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "experience_governance.sqlite3",

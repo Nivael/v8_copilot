@@ -15,7 +15,7 @@
 - [x] 新增只读 `plan`，区分 current、stale、missing baseline 并估算最低请求数。
 - [x] 新增 benchmark registry、独立 SQLite store 和中证全指刷新服务。
 - [x] 新增 survivorship-safe ST 等权计算核与 coverage 字段。
-- [~] 回归完成：新增 18 项聚焦测试、其余 207 项与 Web 29 项通过；master 同样存在 3 个既有真实数据/措辞断言失败，待单独修正后完成 commit。
+- [x] 回归与本地提交完成：新增 18 项聚焦测试全绿；Python 全套 210 项中 207 项通过，3 个失败在 master 同样复现；Web 29 项全绿。既有真实数据/措辞断言已隔离为后续修复项。
 
 验收：聚焦单元测试全绿；空 universe、错日响应、缺历史 membership 均 fail closed。
 

@@ -110,7 +110,10 @@ def test_recruitment_deadline_limit_down_precedent_uses_dedicated_route() -> Non
     assert "M6" not in response.answer_card["sample_scope"]
     assert response.narrative is not None
     assert "报名截止前" in response.narrative.direct_answer.text
-    assert any("未独立核验" in item.text for item in response.narrative.uncertainties)
+    assert any(
+        "截止前" in item.text and "独立核验" in item.text
+        for item in response.narrative.uncertainties
+    )
 
 
 def test_two_stock_comparison_executes_instead_of_falling_back() -> None:

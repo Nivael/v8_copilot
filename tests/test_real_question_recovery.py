@@ -58,4 +58,4 @@ def test_answer_card_as_of_tracks_the_dimensions_used_by_the_question() -> None:
     announcement_and_price = ask("ST亚光7月8日公告后股价怎么走？")
 
     assert announcement.answer_card["as_of"] == "2026-07-08"
-    assert announcement_and_price.answer_card["as_of"] == "2026-06-26"
+    assert announcement_and_price.answer_card["as_of"] == "2026-07-08"

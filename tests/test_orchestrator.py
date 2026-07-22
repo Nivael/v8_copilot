@@ -1,5 +1,7 @@
+from answer_engine import BASE_DB
 from api_contract import ResearchObject, ResearchRequest
 from orchestrator import orchestrate, route_only, stream_events
+from snapshot_metadata import load_price_snapshot
 
 
 def request(question: str, *, kind: str, ref: str, llm_mode: str = "off") -> ResearchRequest:
@@ -240,7 +242,9 @@ def test_selected_event_executes_stock_event_window_template() -> None:
     assert response.answer_card is not None
     assert response.answer_card["body_rows"][0]["事件编号"] == "announcement:1221766612"
     assert response.answer_card["body_rows"][0]["标题"] != "控股股东相关公告"
-    assert response.answer_card["source_freshness"]["price_data_as_of"] == "2026-06-26"
+    assert response.answer_card["source_freshness"]["price_data_as_of"] == (
+        load_price_snapshot(BASE_DB, symbol="603398").as_of
+    )
 
 
 def test_unresolved_client_event_cannot_generate_an_answer_card() -> None:

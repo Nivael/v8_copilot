@@ -1,9 +1,9 @@
-# v8 下一阶段 PRD：全量 ST 数据面与相对市场语境
+# v8 下一阶段 PRD：全量 ST 数据面、相对市场语境与时点市值
 
-状态：P2/P3/P4 implemented and validated
-日期：2026-07-21  
+状态：P2/P3/P4 及 P5-C14 implemented and validated
+日期：2026-07-22
 负责人：Codex commander window  
-实施分支：`codex/universe-benchmark-prd`
+实施分支：`codex/c14-point-in-time-market-cap`
 
 ## 1. 结论先行
 
@@ -83,7 +83,7 @@ P1 dry plan 在执行前的盘点结果：
 | 答案卡相对 ST/大盘指标 | 已完成 | 同窗消费 ST/中证2000/中证全指；个股 dossier 增加个股序列；`D-051C` 已关闭 |
 | 全量 209 只价格/公告刷新与 universe manifest | 已完成 | `FM-D836EE706EAA2BDE08DC`，价格至 2026-07-20、公告核查至 2026-07-21 |
 | market-context manifest | 已完成 | `MC-F15756CDF3490173508B`；ST/中证2000/中证全指同池，当前 ready、历史 partial 分开表达 |
-| 市值/微盘因子 | 未完成 | `C14` 仍是独立数据债 |
+| 市值/微盘因子 | 已完成并真实验收 | 起点快照 `MFS-61A1FC03A4CD04164329`；208/211 有效市值，覆盖 98.58%；`C14` 已关闭 |
 | SDK 质量门与旧入口退役 | 未完成 | 原 PRD Phase 4/5 延续项 |
 
 ## 5. 架构评审
@@ -131,10 +131,13 @@ flowchart LR
     B --> F["ST equal-weight v1"]
     D --> F
     G["Tushare 932000.CSI / 000985.CSI"] --> H["market context store"]
+    B --> L["Tushare daily_basic\npoint-in-time market cap"]
+    L --> M["append-only market factor snapshots"]
     F --> H
     D --> I["EvidencePack / AnswerCard"]
     E --> I
     H --> I
+    M --> I
     I --> J["Codex 主答案"]
     J --> K["浏览器审计与经验治理"]
 ```
@@ -207,6 +210,26 @@ P4 不发布新的 AnswerCard contract。冻结的 v0 已明确允许 `body_rows
 
 只有未来需要多窗口、多频率，或消费者必须在顶层字段上做强类型随机访问时，才发布新版本。不能因为加一张图就让所有答案卡消费者承担合约迁移成本。
 
+### 8.5 C14 时点市值契约
+
+C14 使用独立 `market_factors_v1.sqlite3`，不把市值塞进个股价格库或 market-context
+基准表。维护任务对每个交易日只拉取一次 Tushare `daily_basic` 横截面，再按该日
+`st_membership_daily` 精确过滤；源端“万元/万股”统一换算为人民币元/股。没有该日历史
+membership 时直接失败，绝不拿当前名单补历史。
+
+每份快照内容寻址并 append-only；每个交易日有一份不可变 dated manifest，另有可替换的
+current pointer。消费者按收益窗口起点选择 dated manifest，因此日常刷新不会覆盖未来滚动
+窗口所需的历史因子。manifest 同时冻结因子日期、membership digest、覆盖率、
+来源和定义。`st_total_mv_bottom_30pct_v1` 的规则是：在收益窗口起点、有效总市值的 ST
+成员中升序排列，取最小 30%（向上取整），阈值同值全部进入微盘组，其余为普通 ST。
+收益窗口终点或“今天”的市值不参与分组。
+
+市值覆盖率以及微盘/普通 ST 各自的收益端点覆盖率均需达到 95%。缺失端点不插值；资产
+不存在、日期错位、digest 不一致或覆盖不足时，答案卡输出 `市值分层缺口`。这是已实现
+能力的运行证据缺口，不是重新打开 `C14`。稳定行类型为 `市值分层定义`、两行
+`市值分层分布`、`市值分层比较摘要` 和 `市值分层缺口`；现有 AnswerCard v0 的
+`body_rows` 可无损承载，因此仍不发布无必要的新契约版本。
+
 ## 9. 功能需求与验收
 
 ### FR-1 权威 universe materialization
@@ -241,9 +264,16 @@ P4 不发布新的 AnswerCard contract。冻结的 v0 已明确允许 `body_rows
 
 - 两周涨跌答案同时呈现个股、ST、中证2000、中证全指收益，以及职责清晰的相对差。
 - provenance 指向 universe snapshot、价格 snapshot、benchmark definition 和 series as-of。
-- 完成后关闭 `D-051C`；微盘/市值债 `C14` 仍单独存在。
+- P4 关闭 `D-051C`；微盘/市值能力保持独立，由 FR-6 验收并关闭 `C14`。
 
-### FR-6 运行安全
+### FR-6 时点市值与微盘分层
+
+- 每个需支持的交易日保存与该日 ST membership 绑定的市值快照。
+- 微盘分组只使用收益窗口起点总市值，不得使用当前或窗口终点市值。
+- 输出两组覆盖率、均值、中位数、尾部、上涨占比、中位市值及相对百分点差。
+- provenance 指向 factor snapshot、factor manifest 和历史 membership；缺口 fail closed。
+
+### FR-7 运行安全
 
 - 默认 dry plan 后才允许 full universe 网络写入。
 - 支持限速、批次大小、resume 和失败重试。
@@ -267,10 +297,20 @@ P4 不发布新的 AnswerCard contract。冻结的 v0 已明确允许 `body_rows
 4. 中证全指可增量刷新并进入 market-context manifest；（已达到）
 5. ST 等权指数至少完成一段覆盖率合格的 shadow run；（已达到）厂商旁证因公开端点空响应、当前 Tushare 权限不足而保留为非阻塞 context-only 项；
 6. 答案卡显示相对指标且 `D-051C` 不再出现；（已达到）
-7. commander window 的运行说明与恢复步骤更新。（P2/P3 已达到）
+7. commander window 的运行说明与恢复步骤更新。（已达到）
+8. C14 有真实起点快照、双组覆盖门、AnswerCard/Narrative/Web 消费和 current-v2
+   路由验收，且答案不再发出 `C14`。（已达到）
 
 P2/P3 的发布结论：canonical 数据面已经可以日常运行。最近 10 个交易日中证2000累计收益为 -19.30%，内部 ST 等权为 -12.79%，中证全指为 -11.22%；这一窗口里中小盘风格弱于 ST，ST 又略弱于全市场。该结果验证了不能把近期跌幅都归因于 ST，也验证了中证2000进入同一参考池的必要性。它是维护验收数据，不是交易结论。
 
 P4 发布结论：答案引擎已在 manifest 声明的同一交易日窗口上消费四条序列，个股缺价、基准缺端点、ST 覆盖率低于 95%、universe as-of 与窗口终点不一致时均返回 evidence gap。网页端显示四项收益与起点归一为 100 的曲线，并明确百分点差不是资金净流入或 alpha。
 
-`D-051C` 于 2026-07-21 关闭。关闭证据是：market-context manifest `MC-F15756CDF3490173508B`、universe snapshot `SU-4228A7C5B06703A022EF`、`market_comparison.py` 的只读对齐器、当前 v1 路由/种子/golden 覆盖层，以及后端 22 项聚焦测试、Web 32 项测试和生产构建。v0 验收文件保留原始缺口表述，只作历史基线；当前验收不再发出 `D-051C`。`C14` 仍独立存在，不因本项关闭而被掩盖。
+`D-051C` 于 2026-07-21 关闭。关闭证据是：market-context manifest `MC-F15756CDF3490173508B`、universe snapshot `SU-4228A7C5B06703A022EF`、`market_comparison.py` 的只读对齐器、当前 v1 路由/种子/golden 覆盖层，以及后端 22 项聚焦测试、Web 32 项测试和生产构建。v0 验收文件保留原始缺口表述，只作历史基线；当前验收不再发出 `D-051C`。
+
+`C14` 于 2026-07-22 关闭。真实起点快照 `MFS-61A1FC03A4CD04164329` 绑定
+2026-07-06 的 211 只历史 ST 成员，其中 208 只有有效总市值，覆盖 98.58%，当前 manifest
+为 `MF-7112DE9643948A1C7BD7`。微盘阈值为 20.61 亿元，阈值同值纳入后微盘 63 只、普通
+ST 145 只；收益端点覆盖分别为 60/63（95.24%）和 142/145（97.93%）。该窗口微盘相对
+普通 ST 的平均收益差为 +0.65 个百分点、中位收益差为 -3.34 个百分点，二者只作历史
+横截面描述，不是 alpha。关闭证据包括独立因子数据面、只读比较器、AnswerCard/Narrative/
+Web 消费、current-v2 路由/种子/golden 覆盖层和完整回归；v0/v1 历史验收原件不改写。

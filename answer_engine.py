@@ -35,6 +35,7 @@ from announcement_body import (
 )
 from lens_binding import LensRegistry, LensInvocation, LensGap
 from market_comparison import MarketComparisonWindow, load_market_comparison
+from microcap_comparison import MicrocapComparison, load_microcap_comparison
 from recruitment_precedent import (
     RecruitmentMaterializationError,
     analyze_recruitment_precedents,
@@ -405,6 +406,69 @@ def _attach_market_comparison(
     return comparison
 
 
+def _attach_microcap_comparison(
+    card: AnswerCard, *, market_window: MarketComparisonWindow
+) -> MicrocapComparison | None:
+    if not market_window.ready:
+        card.body_rows.append(_row(
+            "microcap_comparison_gap",
+            **{
+                "记录类型": "市值分层缺口",
+                "缺口": "市场共同交易日窗口不可用，无法绑定窗口起点市值",
+            },
+        ))
+        card.analysis_claims.append(AnalysisClaim(
+            text="市场共同窗口不可用，未生成微盘与普通 ST 分层。",
+            claim_type="data_gap",
+            backing=BackingRef(kind="query_row", ref="microcap_comparison_gap"),
+        ))
+        return None
+    comparison = load_microcap_comparison(
+        price_database=BASE_DB,
+        start_date=market_window.start_date,
+        end_date=market_window.end_date,
+    )
+    card.body_rows.extend(comparison.body_rows())
+    card.provenance.extend([
+        "local_data/v8_copilot/market_factors_v1.sqlite3::market_cap_daily",
+        f"local_data/v8_copilot/market_factor_manifests/{comparison.start_date}.json"
+        + (f"#{comparison.manifest_id}" if comparison.manifest_id else ""),
+        "local_data/v8_copilot/market_context_v1.sqlite3::st_membership_daily",
+    ])
+    if comparison.ready:
+        card.source_freshness["market_cap_as_of"] = comparison.start_date
+        mean_difference = (
+            float(comparison.microcap_stats["mean_return"])
+            - float(comparison.other_stats["mean_return"])
+        )
+        median_difference = (
+            float(comparison.microcap_stats["median_return"])
+            - float(comparison.other_stats["median_return"])
+        )
+        card.analysis_claims.append(AnalysisClaim(
+            text=(
+                f"以窗口起点 {comparison.start_date} 的 ST 总市值分组，"
+                f"微盘 ST 相对普通 ST 的平均收益差为 {mean_difference:+.2f} 个百分点，"
+                f"中位收益差为 {median_difference:+.2f} 个百分点。"
+            ),
+            claim_type="fact",
+            backing=BackingRef(
+                kind="query_row", ref="microcap_comparison_summary"
+            ),
+        ))
+        card.caveats.append(
+            "微盘按收益窗口起点的 ST 总市值最小 30% 定义；不使用窗口终点或当前市值倒推。"
+        )
+    else:
+        card.analysis_claims.append(AnalysisClaim(
+            text="point-in-time 市值或分组收益覆盖不足，未插值生成微盘比较。",
+            claim_type="data_gap",
+            backing=BackingRef(kind="query_row", ref="microcap_comparison_gap"),
+        ))
+    card.provenance = list(dict.fromkeys(card.provenance))
+    return comparison
+
+
 # ================= card builders (through the lens binding spine) =================
 
 def card_next_node_gap(
@@ -733,7 +797,7 @@ def card_recruitment_limit_down_precedent(
 
 
 def card_two_week_move(
-    *, include_market_debt: bool = True, include_microcap_debt: bool = True
+    *, include_market_debt: bool = True, include_microcap_comparison: bool = True
 ) -> AnswerCard:
     """#02 两周异动：ST 横截面与 canonical market-context pool。"""
     import numpy as np, pandas as pd
@@ -760,11 +824,6 @@ def card_two_week_move(
         ),
     ]
     debts: list[DataDebtRow] = []
-    if include_microcap_debt:
-        debts.append(DataDebtRow(
-            "as-of 市值/股本", "『微盘』cohort 无法定义（市值字段全空）", "C14"
-        ))
-    debt_refs = [debt.debt_ref for debt in debts]
     # 尝试绑定：日历 regime evidence lens 存在，但它是月份口径，不解答两周横截面 → 记为 gap
     gaps = [LensGap(gap_id="two_week_cross_section_evidence",
                     missing_for="两周横截面异动分布的验证证据",
@@ -785,19 +844,15 @@ def card_two_week_move(
         data_snapshot_as_of=price_snapshot.as_of,
         source_freshness={"price_data_as_of": price_snapshot.as_of},
         lens_invocations=[], lens_gap=gaps,
-        body_rows=body, data_debt=debts, data_debt_refs=debt_refs,
-        analysis_claims=[
-            *([AnalysisClaim(
-                text="微盘分层缺少 as-of 市值或可复算字段。",
-                claim_type="data_gap",
-                backing=BackingRef(kind="data_debt", ref="C14"),
-            )] if include_microcap_debt else []),
-        ],
+        body_rows=body, data_debt=debts, data_debt_refs=[],
+        analysis_claims=[],
         caveats=FIXED_CAVEATS + [
             "退市股价格可能右截断（生存偏差）；两周=10 交易日口径。",
-            "微盘分层仍需要 point-in-time 市值；ST 面板横截面分布为描述性 query。"],
+            "ST 面板横截面分布为描述性 query。"],
         provenance=["shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices"])
     comparison = _attach_market_comparison(card, sessions=10)
+    if include_microcap_comparison:
+        _attach_microcap_comparison(card, market_window=comparison)
     if comparison.ready:
         card.as_of = limiting_as_of(price_snapshot.as_of, comparison.end_date)
         card.data_snapshot_as_of = card.as_of

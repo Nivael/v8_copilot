@@ -152,10 +152,9 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
     )
     if market_relative_question:
         q_refs.append("QC-20260710-014")
-    if "微盘" in text:
-        debt_refs.append("C14")
+    microcap_question = "微盘" in text
+    if microcap_question:
         q_refs.append("QC-20260710-013")
-        gap_rules.append("missing_market_cap_cohort")
     if "股东人数" in text:
         q_refs.append("QC-20260710-006")
         gap_rules.append("missing_shareholder_count_full_coverage")
@@ -236,6 +235,17 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
             question_refs=q_refs,
             rules=gap_rules,
             note="请求包含当前未冻结或覆盖不足的字段。",
+        )
+
+    if microcap_question:
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_gap_required",
+            question_refs=q_refs,
+            rules=["st_panel_two_week_distribution"],
+            note="使用窗口起点 point-in-time 总市值比较微盘 ST 与普通 ST。",
         )
 
     if market_relative_question and _has_any(

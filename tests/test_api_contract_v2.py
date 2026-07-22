@@ -74,6 +74,31 @@ def test_timing_narrative_explains_all_three_definitions() -> None:
     ]
 
 
+def test_microcap_question_uses_window_start_factor_and_has_no_c14_debt() -> None:
+    response = orchestrate(ResearchRequest(
+        question="微盘 ST 两周异动分布和普通 ST 比怎么样？",
+        object={"kind": "universe", "ref": "ST panel"},
+        llm_mode="off",
+    ))
+
+    assert response.route.route == "answer_query"
+    assert response.answer_card is not None
+    card = response.answer_card
+    assert "C14" not in card["data_debt_refs"]
+    row_ids = {row["row_id"] for row in card["body_rows"]}
+    assert {
+        "microcap_definition",
+        "microcap_distribution",
+        "other_st_distribution",
+        "microcap_comparison_summary",
+    } <= row_ids
+    assert card["source_freshness"]["market_cap_as_of"] == "2026-07-06"
+    assert any("market_factors_v1.sqlite3::market_cap_daily" in ref for ref in card["provenance"])
+    assert response.narrative is not None
+    assert "微盘 ST 平均收益" in response.narrative.direct_answer.text
+    assert "不是 alpha 或交易信号" in response.narrative.direct_answer.text
+
+
 def test_evidence_narrative_keeps_sample_and_counterexample_chain() -> None:
     response = orchestrate(ResearchRequest(
         question="哪些月份有历史月份效应证据？",

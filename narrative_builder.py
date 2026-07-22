@@ -816,14 +816,92 @@ def _two_week_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> Re
     frequency = next((row for row in rows if "|>10%|" in row), None)
     if quantiles is None:
         raise ValueError("two-week narrative 缺收益分位行")
-    direct = _statement(
-        (
-            f"当前只能确认 ST 面板自身的 T+10 分布：中位数为 {quantiles.get('p50')}，"
-            f"5% 到 95% 分位为 {quantiles.get('p05')} 至 {quantiles.get('p95')}。"
-        ),
-        "query_row",
-        _row_id(quantiles),
+    definition = next(
+        (row for row in rows if _row_id(row) == "microcap_definition"), None,
     )
+    microcap = next(
+        (row for row in rows if _row_id(row) == "microcap_distribution"), None,
+    )
+    other = next(
+        (row for row in rows if _row_id(row) == "other_st_distribution"), None,
+    )
+    comparison = next(
+        (row for row in rows if _row_id(row) == "microcap_comparison_summary"), None,
+    )
+    comparison_gap = next(
+        (row for row in rows if _row_id(row) == "microcap_comparison_gap"), None,
+    )
+
+    if definition and microcap and other and comparison:
+        shared_backing = [
+            _backing("query_row", _row_id(row))
+            for row in (definition, microcap, other, comparison)
+        ]
+        direct = NarrativeStatement(
+            text=(
+                f"按收益窗口起点总市值划分（最小 30%，阈值 {definition.get('微盘阈值')}），"
+                f"微盘 ST 平均收益 {microcap.get('平均收益')}、中位收益 {microcap.get('中位收益')}；"
+                f"普通 ST 平均收益 {other.get('平均收益')}、中位收益 {other.get('中位收益')}。"
+                f"微盘相对普通 ST 的平均收益差 {comparison.get('微盘减普通ST平均收益')}，"
+                f"中位收益差 {comparison.get('微盘减普通ST中位收益')}。"
+                "这只是该窗口的历史横截面描述，不是 alpha 或交易信号。"
+            ),
+            backing=shared_backing,
+        )
+        steps = [
+            NarrativeStep(
+                title="先冻结市值口径",
+                text=(
+                    f"市值因子取自 {definition.get('因子日期')}，与收益窗口起点一致；"
+                    f"ST 成员 {definition.get('ST成员数')} 只，市值覆盖率 "
+                    f"{definition.get('市值覆盖率')}，不使用当前市值倒推历史。"
+                ),
+                backing=[_backing("query_row", _row_id(definition))],
+            ),
+            NarrativeStep(
+                title="再比较两组分布和覆盖率",
+                text=(
+                    f"微盘 ST 为 {microcap.get('成员数')} 只、有效收益 "
+                    f"{microcap.get('有效收益数')} 只（{microcap.get('收益覆盖率')}）；"
+                    f"普通 ST 为 {other.get('成员数')} 只、有效收益 "
+                    f"{other.get('有效收益数')} 只（{other.get('收益覆盖率')}）。"
+                ),
+                backing=[
+                    _backing("query_row", _row_id(microcap)),
+                    _backing("query_row", _row_id(other)),
+                ],
+            ),
+        ]
+        return ResearchNarrative(
+            direct_answer=direct,
+            reasoning_steps=steps,
+            uncertainties=[
+                _claim_statement(claim) for claim in claims
+                if claim.claim_type in {"caveat", "data_gap"}
+            ],
+            watch_items=[],
+            basis_note=_basis_note(card),
+        )
+
+    if comparison_gap:
+        direct = _statement(
+            (
+                "当前无法完成微盘 ST 与普通 ST 的可靠比较："
+                f"{comparison_gap.get('缺口')}。全体 ST 的 T+10 分布仍可作为背景，"
+                f"其中中位数为 {quantiles.get('p50')}。"
+            ),
+            "query_row",
+            _row_id(comparison_gap),
+        )
+    else:
+        direct = _statement(
+            (
+                f"当前只能确认 ST 面板自身的 T+10 分布：中位数为 {quantiles.get('p50')}，"
+                f"5% 到 95% 分位为 {quantiles.get('p05')} 至 {quantiles.get('p95')}。"
+            ),
+            "query_row",
+            _row_id(quantiles),
+        )
     steps = [NarrativeStep(
         title="先看分布中心和尾部",
         text=(

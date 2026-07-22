@@ -10,13 +10,14 @@ is to define acceptance pressure for W1 and later LLM orchestration:
 - `question_routing_set_v0.jsonl` - 30 user-style questions with expected legal
   route, required backing, required provenance, and forbidden claims；保留为
   2026-07-10 历史基线。
-- `question_routing_set_current_v1.json` - 在 v0 上只覆盖已关闭的数据债预期；
+- `question_routing_set_current_v2.json` - 在 v1 上覆盖已关闭的 C14 时点市值能力；
   当前 validator/router gate 使用这一层，不改写历史问题。
 - `question_card_seeds_v0.jsonl` - normalized copy of the current 15
   QuestionCard seeds；历史基线。当前状态由
-  `question_card_seeds_current_v1.json` 覆盖。
+  `question_card_seeds_current_v2.json` 覆盖。
 - `golden_fact_assertions_v0.json` - 历史 seed AnswerCard 事实断言。
-  `golden_fact_assertions_v1.json` 是当前断言，并验证 `D-051C` 不再出现。
+  `golden_fact_assertions_v2.json` 是当前断言，并验证 `D-051C`、`C14`
+  不再出现，且市值分层四类稳定行已进入 AnswerCard。
 - `validate_w2_evals.py` - stdlib validator for all W2 artifacts.
 - `question_routing_paraphrases_v0.jsonl` - 20 个改写、未知与边界问题。
 - `run_route_eval_50.py` - 30 个 canonical 问题加 20 个改写问题的最终合法路由门。
@@ -84,7 +85,7 @@ The two July 2026 announcement cases require the validated local CNINFO refresh
 snapshots. Missing refresh data is a product freshness failure, not a skipped
 test.
 - Golden assertions: 20 checks against the three original slice AnswerCards.
-- Deterministic router v0: 30/30 route matches against the current v1 overlay;
+- Deterministic router v0: 30/30 route matches against the current v2 overlay;
   v0 JSONL remains the immutable historical baseline.
 - Fake LLM parser: 30/30 adjudicated route matches.
 - Boundary rewrite set: 20/20 requests route to `refuse_or_rewrite` and receive

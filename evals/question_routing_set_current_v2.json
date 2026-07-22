@@ -1,0 +1,34 @@
+{
+  "contract_version": "question-routing-current-v2",
+  "base": "question_routing_set_current_v1.json",
+  "overrides": {
+    "QR-20260710-012": {
+      "expected_route": "answer_query",
+      "expected_status": "answerable",
+      "expected_view": "query",
+      "required_backing": [
+        "query:daily_prices",
+        "query:point_in_time_market_cap",
+        "query:historical_st_membership"
+      ],
+      "required_provenance": [
+        "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3::daily_prices",
+        "local_data/v8_copilot/market_factors_v1.sqlite3::market_cap_daily",
+        "local_data/v8_copilot/market_factor_manifests/<window-start>.json",
+        "local_data/v8_copilot/market_context_v1.sqlite3::st_membership_daily"
+      ],
+      "required_lens_behavior": "lens_gap_required",
+      "required_data_debt_refs": [],
+      "required_question_card_refs": [
+        "QC-20260710-013"
+      ],
+      "forbidden_claims": [
+        "用当前市值倒推历史分组",
+        "缺失收益端点插值",
+        "百分点差就是 alpha",
+        "市值分层就是交易信号"
+      ],
+      "notes": "C14 closed: use the return-window-start ST membership and point-in-time total market cap; operationally missing factor assets surface as an evidence gap."
+    }
+  }
+}

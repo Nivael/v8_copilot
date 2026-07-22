@@ -71,6 +71,15 @@ python data_maintenance.py materialize-st-index \
 
 python data_maintenance.py market-context-status \
   --coverage-threshold 0.95
+
+python data_maintenance.py refresh-market-caps \
+  --env-file <local-tushare-env> \
+  --as-of <YYYY-MM-DD> \
+  --coverage-threshold 0.95
+
+python data_maintenance.py market-factor-status \
+  --as-of <YYYY-MM-DD> \
+  --coverage-threshold 0.95
 ```
 
 `refresh-benchmarks` 默认同时刷新中证全指和中证2000；也可重复传
@@ -81,10 +90,21 @@ python data_maintenance.py market-context-status \
 2021-03-17 开始；包含中证2000的完整 pool 共同窗口从其正式发布日期 2023-08-11 开始。
 日常增量不应覆盖或隐去这些历史边界。
 
+`refresh-market-caps` 每个交易日只拉一次 `daily_basic` 横截面，并且只保留该日历史
+ST membership；因此应在该日 membership 入库后运行。快照和市值行写入独立
+`market_factors_v1.sqlite3`；每个交易日另存一份不可变 dated manifest，current pointer
+只用于状态查看，manifest 覆盖不足 95% 时不 ready。为了让未来任意滚动窗口都能严格使用
+窗口起点因子，需逐交易日留存快照，不能等到回答问题时用当前市值补历史。
+当前真实验收快照为 `MFS-61A1FC03A4CD04164329`（2026-07-06，208/211，98.58%）。
+
 答案路径只读消费该 pool：以 ready manifest 的终点为边界，并要求 current universe 的
 as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列缺端点或 ST 覆盖率低于
 95% 时返回市场对比缺口，不插值。网页端同时展示绝对收益、相对百分点差和起点归一为
 100 的曲线；百分点差不解释为 alpha 或资金净流入。
+
+涉及微盘的问题还要求 market-factor manifest 的日期严格等于收益窗口起点，并分别检查
+微盘/普通 ST 的收益端点覆盖率均不低于 95%。网页展示两组分布与相对百分点差；任一条件
+不满足时输出市值分层缺口，不插值，也不把运行缺口重新包装成已关闭的 `C14`。
 
 ## 窗口二：研究问答
 

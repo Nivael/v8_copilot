@@ -82,6 +82,24 @@ python data_maintenance.py market-factor-status \
   --coverage-threshold 0.95
 ```
 
+P6A 管理人事实层同样只允许从维护入口写入。缺正文的历史任命公告先按明确 ID
+缓存巨潮官方 PDF，再执行幂等物化和状态检查：
+
+```bash
+python data_maintenance.py cache-administrator-bodies \
+  --manifest pilot_manifests/p6a_administrator_pilot_v1.json
+python data_maintenance.py materialize-administrators \
+  --start-date 2022-01-01 \
+  --through 2026-07-23
+python data_maintenance.py administrator-status
+```
+
+答案路径只读 `restructuring_entities_v1.sqlite3`，不联网。自动物化只接受上市公司
+本体公告中可定位的“指定/选定管理人”语句；子公司、控股股东、无正文或无法识别机构
+的记录进入 rejection ledger。法院平台原文尚未独立材料化时，答案卡必须保留渠道缺口。
+日期型披露从披露日后的首个交易日开始观察，不使用同日行情；同案同节点重复公告去重，
+同一管理人同类节点少于 8 个案件时不生成分布、成功率或排名。
+
 `refresh-benchmarks` 默认同时刷新中证全指和中证2000；也可重复传
 `--benchmark-id csi_all_share` / `--benchmark-id csi_2000` 做定向恢复。正式市场语境 pool 由
 中证全指、中证2000和“逐日 ST membership + qfq 个股收益”物化的 `st_equal_weight_v1`

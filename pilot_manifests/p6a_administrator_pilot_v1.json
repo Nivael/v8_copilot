@@ -1,0 +1,73 @@
+{
+  "contract_version": "v8_restructuring_administrators_v1",
+  "pilot_id": "P6A-ADMINISTRATOR-PILOT-V1",
+  "frozen_at": "2026-07-23",
+  "source": "CNINFO official issuer announcements",
+  "selection_rule": "Listed-company body explicitly states that an administrator was selected or appointed; related-entity titles fail closed.",
+  "candidate_body_cache": [
+    {
+      "announcement_id": "1215539480",
+      "symbol": "002482",
+      "announcement_date": "2023-01-06"
+    },
+    {
+      "announcement_id": "1216405217",
+      "symbol": "600306",
+      "announcement_date": "2023-04-13"
+    },
+    {
+      "announcement_id": "1216516978",
+      "symbol": "600759",
+      "announcement_date": "2023-04-21"
+    },
+    {
+      "announcement_id": "1216810609",
+      "symbol": "000540",
+      "announcement_date": "2023-05-12"
+    },
+    {
+      "announcement_id": "1219186200",
+      "symbol": "600715",
+      "announcement_date": "2024-02-26"
+    },
+    {
+      "announcement_id": "1219301726",
+      "symbol": "300209",
+      "announcement_date": "2024-03-13"
+    },
+    {
+      "announcement_id": "1220226558",
+      "symbol": "600165",
+      "announcement_date": "2024-05-31"
+    },
+    {
+      "announcement_id": "1220676276",
+      "symbol": "300117",
+      "announcement_date": "2024-07-18"
+    },
+    {
+      "announcement_id": "1220766220",
+      "symbol": "000908",
+      "announcement_date": "2024-07-31"
+    },
+    {
+      "announcement_id": "1220926944",
+      "symbol": "603559",
+      "announcement_date": "2024-08-20"
+    }
+  ],
+  "expected_materialization": {
+    "candidates_scanned": 38,
+    "appointment_documents_accepted": 31,
+    "appointment_documents_rejected": 7,
+    "restructuring_cases": 24,
+    "administrator_organizations": 23,
+    "administrator_aliases": 2,
+    "administrator_assignments": 35,
+    "restructuring_events": 119
+  },
+  "known_fail_closed_candidate": {
+    "announcement_id": "1216405217",
+    "reason": "administrator_entity_not_parseable"
+  }
+}

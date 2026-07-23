@@ -416,5 +416,75 @@
     },
     "proposed_executor_ref": null,
     "executable": true
+  },
+  {
+    "contract_version": "v8_research_memory_contract_v0",
+    "status": "accepted",
+    "created_at": "2026-07-11T00:00:00Z",
+    "updated_at": "2026-07-11T00:00:00Z",
+    "source_refs": [
+      {
+        "source_type": "query_template_registry",
+        "source_ref": "QT-009",
+        "source_alias": null
+      }
+    ],
+    "provenance_refs": [
+      {
+        "provenance_type": "query_template_registry",
+        "provenance_ref": "contracts/v8_query_template_contract_v0/registry.json"
+      }
+    ],
+    "memory_id": "MEM-QT-E53BAB2CC80B8B0A20EC",
+    "canonical_key": "{\"executor_ref\":{\"registry\":{\"executor_key\":\"administrator_history\",\"registry_contract_version\":\"v8_query_template_contract_v0\",\"template_id\":\"qt-009\"}},\"kind\":\"query_template\",\"outcome_semantics\":[\"case_deduplicated_event_window\",\"formal_administrator\",\"stock_administrator_history\",\"temporary_administrator\"],\"parameter_schema\":[{\"allowed_values\":[],\"name\":\"administrator_assignments\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"daily_prices\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"market_context\",\"required\":true,\"value_type\":\"string\"},{\"allowed_values\":[],\"name\":\"symbol\",\"required\":true,\"value_type\":\"string\"}]}",
+    "dedupe_key": "e53bab2cc80b8b0a20ecdd012fa8a6104b9cec76386040630e5cc6d22b4f1e21",
+    "not_evidence": true,
+    "record_type": "query_template",
+    "template_id": "QT-009",
+    "definition_version": "v8_query_template_contract_v0",
+    "question_pattern": "某重整股票的管理人是谁、该管理人历史节点表现如何",
+    "parameter_schema": [
+      {
+        "name": "administrator_assignments",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "daily_prices",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "market_context",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      },
+      {
+        "name": "symbol",
+        "value_type": "string",
+        "required": true,
+        "allowed_values": []
+      }
+    ],
+    "outcome_semantics": [
+      "case_deduplicated_event_window",
+      "formal_administrator",
+      "stock_administrator_history",
+      "temporary_administrator"
+    ],
+    "caveats": [
+      "小于八个案件只展示逐案结果",
+      "管理人任职事实与节点后价格表现必须分开表述"
+    ],
+    "executor_ref": {
+      "registry_contract_version": "v8_query_template_contract_v0",
+      "template_id": "QT-009",
+      "executor_key": "administrator_history"
+    },
+    "proposed_executor_ref": null,
+    "executable": true
   }
 ]

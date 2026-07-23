@@ -100,6 +100,27 @@ TEMPLATES = (
         default_caveats=["methodology 不得升级为 evidence"],
         executor_key="control_methodology",
     ),
+    QueryTemplate(
+        template_id="QT-009",
+        question_pattern="某重整股票的管理人是谁、该管理人历史节点表现如何",
+        required_inputs=[
+            "symbol",
+            "administrator_assignments",
+            "daily_prices",
+            "market_context",
+        ],
+        query_intent="stock_administrator_history",
+        definition_variants=[
+            "temporary_administrator",
+            "formal_administrator",
+            "case_deduplicated_event_window",
+        ],
+        default_caveats=[
+            "管理人任职事实与节点后价格表现必须分开表述",
+            "小于八个案件只展示逐案结果",
+        ],
+        executor_key="administrator_history",
+    ),
 )
 
 TEMPLATE_BY_ID = {template.template_id: template for template in TEMPLATES}
@@ -119,6 +140,7 @@ RULE_TO_TEMPLATE = {
     "release_library_lens_detail": "QT-007",
     "calendar_regime_evidence_lenses": "QT-007",
     "control_structure_methodology": "QT-008",
+    "stock_administrator_history_query": "QT-009",
 }
 
 

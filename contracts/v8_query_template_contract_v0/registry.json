@@ -145,5 +145,29 @@
     "data_debt_fallbacks": [],
     "executor_key": "control_methodology",
     "not_evidence": true
+  },
+  {
+    "contract_version": "v8_query_template_contract_v0",
+    "template_id": "QT-009",
+    "question_pattern": "某重整股票的管理人是谁、该管理人历史节点表现如何",
+    "required_inputs": [
+      "symbol",
+      "administrator_assignments",
+      "daily_prices",
+      "market_context"
+    ],
+    "query_intent": "stock_administrator_history",
+    "definition_variants": [
+      "temporary_administrator",
+      "formal_administrator",
+      "case_deduplicated_event_window"
+    ],
+    "default_caveats": [
+      "管理人任职事实与节点后价格表现必须分开表述",
+      "小于八个案件只展示逐案结果"
+    ],
+    "data_debt_fallbacks": [],
+    "executor_key": "administrator_history",
+    "not_evidence": true
   }
 ]

@@ -73,7 +73,7 @@ QuestionCard 的 Memory lifecycle `status` 与原研究路由状态 `research_st
 
 ## QueryTemplate
 
-QT-001 到 QT-008 保留现有 ID 和 `not_evidence=true`。Memory record 保存 lifecycle、
+QT-001 到 QT-009 保留现有 ID 和 `not_evidence=true`。Memory record 保存 lifecycle、
 来源、`parameter_schema`、outcome semantics 与 caveat；`executor_ref` 只引用版本化
 code registry。草案必须提供 proposed executor identity，且只能是不可执行的
 `candidate`。执行定义仍以

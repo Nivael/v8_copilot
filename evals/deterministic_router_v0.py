@@ -161,6 +161,22 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
     if _has_any(text, ["董秘", "论坛热度", "热度", "语气"]):
         gap_rules.append("missing_ir_tone_or_forum_heat")
 
+    administrator_question = object_kind == "stock" and _has_any(
+        text, ["管理人", "临时管理人"]
+    ) and _has_any(
+        text,
+        ["谁", "哪家", "律所", "会计师事务所", "历史表现", "表现", "案例", "任职", "指定"],
+    )
+    if administrator_question:
+        return _prediction(
+            "answer_query",
+            "answerable",
+            "query",
+            "lens_invocations_or_gap",
+            rules=["stock_administrator_history_query"],
+            note="先回链任职公告，再按案件去重展示披露后事件窗口；小样本不聚合。",
+        )
+
     progress_question = object_kind == "stock" and _has_any(
         text, ["推进到哪一步", "进展到哪一步", "目前到哪一步", "当前阶段", "下一个公告可能", "下一个节点最可能"],
     ) and _has_any(text, ["重整", "预重整", "公开招募", "招募"])

@@ -27,6 +27,12 @@ from datetime import date, timedelta
 from typing import Any, Iterable
 
 from announcement_inventory import OfficialAnnouncement, load_announcement_inventory
+from administrator_event_study import (
+    APPOINTMENT_KIND_LABELS,
+    cohort_distribution_rows,
+    event_study_row,
+    organization_event_studies,
+)
 from announcement_body import (
     AnnouncementBodyError,
     load_announcement_body,
@@ -41,10 +47,13 @@ from recruitment_precedent import (
     analyze_recruitment_precedents,
     load_recruitment_deadlines,
 )
+from restructuring_administrators import AdministratorRepository
 from settings import (
     ANNOUNCEMENT_REFRESH_DIR,
     DATA_ROOT,
+    MARKET_CONTEXT_DB,
     RECRUITMENT_DEADLINE_MATERIALIZATION,
+    RESTRUCTURING_ENTITIES_DB,
 )
 from snapshot_metadata import (
     limiting_as_of,
@@ -2009,6 +2018,223 @@ def _historical_next_restructuring_rows(
                 },
             ))
     return rows
+
+
+def card_stock_administrator_history(
+    symbol: str,
+    question: str,
+    *,
+    repository_database=RESTRUCTURING_ENTITIES_DB,
+    price_database=BASE_DB,
+    market_database=MARKET_CONTEXT_DB,
+) -> AnswerCard:
+    """Return sourced administrator facts and case-deduplicated event windows."""
+    repository = AdministratorRepository(repository_database)
+    assignments = repository.assignments_for_symbol(symbol)
+    status = repository.status()
+    materialization_as_of = str(
+        status.get("event_information_window", {}).get("end") or "not_available"
+    )
+    performance_gap = LensGap(
+        gap_id="administrator_performance_validated_lens",
+        missing_for="管理人任职与案件推进或股价表现之间的验证型因果证据",
+        sediment_as="question_card:administrator_performance_validated_lens",
+        note="当前只展示按案件去重的历史节点窗口，不生成成功率、排名或因果结论。",
+    )
+    channel_gap = LensGap(
+        gap_id="administrator_independent_court_channel_coverage",
+        missing_for="法院或全国企业破产重整案件信息网的独立原文复核",
+        sediment_as="question_card:administrator_independent_court_channel_coverage",
+        note="自动 pilot 以公司正式公告正文为事实来源，尚未把法院平台原文独立材料化。",
+    )
+    cands = _REGISTRY.candidate_lenses(
+        clusters=["C04"], topic_terms=["重整", "资产重组"]
+    )
+    invocations = [
+        _REGISTRY.invoke(item, "管理人节点历史表现的解释边界")
+        for item in cands
+    ]
+    if not assignments:
+        row = _row(
+            "administrator_materialization_gap",
+            **{
+                "记录类型": "管理人证据缺口",
+                "股票": symbol,
+                "物化状态": status.get("status", "missing"),
+                "说明": "当前高置信管理人 pilot 未找到该股票的上市公司本体任职记录。",
+                "自动来源边界": "公司正式公告正文中的明确指定或选定语句",
+            },
+        )
+        return AnswerCard(
+            question=question,
+            object_ref=f"stock:{symbol}",
+            view="query",
+            as_of=materialization_as_of,
+            sample_scope=f"{symbol} 管理人 pilot：0 条任职记录",
+            evidence_grade="data_gap",
+            lens_invocations=invocations,
+            lens_gap=[performance_gap, channel_gap],
+            episode_index_version="not_used",
+            data_snapshot_as_of=materialization_as_of,
+            source_freshness={
+                "administrator_materialization_as_of": materialization_as_of,
+            },
+            body_rows=[row],
+            analysis_claims=[AnalysisClaim(
+                text="当前高置信管理人 pilot 未找到该股票记录，不能据此推定没有管理人。",
+                claim_type="data_gap",
+                backing=BackingRef(kind="query_row", ref=row["row_id"]),
+            )],
+            caveats=FIXED_CAVEATS + [
+                "未命中只表示当前自动 pilot 未材料化，不代表法院或其他公开渠道没有记录。",
+                "管理人身份不得从模糊简称或媒体转述中猜测。",
+            ],
+            provenance=[
+                "local_data/v8_copilot/restructuring_entities_v1.sqlite3",
+            ],
+        )
+
+    rows: list[dict[str, Any]] = []
+    for index, assignment in enumerate(assignments, 1):
+        source = assignment["source_document"]
+        rows.append(_row(
+            f"administrator_assignment_{index:02d}",
+            **{
+                "记录类型": "管理人任职事实",
+                "股票": symbol,
+                "管理人": assignment["canonical_name"],
+                "实体类型": assignment["entity_type"],
+                "任职类型": APPOINTMENT_KIND_LABELS.get(
+                    assignment["appointment_kind"],
+                    assignment["appointment_kind"],
+                ),
+                "appointment_kind": assignment["appointment_kind"],
+                "参与方式": assignment["participation_role"],
+                "生效日": assignment["effective_date"],
+                "信息可得日": assignment["information_available_date"],
+                "案件ID": assignment["case_id"],
+                "公告标题": source["title"],
+                "公告ID": source["announcement_id"],
+                "公告原文摘录": source["evidence_quote"],
+                "原文链接": source["source_url"] or "当前快照未记录链接",
+            },
+        ))
+
+    all_studies = []
+    unique_organizations: dict[str, str] = {}
+    for assignment in assignments:
+        unique_organizations.setdefault(
+            str(assignment["organization_id"]),
+            str(assignment["canonical_name"]),
+        )
+    for organization_id, organization_name in unique_organizations.items():
+        studies = organization_event_studies(
+            repository=repository,
+            organization_id=organization_id,
+            price_database=price_database,
+            market_database=market_database,
+        )
+        all_studies.extend(studies)
+        for index, study in enumerate(studies, 1):
+            rows.append(event_study_row(
+                study,
+                row_id=f"administrator_case_{organization_id}_{index:02d}",
+            ))
+        distributions = cohort_distribution_rows(studies, minimum_cases=8)
+        if distributions:
+            for distribution in distributions:
+                distribution["row_id"] = (
+                    f"{distribution['row_id']}_{organization_id}"
+                )
+                distribution["管理人"] = organization_name
+            rows.extend(distributions)
+        else:
+            case_count = len({study.case_id for study in studies})
+            rows.append(_row(
+                f"administrator_small_sample_{organization_id}",
+                **{
+                    "记录类型": "管理人样本门槛",
+                    "管理人": organization_name,
+                    "按案件去重样本数": case_count,
+                    "生成分布所需最少案件数": 8,
+                    "处理": "仅展示逐案窗口，不生成分布、成功率或排名",
+                },
+            ))
+
+    price_snapshot = load_price_snapshot(price_database)
+    market_as_of = "not_available"
+    if market_database.is_file():
+        with sqlite3.connect(
+            f"file:{market_database}?mode=ro", uri=True
+        ) as connection:
+            current = connection.execute(
+                "select max(trade_date) from benchmark_daily"
+            ).fetchone()
+            market_as_of = str(current[0] or "not_available") if current else "not_available"
+    freshness_dates = [
+        value for value in (
+            materialization_as_of,
+            price_snapshot.as_of,
+            market_as_of,
+        )
+        if value != "not_available"
+    ]
+    as_of = min(freshness_dates) if freshness_dates else "not_available"
+    first_fact = rows[0]
+    claims = [
+        AnalysisClaim(
+            text=(
+                f"公司正式公告可回链确认 {first_fact['管理人']} "
+                f"以 {first_fact['任职类型']} 身份任职。"
+            ),
+            claim_type="fact",
+            backing=BackingRef(kind="query_row", ref=first_fact["row_id"]),
+        ),
+        AnalysisClaim(
+            text="节点后价格窗口是描述性案例记录，不能归因为管理人能力或声誉。",
+            claim_type="caveat",
+            backing=BackingRef(kind="lens_gap", ref=performance_gap.gap_id),
+        ),
+        AnalysisClaim(
+            text="当前自动 pilot 尚未独立复核法院平台原文。",
+            claim_type="data_gap",
+            backing=BackingRef(kind="lens_gap", ref=channel_gap.gap_id),
+        ),
+    ]
+    return AnswerCard(
+        question=question,
+        object_ref=f"stock:{symbol}",
+        view="query",
+        as_of=as_of,
+        sample_scope=(
+            f"{symbol} 任职事实 {len(assignments)} 条；"
+            f"管理人 {len(unique_organizations)} 个；"
+            f"按案件和节点类型去重事件 {len(all_studies)} 个"
+        ),
+        evidence_grade="descriptive_case_series",
+        lens_invocations=invocations,
+        lens_gap=[performance_gap, channel_gap],
+        episode_index_version="not_used",
+        data_snapshot_as_of=as_of,
+        source_freshness={
+            "administrator_materialization_as_of": materialization_as_of,
+            "daily_prices_as_of": price_snapshot.as_of,
+            "market_context_as_of": market_as_of,
+        },
+        body_rows=rows,
+        analysis_claims=claims,
+        caveats=FIXED_CAVEATS + [
+            "日期型公告一律从披露日后的首个交易日开始观察，放弃同日行情以避免前视。",
+            "同一案件的重复公告按案件和节点类型去重，联合管理人分别保留实体但不重复计算案件。",
+            "少于 8 个案件时只展示逐案窗口，不生成管理人分布、成功率、因果或声誉排名。",
+            "ST 等权、中证2000或中证全指缺共同交易日时明确留空，不插值。",
+        ],
+        provenance=[
+            "local_data/v8_copilot/restructuring_entities_v1.sqlite3",
+            "shared_data/v5/.../st_stocks_v5_backup.sqlite3::daily_prices",
+            "local_data/v8_copilot/market_context_v1.sqlite3::benchmark_daily",
+        ],
+    )
 
 
 def card_stock_restructuring_progress(symbol: str, question: str) -> AnswerCard:

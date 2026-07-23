@@ -47,6 +47,10 @@ MARKET_CONTEXT_MANIFEST_PATH = Path(os.environ.get(
     "V8_MARKET_CONTEXT_MANIFEST_PATH",
     DATA_ROOT / "local_data" / "v8_copilot" / "market_context_manifest_v1.json",
 )).expanduser().resolve()
+RESTRUCTURING_ENTITIES_DB = Path(os.environ.get(
+    "V8_RESTRUCTURING_ENTITIES_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "restructuring_entities_v1.sqlite3",
+)).expanduser().resolve()
 MARKET_FACTOR_DB = Path(os.environ.get(
     "V8_MARKET_FACTOR_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "market_factors_v1.sqlite3",

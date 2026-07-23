@@ -25,6 +25,7 @@ from answer_engine import (
     card_recruitment_limit_down_precedent,
     card_release_lens_evidence,
     card_stock_research_overview,
+    card_stock_administrator_history,
     card_stock_restructuring_progress,
     card_stock_comparison,
     card_st_status_timeline,
@@ -73,6 +74,10 @@ def _execute_answer(
         elif "stock_comparison_query" in rules:
             ref = interpretation.object.ref.removeprefix("comparison:")
             card = card_stock_comparison(ref.split(","), request.question)
+        elif "stock_administrator_history_query" in rules:
+            symbol = _symbol(request, interpretation)
+            if symbol:
+                card = card_stock_administrator_history(symbol, request.question)
         elif "stock_restructuring_progress_query" in rules:
             symbol = _symbol(request, interpretation)
             if symbol:

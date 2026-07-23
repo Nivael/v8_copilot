@@ -131,6 +131,11 @@ market-context pool 包含 ST 等权、中证2000和中证全指；manifest 为
 百分点差和归一化曲线；缺端点、低覆盖或 universe 日期错位时显式降级。另有独立
 point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总市值划分微盘/普通 ST，
 不使用当前市值倒推历史。`D-051C` 与 `C14` 已分别于 2026-07-21、2026-07-22 关闭。
+P6A 的首个管理人闭环已实现：`restructuring_entities_v1.sqlite3` 使用 append-only
+案件、组织、别名、任职、来源和关键节点；当前本地 pilot 覆盖 24 个上市公司案件、
+23 个管理人组织、35 条任职事实和 119 条“管理人 × 案件节点”关系。节点价格严格从
+披露后的首个交易日开始观察，并与 ST 等权、中证2000和中证全指同端点比较；同案重复
+公告不重复计样本，单一管理人同类节点少于 8 案时只列逐案结果。
 新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
 点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为
 `experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
@@ -142,11 +147,14 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `market_comparison.py` — manifest 约束的只读同窗对齐器、相对收益和 evidence-gap 语义。
 - `market_factors.py` — append-only 时点市值快照、覆盖门与 factor manifest。
 - `microcap_comparison.py` — 窗口起点微盘/普通 ST 分组、收益分布和缺口语义。
+- `restructuring_administrators.py` — P6A append-only 案件/管理人/别名/任职/关键节点事实层和保守物化器。
+- `administrator_event_study.py` — 披露后首个交易日起算的管理人节点事件窗口、三基准相对收益和小样本门。
+- `pilot_manifests/p6a_administrator_pilot_v1.json` — 可复现的 P6A 官方 PDF 缓存清单、预期计数和 fail-closed 样本。
 - `contracts/v8_answer_contract_v0/` — W1 单写、W2/W3/LLM 只读的 JSON 契约。
 - `contracts/v8_copilot_api_contract_v0/` — 冻结的 Batch 2 API v0 schema、manifest 和固定 fixtures。
 - `contracts/v8_copilot_api_contract_v1/` — 增量 API v1：typed QuestionCard、QueryTemplate id 和证据导航。
 - `contracts/v8_question_card_contract_v0/` — 问题卡对象、生命周期和固定 fixture。
-- `contracts/v8_query_template_contract_v0/` — 八类可复用查询模板；全部标记 `not_evidence=true`。
+- `contracts/v8_query_template_contract_v0/` — 九类可复用查询模板；全部标记 `not_evidence=true`。
 - `api_contract.py` — ResearchRequest、RouteDecision、ResearchResponse、dossier 和 stream 类型。
 - `core_router.py` / `orchestrator.py` — 确定性解释、最终路由和 AnswerCard 执行编排。
 - `orchestrator_v1.py` — typed sedimentation、QueryTemplate 和七类证据导航增量层。

@@ -23,7 +23,7 @@ def test_committed_closeout_schemas_match_models() -> None:
     QuestionCard.model_validate(json.loads((question_dir / "fixture.json").read_text()))
     for template in json.loads((template_dir / "registry.json").read_text()):
         QueryTemplate.model_validate(template)
-    assert len(TEMPLATES) == 8
+    assert len(TEMPLATES) == 9
 
 
 def test_api_v1_fixtures_validate() -> None:

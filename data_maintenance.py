@@ -7,11 +7,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sqlite3
 import time
+from datetime import date
 from pathlib import Path
 from typing import Callable, TypeVar
 
 from answer_engine import BASE_DB
+from announcement_body import load_announcement_body
+from announcement_inventory import OfficialAnnouncement
 from data_refresh import (
     AnnouncementRefreshService,
     CninfoHttpClient,
@@ -42,8 +46,13 @@ from market_factors import (
     build_market_factor_manifest,
     write_market_factor_manifest_set,
 )
+from restructuring_administrators import (
+    AdministratorRepository,
+    materialize_administrator_facts,
+)
 from settings import (
     ANNOUNCEMENT_REFRESH_DIR,
+    ANNOUNCEMENT_BODY_CACHE_DIR,
     DATA_MAINTENANCE_DB,
     FRESHNESS_MANIFEST_PATH,
     MARKET_CONTEXT_DB,
@@ -51,6 +60,7 @@ from settings import (
     MARKET_FACTOR_DB,
     MARKET_FACTOR_MANIFEST_DIR,
     MARKET_FACTOR_MANIFEST_PATH,
+    RESTRUCTURING_ENTITIES_DB,
     ST_UNIVERSE_DIR,
 )
 from universe import StUniverseRepository, StUniverseService, StUniverseSnapshot
@@ -351,6 +361,39 @@ def main() -> int:
         "--coverage-threshold", type=float, default=0.95
     )
 
+    materialize_administrators = sub.add_parser("materialize-administrators")
+    materialize_administrators.add_argument(
+        "--source-database", type=Path, default=BASE_DB
+    )
+    materialize_administrators.add_argument(
+        "--database", type=Path, default=RESTRUCTURING_ENTITIES_DB
+    )
+    materialize_administrators.add_argument("--start-date", default="")
+    materialize_administrators.add_argument("--through", default="")
+    materialize_administrators.add_argument("--limit", type=int, default=0)
+    materialize_administrators.add_argument(
+        "--body-cache-dir", type=Path, default=ANNOUNCEMENT_BODY_CACHE_DIR
+    )
+
+    cache_administrator_bodies = sub.add_parser(
+        "cache-administrator-bodies"
+    )
+    cache_administrator_bodies.add_argument(
+        "--announcement-id", action="append", default=[]
+    )
+    cache_administrator_bodies.add_argument("--manifest", type=Path)
+    cache_administrator_bodies.add_argument(
+        "--source-database", type=Path, default=BASE_DB
+    )
+    cache_administrator_bodies.add_argument(
+        "--cache-dir", type=Path, default=ANNOUNCEMENT_BODY_CACHE_DIR
+    )
+
+    administrator_status = sub.add_parser("administrator-status")
+    administrator_status.add_argument(
+        "--database", type=Path, default=RESTRUCTURING_ENTITIES_DB
+    )
+
     plan = sub.add_parser("plan")
     plan.add_argument("--symbol", action="append", default=[])
     plan.add_argument("--universe-current", action="store_true")
@@ -534,6 +577,83 @@ def main() -> int:
         )
         print(json.dumps(factor_manifest, ensure_ascii=False, indent=2))
         return 0 if factor_manifest["status"] == "ready" else 2
+    if args.command == "materialize-administrators":
+        summary = materialize_administrator_facts(
+            source_database=args.source_database,
+            database=args.database,
+            start_date=(
+                date.fromisoformat(args.start_date) if args.start_date else None
+            ),
+            through=date.fromisoformat(args.through) if args.through else None,
+            limit=args.limit,
+            body_cache_dir=args.body_cache_dir,
+        )
+        print(json.dumps(
+            summary.model_dump(mode="json"),
+            ensure_ascii=False,
+            indent=2,
+        ))
+        return 0
+    if args.command == "cache-administrator-bodies":
+        cached = []
+        announcement_ids = list(args.announcement_id)
+        if args.manifest:
+            payload = json.loads(args.manifest.read_text(encoding="utf-8"))
+            records = payload.get("candidate_body_cache")
+            if not isinstance(records, list):
+                parser.error("pilot manifest 缺 candidate_body_cache list")
+            announcement_ids.extend(
+                str(item.get("announcement_id") or "")
+                for item in records if isinstance(item, dict)
+            )
+        announcement_ids = list(dict.fromkeys(announcement_ids))
+        if not announcement_ids:
+            parser.error("至少提供一个 --announcement-id 或 --manifest")
+        with sqlite3.connect(
+            f"file:{args.source_database}?mode=ro", uri=True
+        ) as connection:
+            for announcement_id in announcement_ids:
+                if not announcement_id.isdigit():
+                    parser.error("--announcement-id 仅接受巨潮数字公告 ID")
+                row = connection.execute(
+                    "select announcement_date,title,url,source,"
+                    "case when length(trim(body_text))>0 then body_text else null end "
+                    "from company_announcements where announcement_id=?",
+                    (announcement_id,),
+                ).fetchone()
+                if row is None:
+                    parser.error(f"公告 ID 不存在: {announcement_id}")
+                record = OfficialAnnouncement(
+                    announcement_id=announcement_id,
+                    announcement_date=str(row[0])[:10],
+                    title=str(row[1]),
+                    url=str(row[2] or ""),
+                    source=str(row[3]),
+                    body_available=bool(row[4]),
+                    body_text=str(row[4]) if row[4] else None,
+                )
+                body = load_announcement_body(
+                    record,
+                    source_db=args.source_database,
+                    cache_dir=args.cache_dir,
+                    allow_network=True,
+                )
+                cached.append({
+                    "announcement_id": body.announcement_id,
+                    "announcement_date": body.announcement_date,
+                    "source": body.source,
+                    "page_count": body.page_count,
+                    "text_chars": len(body.text),
+                })
+        print(json.dumps({"cached": cached}, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "administrator-status":
+        print(json.dumps(
+            AdministratorRepository(args.database).status(),
+            ensure_ascii=False,
+            indent=2,
+        ))
+        return 0
     if args.command == "plan":
         symbols, snapshot = _resolve_scope(args, parser)
         current = build_maintenance_plan(

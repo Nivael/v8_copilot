@@ -636,6 +636,77 @@ def _restructuring_progress_narrative(
     )
 
 
+def _administrator_history_narrative(
+    card: dict[str, Any], claims: list[VerifiedClaim]
+) -> ResearchNarrative:
+    rows = list(card.get("body_rows", []))
+    facts = [row for row in rows if row.get("记录类型") == "管理人任职事实"]
+    cases = [row for row in rows if row.get("记录类型") == "管理人节点案例"]
+    thresholds = [row for row in rows if row.get("记录类型") == "管理人样本门槛"]
+    if not facts:
+        return _generic_narrative(card, claims)
+    first = facts[0]
+    managers = "、".join(dict.fromkeys(
+        str(row.get("管理人")) for row in facts if row.get("管理人")
+    ))
+    direct_text = (
+        f"公司正式公告可确认的管理人为{managers}；"
+        f"首条可回链任职是 {first.get('生效日')} 的"
+        f"{first.get('任职类型')}。"
+    )
+    direct_backing = [_backing("query_row", _row_id(first))]
+    if cases:
+        direct_text += (
+            f"当前展示 {len(cases)} 个按案件和节点类型去重的历史节点窗口。"
+        )
+        direct_backing.append(_backing("query_row", _row_id(cases[0])))
+    if thresholds:
+        minimum = thresholds[0]
+        direct_text += (
+            f"{minimum.get('管理人')}只有"
+            f"{minimum.get('按案件去重样本数')} 个案件，低于"
+            f"{minimum.get('生成分布所需最少案件数')} 个门槛，"
+            "所以不生成成功率、分布结论或排名。"
+        )
+        direct_backing.append(_backing("query_row", _row_id(minimum)))
+
+    steps = [NarrativeStep(
+        title="先确认任职事实",
+        text=(
+            f"{first.get('公告标题')}明确记载{first.get('管理人')}，"
+            f"参与方式为{first.get('参与方式')}；原文摘录已随答案卡保存。"
+        ),
+        backing=[_backing("query_row", _row_id(first))],
+    )]
+    for case in cases[:3]:
+        steps.append(NarrativeStep(
+            title=f"再看 {case.get('股票')} 的{case.get('节点类型')}窗口",
+            text=(
+                f"为避免使用披露当日未知信息，基线取 {case.get('基线交易日')}，"
+                f"首个可观察交易日为 {case.get('首个可观察交易日')}；"
+                f"后20日个股收益 {case.get('任职后20日个股收益(%)')}%，"
+                f"相对 ST {case.get('后20日相对ST(百分点)')} 个百分点，"
+                f"相对中证2000 {case.get('后20日相对中证2000(百分点)')} 个百分点。"
+            ),
+            backing=[_backing("query_row", _row_id(case))],
+        ))
+    return ResearchNarrative(
+        direct_answer=NarrativeStatement(text=direct_text, backing=direct_backing),
+        reasoning_steps=steps,
+        uncertainties=[
+            _claim_statement(claim)
+            for claim in claims
+            if claim.claim_type in {"caveat", "data_gap"}
+        ][:8],
+        watch_items=[_statement(
+            "后续只有在新增法院或公司正式公告出现管理人更换、联合任职或程序节点时才更新事实链。",
+            "query_row",
+            _row_id(first),
+        )],
+        basis_note=_basis_note(card),
+    )
+
+
 def _comparison_narrative(card: dict[str, Any], claims: list[VerifiedClaim]) -> ResearchNarrative:
     rows = [row for row in card.get("body_rows", []) if row.get("记录类型") == "股票并列比较"]
     if len(rows) != 2:
@@ -1150,6 +1221,8 @@ def build_narrative(response: ResearchResponseV1) -> ResearchNarrative | None:
         return _timing_narrative(card, response.claims)
     if "stock_restructuring_progress_query" in response.route.matched_rules:
         return _restructuring_progress_narrative(card, response.claims)
+    if "stock_administrator_history_query" in response.route.matched_rules:
+        return _administrator_history_narrative(card, response.claims)
     if "stock_comparison_query" in response.route.matched_rules:
         return _comparison_narrative(card, response.claims)
     if "st_panel_two_week_distribution" in response.route.matched_rules:

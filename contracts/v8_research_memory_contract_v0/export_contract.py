@@ -146,7 +146,7 @@ PROTECTED_CONTRACT_CHECKSUMS = {
     "contracts/v8_copilot_api_contract_v0/schema.json": "6857ef8e486ef1cadfb3deedc13c1a27ec866ae7eb18b36e6108d5b2111ec8f8",
     "contracts/v8_copilot_api_contract_v1/manifest.json": "2d40a181718fe2934ecb243a7d4890cd86c53f0af6ebceb1d3771f37e730af76",
     "contracts/v8_copilot_api_contract_v1/schema.json": "8ec5b6a048e900a23ca745bf9e54a286ede62462349117f140e01c56ced82ca6",
-    "contracts/v8_query_template_contract_v0/registry.json": "a93d0e8b223339d40d917bbf97e24508a634425cfbee8fc993da55bc814b0f9d",
+    "contracts/v8_query_template_contract_v0/registry.json": "fc99d17f5fe035c4e36ecd9d0c58c686865db360e38390a9945339204dc5c22f",
     "contracts/v8_query_template_contract_v0/schema.json": "6b8914ebd650bf768d6543352492f03ed9145e9278015b3f3e6ce45df2396d59",
     "contracts/v8_question_card_contract_v0/fixture.json": "5268fe8e042edd35219fd1d8e201377b6a5d23804589122e9c74faff9bef3281",
     "contracts/v8_question_card_contract_v0/schema.json": "52e7de211b4e74cc18a5a744423ed177642c9028559d2cdf405f67e67e6cadaf",

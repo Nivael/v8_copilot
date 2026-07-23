@@ -285,7 +285,7 @@ def validate_query_template_registry() -> None:
     for row in record_payloads:
         validate_public_payload(row)
     assert {record.template_id for record in records} == set(registry) == {
-        f"QT-{index:03d}" for index in range(1, 9)
+        f"QT-{index:03d}" for index in range(1, 10)
     }
     for record in records:
         assert record.not_evidence is True

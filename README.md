@@ -117,8 +117,9 @@ uv run python run_api.py
 选择性联网与离线机制的边界见 [SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md](SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md)。
 全量 ST universe、市场基准和下一阶段能力差距见 [V8_NEXT_PRD.md](V8_NEXT_PRD.md)；
 按阶段验收的执行账见 [V8_NEXT_TODO.md](V8_NEXT_TODO.md)。P6 的管理人模式、
-重整前价值区间、方案价值重估及无专家人审校准机制见
-[V8_P6_INSIGHTS_PRD.md](V8_P6_INSIGHTS_PRD.md) 和 [.todos/](.todos/)。
+重整前偿债压力/市场重定价、方案价值重估及最小化人审机制见
+[V8_P6_INSIGHTS_PRD.md](V8_P6_INSIGHTS_PRD.md)、
+[V8_P6B_PRD.md](V8_P6B_PRD.md) 和 [.todos/](.todos/)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot

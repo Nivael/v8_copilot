@@ -5,7 +5,7 @@
 负责人：Codex commander window  
 实施分支：`codex/c14-point-in-time-market-cap`
 
-后续 P6 已拆成管理人模式、重整前独立价值区间和重整方案价值重估；
+后续 P6 已拆成管理人模式、重整前偿债压力/市场重定价地图和重整方案价值重估；
 架构、客观校准机制与实施队列见 `V8_P6_INSIGHTS_PRD.md` 和 `.todos/`。
 
 ## 1. 结论先行

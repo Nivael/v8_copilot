@@ -101,4 +101,20 @@
 3. P2 全量维护与 P3 canonical 基准已完成；日常按运行手册增量执行。
 4. P4 答案卡和 dossier 市场语境已完成，`D-051C` 已关闭。
 5. 厂商 ST 指数仅在取得稳定授权接口后补 context-only shadow check。
-6. `C14` 已完成；下一步进入 episode/lens freshness、SDK 质量门和旧入口退役。
+6. `C14` 已完成；下一步进入 P6A/P6B pilot，同时保留 episode/lens freshness、SDK
+   质量门和旧入口退役为独立延续项。
+
+## P6 — 三条新 insight
+
+详细架构、校准机制和分项状态以 `V8_P6_INSIGHTS_PRD.md` 与 `.todos/` 为准。
+
+- [ ] **P6A 管理人历史模式**：案件级管理人实体、联合/更换任职、正式来源与关键节点相对价格路径。
+- [ ] **P6B 重整前偿债压力与市场重定价地图**：先做只读 dry plan，再分别交付
+  point-in-time 资产/偿债事实、同日 ST 规模位置、episode 相对重定价、核证
+  valuation episode 和 shadow validation；v1 不发布传统估值区间。
+- [ ] **P6C 重整方案价值重估**：债务/现金/资产/稀释价值桥、实施后股本与兑现校准。
+
+P6A 与 P6B 没有工程依赖，可以分别提交；P6C 依赖 P6B 已核证的资产、负债、偿债状态
+和老股东权益账，不依赖一个强行合成的“重整前价值”。
+P6B v1 只发布描述能力；任何未来“估值偏离”能力必须通过独立 PR 预注册验证门，
+无法通过时长期保持 `unvalidated`，不得降低门槛。

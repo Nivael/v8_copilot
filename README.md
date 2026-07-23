@@ -116,7 +116,10 @@ uv run python run_api.py
 固定的数据维护任务、研究任务和审计面板分工见 [OPERATING_MODEL.md](OPERATING_MODEL.md)。
 选择性联网与离线机制的边界见 [SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md](SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md)。
 全量 ST universe、市场基准和下一阶段能力差距见 [V8_NEXT_PRD.md](V8_NEXT_PRD.md)；
-按阶段验收的执行账见 [V8_NEXT_TODO.md](V8_NEXT_TODO.md)。
+按阶段验收的执行账见 [V8_NEXT_TODO.md](V8_NEXT_TODO.md)。P6 的管理人模式、
+重整前偿债压力/市场重定价、方案价值重估及最小化人审机制见
+[V8_P6_INSIGHTS_PRD.md](V8_P6_INSIGHTS_PRD.md)、
+[V8_P6B_PRD.md](V8_P6B_PRD.md) 和 [.todos/](.todos/)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot
@@ -162,7 +165,8 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `universe.py` — 权威每日 ST membership、append-only snapshot、digest/diff 与 current pointer。
 - `maintenance_plan.py` — universe 对本地 holdings/checkpoint 的只读差集与 bootstrap 计划。
 - `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
-- `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — 当前完成度、下一阶段架构与有验收条件的工作账。
+- `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
+- `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。
 - `tests/` — validator、release reader 与真实数据集成测试。
 - `run_seeds.py` — 生成七张 P1 seed card，产出 `out/answer_cards.{json,md}`。

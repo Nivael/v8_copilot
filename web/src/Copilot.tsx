@@ -8,6 +8,7 @@ import {ask} from './api'
 import {questionLink, readContext, readNavigationFocus} from './context'
 import {show} from './display'
 import {MarketComparisonChart} from './MarketComparisonChart'
+import {MarketCapCohortPanel} from './MarketCapCohortPanel'
 import type {
   AnswerCard, Claim, NavigationRef, QuestionCard, ResearchContext, ResearchNarrative,
   Response, StreamEvent,
@@ -403,6 +404,7 @@ function Answer({card, claims, narrative, llmUsed, pendingLlm, navigation, onOpe
       </div>
       <ReadableAnalysis card={card} claims={claims.length ? claims : card.analysis_claims} narrative={narrative} llmUsed={llmUsed} pendingLlm={pendingLlm} onOpenEvidence={onOpenEvidence}/>
       <MarketComparisonChart rows={card.body_rows}/>
+      <MarketCapCohortPanel rows={card.body_rows}/>
       <footer className="answer-foot">
         <span>{card.body_rows.length} 行查询证据</span>
         <span>{card.lens_invocations.length} 条 Lens 命中</span>

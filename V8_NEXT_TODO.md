@@ -73,9 +73,19 @@
 
 验收：针对“最近两周为什么跌这么多”类问题，答案能区分个股问题、ST 风格下跌和全市场下跌。
 
-## P5 — 其余 v8 能力缺口
+## P5 — 时点市值与其余 v8 能力缺口
 
-- [ ] 补 `C14` 的 point-in-time 市值/微盘变量，不使用当前市值回填历史。
+- [x] 新增独立 `market_factors_v1.sqlite3`：按交易日保存 Tushare `daily_basic`
+  时点股本/市值，只保留该日历史 ST membership，快照内容寻址且 append-only。
+- [x] 冻结 `st_total_mv_bottom_30pct_v1`：按收益窗口起点总市值升序取最小
+  30%，阈值同值一并纳入；禁止用窗口终点或当前市值倒推历史。
+- [x] 增加 95% 市值覆盖门和两组各自 95% 收益端点覆盖门；缺口不插值，
+  作为 operational evidence gap 返回，不重新登记为 `C14`。
+- [x] 将微盘/普通 ST 的样本数、均值、中位数、尾部、上涨占比和相对百分点
+  接入 AnswerCard、Narrative、provenance、freshness、current-v2 路由与网页面板。
+- [x] 完成真实窗口验收：2026-07-06 因子快照
+  `MFS-61A1FC03A4CD04164329`，市值 208/211（98.58%）；微盘 63 只、
+  普通 ST 145 只，收益覆盖分别 60/63 与 142/145；`C14` 关闭。
 - [ ] 自动刷新 episode index、release lens 快照与相关 freshness。
 - [ ] 增加 OpenAI SDK 真实调用质量门，覆盖 tool calling、schema failure 与 fallback。
 - [ ] 将已接受经验的生产 registry 从 seed 状态推进到真实人工接受样本。
@@ -91,4 +101,4 @@
 3. P2 全量维护与 P3 canonical 基准已完成；日常按运行手册增量执行。
 4. P4 答案卡和 dossier 市场语境已完成，`D-051C` 已关闭。
 5. 厂商 ST 指数仅在取得稳定授权接口后补 context-only shadow check。
-6. 下一步进入 `C14`、SDK 质量门和旧入口退役。
+6. `C14` 已完成；下一步进入 episode/lens freshness、SDK 质量门和旧入口退役。

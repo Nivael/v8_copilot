@@ -12,7 +12,7 @@ from evals.validate_w2_evals import QUESTION_SET, load_jsonl
 
 
 PARAPHRASE_SET = Path(__file__).with_name(
-    "question_routing_paraphrases_current_v1.json"
+    "question_routing_paraphrases_current_v2.json"
 )
 
 

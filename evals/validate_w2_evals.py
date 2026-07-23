@@ -11,9 +11,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
 
-QUESTION_SET = EVALS / "question_routing_set_current_v1.json"
-SEED_SET = EVALS / "question_card_seeds_current_v1.json"
-GOLDEN = EVALS / "golden_fact_assertions_v1.json"
+QUESTION_SET = EVALS / "question_routing_set_current_v2.json"
+SEED_SET = EVALS / "question_card_seeds_current_v2.json"
+GOLDEN = EVALS / "golden_fact_assertions_v2.json"
 REWRITE_SET = EVALS / "rewrite_routing_set_v0.jsonl"
 
 LEGAL_ROUTES = {
@@ -55,7 +55,7 @@ REQUIRED_ROUTE_COVERAGE = {
     "clarify",
     "refuse_or_rewrite",
 }
-EXPECTED_SEED_STATUS_COUNTS = Counter({"answerable": 8, "needs_data": 6, "needs_review": 1})
+EXPECTED_SEED_STATUS_COUNTS = Counter({"answerable": 9, "needs_data": 5, "needs_review": 1})
 KNOWN_SEED_DEBT_ASSIGNMENT_GAPS = {
     "QC-20260710-003",
     "QC-20260710-005",
@@ -237,6 +237,15 @@ def validate_golden_assertions(spec: dict[str, Any]) -> None:
             raise AssertionError(f"{aid} expected len {assertion['len']}, got {len(value)}")
         if "min_len" in assertion and len(value) < assertion["min_len"]:
             raise AssertionError(f"{aid} expected len >= {assertion['min_len']}, got {len(value)}")
+        if "contains_row_id" in assertion:
+            row_ids = {
+                row.get("row_id") for row in value if isinstance(row, dict)
+            }
+            if assertion["contains_row_id"] not in row_ids:
+                raise AssertionError(
+                    f"{aid} expected row_id {assertion['contains_row_id']!r}, "
+                    f"got {sorted(row_id for row_id in row_ids if row_id)}"
+                )
 
     for card_id, card in cards.items():
         if not (card.get("lens_invocations") or card.get("lens_gap")):

@@ -126,8 +126,9 @@ market-context pool 包含 ST 等权、中证2000和中证全指；manifest 为
 `MC-F15756CDF3490173508B`，最新区间 ready、历史区间 partial，三基准共同窗口从
 2023-08-11 开始。
 答案卡现在按 manifest 终点消费同窗个股、ST 等权、中证2000和中证全指，输出收益、
-百分点差和归一化曲线；缺端点、低覆盖或 universe 日期错位时显式降级。`D-051C`
-已于 2026-07-21 关闭，微盘/市值数据债 `C14` 仍独立存在。
+百分点差和归一化曲线；缺端点、低覆盖或 universe 日期错位时显式降级。另有独立
+point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总市值划分微盘/普通 ST，
+不使用当前市值倒推历史。`D-051C` 与 `C14` 已分别于 2026-07-21、2026-07-22 关闭。
 新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
 点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为
 `experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
@@ -137,6 +138,8 @@ market-context pool 包含 ST 等权、中证2000和中证全指；manifest 为
 - `lens_binding.py` — **脊梁**：LensRegistry（只读加载 pinned v1 库）+ candidate_lenses（按主题标签/cluster 精确匹配）+ LensInvocation + LensGap。
 - `answer_engine.py` — AnswerCard、AnalysisClaim/backing、只读数据访问和 card builders。
 - `market_comparison.py` — manifest 约束的只读同窗对齐器、相对收益和 evidence-gap 语义。
+- `market_factors.py` — append-only 时点市值快照、覆盖门与 factor manifest。
+- `microcap_comparison.py` — 窗口起点微盘/普通 ST 分组、收益分布和缺口语义。
 - `contracts/v8_answer_contract_v0/` — W1 单写、W2/W3/LLM 只读的 JSON 契约。
 - `contracts/v8_copilot_api_contract_v0/` — 冻结的 Batch 2 API v0 schema、manifest 和固定 fixtures。
 - `contracts/v8_copilot_api_contract_v1/` — 增量 API v1：typed QuestionCard、QueryTemplate id 和证据导航。

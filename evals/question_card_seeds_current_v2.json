@@ -1,0 +1,17 @@
+{
+  "contract_version": "question-card-seeds-current-v2",
+  "base": "question_card_seeds_current_v1.json",
+  "overrides": {
+    "QC-20260710-013": {
+      "needs_data": [
+        "daily_prices",
+        "point_in_time_market_cap",
+        "historical_st_membership"
+      ],
+      "status": "answerable",
+      "view": "query",
+      "debt_ref": "",
+      "debt_ref_status": "not_required"
+    }
+  }
+}

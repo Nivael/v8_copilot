@@ -1,6 +1,7 @@
 import asyncio
 import hashlib
 import json
+import sqlite3
 from pathlib import Path
 
 import api as api_module
@@ -325,8 +326,13 @@ def test_dossier_endpoint_uses_real_read_only_sources() -> None:
     assert before == after
     body = response.json()
     assert body["symbol"] == "603398"
-    assert body["as_of"] == "2026-06-26"
-    assert len(body["price_series"]) == 1982
+    with sqlite3.connect(f"file:{BASE_DB}?mode=ro", uri=True) as connection:
+        expected_price_count = connection.execute(
+            "select count(*) from daily_prices where symbol=? and adjust='qfq'",
+            ("603398",),
+        ).fetchone()[0]
+    assert body["as_of"] == body["price_series"][-1]["date"]
+    assert len(body["price_series"]) == expected_price_count
     assert len(body["events"]) >= 300
     assert len({event["event_id"] for event in body["events"]}) == len(body["events"])
     assert {item["release_id"] for item in body["lens_summaries"]} == {

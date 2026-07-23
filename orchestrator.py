@@ -97,7 +97,7 @@ def _execute_answer(
         elif executor_key == "two_week_distribution":
             card = card_two_week_move(
                 include_market_debt="相对大盘" in request.question,
-                include_microcap_debt="微盘" in request.question,
+                include_microcap_comparison="微盘" in request.question,
             )
         elif executor_key == "st_status_timeline":
             symbol = _symbol(request, interpretation)

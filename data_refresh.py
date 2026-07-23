@@ -384,6 +384,19 @@ class TushareHttpClient:
             fields="ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
         )
 
+    def fetch_daily_basic(self, *, trade_date: str) -> list[dict[str, Any]]:
+        """Return one exchange-date cross-section for point-in-time factors."""
+
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "daily_basic",
+            params={"trade_date": day},
+            fields=(
+                "ts_code,trade_date,total_share,float_share,free_share,"
+                "total_mv,circ_mv,turnover_rate"
+            ),
+        )
+
     @staticmethod
     def _ts_code(symbol: str) -> str:
         if symbol.startswith(("5", "6", "9")):

@@ -36,12 +36,21 @@ from market_context import (
     write_market_context_manifest,
 )
 from maintenance_plan import build_maintenance_plan
+from market_factors import (
+    MarketFactorRepository,
+    MarketFactorService,
+    build_market_factor_manifest,
+    write_market_factor_manifest_set,
+)
 from settings import (
     ANNOUNCEMENT_REFRESH_DIR,
     DATA_MAINTENANCE_DB,
     FRESHNESS_MANIFEST_PATH,
     MARKET_CONTEXT_DB,
     MARKET_CONTEXT_MANIFEST_PATH,
+    MARKET_FACTOR_DB,
+    MARKET_FACTOR_MANIFEST_DIR,
+    MARKET_FACTOR_MANIFEST_PATH,
     ST_UNIVERSE_DIR,
 )
 from universe import StUniverseRepository, StUniverseService, StUniverseSnapshot
@@ -308,6 +317,40 @@ def main() -> int:
     )
     market_status.add_argument("--coverage-threshold", type=float, default=0.95)
 
+    refresh_market_caps = sub.add_parser("refresh-market-caps")
+    refresh_market_caps.add_argument("--as-of", required=True)
+    refresh_market_caps.add_argument("--env-file", type=Path)
+    refresh_market_caps.add_argument(
+        "--database", type=Path, default=MARKET_FACTOR_DB
+    )
+    refresh_market_caps.add_argument(
+        "--market-context-database", type=Path, default=MARKET_CONTEXT_DB
+    )
+    refresh_market_caps.add_argument(
+        "--manifest", type=Path, default=MARKET_FACTOR_MANIFEST_PATH
+    )
+    refresh_market_caps.add_argument(
+        "--manifest-directory", type=Path, default=MARKET_FACTOR_MANIFEST_DIR
+    )
+    refresh_market_caps.add_argument(
+        "--coverage-threshold", type=float, default=0.95
+    )
+
+    market_factor_status = sub.add_parser("market-factor-status")
+    market_factor_status.add_argument("--as-of", required=True)
+    market_factor_status.add_argument(
+        "--database", type=Path, default=MARKET_FACTOR_DB
+    )
+    market_factor_status.add_argument(
+        "--manifest", type=Path, default=MARKET_FACTOR_MANIFEST_PATH
+    )
+    market_factor_status.add_argument(
+        "--manifest-directory", type=Path, default=MARKET_FACTOR_MANIFEST_DIR
+    )
+    market_factor_status.add_argument(
+        "--coverage-threshold", type=float, default=0.95
+    )
+
     plan = sub.add_parser("plan")
     plan.add_argument("--symbol", action="append", default=[])
     plan.add_argument("--universe-current", action="store_true")
@@ -440,6 +483,57 @@ def main() -> int:
         write_market_context_manifest(context, args.manifest)
         print(json.dumps(context, ensure_ascii=False, indent=2))
         return 0
+    if args.command == "refresh-market-caps":
+        _load_env_file(args.env_file)
+        repository = MarketFactorRepository(args.database)
+        snapshot = MarketFactorService(
+            provider=TushareHttpClient(),
+            repository=repository,
+            market_context_database=args.market_context_database,
+        ).refresh(as_of=args.as_of)
+        factor_manifest = build_market_factor_manifest(
+            repository=repository,
+            snapshot_id=snapshot.snapshot_id,
+            coverage_threshold=args.coverage_threshold,
+        )
+        dated_manifest = write_market_factor_manifest_set(
+            factor_manifest,
+            current_path=args.manifest,
+            manifest_directory=args.manifest_directory,
+        )
+        print(json.dumps({
+            "snapshot_id": snapshot.snapshot_id,
+            "factor_date": snapshot.trade_date,
+            "membership_count": snapshot.membership_count,
+            "valid_total_market_value_count": (
+                snapshot.valid_total_market_value_count
+            ),
+            "coverage_ratio": snapshot.coverage_ratio,
+            "manifest_id": factor_manifest["manifest_id"],
+            "status": factor_manifest["status"],
+            "blocking_gaps": factor_manifest["blocking_gaps"],
+            "database": str(args.database),
+            "manifest": str(args.manifest),
+            "dated_manifest": str(dated_manifest),
+        }, ensure_ascii=False, indent=2))
+        return 0 if factor_manifest["status"] == "ready" else 2
+    if args.command == "market-factor-status":
+        repository = MarketFactorRepository(args.database)
+        snapshot = repository.latest_snapshot(args.as_of)
+        if snapshot is None:
+            parser.error(f"{args.as_of} 尚无 point-in-time 市值快照")
+        factor_manifest = build_market_factor_manifest(
+            repository=repository,
+            snapshot_id=snapshot.snapshot_id,
+            coverage_threshold=args.coverage_threshold,
+        )
+        write_market_factor_manifest_set(
+            factor_manifest,
+            current_path=args.manifest,
+            manifest_directory=args.manifest_directory,
+        )
+        print(json.dumps(factor_manifest, ensure_ascii=False, indent=2))
+        return 0 if factor_manifest["status"] == "ready" else 2
     if args.command == "plan":
         symbols, snapshot = _resolve_scope(args, parser)
         current = build_maintenance_plan(

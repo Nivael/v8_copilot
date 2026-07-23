@@ -1,0 +1,9 @@
+{
+  "contract_version": "question-routing-paraphrases-current-v2",
+  "base": "question_routing_paraphrases_current_v1.json",
+  "overrides": {
+    "QRP-012": {
+      "expected_route": "answer_query"
+    }
+  }
+}

@@ -373,6 +373,17 @@ class MarketContextRepository:
             ).fetchone()
         return str(row[0] or ""), str(row[1] or ""), int(row[2] or 0), int(row[3] or 0)
 
+    def membership_symbols(self, trade_date: str) -> list[str]:
+        day = _iso_date(trade_date, field="trade_date")
+        if not self.path.is_file():
+            return []
+        with sqlite3.connect(f"file:{self.path}?mode=ro", uri=True) as connection:
+            return [str(row[0]) for row in connection.execute(
+                "select symbol from st_membership_daily where trade_date=? "
+                "order by symbol",
+                (day,),
+            )]
+
     def upsert_membership_rows(self, rows: list[HistoricalMembershipRow]) -> int:
         now = datetime.now(timezone.utc).isoformat()
         with self._connect() as connection:

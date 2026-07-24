@@ -161,6 +161,9 @@ def test_tushare_client_exposes_st_universe_and_index_boundaries(monkeypatch) ->
         ts_code="932000.CSI", start_date="2026-07-01", end_date="2026-07-20"
     )
     client.fetch_daily_basic(trade_date="2026-07-06")
+    client.fetch_daily_basic_range(
+        symbol="603398", start_date="2026-07-01", end_date="2026-07-20"
+    )
 
     assert calls[0][0:2] == ("stock_st", {"trade_date": "20260720"})
     assert calls[1][0] == "index_daily"
@@ -173,6 +176,14 @@ def test_tushare_client_exposes_st_universe_and_index_boundaries(monkeypatch) ->
     }
     assert calls[3][0:2] == ("daily_basic", {"trade_date": "20260706"})
     assert "total_mv" in calls[3][2]
+    assert calls[4][0:2] == (
+        "daily_basic",
+        {
+            "ts_code": "603398.SH",
+            "start_date": "20260701",
+            "end_date": "20260720",
+        },
+    )
 
 
 def test_cninfo_timestamp_is_interpreted_in_exchange_timezone() -> None:

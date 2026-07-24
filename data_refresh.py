@@ -397,6 +397,29 @@ class TushareHttpClient:
             ),
         )
 
+    def fetch_daily_basic_range(
+        self, *, symbol: str, start_date: str, end_date: str
+    ) -> list[dict[str, Any]]:
+        """Return one symbol's daily-basic history for a bounded probe."""
+
+        compact = _symbol(symbol)
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        if start > end:
+            raise ValueError("start_date 不得晚于 end_date")
+        return self._query(
+            "daily_basic",
+            params={
+                "ts_code": self._ts_code(compact),
+                "start_date": start,
+                "end_date": end,
+            },
+            fields=(
+                "ts_code,trade_date,total_share,float_share,free_share,"
+                "total_mv,circ_mv,turnover_rate"
+            ),
+        )
+
     @staticmethod
     def _ts_code(symbol: str) -> str:
         if symbol.startswith(("5", "6", "9")):

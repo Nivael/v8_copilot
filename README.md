@@ -164,8 +164,9 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `data_maintenance.py` / `data_refresh.py` / `freshness_manifest.py` — Tushare/CNINFO 可恢复增量维护与统一 freshness manifest。
 - `universe.py` — 权威每日 ST membership、append-only snapshot、digest/diff 与 current pointer。
 - `maintenance_plan.py` — universe 对本地 holdings/checkpoint 的只读差集与 bootstrap 计划。
-- `p6b_dry_plan.py` / `P6B0_DRY_PLAN_RESULT.md` — P6B 候选 episode、历史市值请求量、
-  价格陈旧代理、资本结构 guard 与小规模 provider probe 的只读可行性盘点。
+- `p6b_dry_plan.py` / `p6b_provider_probe.py` — P6B 候选 episode、历史市值请求量、
+  价格陈旧代理、资本结构 guard 与冻结 provider 样本的只读可行性盘点；真实结果见
+  `P6B0_DRY_PLAN_RESULT.md` / `P6B0_PROVIDER_PROBE_RESULT.md`。
 - `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。

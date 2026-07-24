@@ -9,7 +9,9 @@ from market_factors import (
     MARKET_CAP_SOURCE,
     MarketFactorRepository,
     MarketFactorService,
+    advance_market_factor_current,
     build_market_factor_manifest,
+    write_market_factor_dated_manifest,
     write_market_factor_manifest,
     write_market_factor_manifest_set,
 )
@@ -173,3 +175,41 @@ def test_manifest_set_keeps_dated_artifact_when_current_pointer_advances(tmp_pat
     assert json.loads(dated.read_text(encoding="utf-8")) == first_payload
     assert json.loads(current.read_text(encoding="utf-8")) == second_manifest
     assert (directory / "2026-07-20.json").is_file()
+
+
+def test_historical_dated_manifest_does_not_regress_current_pointer(
+    tmp_path,
+) -> None:
+    current = tmp_path / "current.json"
+    directory = tmp_path / "manifests"
+    latest = {
+        "factor_date": "2026-07-20",
+        "factor_snapshot_id": "MFS-AAAAAAAAAAAAAAAAAAAA",
+    }
+    historical = {
+        "factor_date": "2021-03-17",
+        "factor_snapshot_id": "MFS-BBBBBBBBBBBBBBBBBBBB",
+    }
+    advance_market_factor_current(latest, current_path=current)
+
+    dated = write_market_factor_dated_manifest(
+        historical, manifest_directory=directory
+    )
+    advanced = advance_market_factor_current(
+        historical, current_path=current
+    )
+
+    assert dated.name == "2021-03-17.json"
+    assert advanced is False
+    assert json.loads(current.read_text()) == latest
+
+
+def test_current_pointer_same_snapshot_is_idempotent(tmp_path) -> None:
+    current = tmp_path / "current.json"
+    payload = {
+        "factor_date": "2026-07-20",
+        "factor_snapshot_id": "MFS-AAAAAAAAAAAAAAAAAAAA",
+    }
+
+    assert advance_market_factor_current(payload, current_path=current) is True
+    assert advance_market_factor_current(payload, current_path=current) is False

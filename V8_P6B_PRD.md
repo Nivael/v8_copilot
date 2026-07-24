@@ -367,6 +367,16 @@ Tushare `daily_basic` 从 2016-08-09 起具备历史 `total_share` / `total_mv` 
 - episode 相对重定价、基准缺口和资本结构污染门；
 - 仅发布 `descriptive_only`。
 
+P6B-1a 已于 2026-07-24 完成锚点回填与同日规模位置计算，结果见
+[P6B1_MARKET_CAP_BACKFILL_RESULT.md](P6B1_MARKET_CAP_BACKFILL_RESULT.md)：
+306/306 个交易日锚点均有 append-only snapshot 和 dated manifest，103 日通过 95% 门，
+203 日 fail closed。原始 episode 起点若不是交易日，固定映射到下一个中证全指交易日并
+在 plan 中记录调整；当前唯一调整是 2026-07-12 → 2026-07-13。
+
+P6B-1a 只完成“同日是谁”：总市值、平均秩分位、样本和覆盖。固定 12 个月自身变化、
+cohort 换手、episode 相对重定价、价格/股本效应及 AnswerCard 接入属于 P6B-1b，不得把
+本阶段模块冒充完整 P6B-1。
+
 ### P6B-2 — 资产与老股东权益 pilot
 
 - 选择 5–10 家资产结构和结果不同的公司；

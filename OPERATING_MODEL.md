@@ -97,6 +97,19 @@ ST membership；因此应在该日 membership 入库后运行。快照和市值�
 窗口起点因子，需逐交易日留存快照，不能等到回答问题时用当前市值补历史。
 当前真实验收快照为 `MFS-61A1FC03A4CD04164329`（2026-07-06，208/211，98.58%）。
 
+P6B 历史锚点使用独立的内容寻址 plan 和可恢复运行器：
+
+```bash
+python p6b_market_cap_backfill.py run \
+  --env-file <local-tushare-env> \
+  --output <local-run-report.json>
+```
+
+运行器跳过已有 snapshot、只追加 dated manifest，并且只有 306 日完整闭环后才允许
+current pointer 单向前进。2026-07-24 的 plan `P6B1P-C7B9FB39D9F73440A3E8` 已完成：
+103 日 ready、203 日 coverage gap、0 缺失；见
+[P6B1_MARKET_CAP_BACKFILL_RESULT.md](P6B1_MARKET_CAP_BACKFILL_RESULT.md)。
+
 答案路径只读消费该 pool：以 ready manifest 的终点为边界，并要求 current universe 的
 as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列缺端点或 ST 覆盖率低于
 95% 时返回市场对比缺口，不插值。网页端同时展示绝对收益、相对百分点差和起点归一为

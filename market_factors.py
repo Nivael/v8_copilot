@@ -367,14 +367,51 @@ def write_market_factor_manifest_set(
 ) -> Path:
     """Persist an immutable date manifest plus the replaceable current pointer."""
 
+    dated_path = write_market_factor_dated_manifest(
+        payload, manifest_directory=manifest_directory
+    )
+    advance_market_factor_current(payload, current_path=current_path)
+    return dated_path
+
+
+def write_market_factor_dated_manifest(
+    payload: dict[str, Any], *, manifest_directory: Path,
+) -> Path:
+    """Persist one immutable date manifest without moving the current pointer."""
+
     factor_date = _iso_date(str(payload.get("factor_date") or ""), field="factor_date")
     dated_path = manifest_directory / f"{factor_date}.json"
     if dated_path.is_file():
         existing = json.loads(dated_path.read_text(encoding="utf-8"))
         if existing.get("factor_snapshot_id") != payload.get("factor_snapshot_id"):
             raise ValueError(f"{factor_date} dated manifest 已绑定不同 factor snapshot")
-        payload = existing
-    else:
-        atomic_write_json(dated_path, payload)
-    atomic_write_json(current_path, payload)
+        return dated_path
+    atomic_write_json(dated_path, payload)
     return dated_path
+
+
+def advance_market_factor_current(
+    payload: dict[str, Any], *, current_path: Path,
+) -> bool:
+    """Advance current monotonically; historical backfills never move it backward."""
+
+    factor_date = _iso_date(str(payload.get("factor_date") or ""), field="factor_date")
+    if current_path.is_file():
+        existing = json.loads(current_path.read_text(encoding="utf-8"))
+        existing_date = _iso_date(
+            str(existing.get("factor_date") or ""),
+            field="current.factor_date",
+        )
+        if existing_date > factor_date:
+            return False
+        if existing_date == factor_date:
+            if (
+                existing.get("factor_snapshot_id")
+                != payload.get("factor_snapshot_id")
+            ):
+                raise ValueError(
+                    f"{factor_date} current manifest 已绑定不同 factor snapshot"
+                )
+            return False
+    atomic_write_json(current_path, payload)
+    return True

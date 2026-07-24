@@ -148,6 +148,8 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `contracts/v8_copilot_api_contract_v1/` — 增量 API v1：typed QuestionCard、QueryTemplate id 和证据导航。
 - `contracts/v8_question_card_contract_v0/` — 问题卡对象、生命周期和固定 fixture。
 - `contracts/v8_query_template_contract_v0/` — 八类可复用查询模板；全部标记 `not_evidence=true`。
+- `contracts/v8_p6b_market_cap_backfill_v1/` — 306 个交易日锚点、来源 dry plan /
+  provider probe 和非交易日调整的内容寻址计划。
 - `api_contract.py` — ResearchRequest、RouteDecision、ResearchResponse、dossier 和 stream 类型。
 - `core_router.py` / `orchestrator.py` — 确定性解释、最终路由和 AnswerCard 执行编排。
 - `orchestrator_v1.py` — typed sedimentation、QueryTemplate 和七类证据导航增量层。
@@ -167,6 +169,9 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `p6b_dry_plan.py` / `p6b_provider_probe.py` — P6B 候选 episode、历史市值请求量、
   价格陈旧代理、资本结构 guard 与冻结 provider 样本的只读可行性盘点；真实结果见
   `P6B0_DRY_PLAN_RESULT.md` / `P6B0_PROVIDER_PROBE_RESULT.md`。
+- `p6b_market_cap_backfill.py` / `p6b_market_map.py` — P6B-1a 的内容寻址锚点计划、
+  可恢复历史市值回填和同日 ST size position；真实结果见
+  `P6B1_MARKET_CAP_BACKFILL_RESULT.md`。
 - `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。

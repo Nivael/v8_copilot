@@ -1,7 +1,13 @@
 from __future__ import annotations
 
+import sqlite3
+
 from market_factors import MarketCapPoint, MarketFactorRepository
-from p6b_market_map import same_day_size_position
+from p6b_market_map import (
+    fixed_twelve_month_size_change,
+    last_valid_size_position,
+    same_day_size_position,
+)
 
 
 DAY = "2024-04-29"
@@ -102,3 +108,121 @@ def test_same_day_position_requires_exact_snapshot(tmp_path) -> None:
     assert result.status == "unavailable"
     assert result.gap_code == "missing_snapshot"
     assert not (tmp_path / "missing.sqlite3").exists()
+
+
+def _market_context(path) -> None:
+    with sqlite3.connect(path) as connection:
+        connection.executescript("""
+            create table benchmark_daily (
+                benchmark_id text, trade_date text, close real
+            );
+            create table st_membership_daily (
+                trade_date text, symbol text
+            );
+            insert into benchmark_daily values
+                ('csi_all_share','2023-01-03',100),
+                ('csi_all_share','2024-01-03',110),
+                ('csi_all_share','2024-01-04',111);
+            insert into st_membership_daily values
+                ('2023-01-03','000001'),
+                ('2023-01-03','000002'),
+                ('2023-01-03','000003'),
+                ('2023-01-03','000004'),
+                ('2024-01-03','000001'),
+                ('2024-01-03','000002'),
+                ('2024-01-03','000003'),
+                ('2024-01-03','000005');
+        """)
+
+
+def test_fixed_twelve_month_change_shows_turnover_and_composition_noise(
+    tmp_path,
+) -> None:
+    factors = tmp_path / "factors.sqlite3"
+    repository = MarketFactorRepository(factors)
+    repository.store_snapshot(
+        trade_date="2023-01-03",
+        membership_symbols=["000001", "000002", "000003", "000004"],
+        points=[
+            MarketCapPoint(
+                symbol=f"00000{index}", trade_date="2023-01-03",
+                total_market_value=value,
+            )
+            for index, value in enumerate((10, 20, 30, 40), 1)
+        ],
+    )
+    repository.store_snapshot(
+        trade_date="2024-01-03",
+        membership_symbols=["000001", "000002", "000003", "000005"],
+        points=[
+            MarketCapPoint(
+                symbol=symbol, trade_date="2024-01-03",
+                total_market_value=value,
+            )
+            for symbol, value in zip(
+                ["000001", "000002", "000003", "000005"],
+                [30, 20, 10, 40],
+                strict=True,
+            )
+        ],
+    )
+    market = tmp_path / "market.sqlite3"
+    _market_context(market)
+
+    result = fixed_twelve_month_size_change(
+        market_factor_database=factors,
+        market_context_database=market,
+        symbol="000001",
+        end_date="2024-01-03",
+        minimum_cohort_size=4,
+    )
+
+    assert result.status == "ready"
+    assert result.comparison_date == "2023-01-03"
+    assert result.percentile_change_points == 66.666667
+    assert result.cohort_turnover == 0.4
+    assert result.membership_composition_noise is True
+    assert result.start_membership_count == result.end_membership_count == 4
+
+
+def test_last_valid_position_reports_suspension_distance_without_stale_peers(
+    tmp_path,
+) -> None:
+    factors = tmp_path / "factors.sqlite3"
+    MarketFactorRepository(factors).store_snapshot(
+        trade_date="2024-01-03",
+        membership_symbols=["000001", "000002", "000003", "000004"],
+        points=[
+            MarketCapPoint(
+                symbol=f"00000{index}", trade_date="2024-01-03",
+                total_market_value=value,
+            )
+            for index, value in enumerate((10, 20, 30, 40), 1)
+        ],
+    )
+    market = tmp_path / "market.sqlite3"
+    _market_context(market)
+    prices = tmp_path / "prices.sqlite3"
+    with sqlite3.connect(prices) as connection:
+        connection.executescript("""
+            create table daily_prices (
+                symbol text, trade_date text, adjust text, close real
+            );
+            insert into daily_prices values ('000001','2024-01-03','qfq',10);
+        """)
+
+    result = last_valid_size_position(
+        market_factor_database=factors,
+        market_context_database=market,
+        price_database=prices,
+        symbol="000001",
+        valuation_date="2024-01-04",
+        minimum_cohort_size=4,
+    )
+
+    assert result.status == "ready"
+    assert result.target_traded_on_valuation_date is False
+    assert result.last_valid_trade_date == "2024-01-03"
+    assert result.trading_day_distance == 1
+    assert result.position is not None
+    assert result.position.status == "ready"

@@ -12,9 +12,9 @@
 
 ## 一句话结论
 
-连续 ST 候选 episode 和 date-only 请求范围可以可靠列出，但当前本地价格与历史股本证据
-不能支持一条连续通过 95% 覆盖门的市场地图历史区间。因此不进入全量回填，先做 11 个
-交易日的只读 provider probe。
+连续 ST 候选 episode 和 date-only 请求范围可以可靠列出；本地数据本身不能证明历史
+provider 能力，因此先执行 11 个交易日的只读 provider probe。该 probe 后续已经完成，
+结果见 [P6B0_PROVIDER_PROBE_RESULT.md](P6B0_PROVIDER_PROBE_RESULT.md)。
 
 ## 盘点结果
 
@@ -39,7 +39,7 @@
 虽有大量日期过门，但不是连续区间；2026 年截至数据日也没有连续达标。这个代理不包含
 历史股本变化 guard，不能直接晋级为 point-in-time market cap。
 
-## 冻结的下一步 probe
+## 已执行的 provider probe
 
 只读抽查以下 11 个交易日的全市场 `daily_basic`、目标 membership 和转增附近股本字段：
 
@@ -51,7 +51,11 @@ probe 只读、不写 canonical 数据，回答三件事：
 
 1. 各年代历史总市值和总股本是否可得；
 2. 停牌时的最近有效市值能否在 5 个交易日内安全沿用；
-3. 转增前后厂商股本跳变是否能与 M6/P6A 事件日期对齐。
+3. 转增前后厂商股本跳变是否能与 M6 资本结构候选事件日期对齐。
+
+真实结果是：历史字段从 2016-08-09 起可取，但不同锚点日的 ST cohort 覆盖非单调，
+不存在一条诚实的连续发布边界。P6B-1 将做 scoped backfill，并在每个日期独立执行 95%
+门；不达标即 `unavailable`。
 
 ## 人类需要做什么
 
@@ -59,11 +63,10 @@ P6B-0 不需要逐公司、逐公告或逐数字审核。系统先采用以下�
 
 1. 连续 episode 以逐日 `st_membership_daily` 为主，稀疏 `st_status_history` 只交叉核查；
 2. candidate inventory 与可发布市场地图使用不同历史边界；
-3. 5 日陈旧规则在 provider probe 完成前保持 shadow，不生成生产分位。
+3. v1 不使用陈旧市值补覆盖；未来只有独立资本结构 guard 完成后才允许晋级。
 
-owner 只需要在下一份一页 probe 摘要上作一次发布范围决定：接受系统建议的历史起点，
-或让能力保持更短历史 / `unavailable`。如果证据仍不足，系统 fail closed，不扩大成人工
-标注任务。
+这些安全默认已由 probe 自动冻结，owner 不需要逐公司、逐日期或逐数字审核。如果后续
+某个锚点日证据不足，系统 fail closed，不扩大成人工标注任务。
 
 ## 复现
 

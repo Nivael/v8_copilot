@@ -121,8 +121,9 @@ P6B 阶段词表：
 - 有效样本至少 20 家；
 - 有效市值覆盖率低于 95% 时不输出分位；
 - 目标公司估值日停牌时不生成“当前分位”，只显示最后有效分位及距估值日交易日数；
-- cohort 成员允许使用不超过 5 个交易日的最近有效市值，但期间必须没有已知股本变化，
-  并标记 `stale_market_cap`；超过 5 个交易日视为无效；
+- v1 初始发布不使用陈旧市值补足 cohort 覆盖；成员缺当日市值即进入 coverage gap。
+  “不超过 5 个交易日且期间没有已知股本变化”保留为未来可晋级规则，只有独立
+  point-in-time 资本结构 guard 完成后才能启用；
 - P6B-0 另报告 0/5/20 个交易日陈旧容忍下的历史覆盖，但不得根据后续收益调整规则。
 
 ### 5.2 自身历史分位和 cohort 换手
@@ -351,8 +352,13 @@ probe 不写 canonical 数据。
 2026-07-24 的真实只读盘点已完成，结果见
 [P6B0_DRY_PLAN_RESULT.md](P6B0_DRY_PLAN_RESULT.md)。候选 inventory 可从
 2016-08-09 开始，但本地 qfq 代理没有形成连续通过 95% 门的区间，且历史股本变化 guard
-尚不可用。因此候选 inventory 与可发布市场地图使用不同历史边界；后者必须等 11 个交易日
-的 read-only provider probe 后再冻结，P6B-1 暂不回填。
+尚不可用。
+
+随后完成的 [P6B0_PROVIDER_PROBE_RESULT.md](P6B0_PROVIDER_PROBE_RESULT.md) 证明
+Tushare `daily_basic` 从 2016-08-09 起具备历史 `total_share` / `total_mv` 字段能力，
+可以启动 306 个锚点日的 scoped backfill。但 11 个冻结截面仅 3 个通过 95% 门，失败日期
+跨年份非单调，因此不再声称存在单一连续“可发布历史边界”：每个锚点日独立过门，失败
+日期返回 `unavailable`。陈旧市值保持关闭，老股东权益 guard 继续留在 P6B-2。
 
 ### P6B-1 — 市场地图
 

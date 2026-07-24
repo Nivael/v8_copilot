@@ -335,7 +335,8 @@ qfq 价格不能单独证明转增、受让和稀释后的老股东财富。P6B-
 
 ### P6B-0 — 只读 dry plan
 
-- 从 `st_status_history` 构造候选 valuation episode；
+- 以 `st_membership_daily` 构造连续候选 valuation episode；`st_status_history`
+  只作来源交叉核查；
 - 计算唯一锚点交易日、按交易日整市场请求量和本地已有覆盖；
 - 按年代盘点目标/成员停牌率、0/5/20 日陈旧覆盖和 95% 门通过率；
 - 盘点股本跳变、退市终点、市场基准版本和 M6 候选阶段覆盖；
@@ -346,6 +347,12 @@ probe 不写 canonical 数据。
 
 停止条件：没有可支持的历史区间、请求量不可控或股本事实无法闭环时，先缩小历史范围，
 不得进入综合实现。
+
+2026-07-24 的真实只读盘点已完成，结果见
+[P6B0_DRY_PLAN_RESULT.md](P6B0_DRY_PLAN_RESULT.md)。候选 inventory 可从
+2016-08-09 开始，但本地 qfq 代理没有形成连续通过 95% 门的区间，且历史股本变化 guard
+尚不可用。因此候选 inventory 与可发布市场地图使用不同历史边界；后者必须等 11 个交易日
+的 read-only provider probe 后再冻结，P6B-1 暂不回填。
 
 ### P6B-1 — 市场地图
 

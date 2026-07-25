@@ -273,6 +273,19 @@ class MarketFactorRepository:
             ).fetchall()
         return [MarketCapPoint.model_validate(dict(row)) for row in rows]
 
+    def point(self, snapshot_id: str, symbol: str) -> MarketCapPoint | None:
+        if not self.path.is_file():
+            return None
+        with sqlite3.connect(f"file:{self.path}?mode=ro", uri=True) as connection:
+            connection.row_factory = sqlite3.Row
+            row = connection.execute(
+                "select symbol,trade_date,total_shares,float_shares,free_shares,"
+                "total_market_value,circulating_market_value,turnover_rate,source "
+                "from market_cap_daily where snapshot_id=? and symbol=?",
+                (snapshot_id, symbol),
+            ).fetchone()
+        return MarketCapPoint.model_validate(dict(row)) if row else None
+
     def snapshot_count(self) -> int:
         if not self.path.is_file():
             return 0

@@ -110,6 +110,15 @@ current pointer 单向前进。2026-07-24 的 plan `P6B1P-C7B9FB39D9F73440A3E8` 
 103 日 ready、203 日 coverage gap、0 缺失；见
 [P6B1_MARKET_CAP_BACKFILL_RESULT.md](P6B1_MARKET_CAP_BACKFILL_RESULT.md)。
 
+P6B-1b 只读消费这些快照、逐日 membership 和 qfq 价格。固定 12 个月比较日按中证全指
+交易日历取周年日当日或之前最近交易日；同屏显示起止成员数和 Jaccard 换手，超过 30%
+必须标记成分噪声。episode 相对重定价从入 ST 前最后共同有效端点开始，逐日重算排除
+目标公司的 ST 等权财富路径。95% 在这里是覆盖警告线，不是把整条收益路径清空的市值
+截面门；每天有效成员少于 20、共同端点缺失、2021-03-17 以前或资本结构无法排除污染时
+仍然 fail closed。股本 guard 使用首个 ST 日到估值日，不能误用入 ST 前价格锚点，因为
+ST-only factor snapshot 在入场前按设计不包含目标公司。真实双样本见
+[P6B1B_MARKET_REPRICING_RESULT.md](P6B1B_MARKET_REPRICING_RESULT.md)。
+
 答案路径只读消费该 pool：以 ready manifest 的终点为边界，并要求 current universe 的
 as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列缺端点或 ST 覆盖率低于
 95% 时返回市场对比缺口，不插值。网页端同时展示绝对收益、相对百分点差和起点归一为

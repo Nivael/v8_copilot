@@ -169,9 +169,12 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `p6b_dry_plan.py` / `p6b_provider_probe.py` — P6B 候选 episode、历史市值请求量、
   价格陈旧代理、资本结构 guard 与冻结 provider 样本的只读可行性盘点；真实结果见
   `P6B0_DRY_PLAN_RESULT.md` / `P6B0_PROVIDER_PROBE_RESULT.md`。
-- `p6b_market_cap_backfill.py` / `p6b_market_map.py` — P6B-1a 的内容寻址锚点计划、
-  可恢复历史市值回填和同日 ST size position；真实结果见
-  `P6B1_MARKET_CAP_BACKFILL_RESULT.md`。
+- `p6b_market_cap_backfill.py` / `p6b_market_map.py` — P6B-1 的内容寻址锚点计划、
+  可恢复历史市值回填、同日 ST size position、固定 12 个月位置变化、cohort 换手和
+  停牌目标的最后有效位置；回填结果见 `P6B1_MARKET_CAP_BACKFILL_RESULT.md`。
+- `p6b_market_repricing.py` — 排除目标的 ST 等权 episode 相对重定价、中证2000/
+  中证全指语境、股本污染门、市值价格/股本效应拆分及 descriptive-only AnswerCard；
+  真实验收见 `P6B1B_MARKET_REPRICING_RESULT.md`。
 - `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。

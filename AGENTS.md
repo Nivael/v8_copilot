@@ -19,12 +19,14 @@ is kept up to date; this file is only a pointer.
 
 ## Repo state
 
-- No `origin` remote configured — local-only as of 2026-07-20. Confirm with
-  the owner before assuming this should be pushed anywhere.
+- `origin` is `github.com/Nivael/v8_copilot`; important changes should be
+  pushed through scoped feature branches and draft PRs. The current PR stack
+  and accepted data snapshots are summarized in the workspace-root
+  `AGENTS.md`, `README.md`, and the relevant result note.
 - Uses the same worktree pattern as `ST_invest_quant`: feature work happens
   under `wt/<name>` (see `git worktree list`), not on local `master` directly.
-- Sibling directory `v8_copilot_batch2_closeout/` is itself a worktree of a
-  `codex/v8-batch2-closeout` branch off this repo, not a separate project.
+- Retained worktrees are traceability artifacts; do not delete them without
+  owner confirmation.
 
 ## Documentation hygiene
 

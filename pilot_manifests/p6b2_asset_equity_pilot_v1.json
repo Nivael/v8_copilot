@@ -1,0 +1,79 @@
+{
+  "contract_version": "v8_p6b2_asset_equity_pilot_v1",
+  "pilot_id": "P6B2-PILOT-V1",
+  "as_of": "2026-07-20",
+  "financial_statement_start": "2023-01-01",
+  "missing_liability_shock_pct_total_assets": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "selection_rule": "Frozen before pilot results: current open ST episodes, five P6A restructuring overlaps plus three contrasting guarantee/capital-structure cases.",
+  "symbols": [
+    {
+      "symbol": "000078",
+      "episode_start_date": "2026-05-06",
+      "selection_tags": [
+        "guarantee_heavy",
+        "non_p6a_contrast"
+      ]
+    },
+    {
+      "symbol": "000903",
+      "episode_start_date": "2025-07-10",
+      "selection_tags": [
+        "capital_structure_change",
+        "non_p6a_contrast"
+      ]
+    },
+    {
+      "symbol": "300125",
+      "episode_start_date": "2024-04-30",
+      "selection_tags": [
+        "p6a_overlap",
+        "restructuring_candidate"
+      ]
+    },
+    {
+      "symbol": "301139",
+      "episode_start_date": "2026-05-12",
+      "selection_tags": [
+        "clean_market_repricing_guard",
+        "non_p6a_contrast"
+      ]
+    },
+    {
+      "symbol": "600165",
+      "episode_start_date": "2024-04-08",
+      "selection_tags": [
+        "p6a_overlap",
+        "multiple_restructuring_candidates"
+      ]
+    },
+    {
+      "symbol": "603377",
+      "episode_start_date": "2024-05-06",
+      "selection_tags": [
+        "p6a_overlap",
+        "capital_structure_change"
+      ]
+    },
+    {
+      "symbol": "603398",
+      "episode_start_date": "2025-05-06",
+      "selection_tags": [
+        "p6a_overlap",
+        "guarantee_and_occupation"
+      ]
+    },
+    {
+      "symbol": "603843",
+      "episode_start_date": "2025-05-06",
+      "selection_tags": [
+        "p6a_overlap",
+        "litigation_heavy"
+      ]
+    }
+  ]
+}

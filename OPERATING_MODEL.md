@@ -119,6 +119,13 @@ P6B-1b 只读消费这些快照、逐日 membership 和 qfq 价格。固定 12 �
 ST-only factor snapshot 在入场前按设计不包含目标公司。真实双样本见
 [P6B1B_MARKET_REPRICING_RESULT.md](P6B1B_MARKET_REPRICING_RESULT.md)。
 
+P6B-2 使用独立的 append-only `valuation_facts_v1` 本地库。Tushare 财报、审计意见和
+财务指标按实际披露日留痕，本地公告只先材料化风险披露存在性；二者都不能自动晋级为
+可回收资产。冻结的 8 家 pilot 在缺少独立处置/评估和完整义务区间时全部保持
+`unknown`。老股东权益账 0/8 精确闭环，因此后续全量固定以范围/unknown 为主，普通刷新
+不要求 owner 逐案审核。见
+[P6B2_ASSET_EQUITY_PILOT_RESULT.md](P6B2_ASSET_EQUITY_PILOT_RESULT.md)。
+
 答案路径只读消费该 pool：以 ready manifest 的终点为边界，并要求 current universe 的
 as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列缺端点或 ST 覆盖率低于
 95% 时返回市场对比缺口，不插值。网页端同时展示绝对收益、相对百分点差和起点归一为

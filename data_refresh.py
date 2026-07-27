@@ -420,6 +420,78 @@ class TushareHttpClient:
             ),
         )
 
+    def fetch_balance_sheets(
+        self, *, symbol: str, start_date: str, end_date: str
+    ) -> list[dict[str, Any]]:
+        """Return reported balance-sheet facts with their publication dates."""
+
+        compact = _symbol(symbol)
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        if start > end:
+            raise ValueError("start_date 不得晚于 end_date")
+        return self._query(
+            "balancesheet",
+            params={
+                "ts_code": self._ts_code(compact),
+                "start_date": start,
+                "end_date": end,
+            },
+            fields=(
+                "ts_code,ann_date,f_ann_date,end_date,report_type,comp_type,"
+                "total_assets,total_liab,total_hldr_eqy_inc_min_int,"
+                "total_hldr_eqy_exc_min_int,money_cap,"
+                "accounts_receiv,inventories,fix_assets,intan_assets,goodwill,"
+                "total_cur_liab,total_ncl,update_flag"
+            ),
+        )
+
+    def fetch_audit_opinions(
+        self, *, symbol: str, start_date: str, end_date: str
+    ) -> list[dict[str, Any]]:
+        """Return annual audit opinions available in the requested window."""
+
+        compact = _symbol(symbol)
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        if start > end:
+            raise ValueError("start_date 不得晚于 end_date")
+        return self._query(
+            "fina_audit",
+            params={
+                "ts_code": self._ts_code(compact),
+                "start_date": start,
+                "end_date": end,
+            },
+            fields=(
+                "ts_code,ann_date,end_date,audit_result,audit_fees,"
+                "audit_agency,audit_sign"
+            ),
+        )
+
+    def fetch_financial_indicators(
+        self, *, symbol: str, start_date: str, end_date: str
+    ) -> list[dict[str, Any]]:
+        """Return reported solvency indicators with point-in-time metadata."""
+
+        compact = _symbol(symbol)
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        if start > end:
+            raise ValueError("start_date 不得晚于 end_date")
+        return self._query(
+            "fina_indicator",
+            params={
+                "ts_code": self._ts_code(compact),
+                "start_date": start,
+                "end_date": end,
+            },
+            fields=(
+                "ts_code,ann_date,end_date,current_ratio,quick_ratio,"
+                "debt_to_assets,ocf_to_shortdebt,update_flag"
+            ),
+        )
+
     @staticmethod
     def _ts_code(symbol: str) -> str:
         if symbol.startswith(("5", "6", "9")):

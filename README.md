@@ -178,6 +178,9 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `p6b_asset_pilot.py` / `pilot_manifests/` — P6B-2 冻结样本、point-in-time 财报/
   风险披露事实、资产三态、账面缺失负债敏感度和老股东权益最小账；真实结果见
   `P6B2_ASSET_EQUITY_PILOT_RESULT.md`。财报不自动晋级为可回收资产底座。
+- `valuation_episodes.py` — P6B-3 连续/重复 ST episode、短 membership 空洞核证、
+  官方重整节点、失败后继续及 P6B/P6C 输入边界；真实结果见
+  `P6B3_VERIFIED_EPISODE_RESULT.md`。
 - `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。

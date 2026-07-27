@@ -408,6 +408,11 @@ point-in-time 留痕，但 8/8 都缺独立核证的可回收资产和完整义�
 - 以 cluster 级规则核证阶段，旧 `case_note_only` 不自动晋级；
 - 处理重复 ST、连续区间、方案失败和 P6B/P6C 边界。
 
+2026-07-27 已完成 `valuation_episode_v1`：1,118 个候选经短空洞核证后形成 912 个
+episode，460 个 verified、452 个 provisional；后者不进入阶段统计。程序终止不拆连续
+ST episode，方案关键条款披露后停止 P6B 输入。“延期提交方案草案”等期限标题不构成
+P6C 边界。详见 `P6B3_VERIFIED_EPISODE_RESULT.md`。
+
 ### P6B-4 — 同阶段描述与 shadow validation
 
 - 满足 20 episode / 15 公司门后才输出阶段分布；

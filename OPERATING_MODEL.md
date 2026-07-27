@@ -126,6 +126,13 @@ P6B-2 使用独立的 append-only `valuation_facts_v1` 本地库。Tushare 财�
 不要求 owner 逐案审核。见
 [P6B2_ASSET_EQUITY_PILOT_RESULT.md](P6B2_ASSET_EQUITY_PILOT_RESULT.md)。
 
+P6B-3 的 `valuation_episode_v1` 以逐日 membership 为候选、`st_status_history` 为边界
+核证。≤3 个交易日的 membership 空洞只有在同一状态区间连续覆盖时才合并；程序失败或
+重招募不拆 episode，摘帽后再入 ST 才开启新轮。阶段只使用官方精确标题或 P6A 核证
+事实，M6 `case_note_only` 不晋级。方案关键条款披露后停止 P6B 输入；缺边界证据的记录
+保持 provisional。见
+[P6B3_VERIFIED_EPISODE_RESULT.md](P6B3_VERIFIED_EPISODE_RESULT.md)。
+
 答案路径只读消费该 pool：以 ready manifest 的终点为边界，并要求 current universe 的
 as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列缺端点或 ST 覆盖率低于
 95% 时返回市场对比缺口，不插值。网页端同时展示绝对收益、相对百分点差和起点归一为

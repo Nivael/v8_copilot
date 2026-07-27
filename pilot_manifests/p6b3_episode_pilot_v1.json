@@ -1,0 +1,33 @@
+{
+  "contract_version": "valuation_episode_v1",
+  "pilot_id": "P6B3-PILOT-V1",
+  "as_of": "2026-07-20",
+  "short_membership_gap_max_trade_days": 3,
+  "selection_rule": "Frozen before results: short membership gaps, duplicate joint-administrator events, open plan-boundary cases, terminated restructuring, and repeated-ST negative control.",
+  "symbols": [
+    {
+      "symbol": "000004",
+      "selection_tags": ["repeated_st", "no_restructuring_control"]
+    },
+    {
+      "symbol": "000525",
+      "selection_tags": ["short_membership_gap", "multi_cycle_restructuring"]
+    },
+    {
+      "symbol": "300108",
+      "selection_tags": ["restructuring_terminated", "delisted_outcome"]
+    },
+    {
+      "symbol": "300125",
+      "selection_tags": ["open_episode", "plan_boundary_reached"]
+    },
+    {
+      "symbol": "600165",
+      "selection_tags": ["open_episode", "plan_boundary_and_completion_outcome"]
+    },
+    {
+      "symbol": "600589",
+      "selection_tags": ["short_membership_gap", "duplicate_joint_administrator_events"]
+    }
+  ]
+}

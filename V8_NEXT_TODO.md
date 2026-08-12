@@ -88,7 +88,9 @@
   普通 ST 145 只，收益覆盖分别 60/63 与 142/145；`C14` 关闭。
 - [ ] 自动刷新 episode index、release lens 快照与相关 freshness。
 - [ ] 增加 OpenAI SDK 真实调用质量门，覆盖 tool calling、schema failure 与 fallback。
-- [ ] 将已接受经验的生产 registry 从 seed 状态推进到真实人工接受样本。
+- [x] 完成经验运营基础设施：运行页四类轻反馈、每轮最多 10 个方法簇批量人审、决定 JSON
+  自动保存/导出/幂等导入、中文主题检索，以及 24 条历史运行到 9 个 candidate 簇的冻结回填。
+- [ ] 由 owner 在经验中心审阅首轮 9 个 candidate；只有明确接受后才进入生产 registry。
 - [ ] 完成旧入口/旧 API 的退役检查，不重建 v7 worksite。
 - [ ] 为公告正文和非 CNINFO 外部事实建立按问题触发的成本预算与覆盖报告。
 

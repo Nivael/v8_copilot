@@ -21,7 +21,7 @@ from evidence_gateway import (
     validate_research_draft,
 )
 from experience_contract import ExperienceCandidateInput, ExperienceFeedbackRequest, ExperienceStatus
-from experience_distiller import distill_feedback
+from experience_distiller import distill_run_feedback
 from research_repository import ExperienceRepository, ResearchRunCreate, ResearchRunLedger
 from settings import EXPERIENCE_REPOSITORY_DB, RESEARCH_RUN_LEDGER_DB
 
@@ -213,7 +213,7 @@ def main() -> int:
             feedback_text=request.feedback_text,
             submitted_by=request.submitted_by,
         )
-        candidate_input = distill_feedback(args.run_id, request)
+        candidate_input = distill_run_feedback(ledger.get(args.run_id), request)
         candidate = experience_repo.propose(candidate_input) if candidate_input else None
         if candidate:
             ledger.link_experience(args.run_id, candidate.experience_id, "candidate_source")

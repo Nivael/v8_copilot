@@ -62,6 +62,7 @@ Codex 工作台增量接口：
 - `POST /api/v1/research/validate` — 校验 Codex 结构化研究稿；
 - `POST/GET /api/v1/research/runs` 与 `GET /api/v1/research/runs/{run_id}` — 写入或读取独立运行审计库；
 - `POST /api/v1/research/runs/{run_id}/feedback` — 绑定反馈并按新颖性生成经验候选；
+- `GET /api/v1/experience-review/queue` 与 `POST /api/v1/experience-review/decisions` — 最多 10 个方法簇的批量人审及幂等决定导入；
 - `POST /api/v1/experiences/candidates` 与 `GET /api/v1/experiences` — 候选写入与经验检索；
 - `POST /api/v1/experiences/{experience_id}/review` — 人工审阅状态转换。
 
@@ -135,6 +136,9 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 新 Codex 运行会把完整 EvidencePack、结构化 draft 和 ordinal 判断审计持久化；在 `/runs`
 点击 Pack ID 可查看数据库行、Lens、联网事实、backing 与 coverage gap。经验治理入口为
 `experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
+经验日常运营、人类最小动作和 24-run 首轮回填见
+[EXPERIENCE_OPERATIONS_PRD.md](EXPERIENCE_OPERATIONS_PRD.md)；`experience_backfill.py` 默认只做
+dry run，显式 `--apply` 也只生成 candidate，不会绕过 owner 接受门。
 
 ## 契约与文件
 
@@ -162,6 +166,7 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 - `research_repository.py` — 独立 Research Run Ledger 与 Experience Repository。
 - `experience_contract.py` / `experience_distiller.py` — 非证据经验契约、人工晋级闸门和候选提炼。
 - `experience_governance.py` / `experience_registry/` — 去敏 registry、冲突检测和定期回归治理。
+- `experience_review.py` / `experience_topics.py` / `experience_backfill.py` — 批量决策卡、中文主题检索和 24-run 聚类回填。
 - `research_workbench.py` — 项目 skill 使用的本地 CLI。
 - `data_maintenance.py` / `data_refresh.py` / `freshness_manifest.py` — Tushare/CNINFO 可恢复增量维护与统一 freshness manifest。
 - `universe.py` — 权威每日 ST membership、append-only snapshot、digest/diff 与 current pointer。

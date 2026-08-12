@@ -209,3 +209,8 @@ python experience_governance.py export --registry-version v1
 `status` 检查 active 经验的冲突；blocking conflict 会阻止接受，重叠策略会要求人工审阅。`verify` 只执行到期经验的白名单回归；回归失败会自动把 accepted 转为 `blocked` 并重新导出 registry，修复后仍需 owner 复审。未知 validation ref 记为 `unverified`，不会伪报通过，也不会在没有实际失败时误封。
 
 普通成功回答仍不会自动生成经验。这是主动的污染防线，不是尚未实现的功能。
+
+经验运营已改为两处轻量动作，不新增浏览器审计窗口：`/runs` 每条运行只有四个固定反馈按钮，
+`/` 的 candidate 以每轮最多 10 个方法簇批量审阅。机器先给建议、影响和代表运行，人类只需
+选择接受、补证、不沉淀或稍后再看；备注可选。决定 JSON 可见、可下载并幂等导入，accepted
+仍只能由 owner 产生。完整契约见 [EXPERIENCE_OPERATIONS_PRD.md](EXPERIENCE_OPERATIONS_PRD.md)。

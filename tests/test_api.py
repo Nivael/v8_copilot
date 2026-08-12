@@ -191,6 +191,52 @@ def test_run_feedback_creates_generic_candidate_not_question_memory(monkeypatch,
     assert candidate["not_evidence"] is True
     assert "两只股票怎么比较" not in candidate["value_summary"]
 
+    replay = api_request(
+        "POST", f"/api/v1/research/runs/{run.json()['run_id']}/feedback",
+        json={
+            "feedback_text": "总览先说实质差异，不要从系统口径开始。",
+            "category": "presentation", "submitted_by": "owner",
+        },
+    )
+    assert replay.json()["feedback_id"] == feedback.json()["feedback_id"]
+    assert api_request("GET", f"/api/v1/research/runs/{run.json()['run_id']}").json()["feedback_count"] == 1
+
+
+def test_batch_review_export_import_is_idempotent(monkeypatch, tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    monkeypatch.setattr(api_module, "research_run_ledger", ledger)
+    monkeypatch.setattr(api_module, "experience_repository", repository)
+    run = api_request("POST", "/api/v1/research/runs", json={
+        "request_id": "req-batch-review", "question_text": "两只股票怎么比较？",
+        "normalized_intent": "stock_comparison", "evidence_pack_ids": ["EP-AAAAAAAAAAAAAAAAAAAA"],
+        "final_answer": "先给实质差异。", "validation_report": {"valid": True},
+        "source_freshness": {"announcement": "2026-08-11"}, "agent_surface": "codex_desktop",
+    }).json()
+    api_request("POST", f"/api/v1/research/runs/{run['run_id']}/feedback", json={
+        "feedback_text": "先给判断", "category": "presentation", "submitted_by": "owner",
+    })
+    queue = api_request("GET", "/api/v1/experience-review/queue?limit=10").json()
+    card = queue["cards"][0]
+    export = {
+        "review_session_id": queue["review_session_id"], "review_version": queue["review_version"],
+        "exported_at": "2026-08-12T00:00:00Z", "source_packet": queue["source_packet"],
+        "decisions": [{
+            "card_id": card["card_id"], "decision": "accept_suggested", "note": "",
+            "target_field": card["target_field"], "affected_area": card["affected_area"],
+            "scope": card["scope"], "recommended_decision": card["recommendation"],
+            "question": card["decision_requested"],
+        }],
+    }
+
+    first = api_request("POST", "/api/v1/experience-review/decisions", json=export)
+    second = api_request("POST", "/api/v1/experience-review/decisions", json=export)
+
+    assert first.status_code == 200
+    assert first.json()["applied"][0] == {"card_id": card["card_id"], "status": "accepted", "replayed": False}
+    assert second.json()["applied"][0]["replayed"] is True
+    assert repository.get(card["card_id"]).status.value == "accepted"
+
 
 def test_persisted_evidence_pack_is_available_for_run_audit(monkeypatch, tmp_path) -> None:
     ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")

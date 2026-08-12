@@ -1,6 +1,6 @@
 import type {
-  Dossier, EvidencePackAuditRecord, Experience, ExperienceGovernanceStatus, ExperienceStatus, ResearchContext,
-  ResearchRun, StreamEvent,
+  Dossier, EvidencePackAuditRecord, Experience, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
+  ExperienceReviewQueue, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
 } from './types'
 
 export function parseNdjson(buffer: string, chunk: string) {
@@ -84,6 +84,35 @@ export async function getExperienceGovernanceStatus(
 ):Promise<ExperienceGovernanceStatus> {
   const response=await fetch('/api/v1/experience-governance/status',{signal})
   if(!response.ok)throw new Error(`经验治理服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getExperienceReviewQueue(signal?:AbortSignal):Promise<ExperienceReviewQueue> {
+  const response=await fetch('/api/v1/experience-review/queue?limit=10',{signal})
+  if(!response.ok)throw new Error(`经验审阅队列返回 ${response.status}`)
+  return response.json()
+}
+
+export async function submitExperienceReviewDecisions(
+  payload:ExperienceReviewDecisionExport,
+):Promise<{review_session_id:string;applied:Array<{card_id:string;status:string;replayed:boolean}>}> {
+  const response=await fetch('/api/v1/experience-review/decisions',{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
+  })
+  if(!response.ok)throw new Error(`经验批量审阅返回 ${response.status}`)
+  return response.json()
+}
+
+export async function submitRunFeedback(
+  runId:string,
+  category:'presentation'|'coverage'|'query_plan'|'anti_pattern'|'no_experience',
+  feedbackText:string,
+):Promise<{feedback_id:string;experience_candidate:Experience|null}> {
+  const response=await fetch(`/api/v1/research/runs/${encodeURIComponent(runId)}/feedback`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({category,feedback_text:feedbackText,submitted_by:'owner'}),
+  })
+  if(!response.ok)throw new Error(`运行反馈返回 ${response.status}`)
   return response.json()
 }
 

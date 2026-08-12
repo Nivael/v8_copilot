@@ -43,6 +43,7 @@ class ExperienceCandidateInput(StrictModel):
     title: str = Field(min_length=3, max_length=160)
     value_summary: str = Field(min_length=3, max_length=1000)
     trigger_conditions: list[str] = Field(min_length=1, max_length=20)
+    topic_tags: list[str] = Field(default_factory=list, max_length=20)
     scope: list[str] = Field(min_length=1, max_length=20)
     required_inputs: list[str] = Field(min_length=1, max_length=20)
     query_plan: list[str] = Field(default_factory=list, max_length=30)

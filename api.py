@@ -39,12 +39,18 @@ from experience_contract import (
     ExperienceReviewRequest,
     ExperienceStatus,
 )
-from experience_distiller import distill_feedback
+from experience_distiller import distill_run_feedback
 from experience_governance import (
     ExperienceGovernanceRepository,
     detect_experience_conflicts,
     export_accepted_registry,
     governance_status,
+)
+from experience_review import (
+    ExperienceReviewDecisionExport,
+    ExperienceReviewQueue,
+    build_review_queue,
+    validate_decision_export,
 )
 from llm_adapter import (
     openai_configured,
@@ -320,7 +326,8 @@ def add_research_feedback(
         )
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="research run 不存在") from exc
-    candidate_input = distill_feedback(run_id, request)
+    run = research_run_ledger.get(run_id)
+    candidate_input = distill_run_feedback(run, request)
     candidate = None
     if candidate_input is not None:
         candidate = experience_repository.propose(candidate_input)
@@ -329,6 +336,91 @@ def add_research_feedback(
         "feedback_id": feedback_id,
         "experience_candidate": candidate.model_dump(mode="json") if candidate else None,
     }
+
+
+def _review_experience_record(
+    experience_id: str,
+    request: ExperienceReviewRequest,
+) -> ExperienceRecord:
+    current = experience_repository.get(experience_id)
+    if request.action == "accept":
+        active = experience_repository.list(status=ExperienceStatus.ACCEPTED, limit=1000)
+        blocking = [
+            conflict for conflict in detect_experience_conflicts([*active, current])
+            if conflict.severity == "blocking" and experience_id in {
+                conflict.left_experience_id, conflict.right_experience_id,
+            }
+        ]
+        if blocking:
+            raise ValueError(f"经验存在 blocking conflict: {blocking[0].detail}")
+    updated = experience_repository.review(experience_id, request)
+    if current.status == ExperienceStatus.ACCEPTED or updated.status == ExperienceStatus.ACCEPTED:
+        export_accepted_registry(experience_repository, output=_accepted_registry_output())
+    return updated
+
+
+@app.get("/api/v1/experience-review/queue", response_model=ExperienceReviewQueue)
+def get_experience_review_queue(
+    limit: int = Query(default=10, ge=1, le=20),
+) -> ExperienceReviewQueue:
+    queue = build_review_queue(experience_repository, research_run_ledger, limit=limit)
+    experience_repository.save_review_queue(queue.model_dump(mode="json"))
+    return queue
+
+
+@app.post("/api/v1/experience-review/decisions")
+def apply_experience_review_decisions(
+    request: ExperienceReviewDecisionExport,
+) -> dict[str, object]:
+    try:
+        queue = ExperienceReviewQueue.model_validate(
+            experience_repository.get_review_queue(request.review_session_id)
+        )
+        validate_decision_export(queue, request)
+        applied: list[dict[str, object]] = []
+        for decision in request.decisions:
+            payload = decision.model_dump(mode="json")
+            prior = experience_repository.get_review_decision(
+                request.review_session_id, decision.card_id,
+            )
+            if prior is not None:
+                if prior != payload:
+                    raise ValueError("同一审阅卡已经提交过不同决定")
+                applied.append({
+                    "card_id": decision.card_id,
+                    "status": experience_repository.get(decision.card_id).status.value,
+                    "replayed": True,
+                })
+                continue
+            status_value = ExperienceStatus.CANDIDATE.value
+            if decision.decision != "defer":
+                action = {
+                    "accept_suggested": "accept",
+                    "need_more_evidence": "block",
+                    "reject": "ignore",
+                }[decision.decision]
+                updated = _review_experience_record(decision.card_id, ExperienceReviewRequest(
+                    action=action,
+                    actor_type="human",
+                    reviewed_by="owner",
+                    note=decision.note,
+                ))
+                status_value = updated.status.value
+            experience_repository.record_review_decision(
+                request.review_session_id, decision.card_id, payload,
+            )
+            applied.append({
+                "card_id": decision.card_id,
+                "status": status_value,
+                "replayed": False,
+            })
+        return {"review_session_id": request.review_session_id, "applied": applied}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="审阅队列或经验不存在") from exc
+    except PermissionError as exc:
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @app.post(
@@ -370,23 +462,7 @@ def review_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),
 ) -> ExperienceRecord:
     try:
-        current = experience_repository.get(experience_id)
-        if request.action == "accept":
-            active = experience_repository.list(status=ExperienceStatus.ACCEPTED, limit=1000)
-            blocking = [
-                conflict for conflict in detect_experience_conflicts([*active, current])
-                if conflict.severity == "blocking" and experience_id in {
-                    conflict.left_experience_id, conflict.right_experience_id,
-                }
-            ]
-            if blocking:
-                raise ValueError(f"经验存在 blocking conflict: {blocking[0].detail}")
-        updated = experience_repository.review(experience_id, request)
-        if current.status == ExperienceStatus.ACCEPTED or updated.status == ExperienceStatus.ACCEPTED:
-            export_accepted_registry(
-                experience_repository, output=_accepted_registry_output(),
-            )
-        return updated
+        return _review_experience_record(experience_id, request)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="experience 不存在") from exc
     except PermissionError as exc:

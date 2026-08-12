@@ -1,8 +1,9 @@
 import {BookOpenCheck, Filter, RefreshCw, Sparkles} from 'lucide-react'
 import {useCallback, useEffect, useState} from 'react'
-import {getExperienceGovernanceStatus, getExperiences, reviewExperience} from './api'
+import {getExperienceGovernanceStatus, getExperienceReviewQueue, getExperiences, reviewExperience} from './api'
 import {ExperienceCard} from './ExperienceCard'
-import type {Experience, ExperienceGovernanceStatus, ExperienceStatus} from './types'
+import {ExperienceReviewPanel} from './ExperienceReviewPanel'
+import type {Experience, ExperienceGovernanceStatus, ExperienceReviewQueue, ExperienceStatus} from './types'
 
 const FILTERS: Array<{value:ExperienceStatus;label:string}> = [
   {value:'candidate',label:'待审经验'},
@@ -16,6 +17,7 @@ export function ExperienceCenter() {
   const [status,setStatus]=useState<ExperienceStatus>('candidate')
   const [experiences,setExperiences]=useState<Experience[]>([])
   const [governance,setGovernance]=useState<ExperienceGovernanceStatus|null>(null)
+  const [reviewQueue,setReviewQueue]=useState<ExperienceReviewQueue|null>(null)
   const [loading,setLoading]=useState(true)
   const [error,setError]=useState('')
   const [busyId,setBusyId]=useState('')
@@ -24,10 +26,12 @@ export function ExperienceCenter() {
     setLoading(true)
     setError('')
     try{
-      const [rows,governanceStatus]=await Promise.all([
-        getExperiences(status,signal),getExperienceGovernanceStatus(signal),
+      const [rows,governanceStatus,queue]=await Promise.all([
+        status==='candidate'?Promise.resolve([]):getExperiences(status,signal),
+        getExperienceGovernanceStatus(signal),
+        status==='candidate'?getExperienceReviewQueue(signal):Promise.resolve(null),
       ])
-      setExperiences(rows)
+      setExperiences(rows);setReviewQueue(queue)
       setGovernance(governanceStatus)
     }
     catch(reason){if(!(reason instanceof DOMException&&reason.name==='AbortError'))setError('经验中心暂时无法读取本地经验库。')}
@@ -77,12 +81,13 @@ export function ExperienceCenter() {
 
       {error&&<p className="experience-error" role="alert">{error}</p>}
       {loading&&<p className="experience-empty">正在读取本地经验库…</p>}
-      {!loading&&!error&&experiences.length===0&&(
+      {!loading&&!error&&status==='candidate'&&reviewQueue&&reviewQueue.cards.length>0&&<ExperienceReviewPanel queue={reviewQueue} onApplied={()=>void load()}/>}
+      {!loading&&!error&&((status==='candidate'&&reviewQueue?.cards.length===0)||(status!=='candidate'&&experiences.length===0))&&(
         <section className="experience-empty"><h2>当前没有{FILTERS.find(item=>item.value===status)?.label}</h2><p>普通成功回答不会制造候选；只有新的通用方法或失败模式才会进入这里。</p></section>
       )}
-      <section className="experience-grid" aria-live="polite">
+      {status!=='candidate'&&<section className="experience-grid" aria-live="polite">
         {experiences.map(experience=><ExperienceCard key={experience.experience_id} experience={experience} busy={busyId===experience.experience_id} onReview={onReview}/>)}
-      </section>
+      </section>}
     </div>
   )
 }

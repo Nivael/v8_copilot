@@ -18,6 +18,7 @@ from experience_contract import (
     ExperienceReviewRequest,
     ExperienceStatus,
 )
+from experience_topics import detect_topic_tags, retrieval_score
 
 
 def _json(value: Any) -> str:
@@ -62,6 +63,7 @@ class ResearchRunRecord(ResearchRunCreate):
     run_id: str = Field(pattern=r"^RUN-[A-F0-9]{24}$")
     created_at: str
     experience_candidate_ids: list[str] = Field(default_factory=list)
+    feedback_count: int = Field(default=0, ge=0)
 
 
 class EvidencePackAuditRecord(StrictModel):
@@ -110,7 +112,8 @@ class ResearchRunLedger:
                 category text not null,
                 feedback_text text not null,
                 submitted_by text not null,
-                created_at text not null
+                created_at text not null,
+                dedupe_key text
             );
             create table if not exists run_experience_links (
                 run_id text not null references research_runs(run_id),
@@ -137,7 +140,48 @@ class ResearchRunLedger:
             connection.execute(
                 "alter table research_runs add column decision_audit_json text not null default '{}'"
             )
+        feedback_columns = {
+            str(row[1]) for row in connection.execute("pragma table_info(run_feedback)")
+        }
+        if "dedupe_key" not in feedback_columns:
+            connection.execute("alter table run_feedback add column dedupe_key text")
+        seen_feedback_keys = {
+            str(row[0]) for row in connection.execute(
+                "select dedupe_key from run_feedback where dedupe_key is not null"
+            ).fetchall()
+        }
+        for row in connection.execute(
+            "select feedback_id,run_id,category,feedback_text,submitted_by from run_feedback "
+            "where dedupe_key is null order by created_at,feedback_id"
+        ).fetchall():
+            key = self._feedback_dedupe_key(
+                str(row["run_id"]), str(row["category"]),
+                str(row["feedback_text"]), str(row["submitted_by"]),
+            )
+            if key in seen_feedback_keys:
+                key = hashlib.sha256(
+                    f"legacy-duplicate:{key}:{row['feedback_id']}".encode("utf-8")
+                ).hexdigest()
+            seen_feedback_keys.add(key)
+            connection.execute(
+                "update run_feedback set dedupe_key=? where feedback_id=?",
+                (key, str(row["feedback_id"])),
+            )
+        connection.execute(
+            "create unique index if not exists idx_run_feedback_dedupe "
+            "on run_feedback(dedupe_key)"
+        )
         return connection
+
+    @staticmethod
+    def _feedback_dedupe_key(
+        run_id: str, category: str, feedback_text: str, submitted_by: str,
+    ) -> str:
+        normalized = " ".join(feedback_text.casefold().split())
+        return hashlib.sha256(_json({
+            "run_id": run_id, "category": category,
+            "feedback_text": normalized, "submitted_by": submitted_by.casefold(),
+        }).encode("utf-8")).hexdigest()
 
     def _connect_readonly(self) -> sqlite3.Connection | None:
         if not self.path.is_file():
@@ -238,16 +282,26 @@ class ResearchRunLedger:
         feedback_text: str,
         submitted_by: str,
     ) -> str:
-        feedback_id = f"FB-{uuid4().hex[:20].upper()}"
+        dedupe_key = self._feedback_dedupe_key(
+            run_id, category, feedback_text, submitted_by,
+        )
         with self._connect() as connection:
             exists = connection.execute(
                 "select 1 from research_runs where run_id=?", (run_id,)
             ).fetchone()
             if exists is None:
                 raise KeyError(run_id)
+            existing = connection.execute(
+                "select feedback_id from run_feedback where dedupe_key=?", (dedupe_key,)
+            ).fetchone()
+            if existing is not None:
+                return str(existing["feedback_id"])
+            feedback_id = f"FB-{uuid4().hex[:20].upper()}"
             connection.execute(
-                "insert into run_feedback values (?,?,?,?,?,?)",
-                (feedback_id, run_id, category, feedback_text, submitted_by, _now()),
+                "insert into run_feedback "
+                "(feedback_id,run_id,category,feedback_text,submitted_by,created_at,dedupe_key) "
+                "values (?,?,?,?,?,?,?)",
+                (feedback_id, run_id, category, feedback_text, submitted_by, _now(), dedupe_key),
             )
         return feedback_id
 
@@ -265,7 +319,8 @@ class ResearchRunLedger:
         with connection:
             rows = connection.execute(
                 "select r.*, coalesce((select json_group_array(experience_id) "
-                "from run_experience_links l where l.run_id=r.run_id), '[]') as candidates "
+                "from run_experience_links l where l.run_id=r.run_id), '[]') as candidates, "
+                "(select count(*) from run_feedback f where f.run_id=r.run_id) as feedback_count "
                 "from research_runs r order by created_at desc limit ?",
                 (limit,),
             ).fetchall()
@@ -278,7 +333,8 @@ class ResearchRunLedger:
         with connection:
             row = connection.execute(
                 "select r.*, coalesce((select json_group_array(experience_id) "
-                "from run_experience_links l where l.run_id=r.run_id), '[]') as candidates "
+                "from run_experience_links l where l.run_id=r.run_id), '[]') as candidates, "
+                "(select count(*) from run_feedback f where f.run_id=r.run_id) as feedback_count "
                 "from research_runs r where run_id=?",
                 (run_id,),
             ).fetchone()
@@ -305,6 +361,7 @@ class ResearchRunLedger:
             turn_id=row["turn_id"], started_at=row["started_at"],
             completed_at=row["completed_at"], created_at=row["created_at"],
             experience_candidate_ids=_loads(row["candidates"]),
+            feedback_count=int(row["feedback_count"]),
         )
 
 
@@ -316,6 +373,7 @@ class ExperienceRepository:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         connection = sqlite3.connect(self.path)
         connection.row_factory = sqlite3.Row
+        connection.execute("pragma foreign_keys=on")
         connection.executescript("""
             create table if not exists experiences (
                 experience_id text primary key,
@@ -342,6 +400,19 @@ class ExperienceRepository:
                 note text not null,
                 merge_target text,
                 created_at text not null
+            );
+            create table if not exists experience_review_sessions (
+                review_session_id text primary key,
+                source_packet text not null,
+                queue_json text not null,
+                created_at text not null
+            );
+            create table if not exists experience_review_decisions (
+                review_session_id text not null references experience_review_sessions(review_session_id),
+                card_id text not null,
+                decision_json text not null,
+                created_at text not null,
+                primary key (review_session_id, card_id)
             );
         """)
         return connection
@@ -372,9 +443,17 @@ class ExperienceRepository:
             if existing is not None:
                 record = self._record(existing)
                 merged_sources = sorted(set(record.source_run_refs) | set(value.source_run_refs))
-                if merged_sources != record.source_run_refs:
+                merged_topics = sorted(set(record.topic_tags) | set(value.topic_tags))
+                merged_validation = sorted(set(record.validation_refs) | set(value.validation_refs))
+                if (
+                    merged_sources != record.source_run_refs
+                    or merged_topics != record.topic_tags
+                    or merged_validation != record.validation_refs
+                ):
                     payload = record.model_dump(mode="json")
                     payload["source_run_refs"] = merged_sources
+                    payload["topic_tags"] = merged_topics
+                    payload["validation_refs"] = merged_validation
                     connection.execute(
                         "update experiences set payload_json=? where experience_id=?",
                         (_json(payload), record.experience_id),
@@ -493,25 +572,22 @@ class ExperienceRepository:
         return updated
 
     def retrieve_accepted(self, question: str, *, limit: int = 8) -> list[dict[str, Any]]:
-        tokens = {token for token in question.casefold().replace("？", " ").split() if token}
         records = self.list(status=ExperienceStatus.ACCEPTED, limit=200)
         ranked: list[tuple[int, ExperienceRecord]] = []
         for record in records:
-            haystack = " ".join([
-                record.title, record.value_summary, *record.trigger_conditions,
-                *record.scope,
-            ]).casefold()
-            score = sum(1 for token in tokens if token in haystack)
-            # Chinese questions often have no spaces; trigger phrase containment is stronger.
-            normalized_triggers = {
-                trigger.removesuffix("问题").removesuffix("查询")
-                for trigger in record.trigger_conditions
-            }
-            score += 3 * sum(
-                1 for trigger in normalized_triggers
-                if len(trigger) >= 2 and trigger in question
+            searchable = [
+                *record.trigger_conditions, *record.scope,
+                record.title, record.value_summary,
+            ]
+            effective_topics = sorted(set(record.topic_tags) | set(
+                detect_topic_tags(" ".join(searchable))
+            ))
+            score = retrieval_score(
+                question,
+                topic_tags=effective_topics,
+                fields=[*effective_topics, *searchable],
             )
-            if score or any(term in question for term in record.scope):
+            if score:
                 ranked.append((score, record))
         ranked.sort(key=lambda item: (-item[0], item[1].title))
         return [
@@ -521,6 +597,7 @@ class ExperienceRepository:
                 "experience_type": record.experience_type.value,
                 "value_summary": record.value_summary,
                 "trigger_conditions": record.trigger_conditions,
+                "topic_tags": record.topic_tags,
                 "answer_rubric": record.answer_rubric,
                 "coverage_boundaries": record.coverage_boundaries,
                 "version": record.experience_version,
@@ -528,6 +605,70 @@ class ExperienceRepository:
             }
             for _, record in ranked[:limit]
         ]
+
+    def save_review_queue(self, payload: dict[str, Any]) -> None:
+        session_id = str(payload["review_session_id"])
+        source_packet = str(payload["source_packet"])
+        with self._connect() as connection:
+            existing = connection.execute(
+                "select queue_json from experience_review_sessions where review_session_id=?",
+                (session_id,),
+            ).fetchone()
+            serialized = _json(payload)
+            if existing is not None and str(existing["queue_json"]) != serialized:
+                raise ValueError("同 review_session_id 的 queue 内容不一致")
+            connection.execute(
+                "insert or ignore into experience_review_sessions values (?,?,?,?)",
+                (session_id, source_packet, serialized, _now()),
+            )
+
+    def get_review_queue(self, review_session_id: str) -> dict[str, Any]:
+        connection = self._connect_readonly()
+        if connection is None:
+            raise KeyError(review_session_id)
+        with connection:
+            row = connection.execute(
+                "select queue_json from experience_review_sessions where review_session_id=?",
+                (review_session_id,),
+            ).fetchone()
+        if row is None:
+            raise KeyError(review_session_id)
+        return _loads(str(row["queue_json"]))
+
+    def record_review_decision(
+        self, review_session_id: str, card_id: str, payload: dict[str, Any],
+    ) -> bool:
+        """Persist a decision separately; return False for an identical replay."""
+        serialized = _json(payload)
+        with self._connect() as connection:
+            existing = connection.execute(
+                "select decision_json from experience_review_decisions "
+                "where review_session_id=? and card_id=?",
+                (review_session_id, card_id),
+            ).fetchone()
+            if existing is not None:
+                if str(existing["decision_json"]) != serialized:
+                    raise ValueError("同一审阅卡已经提交过不同决定")
+                return False
+            connection.execute(
+                "insert into experience_review_decisions values (?,?,?,?)",
+                (review_session_id, card_id, serialized, _now()),
+            )
+        return True
+
+    def get_review_decision(
+        self, review_session_id: str, card_id: str,
+    ) -> dict[str, Any] | None:
+        connection = self._connect_readonly()
+        if connection is None:
+            return None
+        with connection:
+            row = connection.execute(
+                "select decision_json from experience_review_decisions "
+                "where review_session_id=? and card_id=?",
+                (review_session_id, card_id),
+            ).fetchone()
+        return _loads(str(row["decision_json"])) if row is not None else None
 
     @staticmethod
     def _record(row: sqlite3.Row) -> ExperienceRecord:

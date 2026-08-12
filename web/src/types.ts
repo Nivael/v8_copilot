@@ -95,6 +95,7 @@ export interface Experience {
   title:string
   value_summary:string
   trigger_conditions:string[]
+  topic_tags:string[]
   scope:string[]
   required_inputs:string[]
   query_plan:string[]
@@ -136,6 +137,7 @@ export interface ResearchRun {
   tool_calls:string[]
   experience_hits:string[]
   experience_candidate_ids:string[]
+  feedback_count:number
   agent_surface:string
   model:string
   config_digest:string
@@ -204,4 +206,55 @@ export interface EvidencePackAuditRecord {
   pack_digest:string
   payload:EvidencePackPayload
   created_at:string
+}
+
+export type ExperienceReviewDecisionValue = 'accept_suggested'|'need_more_evidence'|'reject'|'defer'
+export interface ExperienceReviewOption {value:ExperienceReviewDecisionValue;label:string;description:string}
+export interface ExperienceReviewExample {run_id:string;question:string;intent:string;answer_excerpt:string;source_pointer:string}
+export interface ExperienceReviewCard {
+  card_id:string
+  experience_id:string
+  experience_version:number
+  title:string
+  affected_area:string
+  target_field:'experience_status'
+  scope:'experience_cluster'
+  decision_requested:string
+  why_surfaced:string
+  recommendation:ExperienceReviewDecisionValue
+  recommendation_label:string
+  recommendation_reason:string
+  impact:string
+  affected_count:number
+  options:ExperienceReviewOption[]
+  evidence_examples:ExperienceReviewExample[]
+  counterexamples:ExperienceReviewExample[]
+  prior_decisions:string[]
+  experience:Experience
+}
+export interface ExperienceReviewQueue {
+  review_session_id:string
+  review_version:'v8_experience_batch_review_v1'
+  title:string
+  source_packet:string
+  created_at:string
+  max_pending:number
+  cards:ExperienceReviewCard[]
+}
+export interface ExperienceReviewDecision {
+  card_id:string
+  decision:ExperienceReviewDecisionValue
+  note:string
+  target_field:'experience_status'
+  affected_area:string
+  scope:'experience_cluster'
+  recommended_decision:ExperienceReviewDecisionValue
+  question:string
+}
+export interface ExperienceReviewDecisionExport {
+  review_session_id:string
+  review_version:'v8_experience_batch_review_v1'
+  exported_at:string
+  source_packet:string
+  decisions:ExperienceReviewDecision[]
 }

@@ -1,6 +1,6 @@
-import {CheckCircle2, ChevronDown, Clock3, FileClock, Scale, ShieldAlert} from 'lucide-react'
+import {CheckCircle2, ChevronDown, Clock3, FileClock, MessageSquarePlus, Scale, ShieldAlert} from 'lucide-react'
 import {useEffect, useMemo, useState} from 'react'
-import {getEvidencePack, getResearchRuns} from './api'
+import {getEvidencePack, getResearchRuns, submitRunFeedback} from './api'
 import type {
   DecisionAudit, EvidenceBacking, EvidencePackAuditRecord, ResearchRun,
 } from './types'
@@ -46,6 +46,34 @@ function DecisionAuditView({audit}:{audit:DecisionAudit}) {
     </div>
     {audit.alternatives.length>0&&<details><summary>查看备选解释如何处理</summary><ul>{audit.alternatives.map((item,index)=><li key={`${item.label}-${index}`}><strong>{dispositionLabels[item.disposition]}：{item.label}</strong><span>{item.reason}</span></li>)}</ul></details>}
     <p className="audit-boundary">这是回答者提交并经 backing 校验的结构化判断说明，不是模型隐藏思维过程，也不使用伪精确概率。</p>
+  </section>
+}
+
+const feedbackActions=[
+  {category:'query_plan',label:'沉淀这个方法',text:'这次研究使用了值得在同类问题中复用的方法。'},
+  {category:'anti_pattern',label:'记录错误模式',text:'这次回答暴露了应避免的可泛化错误模式。'},
+  {category:'presentation',label:'只改表达',text:'主回答应该先给人话判断，再下沉口径和证据细节。'},
+  {category:'no_experience',label:'不值得沉淀',text:'本次反馈只针对单次回答，不形成可复用经验。'},
+] as const
+
+function RunFeedback({run}:{run:ResearchRun}) {
+  const [note,setNote]=useState('')
+  const [message,setMessage]=useState('')
+  const [busy,setBusy]=useState('')
+  async function send(action:typeof feedbackActions[number]){
+    setBusy(action.category);setMessage('')
+    try{
+      const result=await submitRunFeedback(run.run_id,action.category,note.trim()||action.text)
+      setMessage(result.experience_candidate?`已记录，并归入候选“${result.experience_candidate.title}”。`:'已记录；本次不生成经验候选。')
+      setNote('')
+    }catch{setMessage('反馈未写入，请稍后重试。')}
+    finally{setBusy('')}
+  }
+  return <section className="run-feedback" aria-label="本次研究反馈">
+    <header><MessageSquarePlus size={16}/><div><h3>这次有什么值得留下？</h3><p>点一次即可；只有通用方法或错误会进入候选，仍需你在经验中心接受。</p></div></header>
+    <div>{feedbackActions.map(action=><button type="button" key={action.category} disabled={Boolean(busy)} onClick={()=>void send(action)}>{busy===action.category?'正在记录…':action.label}</button>)}</div>
+    <details><summary>补一句可选说明</summary><textarea value={note} onChange={event=>setNote(event.target.value)} placeholder="例如：同日十份附件要按一套证据包处理。"/></details>
+    {message&&<p role="status">{message}</p>}
   </section>
 }
 
@@ -107,6 +135,7 @@ export function RunAudit() {
           <div className="audit-meta"><span><Clock3 size={13}/>{new Date(run.created_at).toLocaleString('zh-CN')}</span><span>{run.normalized_intent}</span><span>{run.evidence_pack_ids.length} 个 EvidencePack</span><span>{run.experience_candidate_ids.length} 个经验候选</span></div>
           <details><summary>查看回答与基础审计</summary><pre>{run.final_answer}</pre><dl>{Object.entries(run.source_freshness).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><pre>{JSON.stringify(run.validation_report,null,2)}</pre></details>
           {isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}
+          <RunFeedback run={run}/>
           <section className="pack-list" aria-label="EvidencePack 列表"><h3>EvidencePack</h3>{run.evidence_pack_ids.map(packId=><EvidencePackView key={packId} packId={packId} run={run}/>)}</section>
         </article>)}
       </section>

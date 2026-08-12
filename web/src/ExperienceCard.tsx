@@ -38,6 +38,7 @@ export function ExperienceCard({experience, busy, onReview}: ExperienceCardProps
       </header>
       <p className="experience-value">{experience.value_summary}</p>
       <div className="experience-triggers" aria-label="触发条件">
+        {experience.topic_tags.map(value=><span className="topic-tag" key={`topic-${value}`}>{value}</span>)}
         {experience.trigger_conditions.map(value=><span key={value}>{value}</span>)}
       </div>
       <dl className="experience-meta">

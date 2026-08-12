@@ -41,6 +41,7 @@ class AcceptedRegistryRecord(StrictModel):
     title: str
     value_summary: str
     trigger_conditions: list[str]
+    topic_tags: list[str] = Field(default_factory=list)
     scope: list[str]
     required_inputs: list[str]
     query_plan: list[str]
@@ -161,6 +162,7 @@ def export_accepted_registry(
             title=row.title,
             value_summary=row.value_summary,
             trigger_conditions=row.trigger_conditions,
+            topic_tags=row.topic_tags,
             scope=row.scope,
             required_inputs=row.required_inputs,
             query_plan=row.query_plan,
@@ -313,6 +315,11 @@ class PytestRegressionExecutor:
         "regression:source_absence_scope": [
             "tests/test_real_question_recovery.py", "tests/test_evidence_gateway.py",
         ],
+        "regression:entity_scope_boundary": ["tests/test_experience_retrieval.py"],
+        "regression:same_day_evidence_bundle": ["tests/test_experience_retrieval.py"],
+        "regression:right_censoring": ["tests/test_experience_retrieval.py"],
+        "regression:discipline_taxonomy": ["tests/test_experience_retrieval.py"],
+        "regression:point_in_time_universe": ["tests/test_experience_retrieval.py"],
     }
     ALLOWED_TEST_FILES = {
         "tests/test_recruitment_precedent.py",

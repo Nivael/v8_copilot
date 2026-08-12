@@ -39,6 +39,7 @@ from experience_contract import (
     ExperienceReviewRequest,
     ExperienceStatus,
 )
+from experience_auto_accept import auto_accept_candidate
 from experience_distiller import distill_run_feedback
 from experience_governance import (
     ExperienceGovernanceRepository,
@@ -329,12 +330,23 @@ def add_research_feedback(
     run = research_run_ledger.get(run_id)
     candidate_input = distill_run_feedback(run, request)
     candidate = None
+    auto_acceptance = None
     if candidate_input is not None:
         candidate = experience_repository.propose(candidate_input)
         research_run_ledger.link_experience(run_id, candidate.experience_id, "candidate_source")
+        auto_acceptance = auto_accept_candidate(
+            candidate,
+            repository=experience_repository,
+            ledger=research_run_ledger,
+            registry_output=_accepted_registry_output(),
+        )
+        candidate = experience_repository.get(candidate.experience_id)
     return {
         "feedback_id": feedback_id,
         "experience_candidate": candidate.model_dump(mode="json") if candidate else None,
+        "auto_acceptance": (
+            auto_acceptance.model_dump(mode="json") if auto_acceptance else None
+        ),
     }
 
 
@@ -430,7 +442,12 @@ def apply_experience_review_decisions(
 )
 def propose_experience(request: ExperienceCandidateInput) -> ExperienceRecord:
     """Codex and deterministic distillers may only create candidate records."""
-    return experience_repository.propose(request)
+    record = experience_repository.propose(request)
+    auto_accept_candidate(
+        record, repository=experience_repository, ledger=research_run_ledger,
+        registry_output=_accepted_registry_output(),
+    )
+    return experience_repository.get(record.experience_id)
 
 
 @app.get("/api/v1/experiences", response_model=list[ExperienceRecord])
@@ -462,6 +479,8 @@ def review_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),
 ) -> ExperienceRecord:
     try:
+        if request.actor_type == "owner_policy":
+            raise PermissionError("owner_policy 只能由本地自动晋级器调用")
         return _review_experience_record(experience_id, request)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="experience 不存在") from exc

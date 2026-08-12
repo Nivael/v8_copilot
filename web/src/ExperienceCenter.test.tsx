@@ -30,14 +30,18 @@ describe('ExperienceCenter',()=>{
         {value:'defer',label:'稍后再看',description:'保留 candidate。'},
       ],evidence_examples:[{run_id:'RUN-1',question:'是否有先例？',intent:'precedent',answer_excerpt:'存在代表案例。',source_pointer:'research_run:RUN-1'}],counterexamples:[],prior_decisions:[],experience:candidate,
     }]}
-    const fetchMock=vi.spyOn(globalThis,'fetch')
-      .mockResolvedValueOnce(new Response(JSON.stringify(governance),{status:200}))
-      .mockResolvedValueOnce(new Response(JSON.stringify(queue),{status:200}))
-      .mockResolvedValueOnce(new Response(JSON.stringify({review_session_id:queue.review_session_id,applied:[{card_id:candidate.experience_id,status:'accepted',replayed:false}]}),{status:200}))
-      .mockResolvedValueOnce(new Response(JSON.stringify(governance),{status:200}))
-      .mockResolvedValueOnce(new Response(JSON.stringify({...queue,cards:[]}),{status:200}))
+    let submitted=false
+    const fetchMock=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
+      const url=String(input)
+      if(url.includes('/decisions')){submitted=true;return new Response(JSON.stringify({review_session_id:queue.review_session_id,applied:[{card_id:candidate.experience_id,status:'accepted',replayed:false}]}),{status:200})}
+      if(url.includes('experience-governance'))return new Response(JSON.stringify(governance),{status:200})
+      if(url.includes('experience-review'))return new Response(JSON.stringify(submitted?{...queue,cards:[]}:queue),{status:200})
+      return new Response(JSON.stringify([]),{status:200})
+    })
 
     render(<ExperienceCenter/>)
+    expect(await screen.findByRole('heading',{name:'当前没有已接受'})).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button',{name:'自动待验证'}))
     expect(await screen.findByRole('heading',{name:'事件窗口连接逐日路径'})).toBeInTheDocument()
     fireEvent.click(screen.getByText('查看方法、边界和代表运行'))
     expect(screen.getByText('历史先例不预测未来')).toBeInTheDocument()
@@ -45,7 +49,8 @@ describe('ExperienceCenter',()=>{
     fireEvent.click(screen.getByRole('button',{name:/提交已选决定/}))
 
     await waitFor(()=>expect(screen.queryByRole('heading',{name:'事件窗口连接逐日路径'})).not.toBeInTheDocument())
-    const init=fetchMock.mock.calls[2][1] as RequestInit
+    const decisionCall=fetchMock.mock.calls.find(call=>String(call[0]).includes('/decisions'))
+    const init=decisionCall?.[1] as RequestInit
     const body=JSON.parse(String(init.body))
     expect(body.review_session_id).toBe(queue.review_session_id)
     expect(body.decisions[0].decision).toBe('accept_suggested')

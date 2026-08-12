@@ -1,5 +1,5 @@
 import type {
-  Dossier, EvidencePackAuditRecord, Experience, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
+  Dossier, EvidencePackAuditRecord, Experience, ExperienceAutoAcceptance, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
   ExperienceReviewQueue, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
 } from './types'
 
@@ -107,7 +107,7 @@ export async function submitRunFeedback(
   runId:string,
   category:'presentation'|'coverage'|'query_plan'|'anti_pattern'|'no_experience',
   feedbackText:string,
-):Promise<{feedback_id:string;experience_candidate:Experience|null}> {
+):Promise<{feedback_id:string;experience_candidate:Experience|null;auto_acceptance:ExperienceAutoAcceptance|null}> {
   const response=await fetch(`/api/v1/research/runs/${encodeURIComponent(runId)}/feedback`,{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({category,feedback_text:feedbackText,submitted_by:'owner'}),

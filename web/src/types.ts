@@ -119,7 +119,20 @@ export interface ExperienceGovernanceStatus {
   conflicts:Array<{conflict_id:string;kind:string;severity:'blocking'|'review';detail:string}>
   latest_regression:Record<string,unknown>|null
   ordinary_success_auto_capture:false
+  auto_accept_enabled?:boolean
+  auto_accept_min_distinct_runs?:number
+  auto_accept_policy?:string
   not_evidence:true
+}
+
+export interface ExperienceAutoAcceptance {
+  experience_id:string
+  outcome:'accepted'|'waiting_for_replication'|'blocked'|'unchanged'
+  policy_id:string
+  distinct_source_runs:number
+  minimum_source_runs:number
+  reason:string
+  checks:Array<{validation_ref:string;status:'passed'|'failed'|'unverified';detail:string}>
 }
 
 export interface ResearchRun {

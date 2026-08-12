@@ -31,6 +31,7 @@ class ApplicableExperience(StrictModel):
     experience_type: str
     value_summary: str
     trigger_conditions: list[str]
+    topic_tags: list[str] = Field(default_factory=list)
     answer_rubric: list[str]
     coverage_boundaries: list[str]
     version: int = Field(ge=1)

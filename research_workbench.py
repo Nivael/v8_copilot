@@ -21,9 +21,14 @@ from evidence_gateway import (
     validate_research_draft,
 )
 from experience_contract import ExperienceCandidateInput, ExperienceFeedbackRequest, ExperienceStatus
+from experience_auto_accept import auto_accept_candidate
 from experience_distiller import distill_run_feedback
 from research_repository import ExperienceRepository, ResearchRunCreate, ResearchRunLedger
-from settings import EXPERIENCE_REPOSITORY_DB, RESEARCH_RUN_LEDGER_DB
+from settings import (
+    ACCEPTED_EXPERIENCE_REGISTRY_PATH,
+    EXPERIENCE_REPOSITORY_DB,
+    RESEARCH_RUN_LEDGER_DB,
+)
 
 
 def _write_or_print(payload: dict | list, output: Path | None) -> None:
@@ -38,6 +43,12 @@ def _write_or_print(payload: dict | list, output: Path | None) -> None:
 
 def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _registry_output(repository: ExperienceRepository) -> Path:
+    if repository.path == EXPERIENCE_REPOSITORY_DB:
+        return ACCEPTED_EXPERIENCE_REGISTRY_PATH
+    return repository.path.parent / "accepted_experiences_v1.json"
 
 
 def _digest(value: dict) -> str:
@@ -215,12 +226,21 @@ def main() -> int:
         )
         candidate_input = distill_run_feedback(ledger.get(args.run_id), request)
         candidate = experience_repo.propose(candidate_input) if candidate_input else None
+        auto_acceptance = None
         if candidate:
             ledger.link_experience(args.run_id, candidate.experience_id, "candidate_source")
+            auto_acceptance = auto_accept_candidate(
+                candidate, repository=experience_repo, ledger=ledger,
+                registry_output=_registry_output(experience_repo),
+            )
+            candidate = experience_repo.get(candidate.experience_id)
         _write_or_print({
             "feedback_id": feedback_id,
             "experience_candidate": (
                 candidate.model_dump(mode="json") if candidate else None
+            ),
+            "auto_acceptance": (
+                auto_acceptance.model_dump(mode="json") if auto_acceptance else None
             ),
         }, None)
         return 0
@@ -233,6 +253,11 @@ def main() -> int:
 
     candidate = ExperienceCandidateInput.model_validate(_read_json(args.candidate))
     result = experience_repo.propose(candidate)
+    auto_accept_candidate(
+        result, repository=experience_repo, ledger=ledger,
+        registry_output=_registry_output(experience_repo),
+    )
+    result = experience_repo.get(result.experience_id)
     _write_or_print(result.model_dump(mode="json"), None)
     return 0
 

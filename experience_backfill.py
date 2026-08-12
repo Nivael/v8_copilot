@@ -6,9 +6,14 @@ import hashlib
 import json
 
 from experience_contract import ExperienceCandidateInput, ExperienceFeedbackRequest, ExperienceType
+from experience_auto_accept import auto_accept_all
 from experience_distiller import distill_feedback
 from research_repository import ExperienceRepository, ResearchRunLedger
-from settings import EXPERIENCE_REPOSITORY_DB, RESEARCH_RUN_LEDGER_DB
+from settings import (
+    ACCEPTED_EXPERIENCE_REGISTRY_PATH,
+    EXPERIENCE_REPOSITORY_DB,
+    RESEARCH_RUN_LEDGER_DB,
+)
 
 
 BACKFILL_VERSION = "v8_experience_backfill_24_runs_v1"
@@ -200,7 +205,14 @@ def main() -> int:
             for run_id in record.source_run_refs:
                 if run_id.startswith("RUN-"):
                     ledger.link_experience(run_id, record.experience_id, "backfill_cluster_source")
+        auto_results = auto_accept_all(
+            repository=repository, ledger=ledger,
+            registry_output=ACCEPTED_EXPERIENCE_REGISTRY_PATH,
+        )
         result["experience_ids"] = [row.experience_id for row in records]
+        result["auto_acceptance"] = [
+            row.model_dump(mode="json") for row in auto_results
+        ]
         result["applied"] = True
     else:
         result["applied"] = False

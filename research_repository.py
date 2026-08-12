@@ -515,8 +515,8 @@ class ExperienceRepository:
         experience_id: str,
         request: ExperienceReviewRequest,
     ) -> ExperienceRecord:
-        if request.action == "accept" and request.actor_type != "human":
-            raise PermissionError("只有 human review 可以接受经验")
+        if request.action == "accept" and request.actor_type not in {"human", "owner_policy"}:
+            raise PermissionError("只有 human review 或预授权 owner policy 可以接受经验")
         target = {
             "accept": ExperienceStatus.ACCEPTED,
             "ignore": ExperienceStatus.IGNORED,

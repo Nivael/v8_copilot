@@ -67,7 +67,7 @@ export function ExperienceCard({experience, busy, onReview}: ExperienceCardProps
         </footer>
       )}
       {experience.status === 'accepted' && (
-        <footer className="accepted-note"><Check size={15}/>已由 {experience.reviewed_by} 人工接受；后续使用仍会重查最新证据。</footer>
+        <footer className="accepted-note"><Check size={15}/>{experience.reviewed_by?.startsWith('owner_preapproved_')?'已通过 owner 预授权自动门':'已由 owner 明确接受'}；后续使用仍会重查最新证据。</footer>
       )}
       {experience.status === 'merged' && (
         <footer className="accepted-note"><GitMerge size={15}/>已合并到其他经验。</footer>

@@ -64,13 +64,16 @@ function RunFeedback({run}:{run:ResearchRun}) {
     setBusy(action.category);setMessage('')
     try{
       const result=await submitRunFeedback(run.run_id,action.category,note.trim()||action.text)
-      setMessage(result.experience_candidate?`已记录，并归入候选“${result.experience_candidate.title}”。`:'已记录；本次不生成经验候选。')
+      if(result.auto_acceptance?.outcome==='accepted')setMessage(`已通过自动门并写入经验“${result.experience_candidate?.title}”。`)
+      else if(result.auto_acceptance?.outcome==='waiting_for_replication')setMessage(`已记录；同类方法再被一个真实运行复现后会自动验证。`)
+      else if(result.auto_acceptance?.outcome==='blocked')setMessage('已记录，但自动验证未通过；系统已 blocked，不需要你处理。')
+      else setMessage(result.experience_candidate?`已记录，并归入候选“${result.experience_candidate.title}”。`:'已记录；本次不生成经验候选。')
       setNote('')
     }catch{setMessage('反馈未写入，请稍后重试。')}
     finally{setBusy('')}
   }
   return <section className="run-feedback" aria-label="本次研究反馈">
-    <header><MessageSquarePlus size={16}/><div><h3>这次有什么值得留下？</h3><p>点一次即可；只有通用方法或错误会进入候选，仍需你在经验中心接受。</p></div></header>
+    <header><MessageSquarePlus size={16}/><div><h3>这次有什么值得留下？</h3><p>点一次即可；方法被两个真实运行复现并通过回归后自动写入，不再需要你审卡。</p></div></header>
     <div>{feedbackActions.map(action=><button type="button" key={action.category} disabled={Boolean(busy)} onClick={()=>void send(action)}>{busy===action.category?'正在记录…':action.label}</button>)}</div>
     <details><summary>补一句可选说明</summary><textarea value={note} onChange={event=>setNote(event.target.value)} placeholder="例如：同日十份附件要按一套证据包处理。"/></details>
     {message&&<p role="status">{message}</p>}

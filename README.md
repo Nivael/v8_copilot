@@ -64,7 +64,7 @@ Codex 工作台增量接口：
 - `POST /api/v1/research/runs/{run_id}/feedback` — 绑定反馈并按新颖性生成经验候选；
 - `GET /api/v1/experience-review/queue` 与 `POST /api/v1/experience-review/decisions` — 最多 10 个方法簇的批量人审及幂等决定导入；
 - `POST /api/v1/experiences/candidates` 与 `GET /api/v1/experiences` — 候选写入与经验检索；
-- `POST /api/v1/experiences/{experience_id}/review` — 人工审阅状态转换。
+- `POST /api/v1/experiences/{experience_id}/review` — 异常情况下的人工审阅状态转换；公开接口不能冒充 owner policy。
 
 Evidence Gateway 只读研究 SQLite 和本地材料化缓存，不联网、不写研究数据库。运行审计与
 经验库分别使用 local-only SQLite；两者均不是研究证据库。`accepted` 经验仍标记
@@ -81,8 +81,9 @@ uv run python research_workbench.py validate --pack /tmp/st-pack.json --draft /t
 uv run python research_workbench.py record --pack /tmp/st-pack.json --draft /tmp/st-draft.json --validation /tmp/st-validation.json
 ```
 
-只有显式 `record`、`feedback`、`propose`、seed 或人工 review 会写独立本地库。普通成功回答
-不会自动生成经验；Codex 和后台规则也不能把 candidate 升级为 accepted。
+只有显式 `record`、`feedback`、`propose`、seed、人工 review 或 owner 预授权自动晋级器会写
+独立本地库。普通成功回答不会自动生成经验；candidate 至少被 2 个真实运行复现、白名单回归
+实际通过且无 blocking conflict 后，才由 `owner_preapproved_replicated_v1` 自动升级。
 
 `/answers/stream` 使用 NDJSON，只发送完整、已验证的领域事件：`accepted`、
 `interpreted`、`routed`、`answer_card`、`claim_block`、`degraded`、`completed`、
@@ -138,7 +139,7 @@ point-in-time 市值数据面：按收益窗口起点的历史 ST 名单与总�
 `experience_governance.py`，负责 accepted registry 导出、到期复验、冲突检测和失败自动 blocked。
 经验日常运营、人类最小动作和 24-run 首轮回填见
 [EXPERIENCE_OPERATIONS_PRD.md](EXPERIENCE_OPERATIONS_PRD.md)；`experience_backfill.py` 默认只做
-dry run，显式 `--apply` 也只生成 candidate，不会绕过 owner 接受门。
+dry run；显式 `--apply` 生成 candidate，并让满足 owner 预授权门的簇自动晋级。
 
 ## 契约与文件
 
@@ -164,7 +165,8 @@ dry run，显式 `--apply` 也只生成 candidate，不会绕过 owner 接受门
 - `llm_adapter.py` — W1 API 与 W2 LLM 边界之间的薄集成层。
 - `evidence_gateway.py` — AnswerCard 到 EvidencePack 的只读适配和 Codex draft 校验。
 - `research_repository.py` — 独立 Research Run Ledger 与 Experience Repository。
-- `experience_contract.py` / `experience_distiller.py` — 非证据经验契约、人工晋级闸门和候选提炼。
+- `experience_contract.py` / `experience_distiller.py` — 非证据经验契约、候选提炼和接受来源审计。
+- `experience_auto_accept.py` — 两次真实复现、白名单回归、冲突与通用性四重自动晋级门。
 - `experience_governance.py` / `experience_registry/` — 去敏 registry、冲突检测和定期回归治理。
 - `experience_review.py` / `experience_topics.py` / `experience_backfill.py` — 批量决策卡、中文主题检索和 24-run 聚类回填。
 - `research_workbench.py` — 项目 skill 使用的本地 CLI。
@@ -225,4 +227,4 @@ Batch 2 W1 另验证：
 
 冻结 AnswerCard、API、QuestionCard、QueryTemplate 和 Research Memory contracts 保持不变。
 任何新事实字段仍先进入确定性 Core 和 AnswerCard。经验契约是消费侧增量对象；候选可持久化，
-但只有 owner 的人工 review 才能接受，且接受后仍不是证据。
+只有 owner 明确决定或其冻结的自动策略才能接受，且接受后仍不是证据。

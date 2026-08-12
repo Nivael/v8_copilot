@@ -326,6 +326,10 @@ class PytestRegressionExecutor:
         "tests/test_p2_4_analysis_engine.py",
     }
 
+    @classmethod
+    def supports(cls, validation_ref: str) -> bool:
+        return validation_ref in cls.NAMED_TARGETS or validation_ref in cls.ALLOWED_TEST_FILES
+
     def __init__(self, project_root: Path = PROJECT_ROOT):
         self.project_root = project_root
 
@@ -421,6 +425,9 @@ def governance_status(
         "conflicts": [row.model_dump(mode="json") for row in conflicts],
         "latest_regression": latest.model_dump(mode="json") if latest else None,
         "ordinary_success_auto_capture": False,
+        "auto_accept_enabled": True,
+        "auto_accept_min_distinct_runs": 2,
+        "auto_accept_policy": "owner_preapproved_replicated_v1",
         "not_evidence": True,
     }
 

@@ -68,7 +68,7 @@ def test_read_endpoints_do_not_create_repository_files(tmp_path) -> None:
     assert not run_path.exists()
 
 
-def test_only_human_review_can_accept_experience(tmp_path) -> None:
+def test_only_human_or_owner_policy_can_accept_experience(tmp_path) -> None:
     repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
     record = repository.propose(candidate())
 
@@ -82,6 +82,15 @@ def test_only_human_review_can_accept_experience(tmp_path) -> None:
     ))
     assert accepted.status == ExperienceStatus.ACCEPTED
     assert accepted.reviewed_by == "owner"
+
+    policy_record = repository.propose(candidate(source="RUN-BBBBBBBBBBBBBBBBBBBBBBBB").model_copy(
+        update={"title": "主回答先给人话判断"}
+    ))
+    policy_accepted = repository.review(policy_record.experience_id, ExperienceReviewRequest(
+        action="accept", actor_type="owner_policy",
+        reviewed_by="owner_preapproved_replicated_v1",
+    ))
+    assert policy_accepted.status == ExperienceStatus.ACCEPTED
 
 
 def test_accepted_experience_is_retrieved_as_method_not_evidence(tmp_path) -> None:

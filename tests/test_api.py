@@ -9,6 +9,8 @@ import dossier_service
 import httpx
 from api import SPAStaticFiles
 from answer_engine import BASE_DB, EPISODE_INDEX
+from experience_auto_accept import auto_accept_candidate as run_auto_accept_candidate
+from experience_governance import RegressionCheckResult
 from fastapi import FastAPI
 from jsonschema import Draft202012Validator
 from lens_binding import RELEASE_LIBRARY
@@ -147,6 +149,14 @@ def test_experience_review_requires_human_and_filters_status(monkeypatch, tmp_pa
         json={"action": "accept", "actor_type": "codex", "reviewed_by": "codex"},
     )
     assert rejected.status_code == 403
+    policy_spoof = api_request(
+        "POST", f"/api/v1/experiences/{experience_id}/review",
+        json={
+            "action": "accept", "actor_type": "owner_policy",
+            "reviewed_by": "owner_preapproved_replicated_v1",
+        },
+    )
+    assert policy_spoof.status_code == 403
 
     accepted = api_request(
         "POST",
@@ -200,6 +210,51 @@ def test_run_feedback_creates_generic_candidate_not_question_memory(monkeypatch,
     )
     assert replay.json()["feedback_id"] == feedback.json()["feedback_id"]
     assert api_request("GET", f"/api/v1/research/runs/{run.json()['run_id']}").json()["feedback_count"] == 1
+
+
+def test_second_matching_feedback_auto_accepts_without_owner_review(monkeypatch, tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    monkeypatch.setattr(api_module, "research_run_ledger", ledger)
+    monkeypatch.setattr(api_module, "experience_repository", repository)
+
+    class PassingExecutor:
+        def run(self, validation_ref: str) -> RegressionCheckResult:
+            return RegressionCheckResult(
+                validation_ref=validation_ref, status="passed", detail="integration fake",
+            )
+
+    def auto_gate(record, **kwargs):
+        return run_auto_accept_candidate(record, executor=PassingExecutor(), **kwargs)
+
+    monkeypatch.setattr(api_module, "auto_accept_candidate", auto_gate)
+    outcomes = []
+    experience_ids = []
+    for index in (1, 2):
+        run = api_request("POST", "/api/v1/research/runs", json={
+            "request_id": f"req-auto-{index}",
+            "question_text": "两只股票怎么比较？",
+            "normalized_intent": "stock_comparison",
+            "evidence_pack_ids": ["EP-AAAAAAAAAAAAAAAAAAAA"],
+            "final_answer": "先给实质差异。",
+            "validation_report": {"valid": True},
+            "source_freshness": {"announcement": "2026-08-12"},
+            "agent_surface": "codex_desktop",
+        }).json()
+        feedback = api_request(
+            "POST", f"/api/v1/research/runs/{run['run_id']}/feedback",
+            json={
+                "feedback_text": "总览先说实质差异。",
+                "category": "presentation", "submitted_by": "owner",
+            },
+        ).json()
+        outcomes.append(feedback["auto_acceptance"]["outcome"])
+        experience_ids.append(feedback["experience_candidate"]["experience_id"])
+
+    assert outcomes == ["waiting_for_replication", "accepted"]
+    assert experience_ids[0] == experience_ids[1]
+    assert repository.get(experience_ids[1]).status.value == "accepted"
+    assert json.loads((tmp_path / "accepted_experiences_v1.json").read_text())["accepted_count"] == 1
 
 
 def test_batch_review_export_import_is_idempotent(monkeypatch, tmp_path) -> None:

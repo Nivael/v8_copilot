@@ -68,10 +68,10 @@ class ExperienceRecord(ExperienceCandidateInput):
     not_evidence: Literal[True] = True
 
     @model_validator(mode="after")
-    def accepted_is_human_reviewed_and_generic(self) -> "ExperienceRecord":
+    def accepted_has_review_provenance_and_is_generic(self) -> "ExperienceRecord":
         if self.status == ExperienceStatus.ACCEPTED:
             if self.reviewed_at is None or not self.reviewed_by:
-                raise ValueError("accepted experience 必须有人类审阅记录")
+                raise ValueError("accepted experience 必须有人工决定或 owner policy 审计记录")
             reusable = " ".join([
                 self.title, self.value_summary, *self.trigger_conditions,
                 *self.query_plan, *self.answer_rubric,
@@ -83,7 +83,7 @@ class ExperienceRecord(ExperienceCandidateInput):
 
 class ExperienceReviewRequest(StrictModel):
     action: Literal["accept", "ignore", "block", "merge", "close", "supersede"]
-    actor_type: Literal["human", "codex", "system"]
+    actor_type: Literal["human", "codex", "system", "owner_policy"]
     reviewed_by: str = Field(min_length=1, max_length=128)
     note: str = Field(default="", max_length=2000)
     merge_target: str | None = Field(default=None, pattern=r"^EXP-[A-F0-9]{20}$")

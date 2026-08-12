@@ -7,7 +7,7 @@ describe('RunAudit',()=>{
   afterEach(()=>vi.restoreAllMocks())
 
   it('drills from a run into evidence rows, lens, backing, gaps and weights',async()=>{
-    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
+    const fetchMock=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
       const url=String(input)
       if(url.includes('/api/v1/research/evidence/'))return new Response(JSON.stringify({
         pack_id:'EP-AAAAAAAAAAAAAAAAAAAA',pack_digest:'a'.repeat(64),created_at:'2026-07-15T00:00:00Z',
@@ -46,5 +46,9 @@ describe('RunAudit',()=>{
     expect(screen.getAllByText(/RL-1/).length).toBeGreaterThan(0)
     expect(screen.getByText('回答 backing')).toBeInTheDocument()
     expect(screen.getByText('Coverage gap')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button',{name:'沉淀这个方法'}))
+    expect(await screen.findByText('已记录；本次不生成经验候选。')).toBeInTheDocument()
+    const feedbackCall=fetchMock.mock.calls.find(call=>String(call[0]).includes('/feedback'))
+    expect(JSON.parse(String((feedbackCall?.[1] as RequestInit).body)).category).toBe('query_plan')
   })
 })

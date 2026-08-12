@@ -1,6 +1,6 @@
 ---
 name: st-research-codex
-description: Use for ST A-share research questions that require local announcement evidence, current official facts, restructuring stages, stock comparisons, event-window precedents, price paths, or source-freshness analysis. Orchestrates local EvidencePacks, selective primary-source web lookup, reusable accepted methods, deterministic validation, run audit, and human-reviewed experience candidates.
+description: Use for ST A-share research questions that require local announcement evidence, current official facts, restructuring stages, stock comparisons, event-window precedents, price paths, or source-freshness analysis. Orchestrates local EvidencePacks, selective primary-source web lookup, reusable accepted methods, deterministic validation, run audit, and owner-policy-governed experience candidates.
 ---
 
 # ST Research Codex
@@ -16,7 +16,7 @@ Act as the primary research host. Use the deterministic v8 engine as a fact tool
 - Keep shared comparison cutoffs separate from each stock's latest available fact.
 - Keep descriptive precedent separate from prediction.
 - Never output buy, sell, hold, position, target-price, ranking, or other action guidance.
-- Never call an experience review action that accepts a candidate. Only the human owner may do that in the experience panel.
+- Never impersonate `owner_policy` or call the public review API as that actor. Candidate promotion is owned by the local automatic gate: two real runs, executable passing regression, no blocking conflict, and generic-content validation.
 
 ## Research workflow
 
@@ -80,7 +80,7 @@ Do not propose an experience for an ordinary successful or repeated answer. Prop
 
 Candidates must be generic across objects, cite source runs, define required inputs and boundaries, and include a validation reference. They may never contain a time-sensitive stock conclusion or an old answer to reuse.
 
-Use `research_workbench.py feedback` to bind user feedback to a recorded run. Use `research_workbench.py propose` only for a complete structured candidate. Leave acceptance to the human experience panel.
+Use `research_workbench.py feedback` to bind user feedback to a recorded run. Use `research_workbench.py propose` only for a complete structured candidate. Both commands invoke the owner-preauthorized local gate; one-off methods wait for replication, while eligible methods are automatically accepted. The human panel is an exception override, not a daily step.
 
 ## Separate materialization
 

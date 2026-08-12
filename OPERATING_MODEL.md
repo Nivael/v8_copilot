@@ -164,7 +164,7 @@ as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列
 浏览器只用于审阅，不作为主问答入口：
 
 - `/runs`：查看每次回答、完整 EvidencePack、数据库行、Lens 调用、联网事实、statement backing、coverage gap、validator 结果和判断权重审计；
-- `/`：审阅可复用经验候选，只有 owner 可以接受；
+- `/`：查看 accepted 方法库存和自动待验证/blocked 异常；人工审阅只作兜底；
 - `/legacy`：旧问答兼容和回归，不承担日常主持。
 
 ## 怎样确认回答真的基于数据库和 Lens
@@ -196,7 +196,9 @@ as-of 同日；最近 10 个交易日用 11 个共同端点计算。任一序列
 
 ## 知识沉淀循环目前到哪一步
 
-闭环已经具备四层保护：研究运行进入独立 ledger；用户反馈可提炼为通用候选；只有 owner 能把候选接受为经验；accepted 经验会去除来源运行后导出为带 digest 的版本化 registry。
+闭环已经具备四层保护：研究运行进入独立 ledger；用户反馈可提炼为通用候选；owner 冻结的
+自动门要求两次真实复现、白名单回归、无 blocking conflict 和通用性校验；accepted 经验会
+去除来源运行后导出为带 digest 的版本化 registry。
 
 经验治理窗口按默认 30 天 cadence 执行：
 
@@ -206,6 +208,13 @@ python experience_governance.py verify
 python experience_governance.py export --registry-version v1
 ```
 
-`status` 检查 active 经验的冲突；blocking conflict 会阻止接受，重叠策略会要求人工审阅。`verify` 只执行到期经验的白名单回归；回归失败会自动把 accepted 转为 `blocked` 并重新导出 registry，修复后仍需 owner 复审。未知 validation ref 记为 `unverified`，不会伪报通过，也不会在没有实际失败时误封。
+`status` 检查 active 经验的冲突；blocking conflict 会阻止接受。`verify` 只执行到期经验的
+白名单回归；回归失败会自动把 accepted 转为 `blocked` 并重新导出 registry。修复后可由同一
+owner policy 重新跑自动门；未知 validation ref 保持 blocked，不伪报通过。
 
 普通成功回答仍不会自动生成经验。这是主动的污染防线，不是尚未实现的功能。
+
+经验运营不新增浏览器窗口：`/runs` 每条运行只有四个固定反馈按钮；同类方法达到两次真实复现
+后自动执行回归与冲突门并写入。`/` 默认展示 accepted 库，candidate 只是自动待验证状态；
+批量审阅、决定 JSON 和幂等导入保留为异常兜底，不再构成人类日常待办。完整契约见
+[EXPERIENCE_OPERATIONS_PRD.md](EXPERIENCE_OPERATIONS_PRD.md)。

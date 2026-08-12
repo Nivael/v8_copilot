@@ -41,6 +41,7 @@ class AcceptedRegistryRecord(StrictModel):
     title: str
     value_summary: str
     trigger_conditions: list[str]
+    topic_tags: list[str] = Field(default_factory=list)
     scope: list[str]
     required_inputs: list[str]
     query_plan: list[str]
@@ -161,6 +162,7 @@ def export_accepted_registry(
             title=row.title,
             value_summary=row.value_summary,
             trigger_conditions=row.trigger_conditions,
+            topic_tags=row.topic_tags,
             scope=row.scope,
             required_inputs=row.required_inputs,
             query_plan=row.query_plan,
@@ -313,11 +315,20 @@ class PytestRegressionExecutor:
         "regression:source_absence_scope": [
             "tests/test_real_question_recovery.py", "tests/test_evidence_gateway.py",
         ],
+        "regression:entity_scope_boundary": ["tests/test_experience_retrieval.py"],
+        "regression:same_day_evidence_bundle": ["tests/test_experience_retrieval.py"],
+        "regression:right_censoring": ["tests/test_experience_retrieval.py"],
+        "regression:discipline_taxonomy": ["tests/test_experience_retrieval.py"],
+        "regression:point_in_time_universe": ["tests/test_experience_retrieval.py"],
     }
     ALLOWED_TEST_FILES = {
         "tests/test_recruitment_precedent.py",
         "tests/test_p2_4_analysis_engine.py",
     }
+
+    @classmethod
+    def supports(cls, validation_ref: str) -> bool:
+        return validation_ref in cls.NAMED_TARGETS or validation_ref in cls.ALLOWED_TEST_FILES
 
     def __init__(self, project_root: Path = PROJECT_ROOT):
         self.project_root = project_root
@@ -414,6 +425,9 @@ def governance_status(
         "conflicts": [row.model_dump(mode="json") for row in conflicts],
         "latest_regression": latest.model_dump(mode="json") if latest else None,
         "ordinary_success_auto_capture": False,
+        "auto_accept_enabled": True,
+        "auto_accept_min_distinct_runs": 2,
+        "auto_accept_policy": "owner_preapproved_replicated_v1",
         "not_evidence": True,
     }
 

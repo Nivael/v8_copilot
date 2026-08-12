@@ -34,7 +34,9 @@ v8 已有只读 SQLite、公告缓存、episode、Lens、确定性计算、Evide
 
 维护窗口固定使用 Tushare qfq 和 CNINFO，并用独立 checkpoint SQLite 保存每个来源、每只股票的上次尝试和上次成功游标。价格复权因子变化触发单票完整重建；公告用重叠窗口和 announcement ID 合并。
 
-经验继续是方法而非事实。普通成功回答不自动沉淀；只有人工接受的经验进入去敏 registry。active 经验接受前检查冲突，accepted 经验按 cadence 运行白名单回归，实际失败自动转为 blocked。
+经验继续是方法而非事实。普通成功回答不自动沉淀；明确反馈形成的 candidate 至少被两个真实
+运行复现、白名单回归实际通过、无 blocking conflict 且通用性校验通过后，才由 owner 冻结的
+本地策略自动进入去敏 registry。accepted 经验按 cadence 复验，实际失败自动转为 blocked。
 
 ## 风险与迁移
 

@@ -287,9 +287,20 @@ def doctor(workspace_root: Path) -> int:
         result = _run([diskutil, "info", str(workspace_root)], check=False)
         detail = result.stdout + result.stderr
         encrypted = re.search(r"(?:FileVault|Encrypted):\s+Yes", detail) is not None
+        explicitly_unencrypted = re.search(
+            r"(?:FileVault|Encrypted):\s+No", detail
+        ) is not None
         checks.append(Check(
             "ssd_encryption", "pass" if encrypted else "warn",
-            "diskutil reports encryption" if encrypted else "encryption not confirmed; verify before carrying secrets",
+            (
+                "diskutil reports encryption"
+                if encrypted
+                else (
+                    "diskutil reports unencrypted; keep secrets off SSD"
+                    if explicitly_unencrypted
+                    else "encryption not confirmed; keep secrets off SSD"
+                )
+            ),
         ))
     else:
         checks.append(Check("ssd_encryption", "warn", "diskutil unavailable; verify APFS encryption manually"))

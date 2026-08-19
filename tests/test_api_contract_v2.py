@@ -92,7 +92,11 @@ def test_microcap_question_uses_window_start_factor_and_has_no_c14_debt() -> Non
         "other_st_distribution",
         "microcap_comparison_summary",
     } <= row_ids
-    assert card["source_freshness"]["market_cap_as_of"] == "2026-07-06"
+    definition = next(
+        row for row in card["body_rows"] if row["row_id"] == "microcap_definition"
+    )
+    assert card["source_freshness"]["market_cap_as_of"] == definition["因子日期"]
+    assert definition["因子日期"] == definition["收益窗口起点"]
     assert any("market_factors_v1.sqlite3::market_cap_daily" in ref for ref in card["provenance"])
     assert response.narrative is not None
     assert "微盘 ST 平均收益" in response.narrative.direct_answer.text

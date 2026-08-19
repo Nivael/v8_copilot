@@ -116,6 +116,9 @@ uv run python run_api.py
 `/legacy`，个股节点通过 ResearchContext URL 回到该兼容入口继续提问。
 
 固定的数据维护任务、研究任务和审计面板分工见 [OPERATING_MODEL.md](OPERATING_MODEL.md)。
+需要在低存储 Mac 间携带完整工作区时，使用
+[portable/README.md](portable/README.md) 的 Leibniz 单一数据根方案；不要复制 Git
+worktree 元数据或用双向文件同步复制 SQLite。
 选择性联网与离线机制的边界见 [SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md](SELECTIVE_EVIDENCE_ARCHITECTURE_2026_07_15.md)。
 全量 ST universe、市场基准和下一阶段能力差距见 [V8_NEXT_PRD.md](V8_NEXT_PRD.md)；
 按阶段验收的执行账见 [V8_NEXT_TODO.md](V8_NEXT_TODO.md)。P6 的管理人模式、

@@ -6,8 +6,11 @@ research databases onto a Mac's internal disk.
 ## Frozen architecture
 
 - GitHub is the source of truth for tracked code and documentation.
-- Leibniz `shared_data/`, `local_data/`, `local_logs/`, and `local_secrets/`
-  are the single local data source of truth for both Macs.
+- Leibniz `shared_data/`, `local_data/`, and `local_logs/` are the single local
+  data source of truth for both Macs.
+- API tokens are the only exception: each Mac keeps a few-KB copy under its
+  internal, FileVault-protected
+  `~/Library/Application Support/STResearch/secrets/` directory.
 - A clean portable workspace lives at `/Volumes/Leibniz/STResearch`; its data
   directories are symlinks to `/Volumes/Leibniz/dev/st_research` and are not
   duplicate databases.
@@ -51,7 +54,9 @@ without deletion. The internal-disk source remains the rollback copy.
    macOS Privacy & Security if prompted.
 3. Open `/Volumes/Leibniz/STResearch` as the project/environment in Codex and
    Claude.
-4. In Terminal:
+4. Put `st_invest_quant.env` and `v8_copilot.env` in the path printed by
+   `./portable/st-portable secrets-path`; set both files to mode `600`.
+5. In Terminal:
 
 ```bash
 cd /Volumes/Leibniz/STResearch/v8_copilot
@@ -103,8 +108,9 @@ run a data refresh while the browser/API or research task is active.
 
 ## Security boundary
 
-The SSD currently mounts with ownership disabled, so Unix mode bits alone are
-not a sufficient secret boundary. Verify in Disk Utility/Finder that Leibniz
-is APFS encrypted before travel. If it is not encrypted, move API tokens to
-the travel Mac's Keychain or an encrypted secrets store and leave only a
-non-secret env template on the SSD.
+Leibniz is currently APFS but unencrypted and mounts with ownership disabled.
+It must not contain API tokens. The portable wrapper therefore loads secrets
+only from the current Mac's internal secret directory. Keep that Mac protected
+with FileVault, use mode `600`, and rotate any token that was previously stored
+on the unencrypted SSD. Encrypting Leibniz is still recommended because the
+research databases and logs may themselves be sensitive.

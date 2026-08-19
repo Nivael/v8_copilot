@@ -43,7 +43,6 @@ def test_sync_dry_run_does_not_mutate_destination(monkeypatch, tmp_path, capsys)
     os.utime(source_db, (2, 2))
     (source / "shared_data").mkdir(parents=True)
     (source / "local_logs").mkdir()
-    (source / "local_secrets").mkdir()
     destination.joinpath("shared_data").mkdir(parents=True)
     monkeypatch.setattr(portable, "_run", lambda *args, **kwargs: type("Result", (), {"stdout": ""})())
     monkeypatch.setattr(portable, "_is_leibniz_path", lambda path: True)
@@ -64,7 +63,7 @@ def test_newer_destination_is_rejected(monkeypatch, tmp_path) -> None:
     _database(destination_db, "new")
     os.utime(source_db, (1, 1))
     os.utime(destination_db, (2, 2))
-    for name in ("shared_data", "local_logs", "local_secrets"):
+    for name in ("shared_data", "local_logs"):
         (source / name).mkdir(parents=True)
         (destination / name).mkdir(parents=True)
     monkeypatch.setattr(portable, "_run", lambda *args, **kwargs: type("Result", (), {"stdout": ""})())
@@ -95,16 +94,38 @@ def test_install_creates_data_links_and_workspace_instructions(monkeypatch, tmp_
     assert (workspace / "CLAUDE.md").read_text() == (workspace / "AGENTS.md").read_text()
 
 
+def test_install_archives_legacy_ssd_secret_link(monkeypatch, tmp_path) -> None:
+    data_root = tmp_path / "canonical"
+    workspace = tmp_path / "workspace"
+    for name in portable.DATA_DIRS:
+        (data_root / name).mkdir(parents=True)
+    old_secrets = data_root / "local_secrets"
+    old_secrets.mkdir()
+    workspace.mkdir()
+    (workspace / "local_secrets").symlink_to(old_secrets, target_is_directory=True)
+    monkeypatch.setattr(portable, "_clone_or_update", lambda destination, remote, ref: destination.mkdir())
+    monkeypatch.setattr(portable, "_copy_prebuilt_web", lambda destination: None)
+
+    portable.install(data_root, workspace, v8_ref="branch", upstream_ref="master")
+
+    assert not (workspace / "local_secrets").exists()
+    retired = list((data_root / "local_logs" / "portable_migration").rglob(
+        "retired-workspace-local_secrets-link"
+    ))
+    assert len(retired) == 1
+    assert retired[0].is_symlink()
+
+
 def test_secret_loader_preserves_shell_metacharacters(monkeypatch, tmp_path) -> None:
     monkeypatch.setenv("EXISTING_VALUE", "kept")
-    secrets = tmp_path / "local_secrets"
+    secrets = tmp_path / "secrets"
     secrets.mkdir()
     (secrets / "st_invest_quant.env").write_text(
         "TUSHARE_TOKEN=abc(123); .thumbcache=value/with+symbols%3D\n",
         encoding="utf-8",
     )
 
-    environment = secret_environment(tmp_path)
+    environment = secret_environment(secrets)
 
     assert environment["EXISTING_VALUE"] == "kept"
     assert environment["TUSHARE_TOKEN"] == "abc(123); .thumbcache=value/with+symbols%3D"

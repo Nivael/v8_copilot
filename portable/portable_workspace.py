@@ -21,7 +21,7 @@ V8_REMOTE = "https://github.com/Nivael/v8_copilot.git"
 UPSTREAM_REMOTE = "https://github.com/byliu-labs/ST_invest_quant.git"
 V8_REF = "codex/leibniz-portable-workspace"
 UPSTREAM_REF = "master"
-DATA_DIRS = ("shared_data", "local_data", "local_logs", "local_secrets")
+DATA_DIRS = ("shared_data", "local_data", "local_logs")
 
 
 @dataclass(frozen=True)
@@ -66,6 +66,7 @@ This is the travel workspace on Leibniz. Last generated: {datetime.now(timezone.
 - Active product: `v8_copilot/`.
 - Upstream ingestion code: `ST_invest_quant/`.
 - Canonical local data root: `{data_root}` through the symlinked data directories here.
+- Secrets stay on each Mac under `~/Library/Application Support/STResearch/secrets`.
 - Run `v8_copilot/portable/st-portable doctor` before work.
 - GitHub is authoritative for tracked code. Leibniz is authoritative for local/shared data.
 - Never copy an internal-disk database over a newer SSD database.
@@ -93,6 +94,17 @@ def install(data_root: Path, workspace_root: Path, *, v8_ref: str, upstream_ref:
     if not (data_root / "shared_data").is_dir():
         raise RuntimeError(f"canonical shared_data 不存在: {data_root}")
     workspace_root.mkdir(parents=True, exist_ok=True)
+    legacy_secret_link = workspace_root / "local_secrets"
+    if legacy_secret_link.is_symlink():
+        archive = (
+            data_root / "local_logs" / "portable_migration"
+            / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            / "retired-workspace-local_secrets-link"
+        )
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        legacy_secret_link.replace(archive)
+    elif legacy_secret_link.exists():
+        raise RuntimeError(f"拒绝覆盖既有 local_secrets: {legacy_secret_link}")
     for name in DATA_DIRS:
         source = data_root / name
         source.mkdir(parents=True, exist_ok=True)
@@ -231,11 +243,6 @@ def sync(source_root: Path, data_root: Path, *, apply: bool) -> None:
         for source, destination in sqlite_changes:
             print(f"SQLite backup: {source} -> {destination}", flush=True)
             _backup_sqlite(source, destination, archive_root)
-        secrets = data_root / "local_secrets"
-        for path in secrets.rglob("*") if secrets.exists() else []:
-            if path.is_file() and path.name != ".DS_Store":
-                path.chmod(0o600)
-
     print(json.dumps({
         "mode": "apply" if apply else "dry_run",
         "source_root": str(source_root),
@@ -322,12 +329,15 @@ def doctor(workspace_root: Path) -> int:
         checks.append(Check("freshness_manifest", "fail", f"{type(exc).__name__}: {exc}"))
     web_dist = v8 / "web" / "dist" / "index.html"
     checks.append(Check("web_dist", "pass" if web_dist.is_file() else "warn", str(web_dist) if web_dist.is_file() else "run build-web"))
-    secrets = data_root / "local_secrets"
+    secrets = Path(os.environ.get(
+        "V8_SECRET_ROOT",
+        Path.home() / "Library" / "Application Support" / "STResearch" / "secrets",
+    ))
     secret_files = [path for path in secrets.rglob("*.env") if path.is_file()] if secrets.exists() else []
     bad_modes = [str(path) for path in secret_files if path.stat().st_mode & 0o077]
     checks.append(Check(
         "secret_modes", "warn" if bad_modes else ("pass" if secret_files else "fail"),
-        f"env_files={len(secret_files)}; permissive={len(bad_modes)}; verify APFS encryption separately",
+        f"root={secrets}; env_files={len(secret_files)}; permissive={len(bad_modes)}",
     ))
 
     print(json.dumps({

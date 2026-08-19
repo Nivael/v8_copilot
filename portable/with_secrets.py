@@ -13,10 +13,10 @@ VALID_NAME = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 SECRET_FILES = ("st_invest_quant.env", "v8_copilot.env")
 
 
-def secret_environment(data_root: Path) -> dict[str, str]:
+def secret_environment(secret_root: Path) -> dict[str, str]:
     environment = dict(os.environ)
     for name in SECRET_FILES:
-        path = data_root / "local_secrets" / name
+        path = secret_root / name
         if not path.is_file():
             continue
         values = dotenv_values(path, interpolate=False)
@@ -33,7 +33,10 @@ def main() -> int:
     if len(sys.argv) < 2:
         print("usage: with_secrets.py PYTHON_SCRIPT [ARGS...]", file=sys.stderr)
         return 2
-    data_root = Path(os.environ.get("V8_DATA_ROOT", Path(__file__).resolve().parents[2]))
+    secret_root = Path(os.environ.get(
+        "V8_SECRET_ROOT",
+        Path.home() / "Library" / "Application Support" / "STResearch" / "secrets",
+    ))
     script = Path(sys.argv[1])
     if not script.is_absolute():
         script = Path.cwd() / script
@@ -41,7 +44,7 @@ def main() -> int:
         print(f"Python entry point does not exist: {script}", file=sys.stderr)
         return 2
     try:
-        environment = secret_environment(data_root)
+        environment = secret_environment(secret_root)
     except (OSError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 2

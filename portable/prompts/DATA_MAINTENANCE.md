@@ -17,6 +17,6 @@ cd /Volumes/Leibniz/STResearch/v8_copilot
 ./portable/st-portable data <data_maintenance.py 的子命令与参数>
 ```
 
-wrapper 会加载 SSD secrets 并取得单写锁。失败必须保留 checkpoint；不得换数据供应商或把
+wrapper 会加载本机 FileVault 下的 secrets 并取得单写锁。失败必须保留 checkpoint；不得换数据供应商或把
 partial 说成 ready。结束后运行 governance verify，报告 manifest id、各来源日期、覆盖数、
 失败和 gaps。不要在 API/研究任务仍运行时刷新；不要把数据库复制回出差机内置盘。

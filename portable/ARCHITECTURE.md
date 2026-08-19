@@ -13,9 +13,10 @@ reconciling two independently changed databases.
 
 v8 is already split in the right places: tracked Python/React code in Git;
 large versioned research inputs under `shared_data`; mutable maintenance,
-manifest, Research Run, and experience stores under `local_data`; tiny local
-tokens under `local_secrets`. `V8_DATA_ROOT` is the existing seam between code
-and data. The old SSD copy cannot itself be treated as a clean Git workspace:
+manifest, Research Run, and experience stores under `local_data`. `V8_DATA_ROOT`
+is the existing seam between code and data. Tiny token files are deliberately
+kept on each Mac's internal FileVault volume. The old SSD copy cannot itself be
+treated as a clean Git workspace:
 its copied worktree metadata contains absolute paths to the main Mac.
 
 ## Greenfield alternative
@@ -41,11 +42,12 @@ the migration surface.
 ## Decision
 
 `/Volumes/Leibniz/STResearch` is the portable app workspace. GitHub owns code;
-`/Volumes/Leibniz/dev/st_research/{shared_data,local_data,local_logs,local_secrets}`
-owns data. The workspace symlinks those four directories and contains clean
-clones. Machine-native Python, virtualenvs, and caches live in `.runtime` on
-the SSD. A data-writer guard prevents research/API overlap and leaves an audit
-trail instead of silently deleting locks.
+`/Volumes/Leibniz/dev/st_research/{shared_data,local_data,local_logs}` owns
+data. The workspace symlinks those three directories and contains clean clones.
+Each Mac owns `~/Library/Application Support/STResearch/secrets`; the wrapper
+loads it without shell evaluation. Machine-native Python, virtualenvs, and
+caches live in `.runtime` on the SSD. A data-writer guard prevents research/API
+overlap and leaves an audit trail instead of silently deleting locks.
 
 ## Migration and rollback
 
@@ -59,6 +61,8 @@ old internal copy must never be pushed back over it.
 ## Risks
 
 - SSD loss is now the main local-data risk: keep it encrypted and backed up.
+- Leibniz was verified unencrypted on 2026-08-19. Tokens previously stored on
+  it must be removed and rotated; portable operation uses per-Mac secrets.
 - Surprise unplug during a write can leave a stale lock; archive it only after
   verifying no maintenance process runs, then run doctor/SQLite checks.
 - Intel and Apple Silicon cannot share a virtualenv. Per-machine runtime paths

@@ -5,6 +5,7 @@ SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
 WORKSPACE_ROOT=$(CDPATH= cd -- "$REPO_ROOT/.." && pwd)
 DATA_ROOT=${V8_DATA_ROOT:-$WORKSPACE_ROOT}
+SECRET_ROOT=${V8_SECRET_ROOT:-$HOME/Library/Application Support/STResearch/secrets}
 
 HOST_PART=$(hostname -s 2>/dev/null || hostname)
 ARCH_PART=$(uname -m)
@@ -18,6 +19,7 @@ if command -v uv >/dev/null 2>&1; then
 fi
 
 export V8_DATA_ROOT="$DATA_ROOT"
+export V8_SECRET_ROOT="$SECRET_ROOT"
 export UV_CACHE_DIR="$MACHINE_RUNTIME/cache/uv"
 export UV_PYTHON_CACHE_DIR="$MACHINE_RUNTIME/cache/uv-python"
 export UV_PYTHON_INSTALL_DIR="$MACHINE_RUNTIME/python"
@@ -26,6 +28,8 @@ export XDG_CACHE_HOME="$MACHINE_RUNTIME/cache"
 export npm_config_cache="$MACHINE_RUNTIME/cache/npm"
 
 mkdir -p "$MACHINE_RUNTIME/bin" "$MACHINE_RUNTIME/cache" "$WORKSPACE_ROOT/local_logs/portable_locks"
+mkdir -p "$SECRET_ROOT"
+chmod 700 "$SECRET_ROOT"
 
 usage() {
   cat <<'EOF'
@@ -40,6 +44,7 @@ Commands:
   governance ARGS... Run experience_governance.py
   test [ARGS...]     Run pytest (all tests by default)
   build-web          Install locked Web dependencies and build the UI
+  secrets-path       Show this Mac's tiny, internal secret directory
   unlock             Archive a stale writer lock after checking no writer runs
 EOF
 }
@@ -143,6 +148,9 @@ case "$command" in
       exit 2
     fi
     (cd web && npm ci && npm run build)
+    ;;
+  secrets-path)
+    printf '%s\n' "$SECRET_ROOT"
     ;;
   unlock)
     if [ ! -d "$LOCK_DIR" ]; then

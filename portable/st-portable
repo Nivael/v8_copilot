@@ -52,17 +52,6 @@ need_uv() {
   fi
 }
 
-load_secrets() {
-  for secret_file in "$DATA_ROOT/local_secrets/st_invest_quant.env" "$DATA_ROOT/local_secrets/v8_copilot.env"; do
-    if [ -f "$secret_file" ]; then
-      set -a
-      # shellcheck disable=SC1090
-      . "$secret_file"
-      set +a
-    fi
-  done
-}
-
 LOCK_DIR="$DATA_ROOT/local_data/v8_copilot/.portable_writer_lock"
 
 archive_lock() {
@@ -114,7 +103,6 @@ case "$command" in
     ;;
   serve)
     need_uv
-    load_secrets
     if [ -d "$LOCK_DIR" ]; then
       echo "Refusing to serve while a data writer lock exists: $LOCK_DIR" >&2
       exit 3
@@ -123,22 +111,20 @@ case "$command" in
       echo "Missing web/dist/index.html; run ./portable/st-portable build-web" >&2
       exit 4
     fi
-    exec "$UV_BIN" run --no-sync python run_api.py
+    exec "$UV_BIN" run --no-sync python portable/with_secrets.py run_api.py
     ;;
   data)
     need_uv
-    load_secrets
     acquire_lock "$@"
-    "$UV_BIN" run --no-sync python data_maintenance.py "$@"
+    "$UV_BIN" run --no-sync python portable/with_secrets.py data_maintenance.py "$@"
     ;;
   research)
     need_uv
-    load_secrets
     if [ -d "$LOCK_DIR" ]; then
       echo "Refusing research while data maintenance is active." >&2
       exit 3
     fi
-    "$UV_BIN" run --no-sync python research_workbench.py "$@"
+    "$UV_BIN" run --no-sync python portable/with_secrets.py research_workbench.py "$@"
     ;;
   governance)
     need_uv

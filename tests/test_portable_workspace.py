@@ -6,6 +6,7 @@ import sqlite3
 from pathlib import Path
 
 import portable.portable_workspace as portable
+from portable.with_secrets import secret_environment
 
 
 def _database(path: Path, value: str) -> None:
@@ -92,3 +93,18 @@ def test_install_creates_data_links_and_workspace_instructions(monkeypatch, tmp_
         assert (workspace / name).resolve() == (data_root / name).resolve()
     assert "Leibniz is authoritative" in (workspace / "AGENTS.md").read_text()
     assert (workspace / "CLAUDE.md").read_text() == (workspace / "AGENTS.md").read_text()
+
+
+def test_secret_loader_preserves_shell_metacharacters(monkeypatch, tmp_path) -> None:
+    monkeypatch.setenv("EXISTING_VALUE", "kept")
+    secrets = tmp_path / "local_secrets"
+    secrets.mkdir()
+    (secrets / "st_invest_quant.env").write_text(
+        "TUSHARE_TOKEN=abc(123); .thumbcache=value/with+symbols%3D\n",
+        encoding="utf-8",
+    )
+
+    environment = secret_environment(tmp_path)
+
+    assert environment["EXISTING_VALUE"] == "kept"
+    assert environment["TUSHARE_TOKEN"] == "abc(123); .thumbcache=value/with+symbols%3D"

@@ -1402,6 +1402,7 @@ def card_stock_research_overview(
     card = card_st_status_timeline(symbol)
     card.question = question
     matched_announcements: list[OfficialAnnouncement] = []
+    explicit_announcement_boundary: str | None = None
 
     if requested & {"shareholder_count", "equity", "capital_structure", "control_structure"}:
         control_records = _REGISTRY.candidate_lenses(
@@ -1468,6 +1469,8 @@ def card_stock_research_overview(
         matched_announcements = [
             record for record in inventory.records if matches_question(record)
         ] if full_dates or month_days or search_terms else []
+        if matched_announcements and (full_dates or month_days):
+            explicit_announcement_boundary = matched_announcements[0].announcement_date
         selected_announcements = list(dict.fromkeys([
             *matched_announcements,
             *inventory.records[:8],
@@ -1815,7 +1818,14 @@ def card_stock_research_overview(
     card.sample_scope += f"；按题面加载维度：{loaded_dimensions}"
     relevant_freshness: list[str] = []
     if "announcement" in requested:
-        relevant_freshness.append(card.source_freshness["company_announcements_as_of"])
+        # A question anchored to an explicit announcement date is answered at
+        # that event boundary.  Keep the inventory freshness separately, but
+        # do not let a later refresh silently move the answer's as-of date.
+        announcement_boundary = (
+            explicit_announcement_boundary
+            or card.source_freshness["company_announcements_as_of"]
+        )
+        relevant_freshness.append(announcement_boundary)
     if "price" in requested:
         relevant_freshness.append(card.source_freshness["price_data_as_of"])
     if "shareholder_count" in requested:
@@ -1870,7 +1880,7 @@ def card_stock_research_overview(
         ]
         card.as_of = max(analysis_dates) if analysis_dates else limiting_as_of(*card.source_freshness.values())
     else:
-        card.as_of = limiting_as_of(*(
+        card.as_of = explicit_announcement_boundary or limiting_as_of(*(
             relevant_freshness or list(card.source_freshness.values())
         ))
     card.data_snapshot_as_of = card.as_of

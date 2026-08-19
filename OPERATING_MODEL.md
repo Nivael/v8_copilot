@@ -2,6 +2,11 @@
 
 日常固定为两个 Codex 任务和一个浏览器面板。三个窗口各做一件事，避免数据更新、回答和经验审阅互相污染。
 
+在 Leibniz 出差工作区中，三个入口仍然不变，只是所有命令从
+`/Volumes/Leibniz/STResearch/v8_copilot` 运行，并由 `portable/st-portable` 固定
+`V8_DATA_ROOT`、机器专属 Python 环境和数据单写锁。GitHub 管代码，SSD 管唯一一份本地数据；
+详见 [portable/README.md](portable/README.md)。
+
 ## 窗口一：数据更新
 
 固定一个置顶 Codex 任务，开场指令：

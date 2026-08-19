@@ -1,0 +1,174 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
+WORKSPACE_ROOT=$(CDPATH= cd -- "$REPO_ROOT/.." && pwd)
+DATA_ROOT=${V8_DATA_ROOT:-$WORKSPACE_ROOT}
+SECRET_ROOT=${V8_SECRET_ROOT:-$HOME/Library/Application Support/STResearch/secrets}
+
+HOST_PART=$(hostname -s 2>/dev/null || hostname)
+ARCH_PART=$(uname -m)
+MACHINE_ID=$(printf '%s-%s' "$HOST_PART" "$ARCH_PART" | tr -c 'A-Za-z0-9._-' '_')
+MACHINE_RUNTIME="$WORKSPACE_ROOT/.runtime/$MACHINE_ID"
+PATH="$MACHINE_RUNTIME/bin:$PATH"
+export PATH
+UV_BIN=${UV_BIN:-$MACHINE_RUNTIME/bin/uv}
+if command -v uv >/dev/null 2>&1; then
+  UV_BIN=$(command -v uv)
+fi
+
+export V8_DATA_ROOT="$DATA_ROOT"
+export V8_SECRET_ROOT="$SECRET_ROOT"
+export UV_CACHE_DIR="$MACHINE_RUNTIME/cache/uv"
+export UV_PYTHON_CACHE_DIR="$MACHINE_RUNTIME/cache/uv-python"
+export UV_PYTHON_INSTALL_DIR="$MACHINE_RUNTIME/python"
+export UV_PROJECT_ENVIRONMENT="$MACHINE_RUNTIME/venv"
+export XDG_CACHE_HOME="$MACHINE_RUNTIME/cache"
+export npm_config_cache="$MACHINE_RUNTIME/cache/npm"
+
+mkdir -p "$MACHINE_RUNTIME/bin" "$MACHINE_RUNTIME/cache" "$WORKSPACE_ROOT/local_logs/portable_locks"
+mkdir -p "$SECRET_ROOT"
+chmod 700 "$SECRET_ROOT"
+
+usage() {
+  cat <<'EOF'
+Usage: ./portable/st-portable COMMAND [ARGS]
+
+Commands:
+  bootstrap          Create this Mac's Python environment on Leibniz
+  doctor             Verify mount, data, secrets, Git, and SQLite health
+  serve              Start the local v8 API and browser UI
+  data ARGS...       Run data_maintenance.py under the single-writer guard
+  research ARGS...   Run research_workbench.py
+  governance ARGS... Run experience_governance.py
+  test [ARGS...]     Run pytest (all tests by default)
+  build-web          Install locked Web dependencies and build the UI
+  secrets-path       Show this Mac's tiny, internal secret directory
+  unlock             Archive a stale writer lock after checking no writer runs
+EOF
+}
+
+need_uv() {
+  if [ ! -x "$UV_BIN" ]; then
+    echo "uv is missing for this Mac. Install its native binary on Leibniz:" >&2
+    echo "curl -LsSf https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL=\"$MACHINE_RUNTIME/bin\" sh" >&2
+    exit 2
+  fi
+}
+
+LOCK_DIR="$DATA_ROOT/local_data/v8_copilot/.portable_writer_lock"
+
+archive_lock() {
+  if [ -d "$LOCK_DIR" ]; then
+    stamp=$(date -u '+%Y%m%dT%H%M%SZ')
+    mv "$LOCK_DIR" "$WORKSPACE_ROOT/local_logs/portable_locks/released-$stamp-$MACHINE_ID"
+  fi
+}
+
+acquire_lock() {
+  if pgrep -f 'run_api.py|research_workbench.py' >/dev/null 2>&1; then
+    echo "API or research process is still active; stop it before data maintenance." >&2
+    exit 3
+  fi
+  if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+    echo "Data writer lock already exists: $LOCK_DIR" >&2
+    if [ -f "$LOCK_DIR/owner.txt" ]; then
+      sed -n '1,20p' "$LOCK_DIR/owner.txt" >&2
+    fi
+    echo "Confirm no writer is active, then run: ./portable/st-portable unlock" >&2
+    exit 3
+  fi
+  {
+    echo "host=$HOST_PART"
+    echo "arch=$ARCH_PART"
+    echo "pid=$$"
+    echo "started_at=$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+    echo "command=$*"
+  } > "$LOCK_DIR/owner.txt"
+  trap archive_lock EXIT HUP INT TERM
+}
+
+command=${1:-help}
+if [ "$#" -gt 0 ]; then shift; fi
+
+cd "$REPO_ROOT"
+case "$command" in
+  bootstrap)
+    need_uv
+    "$UV_BIN" sync --group dev --locked
+    if [ ! -f "$REPO_ROOT/web/dist/index.html" ]; then
+      echo "web/dist is absent. Run build-web if Node/npm is installed." >&2
+    fi
+    "$UV_BIN" run --no-sync python portable/portable_workspace.py doctor --workspace-root "$WORKSPACE_ROOT"
+    ;;
+  doctor)
+    need_uv
+    "$UV_BIN" run --no-sync python portable/portable_workspace.py doctor --workspace-root "$WORKSPACE_ROOT"
+    ;;
+  serve)
+    need_uv
+    if [ -d "$LOCK_DIR" ]; then
+      echo "Refusing to serve while a data writer lock exists: $LOCK_DIR" >&2
+      exit 3
+    fi
+    if [ ! -f "$REPO_ROOT/web/dist/index.html" ]; then
+      echo "Missing web/dist/index.html; run ./portable/st-portable build-web" >&2
+      exit 4
+    fi
+    exec "$UV_BIN" run --no-sync python portable/with_secrets.py run_api.py
+    ;;
+  data)
+    need_uv
+    acquire_lock "$@"
+    "$UV_BIN" run --no-sync python portable/with_secrets.py data_maintenance.py "$@"
+    ;;
+  research)
+    need_uv
+    if [ -d "$LOCK_DIR" ]; then
+      echo "Refusing research while data maintenance is active." >&2
+      exit 3
+    fi
+    "$UV_BIN" run --no-sync python portable/with_secrets.py research_workbench.py "$@"
+    ;;
+  governance)
+    need_uv
+    "$UV_BIN" run --no-sync python experience_governance.py "$@"
+    ;;
+  test)
+    need_uv
+    if [ "$#" -eq 0 ]; then
+      set -- -q
+    fi
+    "$UV_BIN" run --no-sync pytest "$@"
+    ;;
+  build-web)
+    if ! command -v npm >/dev/null 2>&1; then
+      echo "Node/npm is only required for frontend development and is not installed." >&2
+      exit 2
+    fi
+    (cd web && npm ci && npm run build)
+    ;;
+  secrets-path)
+    printf '%s\n' "$SECRET_ROOT"
+    ;;
+  unlock)
+    if [ ! -d "$LOCK_DIR" ]; then
+      echo "No writer lock exists."
+      exit 0
+    fi
+    if pgrep -f 'data_maintenance.py' >/dev/null 2>&1; then
+      echo "A data_maintenance.py process is still running; lock retained." >&2
+      exit 3
+    fi
+    archive_lock
+    echo "Stale lock archived under $WORKSPACE_ROOT/local_logs/portable_locks"
+    ;;
+  help|-h|--help)
+    usage
+    ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac

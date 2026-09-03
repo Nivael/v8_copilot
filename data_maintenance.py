@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sqlite3
 import time
 from pathlib import Path
 from typing import Callable, TypeVar
@@ -42,6 +43,26 @@ from market_factors import (
     build_market_factor_manifest,
     write_market_factor_manifest_set,
 )
+from market_activity import (
+    MarketActivityBootstrapService,
+    MarketActivityRepository,
+    build_market_activity_manifest,
+    write_market_activity_manifest_set,
+)
+from p7_anomalies import (
+    P7IntelligenceRepository,
+    build_anomaly_run,
+    validate_research_language,
+)
+from p7_announcements import (
+    AnnouncementIntelligenceRepository,
+    build_announcement_run,
+)
+from p7_daily import (
+    LinkageRepository, build_daily_payload, build_linkage_run,
+    load_valuation_stage_map,
+)
+from p7_manifest import build_p7_manifest, write_p7_manifest_set
 from settings import (
     ANNOUNCEMENT_REFRESH_DIR,
     DATA_MAINTENANCE_DB,
@@ -51,6 +72,15 @@ from settings import (
     MARKET_FACTOR_DB,
     MARKET_FACTOR_MANIFEST_DIR,
     MARKET_FACTOR_MANIFEST_PATH,
+    MARKET_ACTIVITY_DB,
+    MARKET_ACTIVITY_MANIFEST_DIR,
+    MARKET_ACTIVITY_MANIFEST_PATH,
+    P7_INTELLIGENCE_DB,
+    VALUATION_FACTS_DB,
+    VALUATION_EPISODE_DB,
+    P7_FORWARD_SHADOW_START,
+    P7_DAILY_MANIFEST_DIR,
+    P7_DAILY_MANIFEST_PATH,
     ST_UNIVERSE_DIR,
 )
 from universe import StUniverseRepository, StUniverseService, StUniverseSnapshot
@@ -351,6 +381,72 @@ def main() -> int:
         "--coverage-threshold", type=float, default=0.95
     )
 
+    activity_bootstrap = sub.add_parser("bootstrap-market-activity")
+    activity_bootstrap.add_argument("--start-date", required=True)
+    activity_bootstrap.add_argument("--through", required=True)
+    activity_bootstrap.add_argument("--env-file", type=Path)
+    activity_bootstrap.add_argument("--database", type=Path, default=MARKET_ACTIVITY_DB)
+    activity_bootstrap.add_argument(
+        "--market-context-database", type=Path, default=MARKET_CONTEXT_DB
+    )
+    activity_bootstrap.add_argument(
+        "--manifest", type=Path, default=MARKET_ACTIVITY_MANIFEST_PATH
+    )
+    activity_bootstrap.add_argument(
+        "--manifest-directory", type=Path, default=MARKET_ACTIVITY_MANIFEST_DIR
+    )
+    activity_bootstrap.add_argument("--no-resume", action="store_true")
+
+    activity_status = sub.add_parser("market-activity-status")
+    activity_status.add_argument("--through", default="")
+    activity_status.add_argument("--database", type=Path, default=MARKET_ACTIVITY_DB)
+    activity_status.add_argument(
+        "--manifest", type=Path, default=MARKET_ACTIVITY_MANIFEST_PATH
+    )
+    activity_status.add_argument(
+        "--manifest-directory", type=Path, default=MARKET_ACTIVITY_MANIFEST_DIR
+    )
+
+    materialize_p7 = sub.add_parser("materialize-p7")
+    materialize_p7.add_argument("--start-date", required=True)
+    materialize_p7.add_argument("--through", required=True)
+    materialize_p7.add_argument(
+        "--announcement-start-date", default="",
+        help="P7A 状态机历史起点；省略时与 --start-date 相同",
+    )
+    materialize_p7.add_argument("--base-database", type=Path, default=BASE_DB)
+    materialize_p7.add_argument(
+        "--announcement-refresh-directory", type=Path, default=ANNOUNCEMENT_REFRESH_DIR
+    )
+    materialize_p7.add_argument("--activity-database", type=Path, default=MARKET_ACTIVITY_DB)
+    materialize_p7.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)
+    materialize_p7.add_argument("--output-database", type=Path, default=P7_INTELLIGENCE_DB)
+    materialize_p7.add_argument(
+        "--shadow-mode", choices=["historical_replay", "prospective"],
+        default="historical_replay",
+    )
+    materialize_p7.add_argument(
+        "--shadow-start-date", default=P7_FORWARD_SHADOW_START,
+    )
+    materialize_p7.add_argument(
+        "--valuation-facts-database", type=Path, default=VALUATION_FACTS_DB
+    )
+    materialize_p7.add_argument(
+        "--valuation-episode-database", type=Path, default=VALUATION_EPISODE_DB
+    )
+    materialize_p7.add_argument(
+        "--manifest", type=Path, default=P7_DAILY_MANIFEST_PATH
+    )
+    materialize_p7.add_argument(
+        "--manifest-directory", type=Path, default=P7_DAILY_MANIFEST_DIR
+    )
+
+    p7_daily = sub.add_parser("p7-daily")
+    p7_daily.add_argument("--as-of", required=True)
+    p7_daily.add_argument("--top-n", type=int, default=20)
+    p7_daily.add_argument("--activity-database", type=Path, default=MARKET_ACTIVITY_DB)
+    p7_daily.add_argument("--intelligence-database", type=Path, default=P7_INTELLIGENCE_DB)
+
     plan = sub.add_parser("plan")
     plan.add_argument("--symbol", action="append", default=[])
     plan.add_argument("--universe-current", action="store_true")
@@ -534,6 +630,129 @@ def main() -> int:
         )
         print(json.dumps(factor_manifest, ensure_ascii=False, indent=2))
         return 0 if factor_manifest["status"] == "ready" else 2
+    if args.command == "bootstrap-market-activity":
+        _load_env_file(args.env_file)
+        repository = MarketActivityRepository(args.database)
+        result = MarketActivityBootstrapService(
+            provider=TushareHttpClient(), repository=repository,
+            market_context_database=args.market_context_database,
+        ).bootstrap(
+            start_date=args.start_date, through=args.through,
+            resume=not args.no_resume,
+            progress=lambda payload: print(
+                json.dumps({"market_activity_progress": payload}, ensure_ascii=False),
+                flush=True,
+            ),
+        )
+        activity_manifest = build_market_activity_manifest(
+            repository, through=args.through,
+        )
+        dated_manifest = write_market_activity_manifest_set(
+            activity_manifest, current_path=args.manifest,
+            manifest_directory=args.manifest_directory,
+        )
+        print(json.dumps({
+            "result": result.model_dump(mode="json"),
+            "manifest": activity_manifest, "dated_manifest": str(dated_manifest),
+            "database": str(args.database),
+        }, ensure_ascii=False, indent=2))
+        return 2 if result.failed_date_count or activity_manifest["status"] != "ready" else 0
+    if args.command == "market-activity-status":
+        activity_manifest = build_market_activity_manifest(
+            MarketActivityRepository(args.database), through=args.through,
+        )
+        if activity_manifest["checked_through"]:
+            write_market_activity_manifest_set(
+                activity_manifest, current_path=args.manifest,
+                manifest_directory=args.manifest_directory,
+            )
+        print(json.dumps(activity_manifest, ensure_ascii=False, indent=2))
+        return 0 if activity_manifest["status"] == "ready" else 2
+    if args.command == "materialize-p7":
+        activity_facts = MarketActivityRepository(args.activity_database).latest_facts(
+            start_date=args.start_date, through=args.through,
+        )
+        if not activity_facts:
+            parser.error("指定范围没有 market_activity_v1 facts")
+        with sqlite3.connect(
+            f"file:{args.market_context_database}?mode=ro", uri=True
+        ) as connection:
+            benchmark_rows = connection.execute(
+                "select trade_date,benchmark_id,pct_change from benchmark_daily "
+                "where trade_date between ? and ? and benchmark_id in ('st_equal_weight_v1','csi_2000')",
+                (args.start_date, args.through),
+            ).fetchall()
+            calendar = [str(row[0]) for row in connection.execute(
+                "select trade_date from benchmark_daily where benchmark_id='csi_all_share' "
+                "and trade_date between ? and ? order by trade_date",
+                (args.start_date, args.through),
+            )]
+        benchmarks = {
+            (str(row[0]), str(row[1])): float(row[2]) if row[2] is not None else None
+            for row in benchmark_rows
+        }
+        symbols = sorted({item.symbol for item in activity_facts})
+        qfq_closes: dict[tuple[str, str], float] = {}
+        with sqlite3.connect(f"file:{args.base_database}?mode=ro", uri=True) as connection:
+            for offset in range(0, len(symbols), 500):
+                batch = symbols[offset:offset + 500]
+                placeholders = ",".join("?" for _ in batch)
+                rows = connection.execute(
+                    "select symbol,trade_date,close from daily_prices where adjust='qfq' "
+                    f"and symbol in ({placeholders}) and trade_date between ? and ? and close is not null",
+                    (*batch, args.start_date, args.through),
+                ).fetchall()
+                qfq_closes.update({(str(row[0]), str(row[1])): float(row[2]) for row in rows})
+        anomaly_run = build_anomaly_run(
+            activity_facts, benchmarks=benchmarks, qfq_closes=qfq_closes,
+        )
+        validate_research_language(anomaly_run.model_dump(mode="json"))
+        P7IntelligenceRepository(args.output_database).store_anomaly_run(anomaly_run)
+        announcement_run = build_announcement_run(
+            base_database=args.base_database,
+            refresh_directory=args.announcement_refresh_directory,
+            start_date=(args.announcement_start_date or args.start_date), through=args.through,
+            valuation_facts_database=args.valuation_facts_database,
+            market_context_database=args.market_context_database,
+        )
+        AnnouncementIntelligenceRepository(args.output_database).store(announcement_run)
+        linkage_run = build_linkage_run(
+            anomaly_run=anomaly_run, announcement_run=announcement_run,
+            trading_calendar=calendar, mode=args.shadow_mode,
+            valuation_stage_map=load_valuation_stage_map(
+                args.valuation_episode_database,
+                dates=[item.trade_date for item in anomaly_run.anomalies],
+            ),
+            shadow_start_date=(args.shadow_start_date if args.shadow_mode == "prospective" else ""),
+        )
+        LinkageRepository(args.output_database).store(linkage_run)
+        p7_manifest = build_p7_manifest(
+            anomaly_run=anomaly_run, announcement_run=announcement_run,
+            linkage_run=linkage_run,
+        )
+        dated_manifest = write_p7_manifest_set(
+            p7_manifest, current_path=args.manifest,
+            manifest_directory=args.manifest_directory,
+        )
+        print(json.dumps({
+            "anomaly_run": anomaly_run.model_dump(mode="json", exclude={"anomalies", "episodes"}),
+            "announcement_run": announcement_run.model_dump(mode="json", exclude={"facts", "bundles", "transitions"}),
+            "linkage_run": linkage_run.model_dump(mode="json", exclude={"queue_items", "shadow_outcomes"}),
+            "output_database": str(args.output_database),
+            "manifest": p7_manifest,
+            "dated_manifest": str(dated_manifest),
+        }, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "p7-daily":
+        if args.top_n < 1 or args.top_n > 100:
+            parser.error("--top-n 必须在 1..100")
+        payload = build_daily_payload(
+            as_of=args.as_of, activity_database=args.activity_database,
+            intelligence_database=args.intelligence_database, top_n=args.top_n,
+        )
+        validate_research_language(payload.model_dump(mode="json"))
+        print(payload.model_dump_json(indent=2))
+        return 0
     if args.command == "plan":
         symbols, snapshot = _resolve_scope(args, parser)
         current = build_maintenance_plan(

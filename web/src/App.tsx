@@ -1,9 +1,10 @@
-import {BarChart3, BookOpenCheck, FileClock, MessageSquareText} from 'lucide-react'
+import {Activity, BarChart3, BookOpenCheck, FileClock, MessageSquareText} from 'lucide-react'
 import {Link, NavLink, Route, Routes} from 'react-router-dom'
 import {Copilot} from './Copilot'
 import {DossierPage} from './DossierPage'
 import {ExperienceCenter} from './ExperienceCenter'
 import {RunAudit} from './RunAudit'
+import {DailyIntelligencePage} from './DailyIntelligencePage'
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
           <NavLink to="/legacy"><MessageSquareText size={16}/>研究问答（兼容）</NavLink>
           <NavLink to="/stocks/603398"><BarChart3 size={16}/>个股证据</NavLink>
           <NavLink to="/runs"><FileClock size={16}/>运行审计</NavLink>
+          <NavLink to="/daily"><Activity size={16}/>每日观察</NavLink>
         </nav>
       </header>
       <main>
@@ -23,6 +25,7 @@ export function App() {
           <Route path="/legacy" element={<Copilot/>}/>
           <Route path="/stocks/:symbol" element={<DossierPage/>}/>
           <Route path="/runs" element={<RunAudit/>}/>
+          <Route path="/daily" element={<DailyIntelligencePage/>}/>
         </Routes>
       </main>
     </div>

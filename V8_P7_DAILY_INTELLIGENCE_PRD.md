@@ -1,12 +1,14 @@
 # v8 P7 PRD：每日公告、异常量价与研究优先级
 
-状态：approved for staged implementation；P7-0 contract frozen，尚未执行 provider probe
+状态：implemented；P7A 等待描述性发布决定，P7B/P7C 自 2026-09-04 起 prospective shadow
 日期：2026-09-04
 负责人：Codex commander window
 实施基线：`codex/leibniz-portable-workspace` commit `130ca0d` 之上
 依赖：P4 market context；P5-C14；P6B 已核证 valuation episode；现有公告与价格维护器
 执行账：[.todos/004.md](.todos/004.md)
 dry-plan 契约：[V8_P7_0_DRY_PLAN_CONTRACT.md](V8_P7_0_DRY_PLAN_CONTRACT.md)
+实施结果：[P7_IMPLEMENTATION_RESULT.md](P7_IMPLEMENTATION_RESULT.md)
+前瞻发布门：[V8_P7D_FORWARD_GATE.md](V8_P7D_FORWARD_GATE.md)
 
 ## 1. 决策与目标
 
@@ -210,7 +212,9 @@ P7-0 固定比较三个预注册 profile：
 - limit 状态两来源冲突且无法确定。
 
 复牌首日和长期停牌后的恢复期单列 `post_suspension`；P7-0 先报告数量和不同 guard 对覆盖的
-影响，再冻结公开口径。未核证退市整理边界的公司不能静默混入，标记
+影响，再冻结公开口径。P7-0 容量盘点后冻结为：任一已知停牌后的 5 个股票观察日标记
+`post_suspension_recovery`，不生成默认异常，也不进入后续历史基线；原始活动事实仍保留。
+未核证退市整理边界的公司不能静默混入，标记
 `terminal_phase_unknown` 并排除公开队列。
 
 ### 6.4 异常 episode

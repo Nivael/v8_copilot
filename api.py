@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import logging
+import json
+import sqlite3
 from collections.abc import Iterator
 from pathlib import Path as FilePath
 from uuid import uuid4
@@ -68,11 +70,15 @@ from research_repository import (
     ResearchRunLedger,
     ResearchRunRecord,
 )
+from p7_daily import DailyIntelligencePayload, build_daily_payload
 from settings import (
     ACCEPTED_EXPERIENCE_REGISTRY_PATH,
     EXPERIENCE_GOVERNANCE_DB,
     EXPERIENCE_REPOSITORY_DB,
     RESEARCH_RUN_LEDGER_DB,
+    MARKET_ACTIVITY_DB,
+    MARKET_ACTIVITY_MANIFEST_PATH,
+    P7_INTELLIGENCE_DB,
 )
 
 
@@ -148,6 +154,31 @@ def health() -> dict[str, object]:
         "llm_available": openai_configured(),
         "database_mode": "read_only",
     }
+
+
+@app.get("/api/v1/p7/daily", response_model=DailyIntelligencePayload)
+def p7_daily_intelligence(
+    as_of: str | None = Query(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$"),
+    top_n: int = Query(default=20, ge=1, le=100),
+) -> DailyIntelligencePayload:
+    day = as_of
+    if day is None and MARKET_ACTIVITY_MANIFEST_PATH.is_file():
+        try:
+            day = str(json.loads(
+                MARKET_ACTIVITY_MANIFEST_PATH.read_text(encoding="utf-8")
+            ).get("checked_through") or "")
+        except (OSError, json.JSONDecodeError):
+            day = ""
+    if not day:
+        raise HTTPException(status_code=404, detail="P7 尚无可读取的活动日期")
+    try:
+        return build_daily_payload(
+            as_of=day, activity_database=MARKET_ACTIVITY_DB,
+            intelligence_database=P7_INTELLIGENCE_DB, top_n=top_n,
+        )
+    except (FileNotFoundError, ValueError, sqlite3.DatabaseError) as exc:
+        logger.exception("P7 daily payload failed")
+        raise HTTPException(status_code=500, detail="P7 每日研究页生成失败") from exc
 
 
 @app.post("/api/v1/route", response_model=RouteDecision)

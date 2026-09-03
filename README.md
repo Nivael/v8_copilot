@@ -125,6 +125,9 @@ worktree 元数据或用双向文件同步复制 SQLite。
 重整前偿债压力/市场重定价、方案价值重估及最小化人审机制见
 [V8_P6_INSIGHTS_PRD.md](V8_P6_INSIGHTS_PRD.md)、
 [V8_P6B_PRD.md](V8_P6B_PRD.md) 和 [.todos/](.todos/)。
+P7 的每日公告、异常量价、研究优先级和 shadow 验证见
+[V8_P7_DAILY_INTELLIGENCE_PRD.md](V8_P7_DAILY_INTELLIGENCE_PRD.md)；开工前只读盘点与
+provider 权限/容量门见 [V8_P7_0_DRY_PLAN_CONTRACT.md](V8_P7_0_DRY_PLAN_CONTRACT.md)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot

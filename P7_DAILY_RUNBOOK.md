@@ -49,3 +49,25 @@ owner 在静态 `index.html` 中选择后下载 JSON；导入命令可重复执�
 uv run python p7_review.py import --queue /path/to/review_queue.json \
   --decisions /path/to/downloaded-decisions.json
 ```
+
+## 周/月/年回测复算
+
+回测使用独立 materialization 数据库，不能覆盖日常 prospective ledger。先按
+`V8_P7_BACKTEST_CONTRACT.md` 补齐冻结的最小基线，再运行：
+
+```bash
+uv run python data_maintenance.py materialize-p7 \
+  --start-date 2025-02-26 --announcement-start-date 2021-03-17 \
+  --through 2026-09-03 --shadow-mode historical_replay \
+  --output-database /path/to/p7_backtest_materialization.sqlite3 \
+  --manifest /path/to/p7_backtest_manifest.json \
+  --manifest-directory /path/to/p7_backtest_manifests
+
+uv run python p7_backtest.py --through 2026-09-03 \
+  --intelligence-database /path/to/p7_backtest_materialization.sqlite3 \
+  --output-directory /path/to/p7_backtest_report
+```
+
+输出包含 `report.json` 和可直接双击的 `index.html`。周/月锚点的未完成窗口必须保留为
+右删失；不得用历史结果解除 P7D 的真实前瞻发布门。首轮结果和解释边界见
+`P7_BACKTEST_RESULT.md`。

@@ -4,7 +4,9 @@ from datetime import date, timedelta
 import sqlite3
 
 from market_activity import MarketActivityFact
-from p7_anomalies import AnomalyRun, P7IntelligenceRepository, build_anomaly_run
+from p7_anomalies import (
+    ActivityEpisode, AnomalyRun, P7IntelligenceRepository, build_anomaly_run,
+)
 from p7_announcements import (
     AnnouncementBundle,
     AnnouncementRun,
@@ -74,6 +76,52 @@ def test_linkage_keeps_timing_relations_and_shadow_separate():
     assert "inference_status" in result.shadow_summary
     assert result.shadow_summary["summary_contract"] == "p7d_shadow_summary_v2"
     assert result.shadow_summary["uncertainty"]["episode_wilson_95"] is not None
+
+
+def test_weekend_hard_transition_maps_to_next_trading_day():
+    anomaly_run = AnomalyRun(
+        run_id="P7AR-1234567890ABCDEFABCD", generated_at="2026-01-01T00:00:00Z",
+        start_date="2026-01-02", through="2026-01-06", fact_count=1,
+        calculable_count=1, broad_hit_count=1, balanced_hit_count=1,
+        strict_hit_count=0, zero_mad_breakout_count=0,
+        episode_counts={"balanced_5": 1}, anomalies=[],
+        episodes=[ActivityEpisode(
+            episode_id="P7AE-1234567890ABCDEFABCD", symbol="000001",
+            profile="balanced", merge_gap=5, start_date="2026-01-02",
+            end_date="2026-01-02", hit_count=1, member_dates=["2026-01-02"],
+            peak_turnover_rate_f=10, peak_robust_z=5,
+        )],
+    )
+    bundle = AnnouncementBundle(
+        bundle_id="P7AB-1234567890ABCDEFABCD", symbol="000001",
+        announcement_date="2026-01-03", category="restructuring_and_pre_restructuring",
+        topic_key="plan", announcement_ids=["A1"], titles=["法院批准重整计划"],
+        source_urls=["https://example/A1"], hard_event_types=["restructuring_plan_approved"],
+        priority_reasons=["hard_state_transition"], conflict_status="clear",
+    )
+    transition = IssuerTransition(
+        transition_id="P7TR-1234567890ABCDEFABCD", symbol="000001",
+        dimension="restructuring", from_state="unknown", to_state="plan_approved",
+        event_type="restructuring_plan_approved", announced_at="2026-01-03",
+        effective_at="2026-01-03", available_as_of="2026-01-03",
+        bundle_id=bundle.bundle_id, source_refs=["official_announcement:A1"],
+        evidence_status="verified",
+    )
+    announcement_run = AnnouncementRun(
+        run_id="P7AN-1234567890ABCDEFABCD", generated_at="2026-01-01T00:00:00Z",
+        start_date="2026-01-01", through="2026-01-06", announcement_count=1,
+        bundle_count=1, priority_bundle_count=1, hard_transition_count=1,
+        category_counts={}, facts=[], bundles=[bundle], transitions=[transition],
+    )
+    result = build_linkage_run(
+        anomaly_run=anomaly_run, announcement_run=announcement_run,
+        trading_calendar=[
+            "2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07",
+            "2026-01-08", "2026-01-09", "2026-01-12",
+        ],
+    )
+    assert result.shadow_outcomes[0].horizon_5 is True
+    assert result.shadow_outcomes[0].trading_days_to_hard_transition == 1
 
 
 def test_post_suspension_recovery_is_excluded_for_five_symbol_observations():

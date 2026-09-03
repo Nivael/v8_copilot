@@ -203,6 +203,8 @@ dry run；显式 `--apply` 生成 candidate，并让满足 owner 预授权门的
   P7C 研究队列和 P7D 历史/前瞻 shadow。
 - `p7_provider_probe.py` / `p7_dry_plan.py` / `p7_status.py` — provider 权限、容量与冻结发布门。
 - `p7_review.py` — 两张发布决策卡、静态 HTML 和幂等决定 JSON 导入。
+- `p7_backtest.py` — 周/月/年 point-in-time 锚点回放、公告研究价值与 D0–D4 放量偏离留出验证；
+  首轮真实结果见 `P7_BACKTEST_RESULT.md`。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。

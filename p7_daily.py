@@ -6,6 +6,7 @@ import json
 import math
 import random
 import sqlite3
+from bisect import bisect_left
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -224,6 +225,19 @@ def build_linkage_run(
     calendar = sorted(dict.fromkeys(trading_calendar))
     calendar_index = {day: index for index, day in enumerate(calendar)}
     bundles = announcement_run.bundles
+    event_dates = {
+        item.announcement_date for item in bundles
+    } | {
+        item.available_as_of for item in announcement_run.transitions
+    } | {
+        day for (_symbol, day) in (exchange_references or {})
+    }
+    for event_date in sorted(event_dates):
+        if event_date in calendar_index:
+            continue
+        position = bisect_left(calendar, event_date)
+        if position < len(calendar):
+            calendar_index[event_date] = position
     stages = valuation_stage_map or {}
     balanced = [
         item for item in anomaly_run.episodes

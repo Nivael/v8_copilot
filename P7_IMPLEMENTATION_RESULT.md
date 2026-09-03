@@ -1,6 +1,6 @@
 # P7 实施与真实数据验收结果
 
-状态：**engineering complete；P7A 等待 owner 描述性发布决定；P7B/P7C 正在真实前瞻 shadow**
+状态：**engineering complete；首轮历史回测完成；P7A 仅具描述性价值，P7B/P7C 正在真实前瞻 shadow**
 数据截止：2026-09-03
 运行日期：2026-09-04
 PRD：[V8_P7_DAILY_INTELLIGENCE_PRD.md](V8_P7_DAILY_INTELLIGENCE_PRD.md)
@@ -15,15 +15,20 @@ P7 的工程闭环和当前真实数据已经可运行：正式公告、硬状�
 P7A 可以由 owner 决定是否只发布描述事实。P7B/P7C 不能提前发布：真实前瞻起点是
 2026-09-04，当前进度 0/60 个交易日；历史回放不能替代时间门。
 
+周/月/年首轮回测 `P7BT-35434858D1CD7665038F` 进一步确认：公告结构在 P6 已核证重叠上
+5/5 一致，但 priority 留出期没有比 routine 形成可用区分；放量 D1–D4 留出关系不单调且
+D3 可比对照覆盖只有 54.23%。因此公告优先级和放量临近度都不升级，详见
+[P7_BACKTEST_RESULT.md](P7_BACKTEST_RESULT.md)。
+
 ## 真实数据账
 
 | 数据面 | 结果 |
 | --- | --- |
 | 当前 ST universe | 203 只；snapshot `SU-E6F695722FE67D90A1EC` |
 | 当前价格/公告 freshness | ready；`FM-F4909E3687984315B5C8` |
-| market activity | 134 个真实交易日、27,978 symbol-day；manifest `MAM-50C96965EAC87EE8C678` |
+| market activity | 373 个真实交易日、68,738 symbol-day；manifest `MAM-A9CADF021161E07D698B` |
 | 2026-09-03 当前活动覆盖 | 203/203 行，自由流通换手 99.01% |
-| 全窗字段覆盖 | `turnover_rate_f` 97.48%，振幅/limit fallback 97.68%，停复牌状态 100% |
+| 全窗自由流通换手覆盖 | `turnover_rate_f` 97.17%；异常计算仍逐日执行 95% 覆盖门和排除规则 |
 | P7-0 final | `P7DP-3C961A361143D9F34C48` |
 | 公告状态机 | 2021-03-17 至 2026-09-03，107,036 条公告、106,444 个 bundle、491 个硬跃迁 |
 | P7A run | `P7AN-E6FC24874F1898B11A0C` |
@@ -34,7 +39,8 @@ P7A 可以由 owner 决定是否只发布描述事实。P7B/P7C 不能提前发�
 | C14 回归锚 | 2026-08-20，206/206；`MFS-E2AE3A0DBAE4E0B69EF1` / `MF-9F40E10C3C4EB90EAF3E` |
 
 新入池且没有本地基线的 301117 已逐股 bootstrap：2026 年以来 163 个 qfq 价格行和 30 条
-CNINFO 公告。最终全池 freshness 无阻塞缺口。
+CNINFO 公告。最终全池 freshness 无阻塞缺口。为一年锚点回测另有界补齐 2025-02-26 至
+2026-02-12 的 239 个历史交易日，239/239 成功；这不扩张为 2021 年起的无边界回填。
 
 ## 容量与冻结选择
 

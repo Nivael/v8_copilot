@@ -128,6 +128,9 @@ worktree 元数据或用双向文件同步复制 SQLite。
 P7 的每日公告、异常量价、研究优先级和 shadow 验证见
 [V8_P7_DAILY_INTELLIGENCE_PRD.md](V8_P7_DAILY_INTELLIGENCE_PRD.md)；开工前只读盘点与
 provider 权限/容量门见 [V8_P7_0_DRY_PLAN_CONTRACT.md](V8_P7_0_DRY_PLAN_CONTRACT.md)。
+真实实施账见 [P7_IMPLEMENTATION_RESULT.md](P7_IMPLEMENTATION_RESULT.md)，日常维护见
+[P7_DAILY_RUNBOOK.md](P7_DAILY_RUNBOOK.md)，真实前瞻门见
+[V8_P7D_FORWARD_GATE.md](V8_P7D_FORWARD_GATE.md)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot
@@ -195,6 +198,13 @@ dry run；显式 `--apply` 生成 candidate，并让满足 owner 预授权门的
   官方重整节点、失败后继续及 P6B/P6C 输入边界；真实结果见
   `P6B3_VERIFIED_EPISODE_RESULT.md`。
 - `market_context.py` — benchmark registry、中证全指存储和逐日成分 ST 等权指数计算核。
+- `market_activity.py` — P7 独立的 append-only 活动事实、交易日截面、覆盖和内容摘要。
+- `p7_anomalies.py` / `p7_announcements.py` / `p7_daily.py` — P7B 预注册异常、P7A 公告状态机、
+  P7C 研究队列和 P7D 历史/前瞻 shadow。
+- `p7_provider_probe.py` / `p7_dry_plan.py` / `p7_status.py` — provider 权限、容量与冻结发布门。
+- `p7_review.py` — 两张发布决策卡、静态 HTML 和幂等决定 JSON 导入。
+- `p7_backtest.py` — 周/月/年 point-in-time 锚点回放、公告研究价值与 D0–D4 放量偏离留出验证；
+  首轮真实结果见 `P7_BACKTEST_RESULT.md`。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。

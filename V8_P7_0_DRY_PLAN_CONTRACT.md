@@ -1,6 +1,6 @@
 # v8 P7-0 dry-plan 契约
 
-状态：frozen before implementation
+状态：frozen and executed；真实结果见 [P7_IMPLEMENTATION_RESULT.md](P7_IMPLEMENTATION_RESULT.md)
 日期：2026-09-04
 契约版本：`v8_p7_0_dry_plan_v1`
 父 PRD：[V8_P7_DAILY_INTELLIGENCE_PRD.md](V8_P7_DAILY_INTELLIGENCE_PRD.md)

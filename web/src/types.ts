@@ -271,3 +271,18 @@ export interface ExperienceReviewDecisionExport {
   source_packet:string
   decisions:ExperienceReviewDecision[]
 }
+
+export interface DailyIntelligence {
+  contract_version:string
+  as_of:string
+  checked_through:Record<string,string>
+  release_status:Record<string,'descriptive'|'shadow'|'unavailable'>
+  coverage:{membership_count:number;activity_row_count:number;turnover_rate_f_coverage:number;full_universe_ready:boolean}
+  hard_transitions:Array<Record<string,unknown>>
+  priority_announcements:Array<Record<string,unknown>>
+  activity_anomalies:Array<Record<string,unknown>>
+  research_queue:Array<Record<string,unknown>>
+  continuing_watch:Array<Record<string,unknown>>
+  overflow_count:number
+  risk_notice:string
+}

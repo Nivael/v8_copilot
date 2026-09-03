@@ -59,6 +59,45 @@ MARKET_FACTOR_MANIFEST_DIR = Path(os.environ.get(
     "V8_MARKET_FACTOR_MANIFEST_DIR",
     DATA_ROOT / "local_data" / "v8_copilot" / "market_factor_manifests",
 )).expanduser().resolve()
+MARKET_ACTIVITY_DB = Path(os.environ.get(
+    "V8_MARKET_ACTIVITY_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "market_activity_v1.sqlite3",
+)).expanduser().resolve()
+MARKET_ACTIVITY_MANIFEST_PATH = Path(os.environ.get(
+    "V8_MARKET_ACTIVITY_MANIFEST_PATH",
+    DATA_ROOT / "local_data" / "v8_copilot" / "market_activity_manifest_v1.json",
+)).expanduser().resolve()
+MARKET_ACTIVITY_MANIFEST_DIR = Path(os.environ.get(
+    "V8_MARKET_ACTIVITY_MANIFEST_DIR",
+    DATA_ROOT / "local_data" / "v8_copilot" / "market_activity_manifests",
+)).expanduser().resolve()
+P7_INTELLIGENCE_DB = Path(os.environ.get(
+    "V8_P7_INTELLIGENCE_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p7_intelligence_v1.sqlite3",
+)).expanduser().resolve()
+VALUATION_FACTS_DB = Path(os.environ.get(
+    "V8_VALUATION_FACTS_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "valuation_facts_v1.sqlite3",
+)).expanduser().resolve()
+VALUATION_EPISODE_DB = Path(os.environ.get(
+    "V8_VALUATION_EPISODE_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "valuation_episode_v1.sqlite3",
+)).expanduser().resolve()
+P7_FORWARD_SHADOW_START = os.environ.get(
+    "V8_P7_FORWARD_SHADOW_START", "2026-09-04"
+)
+P7_REVIEW_DIR = Path(os.environ.get(
+    "V8_P7_REVIEW_DIR",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p7_review",
+)).expanduser().resolve()
+P7_DAILY_MANIFEST_PATH = Path(os.environ.get(
+    "V8_P7_DAILY_MANIFEST_PATH",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p7_daily_manifest_v1.json",
+)).expanduser().resolve()
+P7_DAILY_MANIFEST_DIR = Path(os.environ.get(
+    "V8_P7_DAILY_MANIFEST_DIR",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p7_daily_manifests",
+)).expanduser().resolve()
 EXPERIENCE_GOVERNANCE_DB = Path(os.environ.get(
     "V8_EXPERIENCE_GOVERNANCE_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "experience_governance.sqlite3",

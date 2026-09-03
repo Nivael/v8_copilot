@@ -329,6 +329,19 @@ class TushareHttpClient:
             rows=[unique[key] for key in sorted(unique)], latest_adj_factor=latest_factor,
         )
 
+    def fetch_daily(self, *, trade_date: str) -> list[dict[str, Any]]:
+        """Return one full-market raw daily cross-section for P7 activity facts."""
+
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "daily",
+            params={"trade_date": day},
+            fields=(
+                "ts_code,trade_date,open,high,low,close,pre_close,change,"
+                "pct_chg,vol,amount"
+            ),
+        )
+
     def fetch_st_universe(self, *, as_of: str) -> list[dict[str, Any]]:
         """Return the official risk-warning membership for one trading date."""
 
@@ -392,8 +405,9 @@ class TushareHttpClient:
             "daily_basic",
             params={"trade_date": day},
             fields=(
-                "ts_code,trade_date,total_share,float_share,free_share,"
-                "total_mv,circ_mv,turnover_rate"
+                "ts_code,trade_date,close,turnover_rate,turnover_rate_f,"
+                "volume_ratio,total_share,float_share,free_share,total_mv,"
+                "circ_mv,limit_status"
             ),
         )
 
@@ -415,10 +429,44 @@ class TushareHttpClient:
                 "end_date": end,
             },
             fields=(
-                "ts_code,trade_date,total_share,float_share,free_share,"
-                "total_mv,circ_mv,turnover_rate"
+                "ts_code,trade_date,close,turnover_rate,turnover_rate_f,"
+                "volume_ratio,total_share,float_share,free_share,total_mv,"
+                "circ_mv,limit_status"
             ),
         )
+
+    def fetch_suspend_daily(self, *, trade_date: str) -> list[dict[str, Any]]:
+        """Return the successful date query used for suspension negative evidence."""
+
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "suspend_d",
+            params={"trade_date": day},
+            fields="ts_code,trade_date,suspend_timing,suspend_type",
+        )
+
+    def fetch_stock_limits(self, *, trade_date: str) -> list[dict[str, Any]]:
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "stk_limit",
+            params={"trade_date": day},
+            fields="trade_date,ts_code,pre_close,up_limit,down_limit",
+        )
+
+    def fetch_exchange_reference(
+        self, *, api_name: str, trade_date: str
+    ) -> list[dict[str, Any]]:
+        """Probe or ingest one frozen exchange-public activity reference date."""
+
+        if api_name not in {"stk_shock", "stk_high_shock", "stk_alert"}:
+            raise ValueError(f"不支持的交易所参考接口: {api_name!r}")
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        fields = {
+            "stk_shock": "trade_date,ts_code,name,close,pct_change,reason",
+            "stk_high_shock": "trade_date,ts_code,name,close,pct_change,reason",
+            "stk_alert": "trade_date,ts_code,name,start_date,end_date,reason",
+        }[api_name]
+        return self._query(api_name, params={"trade_date": day}, fields=fields)
 
     def fetch_balance_sheets(
         self, *, symbol: str, start_date: str, end_date: str

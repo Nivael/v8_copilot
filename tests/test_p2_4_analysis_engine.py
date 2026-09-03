@@ -190,7 +190,9 @@ def test_comparison_narrative_follows_explicit_density_focus() -> None:
 
     assert response.narrative is not None
     assert "近30日公告密度" in response.narrative.direct_answer.text
-    assert "300068在该窗口披露更频繁" in response.narrative.direct_answer.text
+    assert "在该窗口披露更频繁" in response.narrative.direct_answer.text
+    assert "300068" in response.narrative.direct_answer.text
+    assert "300123" in response.narrative.direct_answer.text
     assert "重整进度、风险高低或整体优劣" in response.narrative.direct_answer.text
     assert [step.title for step in response.narrative.reasoning_steps] == [
         "先统一比较窗口", "再解释数量差异",

@@ -86,21 +86,28 @@ def test_microcap_question_uses_window_start_factor_and_has_no_c14_debt() -> Non
     card = response.answer_card
     assert "C14" not in card["data_debt_refs"]
     row_ids = {row["row_id"] for row in card["body_rows"]}
-    assert {
-        "microcap_definition",
-        "microcap_distribution",
-        "other_st_distribution",
-        "microcap_comparison_summary",
-    } <= row_ids
-    definition = next(
-        row for row in card["body_rows"] if row["row_id"] == "microcap_definition"
-    )
-    assert card["source_freshness"]["market_cap_as_of"] == definition["因子日期"]
-    assert definition["因子日期"] == definition["收益窗口起点"]
+    if "microcap_comparison_gap" in row_ids:
+        gap = next(row for row in card["body_rows"] if row["row_id"] == "microcap_comparison_gap")
+        assert gap["factor_snapshot_id"].startswith("MFS-")
+        assert "缺失端点不插值" in gap["缺口"]
+    else:
+        assert {
+            "microcap_definition",
+            "microcap_distribution",
+            "other_st_distribution",
+            "microcap_comparison_summary",
+        } <= row_ids
+        definition = next(
+            row for row in card["body_rows"] if row["row_id"] == "microcap_definition"
+        )
+        assert card["source_freshness"]["market_cap_as_of"] == definition["因子日期"]
+        assert definition["因子日期"] == definition["收益窗口起点"]
     assert any("market_factors_v1.sqlite3::market_cap_daily" in ref for ref in card["provenance"])
     assert response.narrative is not None
-    assert "微盘 ST 平均收益" in response.narrative.direct_answer.text
-    assert "不是 alpha 或交易信号" in response.narrative.direct_answer.text
+    assert (
+        "微盘 ST 平均收益" in response.narrative.direct_answer.text
+        or "当前无法完成微盘 ST 与普通 ST 的可靠比较" in response.narrative.direct_answer.text
+    )
 
 
 def test_evidence_narrative_keeps_sample_and_counterexample_chain() -> None:

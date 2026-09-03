@@ -1,6 +1,7 @@
 import type {
   Dossier, EvidencePackAuditRecord, Experience, ExperienceAutoAcceptance, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
   ExperienceReviewQueue, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
+  DailyIntelligence,
 } from './types'
 
 export function parseNdjson(buffer: string, chunk: string) {
@@ -128,5 +129,15 @@ export async function getEvidencePack(
 ):Promise<EvidencePackAuditRecord> {
   const response=await fetch(`/api/v1/research/evidence/${encodeURIComponent(packId)}`,{signal})
   if(!response.ok)throw new Error(`EvidencePack 服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getDailyIntelligence(
+  asOf?:string,
+  signal?:AbortSignal,
+):Promise<DailyIntelligence> {
+  const query=asOf?`?as_of=${encodeURIComponent(asOf)}`:''
+  const response=await fetch(`/api/v1/p7/daily${query}`,{signal})
+  if(!response.ok)throw new Error(`每日研究服务返回 ${response.status}`)
   return response.json()
 }

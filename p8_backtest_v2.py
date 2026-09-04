@@ -743,6 +743,66 @@ def _diagnostic_slice(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def leadingness_diagnostic(
+    scores: list[dict[str, Any]], *, events: list[dict[str, Any]], calendar: list[str],
+) -> dict[str, Any]:
+    """Measure whether persistent high-score dates merely echo recent covered announcements."""
+
+    calendar_index = {day: index for index, day in enumerate(calendar)}
+    event_dates: dict[str, set[str]] = defaultdict(set)
+    for event in events:
+        symbol = str(event.get("symbol") or "")
+        day = str(event.get("available_as_of") or "")
+        if symbol and day:
+            event_dates[symbol].add(day)
+    hits = [
+        item for item in scores
+        if int(item.get("test_year") or 0) in TEST_YEARS
+        and item.get("bucket") == "high"
+        and item.get("shape_label") in PERSISTENT_LABELS
+    ]
+
+    def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
+        recent = 0
+        observable = 0
+        for item in rows:
+            day = str(item["trade_date"])
+            index = calendar_index.get(day)
+            if index is None:
+                continue
+            observable += 1
+            window = set(calendar[max(0, index - 5):index + 1])
+            recent += int(bool(window & event_dates.get(str(item["symbol"]), set())))
+        return {
+            "hit_count": len(rows),
+            "observable_hit_count": observable,
+            "company_count": len({str(item["symbol"]) for item in rows}),
+            "recent_covered_announcement_count": recent,
+            "recent_covered_announcement_share": recent / observable if observable else None,
+            "no_covered_announcement_share": (observable - recent) / observable if observable else None,
+        }
+
+    per_year = {
+        str(year): summarize([item for item in hits if int(item["test_year"]) == year])
+        for year in TEST_YEARS
+    }
+    reactions = [
+        item["recent_covered_announcement_share"] for item in per_year.values()
+        if item["recent_covered_announcement_share"] is not None
+    ]
+    enough = len(hits) >= MIN_SIGNAL_OBSERVATIONS and len({str(item["symbol"]) for item in hits}) >= MIN_SIGNAL_COMPANIES
+    killed = sum(float(value) > .8 for value in reactions) >= 2
+    return {
+        "status": "unavailable" if not enough else "killed" if killed else "not_reaction_dominant",
+        "window": "signal_day_and_previous_5_market_trading_days",
+        "event_coverage": "all_p8_event_graph_records_regardless_truth_grade",
+        "overall": summarize(hits),
+        "per_year": per_year,
+        "kill_rule": "recent_covered_announcement_share_above_80pct_in_two_test_years",
+        "not_a_causal_claim": True,
+    }
+
+
 def rank_scorecard(
     observations: list[dict[str, Any]], *, signal_family: str = "p8c_accumulation",
 ) -> dict[str, Any]:
@@ -938,6 +998,10 @@ def build_and_evaluate(
         holder_scores, prices=prices, benchmarks=benchmarks, events=events,
         market_calendar=outcome_calendar, terminal_dates=terminal_dates,
     )
+    accumulation_card = rank_scorecard(observations)
+    accumulation_card["leadingness_diagnostic"] = leadingness_diagnostic(
+        scores, events=events, calendar=outcome_calendar,
+    )
     cards = [
         {
             "signal_family": "p8a_p_star", "status": "unavailable",
@@ -947,7 +1011,7 @@ def build_and_evaluate(
             "signal_family": "p8b_precursor", "status": "unavailable",
             "reason": "verified_hard_outcomes_below_training_gate",
         },
-        rank_scorecard(observations),
+        accumulation_card,
         rank_scorecard(holder_observations, signal_family="p8c_holder"),
     ]
     _holm(cards)

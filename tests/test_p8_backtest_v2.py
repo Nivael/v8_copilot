@@ -5,6 +5,7 @@ from p8_backtest_v2 import (
     build_accumulation_scores,
     build_holder_scores,
     build_historical_funnel,
+    leadingness_diagnostic,
     rank_scorecard,
 )
 
@@ -180,3 +181,24 @@ def test_rank_scorecard_reports_frozen_secondary_and_risk_diagnostics() -> None:
         "2024_pre_rule_revision", "2024_post_revision_pre_mv_rule",
         "2024_market_cap_rule_effective",
     }
+
+
+def test_leadingness_diagnostic_counts_recent_covered_announcements() -> None:
+    calendar = [f"2023-01-{day:02d}" for day in range(1, 11)]
+    scores = [
+        {
+            "symbol": "000001", "trade_date": "2023-01-08", "test_year": 2023,
+            "bucket": "high", "shape_label": "persistent_activity_price_stable",
+        },
+        {
+            "symbol": "000002", "trade_date": "2023-01-08", "test_year": 2023,
+            "bucket": "high", "shape_label": "persistent_activity_price_down",
+        },
+    ]
+    result = leadingness_diagnostic(
+        scores,
+        events=[{"symbol": "000001", "available_as_of": "2023-01-05"}],
+        calendar=calendar,
+    )
+    assert result["overall"]["recent_covered_announcement_share"] == .5
+    assert result["overall"]["no_covered_announcement_share"] == .5

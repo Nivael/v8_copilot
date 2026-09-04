@@ -7,6 +7,7 @@ failed or repeated pull never masquerades as research-data freshness.
 from __future__ import annotations
 
 import hashlib
+import gzip
 import json
 import os
 import re
@@ -271,11 +272,18 @@ class TushareHttpClient:
         }).encode("utf-8")
         request = Request(
             self.url, data=body,
-            headers={"Content-Type": "application/json", "User-Agent": "st-research-v8-maintainer/1.0"},
+            headers={
+                "Content-Type": "application/json",
+                "User-Agent": "st-research-v8-maintainer/1.0",
+                "Accept-Encoding": "gzip",
+            },
             method="POST",
         )
         with urlopen(request, timeout=self.timeout_seconds) as response:
-            payload = json.loads(response.read().decode("utf-8"))
+            raw = response.read()
+            if str(response.headers.get("Content-Encoding", "")).lower() == "gzip":
+                raw = gzip.decompress(raw)
+            payload = json.loads(raw.decode("utf-8"))
         if int(payload.get("code") or 0) != 0:
             raise RuntimeError(f"Tushare {api_name} 返回错误: {payload.get('msg') or 'unknown'}")
         data = payload.get("data") or {}
@@ -339,6 +347,21 @@ class TushareHttpClient:
             fields=(
                 "ts_code,trade_date,open,high,low,close,pre_close,change,"
                 "pct_chg,vol,amount"
+            ),
+        )
+
+    def fetch_stock_basics(self, *, list_status: str) -> list[dict[str, Any]]:
+        """Return exchange listing and terminal dates for one listing-status cohort."""
+
+        status = str(list_status).strip().upper()
+        if status not in {"L", "D", "P"}:
+            raise ValueError("stock_basic list_status 只允许 L/D/P")
+        return self._query(
+            "stock_basic",
+            params={"list_status": status},
+            fields=(
+                "ts_code,symbol,name,market,exchange,list_status,list_date,"
+                "delist_date"
             ),
         )
 
@@ -467,6 +490,55 @@ class TushareHttpClient:
             "stk_alert": "trade_date,ts_code,name,start_date,end_date,reason",
         }[api_name]
         return self._query(api_name, params={"trade_date": day}, fields=fields)
+
+    def fetch_holder_numbers(
+        self, *, symbol: str, start_date: str, end_date: str
+    ) -> list[dict[str, Any]]:
+        """Return holder counts keyed by their publication date, never period end alone."""
+
+        compact = _symbol(symbol)
+        start = _iso_date(start_date, field="start_date").replace("-", "")
+        end = _iso_date(end_date, field="end_date").replace("-", "")
+        return self._query(
+            "stk_holdernumber",
+            params={"ts_code": self._ts_code(compact), "start_date": start, "end_date": end},
+            fields="ts_code,ann_date,end_date,holder_num",
+        )
+
+    def fetch_top_list(self, *, trade_date: str) -> list[dict[str, Any]]:
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "top_list", params={"trade_date": day},
+            fields=(
+                "trade_date,ts_code,name,close,pct_change,turnover_rate,amount,"
+                "l_sell,l_buy,l_amount,net_amount,net_rate,amount_rate,float_values,reason"
+            ),
+        )
+
+    def fetch_top_institutions(self, *, trade_date: str) -> list[dict[str, Any]]:
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "top_inst", params={"trade_date": day},
+            fields=(
+                "trade_date,ts_code,exalter,side,buy,buy_rate,sell,sell_rate,net_buy,reason"
+            ),
+        )
+
+    def fetch_block_trades(self, *, trade_date: str) -> list[dict[str, Any]]:
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "block_trade", params={"trade_date": day},
+            fields="ts_code,trade_date,price,vol,amount,buyer,seller",
+        )
+
+    def fetch_margin_details(self, *, trade_date: str) -> list[dict[str, Any]]:
+        day = _iso_date(trade_date, field="trade_date").replace("-", "")
+        return self._query(
+            "margin_detail", params={"trade_date": day},
+            fields=(
+                "trade_date,ts_code,name,rzye,rqye,rzmre,rqyl,rzche,rqchl,rqmcl,rzrqye"
+            ),
+        )
 
     def fetch_balance_sheets(
         self, *, symbol: str, start_date: str, end_date: str

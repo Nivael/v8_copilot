@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import sqlite3
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Literal, Protocol
@@ -532,12 +533,24 @@ class MarketActivityBootstrapService:
 
     def bootstrap(
         self, *, start_date: str, through: str, resume: bool = True,
+        target_dates: list[str] | None = None,
+        refresh_existing: bool = False,
+        parallel_endpoints: bool = False,
         progress: Callable[[dict[str, Any]], None] | None = None,
     ) -> ActivityBootstrapResult:
         memberships = load_memberships(
             self.market_context_database, start_date=start_date, through=through,
         )
-        dates = sorted(memberships)
+        if target_dates is None:
+            dates = sorted(memberships)
+        else:
+            dates = sorted({_iso(item, field="target_date") for item in target_dates})
+            outside = [day for day in dates if day < _iso(start_date) or day > _iso(through)]
+            missing_membership = [day for day in dates if day not in memberships]
+            if outside:
+                raise ValueError(f"target_dates 超出 bootstrap 范围: {outside[:5]}")
+            if missing_membership:
+                raise ValueError(f"target_dates 缺 point-in-time membership: {missing_membership[:5]}")
         plan_id = f"MAP-{_digest({'start': start_date, 'through': through, 'dates': dates, 'membership': memberships})[:20].upper()}"
         snapshots: list[str] = []
         failures: dict[str, str] = {}
@@ -548,7 +561,10 @@ class MarketActivityBootstrapService:
                 skipped += 1
                 snapshots.append(str(prior["snapshot_id"]))
                 continue
-            existing = self.repository.latest_valid_snapshot(day) if resume else None
+            existing = (
+                self.repository.latest_valid_snapshot(day)
+                if resume and not refresh_existing else None
+            )
             if existing is not None:
                 skipped += 1
                 snapshots.append(existing.snapshot_id)
@@ -560,10 +576,27 @@ class MarketActivityBootstrapService:
                     progress({"completed": index, "total": len(dates), "trade_date": day, "status": "reused"})
                 continue
             try:
-                daily = self.provider.fetch_daily(trade_date=day)
-                basics = self.provider.fetch_daily_basic(trade_date=day)
-                suspensions = self.provider.fetch_suspend_daily(trade_date=day)
-                limits = self.provider.fetch_stock_limits(trade_date=day)
+                operations = {
+                    "daily": self.provider.fetch_daily,
+                    "basics": self.provider.fetch_daily_basic,
+                    "suspensions": self.provider.fetch_suspend_daily,
+                    "limits": self.provider.fetch_stock_limits,
+                }
+                if parallel_endpoints:
+                    with ThreadPoolExecutor(max_workers=4) as executor:
+                        futures = {
+                            key: executor.submit(operation, trade_date=day)
+                            for key, operation in operations.items()
+                        }
+                        fetched = {key: future.result() for key, future in futures.items()}
+                else:
+                    fetched = {
+                        key: operation(trade_date=day) for key, operation in operations.items()
+                    }
+                daily = fetched["daily"]
+                basics = fetched["basics"]
+                suspensions = fetched["suspensions"]
+                limits = fetched["limits"]
                 facts = normalize_activity_rows(
                     trade_date=day,
                     memberships=memberships[day],

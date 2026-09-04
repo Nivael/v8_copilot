@@ -223,3 +223,28 @@ owner policy 重新跑自动门；未知 validation ref 保持 blocked，不伪�
 后自动执行回归与冲突门并写入。`/` 默认展示 accepted 库，candidate 只是自动待验证状态；
 批量审阅、决定 JSON 和幂等导入保留为异常兜底，不再构成人类日常待办。完整契约见
 [EXPERIENCE_OPERATIONS_PRD.md](EXPERIENCE_OPERATIONS_PRD.md)。
+
+## P8 研究漏斗如何运行
+
+P8 是独立 append-only 派生层，不是新的真值源。它只读 P6/P7、市场活动、市场因子和官方
+公告，保存 source ID、available-as-of、版本和 digest；失败 run 不移动 current manifest。
+
+研究层允许计算方向、收益、情景敏感性和公开筹码代理；宣称层仍禁止把它们表述为资金身份、
+内幕、买卖信号、底部或目标价。三类情景参考永不混成一个“壳价值”；只有公司自身、同一
+claim 的成功/失败旧股东权益输入闭合时才可算 `p*`，跨公司分层中位数只能作为敏感性。
+P8B 只有“确定性规则 + 结构化 LLM + 可定位原文”一致才生成 `body_verified`；title-only
+只可进入待补证探索或 sensitivity，不能进入已核证事件前沿。
+
+日常只显示最多 20 个研究候选，lane quota 为 6/5/5/4，安静日允许 0。owner 无必审任务；
+未点击保持 `unreviewed`。真实并发日历组合只从上线后每日漏斗累积，不用历史 episode 拼接。
+操作顺序和降级状态见 [P8_DAILY_RUNBOOK.md](P8_DAILY_RUNBOOK.md)。
+
+历史研究验证另行遵守 [V8_P8_BACKTEST_CONTRACT.md](V8_P8_BACKTEST_CONTRACT.md)：连续 120 日
+ST 超额排序与三年可交易篓子是决定性测试，稀有硬节点率只是辅助。补历史数据前先执行
+[V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md](V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md)；dry-plan 禁止读取
+收益或命中率，避免用结果决定尺子。
+
+P8-BT2 正式结果见 [P8_BACKTEST_V2_RESULT.md](P8_BACKTEST_V2_RESULT.md)：补回 191 家历史退市
+终点并执行 -100%/最后可观察价双口径后，持续量价和旧前 20 篓子均被判杀，股东户数只保留
+为不加权弱旁证。后 BT2 漏斗使用 `p8_research_funnel_v2`，持续量价晋级配额为 0；改变该结论
+必须开新的预注册版本，不能在日常窗口里手调阈值。

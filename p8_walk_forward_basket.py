@@ -398,6 +398,14 @@ def build_basket_report(
             excluded_lanes={"persistent_activity"},
         ) for year in TEST_YEARS
     ]
+    without_holder = [
+        simulate_year(
+            year=year, calendar=calendar, funnel=funnel, prices=prices,
+            trade_states=trade_states, benchmark=st_benchmark,
+            delisting_dates=delisting, cost=PRIMARY_COST,
+            excluded_lanes={"chip_or_exploration"},
+        ) for year in TEST_YEARS
+    ]
     sensitivities: dict[str, list[dict[str, Any]]] = {}
     for cost in SENSITIVITY_COSTS:
         sensitivities[f"{int(cost * 10000)}bp"] = [
@@ -433,6 +441,12 @@ def build_basket_report(
         without_portfolio - without_benchmark
         if without_portfolio is not None and without_benchmark is not None else None
     )
+    without_holder_portfolio = _compound([float(item["portfolio_return"]) for item in without_holder])
+    without_holder_benchmark = _compound([float(item["st_benchmark_return"]) for item in without_holder])
+    without_holder_overall = (
+        without_holder_portfolio - without_holder_benchmark
+        if without_holder_portfolio is not None and without_holder_benchmark is not None else None
+    )
     return {
         "record_id": content_id("P8BASKET", {
             "contract": CONTRACT_VERSION, "funnel_digest": funnel_digest,
@@ -456,7 +470,12 @@ def build_basket_report(
         "per_year": primary,
         "top_two_removed_per_year": stress,
         "without_persistent_lane_per_year": without_persistent,
+        "without_holder_lane_per_year": without_holder,
         "cost_sensitivity": sensitivities,
+        "holder_lane_incremental_compounded_excess_st": (
+            overall_excess - without_holder_overall
+            if overall_excess is not None and without_holder_overall is not None else None
+        ),
         "not_a_trading_signal": True,
     }
 

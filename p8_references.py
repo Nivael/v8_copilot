@@ -237,7 +237,9 @@ def _risk_type(path: Path, *, symbol: str, day: str) -> str:
     return known[0] if known else ("none_identified" if "none_identified" in values else "unknown")
 
 
-def _market_values(path: Path) -> dict[tuple[str, str], float]:
+def _market_values(
+    path: Path, *, market_activity_database: Path | None = None,
+) -> dict[tuple[str, str], float]:
     result: dict[tuple[str, str], float] = {}
     with _connect_ro(path) as connection:
         for row in connection.execute(
@@ -246,6 +248,24 @@ def _market_values(path: Path) -> dict[tuple[str, str], float]:
             "where d.total_market_value is not null order by d.symbol,d.trade_date,s.created_at"
         ):
             result[(str(row[0]), str(row[1]))] = float(row[2])
+    # P8's scoped daily_basic backfill is a second C14 source, not a P8C signal.
+    # Preserve the dedicated market-factor ledger as first priority and consume
+    # only the narrow total-market-value field from the mixed activity snapshot.
+    if market_activity_database and market_activity_database.is_file():
+        with _connect_ro(market_activity_database) as connection:
+            rows = connection.execute(
+                "with ranked as (select snapshot_id,trade_date,row_number() over "
+                "(partition by trade_date order by fetched_at desc,snapshot_id desc) rn "
+                "from activity_snapshots) "
+                "select r.trade_date,d.payload_json from ranked r "
+                "join market_activity_daily d on d.snapshot_id=r.snapshot_id where r.rn=1"
+            )
+            for trade_date, payload_json in rows:
+                payload = json.loads(str(payload_json))
+                total_mv_10k = _number(payload.get("total_mv_10k_cny"))
+                symbol = str(payload.get("symbol") or "")
+                if symbol and total_mv_10k is not None:
+                    result.setdefault((symbol, str(trade_date)), total_mv_10k * 10_000)
     return result
 
 
@@ -446,7 +466,7 @@ def strategic_terms(
 
 def build_reference_points(
     *, repository: P8ResearchRepository, base_database: Path,
-    market_factor_database: Path,
+    market_factor_database: Path, market_activity_database: Path | None = None,
 ) -> list[ScenarioReference]:
     event_run = repository.latest_run("event_graph")
     return_run = repository.latest_run("return_paths")
@@ -461,7 +481,9 @@ def build_reference_points(
     }
     paths = repository.records(run_id=return_run.run_id, record_type="return_path")
     path_by_anchor = {str(item["anchor_id"]): item for item in paths}
-    market_values = _market_values(market_factor_database)
+    market_values = _market_values(
+        market_factor_database, market_activity_database=market_activity_database,
+    )
     references: list[ScenarioReference] = []
     for event in events:
         node = str(event.get("node") or "")
@@ -929,6 +951,7 @@ def materialize_references(
     references = build_reference_points(
         repository=repository, base_database=base_database,
         market_factor_database=market_factor_database,
+        market_activity_database=market_activity_database,
     )
     (
         valuation_run_id,

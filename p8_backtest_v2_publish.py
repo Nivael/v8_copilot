@@ -39,11 +39,20 @@ def build_final_report(repository: P8ResearchRepository) -> dict[str, Any]:
     if not rank or not basket:
         raise ValueError("最终发布需要 rank 与 basket 两个完整 run")
     scorecards = [dict(item) for item in rank["signal_scorecards"]]
+    reference_run_id, reference_digest, reference = _latest_record(
+        repository, "p8_reference_backtest_v2", "p8_reference_backtest_v2",
+    )
+    if reference:
+        scorecards.extend(dict(item) for item in reference["family_scorecards"])
     for item in scorecards:
-        if item["signal_family"] != "p8c_accumulation":
+        if item["signal_family"] not in {"p8c_accumulation", "p8c_holder"}:
             continue
         if item["status"] == "supported_pending_basket":
-            incremental = basket.get("persistent_lane_incremental_compounded_excess_st")
+            incremental = basket.get(
+                "persistent_lane_incremental_compounded_excess_st"
+                if item["signal_family"] == "p8c_accumulation"
+                else "holder_lane_incremental_compounded_excess_st"
+            )
             item["status"] = "supported" if incremental is not None and incremental >= 0 else "weak"
             item["basket_incremental_excess_st"] = incremental
             item["basket_resolution"] = (
@@ -62,15 +71,18 @@ def build_final_report(repository: P8ResearchRepository) -> dict[str, Any]:
     supported = sum(item["status"] == "supported" for item in scorecards)
     headline = (
         "数据门仍未完成，不能给研究方向下结论。" if unavailable == len(scorecards)
-        else f"五个方向中：支持 {supported}，弱证据 {len(scorecards) - unavailable - killed - supported}，杀 {killed}，不可用 {unavailable}。"
+        else f"{len(scorecards)} 个独立账中：支持 {supported}，弱证据 {len(scorecards) - unavailable - killed - supported}，杀 {killed}，不可用 {unavailable}。"
     )
     return {
         "record_id": content_id("P8BT2FINAL", {
             "contract": CONTRACT_VERSION, "rank_digest": rank_digest, "basket_digest": basket_digest,
         }),
         "contract_version": CONTRACT_VERSION,
-        "source_run_ids": [rank_run_id, basket_run_id],
-        "source_digests": {"rank": rank_digest, "basket": basket_digest},
+        "source_run_ids": [rank_run_id, basket_run_id, *([reference_run_id] if reference_run_id else [])],
+        "source_digests": {
+            "rank": rank_digest, "basket": basket_digest,
+            **({"reference": reference_digest} if reference_digest else {}),
+        },
         "headline": headline,
         "scorecards": scorecards,
         "rank_report": rank,
@@ -156,7 +168,7 @@ table{{width:100%;border-collapse:collapse}}th,td{{padding:12px 9px;border-botto
 .notice{{border-left:5px solid var(--amber)}}footer{{margin-top:28px;color:var(--muted);font-size:13px}}@media(max-width:720px){{main{{padding:30px 14px}}table{{font-size:14px}}}}
 </style><main><div class="kicker">P8 / PRE-REGISTERED SCORECARD</div><h1>方向有没有用，用两张账说话。</h1>
 <p class="lead">{html.escape(report['headline'])} 排序与可交易篓子分开，稀有节点率不再冒充主结论。</p>
-<section><h2>五个方向</h2><table><thead><tr><th>方向</th><th>结论</th><th>主差值</th><th>边界</th></tr></thead><tbody>{score_rows}</tbody></table></section>
+<section><h2>独立方向账</h2><table><thead><tr><th>方向</th><th>结论</th><th>主差值</th><th>边界</th></tr></thead><tbody>{score_rows}</tbody></table></section>
 <section><h2>50bp 单边成本下的年度篓子</h2><table><thead><tr><th>年份</th><th>组合</th><th>ST 等权</th><th>超额</th><th>最大回撤</th><th>交易</th></tr></thead><tbody>{basket_rows}</tbody></table>
 <p>三年正超额：{report['basket_report']['positive_excess_year_count']}/3；去掉每年最佳两只后的全期超额：{_pct(report['basket_report'].get('top_two_removed_compounded_excess_st'))}。</p></section>
 <section class="notice"><h2>人类只校验一件事</h2><p>正文 LLM 的阶段与方向抽取采用 60→120→200 顺序金标。当前未获正文外发授权，因此状态保持 unavailable，不用标题候选伪造准确率。日常候选无需逐条审核。</p></section>

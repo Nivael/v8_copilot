@@ -26,6 +26,7 @@ def test_final_report_resolves_accumulation_only_after_basket(tmp_path) -> None:
         "record_id": "basket", "status": "supported", "positive_excess_year_count": 2,
         "overall_compounded_excess_st": .1, "top_two_removed_compounded_excess_st": .02,
         "persistent_lane_incremental_compounded_excess_st": .01,
+        "holder_lane_incremental_compounded_excess_st": .01,
         "per_year": [],
     }
     _persist(repository, "p8_backtest_v2_report", "p8_backtest_v2_report", rank)

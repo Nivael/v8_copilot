@@ -1,3 +1,6 @@
+import json
+import sqlite3
+
 import pytest
 
 from p8_references import (
@@ -6,6 +9,7 @@ from p8_references import (
     _scaled_number,
     build_distribution,
     current_market_input_digest,
+    _market_values,
     scenario_weight,
     strategic_terms,
 )
@@ -91,6 +95,35 @@ def test_p8a_economic_input_digest_ignores_mixed_snapshot_provenance():
         "source_digest": "b" * 64,
     })
     assert current_market_input_digest([first]) == current_market_input_digest([second])
+
+
+def test_market_value_fallback_reads_only_total_mv_and_keeps_c14_priority(tmp_path):
+    factor = tmp_path / "factor.sqlite3"
+    activity = tmp_path / "activity.sqlite3"
+    with sqlite3.connect(factor) as connection:
+        connection.executescript("""
+            create table market_factor_snapshots(snapshot_id text,created_at text);
+            create table market_cap_daily(snapshot_id text,symbol text,trade_date text,total_market_value real);
+            insert into market_factor_snapshots values('M1','2023-01-01');
+            insert into market_cap_daily values('M1','000001','2023-01-03',123.0);
+        """)
+    payloads = [
+        {"symbol": "000001", "total_mv_10k_cny": 999.0, "turnover_rate_f": 88.0},
+        {"symbol": "000002", "total_mv_10k_cny": 20.0, "turnover_rate_f": 77.0},
+    ]
+    with sqlite3.connect(activity) as connection:
+        connection.executescript("""
+            create table activity_snapshots(snapshot_id text,trade_date text,fetched_at text);
+            create table market_activity_daily(snapshot_id text,payload_json text);
+            insert into activity_snapshots values('A1','2023-01-03','2023-01-04');
+        """)
+        connection.executemany(
+            "insert into market_activity_daily values('A1',?)",
+            [(json.dumps(item),) for item in payloads],
+        )
+    values = _market_values(factor, market_activity_database=activity)
+    assert values[("000001", "2023-01-03")] == 123.0
+    assert values[("000002", "2023-01-03")] == 200_000.0
 
 
 def test_transaction_fact_numbers_respect_chinese_share_units():

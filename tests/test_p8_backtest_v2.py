@@ -99,6 +99,21 @@ def test_historical_funnel_separates_same_day_event_reaction_from_persistent_lan
     assert by_symbol["000002"]["primary_lane"] == "persistent_activity"
 
 
+def test_historical_funnel_carries_latest_disclosed_holder_score() -> None:
+    calendar = ["2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05", "2023-01-06"]
+    memberships = {day: {"000001"} for day in calendar}
+    result = build_historical_funnel(
+        calendar=calendar, memberships=memberships, events=[], features=[], scores=[],
+        holder_scores=[{
+            "record_id": "HS1", "source_holder_id": "H1", "symbol": "000001",
+            "trade_date": "2023-01-03", "score": .9,
+        }],
+        stage_map={("000001", "2023-01-06"): "st_distress_only"},
+    )
+    assert result[0]["primary_lane"] == "chip_or_exploration"
+    assert result[0]["holder_score"] == .9
+
+
 def test_attach_outcomes_keeps_positive_and_negative_nodes_separate() -> None:
     start = date(2023, 1, 1)
     prices = {"000001": [((start + timedelta(days=i)).isoformat(), 10 + i) for i in range(130)]}

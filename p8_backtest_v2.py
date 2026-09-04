@@ -364,9 +364,15 @@ def build_historical_funnel(
     *, calendar: list[str], memberships: dict[str, set[str]],
     events: list[dict[str, Any]], features: list[dict[str, Any]],
     scores: list[dict[str, Any]], stage_map: dict[tuple[str, str], str],
+    holder_scores: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     starts = _membership_starts(calendar, memberships)
     scores_by_key = {(str(item["symbol"]), str(item["trade_date"])): item for item in scores}
+    holder_by_symbol: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in holder_scores or []:
+        holder_by_symbol[str(item.get("symbol") or "")].append(item)
+    for rows in holder_by_symbol.values():
+        rows.sort(key=lambda item: (str(item.get("trade_date") or ""), str(item.get("record_id") or "")))
     features_by_day: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for item in features:
         features_by_day[str(item.get("trade_date") or "")].append(item)
@@ -431,7 +437,32 @@ def build_historical_funnel(
             -float(scores_by_key[(symbol, decision_day)]["score"]), symbol,
         ))
 
-        lane_orders = {"event_frontier": event_order, "persistent_activity": activity_order}
+        chip_order: list[str] = []
+        for symbol in sorted(current):
+            lower = starts.get((symbol, decision_day), decision_day)
+            eligible = [
+                item for item in holder_by_symbol.get(symbol, [])
+                if lower <= str(item.get("trade_date") or "") <= decision_day
+                and (date.fromisoformat(decision_day) - date.fromisoformat(str(item["trade_date"]))).days <= 90
+            ]
+            if not eligible:
+                continue
+            latest = eligible[-1]
+            candidate = candidates.setdefault(symbol, {
+                "symbol": symbol, "matched_lanes": set(), "event": None,
+                "feature": None, "holder": None,
+            })
+            candidate["matched_lanes"].add("chip_or_exploration")
+            candidate["holder"] = latest
+            chip_order.append(symbol)
+        chip_order.sort(key=lambda symbol: (
+            -float((candidates[symbol].get("holder") or {}).get("score") or 0.0), symbol,
+        ))
+
+        lane_orders = {
+            "event_frontier": event_order, "persistent_activity": activity_order,
+            "chip_or_exploration": chip_order,
+        }
         selected: set[str] = set()
         ranks: dict[tuple[str, str], int] = {}
         for lane in ("event_frontier", "scenario_tension", "persistent_activity", "chip_or_exploration"):
@@ -444,9 +475,11 @@ def build_historical_funnel(
                 candidate = candidates[symbol]
                 event = candidate.get("event") or {}
                 feature = candidate.get("feature") or {}
+                holder = candidate.get("holder") or {}
                 source_ids = [
                     value for value in (
                         event.get("event_id"), feature.get("feature_id"),
+                        holder.get("source_holder_id"),
                     ) if value
                 ]
                 identity = {
@@ -464,6 +497,7 @@ def build_historical_funnel(
                     "lane_rank": rank,
                     "stage": stage_map.get((symbol, decision_day), "unknown"),
                     "score": scores_by_key.get((symbol, decision_day), {}).get("score"),
+                    "holder_score": holder.get("score"),
                     "shape_label": str(feature.get("shape_label") or ""),
                     "source_ids": source_ids,
                     "evidence_status": "historical_point_in_time_replay",
@@ -785,7 +819,7 @@ def build_and_evaluate(
     funnel = build_historical_funnel(
         calendar=[day for day in calendar if "2023-01-01" <= day <= "2025-12-31"],
         memberships=memberships, events=events, features=historical_features,
-        scores=scores, stage_map=decision_stage_map,
+        scores=scores, stage_map=decision_stage_map, holder_scores=holder_scores,
     )
     score_run_id, funnel_run_id = persist_v2_inputs(
         repository, scores=[*scores, *holder_scores], funnel=funnel,

@@ -76,16 +76,36 @@ def _load_plan(path: Path) -> tuple[dict[str, Any], list[str]]:
     return payload, [str(day) for day in date_lists[0]]
 
 
+def _retry_dates(
+    *, plan: dict[str, Any], planned_dates: list[str], retry_report: Path,
+) -> list[str]:
+    prior = json.loads(retry_report.read_text(encoding="utf-8"))
+    if (
+        prior.get("source_plan_id") != plan.get("plan_id")
+        or prior.get("source_plan_digest") != plan.get("content_digest")
+    ):
+        raise ValueError("retry report 与冻结 dry-plan 不匹配")
+    failed = sorted(str(day) for day in (prior.get("result") or {}).get("failures", {}))
+    if not failed or not set(failed).issubset(planned_dates):
+        raise ValueError("retry report 没有合法失败日期")
+    return failed
+
+
 def execute_backfill(
     *, plan_path: Path, market_activity_database: Path,
     market_context_database: Path, allow_provider: bool,
     env_file: Path | None = None, max_attempts: int = 3,
     retry_backoff_seconds: float = 1.0, request_delay_seconds: float = 0.0,
+    retry_report: Path | None = None,
     progress: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     if not allow_provider:
         raise ValueError("provider backfill 必须显式传 --allow-provider")
     plan, dates = _load_plan(plan_path)
+    if retry_report is not None:
+        dates = _retry_dates(
+            plan=plan, planned_dates=dates, retry_report=retry_report,
+        )
     _load_env(env_file)
     provider = RetryingActivityProvider(
         TushareHttpClient(), attempts=max_attempts,
@@ -116,6 +136,7 @@ def execute_backfill(
         "source_plan_id": str(plan["plan_id"]),
         "source_plan_digest": str(plan["content_digest"]),
         "date_only": True,
+        "retry_only": retry_report is not None,
         "provider_calls_expected": len(dates) * 4,
         "result": result.model_dump(mode="json"),
         "status": "complete" if result.failed_date_count == 0 else "partial",
@@ -133,6 +154,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--max-attempts", type=int, default=3)
     parser.add_argument("--retry-backoff-seconds", type=float, default=1.0)
     parser.add_argument("--request-delay-seconds", type=float, default=0.0)
+    parser.add_argument("--retry-report", type=Path)
     return parser.parse_args()
 
 
@@ -147,6 +169,7 @@ def main() -> int:
         max_attempts=args.max_attempts,
         retry_backoff_seconds=args.retry_backoff_seconds,
         request_delay_seconds=args.request_delay_seconds,
+        retry_report=args.retry_report,
         progress=lambda item: print(json.dumps({"progress": item}, ensure_ascii=False), flush=True),
     )
     atomic_write_json(args.output, result)

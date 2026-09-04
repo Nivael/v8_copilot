@@ -14,6 +14,7 @@ from typing import Any
 
 from data_refresh import atomic_write_json
 from p7_daily import load_valuation_stage_map
+from p8_backtest_v2 import build_holder_scores
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
 from p8_regimes import REGISTRY_VERSION as REGIME_REGISTRY_VERSION, regime_for_date
 from settings import (
@@ -103,7 +104,7 @@ def _p8_source_digest(path: Path) -> str:
         return ""
     source_kinds = (
         "activity_features", "event_graph", "scenario_references",
-        "chip_proxies", "funnel", "portfolio", "return_paths",
+        "chip_proxies", "p8_holder_history_v2", "funnel", "portfolio", "return_paths",
     )
     latest: dict[str, dict[str, str]] = {}
     with _connect_ro(path) as connection:
@@ -327,6 +328,17 @@ def _feature_capacity(
         }
         for key, count in sorted(relaxed_observations.items())
     ]
+    holder_run_id, holder_records = _latest_records(
+        repository, "p8_holder_history_v2", "p8_holder_history_v2",
+    )
+    holder_dates = sorted({str(item.get("trade_date") or "") for item in holder_records})
+    holder_stage_map = load_valuation_stage_map(valuation_episode_database, dates=holder_dates)
+    holder_scores = build_holder_scores(holder_records, stage_map=holder_stage_map)
+    holder_test_scores = [
+        item for item in holder_scores
+        if int(str(item.get("trade_date") or "0000")[:4] or 0) in TEST_YEARS
+    ]
+    holder_symbols = {str(item.get("symbol") or "") for item in holder_test_scores}
     family_capacity = {
         "p8a_p_star": {"observation_count": 0, "company_count": 0, "status": "historical_input_absent"},
         "p8b_precursor": {"observation_count": 0, "company_count": 0, "status": "training_score_not_materialized"},
@@ -338,7 +350,18 @@ def _feature_capacity(
                 and len(accumulation_symbols) >= MIN_SIGNAL_COMPANIES else "capacity_gate_failed"
             ),
         },
-        "p8c_holder": {"observation_count": 0, "company_count": 0, "status": "historical_input_absent"},
+        "p8c_holder": {
+            "source_run_id": holder_run_id,
+            "source_record_count": len(holder_records),
+            "observation_count": len(holder_test_scores),
+            "company_count": len(holder_symbols),
+            "status": (
+                "capacity_gate_passed" if len(holder_test_scores) >= MIN_SIGNAL_OBSERVATIONS
+                and len(holder_symbols) >= MIN_SIGNAL_COMPANIES
+                else "historical_input_absent" if not holder_records
+                else "capacity_gate_failed"
+            ),
+        },
     }
     return {
         "source_run_id": run_id,

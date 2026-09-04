@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from p8_backtest_v2 import (
     attach_outcomes,
     build_accumulation_scores,
+    build_holder_scores,
     build_historical_funnel,
 )
 
@@ -42,6 +43,33 @@ def test_accumulation_score_is_same_day_order_invariant_and_uses_prior_history()
     assert left_scores == right_scores
     assert left_scores["000102"] > left_scores["000101"]
     assert next(item for item in left if item["symbol"] == "000101")["history_observation_count"] == 12
+
+
+def test_holder_score_uses_disclosed_decrease_and_strict_prior_history() -> None:
+    start = date(2022, 1, 3)
+    records = []
+    stages = {}
+    for index in range(12):
+        symbol = f"{index + 1:06d}"
+        day = (start + timedelta(days=index)).isoformat()
+        records.append({
+            "record_id": f"H-{symbol}", "symbol": symbol, "trade_date": day,
+            "available_as_of": day, "holder_change_pct": -index / 100,
+        })
+        stages[(symbol, day)] = "st_distress_only"
+    target_day = (start + timedelta(days=20)).isoformat()
+    records.extend([
+        {"record_id": "H-101", "symbol": "000101", "trade_date": target_day,
+         "available_as_of": target_day, "holder_change_pct": -0.03},
+        {"record_id": "H-102", "symbol": "000102", "trade_date": target_day,
+         "available_as_of": target_day, "holder_change_pct": -0.09},
+    ])
+    stages[("000101", target_day)] = "st_distress_only"
+    stages[("000102", target_day)] = "st_distress_only"
+    result = build_holder_scores(records, stage_map=stages)
+    by_symbol = {item["symbol"]: item for item in result}
+    assert by_symbol["000102"]["score"] > by_symbol["000101"]["score"]
+    assert by_symbol["000101"]["history_observation_count"] == 12
 
 
 def test_historical_funnel_separates_same_day_event_reaction_from_persistent_lane() -> None:

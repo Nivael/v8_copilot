@@ -244,6 +244,85 @@ def build_accumulation_scores(
     return result
 
 
+def build_holder_scores(
+    holder_records: list[dict[str, Any]], *, stage_map: dict[tuple[str, str], str],
+) -> list[dict[str, Any]]:
+    """Rank disclosed holder-count decreases using strictly earlier disclosures."""
+
+    prepared: list[tuple[str, str, str, dict[str, Any], dict[str, float]]] = []
+    for item in holder_records:
+        day, symbol = str(item.get("trade_date") or ""), str(item.get("symbol") or "")
+        change = item.get("holder_change_pct")
+        if not day or change is None or int(day[:4] or 0) < 2021:
+            continue
+        value = -float(change)
+        if not math.isfinite(value):
+            continue
+        stage = stage_map.get((symbol, day), "unknown")
+        if stage == "unknown":
+            continue
+        prepared.append((day, symbol, stage, item, {"negative_holder_change_pct": value}))
+    prepared.sort(key=lambda value: (value[0], value[1]))
+    exact_domains: dict[tuple[str, str, str], dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    relaxed_domains: dict[tuple[str, str], dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    for day, _symbol, stage, _item, components in prepared:
+        for key, value in components.items():
+            exact_domains[(stage, _half(day), _board(_symbol))][key].append(value)
+            relaxed_domains[(stage, _half(day))][key].append(value)
+    exact = {key: _History(dict(domains)) for key, domains in exact_domains.items()}
+    relaxed = {key: _History(dict(domains)) for key, domains in relaxed_domains.items()}
+    result: list[dict[str, Any]] = []
+    offset = 0
+    while offset < len(prepared):
+        day = prepared[offset][0]
+        end = offset
+        while end < len(prepared) and prepared[end][0] == day:
+            end += 1
+        daily = prepared[offset:end]
+        for current_day, symbol, stage, item, components in daily:
+            exact_key = (stage, _half(current_day), _board(symbol))
+            relaxed_key = (stage, _half(current_day))
+            history = exact[exact_key]
+            relaxation_path: list[str] = []
+            stratum_key = "|".join(exact_key)
+            if not history.ready():
+                history = relaxed[relaxed_key]
+                relaxation_path = ["drop_board"]
+                stratum_key = "|".join(relaxed_key)
+            scored = history.score(components) if history.ready() else None
+            if scored is None:
+                continue
+            score, component_ranks = scored
+            bucket = "low" if score < 1 / 3 else "high" if score > 2 / 3 else "middle"
+            identity = {
+                "contract": CONTRACT_VERSION, "family": "p8c_holder",
+                "symbol": symbol, "trade_date": current_day,
+                "source_holder_id": item.get("record_id"),
+                "history_observations": history.observations,
+                "history_company_count": len(history.companies),
+            }
+            result.append({
+                "record_id": content_id("P8SCORE", identity),
+                "signal_family": "p8c_holder", "symbol": symbol,
+                "trade_date": current_day, "available_as_of": current_day,
+                "source_available_as_of": str(item.get("available_as_of") or ""),
+                "test_year": int(current_day[:4]), "stage": stage,
+                "calendar_half": _half(current_day), "board": _board(symbol),
+                "stratum_key": stratum_key, "relaxation_path": relaxation_path,
+                "score": score, "component_values": components,
+                "component_midrank_percentiles": component_ranks, "bucket": bucket,
+                "history_observation_count": history.observations,
+                "history_company_count": len(history.companies),
+                "source_holder_id": str(item.get("record_id") or ""),
+                "evidence_status": "derived_point_in_time",
+            })
+        for _day, symbol, stage, _item, components in daily:
+            exact[(stage, _half(_day), _board(symbol))].add(symbol, components)
+            relaxed[(stage, _half(_day))].add(symbol, components)
+        offset = end
+    return result
+
+
 def _calendar_membership(path: Path, start: str, through: str) -> tuple[list[str], dict[str, set[str]]]:
     members: dict[str, set[str]] = defaultdict(set)
     with _connect_ro(path) as connection:
@@ -564,12 +643,14 @@ def _spearman(rows: list[dict[str, Any]], value_key: str) -> float | None:
     return numerator / denominator if denominator else None
 
 
-def rank_scorecard(observations: list[dict[str, Any]]) -> dict[str, Any]:
+def rank_scorecard(
+    observations: list[dict[str, Any]], *, signal_family: str = "p8c_accumulation",
+) -> dict[str, Any]:
     eligible = [item for item in observations if item.get("h120_excess_return_st") is not None]
     companies = {str(item["symbol"]) for item in eligible}
     if len(eligible) < MIN_SIGNAL_OBSERVATIONS or len(companies) < MIN_SIGNAL_COMPANIES:
         return {
-            "signal_family": "p8c_accumulation", "status": "unavailable",
+            "signal_family": signal_family, "status": "unavailable",
             "observation_count": len(eligible), "company_count": len(companies),
             "reason": "minimum_100_observations_40_companies_not_met",
         }
@@ -610,7 +691,7 @@ def rank_scorecard(observations: list[dict[str, Any]]) -> dict[str, Any]:
         )
         decision = "supported_pending_basket" if sum(value > 0 for value in year_values) >= 2 and supported_intervals else "weak"
     return {
-        "signal_family": "p8c_accumulation",
+        "signal_family": signal_family,
         "status": decision,
         "observation_count": len(prepared),
         "company_count": len(companies),
@@ -643,20 +724,21 @@ def _holm(scorecards: list[dict[str, Any]]) -> None:
 
 def persist_v2_inputs(
     repository: P8ResearchRepository, *, scores: list[dict[str, Any]],
-    funnel: list[dict[str, Any]], source_run_id: str, source_digest: str,
+    funnel: list[dict[str, Any]], source_run_ids: list[str],
+    source_digests: dict[str, str], activity_run_id: str, activity_digest: str,
 ) -> tuple[str, str]:
     score_run = build_run(
         run_kind="p8_signal_rank_v2", contract_version=CONTRACT_VERSION,
         start_date="2021-03-17", through="2025-12-31",
-        source_run_ids=[source_run_id], source_digests={"activity_features": source_digest},
+        source_run_ids=source_run_ids, source_digests=source_digests,
         record_payloads={"p8_signal_score_v2": scores},
     )
     repository.persist(run=score_run, records={"p8_signal_score_v2": scores})
     funnel_run = build_run(
         run_kind="p8_historical_funnel_v2", contract_version=CONTRACT_VERSION,
         start_date="2023-01-01", through="2025-12-31",
-        source_run_ids=[source_run_id, score_run.run_id],
-        source_digests={"activity_features": source_digest, "signal_scores": score_run.content_digest},
+        source_run_ids=[activity_run_id, score_run.run_id],
+        source_digests={"activity_features": activity_digest, "signal_scores": score_run.content_digest},
         record_payloads={"p8_historical_funnel_item_v2": funnel},
     )
     repository.persist(run=funnel_run, records={"p8_historical_funnel_item_v2": funnel})
@@ -677,6 +759,9 @@ def build_and_evaluate(
         repository, "activity_features", "activity_feature",
     )
     event_run_id, event_digest, events = _latest_records(repository, "event_graph", "derived_event")
+    holder_run_id, holder_digest, holder_records = _latest_records(
+        repository, "p8_holder_history_v2", "p8_holder_history_v2",
+    )
     if not features:
         raise ValueError("缺 activity_features")
     feature_dates = sorted({str(item.get("trade_date") or "") for item in features if str(item.get("trade_date") or "") <= "2025-12-31"})
@@ -685,6 +770,12 @@ def build_and_evaluate(
         item for item in features if str(item.get("trade_date") or "") <= "2025-12-31"
     ]
     scores = build_accumulation_scores(historical_features, stage_map=stage_map)
+    holder_dates = sorted({
+        str(item.get("trade_date") or "") for item in holder_records
+        if str(item.get("trade_date") or "") <= "2025-12-31"
+    })
+    holder_stage_map = load_valuation_stage_map(valuation_episode_database, dates=holder_dates)
+    holder_scores = build_holder_scores(holder_records, stage_map=holder_stage_map)
     calendar, memberships = _calendar_membership(market_context_database, "2021-03-17", "2025-12-31")
     decision_dates = _weekly_decision_dates([day for day in calendar if "2023-01-01" <= day <= "2025-12-31"])
     missing_stage_dates = sorted(set(decision_dates) - set(feature_dates))
@@ -697,12 +788,20 @@ def build_and_evaluate(
         scores=scores, stage_map=decision_stage_map,
     )
     score_run_id, funnel_run_id = persist_v2_inputs(
-        repository, scores=scores, funnel=funnel,
-        source_run_id=activity_run_id, source_digest=activity_digest,
+        repository, scores=[*scores, *holder_scores], funnel=funnel,
+        source_run_ids=[item for item in (activity_run_id, holder_run_id) if item],
+        source_digests={
+            "activity_features": activity_digest,
+            **({"holder_history": holder_digest} if holder_digest else {}),
+        },
+        activity_run_id=activity_run_id, activity_digest=activity_digest,
     )
     prices = _prices(base_database, "2021-03-17", "2026-09-03")
     benchmarks = _benchmarks(market_context_database, "2021-03-17", "2026-09-03")
     observations = attach_outcomes(scores, prices=prices, benchmarks=benchmarks, events=events)
+    holder_observations = attach_outcomes(
+        holder_scores, prices=prices, benchmarks=benchmarks, events=events,
+    )
     cards = [
         {
             "signal_family": "p8a_p_star", "status": "unavailable",
@@ -713,10 +812,7 @@ def build_and_evaluate(
             "reason": "verified_hard_outcomes_below_training_gate",
         },
         rank_scorecard(observations),
-        {
-            "signal_family": "p8c_holder", "status": "unavailable",
-            "reason": "historical_available_date_holder_series_absent",
-        },
+        rank_scorecard(holder_observations, signal_family="p8c_holder"),
     ]
     _holm(cards)
     result = {
@@ -730,9 +826,17 @@ def build_and_evaluate(
         "start_date": "2023-01-01",
         "through": "2025-12-31",
         "source_dry_plan_id": str(dry_plan.get("plan_id") or ""),
-        "source_run_ids": [activity_run_id, event_run_id, score_run_id, funnel_run_id],
-        "source_digests": {"activity": activity_digest, "event": event_digest},
-        "score_count": len(scores),
+        "source_run_ids": [item for item in (
+            activity_run_id, event_run_id, holder_run_id, score_run_id, funnel_run_id,
+        ) if item],
+        "source_digests": {
+            "activity": activity_digest, "event": event_digest,
+            **({"holder_history": holder_digest} if holder_digest else {}),
+        },
+        "score_count": len(scores) + len(holder_scores),
+        "score_count_by_family": {
+            "p8c_accumulation": len(scores), "p8c_holder": len(holder_scores),
+        },
         "historical_funnel_item_count": len(funnel),
         "historical_funnel_decision_date_count": len({item["decision_date"] for item in funnel}),
         "rank_observation_count": len(observations),

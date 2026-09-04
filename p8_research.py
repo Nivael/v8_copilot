@@ -99,7 +99,7 @@ class P8Run(StrictModel):
         "scenario_references", "chip_proxies", "funnel", "portfolio", "backtest",
         "p8_backtest_v2_dry_plan", "p8_signal_rank_v2",
         "p8_historical_funnel_v2", "p8_walk_forward_basket_v2",
-        "p8_backtest_v2_report",
+        "p8_backtest_v2_report", "p8_holder_history_v2",
     ]
     contract_version: str
     start_date: str

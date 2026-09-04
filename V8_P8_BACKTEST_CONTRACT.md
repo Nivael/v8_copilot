@@ -1,114 +1,236 @@
-# v8 P8 回测与验证契约
+# v8 P8 回测与验证契约 v2
 
-状态：**frozen before P8 outcomes are read**
-日期：2026-09-04
-契约版本：`v8_p8_backtest_v1`
+状态：**frozen before any v2 score/outcome result is computed**
+冻结日期：2026-09-05
+契约版本：`v8_p8_backtest_v2`
 父 PRD：[V8_P8_RESEARCH_FUNNEL_PRD.md](V8_P8_RESEARCH_FUNNEL_PRD.md)
+数据门：[V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md](V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md)
 
-## 1. 五张独立成绩单
+## 0. 替代关系和已知信息边界
 
-P8 不输出一个“总有效率”。验证固定拆为：
+本契约替代 `v8_p8_backtest_v1` 的**判定逻辑**，不删除旧报告。v1 已经计算过的 20 日描述结果
+只保留为历史审计，不得作为 v2 阈值、分层、窗口或分数方向的训练结果。
 
-1. 正文抽取正确性与来源覆盖；
-2. 合法前哨对下一程序节点的 recall、gap 和失败/右删失分布；
-3. 累积型活动特征对后续方向节点与相对收益分布的描述性区分；
-4. 三类情景参考的同口径覆盖、稳定性和事后包含关系；
-5. 每日漏斗的研究转化与真实同期组合回报。
+v1 的根本问题是把“20 日内是否出现稀有硬节点”放在主判断位置。该二元结果基础率低、方差
+高，在现有样本量和分层后难以提供稳定排序证据。v2 将它降为辅助结果；决定方向的两个主测试
+固定为：
 
-前四张不因 owner 点击而改变；第五张不把 `keep` 当成市场真值。
+1. **同阶段同期的排序能力**：高分组是否系统性优于低分组；
+2. **可交易同期篓子**：历史每日漏斗按真实可交易约束能否跑赢 point-in-time ST 等权。
 
-## 2. 不可回写的冻结输入
+这不表示稀有节点结果“无用”。正面、负面节点率继续作为安全和机制诊断，但不能单独宣告一条
+研究方向有效或无效。
 
-每次报告登记 P6/P7/P8 run ID、manifest digest、membership 版本、事件词表、LLM prompt/model、
-形态 profile、基准序列和代码 commit。历史输入之后被修订时生成新版本，不覆盖旧报告。
+## 1. 架构决定
 
-当前观察日不进入自己的 lagged baseline；公告使用 `available_as_of`；结果节点和收益只能在
-预测时点之后进入 outcome。失败、退市和未完成 episode 必须保留。
+采用 hybrid：复用 P8 append-only repository、P6/P7 source ID、point-in-time membership、
+市场因子和现有 typed contracts，不建立第二套事实库。新增的运行种类至少包括：
 
-## 3. 时间切分
+- `p8_backtest_v2_dry_plan`：只读容量与请求预算；
+- `p8_signal_rank_v2`：分层排序成绩单；
+- `p8_historical_funnel_v2`：逐日、逐版本、可回放的历史漏斗；
+- `p8_walk_forward_basket_v2`：周度再平衡的可交易篓子；
+- `p8_backtest_v2_report`：汇总五个方向，但不制造单一“总胜率”。
 
-- 主验证使用 expanding walk-forward：训练只用于估计已经冻结口径的历史分布，下一自然年为
-  留出；不使用留出结果改阈值；
-- 数据不足以形成完整年度时使用季度 rolling origin，但各 origin 必须覆盖相同日历季节；
-- 4 月初至 6 月底年报/摘帽季单独报告，同季同比，不再用任意时间中点切分；
-- 所有同时影响多只股票的市场日按日历月保留相关性。
+原始 P6/P7/P8 记录不重写。历史回填新增 snapshot/run；失败 run 不移动 current pointer。研究层
+可读分数、收益与方向；宣称层仍禁止资金身份、内幕、买卖建议、目标价和“已验证胜率”。
 
-## 4. 方向与结果变量
+## 2. 预注册时间切分
 
-硬节点至少分为：
+### 2.1 三个固定 walk-forward 测试年
 
-- `process_advance`、`process_rollback`；
-- `old_equity_supportive`、`old_equity_adverse`、`old_equity_mixed_or_unknown`。
+| 训练集 | 测试集 | 用途 |
+| --- | --- | --- |
+| 2021-03-17 至 2022-12-31 | 2023 自然年 | 第一个独立测试年 |
+| 2021-03-17 至 2023-12-31 | 2024 自然年 | 第二个独立测试年 |
+| 2021-03-17 至 2024-12-31 | 2025 自然年 | 第三个独立测试年 |
 
-禁止把法院受理、计划批准、终止重整和终止上市合成一个 True。一般进展不是硬 outcome。
+2026 不参与开发期三年判定，只进入真实 prospective shadow。训练集只允许估计 §5.3 明文允许的
+训练期量，不能重选特征、方向、阈值、成本或分层阶梯。
 
-收益窗口固定为 5/10/20/60 个合格交易日：
+### 2.2 制度与季节
 
-- 个股 qfq 收益；
-- 相对同期 ST 等权收益；
-- 相对同期中证 2000 收益；
-- 退市同时报告总损失压力与最后交易所可观察值；
-- 跨越转增/让渡而旧股东账不完整的窗口标 `capital_structure_contaminated`，不能进入精确
-  old-shareholder return。
+- 整体退市/风险警示制度版本继续按 registry 在 **2024-04-30** 切换；
+- 沪深新市值退市指标自 **2024-10-30** 开始计算相关期限，只新增
+  `market_cap_rule_effective` 子变量，不把所有风险类型粗暴切成新全局 regime；
+- 2024 测试年必须并列报告 4 月 30 日前后、10 月 30 日前后，但年度总结果仍保留；
+- 4 月 1 日至 6 月 30 日年报/摘帽季单列；其他月份为非年报季；
+- 半年键固定为 `H1=01-01..06-30`、`H2=07-01..12-31`。
 
-未观察满窗口为 right-censored，不记失败或零收益。
+制度日期依据交易所发布通知：深交所 2024 年修订规则自 4 月 30 日发布施行，其中市值退市
+条款自 10 月 30 日起计算；上交所通知采用同一安排。规则变化必须来自版本化官方来源，不能因
+回测曲线出现断点而事后增设 regime。
 
-## 5. 前哨链验证
+## 3. Point-in-time 输入与真值等级
 
-- 反向 recall：每种已核证推进/回退节点前 20/60 个交易日，是否存在其图中合法直接前序；
-- 正向路径：每种前哨后走向合法推进、失败分支或仍未完成的 cumulative incidence；
-- 同一家公司、同一 precursor family、同一 successor 只记最近一次合格前哨，避免重复公告
-  堆高命中；
-- `body_verified` 为主结果；P6 verified 交叉结果单列；title-only 只作 sensitivity；
-- 公司内多 episode 用 company-cluster，不假设独立。
+每个预测日只能读取当日收盘后已经公开且可得的：
 
-## 6. 量价与筹码验证
+- 当日 ST membership、名称/板块/风险类型和当日以前已核证 stage；
+- 截至当日的公告正文、事件节点、资本结构、日线、qfq、`daily_basic`、涨跌停和停牌；
+- 当日及此前的 ST 等权和中证 2000；
+- 当日以前披露的股东户数、龙虎榜、机构席位、大宗交易和融资数据。
 
-单日 D0–D4 使用互斥箱：`D0`、`D1_only`、`D2_only`、`D3_only`、`D4`。持续型特征保留连续值，
-形态标签只是冻结阈值后的描述层。
+当前观察日不进入自己的 lagged baseline。公告时间只有日期时按收盘后可得处理；有可靠时刻才
+允许覆盖。历史 membership 不得用今天名单倒算，退市和失败公司不得删除。
 
-主比较同时报告：
+事件真值主层只接受：
 
-- 后续 20/60 日各方向硬节点率与相对收益分布；
-- 同期全 ST 基础率；
-- 匹配对照，优先级固定为 P6 verified stage → P8 body-verified stage → 明确无已知重整程序；
-- P7 title-derived stage 只作 sensitivity；stage unknown 不默认等于 `distress_only`；
-- 无法达到匹配门时另报 stage-free 同日近市值结果，不冒充同阶段对照。
+1. P6 人工核证节点；
+2. P8 `body_verified`；
+3. 词义唯一、原文可回链的 `deterministic_verified` hard outcome。
 
-趋势判断使用不确定性区间，不因 D3/D4 点估计差一两个样本宣称不单调。任一箱少于 30 个
-已完成观察，只列点与区间，不进入趋势结论。标准误按公司聚类，并以日历月 block bootstrap
-补充市场共同冲击。
+`title_derived`、`provisional` 只作 sensitivity。目前库存中真正满足 hard + verified 的节点很少；
+在正文抽取及金标门完成前，任何正面节点率结论必须为 `unavailable`，不得用约 250 个标题候选
+扩充分母。
 
-## 7. 情景参考验证
+## 4. 结果变量：连续结果主、稀有结果辅
 
-三类参考分别验证，不计算混合平均：
+### 4.1 主结果
 
-- coverage：exact/range/unknown、样本数、公司数和 relaxation path；
-- stability：滚动窗口前后中位/P25/P75 变化，不以稳定性反向选择窗口；
-- containment：公司后续已实现旧股东权益结果是否落在当时可得参考分布内；
-- interval score：同时惩罚未覆盖和区间宽度，禁止靠无限宽区间获得 100% coverage；
-- `p*` 只在同旧股东权益口径子集评价校准，样本不足时长期保持 unvalidated。
+- **120 个合格交易日相对 point-in-time ST 等权的 qfq 超额收益**；
+- 同时报相对中证 2000 超额收益，但它不替代 ST 主基准；
+- 60 日 ST 超额收益是预注册次主结果；5/10/20 日只作路径诊断；
+- 跨越转增、让渡或新股登记且旧股东账不闭合时标
+  `capital_structure_contaminated`，不进入精确老股东回报结论。
 
-`p*` 只使用公司自身、同一 claim 的成功/失败旧股东权益输入。跨公司分层中位数只形成
-`cross_company_sensitivity_weight`，不得命名或回填为 `p*`，也不与客观转移概率比较。
+### 4.2 辅助与风险结果
 
-## 8. 漏斗和同期组合
+- 60/120 日内 `process_advance` 且 `old_equity_supportive` 的核证节点；
+- `process_rollback`、`old_equity_adverse`、重整终止、退市决定分别单列；
+- 120 日内退市率与 `total_loss_stress=-100%`；最后交易所可观察值另作 sensitivity；
+- 未观察满窗口为 right-censored，不记零收益或失败。
 
-每日漏斗分四 lane，保留 overflow。运营指标分账：
+## 5. 同阶段同期排序测试
 
-- 可研究性：证据可打开率、数据缺口率、进入深挖的比例；
-- owner 使用：`keep` 数、无动作数和明确 `drop`，无动作保持 unreviewed；
-- 研究转化：补正文/补资本结构后结论是否改变、是否形成可复用经验；
-- 市场观察：候选形成后的真实同期等权组合及相对 ST 等权/中证 2000 回报。
+### 5.1 分层键与唯一放宽阶梯
 
-组合必须是按交易日实际可持有的 concurrent calendar portfolio，不把不同年份 episode 当成
-同时投资的独立彩票。公司多次入选按预注册持有期去重。结果用 company cluster + calendar-
-month block bootstrap；不输出胜率、目标价或仓位建议。
+排序只在可比 cohort 内形成。精确键固定为：
 
-## 9. 发布与失败状态
+`stage × calendar_half × board`
 
-历史回测不能替代真实前瞻。每个输出显示完成样本数、右删失数、覆盖、版本和
-`validated / descriptive_only / unvalidated / unavailable`。
+最小 cell 为 12 个观察且 8 家公司。精确 cell 不足时只允许去掉 `board`，形成
+`stage × calendar_half`；仍不足则该观察没有分层 rank，不进入主排序结果。`stage=unknown` 不与
+已知阶段合并。每条结果保存 `stratum_key`、`relaxation_path`、n 和公司数。
 
-以下情况不得发布强解释：方向未分开；对照覆盖不足；正文只是 title-only；资本结构污染；
-样本/公司门不足；结论只在调参后的同一数据成立。无法证伪不是通过验证。
+每个被测信号进入结论前，跨有效 cell 合计必须达到 **100 个观察、40 家公司**。门槛只许在新
+契约中上调，不得看到结果后下调。
+
+### 5.2 冻结的被测分数
+
+不同经济对象不强行加成一个总分：
+
+1. **P8A company `p*` score**：只在公司自身同一 claim 的当前/成功/失败老股东权益都闭合时
+   使用；定义 `p_star_opportunity_score = -p*`，所以高分档代表较低 `p*`。跨公司
+   `cross_company_sensitivity_weight` 不进入主测试。
+2. **P8B precursor score**：对每个 direct precursor family，训练期内以 120 日正面转移率形成
+   Beta-binomial 收缩分数。先验均值为相同 stage 的训练期基础率，先验强度固定 20；训练期该
+   precursor 少于 20 个观察或 10 家公司时 score=unknown。测试年 outcome 不参与分数。
+3. **P8C accumulation score**：在 §5.1 cell 内，对以下四项取 mid-rank percentile 后等权平均：
+   `cum_turnover_log_excess_20`、`elevated_day_ratio_20`、
+   `-abs(excess_return_st_20)`、`-range_compression_20`。任一项 unknown 则总分 unknown。
+4. **P8C holder score**：单独使用 `-holder_change_pct`；披露日之前不得回填，和量价分数不合并。
+5. **P8D funnel rank**：不产生跨 lane 加权分。历史漏斗严格复用 6/5/5/4 lane quota、当时版本的
+   lane 内确定性排序和最多 20 只结果。
+
+所有分数定义为 outcome-blind 或只使用 walk-forward 训练期 outcome。v2 不测试其他临时组合。
+
+### 5.3 三档、相关性与不确定性
+
+- 在有效 §5.1 cell 内使用 mid-rank percentile：`low < 1/3`、`middle 1/3..2/3`、`high > 2/3`；
+- 主统计为 high−low 的 120 日 ST 超额收益差；并列报告 cell 内 rank 与结果的 Spearman；
+- 正面硬节点率以 high/low 比和百分点差作辅助，负面节点与退市率独立列示；
+- 汇总采用 cell 等权和观察等权两种口径，前者为主，防止大 cell 支配；
+- 同时输出 company-cluster bootstrap 和 calendar-month block bootstrap 95% 区间；任一主区间
+  跨 0 都不能标“对”；
+- 四个预注册信号家族的主结果使用 Holm 校正，原始与校正后区间/p 值并列；诊断指标不参与
+  选择结论。
+
+## 6. 可交易同期篓子测试
+
+### 6.1 选股与再平衡
+
+- 每个测试周最后一个交易日收盘后，以当日可得数据重建四 lane 漏斗；
+- 下一周第一个可交易日开始执行，等权目标最多 20 只，不足不补，overflow 不进入；
+- 同一股票命中多 lane 只持有一次；不使用 owner `keep` 作为选股或权重；
+- 每周再平衡；没有候选时持有现金，现金收益固定 0；不加杠杆、不做空。
+
+### 6.2 成交规则
+
+- 日线数据无法证明开盘成交，因此统一使用下一合格交易日**收盘价**作为模拟成交价；
+- 停牌或一字涨停不得买入。买单有效至该周最后一个交易日，仍未成交则取消，现金保留；
+- 停牌或一字跌停不得卖出。卖单保留至首个可卖日，期间按最后可观察收盘价估值并标 stale；
+- 先执行可成交卖单，再以剩余现金按目标等权执行买单；被锁仓占用的资本不得重复分配；
+- 主净值每个实际买/卖边各扣 **50bp**，另报 20bp、100bp 单边敏感性；
+- 期间退市且没有可交易退出端点，主口径按 -100% 结算；最后交易所可观察值单列敏感性；
+- 只使用当日 `stk_limit`/`limit_status`、OHLC 和 `suspend_d`；缺字段时该单状态 unknown，不能
+  假设成交。
+
+### 6.3 基准与决定指标
+
+主基准为相同日历区间的 point-in-time ST 等权；中证 2000 为辅助。按测试年和全期报告：
+
+- 扣 50bp 后的年化/累计 ST 超额、最大回撤、周胜率、换手和现金比例；
+- 三个 walk-forward 测试年中 ST 超额为正的年份数；
+- 事后去掉每个测试年贡献最大的两只股票后重新计算的 ST 超额；
+- 毛收益及 20/100bp 敏感性，但只用 50bp 主口径判定。
+
+去掉最佳两只只作集中度压力测试，不形成可交易规则，也不能反馈到选股。
+
+## 7. 分方向假设与 kill 条件
+
+所有 kill 条件都要求对应信号先满足 100 个观察/40 家公司门；否则状态是 `unavailable`，不是
+“弱”或“杀”。
+
+| 方向 | 可证伪假设 | 主指标 | Kill / 修订条件 |
+| --- | --- | --- | --- |
+| P8A 分层参考 | 相邻层在同制度下有可重复的分布差异 | 相邻层中位数差的 bootstrap 区间；P25–P75 interval score | 两个合格独立测试年中差值区间均含 0 → 合并预注册相邻层；不以两条独立 CI 是否重叠代替差值检验 |
+| P8A 稳定性 | 上一训练窗参考区间能覆盖下一年节点值 | P25–P75 coverage、interval score；MdAPE 辅助 | 两个测试年 MdAPE >50% 或 interval score 劣于无分层基线 → 现有分层杀；只有外生官方制度变量才能开新 regime |
+| P8A `p*` | 同阶段内较低 `p*` 对应更高 120 日 ST 超额，且风险未吞噬收益 | `p*` 三档 120 日 ST 超额、退市率 | 无单调关系；或低档超额被退市总损失反转 → 不再解释为“低位”，改称悬崖风险敏感性 |
+| P8B 前哨 | direct precursor 对目标节点有超越 stage 的增量 | 前哨转化率/同 stage 基础率、失败分支率、时间分布 | 两个测试年比值均接近 1 且区间含 1 → 该 precursor family 降为 stage 描述 |
+| P8B 信息含量 | 前哨在 t+1 后仍留下可观察重定价 | t+2 至目标节点或 120 日的 ST 超额漂移 | 两个测试年漂移差均跨 0 → “早读公告”无价格 edge，只保留流程跟踪 |
+| P8B LLM | 正文阶段和两轴方向抽取准确 | 顺序金标 precision/recall | 任一主字段 precision 或 recall <85% → 停止用该字段做回测，先修抽取 |
+| P8C accumulation | 高分优于同阶段同期低分/quiet | 三档 120 日 ST 超额；正面节点率辅助 | 两个测试年 high−low ≤0 且合并结果 ≤0 → 杀；反应性检查失败则直接改称新闻回声 |
+| P8C 领先性 | 命中不是公开公告后的机械反应 | 命中前 5 个交易日无相关公告比例 | 两个测试年相关公告反应占比均 >80% → 杀“领先性”解释 |
+| P8C 股东户数 | 户数下降在同阶段同期具有排序力 | holder 三档 120 日 ST 超额 | 两个测试年 high−low ≤0 且合并结果 ≤0 → 杀，不与量价合并挽救 |
+| P8D 漏斗 | 四 lane 篓子扣成本后跑赢 ST 等权 | §6.3 主篓子 | 三年中正超额少于 2 年，或去掉最佳两只后全期超额 ≤0 → 漏斗不得称有效 |
+
+“接近 1”在实现中固定为转化率比 95% 区间包含 1，且点估计位于 0.8–1.25；不得看到结果后
+扩大范围。
+
+## 8. 三档结论
+
+- **杀**：满足 §7 对应 kill 条件，或被两个独立时期证明主要是公开消息反应；从主漏斗移除，
+  仍保留 ledger 和失败证据。
+- **弱**：方向点估计有利，但任一主区间跨 0、只有一个合格测试年、Holm 后失效，或篓子中性；
+  可作为不加权弱证据，不得提高 lane 配额。
+- **对**：至少 2/3 个测试年主方向一致，company 与 calendar 两种主区间至少在一个预注册主
+  结果上均不含 0，Holm 后仍成立，且加入同期篓子不拖累 50bp 主口径。
+
+结论按信号 family 独立给出；不得因另一个 family 成功而把失败方向升级。
+
+## 9. LLM 200 条金标的最小人审方案
+
+准确率不能完全自动自证。金标使用固定顺序审计，避免一开始要求 owner 看 200 条：
+
+1. 从五个事件 track、正/负方向、三个年份和两个制度期分层抽 60 条；
+2. 若 85% 门的双侧 Wilson 区间已经确定通过或失败则停止；
+3. 仍跨门则扩至 120 条，再跨门才扩至最多 200 条；
+4. Codex 可预填、聚类和定位原文，但预填不算金标；独立人类只需核对阶段、程序方向、老股东
+   影响和引用是否支持。owner 可委托标注，自己只看冲突簇；
+5. 抽样清单、未完成卡和所有否定样本固定保存，不能只审核看起来正确的条目。
+
+## 10. 发布纪律
+
+首次 v2 运行前必须同时保存：
+
+- 本契约 commit SHA 与 digest；
+- dry-plan run/digest；
+- 数据 snapshot/run ID、membership、事件 registry、LLM prompt/model、形态 profile；
+- 三个测试年、成本、lane 配额、分层阶梯和最低门。
+
+第一次正式结果生成后，只允许修复不改变经济含义的实现 bug。任何新特征、新 regime、新窗口、
+新阈值或新 kill 条件必须进入 `v8_p8_backtest_v3`，v2 结果保持可复算。探索性发现统一标
+`exploratory_not_registered`，不得进入“对/弱/杀”。
+
+历史回测不能替代 60 个真实交易日 prospective shadow。每项输出完整样本、公司数、右删失、
+交易失败、成本、版本、区间和 `supported / weak / killed / unvalidated / unavailable`。

@@ -1,10 +1,10 @@
 # v8 P8 PRD：研究漏斗、分阶段成交情景参考与前哨链
 
-状态：architecture frozen；P8-0 与首轮工程物化完成；正文 LLM 授权及 10/60 日真实前瞻门待完成
-日期：2026-09-04
+状态：architecture frozen；P8-0 与首轮工程物化完成；P8 回测 v2 已预注册、待 outcome-blind dry-plan；正文 LLM 授权及 10/60 日真实前瞻门待完成
+日期：2026-09-05
 负责人：owner 起草，Codex commander window 实施
 修订对象：[V8_P6B_PRD.md](V8_P6B_PRD.md) §1/§2.2/§11、[V8_P7_DAILY_INTELLIGENCE_PRD.md](V8_P7_DAILY_INTELLIGENCE_PRD.md) §2/§5.3/§8、[V8_P7_BACKTEST_CONTRACT.md](V8_P7_BACKTEST_CONTRACT.md) §4/§5
-依赖：P6B-3 核证 valuation episode（912 个，460 个 verified 边界）；C14 时点市值；P7A 状态机（491 个标题规则硬跃迁）；`market_activity_v1`（373 个交易日）
+依赖：P6B-3 核证 valuation episode（912 个，460 个 verified 边界）；C14 时点市值；P7A 状态机（491 个标题规则硬跃迁）；`market_activity_v1`（当前 373 个交易日，P8-BT2 要求补齐 2021-03-17 起历史）
 不改动：P7 数据面、point-in-time 规则、防泄漏规则、fail-closed 规则
 
 ## 0. 一句话
@@ -261,11 +261,13 @@ probe 规则同 P7-0：小样本、零生产写入、先报权限/积分/字段�
 龙虎榜属于事件触发样本，缺失不等于没有机构交易；融资余额对非两融 ST 的缺失不作零值；股东
 户数使用披露日而不是报告期末日。所有代理必须保存 coverage denominator。
 
-### 5.4 结果变量（两条并列）
+### 5.4 结果变量（连续结果为主、节点为辅）
 
-- 后续 20/60 日相对排除目标后的 ST 等权、中证 2000 的 qfq 超额收益；发生资本结构变化时
-  标 `old_equity_return_contaminated`，不能冒充精确老股东回报；
-- 后续 20/60 日按 `process_direction` 与 `old_equity_effect` 分开的硬节点；失败节点单列；
+- 后续 120 日相对排除目标后的 point-in-time ST 等权 qfq 超额收益为回测 v2 主结果，60 日为
+  次主结果；中证 2000 并列作辅助，5/10/20 日只描述路径；发生资本结构变化时标
+  `old_equity_return_contaminated`，不能冒充精确老股东回报；
+- 后续 60/120 日按 `process_direction` 与 `old_equity_effect` 分开的核证硬节点为辅助结果；
+  负面、失败和退市分别单列，不能用标题候选扩充分母；
 - 信号与公告的 `before / same_day / after / no_covered_announcement` 四类关系分开报告。D4 较低
   不能事后解释为追涨，只有这些时间分层可以检验公开信息后的反应假设。
 
@@ -343,27 +345,27 @@ P8E 不假设 912 个 episode 都具备可交易边界或精确老股东权益�
 这张表回答"这个游戏历史上单票与同期篓子的分布有什么差别"。它是研究层描述统计，不因
 样本不足停止，但 coverage 不足时必须输出空表/unknown，不能写成已精确包含稀释。
 
-## 8. 回测方法修正
+## 8. 回测方法修正 v2
 
-以下修正写入新版 `V8_P8_BACKTEST_CONTRACT.md`，在读结果前冻结：
+完整规则已在读 v2 结果前冻结到
+[V8_P8_BACKTEST_CONTRACT.md](V8_P8_BACKTEST_CONTRACT.md)，数据容量门见
+[V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md](V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md)。决定方向的不是
+20 日稀有节点命中率，而是两项测试：
 
-1. **切分**：不再按单次中点切。首选逐自然年 walk-forward；历史长度不足时使用多个滚动
-   origin，并确保每个训练/留出比较都对齐同一日历季。年报季（4 月初至 6 月底）单独分层；
-   “首轮基础率翻倍由季节导致”只作为待验证假设，不预写成结论。
-2. **结果变量分方向**：`process_direction`、`old_equity_effect`、失败退出和超额收益分账，不把
-   advance 与 supportive、rollback 与 adverse 互相代替。
-3. **对照阶段来源**：P6B-3 verified → P8B 正文核证 derived → 明确覆盖完整且未观察到重整
-   程序的 `no_known_restructuring` cohort。仅标题规则的 P7 状态只作敏感度层；完全 unknown
-   不能默认成 `st_distress_only`。另报不要求阶段一致、只匹配 risk/board/市值的 fallback
-   对照，不能冒充同阶段。80% 是覆盖目标，不是降低证据标准的理由。
-4. **分箱**：D0、D1-only、D2-only、D3-only、D4 为互斥分箱，同时保留连续 percentile、
-   robust z 和持续型特征；n < 30 的箱不参与趋势判断。趋势使用带不确定性的有序检验或回归，
-   不能要求四个点估计机械递增，也不能因一次不单调单独否定。
-5. **季节控制**：所有硬节点率并列报告"同期全 ST 池基础率"，lift 相对同期基础率计算。
-6. **重复计功**：同一后继硬节点对同一家公司同一 precursor family 只计一次主命中；重复
-   episode 保留在 ledger，推断按公司聚类。
-7. 保留：point-in-time、右删失、公司聚类 bootstrap、退市样本保留、阈值先冻结。收益主表
-   同时做日历月份 block bootstrap，避免把同一市场阶段的股票当独立样本。
+1. **同阶段同期排序**：在 `stage × calendar_half × board` 内把预注册分数分三档，比较高档与
+   低档的 120 日 ST 超额收益，并以 60/120 日正负核证节点率作辅助；最低 100 个观察、40 家
+   公司，按公司和日历月份两种相关结构给区间；
+2. **可交易同期篓子**：固定用 2023/2024/2025 三个 walk-forward 测试年，每周收盘后重建当时
+   最多 20 只候选，下一可交易收盘执行；计入停牌、一字板、退市、锁仓、现金和 50bp 单边成本，
+   与 point-in-time ST 等权比较，并做去掉每年最佳两只的集中度压力测试。
+
+P8A `p*`、P8B 前哨、P8C 持续活动和股东户数分别检验，不用一个总分互相挽救。每项在契约中
+已有可证伪假设、kill 条件与 supported/weak/killed 定义；未达到数据门时必须是 unavailable，
+不得写成“没效果”。
+
+2024-04-30 作为整体规则版本切换；2024-10-30 只作为市值退市条款生效子变量。title-derived
+和 provisional 节点只进入 sensitivity；正文/确定性核证不足时，正面节点检验保持 unavailable。
+任何新窗口、特征、阈值或制度切分必须进入 v3，不能看完 v2 后回改契约。
 
 ## 9. 实施顺序与停止条件
 
@@ -376,7 +378,9 @@ P8E 不假设 912 个 episode 都具备可交易边界或精确老股东权益�
 | P8B | 前哨链 + 正文补齐 + 真实 LLM 抽取 | 正文补齐配额不足时先覆盖 2024 年以来，并保留全量缺口 denominator |
 | P8C | 持续型特征 + 形态标签 + 筹码代理 | 接口不可用标 `unavailable` |
 | P8D | 四通道漏斗页 + owner 可选 keep/drop 记录 | P8B-0 必须完成；P8A/B/C 至少两条通道可用；无候选允许输出 0 |
-| P8-BT | 按 §8 重跑回测 | 契约先冻结 |
+| P8-BT2-0 | outcome-blind 盘点历史活动、事件真值、分层和可交易状态；生成请求与存储预算 | 不计算收益、命中率或信号效果；dry-plan run/digest 必须先发布 |
+| P8-BT2-1 | 按交易日补齐 2021 起连续活动数据并物化 point-in-time 分数 | append-only；失败 run 不移动 current pointer |
+| P8-BT2-2 | 重放三年历史漏斗、运行分层排序和可交易篓子 | 严格按 v2 契约一次读取；不足即 unavailable |
 
 P8A/P8E 不一定需要新 provider，但需要大量既有文书抽取、端点核验和可能的有界回填；只有
 P8-0 能决定真实成本。P8B-0 是它们共同的语义前置。

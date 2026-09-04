@@ -238,3 +238,8 @@ P8B 只有“确定性规则 + 结构化 LLM + 可定位原文”一致才生成
 日常只显示最多 20 个研究候选，lane quota 为 6/5/5/4，安静日允许 0。owner 无必审任务；
 未点击保持 `unreviewed`。真实并发日历组合只从上线后每日漏斗累积，不用历史 episode 拼接。
 操作顺序和降级状态见 [P8_DAILY_RUNBOOK.md](P8_DAILY_RUNBOOK.md)。
+
+历史研究验证另行遵守 [V8_P8_BACKTEST_CONTRACT.md](V8_P8_BACKTEST_CONTRACT.md)：连续 120 日
+ST 超额排序与三年可交易篓子是决定性测试，稀有硬节点率只是辅助。补历史数据前先执行
+[V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md](V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md)；dry-plan 禁止读取
+收益或命中率，避免用结果决定尺子。

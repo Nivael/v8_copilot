@@ -350,6 +350,21 @@ class TushareHttpClient:
             ),
         )
 
+    def fetch_stock_basics(self, *, list_status: str) -> list[dict[str, Any]]:
+        """Return exchange listing and terminal dates for one listing-status cohort."""
+
+        status = str(list_status).strip().upper()
+        if status not in {"L", "D", "P"}:
+            raise ValueError("stock_basic list_status 只允许 L/D/P")
+        return self._query(
+            "stock_basic",
+            params={"list_status": status},
+            fields=(
+                "ts_code,symbol,name,market,exchange,list_status,list_date,"
+                "delist_date"
+            ),
+        )
+
     def fetch_st_universe(self, *, as_of: str) -> list[dict[str, Any]]:
         """Return the official risk-warning membership for one trading date."""
 

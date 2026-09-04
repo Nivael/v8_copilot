@@ -85,7 +85,7 @@ def load_trade_states(
     return result
 
 
-def _delisting_dates(path: Path) -> dict[str, str]:
+def _delisting_dates(path: Path, *, repository: P8ResearchRepository | None = None) -> dict[str, str]:
     result: dict[str, str] = {}
     with _connect_ro(path) as connection:
         for row in connection.execute(
@@ -93,6 +93,14 @@ def _delisting_dates(path: Path) -> dict[str, str]:
             "where list_status='D' and expected_price_end_date is not null and expected_price_end_date!=''"
         ):
             result[str(row[0])] = str(row[1])[:10]
+    if repository is not None:
+        _run_id, _digest_value, records = _latest_records(
+            repository, "p8_terminal_history_v2", "p8_terminal_outcome_v2",
+        )
+        result.update({
+            str(item.get("symbol") or ""): str(item.get("delist_date") or "")
+            for item in records if item.get("symbol") and item.get("delist_date")
+        })
     return result
 
 
@@ -347,6 +355,32 @@ def _compound(values: list[float]) -> float | None:
     return result - 1
 
 
+def _period_performance(
+    year_result: dict[str, Any], benchmark: dict[str, float], *, start: str, through: str,
+) -> dict[str, Any]:
+    nav = dict(year_result.get("nav_by_day") or {})
+    days = sorted(
+        day for day in nav if start <= day <= through and day in benchmark
+    )
+    if len(days) < 2:
+        return {"start": start, "through": through, "status": "unavailable", "trading_day_count": len(days)}
+    left, right = days[0], days[-1]
+    portfolio_return = float(nav[right]) / float(nav[left]) - 1
+    benchmark_return = float(benchmark[right]) / float(benchmark[left]) - 1
+    return {
+        "start": start,
+        "through": through,
+        "status": "observable",
+        "trading_day_count": len(days),
+        "first_observed_date": left,
+        "last_observed_date": right,
+        "portfolio_return": portfolio_return,
+        "st_benchmark_return": benchmark_return,
+        "excess_return_st": portfolio_return - benchmark_return,
+        "max_drawdown": _max_drawdown([float(nav[day]) for day in days]),
+    }
+
+
 def build_basket_report(
     *, base_database: Path, market_context_database: Path,
     market_activity_database: Path, repository: P8ResearchRepository,
@@ -368,7 +402,7 @@ def build_basket_report(
         market_activity_database=market_activity_database,
         base_database=base_database, start="2023-01-01", through="2025-12-31",
     )
-    delisting = _delisting_dates(base_database)
+    delisting = _delisting_dates(base_database, repository=repository)
 
     primary = [
         simulate_year(
@@ -450,6 +484,36 @@ def build_basket_report(
         without_holder_portfolio - without_holder_benchmark
         if without_holder_portfolio is not None and without_holder_benchmark is not None else None
     )
+    primary_by_year = {int(item["year"]): item for item in primary}
+    diagnostic_slices = {
+        "2024_pre_rule_revision": _period_performance(
+            primary_by_year[2024], st_benchmark, start="2024-01-01", through="2024-04-29",
+        ),
+        "2024_post_revision_pre_mv_rule": _period_performance(
+            primary_by_year[2024], st_benchmark, start="2024-04-30", through="2024-10-29",
+        ),
+        "2024_market_cap_rule_effective": _period_performance(
+            primary_by_year[2024], st_benchmark, start="2024-10-30", through="2024-12-31",
+        ),
+        "annual_report_season_by_year": {
+            str(year): _period_performance(
+                primary_by_year[year], st_benchmark,
+                start=f"{year}-04-01", through=f"{year}-06-30",
+            ) for year in TEST_YEARS
+        },
+        "outside_annual_report_season_by_year": {
+            str(year): [
+                _period_performance(
+                    primary_by_year[year], st_benchmark,
+                    start=f"{year}-01-01", through=f"{year}-03-31",
+                ),
+                _period_performance(
+                    primary_by_year[year], st_benchmark,
+                    start=f"{year}-07-01", through=f"{year}-12-31",
+                ),
+            ] for year in TEST_YEARS
+        },
+    }
     return {
         "record_id": content_id("P8BASKET", {
             "contract": CONTRACT_VERSION, "funnel_digest": funnel_digest,
@@ -475,6 +539,7 @@ def build_basket_report(
         "without_persistent_lane_per_year": without_persistent,
         "without_holder_lane_per_year": without_holder,
         "cost_sensitivity": sensitivities,
+        "diagnostic_slices": diagnostic_slices,
         "holder_lane_incremental_compounded_excess_st": (
             overall_excess - without_holder_overall
             if overall_excess is not None and without_holder_overall is not None else None

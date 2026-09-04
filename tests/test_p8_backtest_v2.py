@@ -5,6 +5,7 @@ from p8_backtest_v2 import (
     build_accumulation_scores,
     build_holder_scores,
     build_historical_funnel,
+    rank_scorecard,
 )
 
 
@@ -133,3 +134,48 @@ def test_attach_outcomes_keeps_positive_and_negative_nodes_separate() -> None:
     result = attach_outcomes([score], prices=prices, benchmarks=benchmarks, events=events)
     assert result[0]["h120_positive_hard_node"] is True
     assert result[0]["h120_negative_hard_node"] is False
+
+
+def test_attach_outcomes_applies_delist_total_loss_on_market_horizon() -> None:
+    start = date(2023, 1, 1)
+    calendar = [(start + timedelta(days=i)).isoformat() for i in range(130)]
+    prices = {"000001": [(day, 10.0) for day in calendar[:20]]}
+    benchmarks = {
+        "st_equal_weight_v1": {day: 100.0 for day in calendar},
+        "csi_2000": {day: 100.0 for day in calendar},
+    }
+    result = attach_outcomes(
+        [{
+            "symbol": "000001", "trade_date": calendar[0], "test_year": 2023,
+            "score": .9, "bucket": "high", "stratum_key": "s|H1",
+        }],
+        prices=prices, benchmarks=benchmarks, events=[], market_calendar=calendar,
+        terminal_dates={"000001": calendar[30]},
+    )
+    assert result[0]["h120_observed"] is True
+    assert result[0]["h120_delisted"] is True
+    assert result[0]["h120_stock_qfq_return"] == -1.0
+    assert result[0]["h120_last_observable_return"] == 0.0
+
+
+def test_rank_scorecard_reports_frozen_secondary_and_risk_diagnostics() -> None:
+    rows = []
+    for index in range(120):
+        bucket = "high" if index % 2 else "low"
+        rows.append({
+            "symbol": f"{index % 40 + 1:06d}", "trade_date": f"2023-{index % 12 + 1:02d}-15",
+            "test_year": 2023, "score": float(index), "bucket": bucket,
+            "stratum_key": "st_distress_only|H1", "h60_excess_return_st": .01,
+            "h120_excess_return_st": .02, "h120_excess_return_csi2000": .03,
+            "h120_positive_hard_node": False, "h120_negative_hard_node": False,
+            "h120_delisted": bucket == "low" and index == 0,
+        })
+    card = rank_scorecard(rows)
+    assert "cell_equal_high_minus_low_60d_excess_st" in card
+    assert "cell_equal_high_minus_low_120d_excess_csi2000" in card
+    assert card["delisted_120d"]["low_count"] == 1
+    assert set(card["diagnostic_slices"]) == {
+        "annual_report_season", "outside_annual_report_season",
+        "2024_pre_rule_revision", "2024_post_revision_pre_mv_rule",
+        "2024_market_cap_rule_effective",
+    }

@@ -107,6 +107,7 @@ def _p8_source_digest(path: Path) -> str:
     source_kinds = (
         "activity_features", "event_graph", "scenario_references",
         "chip_proxies", "p8_holder_history_v2", "funnel", "portfolio", "return_paths",
+        "p8_terminal_history_v2",
     )
     latest: dict[str, dict[str, str]] = {}
     with _connect_ro(path) as connection:
@@ -411,6 +412,21 @@ def _event_truth_inventory(repository: Path) -> dict[str, Any]:
     }
 
 
+def _terminal_truth_inventory(repository: Path) -> dict[str, Any]:
+    run_id, records = _latest_records(
+        repository, "p8_terminal_history_v2", "p8_terminal_outcome_v2",
+    )
+    return {
+        "source_run_id": run_id,
+        "terminal_record_count": len(records),
+        "terminal_company_count": len({str(item.get("symbol") or "") for item in records}),
+        "by_year": dict(sorted(Counter(
+            str(item.get("delist_date") or "")[:4] for item in records
+        ).items())),
+        "status": "ready" if records else "absent",
+    }
+
+
 def _gold_capacity(repository: Path) -> dict[str, Any]:
     _run_id, events = _latest_records(repository, "event_graph", "derived_event")
     candidates = [
@@ -493,6 +509,7 @@ def build_dry_plan(
         repository=p8_repository, valuation_episode_database=valuation_episode_database,
     )
     event_inventory = _event_truth_inventory(p8_repository)
+    terminal_inventory = _terminal_truth_inventory(p8_repository)
     funnel_capacity = _historical_funnel_capacity(p8_repository)
     basket_capacity = _basket_capacity(date_rows)
     missing_dates = list(date_summary["missing_activity_dates"])
@@ -518,6 +535,8 @@ def build_dry_plan(
         for item in feature_capacity["family_capacity"].values()
     ):
         blockers.append("当前物化范围内没有 signal family 达到 100 个观察/40 家公司的最低门。")
+    if terminal_inventory["status"] != "ready":
+        blockers.append("退市终点事实缺失，无法执行预注册的 -100% 终值与退市率账。")
     input_inventory = {
         "base_database": {"path": str(base_database), "digest": _file_digest(base_database)},
         "market_context_database": {"path": str(market_context_database), "digest": _file_digest(market_context_database)},
@@ -539,6 +558,7 @@ def build_dry_plan(
         "feature_capacity": feature_capacity,
         "stratum_capacity": stratum_capacity,
         "event_inventory": event_inventory,
+        "terminal_inventory": terminal_inventory,
         "funnel_capacity": funnel_capacity,
         "basket_capacity": basket_capacity,
     }
@@ -558,6 +578,7 @@ def build_dry_plan(
         "feature_capacity": feature_capacity,
         "stratum_capacity": stratum_capacity,
         "event_truth_inventory": event_inventory,
+        "terminal_truth_inventory": terminal_inventory,
         "gold_queue_capacity": _gold_capacity(p8_repository),
         "historical_funnel_capacity": funnel_capacity,
         "basket_execution_capacity": basket_capacity,
@@ -698,6 +719,7 @@ def persist_plan(repository: P8ResearchRepository, plan: dict[str, Any]) -> str:
         source_run_ids=[
             value["source_run_id"] for value in (
                 plan["feature_capacity"], plan["event_truth_inventory"],
+                plan["terminal_truth_inventory"],
             ) if value.get("source_run_id")
         ],
         source_digests={

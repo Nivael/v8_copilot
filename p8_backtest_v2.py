@@ -529,6 +529,8 @@ def _benchmarks(path: Path, start: str, through: str) -> dict[str, dict[str, flo
 def attach_outcomes(
     scores: list[dict[str, Any]], *, prices: dict[str, list[tuple[str, float]]],
     benchmarks: dict[str, dict[str, float]], events: list[dict[str, Any]],
+    market_calendar: list[str] | None = None,
+    terminal_dates: dict[str, str] | None = None,
     horizons: tuple[int, ...] = (60, 120),
 ) -> list[dict[str, Any]]:
     event_by_symbol: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -537,6 +539,9 @@ def attach_outcomes(
             event_by_symbol[str(event.get("symbol") or "")].append(event)
     for rows in event_by_symbol.values():
         rows.sort(key=lambda item: str(item.get("available_as_of") or ""))
+    calendar = list(market_calendar or [])
+    calendar_index = {day: index for index, day in enumerate(calendar)}
+    terminals = terminal_dates or {}
     result: list[dict[str, Any]] = []
     for score in scores:
         if int(score["test_year"]) not in TEST_YEARS:
@@ -547,16 +552,33 @@ def attach_outcomes(
         start_index = bisect.bisect_left(dates, day)
         if start_index >= len(rows) or rows[start_index][0] != day:
             continue
+        price_by_day = dict(rows)
         observation = dict(score)
         for horizon in horizons:
-            target = start_index + horizon
             prefix = f"h{horizon}"
-            if target >= len(rows):
+            if calendar:
+                calendar_start = calendar_index.get(day)
+                if calendar_start is None or calendar_start + horizon >= len(calendar):
+                    observation[f"{prefix}_observed"] = False
+                    continue
+                end_day = calendar[calendar_start + horizon]
+                end_price = price_by_day.get(end_day)
+            else:
+                target = start_index + horizon
+                if target >= len(rows):
+                    observation[f"{prefix}_observed"] = False
+                    continue
+                end_day, end_price = rows[target]
+            terminal = terminals.get(symbol, "")
+            delisted = bool(terminal and day < terminal <= end_day)
+            if end_price is None and not delisted:
                 observation[f"{prefix}_observed"] = False
+                observation[f"{prefix}_end_date"] = end_day
+                observation[f"{prefix}_delisted"] = False
                 continue
-            end_day, end_price = rows[target]
             start_price = rows[start_index][1]
-            stock_return = end_price / start_price - 1
+            stock_return = -1.0 if delisted else float(end_price) / start_price - 1
+            last_observable = [value for row_day, value in rows if day <= row_day <= min(end_day, terminal or end_day)]
             st_left = benchmarks.get("st_equal_weight_v1", {}).get(day)
             st_right = benchmarks.get("st_equal_weight_v1", {}).get(end_day)
             csi_left = benchmarks.get("csi_2000", {}).get(day)
@@ -565,6 +587,11 @@ def attach_outcomes(
                 f"{prefix}_observed": bool(st_left and st_right),
                 f"{prefix}_end_date": end_day,
                 f"{prefix}_stock_qfq_return": stock_return,
+                f"{prefix}_delisted": delisted,
+                f"{prefix}_total_loss_stress_applied": delisted,
+                f"{prefix}_last_observable_return": (
+                    last_observable[-1] / start_price - 1 if last_observable else None
+                ),
                 f"{prefix}_excess_return_st": (
                     stock_return - (st_right / st_left - 1) if st_left and st_right else None
                 ),
@@ -675,6 +702,36 @@ def _spearman(rows: list[dict[str, Any]], value_key: str) -> float | None:
     return numerator / denominator if denominator else None
 
 
+def _bucket_boolean_summary(rows: list[dict[str, Any]], value_key: str) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for bucket in ("high", "low"):
+        values = [bool(item[value_key]) for item in rows if item.get("bucket") == bucket and value_key in item]
+        result[f"{bucket}_count"] = sum(values)
+        result[f"{bucket}_n"] = len(values)
+        result[f"{bucket}_rate"] = sum(values) / len(values) if values else None
+    high_rate, low_rate = result["high_rate"], result["low_rate"]
+    result["high_minus_low_rate"] = (
+        high_rate - low_rate if high_rate is not None and low_rate is not None else None
+    )
+    return result
+
+
+def _diagnostic_slice(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "observation_count": len(rows),
+        "company_count": len({str(item["symbol"]) for item in rows}),
+        "high_minus_low_60d_excess_st": _cell_equal_difference(rows, "h60_excess_return_st"),
+        "high_minus_low_120d_excess_st": _cell_equal_difference(rows, "h120_excess_return_st"),
+        "high_minus_low_120d_excess_csi2000": _cell_equal_difference(
+            rows, "h120_excess_return_csi2000",
+        ),
+        "spearman_score_vs_120d_excess_st": _spearman(rows, "h120_excess_return_st"),
+        "positive_hard_node_120d": _bucket_boolean_summary(rows, "h120_positive_hard_node"),
+        "negative_hard_node_120d": _bucket_boolean_summary(rows, "h120_negative_hard_node"),
+        "delisted_120d": _bucket_boolean_summary(rows, "h120_delisted"),
+    }
+
+
 def rank_scorecard(
     observations: list[dict[str, Any]], *, signal_family: str = "p8c_accumulation",
 ) -> dict[str, Any]:
@@ -690,18 +747,7 @@ def rank_scorecard(
     per_year: dict[str, Any] = {}
     for year in TEST_YEARS:
         rows = [item for item in prepared if int(item["test_year"]) == year]
-        per_year[str(year)] = {
-            "observation_count": len(rows),
-            "company_count": len({str(item["symbol"]) for item in rows}),
-            "high_minus_low_120d_excess_st": _cell_equal_difference(rows, "h120_excess_return_st"),
-            "spearman_score_vs_120d_excess_st": _spearman(rows, "h120_excess_return_st"),
-            "positive_hard_node_high_count": sum(
-                bool(item.get("h120_positive_hard_node")) and item.get("bucket") == "high" for item in rows
-            ),
-            "positive_hard_node_low_count": sum(
-                bool(item.get("h120_positive_hard_node")) and item.get("bucket") == "low" for item in rows
-            ),
-        }
+        per_year[str(year)] = _diagnostic_slice(rows)
     point = _cell_equal_difference(prepared, "h120_excess_return_st")
     company = _cluster_bootstrap(
         prepared, value_key="h120_excess_return_st", cluster_key="symbol", seed=2026090501,
@@ -728,7 +774,34 @@ def rank_scorecard(
         "observation_count": len(prepared),
         "company_count": len(companies),
         "cell_equal_high_minus_low_120d_excess_st": point,
+        "cell_equal_high_minus_low_60d_excess_st": _cell_equal_difference(
+            prepared, "h60_excess_return_st",
+        ),
+        "cell_equal_high_minus_low_120d_excess_csi2000": _cell_equal_difference(
+            prepared, "h120_excess_return_csi2000",
+        ),
         "spearman_score_vs_120d_excess_st": _spearman(prepared, "h120_excess_return_st"),
+        "spearman_score_vs_60d_excess_st": _spearman(prepared, "h60_excess_return_st"),
+        "positive_hard_node_120d": _bucket_boolean_summary(prepared, "h120_positive_hard_node"),
+        "negative_hard_node_120d": _bucket_boolean_summary(prepared, "h120_negative_hard_node"),
+        "delisted_120d": _bucket_boolean_summary(prepared, "h120_delisted"),
+        "diagnostic_slices": {
+            "annual_report_season": _diagnostic_slice([
+                item for item in prepared if "04-01" <= str(item["trade_date"])[5:] <= "06-30"
+            ]),
+            "outside_annual_report_season": _diagnostic_slice([
+                item for item in prepared if not ("04-01" <= str(item["trade_date"])[5:] <= "06-30")
+            ]),
+            "2024_pre_rule_revision": _diagnostic_slice([
+                item for item in prepared if "2024-01-01" <= str(item["trade_date"]) < "2024-04-30"
+            ]),
+            "2024_post_revision_pre_mv_rule": _diagnostic_slice([
+                item for item in prepared if "2024-04-30" <= str(item["trade_date"]) < "2024-10-30"
+            ]),
+            "2024_market_cap_rule_effective": _diagnostic_slice([
+                item for item in prepared if "2024-10-30" <= str(item["trade_date"]) <= "2024-12-31"
+            ]),
+        },
         "company_cluster_bootstrap": company,
         "calendar_month_block_bootstrap": month,
         "raw_p_value": max(
@@ -795,6 +868,9 @@ def build_and_evaluate(
     holder_run_id, holder_digest, holder_records = _latest_records(
         repository, "p8_holder_history_v2", "p8_holder_history_v2",
     )
+    terminal_run_id, terminal_digest, terminal_records = _latest_records(
+        repository, "p8_terminal_history_v2", "p8_terminal_outcome_v2",
+    )
     if not features:
         raise ValueError("缺 activity_features")
     feature_dates = sorted({str(item.get("trade_date") or "") for item in features if str(item.get("trade_date") or "") <= "2025-12-31"})
@@ -833,9 +909,20 @@ def build_and_evaluate(
         base_database, "2021-03-17", "2026-09-03", overlay_database=qfq_database,
     )
     benchmarks = _benchmarks(market_context_database, "2021-03-17", "2026-09-03")
-    observations = attach_outcomes(scores, prices=prices, benchmarks=benchmarks, events=events)
+    outcome_calendar, _outcome_memberships = _calendar_membership(
+        market_context_database, "2021-03-17", "2026-09-03",
+    )
+    terminal_dates = {
+        str(item.get("symbol") or ""): str(item.get("delist_date") or "")
+        for item in terminal_records if item.get("delist_date")
+    }
+    observations = attach_outcomes(
+        scores, prices=prices, benchmarks=benchmarks, events=events,
+        market_calendar=outcome_calendar, terminal_dates=terminal_dates,
+    )
     holder_observations = attach_outcomes(
         holder_scores, prices=prices, benchmarks=benchmarks, events=events,
+        market_calendar=outcome_calendar, terminal_dates=terminal_dates,
     )
     cards = [
         {
@@ -862,11 +949,13 @@ def build_and_evaluate(
         "through": "2025-12-31",
         "source_dry_plan_id": str(dry_plan.get("plan_id") or ""),
         "source_run_ids": [item for item in (
-            activity_run_id, event_run_id, holder_run_id, score_run_id, funnel_run_id,
+            activity_run_id, event_run_id, holder_run_id, terminal_run_id,
+            score_run_id, funnel_run_id,
         ) if item],
         "source_digests": {
             "activity": activity_digest, "event": event_digest,
             **({"holder_history": holder_digest} if holder_digest else {}),
+            **({"terminal_history": terminal_digest} if terminal_digest else {}),
         },
         "score_count": len(scores) + len(holder_scores),
         "score_count_by_family": {
@@ -880,6 +969,7 @@ def build_and_evaluate(
             item.get("evidence_status") in VERIFIED_EVENT_STATUSES and not bool(item.get("not_hard_outcome"))
             for item in events
         ),
+        "terminal_outcome_count": len(terminal_records),
         "basket_status": "pending_separate_run",
         "not_a_trading_signal": True,
     }

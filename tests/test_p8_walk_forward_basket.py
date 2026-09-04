@@ -1,4 +1,4 @@
-from p8_walk_forward_basket import simulate_year
+from p8_walk_forward_basket import _period_performance, simulate_year
 
 
 def test_basket_delays_one_price_buy_and_keeps_locked_sell() -> None:
@@ -54,3 +54,13 @@ def test_basket_never_assumes_unknown_tradeability() -> None:
     assert result["trade_count"] == 0
     assert result["unknown_trade_state_attempts"] == 1
     assert result["portfolio_return"] == 0
+
+
+def test_period_performance_is_a_non_decision_diagnostic() -> None:
+    result = _period_performance(
+        {"nav_by_day": {"2024-04-30": 1.0, "2024-05-06": 1.1}},
+        {"2024-04-30": 100.0, "2024-05-06": 105.0},
+        start="2024-04-30", through="2024-10-29",
+    )
+    assert result["status"] == "observable"
+    assert abs(result["excess_return_st"] - .05) < 1e-12

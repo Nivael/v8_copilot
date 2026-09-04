@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import sqlite3
 from datetime import date, timedelta
 
 from market_activity import (
     MarketActivityFact,
+    MarketActivityBootstrapService,
     MarketActivityRepository,
     build_market_activity_manifest,
     normalize_activity_rows,
@@ -174,3 +176,53 @@ def test_activity_manifest_is_idempotent_and_content_addressed(tmp_path):
     replay = write_market_activity_manifest_set(second, current_path=current, manifest_directory=directory)
     assert replay == path
     assert path.name.startswith(f"{day}_MAM-")
+
+
+def test_bootstrap_can_execute_a_frozen_date_subset_and_refresh_existing(tmp_path):
+    context = tmp_path / "context.sqlite3"
+    with sqlite3.connect(context) as connection:
+        connection.execute("create table benchmark_daily (benchmark_id text,trade_date text)")
+        connection.execute(
+            "create table st_membership_daily (trade_date text,symbol text,ts_code text,name text,"
+            "risk_type text,risk_type_name text)"
+        )
+        for day in ("2026-01-02", "2026-01-05"):
+            connection.execute("insert into benchmark_daily values ('csi_all_share',?)", (day,))
+            connection.execute(
+                "insert into st_membership_daily values (?,?,?,?,?,?)",
+                (day, "000001", "000001.SZ", "ST样本", "ST", "风险警示"),
+            )
+
+    class Provider:
+        requested = []
+
+        def fetch_daily(self, *, trade_date):
+            self.requested.append(("daily", trade_date))
+            return [_raw("000001", trade_date)]
+
+        def fetch_daily_basic(self, *, trade_date):
+            self.requested.append(("daily_basic", trade_date))
+            return [_basic("000001", trade_date)]
+
+        def fetch_suspend_daily(self, *, trade_date):
+            self.requested.append(("suspend_d", trade_date))
+            return []
+
+        def fetch_stock_limits(self, *, trade_date):
+            self.requested.append(("stk_limit", trade_date))
+            return [{
+                "ts_code": "000001.SZ", "trade_date": trade_date.replace("-", ""),
+                "pre_close": 9.9, "up_limit": 10.4, "down_limit": 9.4,
+            }]
+
+    provider = Provider()
+    result = MarketActivityBootstrapService(
+        provider=provider,
+        repository=MarketActivityRepository(tmp_path / "activity.sqlite3"),
+        market_context_database=context,
+    ).bootstrap(
+        start_date="2026-01-02", through="2026-01-05",
+        target_dates=["2026-01-05"], refresh_existing=True,
+    )
+    assert result.requested_date_count == 1
+    assert {day for _endpoint, day in provider.requested} == {"2026-01-05"}

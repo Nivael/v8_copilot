@@ -1,5 +1,9 @@
+import json
 import sqlite3
 
+import pytest
+
+from p8_backfill_market_activity import _load_plan
 from p8_backtest_v2_dry_plan import _date_coverage, _p8_source_digest, render_markdown
 from p8_research import build_run
 
@@ -97,3 +101,24 @@ def test_p8_source_digest_ignores_dry_plan_self_writes(tmp_path) -> None:
             "insert into p8_runs values ('dry','p8_backtest_v2_dry_plan',?,'2026-01-02')", ("b" * 64,)
         )
     assert _p8_source_digest(database) == before
+
+
+def test_backfill_rejects_non_outcome_blind_or_divergent_endpoint_plan(tmp_path) -> None:
+    plan = {
+        "contract_version": "v8_p8_backtest_dry_plan_v1",
+        "outcomes_read": False,
+        "returns_computed": False,
+        "request_budget": {"incomplete_or_missing_trade_dates": 1},
+        "endpoint_request_plan": {
+            endpoint: {"dates": ["2023-01-03"]}
+            for endpoint in ("daily", "daily_basic", "stk_limit", "suspend_d")
+        },
+    }
+    path = tmp_path / "plan.json"
+    path.write_text(json.dumps(plan), encoding="utf-8")
+    _payload, dates = _load_plan(path)
+    assert dates == ["2023-01-03"]
+    plan["outcomes_read"] = True
+    path.write_text(json.dumps(plan), encoding="utf-8")
+    with pytest.raises(ValueError, match="读取过 outcome"):
+        _load_plan(path)

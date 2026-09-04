@@ -71,6 +71,7 @@ def main() -> int:
         base_database=args.base_database,
         p7_intelligence_database=args.p7_intelligence_database,
         valuation_episode_database=args.valuation_episode_database,
+        market_context_database=args.market_context_database,
         start_date=args.event_start, through=args.as_of,
     )
     if args.allow_llm:
@@ -132,7 +133,10 @@ def main() -> int:
     _write(output / "p8_return_paths_v1.json", returns)
     references = materialize_references(
         repository=repository, base_database=args.base_database,
-        market_factor_database=args.market_factor_database, through=args.as_of,
+        market_factor_database=args.market_factor_database,
+        market_activity_database=args.market_activity_database,
+        valuation_episode_database=args.valuation_episode_database,
+        through=args.as_of,
     )
     _write(output / "p8_scenario_references_v1.json", references)
     funnel = materialize_funnel(repository=repository, as_of=args.as_of)

@@ -134,7 +134,8 @@ provider 权限/容量门见 [V8_P7_0_DRY_PLAN_CONTRACT.md](V8_P7_0_DRY_PLAN_CON
 P8 把研究层与宣称层分开：三类成交情景参考、五轨带方向前哨图、持续型量价/公开筹码旁证、
 四通道低人审漏斗和阶段回报见 [V8_P8_RESEARCH_FUNNEL_PRD.md](V8_P8_RESEARCH_FUNNEL_PRD.md)；
 真实结果见 [P8_IMPLEMENTATION_RESULT.md](P8_IMPLEMENTATION_RESULT.md)，日常顺序见
-[P8_DAILY_RUNBOOK.md](P8_DAILY_RUNBOOK.md)。
+[P8_DAILY_RUNBOOK.md](P8_DAILY_RUNBOOK.md)，真实 10/60 日门见
+[V8_P8_FORWARD_GATE.md](V8_P8_FORWARD_GATE.md)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot
@@ -215,7 +216,8 @@ dry run；显式 `--apply` 生成 candidate，并让满足 owner 预授权门的
   D0–D4 和带缺失语义的公开筹码旁证。
 - `p8_returns.py` / `p8_references.py` — 可交易端点、qfq/旧股东双账与三类互不合并的情景参考。
 - `p8_funnel.py` / `p8_portfolio.py` / `p8_backtest.py` — 四 lane 漏斗、真实并发日历组合和五张
-  分立成绩单；`p8_review_panel.py` 生成无需服务的可选人审 HTML。
+  分立成绩单；已核证事件与标题待补证探索严格分层，单日尖峰不占持续活动 lane；
+  `p8_review_panel.py` 生成无需服务的可选人审 HTML。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。

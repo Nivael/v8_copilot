@@ -31,13 +31,52 @@ def build_status(repository: P8ResearchRepository, *, as_of: str) -> tuple[dict,
     funnel_run = next(run for run in complete if run.run_kind == "funnel")
     portfolio_run = next(run for run in complete if run.run_kind == "portfolio")
     events = repository.records(run_id=event_run.run_id, record_type="derived_event")
+    frontiers = repository.records(run_id=event_run.run_id, record_type="company_frontier")
     extractions = repository.records(run_id=event_run.run_id, record_type="llm_announcement_extraction")
     returns = repository.records(run_id=return_run.run_id, record_type="return_path")
     references = repository.records(run_id=reference_run.run_id, record_type="scenario_reference")
+    current_maps = repository.records(run_id=reference_run.run_id, record_type="current_scenario_map")
     funnel = repository.records(run_id=funnel_run.run_id, record_type="funnel_item")
     portfolios = repository.records(run_id=portfolio_run.run_id, record_type="portfolio_summary")
+    forward_shadow_days = (
+        len(set(portfolios[-1].get("source_funnel_run_ids") or [])) if portfolios else 0
+    )
     body_verified = sum(item.get("evidence_status") == "body_verified" for item in events)
     exact_equity = sum(item.get("value_status") == "exact_old_equity" for item in references)
+    p_star_count = sum(item.get("scenario_implied_weight") is not None for item in current_maps)
+    frontier_symbols = {str(item.get("symbol") or "") for item in frontiers}
+    map_symbols = {str(item.get("symbol") or "") for item in current_maps}
+    families_by_symbol = {
+        symbol: {
+            str(item.get("reference_family") or "")
+            for item in current_maps if item.get("symbol") == symbol
+        }
+        for symbol in map_symbols
+    }
+    map_counts_by_symbol = {
+        symbol: sum(str(item.get("symbol") or "") == symbol for item in current_maps)
+        for symbol in map_symbols
+    }
+    incomplete_maps = [
+        symbol for symbol, families in families_by_symbol.items()
+        if len(families) != 3 or map_counts_by_symbol[symbol] != 3
+    ]
+    duplicate_frontiers = len(frontiers) != len(frontier_symbols)
+    wrong_dates = [
+        str(item.get("record_id") or "")
+        for item in [*frontiers, *current_maps]
+        if str(item.get("available_as_of") or "") != as_of
+    ]
+    if (
+        not frontier_symbols or frontier_symbols != map_symbols or incomplete_maps
+        or duplicate_frontiers or wrong_dates
+    ):
+        raise ValueError(
+            "P8 current cohort 不闭合："
+            f"frontier={len(frontier_symbols)}, map={len(map_symbols)}, "
+            f"incomplete_three_family={len(incomplete_maps)}, "
+            f"duplicate_frontiers={duplicate_frontiers}, wrong_dates={len(wrong_dates)}"
+        )
     status = {
         "as_of": as_of,
         "run_ids_by_kind": {run.run_kind: run.run_id for run in complete},
@@ -45,19 +84,30 @@ def build_status(repository: P8ResearchRepository, *, as_of: str) -> tuple[dict,
             "event_graph": "available",
             "body_llm_extraction": "available" if extractions else "authorization_pending",
             "body_verified_events": body_verified,
+            "current_member_frontiers": len(frontier_symbols),
+            "current_scenario_map_records": len(current_maps),
+            "current_scenario_map_complete": True,
             "observable_return_paths": len(returns),
             "exact_old_equity_references": exact_equity,
-            "p_star": "available" if exact_equity else "unavailable_same_claim_inputs",
+            "p_star": "available" if p_star_count else "unavailable_company_specific_inputs",
+            "p_star_calculable_records": p_star_count,
             "daily_funnel_items": len(funnel),
             "concurrent_portfolio": (
                 portfolios[-1].get("evidence_status") if portfolios else "unavailable"
+            ),
+            "forward_shadow_days": forward_shadow_days,
+            "operational_10_day_gate": (
+                "passed" if forward_shadow_days >= 10 else "accumulating"
+            ),
+            "validation_60_day_gate": (
+                "eligible_for_evaluation" if forward_shadow_days >= 60 else "accumulating"
             ),
         },
         "human_actions_required": 0,
         "publishable": True,
         "limitations": [
             "正文 LLM 未运行时，title/provisional 事件不升级为 body_verified。",
-            "精确旧股东权益参照为 0 时，p* 保持 unavailable。",
+            "公司自身同口径成功/失败情景未闭合时，p* 保持 unavailable；跨公司中位数只作敏感性。",
             "组合只有真实 forward shadow 日，不回填伪历史漏斗。",
         ],
     }

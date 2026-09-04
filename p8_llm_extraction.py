@@ -37,15 +37,24 @@ from p8_event_graph import (
     build_event_graph,
 )
 from p8_research import P8DerivedEvent, P8ResearchRepository, build_run, canonical_json, content_id
-from settings import DATA_ROOT, P7_INTELLIGENCE_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
+from settings import (
+    DATA_ROOT,
+    MARKET_CONTEXT_DB,
+    P7_INTELLIGENCE_DB,
+    P8_RESEARCH_DB,
+    VALUATION_EPISODE_DB,
+)
 
 
-PROMPT_VERSION = "p8_body_extraction_v1"
-EXTRACTION_CONTRACT_VERSION = "p8_body_extraction_contract_v1"
+PROMPT_VERSION = "p8_body_extraction_v2"
+EXTRACTION_CONTRACT_VERSION = "p8_body_extraction_contract_v2"
 DEFAULT_BASE_DB = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
 DEFAULT_CACHE_DIR = DATA_ROOT / "local_data/v8_copilot/p8_llm_extraction_cache"
 MAX_CHUNK_CHARS = 48_000
 CHUNK_OVERLAP_CHARS = 1_000
+CALL_TIMEOUT_SECONDS = 90.0
+MAX_CALL_ATTEMPTS = 3
+RETRY_BACKOFF_SECONDS = (1.5, 3.0)
 
 EventNode = Literal[
     "restructuring_application_disclosed",
@@ -82,6 +91,9 @@ class ProposedNode(StrictModel):
 class ExtractedKeyFact(StrictModel):
     fact_type: Literal[
         "strategic_entry_price", "share_conversion_ratio", "share_transfer_ratio",
+        "transferred_share_count", "post_restructuring_total_share_count",
+        "old_shareholder_retained_share_count", "creditor_compensation_share_count",
+        "cash_investment", "lockup_period", "industrial_commitment",
         "investor", "court", "audit_opinion", "other",
     ]
     value: str = Field(min_length=1, max_length=300)
@@ -169,8 +181,10 @@ class ExtractionBatchResult(StrictModel):
 
 SYSTEM_PROMPT = """你是上市公司公告的结构化事实抽取器，不是投资顾问。
 只读取用户提供的这一份公告正文片段，禁止使用外部知识、标题推断或事后结果。
-任务：找出正文明确陈述、且属于允许词表的程序节点；同时抽取受让价、转增/让渡比例、
-投资人、法院、审计意见等关键事实。每项必须给出正文中逐字可定位的短引用。
+任务：找出正文明确陈述、且属于允许词表的程序节点；同时抽取受让价、实际受让股数、转增后
+总股本、原股东方案后保留股数、债权人受偿股数、现金投入、锁定期、产业承诺、转增/让渡比例、
+投资人、法院、审计意见等关键事实。每项必须给出正文中逐字可定位的短引用。数字 value 只写
+正文中的数值，单位写入 unit；不要自行换算、补齐或用比例反推股数。
 不要把申请、拟议、可能、风险提示误写成已经完成；不要把股东、债权人或无关子公司的
 事项当成上市公司自身事项。程序推进方向与老股东权益影响是不同维度，本任务不作投资判断。
 若片段没有相关事实，document_relevant=false，并用 no_event_reason 简述原因。
@@ -198,7 +212,7 @@ _thread_local = threading.local()
 def _provider() -> OpenAIResponsesProvider:
     provider = getattr(_thread_local, "provider", None)
     if provider is None:
-        provider = OpenAIResponsesProvider(timeout_seconds=90.0)
+        provider = OpenAIResponsesProvider(timeout_seconds=CALL_TIMEOUT_SECONDS)
         _thread_local.provider = provider
     return provider
 
@@ -248,9 +262,16 @@ def locate_quote(body: str, quote: str) -> tuple[int, int] | None:
     return positions[normalized_start], positions[normalized_end] + 1
 
 
-def _cache_path(cache_dir: Path, *, digest: str, model: str, chunk_index: int) -> Path:
+def _cache_path(
+    cache_dir: Path, *, announcement_id: str, digest: str,
+    model: str, chunk_index: int,
+) -> Path:
     model_key = re.sub(r"[^A-Za-z0-9_.-]+", "_", model)
-    return cache_dir / PROMPT_VERSION / model_key / digest[:2] / f"{digest}.{chunk_index}.json"
+    announcement_key = re.sub(r"[^A-Za-z0-9_.-]+", "_", announcement_id)
+    return (
+        cache_dir / EXTRACTION_CONTRACT_VERSION / PROMPT_VERSION / model_key
+        / digest[:2] / f"{announcement_key}.{digest}.{chunk_index}.json"
+    )
 
 
 def _call_chunk(
@@ -258,7 +279,10 @@ def _call_chunk(
     chunk_index: int, chunk_start: int, chunk: str, model: str,
     cache_dir: Path, provider_factory: Any = _provider,
 ) -> tuple[BodyChunkExtraction | None, dict[str, Any]]:
-    path = _cache_path(cache_dir, digest=body_digest, model=model, chunk_index=chunk_index)
+    path = _cache_path(
+        cache_dir, announcement_id=announcement_id, digest=body_digest,
+        model=model, chunk_index=chunk_index,
+    )
     if path.is_file():
         try:
             cached = json.loads(path.read_text(encoding="utf-8"))
@@ -275,7 +299,7 @@ def _call_chunk(
         "body_text": chunk,
     }
     error = ""
-    for attempt in range(3):
+    for attempt in range(MAX_CALL_ATTEMPTS):
         try:
             provider: StructuredLLMProvider = provider_factory()
             response = provider.generate(
@@ -299,8 +323,8 @@ def _call_chunk(
             return response, metadata
         except (LLMProviderError, ValueError, OSError) as exc:
             error = f"{type(exc).__name__}:{exc}"
-            if attempt < 2:
-                time.sleep(1.5 * (attempt + 1))
+            if attempt < MAX_CALL_ATTEMPTS - 1:
+                time.sleep(RETRY_BACKOFF_SECONDS[attempt])
     return None, {"cache_hit": False, "requested_model": model, "response_model": "", "response_id": "", "input_tokens": 0, "output_tokens": 0, "error": error}
 
 
@@ -524,7 +548,11 @@ def reconcile_event_graph(
         "node_counts": dict(sorted(Counter(item.node for item in ordered).items())),
         "company_count": len({item.symbol for item in ordered}),
         "llm_completed_count": sum(item.llm_status == "completed" for item in ordered),
-        "frontiers": _frontiers(ordered),
+        "frontiers": _frontiers(
+            ordered,
+            member_starts={item.symbol: item.membership_start_date for item in baseline.frontiers},
+            through=baseline.through,
+        ),
         "events": ordered,
     })
 
@@ -535,6 +563,10 @@ def persist_reconciled(
 ):
     records = {
         "derived_event": [item.model_dump(mode="json") for item in graph.events],
+        "company_frontier": [
+            {**item.model_dump(mode="json"), "record_id": item.frontier_id}
+            for item in graph.frontiers
+        ],
         "llm_announcement_extraction": [item.model_dump(mode="json") for item in extraction.records],
     }
     summary = extraction.model_dump(mode="json", exclude={"records"})
@@ -558,6 +590,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--base-database", type=Path, default=DEFAULT_BASE_DB)
     parser.add_argument("--p7-intelligence-database", type=Path, default=P7_INTELLIGENCE_DB)
     parser.add_argument("--valuation-episode-database", type=Path, default=VALUATION_EPISODE_DB)
+    parser.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)
     parser.add_argument("--repository", type=Path, default=P8_RESEARCH_DB)
     parser.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     parser.add_argument("--model")
@@ -577,6 +610,7 @@ def main() -> int:
         base_database=args.base_database,
         p7_intelligence_database=args.p7_intelligence_database,
         valuation_episode_database=args.valuation_episode_database,
+        market_context_database=args.market_context_database,
         start_date=args.start_date, through=args.through,
     )
     extraction = run_extraction(

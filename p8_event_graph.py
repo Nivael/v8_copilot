@@ -6,9 +6,10 @@ import hashlib
 import json
 import re
 import sqlite3
+import statistics
 from collections import Counter, defaultdict
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -22,7 +23,13 @@ from p8_research import (
     canonical_json,
     content_id,
 )
-from settings import DATA_ROOT, P7_INTELLIGENCE_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
+from settings import (
+    DATA_ROOT,
+    MARKET_CONTEXT_DB,
+    P7_INTELLIGENCE_DB,
+    P8_RESEARCH_DB,
+    VALUATION_EPISODE_DB,
+)
 
 
 CONTRACT_VERSION = "p8_precursor_graph_v1"
@@ -149,6 +156,9 @@ NODE_SPECS: tuple[NodeSpec, ...] = (
 )
 
 SPEC_BY_NODE = {item.node: item for item in NODE_SPECS}
+GLOBAL_TERMINAL_NODES = {
+    "restructuring_rejected", "restructuring_terminated", "delisting_decision",
+}
 P6_EVENT_TO_NODE = {
     "restructuring_application_disclosed": "restructuring_application_disclosed",
     "pre_restructuring_started": "pre_restructuring_started",
@@ -169,12 +179,22 @@ class StrictModel(BaseModel):
 
 
 class CompanyFrontier(StrictModel):
+    frontier_id: str = Field(pattern=r"^P8FR-[A-F0-9]{20}$")
     symbol: str = Field(pattern=r"^\d{6}$")
+    available_as_of: str
+    membership_start_date: str
     current_nodes_by_track: dict[str, str]
     frontier_nodes: list[str]
     next_possible_successors: list[str]
     unmet_prerequisites: list[str]
+    last_precursor_date: str
+    days_since_last_precursor: int | None = Field(default=None, ge=0)
+    typical_gap_days_by_successor: dict[str, float]
+    process_direction: str
+    old_equity_effect: str
     failure_branch_risk_flags: list[str]
+    stage_source: str
+    source_ids: list[str]
     evidence_status: str
 
 
@@ -324,14 +344,82 @@ def _load_bodies(path: Path, ids: set[str]) -> dict[str, str]:
     return result
 
 
-def _frontiers(events: list[P8DerivedEvent]) -> list[CompanyFrontier]:
+def _current_membership_starts(path: Path, *, through: str) -> tuple[str, dict[str, str]]:
+    """Return the latest point-in-time cohort and each member's continuous episode start."""
+
+    with _connect_ro(path) as connection:
+        dates = [str(row[0]) for row in connection.execute(
+            "select distinct trade_date from st_membership_daily where trade_date<=? order by trade_date",
+            (through,),
+        )]
+        if not dates:
+            raise ValueError(f"{through} 之前没有 ST membership")
+        membership_date = dates[-1]
+        rows = connection.execute(
+            "select trade_date,symbol from st_membership_daily where trade_date<=? order by trade_date,symbol",
+            (membership_date,),
+        ).fetchall()
+    members_by_date: dict[str, set[str]] = defaultdict(set)
+    for day, symbol in rows:
+        members_by_date[str(day)].add(str(symbol))
+    current = members_by_date[membership_date]
+    starts: dict[str, str] = {}
+    for symbol in current:
+        position = len(dates) - 1
+        while position > 0 and symbol in members_by_date[dates[position - 1]]:
+            position -= 1
+        starts[symbol] = dates[position]
+    return membership_date, dict(sorted(starts.items()))
+
+
+def _typical_successor_gaps(events: list[P8DerivedEvent]) -> dict[str, float]:
+    gaps: dict[str, list[int]] = defaultdict(list)
+    by_symbol: dict[str, list[P8DerivedEvent]] = defaultdict(list)
+    for event in events:
+        if event.evidence_status in {"body_verified", "deterministic_verified"}:
+            by_symbol[event.symbol].append(event)
+    for rows in by_symbol.values():
+        ordered = sorted(rows, key=lambda item: (
+            item.available_as_of, item.node in GLOBAL_TERMINAL_NODES, item.event_id,
+        ))
+        for index, precursor in enumerate(ordered):
+            successors = set(precursor.possible_successors) | set(precursor.failure_successors)
+            for successor in successors:
+                match = None
+                for item in ordered[index + 1:]:
+                    if item.available_as_of <= precursor.available_as_of:
+                        continue
+                    if item.node == successor:
+                        match = item
+                        break
+                    if item.node in GLOBAL_TERMINAL_NODES:
+                        break
+                if match is not None:
+                    gaps[successor].append(
+                        (date.fromisoformat(match.available_as_of) - date.fromisoformat(precursor.available_as_of)).days
+                    )
+    return {node: float(statistics.median(values)) for node, values in sorted(gaps.items()) if values}
+
+
+def _frontiers(
+    events: list[P8DerivedEvent], *, member_starts: dict[str, str], through: str,
+) -> list[CompanyFrontier]:
     by_symbol: dict[str, list[P8DerivedEvent]] = defaultdict(list)
     for event in events:
         by_symbol[event.symbol].append(event)
+    typical_gaps = _typical_successor_gaps(events)
     results: list[CompanyFrontier] = []
-    for symbol, rows in sorted(by_symbol.items()):
+    for symbol, membership_start in sorted(member_starts.items()):
+        rows = [
+            event for event in by_symbol.get(symbol, [])
+            if membership_start <= event.available_as_of <= through
+        ]
         current: dict[str, P8DerivedEvent] = {}
-        for event in sorted(rows, key=lambda item: (item.available_as_of, item.event_id)):
+        for event in sorted(rows, key=lambda item: (
+            item.available_as_of, item.node in GLOBAL_TERMINAL_NODES, item.event_id,
+        )):
+            if event.node in GLOBAL_TERMINAL_NODES:
+                current.clear()
             current[event.track] = event
         nodes = {event.node for event in rows}
         successors = sorted({successor for event in current.values() for successor in event.possible_successors})
@@ -341,14 +429,41 @@ def _frontiers(events: list[P8DerivedEvent]) -> list[CompanyFrontier]:
             if prerequisite not in nodes
         })
         failure_flags = sorted({successor for event in current.values() for successor in event.failure_successors})
-        evidence = sorted({event.evidence_status for event in current.values()})
+        evidence = sorted({event.evidence_status for event in current.values()}) or ["no_event_observed"]
+        last = max(rows, key=lambda item: (
+            item.available_as_of, item.node in GLOBAL_TERMINAL_NODES, item.event_id,
+        )) if rows else None
+        source_ids = sorted({source_id for event in current.values() for source_id in event.source_ids})
+        identity = {
+            "contract": CONTRACT_VERSION,
+            "symbol": symbol,
+            "through": through,
+            "membership_start": membership_start,
+            "current_nodes": {track: event.node for track, event in sorted(current.items())},
+        }
         results.append(CompanyFrontier(
+            frontier_id=content_id("P8FR", identity),
             symbol=symbol,
+            available_as_of=through,
+            membership_start_date=membership_start,
             current_nodes_by_track={track: event.node for track, event in sorted(current.items())},
             frontier_nodes=sorted(event.node for event in current.values()),
             next_possible_successors=successors,
             unmet_prerequisites=unmet,
+            last_precursor_date=last.available_as_of if last else "",
+            days_since_last_precursor=(
+                (date.fromisoformat(through) - date.fromisoformat(last.available_as_of)).days
+                if last else None
+            ),
+            typical_gap_days_by_successor={
+                successor: typical_gaps[successor]
+                for successor in successors if successor in typical_gaps
+            },
+            process_direction=last.process_direction if last else "unknown",
+            old_equity_effect=last.old_equity_effect if last else "unknown",
             failure_branch_risk_flags=failure_flags,
+            stage_source=last.evidence_status if last else "unknown",
+            source_ids=source_ids,
             evidence_status="+".join(evidence),
         ))
     return results
@@ -356,7 +471,8 @@ def _frontiers(events: list[P8DerivedEvent]) -> list[CompanyFrontier]:
 
 def build_event_graph(
     *, base_database: Path, p7_intelligence_database: Path,
-    valuation_episode_database: Path, start_date: str, through: str,
+    valuation_episode_database: Path, market_context_database: Path,
+    start_date: str, through: str,
 ) -> EventGraphResult:
     p7_run_id, facts = _latest_p7_facts(
         p7_intelligence_database, start_date=start_date, through=through,
@@ -439,6 +555,13 @@ def build_event_graph(
         if existing is None or priority.get(event.evidence_status, 0) > priority.get(existing.evidence_status, 0):
             unique[key] = event
     ordered = sorted(unique.values(), key=lambda item: (item.available_as_of, item.symbol, item.node, item.event_id))
+    membership_date, member_starts = _current_membership_starts(
+        market_context_database, through=through,
+    )
+    if membership_date != through:
+        raise ValueError(
+            f"event frontier membership 只到 {membership_date}，不能发布 as_of={through}"
+        )
     return EventGraphResult(
         start_date=start_date,
         through=through,
@@ -450,14 +573,18 @@ def build_event_graph(
         body_shortlist_count=sum(bool(bodies.get(str(item.get("announcement_id") or ""))) for item in shortlist),
         body_missing_count=body_missing_count,
         llm_completed_count=sum(item.llm_status == "completed" for item in ordered),
-        frontiers=_frontiers(ordered),
+        frontiers=_frontiers(ordered, member_starts=member_starts, through=through),
         events=ordered,
     )
 
 
 def persist_event_graph(result: EventGraphResult, repository: P8ResearchRepository):
     payloads = [item.model_dump(mode="json") for item in result.events]
-    records = {"derived_event": payloads}
+    frontier_payloads = [
+        {**item.model_dump(mode="json"), "record_id": item.frontier_id}
+        for item in result.frontiers
+    ]
+    records = {"derived_event": payloads, "company_frontier": frontier_payloads}
     run = build_run(
         run_kind="event_graph", contract_version=CONTRACT_VERSION,
         start_date=result.start_date, through=result.through,
@@ -476,6 +603,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--base-database", type=Path, default=DEFAULT_BASE_DB)
     parser.add_argument("--p7-intelligence-database", type=Path, default=P7_INTELLIGENCE_DB)
     parser.add_argument("--valuation-episode-database", type=Path, default=VALUATION_EPISODE_DB)
+    parser.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)
     parser.add_argument("--repository", type=Path, default=P8_RESEARCH_DB)
     parser.add_argument("--output-json", type=Path)
     return parser.parse_args()
@@ -487,6 +615,7 @@ def main() -> int:
         base_database=args.base_database,
         p7_intelligence_database=args.p7_intelligence_database,
         valuation_episode_database=args.valuation_episode_database,
+        market_context_database=args.market_context_database,
         start_date=args.start_date,
         through=args.through,
     )

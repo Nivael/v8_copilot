@@ -2,7 +2,7 @@ import sqlite3
 
 import pytest
 
-from p8_event_graph import SPEC_BY_NODE, _event, _find_span, _matched_specs
+from p8_event_graph import SPEC_BY_NODE, _event, _find_span, _frontiers, _matched_specs
 from p8_research import (
     P8ResearchRepository,
     build_run,
@@ -39,6 +39,47 @@ def test_claim_view_only_accepts_verified_records():
     assert to_claim_event(verified) is not None
     provisional = verified.model_copy(update={"evidence_status": "provisional"})
     assert to_claim_event(provisional) is None
+
+
+def test_frontier_covers_current_cohort_and_does_not_reuse_prior_episode_events():
+    event = _verified_event()
+    frontiers = _frontiers(
+        [event],
+        member_starts={"000001": "2026-01-01", "000002": "2026-01-01"},
+        through="2026-03-01",
+    )
+    assert {item.symbol for item in frontiers} == {"000001", "000002"}
+    assert next(item for item in frontiers if item.symbol == "000001").frontier_nodes == [
+        "formal_restructuring_accepted"
+    ]
+    assert next(item for item in frontiers if item.symbol == "000002").evidence_status == "no_event_observed"
+
+    restarted = _frontiers(
+        [event], member_starts={"000001": "2026-02-01"}, through="2026-03-01",
+    )
+    assert restarted[0].frontier_nodes == []
+
+
+def test_global_failure_terminal_clears_stale_track_successors():
+    accepted = _verified_event()
+    plan = _event(
+        symbol="000001", available_as_of="2026-01-10",
+        spec=SPEC_BY_NODE["plan_key_terms_disclosed"], source_ids=["ann-2"],
+        span=_find_span("披露重整计划草案", "重整计划草案", "official:ann-2"),
+        evidence_status="deterministic_verified", source_digest="b" * 64,
+    )
+    terminated = _event(
+        symbol="000001", available_as_of="2026-01-20",
+        spec=SPEC_BY_NODE["restructuring_terminated"], source_ids=["ann-3"],
+        span=_find_span("法院终止重整程序", "终止重整程序", "official:ann-3"),
+        evidence_status="deterministic_verified", source_digest="c" * 64,
+    )
+    frontier = _frontiers(
+        [accepted, plan, terminated],
+        member_starts={"000001": "2026-01-01"}, through="2026-02-01",
+    )[0]
+    assert frontier.frontier_nodes == ["restructuring_terminated"]
+    assert frontier.next_possible_successors == []
 
 
 def test_repository_is_append_only_and_manifest_moves_only_on_explicit_publish(tmp_path):

@@ -178,6 +178,8 @@ def _event_outcomes(
     for event in events:
         if str(event.get("evidence_status")) not in {"body_verified", "deterministic_verified"}:
             continue
+        if bool(event.get("not_hard_outcome")):
+            continue
         day = str(event.get("available_as_of") or "")
         position = bisect_left(calendar, day)
         if position >= len(calendar):
@@ -204,6 +206,10 @@ def _next_outcome_counts(
             found[f"process_{event.get('process_direction') or 'unknown'}"] += 1
             effect = str(event.get("old_equity_effect") or "unknown")
             found[f"old_equity_{effect if effect in {'supportive','adverse'} else 'mixed_or_unknown'}"] += 1
+    if found:
+        found["verified_hard_outcome_any"] = 1
+    else:
+        found["no_verified_hard_outcome"] = 1
     return dict(found)
 
 
@@ -255,6 +261,7 @@ def _activity_metrics(
             direction_keys = (
                 "process_advance", "process_rollback", "old_equity_supportive",
                 "old_equity_adverse", "old_equity_mixed_or_unknown",
+                "verified_hard_outcome_any", "no_verified_hard_outcome",
             )
             horizon_metrics[str(horizon)] = {
                 "completed_return_n": len(returns),
@@ -501,6 +508,18 @@ def _precursor_scorecard(events: list[dict[str, Any]], calendar: list[str]) -> d
             "reverse_recall": reverse_recall(main),
             "status": "descriptive_only" if main else "unavailable_no_body_verified_events",
         },
+        "p6_or_deterministic_verified_crosscheck": {
+            "precursor_count": sum(
+                item.get("evidence_status") == "deterministic_verified" for item in events
+            ),
+            "metrics": evaluate([
+                item for item in events if item.get("evidence_status") == "deterministic_verified"
+            ]),
+            "reverse_recall": reverse_recall([
+                item for item in events if item.get("evidence_status") == "deterministic_verified"
+            ]),
+            "status": "crosscheck_only",
+        },
         "title_or_provisional_sensitivity": {
             "precursor_count": len(sensitivity), "metrics": evaluate(sensitivity),
             "reverse_recall": reverse_recall(sensitivity),
@@ -554,6 +573,7 @@ def build_report(
     extractions = repository.records(run_id=runs["event_graph"].run_id, record_type="llm_announcement_extraction")  # type: ignore[union-attr]
     features = repository.records(run_id=runs["activity_features"].run_id, record_type="activity_feature")  # type: ignore[union-attr]
     references = repository.records(run_id=runs["scenario_references"].run_id, record_type="scenario_reference") if runs["scenario_references"] else []
+    current_maps = repository.records(run_id=runs["scenario_references"].run_id, record_type="current_scenario_map") if runs["scenario_references"] else []
     funnels = repository.records(run_id=runs["funnel"].run_id, record_type="funnel_item") if runs["funnel"] else []
     portfolios = repository.records(run_id=runs["portfolio"].run_id, record_type="portfolio_summary") if runs["portfolio"] else []
     calendar = _calendar(market_context_database, start_date, through)
@@ -581,12 +601,50 @@ def build_report(
             calendar=calendar, outcomes=outcomes, prices=prices, benchmarks=benchmarks,
         ) for year in sorted({str(item.get("trade_date", ""))[:4] for item in entries})
     }
+    ordered_years = sorted(by_year)
+    expanding_walk_forward = {
+        test_year: {
+            "training_years": ordered_years[:index],
+            "training_episode_count": sum(
+                str(item.get("trade_date", ""))[:4] in set(ordered_years[:index])
+                for item in entries
+            ),
+            "test_episode_count": sum(
+                str(item.get("trade_date", "")).startswith(test_year) for item in entries
+            ),
+            "test_metrics": by_year[test_year],
+            "threshold_refit_from_outcomes": False,
+        }
+        for index, test_year in enumerate(ordered_years)
+        if index > 0
+    }
     reporting_season = _activity_metrics(
-        [item for item in entries if str(item.get("trade_date", ""))[5:7] in {"01", "02", "03", "04"}],
+        [item for item in entries if str(item.get("trade_date", ""))[5:7] in {"04", "05", "06"}],
         calendar=calendar, outcomes=outcomes, prices=prices, benchmarks=benchmarks,
     )
     exact = [item for item in references if item.get("value_status") == "exact_old_equity"]
     range_only = [item for item in references if item.get("value_status") == "range_old_equity"]
+    p_star_maps = [item for item in current_maps if item.get("scenario_implied_weight") is not None]
+    conflict_reasons = sorted({
+        str(reason) for item in extractions for reason in (item.get("conflict_reasons") or [])
+    })
+    conflict_clusters = {
+        reason: {
+            "count": sum(reason in (item.get("conflict_reasons") or []) for item in extractions),
+            "samples": [
+                {
+                    "announcement_id": item.get("announcement_id"),
+                    "symbol": item.get("symbol"),
+                    "available_as_of": item.get("available_as_of"),
+                    "title": item.get("title"),
+                    "deterministic_nodes": item.get("deterministic_nodes") or [],
+                    "llm_nodes": [node.get("node") for node in (item.get("llm_nodes") or [])],
+                }
+                for item in extractions if reason in (item.get("conflict_reasons") or [])
+            ][:3],
+        }
+        for reason in conflict_reasons
+    }
     identity = {
         "contract": CONTRACT_VERSION, "start_date": start_date, "through": through,
         "source_run_ids": sorted(item.run_id for item in runs.values() if item),
@@ -607,14 +665,18 @@ def build_report(
             "completed_count": sum(item.get("reconciliation") != "failed" for item in extractions),
             "body_verified_event_count": sum(item.get("evidence_status") == "body_verified" for item in events),
             "source_span_count": sum(len(item.get("source_spans") or []) for item in events),
+            "conflict_clusters": conflict_clusters,
+            "human_actions_required": 0,
             "status": "descriptive_only" if extractions else "unavailable_external_llm_authorization_pending",
             "accuracy_status": "unvalidated_without_independent_body-labelled_sample",
         },
         precursor_scorecard=_precursor_scorecard(events, calendar),
         activity_scorecard={
             "episode_definition": "first frozen-shape observation after >5 trading-day gap",
-            "overall": activity, "walk_forward_test_years": by_year,
-            "reporting_season_jan_apr": reporting_season,
+            "overall": activity,
+            "calendar_year_slices": by_year,
+            "expanding_walk_forward": expanding_walk_forward,
+            "reporting_season_apr_jun": reporting_season,
             "same_universe_quiet_control": _control_uncertainty(
                 entries, features, prices=prices, benchmarks=benchmarks,
                 stage_map=stages,
@@ -627,18 +689,31 @@ def build_report(
         },
         scenario_reference_scorecard={
             "reference_count": len(references),
+            "current_map_record_count": len(current_maps),
+            "current_map_company_count": len({str(item.get("symbol") or "") for item in current_maps}),
+            "current_map_all_three_families_count": sum(
+                len({
+                    str(item.get("reference_family") or "")
+                    for item in current_maps if item.get("symbol") == symbol
+                }) == 3
+                for symbol in {str(item.get("symbol") or "") for item in current_maps}
+            ),
             "family_counts": dict(sorted(Counter(str(item.get("family")) for item in references).items())),
             "exact_old_equity_count": len(exact), "range_old_equity_count": len(range_only),
             "unknown_or_fact_only_count": len(references) - len(exact) - len(range_only),
             "containment_status": "unavailable" if not exact else "pending",
             "interval_score_status": "unavailable" if not (exact or range_only) else "pending",
-            "p_star_validation_status": "unavailable" if not exact else "pending",
+            "p_star_calculable_record_count": len(p_star_maps),
+            "p_star_validation_status": "unavailable" if not p_star_maps else "pending",
         },
         funnel_scorecard={
             "latest_item_count": len(funnels),
             "latest_lane_counts": dict(sorted(Counter(str(item.get("primary_lane")) for item in funnels).items())),
             "human_actions_required": 0,
-            "historical_daily_shadow_count": 1 if funnels else 0,
+            "historical_daily_shadow_count": (
+                len(set(portfolios[-1].get("source_funnel_run_ids") or []))
+                if portfolios else 0
+            ),
             "concurrent_portfolio": portfolios[-1] if portfolios else None,
             "concurrent_portfolio_status": (
                 str(portfolios[-1].get("evidence_status")) if portfolios
@@ -648,7 +723,7 @@ def build_report(
         },
         limitations=[
             "公告正文外部 LLM 授权未完成时，正文抽取成绩单保持 unavailable。",
-            "旧股东精确权益账为 0，情景包含率、interval score 与 p* 不可计算。",
+            "公司自身同一 claim 的成功/失败旧股东权益输入未闭合，情景包含率、interval score 与 p* 不可计算；跨公司分层中位数只作敏感性。",
             "当前只形成一个真实 P8 每日漏斗，不能伪造历史同期组合。",
             "活动对照当前是同 universe 的 quiet 观察，不冒充同阶段近市值匹配。",
             "历史结果不替代至少 60 个真实交易日的前瞻 shadow。",

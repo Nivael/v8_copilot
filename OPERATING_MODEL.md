@@ -230,9 +230,10 @@ P8 是独立 append-only 派生层，不是新的真值源。它只读 P6/P7、�
 公告，保存 source ID、available-as-of、版本和 digest；失败 run 不移动 current manifest。
 
 研究层允许计算方向、收益、情景敏感性和公开筹码代理；宣称层仍禁止把它们表述为资金身份、
-内幕、买卖信号、底部或目标价。三类情景参考永不混成一个“壳价值”；旧股东权益对象不闭合时
-`p*` 必须 unknown。P8B 只有“确定性规则 + 结构化 LLM + 可定位原文”一致才生成
-`body_verified`，title-only 只可作 sensitivity。
+内幕、买卖信号、底部或目标价。三类情景参考永不混成一个“壳价值”；只有公司自身、同一
+claim 的成功/失败旧股东权益输入闭合时才可算 `p*`，跨公司分层中位数只能作为敏感性。
+P8B 只有“确定性规则 + 结构化 LLM + 可定位原文”一致才生成 `body_verified`；title-only
+只可进入待补证探索或 sensitivity，不能进入已核证事件前沿。
 
 日常只显示最多 20 个研究候选，lane quota 为 6/5/5/4，安静日允许 0。owner 无必审任务；
 未点击保持 `unreviewed`。真实并发日历组合只从上线后每日漏斗累积，不用历史 episode 拼接。

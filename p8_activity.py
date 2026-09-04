@@ -14,7 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from market_activity import MarketActivityFact
 
 
-CONTRACT_VERSION = "p8_cumulative_activity_v1"
+CONTRACT_VERSION = "p8_cumulative_activity_v2"
 MIN_BASELINE = 60
 MAX_BASELINE = 120
 FEATURE_WINDOW = 20
@@ -39,6 +39,9 @@ class P8ActivityFeature(StrictModel):
     excess_return_st_20: float | None = None
     excess_return_csi2000_20: float | None = None
     amount_weighted_log_price_slope_20: float | None = None
+    single_day_qfq_return: float | None = None
+    single_day_excess_return_st: float | None = None
+    single_day_amplitude_ratio: float | None = None
     st_turnover_median: float | None = None
     st_turnover_regime_change_20: float | None = None
     calculable: bool
@@ -52,6 +55,8 @@ class ShapeThresholds(StrictModel):
     stable_abs_excess_return_max: float
     range_compression_max: float
     down_excess_return_max: float
+    single_day_excess_return_min: float
+    single_day_amplitude_ratio_min: float
 
 
 class ShapeLabel(StrictModel):
@@ -72,16 +77,19 @@ FROZEN_SHAPE_PROFILES: tuple[ShapeThresholds, ...] = (
         profile="broad", cum_log_excess_20_min=2.0,
         elevated_day_ratio_min=0.40, stable_abs_excess_return_max=0.10,
         range_compression_max=1.10, down_excess_return_max=-0.10,
+        single_day_excess_return_min=0.03, single_day_amplitude_ratio_min=1.20,
     ),
     ShapeThresholds(
         profile="base", cum_log_excess_20_min=3.0,
         elevated_day_ratio_min=0.50, stable_abs_excess_return_max=0.08,
         range_compression_max=1.00, down_excess_return_max=-0.08,
+        single_day_excess_return_min=0.05, single_day_amplitude_ratio_min=1.50,
     ),
     ShapeThresholds(
         profile="strict", cum_log_excess_20_min=4.0,
         elevated_day_ratio_min=0.60, stable_abs_excess_return_max=0.06,
         range_compression_max=0.90, down_excess_return_max=-0.06,
+        single_day_excess_return_min=0.08, single_day_amplitude_ratio_min=2.00,
     ),
 )
 
@@ -243,6 +251,12 @@ def build_activity_features(
             )
             if range_compression is None:
                 gaps.append("range_compression_unavailable")
+            current_amplitude = current.fact.amplitude_pct
+            single_day_amplitude_ratio = (
+                current_amplitude / amplitude_base
+                if current_amplitude is not None and amplitude_base is not None and amplitude_base > 0
+                else None
+            )
 
             prices = [item.qfq_close for item in window]
             valid_prices = [float(value) for value in prices if value is not None and value > 0]
@@ -261,6 +275,13 @@ def build_activity_features(
             if slope is None:
                 gaps.append("amount_weighted_slope_unavailable")
 
+            prior_observation = next((
+                item for item in reversed(prepared[:index])
+                if item.qfq_close is not None and item.qfq_close > 0
+            ), None)
+            prior_qfq = prior_observation.qfq_close if prior_observation else None
+            single_day_qfq_return = _return(prior_qfq, current.qfq_close)
+
             start_day = window[0].fact.trade_date if len(window) == FEATURE_WINDOW else ""
             st_return = _return(
                 benchmarks.get(("st_equal_weight_v1", start_day)),
@@ -272,6 +293,15 @@ def build_activity_features(
             ) if start_day else None
             st_excess = price_drift - st_return if price_drift is not None and st_return is not None else None
             csi_excess = price_drift - csi_return if price_drift is not None and csi_return is not None else None
+            prior_day = prior_observation.fact.trade_date if prior_observation else ""
+            st_single_return = _return(
+                benchmarks.get(("st_equal_weight_v1", prior_day)),
+                benchmarks.get(("st_equal_weight_v1", current.fact.trade_date)),
+            ) if prior_day else None
+            single_day_excess_st = (
+                single_day_qfq_return - st_single_return
+                if single_day_qfq_return is not None and st_single_return is not None else None
+            )
 
             st_median = daily_st_median.get(current.fact.trade_date)
             regime_change = None
@@ -295,6 +325,9 @@ def build_activity_features(
                 "st_excess": st_excess,
                 "csi_excess": csi_excess,
                 "slope": slope,
+                "single_day_qfq_return": single_day_qfq_return,
+                "single_day_excess_st": single_day_excess_st,
+                "single_day_amplitude_ratio": single_day_amplitude_ratio,
                 "st_regime": regime_change,
             }
             output.append(P8ActivityFeature(
@@ -311,6 +344,9 @@ def build_activity_features(
                 excess_return_st_20=st_excess,
                 excess_return_csi2000_20=csi_excess,
                 amount_weighted_log_price_slope_20=slope,
+                single_day_qfq_return=single_day_qfq_return,
+                single_day_excess_return_st=single_day_excess_st,
+                single_day_amplitude_ratio=single_day_amplitude_ratio,
                 st_turnover_median=st_median,
                 st_turnover_regime_change_20=regime_change,
                 calculable=calculable,
@@ -336,7 +372,17 @@ def classify_shape(
     )
     excess = feature.excess_return_st_20
     compression = feature.range_compression_20
-    if persistent and excess is not None and excess <= thresholds.down_excess_return_max:
+    single_day_jump = bool(
+        single_day_strict
+        and feature.single_day_excess_return_st is not None
+        and feature.single_day_excess_return_st >= thresholds.single_day_excess_return_min
+        and feature.single_day_amplitude_ratio is not None
+        and feature.single_day_amplitude_ratio >= thresholds.single_day_amplitude_ratio_min
+    )
+    if single_day_jump:
+        label = "single_day_activity_price_jump"
+        reasons = ["单日 strict 活跃偏离", "当日相对 ST 上涨且振幅扩张"]
+    elif persistent and excess is not None and excess <= thresholds.down_excess_return_max:
         label = "persistent_activity_price_down"
         reasons = ["累计自由流通换手高于自身历史", "相对 ST 等权价格下行"]
     elif (
@@ -346,9 +392,6 @@ def classify_shape(
     ):
         label = "persistent_activity_price_stable"
         reasons = ["累计自由流通换手高于自身历史", "相对价格平稳且振幅未扩张"]
-    elif single_day_strict and excess is not None and excess > thresholds.stable_abs_excess_return_max:
-        label = "single_day_activity_price_jump"
-        reasons = ["单日 strict 活跃偏离", "相对价格明显上行"]
     else:
         label = "quiet"
         reasons = ["未满足冻结的持续型或单日形态条件"]

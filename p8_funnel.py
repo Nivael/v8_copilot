@@ -108,17 +108,49 @@ def _event_lane(events: list[dict[str, Any]], *, as_of: str) -> list[dict[str, A
     ))
 
 
-def _scenario_lane(references: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    # v1 only admits same-claim exact old-equity points. Empty is the safe expected result today.
-    candidates = [
-        item for item in references
-        if item.get("value_status") == "exact_old_equity"
-        and item.get("old_equity_value") is not None
-        and not item.get("contamination_flags")
+def _current_episode_events(
+    events: list[dict[str, Any]], frontiers: list[dict[str, Any]], *,
+    current_symbols: set[str], as_of: str,
+) -> list[dict[str, Any]]:
+    membership_starts = {
+        str(item.get("symbol") or ""): str(item.get("membership_start_date") or "")
+        for item in frontiers
+    }
+    missing = sorted(current_symbols - set(membership_starts))
+    if missing:
+        raise ValueError(f"P8D current membership 缺 frontier: {missing[:5]}")
+    return [
+        item for item in events
+        if str(item.get("symbol") or "") in current_symbols
+        and membership_starts.get(str(item.get("symbol") or ""), "")
+        <= str(item.get("available_as_of") or "") <= as_of
     ]
-    return sorted(candidates, key=lambda item: (
-        str(item.get("available_as_of") or ""), str(item.get("symbol") or "")
-    ), reverse=True)
+
+
+def _scenario_lane(current_maps: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    # Only same-claim distributions with a pre-registered tail position can enter this lane.
+    candidates = [
+        item for item in current_maps
+        if item.get("reference_status") == "distribution"
+        and item.get("position_pct_in_layer") is not None
+        and (
+            float(item["position_pct_in_layer"]) <= 0.10
+            or float(item["position_pct_in_layer"]) >= 0.90
+        )
+        and item.get("current_old_equity_value") is not None
+    ]
+    ranked = sorted(candidates, key=lambda item: (
+        min(float(item["position_pct_in_layer"]), 1 - float(item["position_pct_in_layer"])),
+        str(item.get("symbol") or ""), str(item.get("reference_family") or ""),
+    ))
+    result: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in ranked:
+        symbol = str(item.get("symbol") or "")
+        if symbol not in seen:
+            result.append(item)
+            seen.add(symbol)
+    return result
 
 
 def _activity_lane(features: list[dict[str, Any]], *, as_of: str) -> list[dict[str, Any]]:
@@ -134,6 +166,29 @@ def _activity_lane(features: list[dict[str, Any]], *, as_of: str) -> list[dict[s
         -float(item.get("cum_turnover_log_excess_20") or 0),
         str(item["symbol"]),
     ))
+
+
+def _persistent_activity_lane(
+    daily_candidates: list[dict[str, Any]], *, same_day_event_symbols: set[str],
+) -> list[dict[str, Any]]:
+    persistent_labels = {
+        "persistent_activity_price_stable", "persistent_activity_price_down",
+    }
+    return [
+        item for item in daily_candidates
+        if str(item.get("shape_label") or "") in persistent_labels
+        and not bool(item.get("single_day_strict_input"))
+        and str(item.get("symbol") or "") not in same_day_event_symbols
+    ]
+
+
+def _verified_event_lane(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Only promote nodes whose meaning is verified beyond the announcement title."""
+    allowed = {"body_verified", "deterministic_verified"}
+    return [
+        item for item in rows
+        if str(item.get("evidence_status") or "") in allowed
+    ]
 
 
 def _exploration_lane(
@@ -152,20 +207,42 @@ def _exploration_lane(
             and float(item["holder_change_pct"]) <= -0.10
         )
     }
-    symbols = sorted(
-        ({*event_by_symbol} & {*activity_by_symbol}) | set(notable_chip)
-    )
-    return [{
+    symbols = ({*event_by_symbol} & {*activity_by_symbol}) | set(notable_chip)
+    rows = [{
         "symbol": symbol,
         "event": event_by_symbol.get(symbol),
         "activity": activity_by_symbol.get(symbol),
         "chip": notable_chip.get(symbol),
     } for symbol in symbols]
+    return sorted(rows, key=_exploration_priority)
+
+
+def _exploration_priority(item: dict[str, Any]) -> tuple[Any, ...]:
+    """Frozen, outcome-blind ordering for the exploration quota."""
+
+    chip = item.get("chip") or {}
+    channel_count = sum(bool(item.get(key)) for key in ("event", "activity", "chip"))
+    discrete_public_fact_count = sum((
+        chip.get("top_list_status") == "triggered",
+        chip.get("top_institution_status") == "reported",
+        chip.get("block_trade_status") == "reported",
+    ))
+    disclosure_date = str(chip.get("holder_latest_announcement_date") or "").replace("-", "")
+    disclosure_rank = -int(disclosure_date) if disclosure_date.isdigit() else 0
+    holder_change = chip.get("holder_change_pct")
+    holder_change_rank = float(holder_change) if holder_change is not None else 0.0
+    return (
+        -channel_count,
+        -discrete_public_fact_count,
+        disclosure_rank,
+        holder_change_rank,
+        str(item.get("symbol") or ""),
+    )
 
 
 def _checks(
     *, symbol: str, event: dict[str, Any] | None,
-    activity: dict[str, Any] | None, reference: dict[str, Any] | None,
+    activity: dict[str, Any] | None, scenario_maps: list[dict[str, Any]],
     chip: dict[str, Any] | None,
 ) -> tuple[list[ResearchCheck], list[str], list[str]]:
     gaps: list[str] = []
@@ -174,46 +251,96 @@ def _checks(
     if event is None:
         official = ResearchCheck(check_id="official_evidence", status="not_applicable", detail="本条不由公告前沿触发。")
     elif event_status in {"body_verified", "deterministic_verified"}:
-        official = ResearchCheck(check_id="official_evidence", status="ready", detail="已有可回链核证事件。")
+        excerpt = str(((event.get("source_spans") or [{}])[0]).get("excerpt") or "")[:80]
+        official = ResearchCheck(
+            check_id="official_evidence", status="ready",
+            detail=f"{event.get('available_as_of')} 已核证 {event.get('node')}：{excerpt or '来源可回链'}",
+        )
     else:
-        official = ResearchCheck(check_id="official_evidence", status="gap", detail=f"事件证据仍为 {event_status or 'unknown'}。")
+        official = ResearchCheck(
+            check_id="official_evidence", status="gap",
+            detail=(
+                f"{event.get('available_as_of')} 的 {event.get('node')} 仍为 "
+                f"{event_status or 'unknown'}，正文摘要不进入正式结论。"
+            ),
+        )
         gaps.append("event_body_or_verification_gap")
+    primary_map = next(
+        (item for item in scenario_maps if item.get("reference_family") == "public_node_reference"),
+        scenario_maps[0] if scenario_maps else None,
+    )
+    current_stage = str((primary_map or {}).get("stage") or "unknown")
+    stage_source = str((primary_map or {}).get("stage_source") or "unknown")
+    successors = list((event or {}).get("possible_successors") or (primary_map or {}).get("next_possible_successors") or [])
+    gap_days = (primary_map or {}).get("days_since_last_verified_node")
     frontier = ResearchCheck(
         check_id="stage_frontier",
-        status="ready" if event and event.get("possible_successors") else "gap",
+        status="ready" if current_stage != "unknown" and successors else "gap",
         detail=(
-            "下一可能节点：" + "、".join(event.get("possible_successors") or [])
-            if event else "未连接到已核证程序前沿。"
+            f"当前阶段 {current_stage}（{stage_source}）；下一可能节点："
+            + ("、".join(successors) if successors else "unknown")
+            + (f"；距最近核证节点 {gap_days} 天" if gap_days is not None else "")
         ),
     )
     if frontier.status == "gap":
         gaps.append("stage_frontier_gap")
-    if reference and reference.get("value_status") == "exact_old_equity":
-        scenario = ResearchCheck(check_id="scenario_reference", status="ready", detail="存在同旧股东权益口径参考。")
-    elif reference:
-        scenario = ResearchCheck(check_id="scenario_reference", status="gap", detail="只有总市值或原始条款，旧股东权益口径未闭合。")
+    distributions = [item for item in scenario_maps if item.get("reference_status") == "distribution"]
+    if distributions:
+        scenario = ResearchCheck(
+            check_id="scenario_reference", status="ready",
+            detail="；".join(
+                f"{item.get('reference_family')} n={item.get('reference_n')} "
+                f"位置={item.get('position_pct_in_layer')}"
+                for item in distributions
+            ),
+        )
+    elif scenario_maps:
+        scenario = ResearchCheck(
+            check_id="scenario_reference", status="gap",
+            detail="三类参考均因同口径样本不足只保留原始点或空结果。",
+        )
         gaps.append("old_equity_reference_gap")
     else:
-        scenario = ResearchCheck(check_id="scenario_reference", status="unavailable", detail="本公司暂无可用情景参考。")
+        scenario = ResearchCheck(check_id="scenario_reference", status="unavailable", detail="当前 ST 全量情景地图缺失。")
         gaps.append("scenario_reference_unavailable")
-    contamination = list((reference or {}).get("contamination_flags") or [])
-    if contamination:
-        risks.extend(contamination)
+    map_gaps = sorted({gap for item in scenario_maps for gap in (item.get("data_gaps") or [])})
+    risks.extend(gap for gap in map_gaps if "capital" in gap or "risk" in gap)
+    p_star = next((item.get("scenario_implied_weight") for item in scenario_maps if item.get("scenario_implied_weight") is not None), None)
+    cross_sensitivity = next((
+        item.get("cross_company_sensitivity_weight") for item in scenario_maps
+        if item.get("cross_company_sensitivity_weight") is not None
+    ), None)
+    par_distance = (primary_map or {}).get("distance_to_par_delisting_pct")
+    mv_distance = (primary_map or {}).get("distance_to_mv_delisting_pct")
     capital = ResearchCheck(
         check_id="capital_structure_and_risk",
-        status="gap" if contamination else "unavailable",
-        detail="；".join(contamination) if contamination else "旧股东让渡、转增或未知负债仍需在深挖时核对。",
+        status="ready" if p_star is not None and mv_distance is not None else "gap",
+        detail=(
+            f"p*={p_star if p_star is not None else 'unknown'}；"
+            f"跨公司情景敏感性={cross_sensitivity if cross_sensitivity is not None else 'unknown'}；"
+            f"距一元参考={f'{float(par_distance):.1%}' if par_distance is not None else 'unknown'}；"
+            f"距市值退市参考={f'{float(mv_distance):.1%}' if mv_distance is not None else 'unknown'}。"
+        ),
     )
+    if capital.status == "gap":
+        gaps.extend(map_gaps or ["capital_structure_or_risk_gap"])
     if activity or chip:
         details = []
         if activity:
             details.append(str(activity.get("shape_label") or "可观察活动特征已计算"))
         if chip:
+            holder_change = chip.get("holder_change_pct")
+            holder_detail = (
+                f"股东户数较前次 {float(holder_change):+.1%}"
+                f"（披露 {chip.get('holder_latest_announcement_date') or '日期未知'}）"
+                if holder_change is not None else "股东户数变化 unknown"
+            )
             details.append(
                 "公开筹码旁证："
                 + "/".join(str(chip.get(key) or "unknown") for key in (
                     "holder_status", "top_list_status", "block_trade_status", "margin_status",
                 ))
+                + f"；{holder_detail}"
             )
         market = ResearchCheck(
             check_id="market_activity_context", status="ready",
@@ -234,25 +361,45 @@ def build_funnel(
     if event_run is None or activity_run is None:
         raise ValueError("P8D 需要 event_graph 与 activity_features")
     events = repository.records(run_id=event_run.run_id, record_type="derived_event")
+    frontiers = repository.records(run_id=event_run.run_id, record_type="company_frontier")
     features = repository.records(run_id=activity_run.run_id, record_type="activity_feature")
-    references = (
-        repository.records(run_id=reference_run.run_id, record_type="scenario_reference")
+    current_maps = (
+        repository.records(run_id=reference_run.run_id, record_type="current_scenario_map")
         if reference_run else []
     )
     chip_proxies = (
         repository.records(run_id=chip_run.run_id, record_type="chip_proxy")
         if chip_run else []
     )
-    event_candidates = _event_lane(events, as_of=as_of)
-    scenario_candidates = _scenario_lane(references)
-    activity_candidates = _activity_lane(features, as_of=as_of)
+    current_symbols = {str(item.get("symbol") or "") for item in current_maps}
+    if not current_symbols:
+        raise ValueError("P8D 缺少 current_scenario_map；拒绝在未限定当日 ST 成员时生成漏斗")
+    current_events = _current_episode_events(
+        events, frontiers, current_symbols=current_symbols, as_of=as_of,
+    )
+    recent_event_candidates = _event_lane(current_events, as_of=as_of)
+    event_candidates = _verified_event_lane(recent_event_candidates)
+    scenario_candidates = _scenario_lane(current_maps)
+    daily_activity_candidates = [
+        item for item in _activity_lane(features, as_of=as_of)
+        if str(item.get("symbol") or "") in current_symbols
+    ]
+    same_day_event_symbols = {
+        str(item.get("symbol") or "") for item in current_events
+        if str(item.get("available_as_of") or "") == as_of
+    }
+    activity_candidates = _persistent_activity_lane(
+        daily_activity_candidates, same_day_event_symbols=same_day_event_symbols,
+    )
     exploration_candidates = _exploration_lane(
-        event_candidates, activity_candidates, chip_proxies,
+        recent_event_candidates, daily_activity_candidates, chip_proxies,
     )
 
-    event_by_symbol = _latest_by_symbol(events, "available_as_of")
-    activity_by_symbol = {str(item["symbol"]): item for item in activity_candidates}
-    reference_by_symbol = _latest_by_symbol(references, "available_as_of")
+    event_by_symbol = _latest_by_symbol(current_events, "available_as_of")
+    activity_by_symbol = {str(item["symbol"]): item for item in daily_activity_candidates}
+    maps_by_symbol: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in current_maps:
+        maps_by_symbol[str(item.get("symbol") or "")].append(item)
     chip_by_symbol = _latest_by_symbol(chip_proxies, "available_as_of")
     lanes: dict[str, list[dict[str, Any]]] = {
         "event_frontier": event_candidates,
@@ -294,27 +441,53 @@ def build_funnel(
     for lane, rank, symbol in selected:
         event = event_by_symbol.get(symbol)
         activity = activity_by_symbol.get(symbol)
-        reference = reference_by_symbol.get(symbol)
+        symbol_maps = maps_by_symbol.get(symbol, [])
         chip = chip_by_symbol.get(symbol)
         checks, gaps, risks = _checks(
-            symbol=symbol, event=event, activity=activity, reference=reference,
+            symbol=symbol, event=event, activity=activity, scenario_maps=symbol_maps,
             chip=chip,
         )
         reasons = []
         if lane == "event_frontier" and event:
             reasons.append(f"程序前沿为 {event.get('node')}，存在已登记后继或失败分支。")
-        elif lane == "scenario_tension" and reference:
+        elif lane == "scenario_tension" and symbol_maps:
             reasons.append("存在同口径旧股东权益情景参考；只进入研究，不构成便宜/昂贵判断。")
         elif lane == "persistent_activity" and activity:
             reasons.extend(list(activity.get("shape_reasons") or [str(activity.get("shape_label"))]))
         else:
+            overlap = [
+                label for present, label in (
+                    (event, "近 30 日公告待核证节点"),
+                    (activity, "当日量价形态"),
+                    (chip, "公开筹码旁证"),
+                ) if present
+            ]
+            if len(overlap) >= 2:
+                reasons.append("与".join(overlap) + "重合，优先补证；不解释为消息资金。")
             if chip:
-                reasons.append("出现公开筹码旁证或与公告/量价通道重合，优先补证；不解释为资金方向。")
-            else:
+                public_facts = []
+                if chip.get("top_list_status") == "triggered":
+                    public_facts.append("龙虎榜")
+                if chip.get("top_institution_status") == "reported":
+                    public_facts.append("机构席位")
+                if chip.get("block_trade_status") == "reported":
+                    public_facts.append("大宗交易")
+                holder_change = chip.get("holder_change_pct")
+                if holder_change is not None and float(holder_change) <= -0.10:
+                    public_facts.append(
+                        f"股东户数较前次 {float(holder_change):+.1%}"
+                        f"（披露 {chip.get('holder_latest_announcement_date') or '日期未知'}）"
+                    )
+                if public_facts:
+                    reasons.append(
+                        "新增公开旁证：" + "、".join(public_facts)
+                        + "；仅描述公开筹码变化，不推断资金身份或方向。"
+                    )
+            if not reasons:
                 reasons.append("公告程序前沿与当日持续型活动同时出现，优先补证。")
         source_ids = sorted(set(
             list((event or {}).get("source_ids") or [])
-            + list((reference or {}).get("source_ids") or [])
+            + [source_id for item in symbol_maps for source_id in (item.get("source_ids") or [])]
             + ([str((activity or {}).get("feature_id"))] if activity else [])
             + ([str((chip or {}).get("record_id"))] if chip else [])
         ))

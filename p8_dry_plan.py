@@ -17,6 +17,14 @@ from pydantic import BaseModel, ConfigDict, Field
 from data_refresh import atomic_write_json
 from market_activity import MarketActivityRepository
 from p8_activity import build_activity_features, choose_capacity_profile, profile_capacity
+from p8_llm_extraction import (
+    CALL_TIMEOUT_SECONDS,
+    EXTRACTION_CONTRACT_VERSION,
+    MAX_CALL_ATTEMPTS,
+    PROMPT_VERSION,
+    RETRY_BACKOFF_SECONDS,
+    _body_chunks,
+)
 from p8_regimes import REGISTRY_VERSION as REGIME_REGISTRY_VERSION, regime_for_date
 from settings import (
     ANNOUNCEMENT_BODY_CACHE_DIR,
@@ -168,6 +176,55 @@ def _load_p7_announcement_facts(path: Path) -> tuple[str, list[dict[str, Any]]]:
         return run_id, [json.loads(str(row[0])) for row in rows]
 
 
+def build_body_missing_queue(path: Path) -> dict[str, Any]:
+    run_id, facts = _load_p7_announcement_facts(path)
+    records = [
+        {
+            "announcement_id": str(item.get("announcement_id") or ""),
+            "symbol": str(item.get("symbol") or ""),
+            "available_as_of": str(item.get("available_as_of") or ""),
+            "title": str(item.get("title") or ""),
+            "category": str(item.get("category") or ""),
+            "source": str(item.get("source") or ""),
+            "url": str(item.get("url") or ""),
+            "missing_reason": "shortlist_body_missing",
+        }
+        for item in facts
+        if str(item.get("llm_route") or "") == "shortlist_body_missing"
+    ]
+    identity = {
+        "contract_version": "p8_body_missing_queue_v1",
+        "source_announcement_run_id": run_id,
+        "records": records,
+    }
+    return {
+        "contract_version": identity["contract_version"],
+        "source_announcement_run_id": run_id,
+        "record_count": len(records),
+        "content_digest": _digest(identity),
+        "records": records,
+    }
+
+
+def _strict_anomaly_keys(path: Path, *, through: str) -> set[tuple[str, str]]:
+    with _connect_ro(path) as connection:
+        row = connection.execute(
+            "select run_id from p7_runs where run_kind='anomaly' and through<=? "
+            "order by through desc,created_at desc limit 1",
+            (through,),
+        ).fetchone()
+        if row is None:
+            return set()
+        return {
+            (str(item[0]), str(item[1]))
+            for item in connection.execute(
+                "select symbol,trade_date from activity_anomalies "
+                "where run_id=? and json_extract(payload_json,'$.strict')=1",
+                (str(row[0]),),
+            )
+        }
+
+
 def _load_verified_episodes(path: Path) -> list[dict[str, Any]]:
     with _connect_ro(path) as connection:
         return [
@@ -309,6 +366,7 @@ def _body_inventory(
     shortlist_ids = {str(item.get("announcement_id")) for item in shortlist}
     content_digests: set[str] = set()
     body_lengths: list[int] = []
+    body_chunk_counts: list[int] = []
     raw_paths = 0
     with _connect_ro(base_database) as connection:
         for row in connection.execute(
@@ -319,8 +377,9 @@ def _body_inventory(
             body = str(row[1])
             content_digests.add(hashlib.sha256(body.encode("utf-8")).hexdigest())
             body_lengths.append(len(body))
+            body_chunk_counts.append(len(_body_chunks(body)))
             raw_paths += bool(str(row[2] or "").strip())
-    cache_files = list(body_cache_directory.glob("*/*.json")) if body_cache_directory.is_dir() else []
+    cache_files = list(body_cache_directory.rglob("*.json")) if body_cache_directory.is_dir() else []
     route_counts = Counter(str(item.get("llm_route") or "unknown") for item in facts)
     category_counts = Counter(str(item.get("category") or "unknown") for item in shortlist)
     inventory = {
@@ -329,6 +388,10 @@ def _body_inventory(
         "route_counts": dict(sorted(route_counts.items())),
         "shortlist_count": len(shortlist),
         "shortlist_body_available_count": sum(bool(item.get("body_available")) for item in shortlist),
+        "shortlist_body_located_count": len(body_lengths),
+        "body_availability_mismatch_count": abs(
+            sum(bool(item.get("body_available")) for item in shortlist) - len(body_lengths)
+        ),
         "shortlist_body_missing_count": sum(not bool(item.get("body_available")) for item in shortlist),
         "shortlist_unique_content_digest_count": len(content_digests),
         "shortlist_raw_path_count": raw_paths,
@@ -336,15 +399,31 @@ def _body_inventory(
         "local_body_cache_file_count": len(cache_files),
         "body_character_count": sum(body_lengths),
         "body_length_median": sorted(body_lengths)[len(body_lengths) // 2] if body_lengths else 0,
+        "body_length_maximum": max(body_lengths, default=0),
+        "body_chunk_call_count": sum(body_chunk_counts),
+        "multi_chunk_announcement_count": sum(value > 1 for value in body_chunk_counts),
         "pdf_scan_status": "not_inferable_from_existing_text_only_inventory",
     }
     missing = inventory["shortlist_body_missing_count"]
     llm_budget = {
         "deterministic_hard_fact_count": route_counts.get("deterministic_hard_fact", 0),
-        "structured_llm_existing_body_jobs": inventory["shortlist_body_available_count"],
+        "structured_llm_existing_body_announcement_jobs": inventory["shortlist_body_located_count"],
+        "structured_llm_existing_body_chunk_calls": inventory["body_chunk_call_count"],
         "body_fetch_jobs_after_announcement_id_dedup": missing,
-        "maximum_structured_llm_jobs_after_body_fill": len(shortlist),
-        "batch_key": "announcement_id+content_digest+extractor_version+model+prompt_version",
+        "maximum_structured_llm_announcement_jobs_after_body_fill": len(shortlist),
+        "future_chunk_calls": "unknown_until_missing_bodies_are_fetched",
+        "extraction_contract_version": EXTRACTION_CONTRACT_VERSION,
+        "prompt_version": PROMPT_VERSION,
+        "input_character_count": inventory["body_character_count"],
+        "default_workers": 4,
+        "maximum_call_attempts": MAX_CALL_ATTEMPTS,
+        "timeout_seconds_per_attempt": CALL_TIMEOUT_SECONDS,
+        "four_worker_all_attempts_timeout_upper_bound_seconds": (
+            ((inventory["body_chunk_call_count"] + 3) // 4)
+            * (MAX_CALL_ATTEMPTS * CALL_TIMEOUT_SECONDS + sum(RETRY_BACKOFF_SECONDS))
+        ),
+        "billing_cost_status": "unknown_until_owner_approves_model_and_current_provider_pricing",
+        "batch_key": "announcement_id+content_digest+chunk_index+extractor_version+model+prompt_version",
         "current_llm_execution_status": "not_run",
     }
     return inventory, llm_budget
@@ -485,7 +564,11 @@ def build_p8_dry_plan(
         activity_facts, qfq_close_by_symbol_date=qfq,
         benchmark_close_by_id_date=benchmarks,
     )
-    capacity = profile_capacity(features)
+    strict_keys = _strict_anomaly_keys(p7_intelligence_database, through=as_of)
+    strict_feature_ids = {
+        item.feature_id for item in features if (item.symbol, item.trade_date) in strict_keys
+    }
+    capacity = profile_capacity(features, strict_feature_ids=strict_feature_ids)
     selected_profile = choose_capacity_profile(capacity)
     calculable = sum(item.calculable for item in features)
     feature_capacity = {
@@ -501,10 +584,13 @@ def build_p8_dry_plan(
                 "cum_turnover_log_excess_10", "cum_turnover_log_excess_20",
                 "elevated_day_ratio_20", "range_compression_20", "price_drift_20",
                 "excess_return_st_20", "excess_return_csi2000_20",
-                "amount_weighted_log_price_slope_20", "st_turnover_regime_change_20",
+                "amount_weighted_log_price_slope_20", "single_day_qfq_return",
+                "single_day_excess_return_st", "single_day_amplitude_ratio",
+                "st_turnover_regime_change_20",
             )
         },
         "profiles": capacity,
+        "strict_single_day_input_count": len(strict_feature_ids),
         "threshold_selection_uses_outcomes": False,
     }
     return_inventory = _return_endpoint_inventory(
@@ -530,8 +616,10 @@ def build_p8_dry_plan(
 
     request_budget = {
         "body_fetch_jobs": body["shortlist_body_missing_count"],
-        "structured_llm_jobs_now": body["shortlist_body_available_count"],
-        "structured_llm_jobs_after_body_fill_max": body["shortlist_count"],
+        "structured_llm_announcement_jobs_now": body["shortlist_body_located_count"],
+        "structured_llm_chunk_calls_now": body["body_chunk_call_count"],
+        "structured_llm_announcement_jobs_after_body_fill_max": body["shortlist_count"],
+        "structured_llm_chunk_calls_after_body_fill": "unknown_until_missing_bodies_are_fetched",
         "chip_probe_calls": 5,
         "production_provider_calls_in_p8_0a": 0,
     }
@@ -624,8 +712,8 @@ def render_markdown(plan: P8DryPlan) -> str:
         "## 结论",
         "",
         "P8C 的持续型量价和 P8E 的 qfq 观察账可以直接开工；P8B 先处理已有正文子集，再按公告 ID"
-        "补齐。P8A 可以搭好三类参考与降级路径，但制度版本和旧股东权益账未闭合前，不发布统一"
-        "分位或 p*。这不是失败，而是本轮数据边界。",
+        "补齐。P8A 可以搭好三类参考、已登记的退出制度版本与降级路径，但公司自身同口径成功/"
+        "失败旧股东权益账未闭合前，不发布统一分位或 p*。这不是失败，而是本轮数据边界。",
         "",
         "## 硬阻塞（只阻塞对应输出）",
         "",
@@ -698,6 +786,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--output-markdown", type=Path)
     parser.add_argument("--output-html", type=Path)
+    parser.add_argument("--output-body-missing-json", type=Path)
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parent)
     return parser.parse_args()
 
@@ -722,6 +811,14 @@ def main() -> int:
         chip_provider_probe=chip_probe,
     )
     atomic_write_json(args.output_json, plan.model_dump(mode="json"))
+    body_missing_path = (
+        args.output_body_missing_json
+        or args.output_json.with_name("p8_body_missing_queue_v1.json")
+    )
+    atomic_write_json(
+        body_missing_path,
+        build_body_missing_queue(args.p7_intelligence_database),
+    )
     if args.output_markdown:
         args.output_markdown.parent.mkdir(parents=True, exist_ok=True)
         args.output_markdown.write_text(render_markdown(plan), encoding="utf-8")
@@ -731,6 +828,7 @@ def main() -> int:
     print(json.dumps({
         "plan_id": plan.plan_id,
         "output_json": str(args.output_json),
+        "body_missing_queue_json": str(body_missing_path),
         "human_decisions_required": len(plan.human_decisions_required),
     }, ensure_ascii=False))
     return 0

@@ -12,6 +12,28 @@ from typing import Any
 
 REVIEW_VERSION = "p8_human_review_panel_v1"
 
+GAP_LABELS = {
+    "current_old_equity_claim_not_closed": "旧股东权益口径尚未闭合",
+    "event_body_or_verification_gap": "公告正文尚未核证",
+    "market_value_delisting_threshold_not_registered": "市值退市参照尚未登记",
+    "old_equity_reference_gap": "同口径权益参考不足",
+    "scenario_reference_unavailable": "本公司暂无情景参考",
+    "verified_current_episode_missing": "当前阶段缺少已核证 episode",
+    "current_stage_unknown": "当前重整阶段未知",
+    "delisting_risk_type_unknown": "退市风险类型未知",
+    "current_total_market_value_missing": "当日总市值缺失",
+}
+
+
+def _gap_label(value: str) -> str:
+    if value.startswith("valuation_stage_checked_through_"):
+        return "阶段真值尚未更新到当日"
+    if value.endswith("_distribution_empty"):
+        return "该类同口径历史分布为空"
+    if value.endswith("_distribution_raw_points_only"):
+        return "该类样本只够列原始点"
+    return GAP_LABELS.get(value, value)
+
 
 def _load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -65,7 +87,11 @@ def build_queue(
         gaps = list(item.get("data_gaps") or [])
         why = "；".join(item.get("reasons") or [])
         if gaps:
-            why += " 当前缺口：" + "、".join(gaps) + "。"
+            labels = list(dict.fromkeys(_gap_label(str(value)) for value in gaps))
+            why += " 主要缺口：" + "、".join(labels[:2])
+            if len(labels) > 2:
+                why += f"；另有 {len(labels) - 2} 项见详情"
+            why += "。"
         cards.append({
             "card_id": str(item["item_id"]),
             "title": f"{names.get(symbol, '')} {symbol}".strip(),
@@ -90,7 +116,7 @@ def build_queue(
                 for check in item.get("checks") or []
             ],
             "counterexamples": [
-                {"label": "风险/缺口", "detail": value}
+                {"label": "风险/缺口", "detail": _gap_label(str(value))}
                 for value in list(item.get("risk_flags") or []) + gaps
             ][:5],
             "affected_count": 1,
@@ -171,6 +197,25 @@ def render_html(
             f"<td>{value.get('activity_candidate_count',0)}</td><td>{html.escape('、'.join(value.get('symbols') or [])) or '—'}</td></tr>"
         )
     control = backtest.get("activity_scorecard", {}).get("same_universe_quiet_control", {})
+    shadow_days = int(backtest.get("funnel_scorecard", {}).get("historical_daily_shadow_count") or 0)
+    conflict_rows = []
+    for reason, cluster in backtest.get("extraction_scorecard", {}).get("conflict_clusters", {}).items():
+        sample_text = "；".join(
+            f"{item.get('symbol')} {item.get('available_as_of')} {item.get('title')}"
+            for item in cluster.get("samples") or []
+        )
+        conflict_rows.append(
+            f"<tr><td>{html.escape(str(reason))}</td><td>{cluster.get('count', 0)}</td>"
+            f"<td>{html.escape(sample_text) or '—'}</td></tr>"
+        )
+    conflict_section = (
+        '<section class="section"><h2>正文抽取冲突簇</h2>'
+        '<p class="section-lead">只显示每类最多三个样本；系统默认保留冲突，不要求逐条审核。</p>'
+        '<table><thead><tr><th>冲突类型</th><th>数量</th><th>代表样本</th></tr></thead><tbody>'
+        + "".join(conflict_rows)
+        + "</tbody></table></section>"
+        if conflict_rows else ""
+    )
     source_packet = json.dumps(queue["source_packet"], ensure_ascii=False, indent=2)
     queue_json = json.dumps(queue, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!doctype html>
@@ -189,10 +234,11 @@ main{{max-width:1240px;margin:0 auto;padding:28px 22px 70px}} .intro{{display:gr
 @media(max-width:850px){{.intro,.grid{{grid-template-columns:1fr}}.metrics{{grid-template-columns:repeat(2,1fr)}}.side{{position:static}}.top-inner{{flex-wrap:wrap}}.intro h2{{font-size:28px}}}}
 </style></head>
 <body><header class="top"><div class="top-inner"><h1>{html.escape(queue['title'])}</h1><span class="top-meta"><b id="decided">0</b> 已选择 · <b id="unresolved">{len(queue['cards'])}</b> 未选择 · 必审 0</span><span id="save-state">已载入</span><button id="copy">复制 JSON</button><button id="export">导出 JSON</button></div></header>
-<main><section class="intro"><div><h2>先看研究价值，再决定要不要深挖</h2><p>这是研究优先级面板，不是买入榜。今天没有任何强制人审；不点击就保持 unreviewed，不会被系统当作 drop。</p></div><div class="boundary"><b>当前最重要的边界</b><br>正文 LLM 尚未获得外部发送授权，旧股东精确权益账仍为 0。两项都不会被数字外观掩盖。</div></section>
-<section class="metrics"><div class="metric"><b>{funnel.get('item_count',0)}</b><span>今日候选</span></div><div class="metric"><b>{dry_plan.get('activity_feature_capacity',{}).get('calculable_count',0)}</b><span>可计算活动观察</span></div><div class="metric"><b>{backtest.get('extraction_scorecard',{}).get('body_verified_event_count',0)}</b><span>正文核证事件</span></div><div class="metric"><b>{backtest.get('scenario_reference_scorecard',{}).get('exact_old_equity_count',0)}</b><span>精确旧权益参照</span></div><div class="metric"><b>{chip.get('holder_observed_count',0)}/{chip.get('member_count',0)}</b><span>股东户数覆盖</span></div></section>
+<main><section class="intro"><div><h2>先看研究价值，再决定要不要深挖</h2><p>这是研究优先级面板，不是买入榜。今天没有任何强制人审；不点击就保持 unreviewed，不会被系统当作 drop。</p></div><div class="boundary"><b>当前最重要的边界</b><br>正文 LLM 尚未获得外部发送授权，旧股东精确权益账仍为 0；真实前瞻已积累 {shadow_days}/10 个运营观察日、{shadow_days}/60 个验证观察日。</div></section>
+<section class="metrics"><div class="metric"><b>{funnel.get('item_count',0)}</b><span>今日候选</span></div><div class="metric"><b>{dry_plan.get('activity_feature_capacity',{}).get('calculable_count',0)}</b><span>可计算活动观察</span></div><div class="metric"><b>{backtest.get('scenario_reference_scorecard',{}).get('current_map_company_count',0)}</b><span>全量情景地图股票</span></div><div class="metric"><b>{shadow_days}/10</b><span>前瞻运营门</span></div><div class="metric"><b>{chip.get('holder_observed_count',0)}/{chip.get('member_count',0)}</b><span>股东户数覆盖</span></div></section>
 <section class="section"><h2>三次历史快照</h2><p class="section-lead">一周、一个月、一年前同样按当时可见数据回放；未走满窗口的继续右删失。</p><table><thead><tr><th>锚点</th><th>日期</th><th>候选数</th><th>股票</th></tr></thead><tbody>{''.join(anchor_rows)}</tbody></table></section>
 <section class="section"><h2>量价成绩单</h2><p class="section-lead">20 日 ST 超额收益只作描述；同日同板块 quiet 对照的均值差为 {_metric(control.get('mean_difference'),pct=True)}，公司聚类区间 {_metric((control.get('company_cluster_bootstrap_95') or [None])[0],pct=True)} 至 {_metric((control.get('company_cluster_bootstrap_95') or [None,None])[1],pct=True)}。</p><table><thead><tr><th>冻结形态</th><th>episode</th><th>完成 20 日</th><th>中位 ST 超额</th><th>状态</th></tr></thead><tbody>{''.join(shape_rows)}</tbody></table></section>
+{conflict_section}
 <section class="section"><h2>今日研究漏斗</h2><p class="section-lead">系统已经给出机器建议。只有你主动选择才写入导出文件；所有动作只影响研究队列。</p><div class="grid"><div class="cards">{''.join(cards_html) or '<p>今天没有候选。</p>'}</div><aside class="side"><h3>导出预览</h3><p>自动保存在本机浏览器；JSON 不含交易指令。</p><pre id="preview"></pre><details><summary>运行来源</summary><pre>{html.escape(source_packet)}</pre></details></aside></div></section></main>
 <script id="queue" type="application/json">{queue_json}</script>
 <script>

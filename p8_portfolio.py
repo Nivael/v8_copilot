@@ -104,6 +104,20 @@ def _compound(values: list[float]) -> float | None:
     return wealth - 1.0
 
 
+def _compound_benchmark_intervals(
+    series: dict[str, float], intervals: list[tuple[str, str]],
+) -> float | None:
+    """Match the benchmark to the exact daily intervals held by the portfolio."""
+
+    values: list[float] = []
+    for previous_day, current_day in intervals:
+        left, right = series.get(previous_day), series.get(current_day)
+        if left is None or right is None or left <= 0:
+            return None
+        values.append(right / left - 1)
+    return _compound(values)
+
+
 def materialize_portfolio(
     *, repository: P8ResearchRepository, base_database: Path,
     market_context_database: Path, market_activity_database: Path,
@@ -160,7 +174,7 @@ def materialize_portfolio(
             position_status=status, qfq_return=value,  # type: ignore[arg-type]
         ))
 
-    daily_returns: list[tuple[str, float]] = []
+    daily_returns: list[tuple[str, str, float]] = []
     all_dates = sorted({day for rows in prices.values() for day, _close in rows})
     price_maps = {symbol: dict(rows) for symbol, rows in prices.items()}
     for previous_day, current_day in zip(all_dates, all_dates[1:]):
@@ -176,16 +190,15 @@ def materialize_portfolio(
             for item in live if price_maps[item.symbol][previous_day] > 0
         ]
         if returns:
-            daily_returns.append((current_day, sum(returns) / len(returns)))
-    portfolio_return = _compound([value for _day, value in daily_returns])
+            daily_returns.append((previous_day, current_day, sum(returns) / len(returns)))
+    portfolio_return = _compound([value for _previous, _current, value in daily_returns])
     benchmarks = _benchmarks(market_context_database, start_date, through)
-    first_day = daily_returns[0][0] if daily_returns else ""
-    last_day = daily_returns[-1][0] if daily_returns else ""
+    intervals = [(previous, current) for previous, current, _value in daily_returns]
     benchmark_returns: dict[str, float | None] = {}
     for benchmark_id in ("st_equal_weight_v1", "csi_2000"):
-        left = benchmarks[benchmark_id].get(first_day)
-        right = benchmarks[benchmark_id].get(last_day)
-        benchmark_returns[benchmark_id] = right / left - 1 if left and right else None
+        benchmark_returns[benchmark_id] = _compound_benchmark_intervals(
+            benchmarks[benchmark_id], intervals,
+        )
     status = (
         "unavailable" if not positions or not daily_returns
         else "right_censored" if any(item.position_status == "open" for item in positions)

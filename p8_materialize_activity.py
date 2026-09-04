@@ -181,6 +181,7 @@ def materialize_activity(
             "shape_profile": profile_name,
             "shape_label": label.label,
             "shape_reasons": label.reasons,
+            "single_day_strict_input": (feature.symbol, feature.trade_date) in strict_dates,
             "single_day_deviation_bin": deviation_bin,
             "point_in_time_total_mv_10k_cny": anomaly.get("total_mv_10k_cny"),
             "risk_type": anomaly.get("risk_type", ""),

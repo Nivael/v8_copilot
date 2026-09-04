@@ -122,7 +122,7 @@ def build_review_queue(repository: P8ResearchRepository, *, limit: int = MAX_BAT
 def render_html(queue: dict[str, Any]) -> str:
     embedded = json.dumps(queue, ensure_ascii=False).replace("</", "<\\/")
     empty = html.escape(str(queue.get("empty_reason") or ""))
-    return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
 <title>P8 正文金标</title><style>
 :root{{--ink:#17211c;--muted:#657169;--paper:#f1efe8;--card:#fffdf8;--line:#d5cdbc;--accent:#24543d;--warn:#93621f}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}}

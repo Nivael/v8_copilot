@@ -222,7 +222,7 @@ def render_html(report: dict[str, Any]) -> str:
         "killed": sum(item["status"] == "killed" for item in report["scorecards"]),
         "unavailable": sum(item["status"] == "unavailable" for item in report["scorecards"]),
     }
-    return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
 <title>P8-BT2 成绩单</title><style>
 :root{{--ink:#14201b;--muted:#66716a;--paper:#f1efe8;--card:#fffdf8;--line:#d8d1c2;--green:#24543d;--amber:#8f621e;--red:#923e31;--gray:#69716c}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}}

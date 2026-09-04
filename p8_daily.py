@@ -46,7 +46,7 @@ def main() -> int:
     parser.add_argument("--as-of", required=True)
     parser.add_argument("--event-start", default="2021-03-17")
     parser.add_argument("--activity-start", default="2025-02-26")
-    parser.add_argument("--portfolio-start", default="2026-09-03")
+    parser.add_argument("--portfolio-start", default="2026-09-07")
     parser.add_argument("--dry-plan-json", type=Path, required=True)
     parser.add_argument("--base-database", type=Path, default=DEFAULT_BASE_DB)
     parser.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)

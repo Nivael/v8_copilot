@@ -1,9 +1,13 @@
 import pytest
 
 from p8_funnel import (
-    _checks, _current_episode_events, _exploration_lane, _persistent_activity_lane, _scenario_lane,
+    LANE_QUOTAS, _checks, _current_episode_events, _exploration_lane, _persistent_activity_lane, _scenario_lane,
     _verified_event_lane,
 )
+
+
+def test_killed_persistent_activity_lane_has_zero_post_result_quota() -> None:
+    assert LANE_QUOTAS["persistent_activity"] == 0
 
 
 def _map(family: str, position: float | None = None) -> dict:

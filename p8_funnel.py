@@ -15,11 +15,13 @@ from p8_research import P8ResearchRepository, build_run, content_id
 from settings import P8_RESEARCH_DB
 
 
-CONTRACT_VERSION = "p8_research_funnel_v1"
+CONTRACT_VERSION = "p8_research_funnel_v2"
 LANE_QUOTAS = {
     "event_frontier": 6,
     "scenario_tension": 5,
-    "persistent_activity": 5,
+    # P8-BT2 killed this lane under both terminal conventions. Keep its
+    # feature/overflow ledger, but do not promote it into the post-result funnel.
+    "persistent_activity": 0,
     "chip_or_exploration": 4,
 }
 MAX_ITEMS = 20
@@ -65,6 +67,7 @@ class FunnelResult(StrictModel):
     item_count: int
     overflow_count: int
     lane_counts: dict[str, int]
+    lane_status: dict[str, str]
     multi_lane_count: int
     human_actions_required: int
     source_run_ids: list[str]
@@ -530,6 +533,12 @@ def materialize_funnel(
         run_id=run.run_id, as_of=as_of,
         item_count=len(items), overflow_count=overflow,
         lane_counts=dict(sorted(Counter(item.primary_lane for item in items).items())),
+        lane_status={
+            "event_frontier": "unavailable_pending_body_validation",
+            "scenario_tension": "unavailable_same_claim_inputs_absent",
+            "persistent_activity": "killed_by_p8_backtest_v2",
+            "chip_or_exploration": "weak_unweighted_context_only",
+        },
         multi_lane_count=sum(len(item.matched_lanes) > 1 for item in items),
         human_actions_required=0,
         source_run_ids=source_run_ids,

@@ -243,3 +243,8 @@ P8B 只有“确定性规则 + 结构化 LLM + 可定位原文”一致才生成
 ST 超额排序与三年可交易篓子是决定性测试，稀有硬节点率只是辅助。补历史数据前先执行
 [V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md](V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md)；dry-plan 禁止读取
 收益或命中率，避免用结果决定尺子。
+
+P8-BT2 正式结果见 [P8_BACKTEST_V2_RESULT.md](P8_BACKTEST_V2_RESULT.md)：补回 191 家历史退市
+终点并执行 -100%/最后可观察价双口径后，持续量价和旧前 20 篓子均被判杀，股东户数只保留
+为不加权弱旁证。后 BT2 漏斗使用 `p8_research_funnel_v2`，持续量价晋级配额为 0；改变该结论
+必须开新的预注册版本，不能在日常窗口里手调阈值。

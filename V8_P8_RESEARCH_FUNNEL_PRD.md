@@ -1,6 +1,6 @@
 # v8 P8 PRD：研究漏斗、分阶段成交情景参考与前哨链
 
-状态：architecture frozen；P8-0 与首轮工程物化完成；P8 回测 v2 已预注册、待 outcome-blind dry-plan；正文 LLM 授权及 10/60 日真实前瞻门待完成
+状态：architecture frozen；无需人审工程与 P8-BT2 正式验证完成；正文 LLM 授权及重置后的 10/60 日真实前瞻门待完成
 日期：2026-09-05
 负责人：owner 起草，Codex commander window 实施
 修订对象：[V8_P6B_PRD.md](V8_P6B_PRD.md) §1/§2.2/§11、[V8_P7_DAILY_INTELLIGENCE_PRD.md](V8_P7_DAILY_INTELLIGENCE_PRD.md) §2/§5.3/§8、[V8_P7_BACKTEST_CONTRACT.md](V8_P7_BACKTEST_CONTRACT.md) §4/§5
@@ -405,3 +405,17 @@ P8-0 能决定真实成本。P8B-0 是它们共同的语义前置。
 - P8E：价格路径与老股东权益路径分账；失败/右删失和 coverage 分母可复算；同期篓子不由跨年
   episode 随机拼接；
 - 宣称层禁词测试（`validate_research_language`）继续全绿。
+
+## 12. P8-BT2 正式结论与版本动作
+
+2026-09-05 的正式 v2 结果见 [P8_BACKTEST_V2_RESULT.md](P8_BACKTEST_V2_RESULT.md)。冻结规则下：
+
+- `p8c_accumulation = killed`；
+- `p8c_holder = weak`；
+- `p8d_funnel_basket = killed`；
+- P8A `p*`、三类参考的未来稳定性及 P8B 前哨均因同口径输入/正文真值不足为 unavailable。
+
+因此下一版 `p8_research_funnel_v2` 将 `persistent_activity` 配额设为 0，只保留特征、诊断、
+overflow 与失败 ledger；股东户数只作不加权旁证。后 BT2 的 10/60 日真实门从 v2 首日重置。
+若研究“持续放量是否是风险警报”或反向排序，属于读结果后的探索，必须另开 v3 契约，不能
+翻改本 PRD 中已经完成的 v2 结论。

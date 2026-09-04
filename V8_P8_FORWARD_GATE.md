@@ -1,8 +1,8 @@
 # P8 真实前瞻门
 
-状态：**accumulating**
+状态：**reset for post-BT2 funnel v2**
 契约版本：`v8_p8_forward_gate_v1`
-起始交易日：2026-09-03
+起始交易日：2026-09-07（首个实际发布日若更晚，以实际日为准）
 
 ## 为什么不能回填
 
@@ -23,10 +23,14 @@ episode 只进入预注册回测；真实漏斗、owner 使用和并发组合只
 
 ## 当前状态
 
-- 已观察真实交易日：1；
+- 已观察真实交易日：0；旧 `p8_research_funnel_v1` 的 2026-09-03 单日保留审计，但不与 v2 混算；
 - 10 日运营门：`accumulating`；
 - 60 日验证观察门：`accumulating`；
 - owner 必审：0。
+
+P8-BT2 已把 `persistent_activity` 主 lane 判定为 killed。后续真实门只累计
+`p8_research_funnel_v2`：持续量价仍保留为诊断/overflow，但晋级配额为 0；股东户数只作
+不加权弱旁证。改变这个安排必须开新的预注册版本，不能沿用本门。
 
 每个新交易日先完成 P7，再运行 `p8_daily.py`。任一步失败或来源日期不一致，current manifest
 不移动，该日不计入前瞻分母。

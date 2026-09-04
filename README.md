@@ -136,7 +136,8 @@ P8 把研究层与宣称层分开：三类成交情景参考、五轨带方向�
 同阶段排序与可交易篓子的冻结规则见
 [V8_P8_BACKTEST_CONTRACT.md](V8_P8_BACKTEST_CONTRACT.md)，其 outcome-blind 数据门见
 [V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md](V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md)；
-真实结果见 [P8_IMPLEMENTATION_RESULT.md](P8_IMPLEMENTATION_RESULT.md)，日常顺序见
+首轮工程账见 [P8_IMPLEMENTATION_RESULT.md](P8_IMPLEMENTATION_RESULT.md)，正式 v2 排序与篓子
+结果见 [P8_BACKTEST_V2_RESULT.md](P8_BACKTEST_V2_RESULT.md)，日常顺序见
 [P8_DAILY_RUNBOOK.md](P8_DAILY_RUNBOOK.md)，真实 10/60 日门见
 [V8_P8_FORWARD_GATE.md](V8_P8_FORWARD_GATE.md)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
@@ -221,6 +222,12 @@ dry run；显式 `--apply` 生成 candidate，并让满足 owner 预授权门的
 - `p8_funnel.py` / `p8_portfolio.py` / `p8_backtest.py` — 四 lane 漏斗、真实并发日历组合和五张
   分立成绩单；已核证事件与标题待补证探索严格分层，单日尖峰不占持续活动 lane；
   `p8_review_panel.py` 生成无需服务的可选人审 HTML。
+- `p8_backfill_market_activity.py` / `p8_qfq_backfill.py` / `p8_holder_history.py` /
+  `p8_terminal_history.py` — P8-BT2 的 2021 起活动、QFQ、股东户数和退市终点独立回填层；不改
+  生产基础库。
+- `p8_backtest_v2_dry_plan.py` / `p8_backtest_v2.py` / `p8_reference_backtest_v2.py` /
+  `p8_walk_forward_basket.py` / `p8_backtest_v2_publish.py` — 无结果数据门、同阶段排序、三类参考
+  稳定性、可交易同期篓子与最终静态成绩单。
 - `V8_NEXT_PRD.md` / `V8_NEXT_TODO.md` — P0–P5 当前完成度与延续项。
 - `V8_P6_INSIGHTS_PRD.md` / `.todos/` — P6 管理人、两类估值、客观校准与分项交付账。
 - `web/` — React/Vite 经验中心、运行审计、兼容问答和个股面板。

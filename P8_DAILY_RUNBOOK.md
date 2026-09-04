@@ -7,9 +7,9 @@ P8 只消费已经完成的 P6/P7 和公开市场数据，不回写它们。下�
 
 1. 先按 [P7_DAILY_RUNBOOK.md](P7_DAILY_RUNBOOK.md) 完成名单、公告、价格、市场活动和基准刷新；
 2. 构建/更新五轨事件图；`event_frontier` 只接收正文核证或机械核证节点，标题节点只留在待补证探索层；正文 LLM 只有在 owner 明确允许公开公告正文发送到 OpenAI 后运行；
-3. 物化持续型活动与 D0–D4 互斥箱；
+3. 物化持续型活动与 D0–D4 互斥箱，但 P8-BT2 后只保留诊断/overflow，不晋级主 lane；
 4. 拉当日公开筹码旁证，股东户数请求按缓存只补当前成员；
-5. 更新阶段回报、三类情景参考、四通道漏斗和真实日历 shadow 组合；
+5. 更新阶段回报、三类情景参考、后 BT2 漏斗和真实日历 shadow 组合；
 6. 更新回测成绩单和离线面板；
 7. 所有 run 对齐同一 `as_of` 后显式移动 P8 current manifest。
 
@@ -66,7 +66,7 @@ python p8_chip_proxies.py --allow-provider --as-of YYYY-MM-DD \
 python p8_returns.py --start-date 2021-03-17 --through YYYY-MM-DD
 python p8_references.py --through YYYY-MM-DD
 python p8_funnel.py --as-of YYYY-MM-DD
-python p8_portfolio.py --start-date 2026-09-03 --through YYYY-MM-DD
+python p8_portfolio.py --start-date 2026-09-07 --through YYYY-MM-DD
 python p8_backtest.py --start-date 2025-02-26 --through YYYY-MM-DD
 ```
 
@@ -92,6 +92,18 @@ python p8_publish.py --publish-current --as-of YYYY-MM-DD \
 `p8_publish.py` 要求八类 run 全部对齐同一日，并要求事件 frontier 与三类 current scenario map
 完整覆盖当日成员。正文核证、公司自身同口径成功/失败权益输入或组合观察天数不足是
 能力级降级，不会被隐藏；某条流水线缺失或日期错位则拒绝移动 manifest。
+
+### P8-BT2 后的 lane 状态
+
+| lane | v2 配额 | 当前用途 |
+| --- | ---: | --- |
+| `event_frontier` | 6 | 正文/机械核证不足，保持 unavailable，不用标题补数 |
+| `scenario_tension` | 5 | 公司自身同 claim 输入不足，保持 unavailable |
+| `persistent_activity` | 0 | 已被 P8-BT2 判杀；只保留特征、overflow 与失败证据 |
+| `chip_or_exploration` | 4 | 股东户数仅为不加权弱旁证，仍不解释资金身份 |
+
+因此后 BT2 主漏斗最多可能少于 20 只；这是证据不足的真实结果，不用别的候选补齐。新版本的
+真实 10/60 日前瞻门从首个 `p8_research_funnel_v2` 交易日重新计数，旧 v1 单日不混入。
 
 ## 日常人类动作
 

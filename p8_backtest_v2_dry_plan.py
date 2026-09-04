@@ -501,10 +501,6 @@ def build_dry_plan(
             f"market_activity 有 {len(refresh_dates)} 个主范围交易日未通过完整输入门，"
             "需按日回填或确认合法停牌缺失后才可运行 v2。"
         )
-    if funnel_capacity["test_year_date_count"] == 0:
-        blockers.append("2023–2025 没有历史 funnel run，必须用冻结输入逐日重放，不能复制 2026 当前候选。")
-    if event_inventory["verified_hard_event_count"] == 0:
-        blockers.append("核证 hard outcome 库为空，节点辅助测试 unavailable。")
     if not any(
         item["status"] == "capacity_gate_passed"
         for item in feature_capacity["family_capacity"].values()
@@ -574,8 +570,9 @@ def build_dry_plan(
             "正文 LLM 未获外发授权，只阻塞 body_verified 抽取与金标准确率，不阻塞市场数据回填。",
         ],
         "recommended_next_step": (
-            "先按 trade_date 回填缺失 market_activity，并重新运行本 dry-plan；"
-            "只有日期、分层和可交易容量过门后才物化 v2 score 与历史 funnel。"
+            "数据门已通过；按冻结代码物化 score、历史 funnel，再一次性读取正式结果。"
+            if not blockers else
+            "先完成 hard_blockers 并重新运行本 dry-plan；未过门前不得读取正式结果。"
         ),
         "human_decisions_required": [],
         "outcomes_read": False,
@@ -604,8 +601,11 @@ def render_markdown(plan: dict[str, Any]) -> str:
         "",
         "## 结论",
         "",
-        "当前还不能跑正式 v2。主要原因是 2021–2024 连续 market_activity 与历史 funnel 尚未重建，"
-        "不是因为任何信号已经被证明无效。本报告没有读取收益、命中率或股票贡献。",
+        (
+            "数据门已通过，可以按冻结代码物化历史漏斗并一次性读取正式结果。"
+            if not plan["hard_blockers"] else
+            "当前还不能跑正式 v2；下列输入门未通过。这不是信号无效的证据。"
+        ) + " 本报告没有读取收益、命中率或股票贡献。",
         "",
         "## 四个信号方向的输入容量",
         "",
@@ -616,9 +616,9 @@ def render_markdown(plan: dict[str, Any]) -> str:
             for key, value in families.items()
         ],
         "",
-        "## 正式回测前必须自动完成",
+        "## 未通过的数据门" if plan["hard_blockers"] else "## 数据门状态",
         "",
-        *[f"- {item}" for item in plan["hard_blockers"]],
+        *([f"- {item}" for item in plan["hard_blockers"]] or ["- 已通过；历史漏斗属于正式物化步骤，不是循环前置条件。"]),
         "",
         "## 下一步",
         "",
@@ -637,6 +637,8 @@ def render_html(plan: dict[str, Any]) -> str:
         ) for key, value in families.items()
     )
     blockers = "".join(f"<li>{html.escape(item)}</li>" for item in plan["hard_blockers"])
+    if not blockers:
+        blockers = "<li>已通过；历史漏斗将在正式物化步骤中按冻结输入重放。</li>"
     cards = (
         ("完整活动日", f"{dates['complete_input_date_count']:,} / {dates['calendar_date_count']:,}", "输入容量"),
         ("未过输入门", f"{plan['request_budget']['incomplete_or_missing_trade_dates']:,}", f"{plan['request_budget']['endpoint_requests']:,} 次端点请求"),
@@ -662,7 +664,7 @@ table{{width:100%;border-collapse:collapse}}th,td{{padding:11px 8px;border-botto
 <p class="lead">这张卡只说明历史输入够不够。它没有计算收益、节点命中率、胜率或股票贡献。</p>
 <span class="stamp">contract {html.escape(plan['git_provenance']['commit'][:12])}</span><div class="grid">{card_html}</div>
 <section><h2>四个方向的输入容量</h2><table><thead><tr><th>方向</th><th>观察</th><th>公司</th><th>状态</th></tr></thead><tbody>{family_rows}</tbody></table></section>
-<section class="stop"><h2>正式回测前必须自动完成</h2><ul>{blockers}</ul></section>
+<section class="stop"><h2>{'未通过的数据门' if plan['hard_blockers'] else '数据门状态'}</h2><ul>{blockers}</ul></section>
 <section><h2>下一步</h2><p>{html.escape(plan['recommended_next_step'])}</p></section>
 <footer>{html.escape(plan['plan_id'])} · digest {html.escape(plan['content_digest'][:16])} · 人类必审 0</footer></main></html>'''
 

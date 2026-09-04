@@ -71,6 +71,10 @@ MARKET_ACTIVITY_MANIFEST_DIR = Path(os.environ.get(
     "V8_MARKET_ACTIVITY_MANIFEST_DIR",
     DATA_ROOT / "local_data" / "v8_copilot" / "market_activity_manifests",
 )).expanduser().resolve()
+P8_QFQ_DB = Path(os.environ.get(
+    "V8_P8_QFQ_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p8_qfq_v1.sqlite3",
+)).expanduser().resolve()
 P7_INTELLIGENCE_DB = Path(os.environ.get(
     "V8_P7_INTELLIGENCE_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "p7_intelligence_v1.sqlite3",

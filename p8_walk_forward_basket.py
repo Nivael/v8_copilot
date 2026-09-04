@@ -15,7 +15,7 @@ from data_refresh import atomic_write_json
 from market_activity import MarketActivityRepository
 from p8_backtest_v2 import CONTRACT_VERSION, TEST_YEARS, _benchmarks, _calendar_membership, _latest_records, _prices
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
-from settings import DATA_ROOT, MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB, P8_RESEARCH_DB
+from settings import DATA_ROOT, MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB, P8_QFQ_DB, P8_RESEARCH_DB
 
 
 PRIMARY_COST = 0.005
@@ -350,6 +350,7 @@ def _compound(values: list[float]) -> float | None:
 def build_basket_report(
     *, base_database: Path, market_context_database: Path,
     market_activity_database: Path, repository: P8ResearchRepository,
+    qfq_database: Path = P8_QFQ_DB,
 ) -> dict[str, Any]:
     funnel_run_id, funnel_digest, funnel = _latest_records(
         repository, "p8_historical_funnel_v2", "p8_historical_funnel_item_v2",
@@ -357,7 +358,9 @@ def build_basket_report(
     if not funnel:
         raise ValueError("缺 p8_historical_funnel_v2")
     calendar, _memberships = _calendar_membership(market_context_database, "2023-01-01", "2025-12-31")
-    price_rows = _prices(base_database, "2023-01-01", "2025-12-31")
+    price_rows = _prices(
+        base_database, "2023-01-01", "2025-12-31", overlay_database=qfq_database,
+    )
     prices = {symbol: dict(rows) for symbol, rows in price_rows.items()}
     benchmarks = _benchmarks(market_context_database, "2023-01-01", "2025-12-31")
     st_benchmark = benchmarks.get("st_equal_weight_v1", {})
@@ -498,6 +501,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)
     parser.add_argument("--market-activity-database", type=Path, default=MARKET_ACTIVITY_DB)
     parser.add_argument("--repository", type=Path, default=P8_RESEARCH_DB)
+    parser.add_argument("--qfq-database", type=Path, default=P8_QFQ_DB)
     parser.add_argument("--output-json", type=Path, required=True)
     return parser.parse_args()
 
@@ -509,7 +513,7 @@ def main() -> int:
         base_database=args.base_database,
         market_context_database=args.market_context_database,
         market_activity_database=args.market_activity_database,
-        repository=repository,
+        repository=repository, qfq_database=args.qfq_database,
     )
     run_id = persist_basket(repository, report)
     report["run_id"] = run_id

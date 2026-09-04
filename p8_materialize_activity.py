@@ -18,9 +18,10 @@ from p8_activity import (
     classify_shape,
 )
 from p8_research import P8ResearchRepository, build_run
+from p8_prices import qfq_close
 from settings import (
     DATA_ROOT, MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB, P7_INTELLIGENCE_DB,
-    P8_RESEARCH_DB,
+    P8_QFQ_DB, P8_RESEARCH_DB,
 )
 
 
@@ -60,18 +61,13 @@ def _file_digest(path: Path) -> str:
 
 
 def _qfq(
-    path: Path, *, symbols: set[str], start_date: str, through: str,
+    path: Path, *, overlay_database: Path, symbols: set[str], start_date: str, through: str,
 ) -> dict[tuple[str, str], float]:
-    result: dict[tuple[str, str], float] = {}
-    with _connect_ro(path) as connection:
-        for row in connection.execute(
-            "select symbol,trade_date,close from daily_prices where adjust='qfq' "
-            "and trade_date between ? and ? and close>0",
-            (start_date, through),
-        ):
-            if str(row[0]) in symbols:
-                result[(str(row[0]), str(row[1]))] = float(row[2])
-    return result
+    return {
+        key: value for key, value in qfq_close(
+            path, overlay_database=overlay_database, start=start_date, through=through,
+        ).items() if key[0] in symbols
+    }
 
 
 def _benchmarks(path: Path, *, start_date: str, through: str) -> dict[tuple[str, str], float]:
@@ -137,6 +133,7 @@ def _p7_anomaly_context(
 def materialize_activity(
     *, base_database: Path, market_context_database: Path,
     market_activity_database: Path, p7_intelligence_database: Path,
+    qfq_database: Path,
     repository: P8ResearchRepository, dry_plan_json: Path,
     start_date: str, through: str,
 ) -> ActivityMaterializationResult:
@@ -152,7 +149,10 @@ def materialize_activity(
         start_date=start_date, through=through,
     )
     symbols = {item.symbol for item in facts}
-    qfq = _qfq(base_database, symbols=symbols, start_date=start_date, through=through)
+    qfq = _qfq(
+        base_database, overlay_database=qfq_database, symbols=symbols,
+        start_date=start_date, through=through,
+    )
     benchmarks = _benchmarks(market_context_database, start_date=start_date, through=through)
     features = build_activity_features(
         facts, qfq_close_by_symbol_date=qfq,
@@ -197,6 +197,7 @@ def materialize_activity(
         source_digests={
             "market_activity_v1": _file_digest(market_activity_database),
             "market_context_v1": _file_digest(market_context_database),
+            "p8_qfq_overlay": _file_digest(qfq_database) if qfq_database.is_file() else "",
             "p8_dry_plan": str(dry_plan.get("content_digest") or ""),
         },
         record_payloads=record_payloads,
@@ -227,6 +228,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)
     parser.add_argument("--market-activity-database", type=Path, default=MARKET_ACTIVITY_DB)
     parser.add_argument("--p7-intelligence-database", type=Path, default=P7_INTELLIGENCE_DB)
+    parser.add_argument("--qfq-database", type=Path, default=P8_QFQ_DB)
     parser.add_argument("--repository", type=Path, default=P8_RESEARCH_DB)
     parser.add_argument("--dry-plan-json", type=Path, required=True)
     parser.add_argument("--output-json", type=Path)
@@ -240,6 +242,7 @@ def main() -> int:
         market_context_database=args.market_context_database,
         market_activity_database=args.market_activity_database,
         p7_intelligence_database=args.p7_intelligence_database,
+        qfq_database=args.qfq_database,
         repository=P8ResearchRepository(args.repository),
         dry_plan_json=args.dry_plan_json,
         start_date=args.start_date,

@@ -17,8 +17,9 @@ from typing import Any, Iterable
 
 from data_refresh import atomic_write_json
 from p7_daily import load_valuation_stage_map
+from p8_prices import qfq_series
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
-from settings import DATA_ROOT, MARKET_CONTEXT_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
+from settings import DATA_ROOT, MARKET_CONTEXT_DB, P8_QFQ_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
 
 
 CONTRACT_VERSION = "v8_p8_backtest_v2"
@@ -505,15 +506,12 @@ def build_historical_funnel(
     return records
 
 
-def _prices(path: Path, start: str, through: str) -> dict[str, list[tuple[str, float]]]:
-    result: dict[str, list[tuple[str, float]]] = defaultdict(list)
-    with _connect_ro(path) as connection:
-        for row in connection.execute(
-            "select symbol,trade_date,close from daily_prices where adjust='qfq' "
-            "and trade_date between ? and ? and close>0 order by symbol,trade_date", (start, through),
-        ):
-            result[str(row[0])].append((str(row[1]), float(row[2])))
-    return dict(result)
+def _prices(
+    path: Path, start: str, through: str, *, overlay_database: Path | None = None,
+) -> dict[str, list[tuple[str, float]]]:
+    return qfq_series(
+        path, overlay_database=overlay_database, start=start, through=through,
+    )
 
 
 def _benchmarks(path: Path, start: str, through: str) -> dict[str, dict[str, float]]:
@@ -782,7 +780,8 @@ def persist_v2_inputs(
 def build_and_evaluate(
     *, base_database: Path, market_context_database: Path,
     valuation_episode_database: Path, repository: P8ResearchRepository,
-    dry_plan_json: Path, allow_outcomes: bool,
+    dry_plan_json: Path, qfq_database: Path = P8_QFQ_DB,
+    allow_outcomes: bool,
 ) -> dict[str, Any]:
     if not allow_outcomes:
         raise ValueError("正式 v2 必须显式传 --allow-outcomes")
@@ -830,7 +829,9 @@ def build_and_evaluate(
         },
         activity_run_id=activity_run_id, activity_digest=activity_digest,
     )
-    prices = _prices(base_database, "2021-03-17", "2026-09-03")
+    prices = _prices(
+        base_database, "2021-03-17", "2026-09-03", overlay_database=qfq_database,
+    )
     benchmarks = _benchmarks(market_context_database, "2021-03-17", "2026-09-03")
     observations = attach_outcomes(scores, prices=prices, benchmarks=benchmarks, events=events)
     holder_observations = attach_outcomes(
@@ -923,6 +924,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--market-context-database", type=Path, default=MARKET_CONTEXT_DB)
     parser.add_argument("--valuation-episode-database", type=Path, default=VALUATION_EPISODE_DB)
     parser.add_argument("--repository", type=Path, default=P8_RESEARCH_DB)
+    parser.add_argument("--qfq-database", type=Path, default=P8_QFQ_DB)
     parser.add_argument("--dry-plan-json", type=Path, required=True)
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--output-markdown", type=Path)
@@ -939,6 +941,7 @@ def main() -> int:
         valuation_episode_database=args.valuation_episode_database,
         repository=repository,
         dry_plan_json=args.dry_plan_json,
+        qfq_database=args.qfq_database,
         allow_outcomes=args.allow_outcomes,
     )
     run_id = persist_report(repository, report)

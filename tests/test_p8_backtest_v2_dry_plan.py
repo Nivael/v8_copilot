@@ -30,6 +30,10 @@ def test_date_capacity_is_outcome_blind_and_keeps_regime_sub_boundary() -> None:
     rows, summary = _date_coverage(
         calendar=calendar, memberships=memberships, benchmarks=benchmarks,
         qfq=qfq, activity=activity,
+        activity_fact_sets={
+            day: {"eligible": set(memberships[day]), "turnover": set(memberships[day])}
+            for day in calendar
+        },
     )
     assert summary["complete_input_date_count"] == 2
     assert rows[0]["regime_version"] == "2024_exit_reform"
@@ -75,7 +79,8 @@ def test_repository_run_contract_accepts_all_v2_run_kinds() -> None:
     for run_kind in (
         "p8_backtest_v2_dry_plan", "p8_signal_rank_v2",
         "p8_historical_funnel_v2", "p8_walk_forward_basket_v2",
-        "p8_backtest_v2_report",
+        "p8_backtest_v2_report", "p8_holder_history_v2",
+        "p8_reference_backtest_v2",
     ):
         run = build_run(
             run_kind=run_kind, contract_version="test",

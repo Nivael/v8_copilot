@@ -15,6 +15,7 @@ from typing import Any
 from data_refresh import atomic_write_json
 from p7_daily import load_valuation_stage_map
 from p8_backtest_v2 import build_holder_scores
+from p8_prices import qfq_close
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
 from p8_regimes import REGISTRY_VERSION as REGIME_REGISTRY_VERSION, regime_for_date
 from settings import (
@@ -22,6 +23,7 @@ from settings import (
     MARKET_ACTIVITY_DB,
     MARKET_CONTEXT_DB,
     P8_RESEARCH_DB,
+    P8_QFQ_DB,
     VALUATION_EPISODE_DB,
 )
 
@@ -159,19 +161,17 @@ def _benchmark_dates(path: Path) -> dict[str, set[str]]:
     return dict(result)
 
 
-def _qfq_keys(path: Path) -> set[tuple[str, str]]:
-    with _connect_ro(path) as connection:
-        return {
-            (str(row[0]), str(row[1])) for row in connection.execute(
-                "select symbol,trade_date from daily_prices where adjust='qfq' "
-                "and trade_date between ? and ? and close>0", (START_DATE, THROUGH),
-            )
-        }
+def _qfq_keys(path: Path, *, overlay_database: Path) -> set[tuple[str, str]]:
+    return set(qfq_close(
+        path, overlay_database=overlay_database, start=START_DATE, through=THROUGH,
+    ))
 
 
-def _activity_by_day(path: Path) -> tuple[dict[str, dict[str, Any]], int, int]:
+def _activity_by_day(
+    path: Path,
+) -> tuple[dict[str, dict[str, Any]], int, int, dict[str, dict[str, set[str]]]]:
     if not path.is_file():
-        return {}, 0, 0
+        return {}, 0, 0, {}
     with _connect_ro(path) as connection:
         rows = connection.execute(
             "with ranked as (select *,row_number() over(partition by trade_date "
@@ -182,6 +182,9 @@ def _activity_by_day(path: Path) -> tuple[dict[str, dict[str, Any]], int, int]:
         latest = {str(row["trade_date"]): dict(row) for row in rows}
         fact_count = 0
         complete_trade_state = 0
+        fact_sets: dict[str, dict[str, set[str]]] = defaultdict(
+            lambda: {"eligible": set(), "turnover": set()}
+        )
         if latest:
             placeholders = ",".join("?" for _ in latest)
             snapshot_ids = [str(item["snapshot_id"]) for item in latest.values()]
@@ -191,19 +194,24 @@ def _activity_by_day(path: Path) -> tuple[dict[str, dict[str, Any]], int, int]:
             ):
                 item = json.loads(str(row[0]))
                 fact_count += 1
+                day, symbol = str(item.get("trade_date") or ""), str(item.get("symbol") or "")
+                if bool(item.get("eligible_for_anomaly")):
+                    fact_sets[day]["eligible"].add(symbol)
+                    if item.get("turnover_rate_f") is not None:
+                        fact_sets[day]["turnover"].add(symbol)
                 if (
                     item.get("suspension_status") != "unknown"
                     and item.get("one_price_limit") is not None
                     and not bool(item.get("limit_state_conflict"))
                 ):
                     complete_trade_state += 1
-    return latest, fact_count, complete_trade_state
+    return latest, fact_count, complete_trade_state, dict(fact_sets)
 
 
 def _date_coverage(
     *, calendar: list[str], memberships: dict[str, set[str]],
     benchmarks: dict[str, set[str]], qfq: set[tuple[str, str]],
-    activity: dict[str, dict[str, Any]],
+    activity: dict[str, dict[str, Any]], activity_fact_sets: dict[str, dict[str, set[str]]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     records: list[dict[str, Any]] = []
     missing_activity: list[str] = []
@@ -211,13 +219,16 @@ def _date_coverage(
     for day in calendar:
         members = memberships.get(day, set())
         member_n = len(members)
-        qfq_n = sum((symbol, day) in qfq for symbol in members)
+        eligible = set((activity_fact_sets.get(day) or {}).get("eligible") or set()) & members
+        turnover_symbols = set((activity_fact_sets.get(day) or {}).get("turnover") or set()) & members
+        eligible_n = len(eligible)
+        qfq_n = sum((symbol, day) in qfq for symbol in eligible)
         snapshot = activity.get(day)
-        turnover_n = int(snapshot.get("valid_turnover_rate_f_count") or 0) if snapshot else 0
+        turnover_n = len(turnover_symbols)
         activity_member_n = int(snapshot.get("membership_count") or 0) if snapshot else 0
         membership_ready = member_n > 0
-        qfq_coverage = qfq_n / member_n if member_n else 0.0
-        turnover_coverage = turnover_n / member_n if member_n else 0.0
+        qfq_coverage = qfq_n / eligible_n if eligible_n else 1.0
+        turnover_coverage = turnover_n / eligible_n if eligible_n else 1.0
         activity_membership_matches = bool(snapshot and activity_member_n == member_n)
         st_ready = day in benchmarks.get("st_equal_weight_v1", set())
         csi_ready = day in benchmarks.get("csi_2000", set())
@@ -236,6 +247,7 @@ def _date_coverage(
             "trade_date": day,
             "year": int(day[:4]),
             "membership_count": member_n,
+            "eligible_member_count": eligible_n,
             "membership_ready": membership_ready,
             "qfq_count": qfq_n,
             "qfq_coverage": round(qfq_coverage, 8),
@@ -467,15 +479,15 @@ def _basket_capacity(date_rows: list[dict[str, Any]]) -> dict[str, Any]:
 def build_dry_plan(
     *, base_database: Path, market_context_database: Path,
     market_activity_database: Path, valuation_episode_database: Path,
-    p8_repository: Path, repo: Path,
+    p8_repository: Path, repo: Path, qfq_database: Path = P8_QFQ_DB,
 ) -> dict[str, Any]:
     calendar, memberships = _calendar_and_membership(market_context_database)
     benchmarks = _benchmark_dates(market_context_database)
-    qfq = _qfq_keys(base_database)
-    activity, activity_fact_count, complete_trade_state_count = _activity_by_day(market_activity_database)
+    qfq = _qfq_keys(base_database, overlay_database=qfq_database)
+    activity, activity_fact_count, complete_trade_state_count, activity_fact_sets = _activity_by_day(market_activity_database)
     date_rows, date_summary = _date_coverage(
         calendar=calendar, memberships=memberships, benchmarks=benchmarks,
-        qfq=qfq, activity=activity,
+        qfq=qfq, activity=activity, activity_fact_sets=activity_fact_sets,
     )
     feature_capacity, stratum_capacity = _feature_capacity(
         repository=p8_repository, valuation_episode_database=valuation_episode_database,
@@ -512,6 +524,10 @@ def build_dry_plan(
         "market_activity_database": {"path": str(market_activity_database), "digest": _file_digest(market_activity_database)},
         "valuation_episode_database": {"path": str(valuation_episode_database), "digest": _file_digest(valuation_episode_database)},
         "p8_repository": {"path": str(p8_repository), "digest": _p8_source_digest(p8_repository)},
+        "p8_qfq_database": {
+            "path": str(qfq_database),
+            "digest": _file_digest(qfq_database) if qfq_database.is_file() else "",
+        },
     }
     identity = {
         "contract_version": CONTRACT_VERSION,
@@ -700,6 +716,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--market-activity-database", type=Path, default=MARKET_ACTIVITY_DB)
     parser.add_argument("--valuation-episode-database", type=Path, default=VALUATION_EPISODE_DB)
     parser.add_argument("--p8-repository", type=Path, default=P8_RESEARCH_DB)
+    parser.add_argument("--qfq-database", type=Path, default=P8_QFQ_DB)
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parent)
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--output-markdown", type=Path)
@@ -716,6 +733,7 @@ def main() -> int:
         market_activity_database=args.market_activity_database,
         valuation_episode_database=args.valuation_episode_database,
         p8_repository=args.p8_repository,
+        qfq_database=args.qfq_database,
         repo=args.repo,
     )
     atomic_write_json(args.output_json, plan)

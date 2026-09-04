@@ -156,6 +156,7 @@ def test_attach_outcomes_applies_delist_total_loss_on_market_horizon() -> None:
     assert result[0]["h120_delisted"] is True
     assert result[0]["h120_stock_qfq_return"] == -1.0
     assert result[0]["h120_last_observable_return"] == 0.0
+    assert result[0]["h120_excess_return_st_last_observable"] == 0.0
 
 
 def test_rank_scorecard_reports_frozen_secondary_and_risk_diagnostics() -> None:

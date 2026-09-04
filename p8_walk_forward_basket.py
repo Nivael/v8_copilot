@@ -159,6 +159,7 @@ def simulate_year(
     prices: dict[str, dict[str, float]], trade_states: dict[tuple[str, str], dict[str, bool]],
     benchmark: dict[str, float], delisting_dates: dict[str, str], cost: float,
     excluded_symbols: set[str] | None = None, excluded_lanes: set[str] | None = None,
+    delist_total_loss: bool = True,
 ) -> dict[str, Any]:
     excluded_symbols = excluded_symbols or set()
     excluded_lanes = excluded_lanes or set()
@@ -193,8 +194,11 @@ def simulate_year(
                     contribution[symbol] += shares[symbol] * (current - prior)
                 marks[symbol] = current
             elif delisting_dates.get(symbol, "9999-12-31") <= day:
-                lost = shares[symbol] * (prior or 0.0)
-                contribution[symbol] -= lost
+                terminal_value = shares[symbol] * (prior or 0.0)
+                if delist_total_loss:
+                    contribution[symbol] -= terminal_value
+                else:
+                    cash += terminal_value
                 shares.pop(symbol, None)
                 marks.pop(symbol, None)
                 pending_sells.discard(symbol)
@@ -339,6 +343,7 @@ def simulate_year(
         "locked_sell_days": locked_sell_days,
         "expired_buy_count": expired_buy_count,
         "delist_total_loss_settlements": delist_settlements,
+        "delist_terminal_convention": "total_loss" if delist_total_loss else "last_observable_value",
         "open_position_count": len(shares),
         "contribution_by_symbol": dict(sorted(contribution.items())),
         "trade_ledger": trade_ledger,
@@ -443,6 +448,14 @@ def build_basket_report(
             excluded_lanes={"chip_or_exploration"},
         ) for year in TEST_YEARS
     ]
+    last_observable_terminal = [
+        simulate_year(
+            year=year, calendar=calendar, funnel=funnel, prices=prices,
+            trade_states=trade_states, benchmark=st_benchmark,
+            delisting_dates=delisting, cost=PRIMARY_COST,
+            delist_total_loss=False,
+        ) for year in TEST_YEARS
+    ]
     sensitivities: dict[str, list[dict[str, Any]]] = {}
     for cost in SENSITIVITY_COSTS:
         sensitivities[f"{int(cost * 10000)}bp"] = [
@@ -483,6 +496,16 @@ def build_basket_report(
     without_holder_overall = (
         without_holder_portfolio - without_holder_benchmark
         if without_holder_portfolio is not None and without_holder_benchmark is not None else None
+    )
+    last_observable_portfolio = _compound([
+        float(item["portfolio_return"]) for item in last_observable_terminal
+    ])
+    last_observable_benchmark = _compound([
+        float(item["st_benchmark_return"]) for item in last_observable_terminal
+    ])
+    last_observable_overall = (
+        last_observable_portfolio - last_observable_benchmark
+        if last_observable_portfolio is not None and last_observable_benchmark is not None else None
     )
     primary_by_year = {int(item["year"]): item for item in primary}
     diagnostic_slices = {
@@ -529,6 +552,7 @@ def build_basket_report(
         "positive_excess_year_count": positive_years,
         "overall_compounded_excess_st": overall_excess,
         "top_two_removed_compounded_excess_st": stress_overall,
+        "last_observable_terminal_compounded_excess_st": last_observable_overall,
         "top_two_removed_by_year": top_two_by_year,
         "persistent_lane_incremental_compounded_excess_st": (
             overall_excess - without_overall
@@ -538,6 +562,7 @@ def build_basket_report(
         "top_two_removed_per_year": stress,
         "without_persistent_lane_per_year": without_persistent,
         "without_holder_lane_per_year": without_holder,
+        "last_observable_terminal_per_year": last_observable_terminal,
         "cost_sensitivity": sensitivities,
         "diagnostic_slices": diagnostic_slices,
         "holder_lane_incremental_compounded_excess_st": (

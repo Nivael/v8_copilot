@@ -579,6 +579,12 @@ def attach_outcomes(
             start_price = rows[start_index][1]
             stock_return = -1.0 if delisted else float(end_price) / start_price - 1
             last_observable = [value for row_day, value in rows if day <= row_day <= min(end_day, terminal or end_day)]
+            last_observable_return = (
+                last_observable[-1] / start_price - 1 if last_observable else None
+            )
+            last_observable_sensitivity_return = (
+                last_observable_return if delisted else stock_return
+            )
             st_left = benchmarks.get("st_equal_weight_v1", {}).get(day)
             st_right = benchmarks.get("st_equal_weight_v1", {}).get(end_day)
             csi_left = benchmarks.get("csi_2000", {}).get(day)
@@ -589,11 +595,13 @@ def attach_outcomes(
                 f"{prefix}_stock_qfq_return": stock_return,
                 f"{prefix}_delisted": delisted,
                 f"{prefix}_total_loss_stress_applied": delisted,
-                f"{prefix}_last_observable_return": (
-                    last_observable[-1] / start_price - 1 if last_observable else None
-                ),
+                f"{prefix}_last_observable_return": last_observable_return,
                 f"{prefix}_excess_return_st": (
                     stock_return - (st_right / st_left - 1) if st_left and st_right else None
+                ),
+                f"{prefix}_excess_return_st_last_observable": (
+                    last_observable_sensitivity_return - (st_right / st_left - 1)
+                    if last_observable_sensitivity_return is not None and st_left and st_right else None
                 ),
                 f"{prefix}_excess_return_csi2000": (
                     stock_return - (csi_right / csi_left - 1) if csi_left and csi_right else None
@@ -722,6 +730,9 @@ def _diagnostic_slice(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "company_count": len({str(item["symbol"]) for item in rows}),
         "high_minus_low_60d_excess_st": _cell_equal_difference(rows, "h60_excess_return_st"),
         "high_minus_low_120d_excess_st": _cell_equal_difference(rows, "h120_excess_return_st"),
+        "high_minus_low_120d_excess_st_last_observable": _cell_equal_difference(
+            rows, "h120_excess_return_st_last_observable",
+        ),
         "high_minus_low_120d_excess_csi2000": _cell_equal_difference(
             rows, "h120_excess_return_csi2000",
         ),
@@ -774,6 +785,9 @@ def rank_scorecard(
         "observation_count": len(prepared),
         "company_count": len(companies),
         "cell_equal_high_minus_low_120d_excess_st": point,
+        "cell_equal_high_minus_low_120d_excess_st_last_observable": _cell_equal_difference(
+            prepared, "h120_excess_return_st_last_observable",
+        ),
         "cell_equal_high_minus_low_60d_excess_st": _cell_equal_difference(
             prepared, "h60_excess_return_st",
         ),

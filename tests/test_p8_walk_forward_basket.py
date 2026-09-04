@@ -64,3 +64,24 @@ def test_period_performance_is_a_non_decision_diagnostic() -> None:
     )
     assert result["status"] == "observable"
     assert abs(result["excess_return_st"] - .05) < 1e-12
+
+
+def test_basket_reports_total_loss_and_last_observable_terminal_conventions() -> None:
+    calendar = ["2023-01-02", "2023-01-03", "2023-01-04"]
+    funnel = [{
+        "decision_date": "2023-01-02", "test_year": 2023,
+        "symbol": "000001", "primary_lane": "persistent_activity",
+    }]
+    states = {("000001", "2023-01-03"): {"known": True, "buy": True, "sell": True}}
+    common = dict(
+        year=2023, calendar=calendar, funnel=funnel,
+        prices={"000001": {"2023-01-03": 10.0}}, trade_states=states,
+        benchmark={day: 100.0 for day in calendar},
+        delisting_dates={"000001": "2023-01-04"}, cost=0.0,
+    )
+    lower = simulate_year(**common)
+    upper = simulate_year(**common, delist_total_loss=False)
+    assert lower["portfolio_return"] == -1.0
+    assert upper["portfolio_return"] == 0.0
+    assert lower["delist_terminal_convention"] == "total_loss"
+    assert upper["delist_terminal_convention"] == "last_observable_value"

@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import sqlite3
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Literal, Protocol
@@ -534,6 +535,7 @@ class MarketActivityBootstrapService:
         self, *, start_date: str, through: str, resume: bool = True,
         target_dates: list[str] | None = None,
         refresh_existing: bool = False,
+        parallel_endpoints: bool = False,
         progress: Callable[[dict[str, Any]], None] | None = None,
     ) -> ActivityBootstrapResult:
         memberships = load_memberships(
@@ -574,10 +576,27 @@ class MarketActivityBootstrapService:
                     progress({"completed": index, "total": len(dates), "trade_date": day, "status": "reused"})
                 continue
             try:
-                daily = self.provider.fetch_daily(trade_date=day)
-                basics = self.provider.fetch_daily_basic(trade_date=day)
-                suspensions = self.provider.fetch_suspend_daily(trade_date=day)
-                limits = self.provider.fetch_stock_limits(trade_date=day)
+                operations = {
+                    "daily": self.provider.fetch_daily,
+                    "basics": self.provider.fetch_daily_basic,
+                    "suspensions": self.provider.fetch_suspend_daily,
+                    "limits": self.provider.fetch_stock_limits,
+                }
+                if parallel_endpoints:
+                    with ThreadPoolExecutor(max_workers=4) as executor:
+                        futures = {
+                            key: executor.submit(operation, trade_date=day)
+                            for key, operation in operations.items()
+                        }
+                        fetched = {key: future.result() for key, future in futures.items()}
+                else:
+                    fetched = {
+                        key: operation(trade_date=day) for key, operation in operations.items()
+                    }
+                daily = fetched["daily"]
+                basics = fetched["basics"]
+                suspensions = fetched["suspensions"]
+                limits = fetched["limits"]
                 facts = normalize_activity_rows(
                     trade_date=day,
                     memberships=memberships[day],

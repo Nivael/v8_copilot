@@ -223,6 +223,7 @@ def test_bootstrap_can_execute_a_frozen_date_subset_and_refresh_existing(tmp_pat
     ).bootstrap(
         start_date="2026-01-02", through="2026-01-05",
         target_dates=["2026-01-05"], refresh_existing=True,
+        parallel_endpoints=True,
     )
     assert result.requested_date_count == 1
     assert {day for _endpoint, day in provider.requested} == {"2026-01-05"}

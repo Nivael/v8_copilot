@@ -107,6 +107,7 @@ def execute_backfill(
         through=str(plan["date_coverage"]["through"]),
         target_dates=dates,
         refresh_existing=True,
+        parallel_endpoints=True,
         resume=True,
         progress=report,
     )

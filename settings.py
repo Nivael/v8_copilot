@@ -75,6 +75,14 @@ P7_INTELLIGENCE_DB = Path(os.environ.get(
     "V8_P7_INTELLIGENCE_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "p7_intelligence_v1.sqlite3",
 )).expanduser().resolve()
+P8_RESEARCH_DB = Path(os.environ.get(
+    "V8_P8_RESEARCH_DB",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p8_research_v1.sqlite3",
+)).expanduser().resolve()
+P8_RESEARCH_MANIFEST_PATH = Path(os.environ.get(
+    "V8_P8_RESEARCH_MANIFEST_PATH",
+    DATA_ROOT / "local_data" / "v8_copilot" / "p8_research_manifest_v1.json",
+)).expanduser().resolve()
 VALUATION_FACTS_DB = Path(os.environ.get(
     "V8_VALUATION_FACTS_DB",
     DATA_ROOT / "local_data" / "v8_copilot" / "valuation_facts_v1.sqlite3",

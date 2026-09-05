@@ -125,7 +125,7 @@ def _pct(value: Any) -> str:
 FAMILY_LABELS = {
     "p8a_p_star": "公司自身 p*",
     "p8b_precursor": "公告前哨",
-    "p8c_accumulation": "持续量价",
+    "p8c_accumulation": "未区分价位的通用持续活跃因子",
     "p8c_holder": "股东户数",
     "p8a_reference_layer:strategic_entry_reference": "战投成交参考",
     "p8a_reference_layer:failure_exit_reference": "失败退出参考",

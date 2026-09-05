@@ -140,6 +140,9 @@ P8 把研究层与宣称层分开：三类成交情景参考、五轨带方向�
 结果见 [P8_BACKTEST_V2_RESULT.md](P8_BACKTEST_V2_RESULT.md)，日常顺序见
 [P8_DAILY_RUNBOOK.md](P8_DAILY_RUNBOOK.md)，真实 10/60 日门见
 [V8_P8_FORWARD_GATE.md](V8_P8_FORWARD_GATE.md)。
+BT2 的 killed 仅限未区分价格位置的通用持续活跃因子。低位网格的两项探索性检验见
+[V8_P8C_GRID_V3_CONTRACT.md](V8_P8C_GRID_V3_CONTRACT.md)，唯一配置 `p8_grid_config.json`，
+执行器 `p8_volume_grid.py` 输出一张可过滤表，不改变生产配额。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot

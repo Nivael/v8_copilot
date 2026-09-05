@@ -74,6 +74,27 @@ def test_common_stratum_gate_uses_matched_not_full_pool(config):
     assert result["control_matched"] == 1
 
 
+def test_company_bootstrap_preserves_paired_company_effect(config):
+    a = [dict(row(1, symbol=f"{i:06}"), excess=i/100+.2) for i in range(40)]
+    b = [dict(row(2, symbol=f"{i:06}"), excess=i/100) for i in range(40)]
+    result = contrast(a, b, "excess", config, True)
+    assert result["status"] == "exploratory_only"
+    assert result["difference"] == pytest.approx(.2)
+    assert result["ci95"] == pytest.approx([.2, .2])
+
+
+def test_delisted_return_has_both_terminal_conventions(config):
+    config["horizons"] = [2]
+    days = [f"2023-01-{i+1:02}" for i in range(5)]
+    prices = {"000001": [(days[0], 5), (days[1], 10), (days[2], 8)]}
+    trades = {("000001", days[1]): {"buy": True, "known": True}}
+    result = observe([row(0)], [row(0)], prices, days, dict.fromkeys(days, 100), trades,
+                     {"000001": days[3]}, config)[0]
+    assert result["excess"] == -1
+    assert result["excess_last"] == pytest.approx(-.2)
+    assert result["end_sellable"] is None
+
+
 def test_price_rank_and_announcement_flags_cannot_see_future(config):
     from types import SimpleNamespace
     cfg = deepcopy(config)

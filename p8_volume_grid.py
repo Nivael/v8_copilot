@@ -241,6 +241,9 @@ def summarize(observations, config):
     for bound in (0, 1):
         fill = lambda arm: [dict(r, transition_bound=r["transition_60"] if r["transition_60"] is not None else float(bound)) for r in arm]
         sensitivity[f"H2_missing_as_{bound}"] = contrast(fill(treated), fill(quiet), "transition_bound", config)
+    for name, t_fill, c_fill in (("lower", 0, 1), ("upper", 1, 0)):
+        fill = lambda arm, v: [dict(r, transition_bound=r["transition_60"] if r["transition_60"] is not None else float(v)) for r in arm]
+        sensitivity[f"H2_difference_{name}"] = contrast(fill(treated, t_fill), fill(quiet, c_fill), "transition_bound", config)
     previous = 0.0
     for rank, (name, test) in enumerate(sorted(tests.items(), key=lambda kv: kv[1]["p"] if kv[1]["p"] is not None else 1)):
         if test["p"] is not None:
@@ -251,22 +254,25 @@ def summarize(observations, config):
 
 def render(report):
     labels = {"grid": "格子", "active": "持续活跃", "horizon": "后续交易日", "announcement": "此前公告", "capital": "250日股本标记",
-              "episodes": "段数", "companies": "公司数", "observed": "收益可观察", "excess": "ST超额", "excess_last": "最后价口径", "focus_minus_cell": "①减本格（分层）", "transition_60": "60日向上接续", "transition_observed": "接续可观察", "focus_matched": "①匹配段数", "control_matched": "本格匹配段数"}
+              "episodes": "段数", "companies": "公司数", "observed": "收益可观察", "excess": "ST超额", "excess_last": "最后价口径", "focus_minus_cell": "①减本格（分层）", "transition_60": "60日向上接续", "transition_observed": "接续可观察", "focus_matched": "①匹配段数", "control_matched": "本格匹配段数", "pulse_share": "脉冲比例", "pulse_known": "脉冲可判", "delisted": "期内退市率"}
     names = {f"{p}_{d}": f"{pl}·{dl}" for p, pl in (("low", "低位"), ("mid", "中位"), ("high", "高位")) for d, dl in (("flat", "价稳"), ("up", "向上"), ("down", "向下"))}
     names.update(detected="检出", none_detected="覆盖内未检出", unknown="未知")
     def show(k, v):
         if v is None: return "—"
         if k in {"excess", "excess_last", "focus_minus_cell"}: return f"{v*100:+.1f}pp"
-        if k == "transition_60": return f"{v*100:.1f}%"
+        if k in {"transition_60", "pulse_share", "delisted"}: return f"{v*100:.1f}%"
         if isinstance(v, bool): return "是" if v else "否"
         return html.escape(names.get(str(v), str(v)))
     heads = "".join(f"<th>{v}</th>" for v in labels.values())
     rows = "".join("<tr>"+"".join(f"<td>{show(k,r.get(k))}</td>" for k in labels)+"</tr>" for r in report["table"])
-    summaries = "".join(f"<p><b>{name}</b>：{test['status']}；差值 {show('excess',test['difference'])}；共同层处理/对照 {test['treated_matched']}/{test['control_matched']} 段；公司 {test['treated_companies']}/{test['control_companies']}；95%区间 {html.escape(str(test['ci95']))}。</p>" for name, test in report["tests"].items())
+    test_names = {"H1_120d_excess": "①之后120日收益是否更强", "H2_transition_60": "①之后60日是否更常转为放量向上"}
+    summaries = "".join(f"<p><b>{test_names[name]}</b>：{'样本不足，仅描述' if test['status']=='descriptive_only' else '探索性检验'}；差值 {show('excess',test['difference'])}；共同层处理/对照 {test['treated_matched']}/{test['control_matched']} 段；公司 {test['treated_companies']}/{test['control_companies']}；95%区间 {'不做推断' if test['ci95'] is None else html.escape(str(test['ci95']))}。</p>" for name, test in report["tests"].items())
+    sensitivity = report["sensitivity"]
+    censor_note = f"接续结果缺失取最不利/最有利分配时，H2差值范围 {show('excess',sensitivity['H2_difference_lower']['difference'])} 至 {show('excess',sensitivity['H2_difference_upper']['difference'])}。"
     return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="data:,"><title>P8C 双轴网格</title>
 <style>body{{margin:0;background:#f4f1e9;color:#24362d;font:16px/1.6 system-ui}}main{{padding:32px;max-width:1600px;margin:auto}}h1{{font-size:38px}}.scroll{{overflow:auto;max-height:70vh;background:#fffdf8}}table{{border-collapse:collapse;white-space:nowrap;width:100%}}td,th{{padding:9px;border-bottom:1px solid #ded8ca;text-align:right}}th{{position:sticky;top:0;background:#e8e5da}}input{{padding:12px;min-width:280px}}small{{color:#586860}}</style>
 <main><h1>低位价稳放量，之后发生了什么？</h1><p>探索性历史复查；①=低位价稳且持续活跃。六个固定阈值，两项检验。价格位置采用当时250日分位。</p>
-{summaries}<p>“未检出公告”有正文覆盖缺口。股本标记包括标题提及或总股本变化。正面节点准确率尚未通过，节点结果留空。收益是下一可买入收盘后的价格路径，端点可卖比例见CSV；不能直接当组合回报。</p>
+{summaries}<p>{censor_note}</p><p>“未检出公告”有正文覆盖缺口。股本标记包括标题提及或总股本变化。正面节点准确率尚未通过，节点结果留空。收益是下一可买入收盘后的价格路径，端点可卖比例见CSV；不能直接当组合回报。</p>
 <p><input id="filter" placeholder="筛选，例如：低位 价稳 未检出"><small>空白=全部；多个词同时匹配。完整字段与删失上下界见同目录CSV/JSON。</small></p><div class="scroll"><table><thead><tr>{heads}</tr></thead><tbody>{rows}</tbody></table></div>
 <p><small>输入摘要 {report['input_digest']} · 行情结论未写回生产配额</small></p></main><script>document.querySelector('#filter').addEventListener('input',e=>{{const words=e.target.value.trim().split(/\\s+/);document.querySelectorAll('tbody tr').forEach(r=>r.hidden=!words.every(w=>r.textContent.includes(w)))}})</script></html>'''
 
@@ -312,6 +318,8 @@ def main():
     observations = observe(episodes, grid, prices, calendar, benchmark, trades, terminals, cfg)
     table, tests, sensitivity = summarize(observations, cfg)
     report = dict(inventory, outcomes_read=True, table=table, tests=tests, sensitivity=sensitivity,
+                  outcome_input_digest=digest(dict(prices=prices, benchmark=benchmark, terminals=terminals,
+                                                   trades=sorted((s,d,v) for (s,d),v in trades.items()))),
                   status="exploratory_only", observations=observations)
     atomic_write_json(args.output / "report.json", report)
     pd.DataFrame(table).to_csv(args.output / "grid.csv", index=False)

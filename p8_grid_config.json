@@ -1,0 +1,19 @@
+{
+  "version": "p8c_grid_v3_exploratory",
+  "thresholds": {
+    "cum_log_excess_min": 2.0,
+    "elevated_ratio_min": 0.4,
+    "position_tail": 0.3,
+    "flat_band": 0.1,
+    "pulse_z_min": 4.0,
+    "pulse_amplitude_min": 1.2
+  },
+  "windows": {"position": 250, "baseline": 120, "activity": 20, "cooldown": 20, "announcement": 20, "transition": 60},
+  "horizons": [20, 60, 120],
+  "primary_horizon": 120,
+  "minimum": {"episodes": 40, "companies": 25},
+  "bootstrap": {"replicates": 1000, "seed": 20260906},
+  "signal_start": "2023-01-01",
+  "signal_through": "2025-12-31",
+  "outcome_through": "2026-09-03"
+}

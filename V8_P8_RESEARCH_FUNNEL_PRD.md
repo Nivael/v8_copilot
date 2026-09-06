@@ -410,7 +410,7 @@ P8-0 能决定真实成本。P8B-0 是它们共同的语义前置。
 
 2026-09-05 的正式 v2 结果见 [P8_BACKTEST_V2_RESULT.md](P8_BACKTEST_V2_RESULT.md)。冻结规则下：
 
-- `p8c_accumulation = killed`；
+- `p8c_accumulation = killed`，对象限定为未区分价格位置的通用持续活跃因子；
 - `p8c_holder = weak`；
 - `p8d_funnel_basket = killed`；
 - P8A `p*`、三类参考的未来稳定性及 P8B 前哨均因同口径输入/正文真值不足为 unavailable。
@@ -419,3 +419,8 @@ P8-0 能决定真实成本。P8B-0 是它们共同的语义前置。
 overflow 与失败 ledger；股东户数只作不加权旁证。后 BT2 的 10/60 日真实门从 v2 首日重置。
 若研究“持续放量是否是风险警报”或反向排序，属于读结果后的探索，必须另开 v3 契约，不能
 翻改本 PRD 中已经完成的 v2 结论。
+
+2026-09-06：P8C-v3 采用价位×相对价格方向的单一网格及独立脉冲标志，只有低位价稳活跃
+后的收益差、60日内向上接续率差两项检验。一个配置、六个经济阈值，不增放宽阶梯；
+具体见 [V8_P8C_GRID_V3_CONTRACT.md](V8_P8C_GRID_V3_CONTRACT.md)。既有历史已读过结果，
+本轮保持探索性，不能自动恢复旧生产配额。

@@ -294,7 +294,7 @@ def render(report):
     heads = "".join(f"<th>{v}</th>" for v in labels.values())
     rows = "".join("<tr>"+"".join(f"<td>{show(k,r.get(k))}</td>" for k in labels)+"</tr>" for r in report["table"])
     test_names = {"H1_120d_excess": "①之后120日收益是否更强", "H2_transition_60": "①之后60日是否更常转为放量向上"}
-    summaries = "".join(f"<p><b>{test_names[name]}</b>：{'样本不足，仅描述' if test['status']=='descriptive_only' else '探索性检验'}；差值 {show('excess',test['difference'])}；共同层处理/对照 {test['treated_matched']}/{test['control_matched']} 段；公司 {test['treated_companies']}/{test['control_companies']}；95%区间 {'不做推断' if test['ci95'] is None else html.escape(str(test['ci95']))}。</p>" for name, test in report["tests"].items())
+    summaries = "".join(f"<p><b>{test_names[name]}</b>：{'样本不足，仅描述' if test['status']=='descriptive_only' else '探索性检验'}；差值 {show('excess',test['difference'])}；共同层处理/对照 {test['treated_matched']}/{test['control_matched']} 段；公司 {test['treated_companies']}/{test['control_companies']}；95%区间 {'不做推断' if test['ci95'] is None else ' 至 '.join(show('excess',v) for v in test['ci95'])}。</p>" for name, test in report["tests"].items())
     sensitivity = report["sensitivity"]
     censor_note = f"接续结果缺失取最不利/最有利分配时，H2差值范围 {show('excess',sensitivity['H2_difference_lower']['difference'])} 至 {show('excess',sensitivity['H2_difference_upper']['difference'])}。"
     coverage_note = "；".join(f"{year}年① {count}段" for year, count in sorted(report["focus_by_year"].items()))

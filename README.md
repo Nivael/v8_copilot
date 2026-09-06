@@ -143,8 +143,10 @@ P8 把研究层与宣称层分开：三类成交情景参考、五轨带方向�
 BT2 的 killed 仅限未区分价格位置的通用持续活跃因子。低位网格的两项探索性检验见
 [V8_P8C_GRID_V3_CONTRACT.md](V8_P8C_GRID_V3_CONTRACT.md)，唯一配置 `p8_grid_config.json`，
 执行器 `p8_volume_grid.py` 输出一张可过滤表，不改变生产配额。
-真实网格结果见 [P8C_GRID_V3_RESULT.md](P8C_GRID_V3_RESULT.md)：低位价稳活跃82段/47家公司，
-两项匹配后均未达到40段/25家公司推断门，只保留描述。
+当前网格结果见 [P8C_GRID_V3_1_RESULT.md](P8C_GRID_V3_1_RESULT.md)：修正全天停牌导致的
+250日窗口整窗排除后，低位价稳活跃163段/100家公司（2023/2024/2025为64/80/19段）。
+H1收益差+2.82pp，区间跨零；H2可观察样本接续差+27.60pp，但缺失敏感度跨零。
+保持探索、配额0；旧结果留在 [P8C_GRID_V3_RESULT.md](P8C_GRID_V3_RESULT.md)。
 数据维护入口为 `data_maintenance.py`：价格固定使用 Tushare，公告固定使用 CNINFO；逐源逐股
 checkpoint 控制重叠增量、去重和失败恢复，最后生成 `local_data/v8_copilot/freshness_manifest.json`。
 维护器可将 Tushare `stock_st` 固化为 append-only 每日 universe，并用 current 或指定 snapshot

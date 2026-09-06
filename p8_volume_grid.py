@@ -18,6 +18,7 @@ from p7_announcements import classify_announcement, load_announcements
 from p7_daily import load_valuation_stage_map
 from p8_backtest_v2 import _benchmarks, _calendar_membership, _latest_records
 from p8_prices import qfq_series
+from p8_grid_price_coverage import verified_suspensions
 from p8_research import P8ResearchRepository, canonical_json
 from p8_walk_forward_basket import load_trade_states
 from settings import (ANNOUNCEMENT_REFRESH_DIR, DATA_ROOT, MARKET_ACTIVITY_DB,
@@ -47,11 +48,29 @@ def classify(position, drift, cumulative, elevated, z, amplitude, config):
     return band + "_" + direction, active, pulse
 
 
-def make_grid(features, facts, prices, calendar, memberships, stages, announcements, events, config):
+def price_position(price, suspended, index, size):
+    """Fixed market-day horizon; only proven full-day suspensions explain gaps."""
+    if index < size-1:
+        return None, 0, 0, "price_history_short"
+    window = price[index-size+1:index+1]
+    valid = np.isfinite(window) & (window > 0)
+    missing = ~valid
+    if not valid[-1]:
+        return None, int(valid.sum()), 0, "current_price_missing"
+    excused = missing & suspended[index-size+1:index+1]
+    if (missing & ~excused).any():
+        return None, int(valid.sum()), int(excused.sum()), "price_gap_unverified"
+    observed = window[valid]
+    position = (np.sum(observed < price[index]) + .5*np.sum(observed == price[index])) / len(observed)
+    return float(position), len(observed), int(excused.sum()), None
+
+
+def make_grid(features, facts, prices, calendar, memberships, stages, announcements, events, config, suspension_evidence=None):
     by_symbol = defaultdict(dict)
     for f in features:
         by_symbol[f["symbol"]][f["trade_date"]] = f
     fact_map = {(f.symbol, f.trade_date): f for f in facts}
+    suspended = verified_suspensions(facts, suspension_evidence)
     news, capital, refs = defaultdict(set), defaultdict(set), defaultdict(list)
     for a in announcements:
         s, day = a["symbol"], a["announcement_date"]
@@ -72,6 +91,7 @@ def make_grid(features, facts, prices, calendar, memberships, stages, announceme
     for symbol, fs in sorted(by_symbol.items()):
         p = dict(prices.get(symbol, []))
         price = np.array([p.get(d, np.nan) for d in calendar])
+        suspension_mask = np.array([(symbol, d) in suspended for d in calendar])
         sf = [fact_map.get((symbol, d)) for d in calendar]
         turns = np.array([f.turnover_rate_f if f and f.eligible_for_anomaly and f.turnover_rate_f else np.nan for f in sf])
         shares = np.array([f.total_share_10k if f and f.total_share_10k else np.nan for f in sf])
@@ -80,26 +100,34 @@ def make_grid(features, facts, prices, calendar, memberships, stages, announceme
             if day > config["signal_through"] or symbol not in memberships.get(day, set()):
                 continue
             f = fs.get(day, {})
-            window = price[max(0, i-w["position"]+1):i+1]
+            year = day[:4]
+            gaps[f"{year}:member_days"] += 1
+            position, observed, skipped, gap = price_position(price, suspension_mask, i, w["position"])
             values = [f.get(k) for k in ("cum_turnover_log_excess_20", "elevated_day_ratio_20", "excess_return_st_20")]
-            if len(window) != w["position"] or not np.isfinite(window).all():
-                gaps["price_250_missing"] += 1
+            if gap:
+                gaps[f"{year}:{gap}"] += 1
                 continue
+            gaps[f"{year}:price_window_valid"] += 1
+            gaps[f"{year}:price_window_with_verified_suspensions"] += bool(skipped)
             if any(v is None for v in values) or f.get("baseline_observations", 0) < w["baseline"] or not np.isfinite(turns[i-w["activity"]+1:i+1]).all():
-                gaps["activity_window_or_baseline_missing"] += 1
+                gaps[f"{year}:activity_window_or_baseline_missing"] += 1
                 continue
-            position = float((np.sum(window < price[i]) + .5*np.sum(window == price[i])) / len(window))
+            gaps[f"{year}:grid_valid"] += 1
             past = turns[max(0, i-w["baseline"]):i]
             med = float(np.median(past)) if np.isfinite(past).all() and len(past) == w["baseline"] else np.nan
             mad = float(np.median(np.abs(past-med)))
             z = float((turns[i]-med)/(1.4826*mad)) if np.isfinite(mad) and mad > 0 else None
             grid, active, pulse = classify(position, values[2], values[0], values[1], z, f.get("single_day_amplitude_ratio"), config)
+            gaps[f"{year}:low_flat_active_days"] += grid == FOCUS and active
             news_days = in_window(news.get(symbol, []), calendar[max(0, i-w["announcement"])], day)
             cap_start = calendar[i-w["position"]+1]
             cap_days = in_window(capital.get(symbol, []), cap_start, day) + in_window(changes, cap_start, day)
             share_complete = bool(np.isfinite(shares[i-w["position"]+1:i+1]).all())
             output.append(dict(symbol=symbol, day=day, index=i, grid=grid, active=active, pulse=pulse,
                                position=position, drift=values[2], cumulative=values[0], elevated=values[1],
+                               price_observations=observed, price_window_start=calendar[i-w["position"]+1],
+                               suspended_dates=[calendar[j] for j in range(i-w["position"]+1, i+1)
+                                                if suspension_mask[j] and (not np.isfinite(price[j]) or price[j] <= 0)],
                                stage=stages.get((symbol, day), "unknown"),
                                announcement="detected" if news_days else "none_detected",
                                announcement_refs=sorted({r for d in news_days for r in refs[(symbol, d)]}),
@@ -269,9 +297,11 @@ def render(report):
     summaries = "".join(f"<p><b>{test_names[name]}</b>：{'样本不足，仅描述' if test['status']=='descriptive_only' else '探索性检验'}；差值 {show('excess',test['difference'])}；共同层处理/对照 {test['treated_matched']}/{test['control_matched']} 段；公司 {test['treated_companies']}/{test['control_companies']}；95%区间 {'不做推断' if test['ci95'] is None else html.escape(str(test['ci95']))}。</p>" for name, test in report["tests"].items())
     sensitivity = report["sensitivity"]
     censor_note = f"接续结果缺失取最不利/最有利分配时，H2差值范围 {show('excess',sensitivity['H2_difference_lower']['difference'])} 至 {show('excess',sensitivity['H2_difference_upper']['difference'])}。"
+    coverage_note = "；".join(f"{year}年① {count}段" for year, count in sorted(report["focus_by_year"].items()))
     return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="data:,"><title>P8C 双轴网格</title>
 <style>body{{margin:0;background:#f4f1e9;color:#24362d;font:16px/1.6 system-ui}}main{{padding:32px;max-width:1600px;margin:auto}}h1{{font-size:38px}}.scroll{{overflow:auto;max-height:70vh;background:#fffdf8}}table{{border-collapse:collapse;white-space:nowrap;width:100%}}td,th{{padding:9px;border-bottom:1px solid #ded8ca;text-align:right}}th{{position:sticky;top:0;background:#e8e5da}}input{{padding:12px;min-width:280px}}small{{color:#586860}}</style>
-<main><h1>低位价稳放量，之后发生了什么？</h1><p>探索性历史复查；①=低位价稳且持续活跃。六个固定阈值，两项检验。价格位置采用当时250日分位。</p>
+<main><h1>低位价稳放量，之后发生了什么？</h1><p>v3.1停牌语义修正版 · 探索性历史复查；①=低位价稳且持续活跃。六个固定阈值，两项检验。</p>
+<p>{coverage_note}。价位仍看250个市场交易日，仅从分母排除已证全天停牌日；没有延长窗口或填旧价，不明缺口仍阻断。每段的真实观察数与停牌日期见JSON。</p>
 {summaries}<p>{censor_note}</p><p>“未检出公告”有正文覆盖缺口。股本标记包括标题提及或总股本变化。正面节点准确率尚未通过，节点结果留空。收益是下一可买入收盘后的价格路径，端点可卖比例见CSV；不能直接当组合回报。</p>
 <p><input id="filter" placeholder="筛选，例如：低位 价稳 未检出"><small>空白=全部；多个词同时匹配。完整字段与删失上下界见同目录CSV/JSON。</small></p><div class="scroll"><table><thead><tr>{heads}</tr></thead><tbody>{rows}</tbody></table></div>
 <p><small>输入摘要 {report['input_digest']} · 行情结论未写回生产配额</small></p></main><script>document.querySelector('#filter').addEventListener('input',e=>{{const words=e.target.value.trim().split(/\\s+/);document.querySelectorAll('tbody tr').forEach(r=>r.hidden=!words.every(w=>r.textContent.includes(w)))}})</script></html>'''
@@ -282,8 +312,10 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--evaluate", action="store_true")
     parser.add_argument("--inventory", type=Path)
+    parser.add_argument("--suspension-evidence", type=Path)
     args = parser.parse_args()
     cfg = json.loads(CONFIG.read_text())
+    evidence = json.loads(args.suspension_evidence.read_text()) if args.suspension_evidence else None
     repo = P8ResearchRepository(P8_RESEARCH_DB)
     sources, payloads = {}, {}
     for kind, record in (("activity_features", "activity_feature"), ("event_graph", "derived_event"), ("p8_terminal_history_v2", "p8_terminal_outcome_v2")):
@@ -297,13 +329,17 @@ def main():
     announcements = load_announcements(base_database=BASE, refresh_directory=ANNOUNCEMENT_REFRESH_DIR, start_date=start, through=cfg["signal_through"])
     stages = load_valuation_stage_map(VALUATION_EPISODE_DB, dates=calendar)
     features = [f for f in payloads["activity_features"] if f["trade_date"] <= cfg["signal_through"]]
-    grid, gaps = make_grid(features, facts, prices, calendar, members, stages, announcements, payloads["event_graph"], cfg)
+    grid, gaps = make_grid(features, facts, prices, calendar, members, stages, announcements, payloads["event_graph"], cfg, evidence)
     episodes = make_episodes(grid, cfg)
     source = dict(config=cfg, sources=sources, grid_digest=digest(grid), episode_digest=digest(episodes),
+                  suspension_evidence_digest=digest(evidence),
+                  coverage_code_sha=hashlib.sha256((ROOT / "p8_grid_price_coverage.py").read_bytes()).hexdigest(),
                   code_sha=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
     inventory = dict(input_digest=digest(source), inputs=source, outcomes_read=False, grid_days=len(grid), episodes=len(episodes),
                      episode_cells=dict(Counter(f"{r['grid']}|{r['active']}" for r in episodes)), gaps=gaps,
                      focus_episodes=sum(r["grid"] == FOCUS and r["active"] for r in episodes),
+                     focus_companies=len({r["symbol"] for r in episodes if r["grid"] == FOCUS and r["active"]}),
+                     focus_by_year=dict(Counter(r["day"][:4] for r in episodes if r["grid"] == FOCUS and r["active"])),
                      unknown_stage=sum(r["stage"] == "unknown" for r in episodes))
     args.output.mkdir(parents=True, exist_ok=True)
     if not args.evaluate:

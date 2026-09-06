@@ -1,5 +1,6 @@
 {
-  "version": "p8c_grid_v3_exploratory",
+  "version": "p8c_grid_v3_1_exploratory",
+  "price_window_policy": "market_days_excluding_verified_full_day_suspensions",
   "thresholds": {
     "cum_log_excess_min": 2.0,
     "elevated_ratio_min": 0.4,

@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import pytest
 
-from p8_volume_grid import CONFIG, classify, contrast, make_episodes, make_grid, observe, summarize
+from p8_volume_grid import CONFIG, classify, contrast, make_episodes, make_grid, observe, summarize, price_position
 
 
 @pytest.fixture
@@ -117,3 +117,52 @@ def test_price_rank_and_announcement_flags_cannot_see_future(config):
     assert flagged[0]["capital"] == "none_detected"
     assert flagged[-1]["announcement"] == "detected"
     assert flagged[-1]["capital"] == "detected"
+
+
+def test_price_window_skips_only_verified_missing_days_without_extending():
+    import numpy as np
+    price = np.array([1., 10., np.nan, 8.])
+    mask = np.array([False, False, True, False])
+    rank, n, skipped, gap = price_position(price, mask, 3, 3)
+    assert (rank, n, skipped, gap) == (.25, 2, 1, None)
+    assert price_position(price, np.zeros(4, dtype=bool), 3, 3)[3] == "price_gap_unverified"
+    assert price_position(price, mask, 2, 3)[3] == "current_price_missing"
+    assert price_position(price, mask, 1, 3)[3] == "price_history_short"
+    # Future prices/status cannot affect a historical window.
+    assert price_position(np.append(price, 10000), np.append(mask, True), 3, 3) == (rank, n, skipped, gap)
+    price[2] = -1
+    assert price_position(price, np.zeros(4, dtype=bool), 3, 3)[3] == "price_gap_unverified"
+
+
+def test_v31_preserves_all_economic_and_time_thresholds(config):
+    assert config["thresholds"] == dict(cum_log_excess_min=2., elevated_ratio_min=.4,
+                                      position_tail=.3, flat_band=.1, pulse_z_min=4., pulse_amplitude_min=1.2)
+    assert config["windows"] == dict(position=250, baseline=120, activity=20, cooldown=20, announcement=20, transition=60)
+    assert config["minimum"] == dict(episodes=40, companies=25)
+
+
+def test_verified_historical_suspension_recovers_grid_but_not_current_activity(config):
+    from types import SimpleNamespace
+    cfg = deepcopy(config)
+    cfg["windows"].update(position=4, baseline=2, activity=2)
+    days = [f"2023-01-{i+1:02}" for i in range(6)]
+    facts = [SimpleNamespace(symbol="000001", trade_date=d, eligible_for_anomaly=True,
+                             turnover_rate_f=2, total_share_10k=100, close=10,
+                             suspend_type="", suspend_timing="") for d in days]
+    features = [dict(symbol="000001", trade_date=d, baseline_observations=2,
+                     cum_turnover_log_excess_20=3, elevated_day_ratio_20=.5,
+                     excess_return_st_20=0, single_day_amplitude_ratio=1) for d in days]
+    prices = {"000001": [(d, 10-i) for i, d in enumerate(days) if i != 1]}
+    args = (features, facts, prices, days, dict.fromkeys(days, {"000001"}), {}, [], [], cfg)
+    before, _ = make_grid(*args)
+    assert days[3] not in {r["day"] for r in before}
+    facts[1].suspend_type, facts[1].close = "S", None
+    facts[1].eligible_for_anomaly = False
+    after, _ = make_grid(*args)
+    recovered = next(r for r in after if r["day"] == days[3])
+    assert recovered["price_observations"] == 3
+    assert recovered["suspended_dates"] == [days[1]]
+    assert recovered["price_window_start"] == days[0]
+    assert days[1] not in {r["day"] for r in after}
+    facts[3].eligible_for_anomaly = False
+    assert days[3] not in {r["day"] for r in make_grid(*args)[0]}

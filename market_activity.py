@@ -495,8 +495,10 @@ class MarketActivityRepository:
             "on d.snapshot_id=s.snapshot_id where s.rank_no=1 order by d.trade_date,d.symbol"
         )
         with sqlite3.connect(f"file:{self.path}?mode=ro", uri=True) as connection:
-            rows = connection.execute(query, params).fetchall()
-        return [MarketActivityFact.model_validate(json.loads(row[0])) for row in rows]
+            return [
+                MarketActivityFact.model_validate_json(row[0])
+                for row in connection.execute(query, params)
+            ]
 
 
 def load_memberships(

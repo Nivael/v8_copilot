@@ -10,7 +10,6 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 
 from data_refresh import atomic_write_json
 from market_activity import MarketActivityRepository
@@ -92,10 +91,15 @@ def make_grid(features, facts, prices, calendar, memberships, stages, announceme
         p = dict(prices.get(symbol, []))
         price = np.array([p.get(d, np.nan) for d in calendar])
         suspension_mask = np.array([(symbol, d) in suspended for d in calendar])
+        missing_suspension_days = [calendar[j] for j in np.flatnonzero(
+            suspension_mask & (~np.isfinite(price) | (price <= 0))
+        )]
         sf = [fact_map.get((symbol, d)) for d in calendar]
         turns = np.array([f.turnover_rate_f if f and f.eligible_for_anomaly and f.turnover_rate_f else np.nan for f in sf])
         shares = np.array([f.total_share_10k if f and f.total_share_10k else np.nan for f in sf])
-        changes = [calendar[i] for i in range(1, len(calendar)) if np.isfinite(shares[i-1:i+1]).all() and shares[i] != shares[i-1]]
+        changes = [calendar[j+1] for j in np.flatnonzero(
+            np.isfinite(shares[:-1]) & np.isfinite(shares[1:]) & (shares[:-1] != shares[1:])
+        )]
         for i, day in enumerate(calendar):
             if day > config["signal_through"] or symbol not in memberships.get(day, set()):
                 continue
@@ -126,8 +130,7 @@ def make_grid(features, facts, prices, calendar, memberships, stages, announceme
             output.append(dict(symbol=symbol, day=day, index=i, grid=grid, active=active, pulse=pulse,
                                position=position, drift=values[2], cumulative=values[0], elevated=values[1],
                                price_observations=observed, price_window_start=calendar[i-w["position"]+1],
-                               suspended_dates=[calendar[j] for j in range(i-w["position"]+1, i+1)
-                                                if suspension_mask[j] and (not np.isfinite(price[j]) or price[j] <= 0)],
+                               suspended_dates=in_window(missing_suspension_days, cap_start, day),
                                stage=stages.get((symbol, day), "unknown"),
                                announcement="detected" if news_days else "none_detected",
                                announcement_refs=sorted({r for d in news_days for r in refs[(symbol, d)]}),
@@ -358,6 +361,9 @@ def main():
                                                    trades=sorted((s,d,v) for (s,d),v in trades.items()))),
                   status="exploratory_only", observations=observations)
     atomic_write_json(args.output / "report.json", report)
+    # Inventory runs never export CSV; avoid loading pandas on that path.
+    import pandas as pd
+
     pd.DataFrame(table).to_csv(args.output / "grid.csv", index=False)
     (args.output / "index.html").write_text(render(report), encoding="utf-8")
     print(json.dumps(dict(tests=tests, sensitivity=sensitivity, rows=len(table)), ensure_ascii=False))

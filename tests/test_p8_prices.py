@@ -1,7 +1,7 @@
 import sqlite3
 
 from data_refresh import TusharePriceBatch
-from p8_prices import qfq_close
+from p8_prices import qfq_close, qfq_series
 from p8_qfq_backfill import backfill, missing_prefix_symbols
 
 
@@ -61,3 +61,33 @@ def test_scoped_qfq_backfill_and_overlay_priority(tmp_path):
     )
     assert prices[("000001", "2021-03-17")] == 5.0
     assert prices[("000001", "2022-01-04")] == 9.0
+    assert qfq_series(
+        base, overlay_database=overlay, start="2021-01-01", through="2023-01-01",
+    ) == {"000001": [("2021-03-17", 5.0), ("2022-01-04", 9.0)]}
+
+
+def test_series_filters_invalid_prices_and_sorts_overlay_history(tmp_path):
+    base, overlay = tmp_path / "base.sqlite3", tmp_path / "overlay.sqlite3"
+    for path in (base, overlay):
+        with sqlite3.connect(path) as connection:
+            connection.execute("create table daily_prices(symbol, trade_date, adjust, close)")
+    with sqlite3.connect(base) as connection:
+        connection.executemany("insert into daily_prices values(?,?,?,?)", [
+            ("000002", "2023-01-03", "qfq", 8),
+            ("000001", "2023-01-03", "qfq", 10),
+            ("000001", "2023-01-02", "hfq", 50),
+        ])
+    with sqlite3.connect(overlay) as connection:
+        connection.executemany("insert into daily_prices values(?,?,?,?)", [
+            ("000001", "2023-01-03", "qfq", 9),
+            ("000001", "2023-01-02", "qfq", 7),
+            ("000002", "2023-01-03", "qfq", 0),
+            ("000002", "2023-01-02", "qfq", None),
+            ("000001", "2022-12-30", "qfq", 6),
+        ])
+    actual = qfq_series(base, overlay_database=overlay, start="2023-01-01", through="2023-01-03")
+    assert list(actual) == ["000001", "000002"]
+    assert actual == {"000001": [("2023-01-02", 7.0), ("2023-01-03", 9.0)],
+                      "000002": [("2023-01-03", 8.0)]}
+    assert qfq_series(tmp_path / "missing", overlay_database=None,
+                      start="2023-01-01", through="2023-01-03") == {}

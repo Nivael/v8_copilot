@@ -77,6 +77,16 @@ def route_question(row: dict[str, Any]) -> RoutePrediction:
         )
 
     if object_kind == "cohort" and str(obj.get("ref", "")).startswith("comparison:"):
+        symbols = str(obj["ref"]).removeprefix("comparison:").split(",")
+        if len(symbols) != 2 or len(set(symbols)) != 2:
+            return _prediction(
+                "clarify",
+                "clarify",
+                "clarify",
+                "not_applicable",
+                rules=["comparison_scope_requires_decomposition"],
+                note="当前比较工具只支持两只不同股票；研究主持人需按子问题分别取证，不能把完整多对象问题压成两股比较。",
+            )
         return _prediction(
             "answer_query",
             "answerable",

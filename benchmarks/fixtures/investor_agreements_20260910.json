@@ -1,0 +1,269 @@
+{
+  "version": "reviewed_agreement_cases_v1",
+  "scope": "2023-01-01 through 2026-09-07 base company_announcements, titles containing 产业投资人 or 财务投资人 and 签署; both roles in separate binding issuer agreements; deduplicated issuer episode, first matching agreement; NOT complete universe, not frozen Lens",
+  "disclosure_date_note": "CNINFO finalpage date; intraday timestamps unavailable. Same-day publication/price ordering requires next-session sensitivity. Selected role agreements may follow earlier generic-title agreements.",
+  "cases": [
+    {
+      "symbol": "000656",
+      "name": "金科",
+      "industrial_id": "1222018474",
+      "financial_id": "1222144698",
+      "industrial_disclosure": "2024-12-14",
+      "financial_disclosure": "2024-12-26",
+      "industrial_price": 0.63,
+      "financial_price": 1.04,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2024-12-14/1222018474.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2024-12-26/1222144698.PDF",
+      "body_digests": {
+        "industrial": "6d677c92fa004d2560cdbee347d7b7157f277b28feb7c0eac7a849228e644d5f",
+        "financial": "a879a487487666e1eaeef7f38dcf9441fa396e4dc0293784943c4d2a8b2e1b21"
+      },
+      "industrial_shares": 1200000000,
+      "financial_shares": 1800000000,
+      "financial_to_industrial": 1.5,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "note": "Initial industrial agreement already quoted financial price; later financial contract does not imply later price discovery.",
+      "industrial_inventory_date": "2024-12-13",
+      "financial_inventory_date": "2024-12-25"
+    },
+    {
+      "symbol": "000793",
+      "name": "华闻",
+      "industrial_id": "1223478762",
+      "financial_id": "1224785012",
+      "industrial_disclosure": "2025-05-07",
+      "financial_disclosure": "2025-11-04",
+      "industrial_price": 1.2209,
+      "financial_price": 1.38,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2025-05-07/1223478762.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2025-11-04/1224785012.PDF",
+      "body_digests": {
+        "industrial": "d1a83551c0182107ce6babb91c5c319fd203ff56120993d241b7c0e5a6737c11",
+        "financial": "006d271d4acdf928a80ae72227659cdb40f01fea79c2b22b11292fda03172059"
+      },
+      "industrial_shares": 500000000,
+      "financial_shares": 1193000000,
+      "financial_to_industrial": 2.386,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "industrial_inventory_date": "2025-05-06",
+      "financial_inventory_date": "2025-11-03"
+    },
+    {
+      "symbol": "002309",
+      "name": "中利",
+      "industrial_id": "1221663269",
+      "financial_id": "1221663272",
+      "industrial_disclosure": "2024-11-11",
+      "financial_disclosure": "2024-11-11",
+      "industrial_price": 0.79,
+      "financial_price": 0.8,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2024-11-11/1221663269.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2024-11-11/1221663272.PDF",
+      "body_digests": {
+        "industrial": "48b5bacb80e93e055a33139a05b4bd404f6500fd41b63682ba0b3bfd81d3f86b",
+        "financial": "517db50361f06d1b7fa5ebcede430abb442a81d86dfcb66f7d4869cd37ff62c4"
+      },
+      "industrial_shares": 601533077,
+      "financial_shares": 1099375491.61,
+      "financial_to_industrial": 1.8276,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "note": "Same-day preliminary binding agreements; financial shares preliminary estimate; gap to first price observation, exclude from timing returns.",
+      "industrial_inventory_date": "2024-11-10",
+      "financial_inventory_date": "2024-11-10"
+    },
+    {
+      "symbol": "002634",
+      "name": "棒杰",
+      "industrial_id": "1225104783",
+      "financial_id": "1225382007",
+      "industrial_disclosure": "2026-04-15",
+      "financial_disclosure": "2026-06-23",
+      "industrial_price": 3.235,
+      "financial_price": 2.6,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2026-04-15/1225104783.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2026-06-23/1225382007.PDF",
+      "body_digests": {
+        "industrial": "9c36b6f30cd8db210787ce5b47cc2987c6e2e18cbcfc0b56b63b072566e5ee08",
+        "financial": "5ac79f03e803510909447584b662f003ad28b07d9be10e9fb8a58b61ac98ccc2"
+      },
+      "industrial_inventory_date": "2026-04-14",
+      "financial_inventory_date": "2026-06-22"
+    },
+    {
+      "symbol": "002713",
+      "name": "东易",
+      "industrial_id": "1222835700",
+      "financial_id": "1223110697",
+      "industrial_disclosure": "2025-03-19",
+      "financial_disclosure": "2025-04-17",
+      "industrial_price": 2.3,
+      "financial_price": 3,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2025-03-19/1222835700.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2025-04-17/1223110697.PDF",
+      "body_digests": {
+        "industrial": "b6a191100c6a8bd11c8c697b7994be0e21b78a27ec1c32096e63b720640124fe",
+        "financial": "be2e3bb633dc0921a21776f890caba6392e2681f559fb9eb2e5b96fb71c3be97"
+      },
+      "industrial_shares": 150000000,
+      "financial_shares": 266868204,
+      "financial_to_industrial": 1.7791,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "industrial_inventory_date": "2025-03-18",
+      "financial_inventory_date": "2025-04-16"
+    },
+    {
+      "symbol": "300091",
+      "name": "金通灵",
+      "industrial_id": "1224641754",
+      "financial_id": "1224930738",
+      "industrial_disclosure": "2025-09-06",
+      "financial_disclosure": "2026-01-13",
+      "industrial_price": 1.3996,
+      "financial_price": 2.79,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2025-09-06/1224641754.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2026-01-13/1224930738.PDF",
+      "body_digests": {
+        "industrial": "99c0e429b26ab1b23e2e6d15b906502e451213132a2f46ea142307c09742c291",
+        "financial": "c52fc26dddd3cefa25f6116ac19b677832305e63315a2531527f7237e46f3cf6"
+      },
+      "industrial_shares": 710511267,
+      "financial_shares": 496111984,
+      "financial_to_industrial": 0.6982,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "industrial_inventory_date": "2025-09-05",
+      "financial_inventory_date": "2026-01-12"
+    },
+    {
+      "symbol": "300159",
+      "name": "新研",
+      "industrial_id": "1224610489",
+      "financial_id": "1224804265",
+      "industrial_disclosure": "2025-08-28",
+      "financial_disclosure": "2025-11-13",
+      "industrial_price": 1.3,
+      "financial_price": 1.7,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224610489.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2025-11-13/1224804265.pdf",
+      "body_digests": {
+        "industrial": "d11221d8bb6ae8fa4d2c0e007a0eded5002df9df61dde948d7c49e7b7dd38821",
+        "financial": "07d733eee6da87f3a37c12e0ca9217b94aeb97ec1ddc2c05589fb4451f16ef14"
+      },
+      "industrial_shares": 500000000,
+      "financial_shares": 934775108.0,
+      "financial_to_industrial": 1.8696,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "note": "Financial shares derived from exact total cash / uniform 1.70 price; price history stops 2025-12-31, 60-session missing.",
+      "industrial_inventory_date": "2025-08-28",
+      "financial_inventory_date": "2025-11-13"
+    },
+    {
+      "symbol": "300198",
+      "name": "纳川",
+      "industrial_id": "1223879948",
+      "financial_id": "1224878774",
+      "industrial_disclosure": "2025-06-13",
+      "financial_disclosure": "2025-12-15",
+      "industrial_price": 1.25,
+      "financial_price": 1.23,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2025-06-13/1223879948.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2025-12-15/1224878774.PDF",
+      "body_digests": {
+        "industrial": "a85bccf4b2f0b27b1e76eb9dd05a4e378ee8c733f01f3b3c3c63c873bba2e96d",
+        "financial": "aa9eb16f5da38f49aefb057d12d6e88fd3e65263ac44ef198683e37427a12aee"
+      },
+      "industrial_inventory_date": "2025-06-13",
+      "financial_inventory_date": "2025-12-15"
+    },
+    {
+      "symbol": "300209",
+      "name": "有棵树",
+      "industrial_id": "1221742618",
+      "financial_id": "1222006377",
+      "industrial_disclosure": "2024-11-16",
+      "financial_disclosure": "2024-12-12",
+      "industrial_price": 1.95,
+      "financial_price": 3.15,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2024-11-16/1221742618.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2024-12-12/1222006377.PDF",
+      "body_digests": {
+        "industrial": "83c5bf504fdf6f5a6d4658a8045975cb5f3e6fc97fd0289b9e55fb97c5c84e15",
+        "financial": "9e87137fbf13e1666a857df47dab10bf927bf832f86a2483c31bac6dedf1d43f"
+      },
+      "industrial_shares": 185727225,
+      "financial_shares": 230042875,
+      "financial_to_industrial": 1.2386,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "industrial_inventory_date": "2024-11-15",
+      "financial_inventory_date": "2024-12-12"
+    },
+    {
+      "symbol": "300472",
+      "name": "新元",
+      "industrial_id": "1224870494",
+      "financial_id": "1224911728",
+      "industrial_disclosure": "2025-12-11",
+      "financial_disclosure": "2025-12-30",
+      "industrial_price": 3.5,
+      "financial_price": 3.76,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2025-12-11/1224870494.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2025-12-30/1224911728.PDF",
+      "body_digests": {
+        "industrial": "d3bfe9d56546233a06c924aad5670c532658444fe6b04aa709c431250889999e",
+        "financial": "972da673f98670a9ee1eb6054f1bb2397f77aef57efa2bdb0355ae3a4803625a"
+      },
+      "industrial_inventory_date": "2025-12-11",
+      "financial_inventory_date": "2025-12-30"
+    },
+    {
+      "symbol": "603559",
+      "name": "中通国脉",
+      "industrial_id": "1221792450",
+      "financial_id": "1221880797",
+      "industrial_disclosure": "2024-11-21",
+      "financial_disclosure": "2024-11-29",
+      "industrial_price": 3.05,
+      "financial_price": 4.58,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2024-11-21/1221792450.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2024-11-29/1221880797.PDF",
+      "body_digests": {
+        "industrial": "0b62321a8351af77f94f0bf27c40662d1bac64bd81d38f5aabcbc262850563db",
+        "financial": "75515b82fb6b64432414bee998dcaa993c5ef612a9899f9dbe75eaebd36b694f"
+      },
+      "industrial_shares": 90287321,
+      "financial_shares": 122326077,
+      "financial_to_industrial": 1.3549,
+      "share_scope": "Announced planned role totals at selected agreement stage; not final allocation or actual paid-in shares.",
+      "industrial_inventory_date": "2024-11-20",
+      "financial_inventory_date": "2024-11-28"
+    },
+    {
+      "symbol": "688033",
+      "name": "天宜",
+      "industrial_id": "1225012959",
+      "financial_id": "1225318130",
+      "industrial_disclosure": "2026-03-17",
+      "financial_disclosure": "2026-05-20",
+      "industrial_price": 3.88,
+      "financial_price": 8.12,
+      "industrial_url": "https://static.cninfo.com.cn/finalpage/2026-03-17/1225012959.PDF",
+      "financial_url": "https://static.cninfo.com.cn/finalpage/2026-05-20/1225318130.PDF",
+      "body_digests": {
+        "industrial": "32ac1ac48a997a83d7a2e7958381360ccb09dd3cf44de28cbf6616314f8db665",
+        "financial": "31905cbafebb15914435c3d9e70601ffd594637b3423d0f83fb6dba4051f684e"
+      },
+      "industrial_inventory_date": "2026-03-16",
+      "financial_inventory_date": "2026-05-19"
+    }
+  ],
+  "exclusions": {
+    "000525": "Only intention agreement, not a binding pair.",
+    "000669": "Only industrial agreement in the screen.",
+    "002124": "Role pair exists as Eastmoney metadata; excluded from this CNINFO-text casebook; source discovery still needed.",
+    "002822": "Only financial agreement in the screen.",
+    "300093": "Only industrial agreement in the screen.",
+    "300125": "Replacement financial and supplemental industrial agreements, not first role pair.",
+    "300385": "Only financial agreement in the screen.",
+    "300506": "Financial/supplemental agreement only; first industrial title absent.",
+    "600589": "Agreement between industrial and financial investors, not first issuer agreements."
+  }
+}

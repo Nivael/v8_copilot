@@ -22,6 +22,11 @@ from settings import (
     MARKET_CONTEXT_DB, MARKET_FACTOR_DB,
 )
 
+from canonical_json import canonical_json as _canonical, digest as _digest
+
+
+from sqlite_access import connect_ro as _connect_ro
+
 
 CONTRACT_VERSION = "v8_p7_0_dry_plan_v1"
 DEFAULT_BASE_DB = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
@@ -59,22 +64,6 @@ class P7DryPlan(StrictModel):
     safe_defaults: list[str]
     recommended_next_step: str
     human_decisions_required: list[dict[str, Any]]
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def _file_sha256(path: Path) -> str:

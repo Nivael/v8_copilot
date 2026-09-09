@@ -2,9 +2,7 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
-import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,6 +11,11 @@ from typing import Any, Literal, Protocol
 from pydantic import BaseModel, ConfigDict, Field
 
 from data_refresh import TushareHttpClient
+
+from canonical_json import canonical_json as _canonical, digest as _digest
+
+
+from provider_env import load_provider_env as _load_env_file
 
 
 CONTRACT_VERSION = "v8_p7_0_provider_probe_v1"
@@ -68,14 +71,6 @@ class ProbeProvider(Protocol):
     def fetch_suspend_daily(self, *, trade_date: str) -> list[dict[str, Any]]: ...
     def fetch_stock_limits(self, *, trade_date: str) -> list[dict[str, Any]]: ...
     def fetch_exchange_reference(self, *, api_name: str, trade_date: str) -> list[dict[str, Any]]: ...
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _safe_error(exc: Exception) -> tuple[str, str]:
@@ -214,18 +209,6 @@ def build_provider_probe(
         },
         hard_blockers=blockers, non_blocking_gaps=non_blocking,
     )
-
-
-def _load_env_file(path: Path | None) -> None:
-    if path is None:
-        return
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        if key.strip() in {"TUSHARE_TOKEN", "TUSHARE_HTTP_URL"}:
-            os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
 
 def main() -> int:

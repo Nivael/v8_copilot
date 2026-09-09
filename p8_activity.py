@@ -1,7 +1,6 @@
 """P8 cumulative activity features with outcome-blind frozen profiles."""
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import statistics
@@ -12,6 +11,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from market_activity import MarketActivityFact
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 CONTRACT_VERSION = "p8_cumulative_activity_v2"
@@ -92,14 +93,6 @@ FROZEN_SHAPE_PROFILES: tuple[ShapeThresholds, ...] = (
         single_day_excess_return_min=0.08, single_day_amplitude_ratio_min=2.00,
     ),
 )
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _median(values: list[float]) -> float | None:

@@ -7,6 +7,10 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 DATA_ROOT = Path(os.environ.get("V8_DATA_ROOT", PROJECT_ROOT.parent)).expanduser().resolve()
+BASE_DB = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
+SHAREHOLDER_DB = DATA_ROOT / "shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3"
+EPISODE_INDEX = DATA_ROOT / "shared_data/v7/episode_index_v0/episode_index.jsonl"
+EPISODE_MANIFEST = DATA_ROOT / "shared_data/v7/episode_index_v0/builder_run_manifest.json"
 ANNOUNCEMENT_REFRESH_DIR = Path(os.environ.get(
     "V8_ANNOUNCEMENT_REFRESH_DIR",
     DATA_ROOT / "local_data" / "v8_copilot" / "announcement_refresh",

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from answer_engine import FORBIDDEN_WORDING
+from trading_boundary import FORBIDDEN_WORDING
 
 
 LLM_FORBIDDEN_WORDING = [

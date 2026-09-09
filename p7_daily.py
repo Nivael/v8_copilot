@@ -1,7 +1,6 @@
 """P7 linkage, historical shadow ledger, and read-only daily product payload."""
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import random
@@ -18,6 +17,8 @@ from market_activity import MarketActivityRepository
 from p7_anomalies import ActivityAnomaly, ActivityEpisode, AnomalyRun, RISK_COPY
 from p7_announcements import AnnouncementBundle, AnnouncementRun, IssuerTransition
 from valuation_episodes import STAGE_EVENT
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 CONTRACT_VERSION = "p7_daily_intelligence_v1"
@@ -98,14 +99,6 @@ class DailyIntelligencePayload(StrictModel):
     continuing_watch: list[dict[str, Any]]
     overflow_count: int = Field(ge=0)
     risk_notice: Literal[RISK_COPY] = RISK_COPY
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _id(prefix: str, *parts: Any) -> str:

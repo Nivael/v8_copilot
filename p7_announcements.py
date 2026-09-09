@@ -1,7 +1,6 @@
 """Deterministic P7 announcement taxonomy, evidence bundles and issuer transitions."""
 from __future__ import annotations
 
-import hashlib
 import json
 import re
 import sqlite3
@@ -14,6 +13,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from valuation_episodes import classify_official_title
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 CONTRACT_VERSION = "p7_announcement_intelligence_v1"
@@ -142,14 +143,6 @@ class AnnouncementRun(StrictModel):
     facts: list[AnnouncementFact]
     bundles: list[AnnouncementBundle]
     transitions: list[IssuerTransition]
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _id(prefix: str, *parts: Any) -> str:

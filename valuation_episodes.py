@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sqlite3
 from collections import Counter, defaultdict
@@ -13,6 +12,11 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from p6b_dry_plan import build_p6b_dry_plan
+
+from canonical_json import canonical_json as _canonical, digest as _digest
+
+
+from sqlite_access import connect_ro as _connect_ro
 
 
 CONTRACT_VERSION = "valuation_episode_v1"
@@ -140,24 +144,8 @@ def _iso(value: object) -> str:
         raise ValueError(f"非法日期: {value!r}") from exc
 
 
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode()).hexdigest()
-
-
 def _id(prefix: str, *parts: object) -> str:
     return f"{prefix}-{_digest(parts)[:20].upper()}"
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def classify_official_title(title: str) -> str | None:

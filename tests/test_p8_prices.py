@@ -91,3 +91,28 @@ def test_series_filters_invalid_prices_and_sorts_overlay_history(tmp_path):
                       "000002": [("2023-01-03", 8.0)]}
     assert qfq_series(tmp_path / "missing", overlay_database=None,
                       start="2023-01-01", through="2023-01-03") == {}
+
+
+def test_failed_backfill_is_checkpointed_and_can_resume(tmp_path):
+    class UnavailableProvider:
+        def fetch_qfq(self, **kwargs):
+            raise TimeoutError("provider unavailable")
+
+    base, context, overlay = (tmp_path / name for name in ("base.sqlite3", "context.sqlite3", "overlay.sqlite3"))
+    _price_db(base)
+    _context(context)
+    options = dict(base_database=base, market_context_database=context,
+                   overlay_database=overlay, allow_provider=True, workers=1, attempts=1)
+    failed = backfill(**options, client_factory=UnavailableProvider)
+    assert failed["status"] == "partial"
+    assert failed["failed_symbols"] == ["000001"]
+    with sqlite3.connect(overlay) as connection:
+        status, error = connection.execute("select status,error from qfq_backfill_checkpoints").fetchone()
+    assert status == "failed"
+    assert "TimeoutError" in error
+    recovered = backfill(**options, client_factory=FakeProvider)
+    assert recovered["status"] == "complete"
+    assert recovered["requested_symbol_count"] == 1
+    cached = backfill(**options, client_factory=UnavailableProvider)
+    assert cached["status"] == "complete"
+    assert cached["checkpoint_skip_count"] == 1

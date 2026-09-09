@@ -43,7 +43,10 @@ from recruitment_precedent import (
 )
 from settings import (
     ANNOUNCEMENT_REFRESH_DIR,
-    DATA_ROOT,
+    BASE_DB,
+    SHAREHOLDER_DB,
+    EPISODE_INDEX,
+    EPISODE_MANIFEST,
     RECRUITMENT_DEADLINE_MATERIALIZATION,
 )
 from snapshot_metadata import (
@@ -53,17 +56,8 @@ from snapshot_metadata import (
     load_table_snapshot,
 )
 
-_ROOT = DATA_ROOT
-BASE_DB = _ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
-SHAREHOLDER_DB = _ROOT / "shared_data/v7/shareholder_count_pilot/shareholder_count.sqlite3"
-EPISODE_INDEX = _ROOT / "shared_data/v7/episode_index_v0/episode_index.jsonl"
-EPISODE_MANIFEST = _ROOT / "shared_data/v7/episode_index_v0/builder_run_manifest.json"
+from trading_boundary import FORBIDDEN_WORDING
 
-FORBIDDEN_WORDING = [
-    "买入", "卖出", "加仓", "减仓", "目标价", "建议持有", "买卖点",
-    "应该买", "应该卖", "推荐买", "推荐卖", "止损", "止盈", "仓位",
-    "target price", "position sizing",
-]
 FIXED_CAVEATS = [
     "输出为历史路径描述，不表示可交易/可预测/可复现（D-037）。",
     "语料/样本为 ST 及论坛提及边界，非全市场（D-024）；episode 均为 case_note_only，非验证结论。",

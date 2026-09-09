@@ -5,7 +5,6 @@ import argparse
 import hashlib
 import json
 import re
-import sqlite3
 import statistics
 from collections import Counter, defaultdict
 from datetime import date
@@ -23,6 +22,8 @@ from settings import (
     P8_RESEARCH_DB,
     VALUATION_EPISODE_DB,
 )
+
+from sqlite_access import connect_ro as _connect_ro
 
 
 CONTRACT_VERSION = "p8_scenario_references_v2"
@@ -179,14 +180,6 @@ class StrategicTerms(StrictModel):
     industrial_commitment_raw: str = ""
     arithmetic_closed: bool
     contamination_flags: list[str]
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def _file_digest(path: Path) -> str:

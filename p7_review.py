@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import html
 import json
 import sqlite3
@@ -13,6 +12,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from settings import MARKET_ACTIVITY_MANIFEST_PATH, P7_INTELLIGENCE_DB, P7_REVIEW_DIR
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 REVIEW_VERSION = "p7_release_review_v1"
@@ -79,14 +80,6 @@ OPTIONS = [
     ReviewOption(value="publish_descriptive_only", label="只发布描述事实", description="只显示发生了什么、覆盖和来源，不输出交易建议。"),
     ReviewOption(value="return_to_data_gap", label="退回数据缺口", description="不发布，并把本卡列出的缺口重新设为阻塞。"),
 ]
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _card_id(area: str, target: str) -> str:

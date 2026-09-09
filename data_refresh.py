@@ -23,6 +23,8 @@ from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from canonical_json import canonical_json as _canonical
+
 
 TUSHARE_SOURCE_ID = "tushare_daily_qfq"
 CNINFO_SOURCE_ID = "cninfo_announcements"
@@ -96,10 +98,6 @@ def _symbol(value: str) -> str:
 
 def _back(value: str, days: int) -> str:
     return (date.fromisoformat(value) - timedelta(days=days)).isoformat()
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
 
 
 class MaintenanceStateRepository:

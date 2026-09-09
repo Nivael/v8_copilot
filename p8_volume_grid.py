@@ -23,15 +23,13 @@ from p8_walk_forward_basket import load_trade_states
 from settings import (ANNOUNCEMENT_REFRESH_DIR, DATA_ROOT, MARKET_ACTIVITY_DB,
                       MARKET_CONTEXT_DB, P8_QFQ_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB)
 
+from canonical_json import digest
+
 ROOT = Path(__file__).resolve().parent
 CONFIG = ROOT / "p8_grid_config.json"
 BASE = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
 FOCUS = "low_flat"
 CAP_WORDS = ("转增", "让渡", "缩股", "股份注销", "股本变动", "股本变化")
-
-
-def digest(value):
-    return hashlib.sha256(canonical_json(value).encode()).hexdigest()
 
 
 def in_window(rows, start, end):

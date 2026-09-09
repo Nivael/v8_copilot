@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -12,19 +11,10 @@ from data_refresh import TushareHttpClient, atomic_write_json
 from market_activity import MarketActivityBootstrapService, MarketActivityRepository
 from settings import MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB
 
+from provider_env import load_provider_env as _load_env
+
 
 EXPECTED_CONTRACT = "v8_p8_backtest_dry_plan_v1"
-
-
-def _load_env(path: Path | None) -> None:
-    if path is None:
-        return
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
 
 class RetryingActivityProvider:

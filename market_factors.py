@@ -13,6 +13,8 @@ from pydantic import BaseModel, ConfigDict, Field
 from data_refresh import atomic_write_json
 from market_context import MarketContextRepository
 
+from canonical_json import canonical_json as _canonical
+
 
 MARKET_FACTOR_CONTRACT_VERSION = "v8_market_factors_v1"
 MARKET_FACTOR_MANIFEST_VERSION = "v8_market_factor_manifest_v1"
@@ -61,13 +63,6 @@ def _iso_date(value: str, *, field: str) -> str:
         return date.fromisoformat(str(value)[:10]).isoformat()
     except (TypeError, ValueError) as exc:
         raise ValueError(f"{field} 必须是 YYYY-MM-DD: {value!r}") from exc
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(
-        value, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
-        default=str,
-    )
 
 
 def _ten_thousand(value: Any) -> float | None:

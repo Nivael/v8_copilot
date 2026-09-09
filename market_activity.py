@@ -1,7 +1,6 @@
 """Append-only P7 market activity facts and resumable date-only maintenance."""
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import sqlite3
@@ -13,6 +12,8 @@ from typing import Any, Callable, Literal, Protocol
 from pydantic import BaseModel, ConfigDict, Field
 
 from data_refresh import atomic_write_json
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 CONTRACT_VERSION = "market_activity_v1"
@@ -98,14 +99,6 @@ class ActivityProvider(Protocol):
     def fetch_daily_basic(self, *, trade_date: str) -> list[dict[str, Any]]: ...
     def fetch_suspend_daily(self, *, trade_date: str) -> list[dict[str, Any]]: ...
     def fetch_stock_limits(self, *, trade_date: str) -> list[dict[str, Any]]: ...
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _iso(value: Any, *, field: str = "date") -> str:

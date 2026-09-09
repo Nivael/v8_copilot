@@ -12,6 +12,8 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from canonical_json import canonical_json, digest
+
 
 STORE_VERSION = "p8_research_v1"
 FORBIDDEN_CLAIM_TERMS = (
@@ -121,14 +123,6 @@ class P8Manifest(StrictModel):
     run_digests_by_kind: dict[str, str]
     generated_at: str
     content_digest: str = Field(pattern=r"^[a-f0-9]{64}$")
-
-
-def canonical_json(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def digest(value: Any) -> str:
-    return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
 def content_id(prefix: str, value: Any) -> str:

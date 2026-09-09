@@ -7,7 +7,7 @@ from typing import Any, Callable, Mapping
 
 from pydantic import BaseModel, ValidationError
 
-from evals.deterministic_router_v0 import RoutePrediction, route_question
+from deterministic_router import RoutePrediction, route_question
 from llm.boundaries import LLM_FORBIDDEN_WORDING
 from llm.config import LLMConfigurationError, resolve_model
 from llm.providers import LLMProviderError, StructuredLLMProvider

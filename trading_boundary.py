@@ -3,6 +3,12 @@ from __future__ import annotations
 
 import re
 
+FORBIDDEN_WORDING = [
+    "买入", "卖出", "加仓", "减仓", "目标价", "建议持有", "买卖点",
+    "应该买", "应该卖", "推荐买", "推荐卖", "止损", "止盈", "仓位",
+    "target price", "position sizing",
+]
+
 
 _DIRECT_TERMS = (
     "目标价", "仓位", "买入", "卖出", "加仓", "减仓", "抄底", "割肉",

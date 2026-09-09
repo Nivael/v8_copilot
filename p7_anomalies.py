@@ -1,7 +1,6 @@
 """Leakage-safe P7 turnover anomaly features and activity episodes."""
 from __future__ import annotations
 
-import hashlib
 import json
 import sqlite3
 import statistics
@@ -13,6 +12,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from market_activity import MarketActivityFact
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 CONTRACT_VERSION = "p7_activity_anomaly_v1"
@@ -90,14 +91,6 @@ class AnomalyRun(StrictModel):
     episode_counts: dict[str, int]
     anomalies: list[ActivityAnomaly]
     episodes: list[ActivityEpisode]
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _id(prefix: str, *parts: Any) -> str:

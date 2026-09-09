@@ -27,6 +27,10 @@ from settings import (
     VALUATION_EPISODE_DB,
 )
 
+from sqlite_access import connect_ro as _connect_ro
+
+from canonical_json import digest as _digest
+
 
 CONTRACT_VERSION = "v8_p8_backtest_dry_plan_v1"
 START_DATE = "2021-03-17"
@@ -40,14 +44,6 @@ DEFAULT_BASE_DB = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backu
 CONTRACT_FILE = Path(__file__).resolve().parent / "V8_P8_BACKTEST_DRY_PLAN_CONTRACT.md"
 
 
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
-
-
 def _file_digest(path: Path) -> str:
     if not path.is_file():
         return ""
@@ -56,10 +52,6 @@ def _file_digest(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
 def _git_provenance(repo: Path) -> dict[str, str]:

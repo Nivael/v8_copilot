@@ -55,14 +55,10 @@ from experience_review import (
     build_review_queue,
     validate_decision_export,
 )
-from llm_adapter import (
-    openai_configured,
-    orchestrate_optional_llm,
-    orchestrate_optional_llm_result,
-)
+from llm_adapter import openai_configured
+from answer_pipeline import answer, answer_deterministic
 from orchestrator import route_only
-from orchestrator_v1 import enrich_response_v1
-from orchestrator_v2 import enrich_response_v2, stream_events_v2
+from orchestrator_v2 import stream_events_v2
 from research_repository import (
     EvidencePackAuditRecord,
     ExperienceRepository,
@@ -113,21 +109,12 @@ class SPAStaticFiles(StaticFiles):
 
 def orchestrate(request: ResearchRequest) -> ResearchResponseV2:
     """Patchable API boundary used by JSON and NDJSON endpoints."""
-    llm_result = orchestrate_optional_llm_result(request)
-    response_v1 = enrich_response_v1(request, llm_result.response)
-    return enrich_response_v2(
-        request, response_v1, narrative_override=llm_result.narrative
-    )
+    return answer(request)
 
 
 def orchestrate_deterministic(request: ResearchRequest) -> ResearchResponseV2:
     """Return the validated local answer without waiting for an LLM provider."""
-    local_request = request.model_copy(update={"llm_mode": "off"})
-    response_v1 = enrich_response_v1(
-        local_request,
-        orchestrate_optional_llm(local_request),
-    )
-    return enrich_response_v2(local_request, response_v1)
+    return answer_deterministic(request)
 
 app = FastAPI(
     title="ST Research Copilot API",

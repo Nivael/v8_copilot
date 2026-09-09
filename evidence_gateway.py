@@ -1,7 +1,6 @@
 """Read-only adapter from the deterministic v8 engine to Codex EvidencePacks."""
 from __future__ import annotations
 
-import hashlib
 import json
 from datetime import datetime, timezone
 from typing import Any, Literal
@@ -10,11 +9,11 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from api_contract import ClaimBacking, ResearchRequest
 from api_contract_v2 import ResearchNarrative
-from llm_adapter import orchestrate_optional_llm
-from orchestrator_v1 import enrich_response_v1
-from orchestrator_v2 import enrich_response_v2
+from answer_pipeline import answer_deterministic as _deterministic_response
 from freshness_manifest import load_freshness_manifest
 from settings import FRESHNESS_MANIFEST_PATH
+
+from canonical_json import canonical_json as _canonical_json, digest as _digest
 
 
 EVIDENCE_PACK_VERSION = "v8_evidence_pack_v2"
@@ -159,21 +158,6 @@ class ValidationReport(StrictModel):
 class DraftValidationRequest(StrictModel):
     evidence_pack: EvidencePack
     draft: ResearchDraft
-
-
-def _canonical_json(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical_json(value).encode("utf-8")).hexdigest()
-
-
-def _deterministic_response(request: ResearchRequest):
-    local_request = request.model_copy(update={"llm_mode": "off"})
-    base = orchestrate_optional_llm(local_request)
-    response_v1 = enrich_response_v1(local_request, base)
-    return enrich_response_v2(local_request, response_v1)
 
 
 def _catalog(answer_card: dict[str, Any]) -> dict[str, str]:

@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import re
@@ -24,6 +23,8 @@ from settings import (
     EXPERIENCE_REPOSITORY_DB,
     PROJECT_ROOT,
 )
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 REGISTRY_CONTRACT_VERSION = "v8_accepted_experience_registry_v1"
@@ -121,14 +122,6 @@ class RegressionExecutor(Protocol):
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _atomic_write(path: Path, payload: dict[str, Any]) -> None:

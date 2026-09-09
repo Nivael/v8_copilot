@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import sqlite3
 import threading
 import time
@@ -16,6 +15,8 @@ from typing import Any, Callable
 from data_refresh import TushareHttpClient, TusharePriceBatch, atomic_write_json
 from p8_research import canonical_json
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, P8_QFQ_DB
+
+from provider_env import load_provider_env as _load_env
 
 
 CONTRACT_VERSION = "v8_p8_qfq_overlay_v1"
@@ -31,18 +32,6 @@ def _client() -> TushareHttpClient:
         client = TushareHttpClient()
         _thread_local.client = client
     return client
-
-
-def _load_env(path: Path | None) -> None:
-    if path is None:
-        return
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        if key.strip() in {"TUSHARE_TOKEN", "TUSHARE_HTTP_URL"}:
-            os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
 
 def _connect(path: Path) -> sqlite3.Connection:

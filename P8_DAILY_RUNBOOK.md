@@ -15,6 +15,16 @@ P8 只消费已经完成的 P6/P7 和公开市场数据，不回写它们。下�
 
 ## 核心命令
 
+`--dry-plan-json` 的生产者是 `p8_dry_plan.py`。首次建立或显式重建冻结盘点时：
+
+```bash
+python p8_dry_plan.py --as-of YYYY-MM-DD \
+  --output-json <local_data>/p8_0_dry_plan_v1.json
+```
+
+该命令只盘点本地输入，不申请 provider 或正文外发。检查盘点状态及冻结 profile 后再交给
+日更入口；已有冻结计划在日更中直接复用，不为追求速度或更好的结果自动重建。
+
 常规日更优先使用唯一入口。它会按固定顺序完成八类物化、离线面板和 current manifest；任一
 步骤失败都不会发布半套结果：
 

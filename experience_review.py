@@ -1,7 +1,6 @@
 """Compressed, human-readable review queue for reusable research experience."""
 from __future__ import annotations
 
-import hashlib
 import json
 from datetime import datetime, timezone
 from typing import Literal
@@ -10,6 +9,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from experience_contract import ExperienceRecord, ExperienceStatus
 from research_repository import ExperienceRepository, ResearchRunLedger
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 REVIEW_VERSION = "v8_experience_batch_review_v1"
@@ -91,14 +92,6 @@ OPTIONS = [
     ReviewOption(value="reject", label="不沉淀", description="转为 ignored，不进入经验库。"),
     ReviewOption(value="defer", label="稍后再看", description="保留 candidate，不产生可复用规则。"),
 ]
-
-
-def _canonical(value: object) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: object) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def build_review_queue(

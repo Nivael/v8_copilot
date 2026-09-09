@@ -5,7 +5,6 @@ import argparse
 import hashlib
 import json
 import re
-import sqlite3
 import statistics
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -30,6 +29,8 @@ from settings import (
     P8_RESEARCH_DB,
     VALUATION_EPISODE_DB,
 )
+
+from sqlite_access import connect_ro as _connect_ro
 
 
 CONTRACT_VERSION = "p8_precursor_graph_v1"
@@ -213,14 +214,6 @@ class EventGraphResult(StrictModel):
     llm_completed_count: int
     frontiers: list[CompanyFrontier]
     events: list[P8DerivedEvent]
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def _normalize(text: str) -> str:

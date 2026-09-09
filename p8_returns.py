@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import sqlite3
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Literal
@@ -17,6 +16,8 @@ from settings import (
     DATA_ROOT, MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB, MARKET_FACTOR_DB, P8_RESEARCH_DB,
     VALUATION_EPISODE_DB,
 )
+
+from sqlite_access import connect_ro as _connect_ro
 
 
 CONTRACT_VERSION = "p8_stage_return_paths_v1"
@@ -79,14 +80,6 @@ class ReturnMaterializationResult(StrictModel):
     delisted_path_count: int
     exact_old_shareholder_path_count: int
     entry_tradeability_status_counts: dict[str, int]
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def _file_digest(path: Path) -> str:

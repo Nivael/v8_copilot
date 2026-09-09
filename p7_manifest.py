@@ -11,9 +11,7 @@ from p7_anomalies import AnomalyRun
 from p7_announcements import AnnouncementRun
 from p7_daily import LinkageRun
 
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
+from canonical_json import canonical_json as _canonical
 
 
 def build_p7_manifest(

@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import html
 import json
 from collections import defaultdict, deque
@@ -15,13 +14,11 @@ from p8_research import P8ResearchRepository, canonical_json
 from p8_regimes import regime_for_date
 from settings import P8_RESEARCH_DB
 
+from canonical_json import digest as _digest
+
 
 REVIEW_VERSION = "p8_llm_gold_review_v1"
 MAX_BATCH = 60
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
 def _eligible(events: list[dict[str, Any]]) -> list[dict[str, Any]]:

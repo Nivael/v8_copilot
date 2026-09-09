@@ -2,10 +2,8 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import math
-import sqlite3
 import statistics
 from collections import defaultdict
 from pathlib import Path
@@ -17,22 +15,14 @@ from p8_backtest_v2 import CONTRACT_VERSION, TEST_YEARS, _benchmarks, _calendar_
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
 from settings import DATA_ROOT, MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB, P8_QFQ_DB, P8_RESEARCH_DB
 
+from sqlite_access import connect_ro as _connect_ro
+
+from canonical_json import digest as _digest
+
 
 PRIMARY_COST = 0.005
 SENSITIVITY_COSTS = (0.002, 0.010)
 DEFAULT_BASE_DB = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
 def _fallback_trade_states(path: Path, start: str, through: str) -> dict[tuple[str, str], dict[str, bool]]:

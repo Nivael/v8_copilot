@@ -7,7 +7,7 @@ from api_contract import (
     ResearchRequest,
     RouteDecision,
 )
-from evals.deterministic_router_v0 import route_question
+from deterministic_router import route_question
 from stock_resolver import resolve_stock, resolve_stocks
 from trading_boundary import is_trading_advice_request
 

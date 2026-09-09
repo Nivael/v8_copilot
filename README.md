@@ -43,6 +43,8 @@ uv run python run_api.py
 
 脚本耗时定位、P8C 实测提速与可重复对照命令见
 [RESEARCH_PERFORMANCE.md](RESEARCH_PERFORMANCE.md)。
+第二轮公共函数合并、依赖修正及原精简方案的复核见
+[CODE_SIMPLIFICATION_REVIEW.md](CODE_SIMPLIFICATION_REVIEW.md)。
 
 `run_api.py` 只绑定 `127.0.0.1`，默认端口 `8765`。canonical 目录布局无需额外配置；
 若独立 worktree 不与 `shared_data/` 同级，使用 `V8_DATA_ROOT` 指向包含

@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import re
 import sqlite3
 import threading
@@ -20,6 +19,8 @@ from pydantic import BaseModel, ConfigDict, Field
 from data_refresh import TushareHttpClient
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, P8_RESEARCH_DB
+
+from provider_env import load_provider_env as _load_env_file
 
 
 CONTRACT_VERSION = "p8_chip_proxy_v1"
@@ -286,18 +287,6 @@ def materialize_chip_proxies(
         provider_request_count=request_count, cache_hit_count=cache_hits,
         failed_request_count=failures, records=records,
     )
-
-
-def _load_env_file(path: Path | None) -> None:
-    if path is None:
-        return
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        if key.strip() in {"TUSHARE_TOKEN", "TUSHARE_HTTP_URL"}:
-            os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
 
 def main() -> int:

@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import sqlite3
 from collections import Counter
 from pathlib import Path
 
@@ -24,6 +23,8 @@ from settings import (
     P8_QFQ_DB, P8_RESEARCH_DB,
 )
 
+from sqlite_access import connect_ro as _connect_ro
+
 
 DEFAULT_BASE_DB = DATA_ROOT / "shared_data/v5/backup_universe/st_stocks_v5_backup.sqlite3"
 
@@ -42,14 +43,6 @@ class ActivityMaterializationResult(BaseModel):
     point_in_time_market_value_count: int
     strict_single_day_input_count: int
     outcome_inputs_consumed: bool = False
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def _file_digest(path: Path) -> str:

@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 from typing import Callable, TypeVar
 
-from answer_engine import BASE_DB
+from settings import BASE_DB
 from data_refresh import (
     AnnouncementRefreshService,
     CninfoHttpClient,

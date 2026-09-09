@@ -54,3 +54,23 @@ def test_holder_history_run_is_point_in_time_and_outcome_blind(tmp_path: Path) -
     assert result["record_count"] == 1
     assert result["outcomes_read"] is False
     assert result["returns_computed"] is False
+
+
+def test_failed_holder_request_is_partial_and_not_cached_as_empty_success(tmp_path):
+    class UnavailableProvider:
+        def fetch_holder_numbers(self, **kwargs):
+            raise TimeoutError("provider unavailable")
+
+    context = tmp_path / "context.sqlite3"
+    _context(context)
+    options = dict(market_context_database=context,
+                   repository=P8ResearchRepository(tmp_path / "p8.sqlite3"),
+                   cache_dir=tmp_path / "cache", allow_provider=True, workers=1, attempts=1)
+    failed = backfill_holder_history(**options, client_factory=UnavailableProvider)
+    assert failed["status"] == "partial"
+    assert failed["failed_symbols"] == ["000001"]
+    assert failed["record_count"] == 0
+    recovered = backfill_holder_history(**options, client_factory=FakeProvider)
+    assert recovered["status"] == "complete"
+    assert recovered["record_count"] == 1
+    assert recovered["cache_hit_count"] == 0

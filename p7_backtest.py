@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import argparse
 from bisect import bisect_left
-import hashlib
 import html
 import json
 import math
@@ -30,6 +29,8 @@ from p7_anomalies import ActivityAnomaly
 from p7_announcements import AnnouncementBundle, AnnouncementFact, IssuerTransition
 from p7_daily import load_valuation_stage_map
 from settings import MARKET_CONTEXT_DB, P7_INTELLIGENCE_DB, VALUATION_EPISODE_DB
+
+from canonical_json import canonical_json as _canonical, digest as _digest
 
 
 CONTRACT_VERSION = "p7_retrospective_backtest_v1"
@@ -82,14 +83,6 @@ class P7BacktestReport(StrictModel):
     release_interpretation: dict[str, str]
     limitations: list[str]
     risk_notice: str = RISK_NOTICE
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
 def _wilson(successes: int, observations: int) -> list[float] | None:

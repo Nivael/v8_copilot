@@ -17,9 +17,9 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from answer_engine import BASE_DB, EPISODE_INDEX, EPISODE_MANIFEST, SHAREHOLDER_DB
 from lens_binding import RELEASE_LIBRARY
 from settings import (
+    BASE_DB, EPISODE_INDEX, EPISODE_MANIFEST, SHAREHOLDER_DB,
     ANNOUNCEMENT_BODY_CACHE_DIR,
     ANNOUNCEMENT_REFRESH_DIR,
     DATA_MAINTENANCE_DB,
@@ -27,6 +27,8 @@ from settings import (
     RECRUITMENT_DEADLINE_MATERIALIZATION,
 )
 from snapshot_metadata import load_episode_snapshot, load_price_snapshot, load_table_snapshot
+
+from canonical_json import canonical_json as _canonical
 
 
 FRESHNESS_MANIFEST_VERSION = "v8_freshness_manifest_v1"
@@ -68,10 +70,6 @@ class FreshnessManifest(StrictModel):
     sources: list[SourceFreshness]
     blocking_gaps: list[str] = Field(default_factory=list)
     coverage_gaps: list[str] = Field(default_factory=list)
-
-
-def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
 
 
 def _iso_date(value: str, *, field: str) -> str:

@@ -6,7 +6,6 @@ import hashlib
 import json
 import math
 import random
-import sqlite3
 import statistics
 from bisect import bisect_left
 from collections import Counter, defaultdict
@@ -20,6 +19,8 @@ from p8_event_graph import SPEC_BY_NODE
 from p8_research import P8ResearchRepository, build_run, canonical_json, content_id
 from p7_daily import load_valuation_stage_map
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
+
+from sqlite_access import connect_ro as _connect_ro
 
 
 CONTRACT_VERSION = "v8_p8_backtest_v1"
@@ -52,14 +53,6 @@ class P8BacktestReport(StrictModel):
     limitations: list[str]
     evidence_status: str = "descriptive_only"
     not_a_trading_signal: bool = True
-
-
-def _connect_ro(path: Path) -> sqlite3.Connection:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    connection = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
 
 
 def _calendar(path: Path, start_date: str, through: str) -> list[str]:

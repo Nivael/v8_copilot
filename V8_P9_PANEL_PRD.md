@@ -165,10 +165,17 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
   这是本体定义；正确文案是“该节点为终结点，无声明后继”。
 - **未声明后继独立成诊断区**：实际观察到但不在声明边内的后继不计入频率，也不隐藏。
 - **固定观察期 H 必须显示**：同一单元在 H=60 与 H=120 下 N 与中位间隔不同。
+- **N 不能单独充当频率**：每个频率单元必须同时显示起点风险集、右删失数、
+  **可观察分母**（= 起点风险集 − 右删失）与公司数；缺任一项则不渲染该频率。
+  同一起点节点的多个单元**共享同一可观察分母**，各行频率不互斥、不可相加。
+- **非交易日口径必须声明并显示**（见 §12 第 6 项）。
 
-**P9D 前置核对已完成**，方法与结果见 [P9D_TRANSITION_AUDIT.md](P9D_TRANSITION_AUDIT.md)：
-严格口径（`deterministic_verified` 起点、只认声明边、H=60 交易日、单元级 N ≥ 8 且 ≥ 5 家）下
-**只有 5 个后继单元可出频率**；16 个节点中 **11 个在 verified 等级没有任何起点事件**。
+**P9D 前置核对已完成**，方法与结果见 [P9D_TRANSITION_AUDIT.md](P9D_TRANSITION_AUDIT.md)，
+可复算基准为 [`p9_transition_audit.py`](p9_transition_audit.py)（版本
+`p9_transition_audit_v1`，只读）与 [`tests/test_p9_transition_audit.py`](tests/test_p9_transition_audit.py)
+（12 项合成回归 + 7 项真实数字锁定）。严格口径（`deterministic_verified` 起点、只认声明边、
+H=60 交易日、单元级 N ≥ 8 且 ≥ 5 家）下**只有 5 个后继单元可出频率**；
+16 个节点中 **11 个在 verified 等级没有任何起点事件**。
 因此第一版分区 A 只开这 5 个单元（`investor_recruitment → investor_agreement_signed`、
 `restructuring_application_disclosed → formal_restructuring_accepted`、
 `restructuring_application_disclosed → pre_restructuring_started`、
@@ -312,7 +319,12 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 4. 面板全程只读：以只读 URI 打开研究库，任何写入尝试必须失败（fault injection）；
 5. 禁词测试覆盖全部新增前端文案与后端 payload；
 6. 前端测试 + lint + build 通过，后端全量 pytest 无新增失败；
-7. 单票（如 603398 沐邦、600337、603959）走通“追踪台 → 单标的工作台 → 情景频率 → 提问”闭环。
+7. 单票（如 603398 沐邦、600337、603959）走通“追踪台 → 单标的工作台 → 情景频率 → 提问”闭环；
+8. P9D 频率数字可复算：`p9_transition_audit.py` 在固定 manifest 下重跑结果与
+   [P9D_TRANSITION_AUDIT.md](P9D_TRANSITION_AUDIT.md) §4.2 一致，且
+   `tests/test_p9_transition_audit.py` 全绿（含 5 个单元、`plan_approved → plan_executed`
+   的 N=1、四个终结点、未声明后继不成单元）；面板展示的每个频率都能回溯到
+   「起点风险集 + 右删失 + 可观察分母 + 公司数 + H + 声明边」。
 
 ## 12. 开放问题（需 owner 决定）
 
@@ -323,3 +335,8 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 5. **正文 LLM 外发授权**是否在本轮内解决？它可能补足 `event_frontier` 所需的正文核证，
    但还需抽取质量、证据校验与通道门槛验收；`scenario_tension` 另需公司自身同 claim
    老股东权益输入闭合。授权也不保证 163 只无已观察节点的标的都会改善。
+6. **非交易日公告口径**（P9D 新增）：91 条事件（5.9%）的 `available_as_of` 落在周末/假日。
+   基线口径 `exclude`（排除出风险集）与 P8 PRD §3.3 的 `next_trading_day`（滚到下一交易日）
+   会给出不同数字——它直接改变 `plan_approved → plan_executed` 的 N（1 → 2）与 verdict。
+   两种口径都已实现并锁定回归，需 owner 二选一后固化进面板。详见
+   [P9D_TRANSITION_AUDIT.md](P9D_TRANSITION_AUDIT.md) §4.4。

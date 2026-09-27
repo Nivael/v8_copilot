@@ -157,19 +157,40 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
 - 右删失：尚未结束的必须计入 `right_censored`，**不得算作失败**；简单占比必须注明
   固定观察期限和该期限内可观察的分母。观察期不足时只列原始点与删失数，不报“后继频率”；
   间隔分位仅在口径一致且样本门通过时展示。
-- 头部节点（≥100 条：`risk_warning_removed` 307、`restructuring_application_disclosed` 271、
-  `plan_key_terms_disclosed` 181、`creditor_claims` 172、`delisting_decision` 148、
-  `investor_agreement_signed` 126、`creditor_meeting` 118、`investor_recruitment` 111、
-  `formal_restructuring_accepted` 103）**仅是优先审计候选**；逐层证据与已观察转移达门槛后
-  才可出频率。尾部节点（≤25）也按实际风险集判定，通常降级为原始点列表。
+- **门槛施加在“起点 → 后继”单元上，不是只施加在起点风险集上**。起点过门但某后继单元
+  N=1 时，该单元只能列原始点（实测反例：`plan_approved` 起点 8 条 / 8 家，
+  但其唯一后继单元 `plan_approved → plan_executed` 只有 N=1）。
+- **终结点不得渲染成 0% 后继**：`risk_warning_removed`、`delisting_decision`、
+  `restructuring_terminated`、`restructuring_rejected` 的 `possible_successors` 为空，
+  这是本体定义；正确文案是“该节点为终结点，无声明后继”。
+- **未声明后继独立成诊断区**：实际观察到但不在声明边内的后继不计入频率，也不隐藏。
+- **固定观察期 H 必须显示**：同一单元在 H=60 与 H=120 下 N 与中位间隔不同。
+
+**P9D 前置核对已完成**，方法与结果见 [P9D_TRANSITION_AUDIT.md](P9D_TRANSITION_AUDIT.md)：
+严格口径（`deterministic_verified` 起点、只认声明边、H=60 交易日、单元级 N ≥ 8 且 ≥ 5 家）下
+**只有 5 个后继单元可出频率**；16 个节点中 **11 个在 verified 等级没有任何起点事件**。
+因此第一版分区 A 只开这 5 个单元（`investor_recruitment → investor_agreement_signed`、
+`restructuring_application_disclosed → formal_restructuring_accepted`、
+`restructuring_application_disclosed → pre_restructuring_started`、
+`pre_restructuring_started → investor_recruitment`、
+`investor_recruitment → investor_selected`），其余按三态降级：
+`frequency` / `raw_points_only` / `sample_insufficient`。
+此前「头部节点（≥100 条）可出频率」的表述**已作废**——节点事件数与已观察转移数是两个量。
 
 ### 6.2 分区 B：阶段条件收益路径分布（2,233 条路径）
 
 - 按 `stage × calendar_half × board` 分层，展示 5/10/20/60 日：
   个股 qfq 收益、相对 ST 等权超额、相对中证2000 超额的中位与 P25/P75；
 - **退市路径（448 条）必须留在分母**并单独标注；
-- `capital_structure_status = changed`（汇总计数 958，粒度须由 P9E 核对）必须打
-  `old_equity_return_contaminated`；不得把该计数直接作为 2,233 条路径的比例分子；
+- **`capital_structure_status` 是 horizon 级字段，不是 path 级**（已核对）：2,233 条路径
+  × 4 个 horizon = **8,932 条 horizon 观察**，`changed` 958 / `unchanged_observed` 7,218 /
+  `unknown` 756 三者合计 8,932。标记 `old_equity_return_contaminated` 必须落在
+  被展示的那个 horizon 上；**不得写成“958/2,233 条路径被污染”**；
+- **相对中证2000 的覆盖显著低于相对 ST**（已核对）：H=60 时 `excess_return_st` 有 1,928/2,233，
+  而 `excess_return_csi2000` 只有 **1,143/2,233（51.2%）**——因中证2000 源端历史自
+  2023-08-11 起。该列必须显示自身分母，缺端点显式 gap，不得静默缩短窗口；
+- `right_censored` 同样是 horizon 级：H=5 103 条、H=10 114 条、H=20 230 条、H=60 305 条，
+  必须在同一单元内报告；
 - **只出价格路径**：`exact_old_shareholder_path_count = 0`，面板不得出现“老股东权益回报”字样；
 - 入场可交易性只有 489/2,233 核证，**不得宣称可交易**；`entry_tradeability_status` 必须随图显示。
 
@@ -277,7 +298,7 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 | P9A | `panel_local_v1.sqlite3` + 自选股/视图本地库 + `not_evidence` 测试 | 自选写入不触碰任何研究库（集成测试证明） |
 | P9B | `/api/v1/p9/tracking` + `/tracking` 表格 + 分层 as_of + 缺口块 | A 类字段 100% 可填；B 类显式 unknown；C 类显式缺口 |
 | P9C | 单标的工作台五轨时间线 + 证据分色 + 相对收益 | 三个证据等级视觉可辨；无 `steps_to_next` |
-| P9D | 先审计已观察转移与风险集，再做 `/scenarios` 分区 A | 样本门按展示层执行；频率按证据等级拆开；固定观察期限、`relaxation_path` 与右删失可复算；不达门槛则只列原始点 |
+| P9D | ~~先审计已观察转移与风险集~~（**前置核对已完成，见 [P9D_TRANSITION_AUDIT.md](P9D_TRANSITION_AUDIT.md)**）→ 再做 `/scenarios` 分区 A，只开 5 个达标单元 | 单元级样本门（N ≥ 8 且 ≥ 5 家）按展示层执行；频率按证据等级拆开；固定观察期 H、`relaxation_path` 与右删失可复算；终结点不出频率；未声明后继独立诊断；不达门槛只列原始点 |
 | P9E | `/scenarios` 分区 B/C + `p*` 槽位 | 退市路径留分母；污染标记；三类不合并；`p*` 显式不可用 |
 | P9F | `/daily` 并入 P8 漏斗与四通道状态 | 4 条 + 100 overflow 如实显示；keep 不回流 |
 | P9G | 探索页签（P8C-v3.1）+ 措辞门回归 | `validate_research_language` 全绿；exploratory 常显 |

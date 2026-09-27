@@ -39,7 +39,8 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
 2. **“概率”被压成了单点结论。** 用户真正想知道的是“从 investor_recruitment 这个阶段出发，
    历史上类似的公司后来发生了什么、要等多久”。数据**已经够算**
    （1,773 事件 / 1,294 条带后继 / 2,233 条收益路径），但现在只以
-   `scorecard` 形式存在 JSON 里，没有面向追问的视图。
+   `scorecard` 形式存在 JSON 里，没有面向追问的视图。现有事件量只是候选样本规模，
+   **不能直接证明观察到的后继转移和间隔足以估计频率**；P9D 须先完成转移队列审计。
 3. **缺口不可见。** `p* = 0 条可算`、三类参考分布全空、80.3% 的当前成员没有事件前沿——
    这些如果不在界面上显式呈现，用户会默认“没显示 = 没发生”。
 
@@ -58,7 +59,8 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
 1. **不得把频率称作“概率”**。统一措辞：`历史条件频率`（historical conditional frequency）、
    `情景插值权重`（`p*`）。禁止出现“成功概率”“上涨概率”“胜率”。
 2. **样本门槛冻结**（与 P8 §3.3 一致）：N ≥ 8 例且 ≥ 5 家才出分布/分位；
-   2–7 例**只列原始点**；0–1 例**明写“样本不足”**。门槛不因结果好看而放宽。
+   2–7 例**只列原始点**；0–1 例**明写“样本不足”**。样本门按每个实际展示的
+   层键、证据等级、节点及收益窗口分别判定，门槛不因结果好看而放宽。
 3. **`p*` 永远不叫概率**，且只在公司自身同一 claim 的成功/失败老股东权益输入闭合时才计算；
    当前状态为不可用，面板必须显式说明原因。
 
@@ -108,7 +110,7 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
 **硬规则**：
 
 - 每行的 `as_of` 按来源分开显示，**不得合并成单一 as_of**（DESIGN.md §6）。
-- 排序默认按“有无最近新事实”，可切换阶段/市值/股东户数变化；**不提供任何收益排序或综合打分**
+- 排序默认按“有无最近新事实”（按该事实自身的 `available_as_of`，而非页面打开时间），可切换阶段/市值/股东户数变化；**不提供任何收益排序或综合打分**
   （P8 PRD §6.3 已否决未校准加权总分）。
 - 自选标记是本地面，不参与排序权重。
 
@@ -145,23 +147,29 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
 
 ### 6.1 分区 A：阶段后继频率（回答“接下来通常发生什么、等多久”）
 
-- 交互：选一个起点节点（16 个节点）× 可选风险类型/板块/制度版本；
+- 交互：选一个起点节点（本次盘点列出 16 种）× 可选风险类型/板块/制度版本；
 - 输出：**后继频率表** — 后继节点、观察到次数、占比、中位间隔交易日、P25/P75；
-- **必须按证据等级拆成三列**（verified / provisional / title_derived），不得合并；
+- **必须按证据等级拆开**（deterministic_verified / provisional / title_derived），不得合并；
 - **必须显示 `relaxation_path`**（精确层 → 去板块 → 相邻阶段组 → 18 月 → 24 月 → 只列原始点）；
 - 样本门：N ≥ 8 且 ≥ 5 家才给占比；否则只列原始事件点；
-- 右删失：尚未结束的必须计入 `right_censored`，**不得算作失败**；
+- 先以已观察的起点事件建立去重的公司／episode 风险集，限定观察起止与可得时间，核对
+  实际后继事件、同日多节点及重复公告。`possible_successors` 只是图谱允许边，**不得当作已发生转移**。
+- 右删失：尚未结束的必须计入 `right_censored`，**不得算作失败**；简单占比必须注明
+  固定观察期限和该期限内可观察的分母。观察期不足时只列原始点与删失数，不报“后继频率”；
+  间隔分位仅在口径一致且样本门通过时展示。
 - 头部节点（≥100 条：`risk_warning_removed` 307、`restructuring_application_disclosed` 271、
   `plan_key_terms_disclosed` 181、`creditor_claims` 172、`delisting_decision` 148、
   `investor_agreement_signed` 126、`creditor_meeting` 118、`investor_recruitment` 111、
-  `formal_restructuring_accepted` 103）可出频率；尾部节点（≤25）自动降级为原始点列表。
+  `formal_restructuring_accepted` 103）**仅是优先审计候选**；逐层证据与已观察转移达门槛后
+  才可出频率。尾部节点（≤25）也按实际风险集判定，通常降级为原始点列表。
 
 ### 6.2 分区 B：阶段条件收益路径分布（2,233 条路径）
 
 - 按 `stage × calendar_half × board` 分层，展示 5/10/20/60 日：
   个股 qfq 收益、相对 ST 等权超额、相对中证2000 超额的中位与 P25/P75；
 - **退市路径（448 条）必须留在分母**并单独标注；
-- `capital_structure_status = changed`（958 条）必须打 `old_equity_return_contaminated`；
+- `capital_structure_status = changed`（汇总计数 958，粒度须由 P9E 核对）必须打
+  `old_equity_return_contaminated`；不得把该计数直接作为 2,233 条路径的比例分子；
 - **只出价格路径**：`exact_old_shareholder_path_count = 0`，面板不得出现“老股东权益回报”字样；
 - 入场可交易性只有 489/2,233 核证，**不得宣称可交易**；`entry_tradeability_status` 必须随图显示。
 
@@ -177,8 +185,8 @@ v8 目前把研究能力做进了 **CLI + 静态 HTML**，但**没有一个能�
 3. `public_node_reference`（511）— 四个公开节点在信息可得后首个可观察交易日的
    `old_equity_market_value` + 总市值 + 污染标记。
 
-**当前 `distribution_count = 0`**，因此第一版这三类只能显示原始条款/事实点，
-页面顶部常驻说明“同口径样本不足，仅列原始点”。
+**当前 `distribution_count = 0`**，因此第一版这三类只能显示原始条款/事实点；
+若该层只有 0–1 条，按样本门仅显示“样本不足”。页面顶部常驻说明“同口径分布不可用”。
 
 ### 6.4 `p*` 槽位
 
@@ -222,8 +230,9 @@ P9 在其后**追加 P8 候选漏斗段落**，并把静态 `p8_review_panel` �
 DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 
 1. **证据徽章**：`evidence / weak / anecdotal / query / lens_gap / data_debt / unknown` 七色。
-2. **每个数字带出处**：N、公司数、窗口、层键、`relaxation_path`、`evidence_status` 缺一不可；
-   缺任一项的数字不得渲染。
+2. **每个统计数字带可展开的出处**：N、公司数、窗口、层键、`relaxation_path`、
+   `evidence_status` 以及删失数（适用时）缺一不可；原始价格、日期等事实按自身来源
+   与 `available_as_of` 标注。统计元数据缺失时隐藏该统计值并显示原因。
 3. **分层 as_of**：每个来源独立显示 as_of 与 `checked_through`，禁止单一 as_of 掩盖不同步。
 4. **缺口不美化**：C 类字段渲染成**明确的缺口块 + 原因**，不是空白、不是 0、不是灰色占位。
 5. **manifest 常显**：页脚固定显示 `P8M-B3010C21F760B075CC71` 与入口 digest。
@@ -245,7 +254,7 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
   - `GET /api/v1/p9/scenarios/returns?stage=&horizon=`
   - `GET /api/v1/p9/scenarios/references?family=`
   - `GET /api/v1/p9/funnel?as_of=`
-  - `POST/GET /api/v1/p9/watchlist`
+- `GET/POST /api/v1/p9/watchlist`，`PATCH/DELETE /api/v1/p9/watchlist/{symbol}`
 - 新增类型放 `api_contract_v3.py`（或 `panel_contract.py`），**不改动 `api_contract_v0/v1/v2.py`**。
 - 后端新增模块建议：`panel_tracking.py`、`panel_scenarios.py`、`panel_funnel.py`、
   `panel_local_store.py`；**不得 import P8C 量价或 P8D 排序模块进 P8A 参考路径**（沿用 P8 §2.4 反循环）。
@@ -268,7 +277,7 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 | P9A | `panel_local_v1.sqlite3` + 自选股/视图本地库 + `not_evidence` 测试 | 自选写入不触碰任何研究库（集成测试证明） |
 | P9B | `/api/v1/p9/tracking` + `/tracking` 表格 + 分层 as_of + 缺口块 | A 类字段 100% 可填；B 类显式 unknown；C 类显式缺口 |
 | P9C | 单标的工作台五轨时间线 + 证据分色 + 相对收益 | 三个证据等级视觉可辨；无 `steps_to_next` |
-| P9D | `/scenarios` 分区 A（后继频率） | 频率按证据等级拆列；样本门与 `relaxation_path` 生效；右删失单列 |
+| P9D | 先审计已观察转移与风险集，再做 `/scenarios` 分区 A | 样本门按展示层执行；频率按证据等级拆开；固定观察期限、`relaxation_path` 与右删失可复算；不达门槛则只列原始点 |
 | P9E | `/scenarios` 分区 B/C + `p*` 槽位 | 退市路径留分母；污染标记；三类不合并；`p*` 显式不可用 |
 | P9F | `/daily` 并入 P8 漏斗与四通道状态 | 4 条 + 100 overflow 如实显示；keep 不回流 |
 | P9G | 探索页签（P8C-v3.1）+ 措辞门回归 | `validate_research_language` 全绿；exploratory 常显 |
@@ -278,7 +287,7 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 1. A 类字段在 203 只当前成员上覆盖率与
    [P9_DATA_AVAILABILITY_AUDIT.md](P9_DATA_AVAILABILITY_AUDIT.md) 一致，误差 0；
 2. B 类字段的 unknown 不被静默填成默认值（专项测试：把 `unknown` 注入并断言渲染为 unknown）；
-3. C 类字段在界面上以缺口块出现，且**不渲染任何数字**；
+3. C 类推导值在界面上以缺口块出现，且**不渲染伪造的推导数字**；原始参考事实可带出处显示；
 4. 面板全程只读：以只读 URI 打开研究库，任何写入尝试必须失败（fault injection）；
 5. 禁词测试覆盖全部新增前端文案与后端 payload；
 6. 前端测试 + lint + build 通过，后端全量 pytest 无新增失败；
@@ -290,5 +299,6 @@ DESIGN.md §2「诚实分层可见」的工程化落实，四个视图共用：
 2. **`/scenarios` 分区 A 的默认起点**：默认展示全部 16 节点的总览，还是进入具体标的时以其当前阶段为起点？
 3. **C 类缺口的呈现强度**：缺口块是常驻可见，还是折叠在“证据与缺口”里（DESIGN.md §2 允许后者）？
 4. **P8C-v3.1 探索页签**是否第一版就做，还是等正文授权后与 `body_verified` 一起上？
-5. **正文 LLM 外发授权**是否在本轮内解决——它是 `event_frontier` 与 `scenario_tension`
-   两条通道从 unavailable 转 available 的唯一前置，也是 80.3% 无事件标的改善的前提。
+5. **正文 LLM 外发授权**是否在本轮内解决？它可能补足 `event_frontier` 所需的正文核证，
+   但还需抽取质量、证据校验与通道门槛验收；`scenario_tension` 另需公司自身同 claim
+   老股东权益输入闭合。授权也不保证 163 只无已观察节点的标的都会改善。

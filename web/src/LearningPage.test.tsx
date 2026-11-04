@@ -68,4 +68,19 @@ describe('LearningPage',()=>{
     expect(within(ledger).queryByText('0')).not.toBeInTheDocument()
     expect(within(ledger).getAllByText('—').length).toBeGreaterThan(0)
   })
+  it('keeps new market source dates separate from the old stock manifest',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{
+      source_id:'szse_nav',label:'深交所 · ETF净值',availability:'observed',requested_through:'2026-11-04',
+      observed_through_min:'2026-11-03',observed_through_max:'2026-11-03',observation_count:30,
+      series_at_target:0,declared_series:3,snapshot_digest:'abc',url:'https://fund.szse.cn/marketdata/etf/',fetched_at:'2026-11-05T00:00:00Z',note:'实际净值日期，不补值。',
+    }]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('2026-11-03')).toBeInTheDocument()
+    expect(within(section).getByText('30 条')).toBeInTheDocument()
+    expect(within(section).getByText('目标日期覆盖 0/3 条序列')).toBeInTheDocument()
+    expect(screen.getByText('59 天')).toBeInTheDocument()
+    expect(within(section).getByRole('link',{name:/查看大盘环境/})).toHaveAttribute('href','/market')
+  })
 })

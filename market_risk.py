@@ -12,10 +12,11 @@ from zoneinfo import ZoneInfo
 
 from canonical_json import digest
 from market_calendar import CALENDAR_VERSION, sessions_2026
+from market_periods import price_period_summary, recent_calendar_window
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, MARKET_CONTEXT_MANIFEST_PATH
 
 
-PARAMETER_VERSION = "market_risk_parameters_v1"
+PARAMETER_VERSION = "market_risk_parameters_v2"
 MARKET_RISK_DIR = DATA_ROOT / "local_data/v8_copilot/market_risk"
 ETF_BASKET = {
     "510300.SH": "沪深300", "510310.SH": "沪深300", "510330.SH": "沪深300", "159919.SZ": "沪深300",
@@ -58,22 +59,22 @@ def index_metrics(rows: list[dict[str, Any]], calendar: list[str]) -> dict[str, 
         window = days[-horizon - 1:]
         closes = [_number(points.get(day, {}).get("close")) for day in window]
         valid = len(window) == horizon + 1 and all(value is not None and value > 0 for value in closes)
-        results[f"return_{horizon}d_pct"] = round((closes[-1] / closes[0] - 1) * 100, 6) if valid else None
+        summary = price_period_summary(closes) if valid else price_period_summary([])
+        results[f"return_{horizon}d_pct"] = summary["return_pct"]
         if horizon == 60:
-            peak = closes[0] if valid else None
-            drawdowns = []
-            if valid:
-                for value in closes:
-                    peak = max(peak, value)
-                    drawdowns.append((value / peak - 1) * 100)
-            results["max_drawdown_60d_pct"] = round(min(drawdowns), 6) if valid else None
-            results["from_60d_peak_pct"] = round(drawdowns[-1], 6) if valid else None
+            results["max_drawdown_60d_pct"] = summary["max_drawdown_pct"]
+            results["from_60d_peak_pct"] = summary["from_peak_pct"]
     amounts = [_number(points.get(day, {}).get("amount")) for day in days[-20:]]
     valid_amount = len(amounts) == 20 and all(value is not None and value >= 0 for value in amounts) and sum(amounts) > 0
     results["amount_5d_to_20d_ratio"] = round((sum(amounts[-5:]) / 5) / (sum(amounts) / 20), 6) if valid_amount else None
     observed_days = [day for day in days if _number(points.get(day, {}).get("close")) is not None]
+    recent = recent_calendar_window(end)
+    recent_metrics = None
+    if recent["availability"] == "defined":
+        recent_metrics = {"start": recent["start"], "end": recent["end"], "sessions": recent["sessions"],
+                          **price_period_summary([_number(points.get(day, {}).get("close")) for day in recent["calendar"]])}
     return {"through": observed_days[-1] if observed_days else None,
-            "evaluation_through": end, "observation_count": len(observed_days), **results,
+            "evaluation_through": end, "observation_count": len(observed_days), "recent": recent_metrics, **results,
             "path": [{"date": day, "close": _number(points[day].get("close"))} for day in days if day in points]}
 
 
@@ -90,11 +91,14 @@ def etf_metrics(
     nav_days = [day for day in days if nav_by_day.get(day) is not None]
     output = {"through": share_days[-1] if share_days else None,
               "nav_through": nav_days[-1] if nav_days else None,
+              "share_observation_count": len(share_days), "nav_observation_count": len(nav_days),
               "evaluation_through": days[-1] if days else None,
               "corporate_actions_checked": corporate_actions_checked, "windows": {},
               "path": [{"date": day, "shares": share_by_day.get(day)} for day in days]}
-    for horizon in (1, 5, 20):
-        window = days[-horizon - 1:]
+    recent = recent_calendar_window(days[-1] if days else None)
+    windows = [(str(horizon), days[-horizon - 1:], horizon) for horizon in (1, 5, 20)]
+    windows.append(("recent", recent.get("calendar", []), recent.get("sessions", 0)))
+    for key, window, horizon in windows:
         unit_counts = [share_by_day.get(day) for day in window]
         values = [nav_by_day.get(day) for day in window[1:]]
         share_ready = len(window) == horizon + 1 and all(value is not None and value > 0 for value in unit_counts)
@@ -102,7 +106,8 @@ def etf_metrics(
         # fd_share is ten-thousand shares. Price changes/AUM changes are never called flows.
         notional = sum((unit_counts[i] - unit_counts[i - 1]) * 10_000 * values[i - 1]
                        for i in range(1, len(window))) if nav_ready else None
-        output["windows"][str(horizon)] = {
+        output["windows"][key] = {
+            "window_sessions": horizon if window else None,
             "window_start": window[0] if len(window) == horizon + 1 else None,
             "window_end": days[-1] if days else None,
             "share_change_ten_thousand": round(unit_counts[-1] - unit_counts[0], 6) if share_ready else None,
@@ -203,7 +208,7 @@ def _szse_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
         fetched = datetime.fromisoformat(raw["fetched_at"])
         if (fetched.tzinfo is None or fetched > now or fetched.date() < through
             or through >= now.astimezone(ZoneInfo("Asia/Shanghai")).date()
-            or len(calendar) != 21 or calendar[-1] != through.isoformat()
+            or not 21 <= len(calendar) <= 61 or calendar[-1] != through.isoformat()
             or calendar != sessions_2026(date.fromisoformat(calendar[0]), through)):
             raise ValueError("invalid SZSE calendar/date")
         codes = {code for code in ETF_BASKET if code.endswith(".SZ")}
@@ -247,6 +252,36 @@ def breadth_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "median_return_pct": returns[middle] if size % 2 else (returns[middle - 1] + returns[middle]) / 2,
             "amount_yuan": sum(amounts) * 1000 if all(value is not None and value >= 0 for value in amounts) else None,
             "scope": "源端返回的当日有成交股票；停牌不填零，尚不宣称全市场覆盖"}
+
+
+def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime | None = None) -> list[dict]:
+    """The learning page observes verified files; it never invokes a collector."""
+    now = now or datetime.now(timezone.utc)
+    index_meta, indices = _public_indices(snapshot_dir / "public_indices", now)
+    sse_meta, sse = _public_etfs(snapshot_dir / "public_etf", now)
+    szse_meta, szse = _szse_etfs(snapshot_dir / "public_etf_szse", now)
+    definitions = [
+        ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
+         "指数可用不代表同期ST风格和市场宽度已覆盖。"),
+        ("sse_etf_shares", "上交所 · ETF份额", sse_meta, sse, "through", "share_observation_count", 5, ETF_SHARE_SOURCE,
+         "份额折算等事件未核验，不作为已确认净申赎金额。"),
+        ("szse_etf_shares", "深交所 · ETF份额", szse_meta, szse, "through", "share_observation_count", 3, SZSE_ETF_SOURCE,
+         "最新份额的次日修订状态待核对。"),
+        ("szse_etf_nav", "深交所 · ETF净值", szse_meta, szse, "nav_through", "nav_observation_count", 3, SZSE_ETF_SOURCE,
+         "只显示实际取得的净值，不以前值补齐未披露日期。"),
+    ]
+    sources = []
+    for key, label, meta, rows, through_key, count_key, size, url, note in definitions:
+        observed = meta["availability"] == "observed"
+        actual = [row[through_key] for row in rows if row.get(through_key)]
+        sources.append({"source_id": key, "label": label, "availability": meta["availability"],
+                        "requested_through": meta.get("through"), "fetched_at": meta.get("fetched_at"),
+                        "observed_through_min": min(actual) if actual else None,
+                        "observed_through_max": max(actual) if actual else None,
+                        "observation_count": sum(row[count_key] for row in rows) if observed else None,
+                        "series_at_target": sum(row.get(through_key) == meta.get("through") for row in rows) if observed else None,
+                        "declared_series": size, "snapshot_digest": meta.get("content_digest"), "url": url, "note": note})
+    return sources
 
 
 def _historical_indices(database: Path, manifest_path: Path) -> list[dict[str, Any]]:
@@ -329,6 +364,17 @@ def build_market_risk_status(
             by_code[row["code"]] = row
     etfs = list(by_code.values())
     etf_through = max((row["evaluation_through"] for row in etfs if row["evaluation_through"]), default=None)
+    recent_window = recent_calendar_window(requested_through or etf_through)
+    recent_indices, recent_shares = [], []
+    if recent_window["availability"] == "defined":
+        recent_indices = [row["recent"] for row in indices if row.get("recent")
+                          and row["recent"]["start"] == recent_window["start"]
+                          and row["recent"]["end"] == recent_window["end"]
+                          and row["recent"]["return_pct"] is not None]
+        recent_shares = [row["windows"]["recent"] for row in etfs
+                         if row["windows"]["recent"]["window_start"] == recent_window["start"]
+                         and row["windows"]["recent"]["window_end"] == recent_window["end"]
+                         and row["windows"]["recent"]["share_change_pct"] is not None]
     attempt = None
     try:
         attempt = json.loads((snapshot_dir / "last_attempt.json").read_text())
@@ -350,6 +396,14 @@ def build_market_risk_status(
             "breadth_at_target": breadth.get("status") == "observed" and breadth.get("through") == requested_through,
             "st_style_at_target": any(row["code"] == "st_equal_weight_v1" and row["through"] == requested_through for row in indices),
         },
+        "recent_window": recent_window,
+        "recent_observations": {"index_coverage": len(recent_indices),
+                                "declining_indices": sum(row["return_pct"] < 0 for row in recent_indices),
+                                "etf_share_coverage": len(recent_shares),
+                                "increasing_share_records": sum(row["share_change_pct"] > 0 for row in recent_shares),
+                                "decreasing_share_records": sum(row["share_change_pct"] < 0 for row in recent_shares),
+                                "interpretation": "价格走势与原始份额变化分别描述；份额事件、净值和持有人身份未完成核验，尚不形成资金撤退结论。"},
+        "node_market_comparison": {"status": "not_evaluated", "reason": "当前只作同窗描述；个股价格/节点与独立对照未完成，不能据此证明大盘因素优于节点。"},
         "etf_aggregate": {str(horizon): {
             "evaluation_through": etf_through,
             "observed_etfs": sum(row["evaluation_through"] == etf_through and row["windows"][str(horizon)]["share_change_pct"] is not None for row in etfs),
@@ -357,8 +411,9 @@ def build_market_risk_status(
             "revision_unconfirmed_etfs": sum(row["evaluation_through"] == etf_through and row.get("share_revision_unverified") is True and row["windows"][str(horizon)]["share_change_pct"] is not None for row in etfs),
             "declared_etfs": len(ETF_BASKET), "estimated_net_subscription_yuan": None,
             "reason": "份额事件未核验；不发布样本净申赎总金额",
-        } for horizon in (1, 5, 20)},
+        } for horizon in (1, 5, 20, "recent")},
         "parameters": {"trend_windows_sessions": list(HORIZONS), "etf_windows_sessions": [1, 5, 20],
+                       "recent_calendar_months": 2,
                        "etf_basket": ETF_BASKET, "risk_weights": None, "risk_thresholds": None},
         "limitations": [
             "先看市场环境，再看ST风格与个股节点；节点不覆盖系统性风险。",

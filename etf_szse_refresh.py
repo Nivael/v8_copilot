@@ -108,14 +108,14 @@ class SZSEHistoryClient:
         return parse_history(pages, code, calendar, nav=nav), provenance
 
 
-def refresh_szse_etfs(client, *, through: str, output: Path, now: datetime | None = None) -> dict:
+def refresh_szse_etfs(client, *, through: str, output: Path, now: datetime | None = None, sessions: int = 21) -> dict:
     now = now or datetime.now(timezone.utc)
     end = date.fromisoformat(through)
-    if end >= now.astimezone(ZoneInfo("Asia/Shanghai")).date():
-        raise ValueError("only completed dates are supported")
-    calendar = sessions_2026(date(end.year, 1, 1), end)[-21:]
-    if len(calendar) != 21 or calendar[-1] != through:
-        raise ValueError("21 verified sessions ending at target required")
+    if end >= now.astimezone(ZoneInfo("Asia/Shanghai")).date() or not 21 <= sessions <= 61:
+        raise ValueError("only completed dates and 21–61 sessions are supported")
+    calendar = sessions_2026(date(end.year, 1, 1), end)[-sessions:]
+    if len(calendar) != sessions or calendar[-1] != through:
+        raise ValueError("verified sessions ending at target required")
     raw = {"contract_version": "szse_etf_history_raw_v1", "provider": "szse_public", "source_url": SZSE_SOURCE,
            "api_url": SZSE_API, "share_unit": "ten_thousand_shares", "nav_unit": "CNY_per_share",
            "requested_through": through, "fetched_at": now.isoformat(), "calendar": calendar,
@@ -157,9 +157,10 @@ def refresh_szse_etfs(client, *, through: str, output: Path, now: datetime | Non
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--through", required=True)
+    parser.add_argument("--sessions", type=int, default=21)
     parser.add_argument("--output", type=Path, default=MARKET_RISK_DIR / "public_etf_szse")
     args = parser.parse_args()
-    report = refresh_szse_etfs(SZSEHistoryClient(args.output / "responses"), through=args.through, output=args.output)
+    report = refresh_szse_etfs(SZSEHistoryClient(args.output / "responses"), through=args.through, output=args.output, sessions=args.sessions)
     print(json.dumps(report, ensure_ascii=False))
     return 2 if report["status"] == "failed" else 0
 

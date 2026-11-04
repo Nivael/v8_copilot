@@ -14,6 +14,7 @@ from experience_governance import PytestRegressionExecutor, RegressionReport, de
 from experience_verification import READONLY_AUDIT_PATH, inventory_digest, method_digest, software_digest
 from canonical_json import digest
 from freshness_manifest import FreshnessManifest
+from market_risk import MARKET_RISK_DIR, market_update_status
 from settings import (
     EXPERIENCE_GOVERNANCE_DB, EXPERIENCE_REPOSITORY_DB, FRESHNESS_MANIFEST_PATH,
     RESEARCH_RUN_LEDGER_DB,
@@ -137,6 +138,7 @@ def build_learning_status(
     governance_db: Path = EXPERIENCE_GOVERNANCE_DB,
     freshness_path: Path = FRESHNESS_MANIFEST_PATH,
     audit_path: Path = READONLY_AUDIT_PATH,
+    market_snapshot_dir: Path = MARKET_RISK_DIR,
     now: datetime | None = None,
 ) -> dict[str, Any]:
     now = now or datetime.now(timezone.utc)
@@ -281,6 +283,7 @@ def build_learning_status(
         "readonly_audit": readonly_audit,
         "conflicts": [row.model_dump(mode="json") for row in conflicts],
         "methods": methods, "freshness": freshness,
+        "market_updates": market_update_status(snapshot_dir=market_snapshot_dir, now=now),
         "quality_evaluation": {"status": "not_measured", "accuracy": None,
                                "reason": "尚无独立留出题集的前后对照；库存、调用和回归通过均不等于研究准确率。"},
         "automation": {"promotion": "on_candidate_or_feedback", "minimum_source_runs": 2,

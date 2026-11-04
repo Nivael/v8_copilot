@@ -77,8 +77,15 @@
 .market-risk-assessment h2 {font-size:28px;font-weight:500;color:#7b6037;margin:12px 0}
 .market-risk-assessment p {font-size:12px;line-height:1.8;max-width:90ch}
 .market-risk-assessment .market-risk-failure {font-size:12px;color:#966e3e}
+.market-source-notes {margin-top:16px;font-size:12px;line-height:1.8}
+.market-source-notes summary {cursor:pointer}
 .market-risk-order {display:flex;align-items:center;gap:20px;margin:28px 0 40px;color:#69806e;font-size:12px}
 .market-risk-windows {display:flex;gap:4px}
+.market-recent-window>p {font-size:12px;line-height:1.8;color:#6b786f;margin:16px 0}
+.market-recent-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #cdd8ce;border-bottom:1px solid #cdd8ce}
+.market-recent-grid article {display:grid;gap:10px;padding:18px 12px 18px 0}
+.market-recent-grid span,.market-recent-grid small {font-size:11px;color:#748077}
+.market-recent-grid strong {font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;color:#3f5145}
 .market-risk-windows button {border:1px solid #d5dfd5;background:transparent;border-radius:3px;color:#64796a;padding:7px 12px;font-size:12px;cursor:pointer}
 .market-risk-windows button[aria-pressed="true"] {border-color:#6d8e72;background:#edf3ec;color:#33573a}
 .market-risk-legend {display:flex;flex-wrap:wrap;gap:16px;color:#748177;font-size:11px;margin:20px 0}
@@ -133,5 +140,7 @@
   .market-risk-banner {width:calc(100% - 28px);flex-direction:column;align-items:flex-start;gap:12px}
   .market-risk-order {flex-wrap:wrap;gap:12px;font-size:11px}
   .market-breadth {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .market-recent-grid {grid-template-columns:1fr}
+  .market-recent-grid article+article {border-top:1px solid #dce4da}
   .market-breadth>div:nth-child(-n+2) {border-bottom:1px solid #dce4da}
 }

@@ -91,7 +91,7 @@ class SSEShareClient:
 
 
 def refresh_public_etfs(client, *, through: str, output: Path, sessions: int = 21,
-                        now: datetime | None = None, repair_missing: bool = False) -> dict[str, Any]:
+                        now: datetime | None = None, repair_missing: bool = False, extend_window: bool = False) -> dict[str, Any]:
     now = now or datetime.now(timezone.utc)
     end = date.fromisoformat(through)
     if end >= now.astimezone(ZoneInfo("Asia/Shanghai")).date() or not 21 <= sessions <= 61:
@@ -101,14 +101,20 @@ def refresh_public_etfs(client, *, through: str, output: Path, sessions: int = 2
         raise ValueError("Target must be a verified 2026 session with sufficient history")
     reusable = {}
     reused_digest = None
-    if repair_missing:
+    if repair_missing and extend_window:
+        raise ValueError("repair and extension are distinct operations")
+    if repair_missing or extend_window:
         state, _ = _public_etfs(output, now)
         if state["availability"] != "observed":
             raise ValueError("No verified public snapshot is available to repair")
         prior = json.loads((output / "current.json").read_text())
         expected = prior.pop("content_digest")
-        if digest(prior) != expected or expected != state["content_digest"] or prior["calendar"] != calendar:
-            raise ValueError("Repair input changed or has a different window")
+        compatible = prior["calendar"] == calendar if repair_missing else (
+            prior["calendar"][-1] == through and len(prior["calendar"]) < len(calendar)
+            and set(prior["calendar"]).issubset(calendar)
+        )
+        if digest(prior) != expected or expected != state["content_digest"] or not compatible:
+            raise ValueError("Reuse input changed or has an incompatible window")
         reused_digest = expected
         for day in calendar:
             rows = [row for values in prior["etf_shares"].values() for row in values if row["trade_date"] == day]
@@ -121,7 +127,7 @@ def refresh_public_etfs(client, *, through: str, output: Path, sessions: int = 2
            "availability_basis": "first_observed_at_fetch_not_historical_PIT",
            "calendar_version": CALENDAR_VERSION, "calendar_source": CALENDAR_SOURCE,
            "calendar": calendar, "declared_codes": list(PUBLIC_CODES),
-           "collection_mode": "repair_missing_dates" if repair_missing else "fresh",
+           "collection_mode": "extend_verified_window" if extend_window else "repair_missing_dates" if repair_missing else "fresh",
            "reused_from_digest": reused_digest,
            "etf_shares": {code: [] for code in PUBLIC_CODES}, "responses": [], "gaps": []}
     for day in calendar:
@@ -162,10 +168,11 @@ def main() -> int:
     parser.add_argument("--through", required=True)
     parser.add_argument("--sessions", type=int, default=21)
     parser.add_argument("--repair", action="store_true", help="Reuse verified complete dates; request only missing dates")
+    parser.add_argument("--extend", action="store_true", help="Extend the same end date, reusing verified overlap")
     parser.add_argument("--output", type=Path, default=MARKET_RISK_DIR / "public_etf")
     args = parser.parse_args()
     report = refresh_public_etfs(SSEShareClient(args.output / "responses"), through=args.through,
-                                 output=args.output, sessions=args.sessions, repair_missing=args.repair)
+                                 output=args.output, sessions=args.sessions, repair_missing=args.repair, extend_window=args.extend)
     print(json.dumps(report, ensure_ascii=False))
     return 2 if report["status"] == "failed" else 0
 

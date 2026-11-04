@@ -87,4 +87,26 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByText('净值截至 2026-11-03')).toBeInTheDocument()
     expect(screen.getByText('最新份额待次日修订核对')).toBeInTheDocument()
   })
+  it('defaults to an explicitly dated two-calendar-month window',async()=>{
+    const recent={start:'2026-09-04',end:'2026-11-04',sessions:37,return_pct:-20,max_drawdown_pct:-20,from_peak_pct:-20}
+    const path=Array.from({length:62},(_,i)=>new Date(Date.UTC(2026,8,4+i)))
+      .filter(day=>![0,6].includes(day.getUTCDay())&&day.toISOString().slice(0,10)!=='2026-09-25'&&!(day.getUTCMonth()===9&&day.getUTCDate()<=7))
+      .map((day,i)=>({date:day.toISOString().slice(0,10),close:100-i*20/37}))
+    const data:MarketRiskStatus={...fixture,status:'observed_snapshot',requested_through:'2026-11-04',
+      recent_window:{availability:'defined',start:recent.start,end:recent.end,sessions:37,points:38},
+      indices:[{...fixture.indices[0],historical_only:false,through:'2026-11-04',recent,path}],
+      etfs:[{...fixture.etfs[0],path:path.map(point=>({date:point.date,shares:point.close})),windows:{...fixture.etfs[0].windows,
+        recent:{window_sessions:37,window_start:recent.start,window_end:recent.end,share_change_pct:-20,share_change_notional_yuan:null,estimated_net_subscription_yuan:null,status:'shares_only'},
+      }}],
+      etf_aggregate:{...fixture.etf_aggregate,recent:{observed_etfs:1,declared_etfs:8,estimated_net_subscription_yuan:null,reason:'未核验'}},
+    }
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByRole('button',{name:'近2个月'})).toHaveAttribute('aria-pressed','true')
+    expect(screen.getByRole('combobox',{name:'ETF观察窗口'})).toHaveValue('recent')
+    expect(screen.getByText(/近两个月：2026-09-04 至 2026-11-04，37个交易日跨度/)).toBeInTheDocument()
+    expect(screen.getByLabelText('近两个月市场基准归一化路径')).toBeInTheDocument()
+    expect(screen.getByLabelText('510300.SH 近两个月总份额归一化路径')).toBeInTheDocument()
+    expect(screen.getByText(/尚未完成节点与大盘因素的独立对照/)).toBeInTheDocument()
+  })
 })

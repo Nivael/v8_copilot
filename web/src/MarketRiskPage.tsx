@@ -23,9 +23,11 @@ function Paths({indices,window,through}:{indices:MarketRiskIndex[];window:number
     indices.forEach((index,i)=>{
       if(through&&index.through!==through)return
       const key=`return_${window}d_pct` as 'return_5d_pct'|'return_20d_pct'|'return_60d_pct'
-      if(index[key]==null)return
-      const points=index.path.slice(-window-1)
-      if(points.length!==window+1||points.some(point=>point.close==null||point.close<=0))return
+      if((window===0?index.recent?.return_pct:index[key])==null)return
+      const sessions=window===0?index.recent?.sessions:window
+      if(sessions==null)return
+      const points=index.path.slice(-sessions-1)
+      if(points.length!==sessions+1||points.some(point=>point.close==null||point.close<=0))return
       const start=points[0].close!
       chart.addSeries(LineSeries,{color:COLORS[i%COLORS.length],lineWidth:2,priceLineVisible:false}).setData(
         points.map(point=>({time:point.date as Time,value:point.close!/start*100})),
@@ -36,7 +38,7 @@ function Paths({indices,window,through}:{indices:MarketRiskIndex[];window:number
     observer?.observe(container.current)
     return()=>{observer?.disconnect();chart.remove()}
   },[indices,window,through])
-  return <div className="market-risk-chart" ref={container} aria-label={`${window}个交易日市场基准归一化路径`}/>
+  return <div className="market-risk-chart" ref={container} aria-label={window===0?'近两个月市场基准归一化路径':`${window}个交易日市场基准归一化路径`}/>
 }
 
 function ETFSharePath({item,window}:{item:MarketRiskETF|undefined;window:string}){
@@ -45,8 +47,9 @@ function ETFSharePath({item,window}:{item:MarketRiskETF|undefined;window:string}
   const ready=metric?.share_change_pct!=null
   useEffect(()=>{
     if(!container.current||!ready)return
-    const points=item?.path?.slice(-Number(window)-1)??[]
-    if(points.length!==Number(window)+1||points.some(point=>point.shares==null||point.shares<=0))return
+    const sessions=metric?.window_sessions??Number(window)
+    const points=item?.path?.slice(-sessions-1)??[]
+    if(!Number.isFinite(sessions)||points.length!==sessions+1||points.some(point=>point.shares==null||point.shares<=0))return
     const chart=createChart(container.current,{autoSize:true,height:260,
       layout:{background:{type:ColorType.Solid,color:'#fafbfa'},textColor:'#758177'},
       grid:{vertLines:{color:'#edf1ec'},horzLines:{color:'#e6ece5'}},
@@ -60,9 +63,9 @@ function ETFSharePath({item,window}:{item:MarketRiskETF|undefined;window:string}
     const observer=typeof ResizeObserver==='undefined'?null:new ResizeObserver(()=>chart.timeScale().fitContent())
     observer?.observe(container.current)
     return()=>{observer?.disconnect();chart.remove()}
-  },[item,window,ready])
+  },[item,window,ready,metric?.window_sessions])
   if(!ready||!item?.path)return <p className="learning-empty">所选ETF缺少完整同窗份额，不补值或缩短窗口。</p>
-  return <><div className="market-risk-chart" ref={container} aria-label={`${item.code} ${window}个交易日总份额归一化路径`}/><p className="learning-footnote">{item.code} · {metric.window_start} 至 {metric.window_end}，起点归一为100。仅展示份额变化，未排除折算等事件；不代表资金金额或持有人身份。</p></>
+  return <><div className="market-risk-chart" ref={container} aria-label={`${item.code} ${window==='recent'?'近两个月':`${window}个交易日`}总份额归一化路径`}/><p className="learning-footnote">{item.code} · {metric.window_start} 至 {metric.window_end}，起点归一为100。仅展示份额变化，未排除折算等事件；不代表资金金额或持有人身份。</p></>
 }
 
 export function MarketRiskBanner(){
@@ -75,8 +78,11 @@ export function MarketRiskPage(){
   const [data,setData]=useState<MarketRiskStatus|null>(null)
   const [error,setError]=useState('')
   const [loading,setLoading]=useState(true)
-  const [window,setWindow]=useState(20)
-  const [etfWindow,setETFWindow]=useState('5')
+  const [chosenWindow,setWindow]=useState(0)
+  const [chosenETFWindow,setETFWindow]=useState('recent')
+  const recentAvailable=data?.recent_window?.availability==='defined'
+  const window=chosenWindow===0&&!recentAvailable?20:chosenWindow
+  const etfWindow=chosenETFWindow==='recent'&&!recentAvailable?'5':chosenETFWindow
   const [etfCode,setETFCode]=useState('510300.SH')
   const controller=useRef<AbortController|null>(null)
   const load=useCallback(async()=>{
@@ -94,17 +100,20 @@ export function MarketRiskPage(){
     {data&&<>
       <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。各来源分别核对截止日，已取得指数不代表整体风险已测量。`:`观察日 ${data.observation_date}。当前没有通过校验的完整市场快照；市场基准仍为历史背景，ETF份额按下方独立截止日展示。`}</p>
         {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；同期ST风格{data.market_coverage.st_style_at_target?'已取得':'未覆盖'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
+        <details className="market-source-notes" open={data.status!=='observed_snapshot'}><summary>来源更新与待核对项</summary>
         {data.public_etf_snapshot?.availability==='observed'&&<p>上交所公开ETF份额已读到 {data.public_etf_snapshot.through}。</p>}
         {data.szse_etf_snapshot?.availability==='observed'&&<p>深交所ETF份额记录已读到 {data.szse_etf_snapshot.through}；最新份额的次日修订状态仍待核对。</p>}
         {data.last_attempt?.status==='failed'&&<p className="market-risk-failure">账户行情源最近更新失败：{data.last_attempt.reason==='provider_token_expired'?'行情接口凭证已过期':data.last_attempt.reason}；请求截至 {data.last_attempt.requested_through}。</p>}
+        </details>
       </section>
       <section className="market-risk-order" aria-label="研究顺序"><span>01 大盘环境</span><ArrowRight size={15}/><span>02 ST与小盘风格</span><ArrowRight size={15}/><span>03 个股节点与自身风险</span></section>
-      <section aria-label="市场趋势与回撤"><header className="learning-section-head"><div><p className="eyebrow">方向 / 风格 / 流动性</p><h2>市场走势与ST风格覆盖</h2></div><div className="market-risk-windows" aria-label="图表窗口">{[5,20,60].map(value=><button key={value} aria-pressed={window===value} onClick={()=>setWindow(value)}>{value}日</button>)}</div></header>
+      <section aria-label="市场趋势与回撤"><header className="learning-section-head"><div><p className="eyebrow">方向 / 风格 / 流动性</p><h2>市场走势与ST风格覆盖</h2></div><div className="market-risk-windows" aria-label="图表窗口">{recentAvailable&&<button aria-pressed={window===0} onClick={()=>setWindow(0)}>近2个月</button>}{[5,20,60].map(value=><button key={value} aria-pressed={window===value} onClick={()=>setWindow(value)}>{value}日</button>)}</div></header>
+        {recentAvailable&&<div className="market-recent-window" aria-label="近两个月实际窗口"><p>近两个月：{data.recent_window?.start} 至 {data.recent_window?.end}，{data.recent_window?.sessions}个交易日跨度。起点为目标起始日或之前最后一个收盘日。</p><div className="market-recent-grid">{data.indices.filter(index=>index.through===data.recent_window?.end&&index.recent?.end===data.recent_window?.end).map(index=><article key={index.code}><span>{index.name} · 窗口收益</span><strong>{pct(index.recent?.return_pct)}</strong><small>窗口最大回撤 {pct(index.recent?.max_drawdown_pct)}</small></article>)}</div>{data.recent_observations&&<p>本窗口指数完整覆盖 {data.recent_observations.index_coverage} 条，其中 {data.recent_observations.declining_indices} 条下跌；同窗ETF份额记录覆盖 {data.recent_observations.etf_share_coverage}/8，增加 {data.recent_observations.increasing_share_records} 只、减少 {data.recent_observations.decreasing_share_records} 只。{data.recent_observations.interpretation}</p>}<p>{data.node_market_comparison?.reason||'此处仅作同窗历史描述，尚未完成节点与大盘因素的独立对照。'}</p></div>}
         <div className="market-risk-legend">{data.indices.map((index,i)=><span key={index.code}><i className={`market-line-${i%3}`}/>{index.name} · 截至 {index.through||'未知'}{index.historical_only?' · 历史快照':''}{data.requested_through&&index.through!==data.requested_through?' · 未入同期图':''}</span>)}</div>
         {data.indices.length>0?<><Paths indices={data.indices} window={window} through={data.requested_through}/><p className="learning-footnote">起点归一为100；仅绘制所选窗口完整且截止日一致的序列。较早的ST历史只保留在表中，不拼接成同期走势；ST等权仅消费覆盖率至少95%的日期。</p><div className="learning-table-wrap"><table className="learning-table market-risk-table"><thead><tr><th scope="col">市场基准</th><th scope="col">5日</th><th scope="col">20日</th><th scope="col">60日</th><th scope="col">60日最大回撤</th><th scope="col">5/20日成交额均值比</th></tr></thead><tbody>{data.indices.map(index=><tr key={index.code}><th scope="row">{index.name}<small>{index.through}</small></th><td>{pct(index.return_5d_pct)}</td><td>{pct(index.return_20d_pct)}</td><td>{pct(index.return_60d_pct)}</td><td>{pct(index.max_drawdown_60d_pct)}</td><td>{index.amount_5d_to_20d_ratio==null?'—':`${index.amount_5d_to_20d_ratio.toFixed(2)} 倍`}</td></tr>)}</tbody></table></div></>:<p className="learning-empty">市场基准缺失，无法计算趋势和回撤。</p>}
       </section>
 
-      <section className="learning-freshness" aria-label="ETF份额与申赎"><header className="learning-section-head"><div><p className="eyebrow">资金撤离线索 / ETF样本</p><h2>份额变化与净申赎估算</h2></div><label>ETF观察窗口 <select aria-label="ETF观察窗口" value={etfWindow} onChange={event=>setETFWindow(event.target.value)}>{[1,5,20].map(value=><option key={value} value={String(value)}>{value}个交易日</option>)}</select></label></header>
+      <section className="learning-freshness" aria-label="ETF份额与申赎"><header className="learning-section-head"><div><p className="eyebrow">资金撤离线索 / ETF样本</p><h2>份额变化与净申赎估算</h2></div><label>ETF观察窗口 <select aria-label="ETF观察窗口" value={etfWindow} onChange={event=>setETFWindow(event.target.value)}>{recentAvailable&&<option value="recent">近2个月</option>}{[1,5,20].map(value=><option key={value} value={String(value)}>{value}个交易日</option>)}</select></label></header>
         <p>固定观察8只沪深300、中证500和中证1000ETF。同窗份额覆盖 {data.etf_aggregate[etfWindow]?.observed_etfs??0}/8{data.etf_aggregate[etfWindow]?.evaluation_through?`，目标截至 ${data.etf_aggregate[etfWindow].evaluation_through}`:''}；不外推全体ETF或机构持仓。净申赎金额需先核对净值和份额折算等事件，当前尚未发布。</p>
         {(data.etf_aggregate[etfWindow]?.revision_unconfirmed_etfs??0)>0&&<p>{data.etf_aggregate[etfWindow].revision_unconfirmed_etfs}只ETF的最新份额修订状态待核对。深交所说明：T日晚间份额仅供参考，以T+1日早间更新为准；尚未取得最终修订标记。</p>}
         <label>份额路径 <select aria-label="ETF份额路径" value={etfCode} onChange={event=>setETFCode(event.target.value)}>{Object.entries(data.parameters.etf_basket).map(([code,group])=><option key={code} value={code}>{code} · {group}</option>)}</select></label>

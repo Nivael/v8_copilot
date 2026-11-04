@@ -83,4 +83,14 @@ describe('LearningPage',()=>{
     expect(screen.getByText('59 天')).toBeInTheDocument()
     expect(within(section).getByRole('link',{name:/查看大盘环境/})).toHaveAttribute('href','/market')
   })
+  it('labels an announcement search cutoff instead of presenting it as a new publication date',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'etf_announcements',label:'ETF公告目录 · 待事件核验',
+      availability:'observed',requested_through:'2026-11-05',observed_through_min:'2026-11-05',observed_through_max:'2026-11-05',
+      observation_count:2468,series_at_target:8,declared_series:8,snapshot_digest:'abc',url:'/market',fetched_at:'2026-11-05T00:00:00Z',
+      date_basis:'catalog_search_cutoff',note:'目录取得不代表份额事件已核验。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    open()
+    expect(await screen.findByText('检索至 2026-11-05')).toBeInTheDocument()
+    expect(screen.getByText('目录取得不代表份额事件已核验。')).toBeInTheDocument()
+  })
 })

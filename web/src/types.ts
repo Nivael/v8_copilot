@@ -158,7 +158,7 @@ export interface LearningStatus {
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
   readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
-  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number;snapshot_digest:string|null;url:string;note:string}>
+  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number;snapshot_digest:string|null;url:string;note:string;date_basis?:string}>
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
   methods:LearningMethod[]
   freshness:{
@@ -239,6 +239,10 @@ export interface MarketRiskStatus {
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}
+  etf_announcements?:{availability:string;through?:string;window_start?:string;window_end?:string;fetched_at?:string;catalog_etfs:number;declared_etfs:number;record_count:number|null;review_required_count:number|null;corporate_actions_checked:false;note:string;
+    fulltext?:{availability:string;required:number|null;text_available:number|null;missing_or_unreadable:number|null;completed_at?:string;semantic_review:string};
+    catalogs:Array<{code:string;source_url:string;record_count:number;oldest_publication:string;newest_publication:string;review_required_count:number;review_status:string;
+      required_documents:Array<{document_id:string;code:string;published_on:string;title:string;url:string;review_reason:string}>}>}
   market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean}
   recent_window?:{availability:string;requested_start?:string;start?:string;end?:string;sessions?:number;points?:number;reason?:string}
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}

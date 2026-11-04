@@ -12,6 +12,7 @@ from zoneinfo import ZoneInfo
 
 from canonical_json import digest
 from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
+from etf_announcements import announcement_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_calendar import CALENDAR_VERSION, sessions_2026
 from market_periods import price_period_summary, recent_calendar_window
@@ -294,6 +295,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     szse_meta, szse = _szse_etfs(snapshot_dir / "public_etf_szse", now)
     issuer_meta, issuer_navs = load_issuer_navs(snapshot_dir / "issuer_nav", now)
     breadth_meta, breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
+    announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -320,6 +322,13 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                         "observation_count": sum(row[count_key] for row in rows) if observed else None,
                         "series_at_target": sum(row.get(through_key) == meta.get("through") for row in rows) if observed else None,
                         "declared_series": size, "snapshot_digest": meta.get("content_digest"), "url": url, "note": note})
+    sources.append({"source_id": "etf_announcements", "label": "ETF公告目录 · 待事件核验", "availability": announcements["availability"],
+                    "requested_through": announcements.get("through"), "fetched_at": announcements.get("fetched_at"),
+                    "observed_through_min": announcements.get("through"), "observed_through_max": announcements.get("through"),
+                    "observation_count": announcements["record_count"], "series_at_target": announcements["catalog_etfs"],
+                    "declared_series": announcements["declared_etfs"], "snapshot_digest": announcements.get("content_digest"),
+                    "url": "/market", "date_basis": "catalog_search_cutoff",
+                    "note": "日期为采集时点的公告检索上界；最近一份公告日期在大盘页逐基金列出。目录取得不代表份额事件已核验。"})
     return sources
 
 
@@ -435,6 +444,7 @@ def build_market_risk_status(
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,
+        "etf_announcements": announcement_status(snapshot_dir / "etf_announcements", now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),

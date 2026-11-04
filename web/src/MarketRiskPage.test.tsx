@@ -19,6 +19,23 @@ const fixture:MarketRiskStatus={
 
 describe('MarketRiskPage',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('displays catalog coverage and cancellation material while leaving event conclusions unverified',async()=>{
+    const data:MarketRiskStatus={...fixture,etf_announcements:{availability:'observed',through:'2026-11-05',
+      window_start:'2026-08-04',window_end:'2026-11-04',catalog_etfs:8,declared_etfs:8,record_count:2468,review_required_count:105,
+      corporate_actions_checked:false,note:'目录取得不代表事件已核验。',fulltext:{availability:'observed',required:105,text_available:105,missing_or_unreadable:0,semantic_review:'not_reconciled'},catalogs:[{code:'512100.SH',source_url:'https://www.sse.com.cn/disclosure/fund/announcement/',
+      record_count:300,oldest_publication:'2016-08-19',newest_publication:'2026-10-29',review_required_count:1,review_status:'not_reconciled',
+      required_documents:[{document_id:'cancel',code:'512100.SH',published_on:'2022-07-30',title:'取消基金份额拆分的公告',url:'https://www.sse.com.cn/cancel.pdf',review_reason:'historical_share_title'}]}]}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByText('目录 8/8')).toBeInTheDocument()
+    expect(screen.getByText(/已取得目录 2,468 条；待核对文档 105 份/)).toBeInTheDocument()
+    expect(screen.getByText(/已提取文本 105 \/ 105 份；缺失或不可读 0 份/)).toBeInTheDocument()
+    expect(screen.getByText(/文本提取不代表逐页完整或份额事件核验通过/)).toBeInTheDocument()
+    expect(screen.getByText('全文与生效日尚未完成核对')).toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'取消基金份额拆分的公告 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/cancel.pdf')
+    expect(screen.getByText('历史份额相关标题',{exact:false})).toBeInTheDocument()
+    expect(screen.getByText('未发布')).toBeInTheDocument()
+  })
   it('marks historical values and expired updates before showing trend data',async()=>{
     vi.spyOn(globalThis,'fetch').mockImplementation(async()=>new Response(JSON.stringify(fixture)))
     render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)

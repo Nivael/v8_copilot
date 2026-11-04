@@ -5,11 +5,12 @@ import {ColorType,LineSeries,createChart,type Time} from 'lightweight-charts'
 import {getMarketRiskStatus} from './api'
 import type {MarketRiskETF,MarketRiskIndex,MarketRiskStatus} from './types'
 import './learning.css'
+import {ETFShareEventReview} from './ETFShareEventReview'
+import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
 const ratio=(value:number|null|undefined)=>value==null?"—":`${value.toFixed(2)}%`
 const number=(value:number|null|undefined)=>value==null?'—':value.toLocaleString('zh-CN')
-const shareCount=(value:string|null|undefined)=>value==null?'—':value.replace(/(\d)(?=(\d{3})+(?:\.|$))/g,'$1,')
 const amount=(value:number|null|undefined)=>value==null?'未发布':`${(value/100_000_000).toFixed(2)} 亿元`
 const COLORS=['#3d684d','#a47845','#7e8b91']
 
@@ -171,6 +172,7 @@ export function MarketRiskPage(){
         <p>日表按万份披露，本次比较以100份为披露精度参照，源端舍入方式未确认；小额差异仍原样显示。场外附注只用于对应期末的范围核对，不据此修改整个日序列或发布净申赎金额。</p>
       </section>}
 
+      {data.etf_share_events&&<ETFShareEventReview data={data.etf_share_events}/>}
       {data.etf_announcements&&<section className="learning-freshness" aria-label="ETF份额事件核对">
         <header className="learning-section-head"><div><p className="eyebrow">份额事件 / 公告依据</p><h2>公告目录与事件核验分开看</h2></div><span>{data.etf_announcements.availability==='observed'?`目录 ${data.etf_announcements.catalog_etfs}/${data.etf_announcements.declared_etfs}`:'目录尚未通过校验'}</span></header>
         <p>公告检索至 {data.etf_announcements.through||'未取得'} 的采集时点，观察窗 {data.etf_announcements.window_start||'未取得'} 至 {data.etf_announcements.window_end||'未取得'}。已取得目录 {number(data.etf_announcements.record_count)} 条；待核对文档 {number(data.etf_announcements.review_required_count)} 份。</p>

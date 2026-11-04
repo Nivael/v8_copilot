@@ -14,6 +14,7 @@ from canonical_json import digest
 from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
 from etf_announcements import announcement_status
 from etf_quarterly import quarterly_status
+from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
 from market_calendar import CALENDAR_VERSION, sessions_2026
@@ -319,6 +320,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     breadth_meta, breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
     history = breadth_history_status(snapshot_dir / "public_breadth_history", now)
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
+    event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -357,7 +359,8 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     "observation_count": announcements["record_count"], "series_at_target": announcements["catalog_etfs"],
                     "declared_series": announcements["declared_etfs"], "snapshot_digest": announcements.get("content_digest"),
                     "url": "/market", "date_basis": "catalog_search_cutoff",
-                    "note": "日期为采集时点的公告检索上界；最近一份公告日期在大盘页逐基金列出。目录取得不代表份额事件已核验。"})
+                    "note": "日期为采集时点的公告检索上界；最近公告日逐基金列出。目录取得不代表份额事件已核验。"
+                            + (f"已逐条核对{event_review['reviewed_events']}条历史事项，涉及{event_review['reconciled_documents']}份材料；其余{event_review['pending_documents']}份尚未完成这类核对。" if event_review['availability']=='partial' else "")})
     return sources
 
 
@@ -477,6 +480,7 @@ def build_market_risk_status(
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,
         "etf_announcements": announcements,
+        "etf_share_events": share_event_status(snapshot_dir / "etf_announcements", announcements, now),
         "etf_quarterly": quarterly_status(snapshot_dir / "etf_announcements", announcements, etfs, requested_through, now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),

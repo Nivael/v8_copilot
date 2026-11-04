@@ -260,6 +260,10 @@ export interface MarketRiskStatus {
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}
   etf_quarterly?:{version:string;availability:string;period_label?:string;period_start?:string;period_end?:string;capture_completed_at?:string;observed_reports:number;declared_etfs:number;corporate_actions_checked:false;note:string;reports:ETFQuarterlyReport[]}
+  etf_share_events?:{version:string;availability:string;reviewed_events:number;reconciled_documents:number;selected_documents:number|null;pending_documents?:number;all_selected_documents_reconciled:false;corporate_actions_checked:false;note:string;
+    events:Array<{event_id:string;code:string;kind:string;resolution:string;event_date:string;record_date?:string;ex_right_date?:string|null;planned_ratio:string|null;effective_ratio:string|null;resolution_published_on:string;within_catalog_window:boolean;holder_rounding?:string;unit_before_shares?:string;unit_after_shares?:string;
+      reported_totals?:Array<{scope:string;before_shares:string;after_shares:string;after_minus_simple_ratio_shares:string}>;
+      documents:Array<{document_id:string;role:string;published_on:string;observed_at?:string;title:string;url:string;pages:number[]}>}>}
   etf_announcements?:{availability:string;through?:string;window_start?:string;window_end?:string;fetched_at?:string;catalog_etfs:number;declared_etfs:number;record_count:number|null;review_required_count:number|null;corporate_actions_checked:false;note:string;
     fulltext?:{availability:string;required:number|null;text_available:number|null;missing_or_unreadable:number|null;completed_at?:string;semantic_review:string};
     catalogs:Array<{code:string;source_url:string;record_count:number;oldest_publication:string;newest_publication:string;review_required_count:number;review_status:string;

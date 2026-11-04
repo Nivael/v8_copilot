@@ -264,7 +264,7 @@ export interface MarketRiskStatus {
     fulltext?:{availability:string;required:number|null;text_available:number|null;missing_or_unreadable:number|null;completed_at?:string;semantic_review:string};
     catalogs:Array<{code:string;source_url:string;record_count:number;oldest_publication:string;newest_publication:string;review_required_count:number;review_status:string;
       required_documents:Array<{document_id:string;code:string;published_on:string;title:string;url:string;review_reason:string}>}>}
-  market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean}
+  market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean;historical_breadth_venues_at_target?:number}
   recent_window?:{availability:string;requested_start?:string;start?:string;end?:string;sessions?:number;points?:number;reason?:string}
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}
   node_market_comparison?:{status:string;reason:string}
@@ -272,6 +272,9 @@ export interface MarketRiskStatus {
   breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
     venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;
     st_name_group?:MarketBreadthSummary&{definition:string}}
+  breadth_history?:{availability:string;scope?:string;start?:string;through?:string;fetched_at?:string;observed_days?:number;expected_days?:number;note?:string;source_url?:string;complete_market_history:false;matches_market_target?:boolean;
+    last_recorded_attempt?:{status:string;recorded_at:string;start:string;requested_through:string;completed_days:number;expected_days:number}|null;
+    points:Array<MarketBreadthSummary&{date:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares:number;st_name_group:MarketBreadthSummary}>}
   last_attempt:{status:string;requested_through:string;reason?:string;completed_at:string}|null
   parameters:{trend_windows_sessions:number[];etf_windows_sessions:number[];etf_basket:Record<string,string>;risk_weights:null;risk_thresholds:null}
   limitations:string[]

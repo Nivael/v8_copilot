@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime
+from decimal import Decimal
 import json
 import math
 from pathlib import Path
@@ -89,7 +90,8 @@ def cross_section(rows: list[dict]) -> dict:
     return {"observed_trading_stocks": len(active), "listed_source_stocks": len(rows),
             "nontrading_stocks": len(rows) - len(active),
             "advancing": sum(value > 0 for value in values), "declining": sum(value < 0 for value in values),
-            "flat": sum(value == 0 for value in values), "declining_5pct_or_more": sum(value <= -5 for value in values),
+            "flat": sum(value == 0 for value in values),
+            "declining_5pct_or_more": sum(Decimal(str(row["last"])) * 100 <= Decimal(str(row["prev_close"])) * 95 for row in active),
             "median_return_pct": round(median(values), 6) if values else None,
             "mean_return_pct": round(mean(values), 6) if values else None,
             "declining_share_pct": round(sum(value < 0 for value in values) / len(values) * 100, 6) if values else None,

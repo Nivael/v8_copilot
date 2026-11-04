@@ -7,10 +7,36 @@ import type {MarketRiskETF,MarketRiskIndex,MarketRiskStatus} from './types'
 import './learning.css'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
+const ratio=(value:number|null|undefined)=>value==null?"—":`${value.toFixed(2)}%`
 const number=(value:number|null|undefined)=>value==null?'—':value.toLocaleString('zh-CN')
 const shareCount=(value:string|null|undefined)=>value==null?'—':value.replace(/(\d)(?=(\d{3})+(?:\.|$))/g,'$1,')
 const amount=(value:number|null|undefined)=>value==null?'未发布':`${(value/100_000_000).toFixed(2)} 亿元`
 const COLORS=['#3d684d','#a47845','#7e8b91']
+
+function BreadthHistoryPath({points}:{points:NonNullable<MarketRiskStatus['breadth_history']>['points']}){
+  const container=useRef<HTMLDivElement>(null)
+  useEffect(()=>{
+    if(!container.current||!points.length)return
+    const chart=createChart(container.current,{autoSize:true,height:260,
+      layout:{background:{type:ColorType.Solid,color:'#fafbfa'},textColor:'#758177'},
+      grid:{vertLines:{color:'#edf1ec'},horzLines:{color:'#e6ece5'}},
+      rightPriceScale:{borderColor:'#cdd8ce',scaleMargins:{top:.05,bottom:.05}},timeScale:{borderColor:'#cdd8ce'},
+    })
+    for(const [index,group] of ['all','st'].entries()){
+      const line=chart.addSeries(LineSeries,{color:COLORS[index],lineWidth:2,priceLineVisible:false,
+        priceFormat:{type:'custom',formatter:(value:number)=>`${value.toFixed(1)}%`},
+        autoscaleInfoProvider:()=>({priceRange:{minValue:0,maxValue:100}}),
+      })
+      line.setData(points.map(point=>{const value=(group==='st'?point.st_name_group:point).declining_share_pct
+        return value==null?{time:point.date as Time}:{time:point.date as Time,value}}))
+    }
+    chart.timeScale().fitContent()
+    const observer=typeof ResizeObserver==='undefined'?null:new ResizeObserver(()=>chart.timeScale().fitContent())
+    observer?.observe(container.current)
+    return()=>{observer?.disconnect();chart.remove()}
+  },[points])
+  return <div className="market-risk-chart" ref={container} aria-label="深市每日下跌股比例路径"/>
+}
 
 function Paths({indices,window,through}:{indices:MarketRiskIndex[];window:number;through:string|null}){
   const container=useRef<HTMLDivElement>(null)
@@ -101,6 +127,7 @@ export function MarketRiskPage(){
     {data&&<>
       <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。各来源分别核对截止日，已取得指数不代表整体风险已测量。`:`观察日 ${data.observation_date}。当前没有通过校验的完整市场快照；市场基准仍为历史背景，ETF份额按下方独立截止日展示。`}</p>
         {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；同期ST走势{data.market_coverage.st_style_at_target?'已取得':'未覆盖'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
+        {data.market_coverage?.historical_breadth_venues_at_target!=null&&<p>同目标日期的历史涨跌分布来源 {data.market_coverage.historical_breadth_venues_at_target}/2；单一交易所不代表沪深整体。</p>}
         <details className="market-source-notes" open={data.status!=='observed_snapshot'}><summary>来源更新与待核对项</summary>
         {data.public_etf_snapshot?.availability==='observed'&&<p>上交所公开ETF份额已读到 {data.public_etf_snapshot.through}。</p>}
         {data.szse_etf_snapshot?.availability==='observed'&&<p>深交所ETF份额记录已读到 {data.szse_etf_snapshot.through}；最新份额的次日修订状态仍待核对。</p>}
@@ -113,6 +140,19 @@ export function MarketRiskPage(){
         <div className="market-risk-legend">{data.indices.map((index,i)=><span key={index.code}><i className={`market-line-${i%3}`}/>{index.name} · 截至 {index.through||'未知'}{index.historical_only?' · 历史快照':''}{data.requested_through&&index.through!==data.requested_through?' · 未入同期图':''}</span>)}</div>
         {data.indices.length>0?<><Paths indices={data.indices} window={window} through={data.requested_through}/><p className="learning-footnote">起点归一为100；仅绘制所选窗口完整且截止日一致的序列。较早的ST历史只保留在表中，不拼接成同期走势；ST等权仅消费覆盖率至少95%的日期。</p><div className="learning-table-wrap"><table className="learning-table market-risk-table"><thead><tr><th scope="col">市场基准</th><th scope="col">5日</th><th scope="col">20日</th><th scope="col">60日</th><th scope="col">60日最大回撤</th><th scope="col">5/20日成交额均值比</th></tr></thead><tbody>{data.indices.map(index=><tr key={index.code}><th scope="row">{index.name}<small>{index.through}</small></th><td>{pct(index.return_5d_pct)}</td><td>{pct(index.return_20d_pct)}</td><td>{pct(index.return_60d_pct)}</td><td>{pct(index.max_drawdown_60d_pct)}</td><td>{index.amount_5d_to_20d_ratio==null?'—':`${index.amount_5d_to_20d_ratio.toFixed(2)} 倍`}</td></tr>)}</tbody></table></div></>:<p className="learning-empty">市场基准缺失，无法计算趋势和回撤。</p>}
       </section>
+
+      {data.breadth_history&&<section className="learning-freshness" aria-label="历史涨跌分布">
+        <header className="learning-section-head"><div><p className="eyebrow">市场宽度 / 历史日表</p><h2>深市历史涨跌分布</h2></div><span>沪市历史仍缺</span></header>
+        {data.breadth_history.availability==='observed'?<>
+          <p>{data.breadth_history.start} 至 {data.breadth_history.through}，完整核对 {data.breadth_history.observed_days}/{data.breadth_history.expected_days} 个收盘日期。{data.breadth_history.note}</p>
+          {data.breadth_history.matches_market_target===false&&<p>历史分布截止日与当前市场目标不同，本图保留自己的实际窗口。</p>}
+          <div className="market-risk-legend"><span><i className="market-line-0"/>深市A股 · 下跌占有成交股票</span><span><i className="market-line-1"/>深市当日ST名称组 · 下跌占有成交股票</span></div>
+          <BreadthHistoryPath points={data.breadth_history.points}/>
+          <p>纵轴为下跌股票占当日有成交股票的比例；名称组每日变化，不串接成ST收益指数，也不把无成交股票当平盘。</p>
+          <details className="market-source-notes"><summary>逐日核对（{data.breadth_history.observed_days}个日期）</summary><div className="learning-table-wrap"><table className="learning-table market-history-table"><thead><tr><th scope="col">日期 / 来源内A股</th><th scope="col">有成交 / 无成交</th><th scope="col">上涨 / 下跌 / 平盘</th><th scope="col">下跌比例</th><th scope="col">ST名称组 / 有成交</th><th scope="col">ST组下跌比例</th></tr></thead><tbody>{data.breadth_history.points.map(point=><tr key={point.date}><th scope="row">{point.date}<small>{number(point.listed_source_stocks)}只；原报表{number(point.source_rows)}条</small><small>剔除B股{point.excluded_b_shares}、优先股{point.excluded_preferred_shares}</small></th><td>{number(point.observed_trading_stocks)} / {number(point.nontrading_stocks)}</td><td>{number(point.advancing)} / {number(point.declining)} / {number(point.flat)}</td><td>{ratio(point.declining_share_pct)}</td><td>{number(point.st_name_group.listed_source_stocks)} / {number(point.st_name_group.observed_trading_stocks)}</td><td>{ratio(point.st_name_group.declining_share_pct)}</td></tr>)}</tbody></table></div></details>
+          <p><a href={data.breadth_history.source_url} target="_blank" rel="noreferrer">深交所历史日表 ↗</a> · 当前仅深市完整窗发布，沪深合并历史分布仍待补齐。</p>
+        </>:<p>历史窗尚未完整发布，暂不展示缩短的曲线。{data.breadth_history.last_recorded_attempt?`最近采集记录已核对 ${data.breadth_history.last_recorded_attempt.completed_days}/${data.breadth_history.last_recorded_attempt.expected_days} 个日期（${new Date(data.breadth_history.last_recorded_attempt.recorded_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}）。`:''}{data.breadth_history.last_recorded_attempt?.status==='failed'?'最近一次采集中断，已核对日期保留用于续采。':''}</p>}
+      </section>}
 
       <section className="learning-freshness" aria-label="ETF份额与申赎"><header className="learning-section-head"><div><p className="eyebrow">资金撤离线索 / ETF样本</p><h2>份额变化与净申赎估算</h2></div><label>ETF观察窗口 <select aria-label="ETF观察窗口" value={etfWindow} onChange={event=>setETFWindow(event.target.value)}>{recentAvailable&&<option value="recent">近2个月</option>}{[1,5,20].map(value=><option key={value} value={String(value)}>{value}个交易日</option>)}</select></label></header>
         <p>固定观察8只沪深300、中证500和中证1000ETF。同窗份额覆盖 {data.etf_aggregate[etfWindow]?.observed_etfs??0}/8{data.etf_aggregate[etfWindow]?.evaluation_through?`，目标截至 ${data.etf_aggregate[etfWindow].evaluation_through}`:''}；不外推全体ETF或机构持仓。净申赎金额需先核对净值和份额折算等事件，当前尚未发布。</p>
@@ -157,7 +197,7 @@ export function MarketRiskPage(){
           </div>
           <p>{data.breadth.scope} {data.breadth.source==='exchange_public'?`有成交股票中平盘 ${number(data.breadth.flat)} 只。`:''} 报告成交额 {amount(data.breadth.amount_yuan)}。</p>
           {data.breadth.return_basis&&<p className="learning-footnote">{data.breadth.return_basis}</p>}
-          {data.breadth.historical_path_available===false&&<p>当前只有 {data.breadth.through} 的收盘截面，近两个月的涨跌分布路径仍待补齐；单日分布不证明风险持续扩散。</p>}
+          {data.breadth.historical_path_available===false&&<p>{data.breadth_history?.availability==='observed'?'已有深市历史日表，沪深合并历史分布仍待补齐；另列的历史图仅覆盖深市。':`当前只有 ${data.breadth.through} 的收盘截面，近两个月的涨跌分布路径仍待补齐；`}单日分布不证明风险持续扩散。</p>}
           {data.breadth.venues&&<div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">官方来源</th><th scope="col">来源内A股</th><th scope="col">有成交</th><th scope="col">停牌或无成交</th><th scope="col">上涨 / 下跌 / 平盘</th><th scope="col">剔除B股</th><th scope="col">剔除优先股</th></tr></thead><tbody>{data.breadth.venues.map(venue=><tr key={venue.venue}><th scope="row"><a href={venue.url} target="_blank" rel="noreferrer">{venue.label} ↗</a><small>{venue.through} · 原报表 {number(venue.source_rows)} 条</small></th><td>{number(venue.listed_source_stocks)}</td><td>{number(venue.observed_trading_stocks)}</td><td>{number(venue.nontrading_stocks)}</td><td>{number(venue.advancing)} / {number(venue.declining)} / {number(venue.flat)}</td><td>{number(venue.excluded_b_shares)}</td><td>{number(venue.excluded_preferred_shares)}</td></tr>)}</tbody></table></div>}
           {data.breadth.st_name_group&&<div className="market-st-cross-section" aria-label="ST名称分组当日分布"><h3>ST名称分组 · 当日分布</h3><p>{data.breadth.st_name_group.definition}</p><div className="market-breadth">
             <div><span>名称组 / 有成交</span><strong>{number(data.breadth.st_name_group.listed_source_stocks)} / {number(data.breadth.st_name_group.observed_trading_stocks)}</strong></div>

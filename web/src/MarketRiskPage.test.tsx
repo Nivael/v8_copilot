@@ -19,6 +19,40 @@ const fixture:MarketRiskStatus={
 
 describe('MarketRiskPage',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('keeps a complete single-venue historical path distinct from whole-market and ST style coverage',async()=>{
+    const summary={listed_source_stocks:5,observed_trading_stocks:4,nontrading_stocks:1,advancing:1,declining:2,flat:1,
+      declining_5pct_or_more:0,median_return_pct:-1,declining_share_pct:50,amount_yuan:1000}
+    const data:MarketRiskStatus={...fixture,breadth_history:{availability:'observed',scope:'SZSE_A_shares_daily_reports',
+      start:'2026-09-04',through:'2026-11-04',observed_days:2,expected_days:2,complete_market_history:false,
+      matches_market_target:false,source_url:'https://www.szse.cn/market/trend/index.html',
+      note:'ST名称组按各日简称分组，不是历史法定名单或固定组合指数。',points:[
+        {date:'2026-09-04',...summary,source_rows:7,excluded_b_shares:1,excluded_preferred_shares:1,st_name_group:summary},
+        {date:'2026-11-04',...summary,source_rows:7,excluded_b_shares:1,excluded_preferred_shares:1,
+          st_name_group:{...summary,observed_trading_stocks:0,nontrading_stocks:5,declining_share_pct:null}},
+      ]}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByRole('heading',{name:'深市历史涨跌分布'})).toBeInTheDocument()
+    expect(screen.getByText('沪市历史仍缺')).toBeInTheDocument()
+    expect(screen.getByText(/ST名称组按各日简称分组，不是历史法定名单或固定组合指数/)).toBeInTheDocument()
+    expect(screen.getByText(/历史分布截止日与当前市场目标不同/)).toBeInTheDocument()
+    expect(screen.getByLabelText('深市每日下跌股比例路径')).toBeInTheDocument()
+    expect(screen.getByRole('columnheader',{name:'ST组下跌比例'})).toBeInTheDocument()
+    expect(screen.getByRole('heading',{name:'当前无法确认'})).toBeInTheDocument()
+    expect(screen.getByText('未发布')).toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'深交所历史日表 ↗'})).toHaveAttribute('href','https://www.szse.cn/market/trend/index.html')
+  })
+  it.each(['collecting','failed'])('shows retained historical collection records without a partial curve or a live-job assertion (%s)',async status=>{
+    const data:MarketRiskStatus={...fixture,breadth_history:{availability:'missing',complete_market_history:false,points:[],
+      last_recorded_attempt:{status,recorded_at:'2026-11-05T00:00:00Z',start:'2026-09-04',requested_through:'2026-11-04',completed_days:2,expected_days:38}}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByText(/最近采集记录已核对 2\/38 个日期/)).toBeInTheDocument()
+    expect(screen.getByText(/历史窗尚未完整发布，暂不展示缩短的曲线/)).toBeInTheDocument()
+    expect(screen.queryByLabelText('深市每日下跌股比例路径')).not.toBeInTheDocument()
+    expect(screen.queryByText(/采集正在运行/)).not.toBeInTheDocument()
+    if(status==='failed')expect(screen.getByText(/最近一次采集中断，已核对日期保留用于续采/)).toBeInTheDocument()
+  })
   it('keeps quarterly share disclosures, dashes and off-exchange scope distinct from current cash flow',async()=>{
     const data:MarketRiskStatus={...fixture,etf_quarterly:{version:'etf_quarterly_share_accounting_v1',availability:'observed',
       period_label:'2026Q3',period_start:'2026-07-01',period_end:'2026-09-30',observed_reports:2,declared_etfs:8,corporate_actions_checked:false,

@@ -89,6 +89,14 @@ def test_verified_preferred_shares_are_separate_from_ordinary_A_shares():
     with pytest.raises(ValueError, match="preferred-share identity"): parse_szse(pages, DAY)
 
 
+@pytest.mark.parametrize('previous,close,expected',[(32.4,30.78,1),(10.4,9.88,1),(20.01,19.01,0),(100,94.99,1)])
+def test_exact_five_percent_boundary_uses_decimal_prices_without_an_epsilon(previous,close,expected):
+    from market_breadth import cross_section
+    from market_breadth_refresh import quote
+    row=quote('300001','边界样本',DAY,close,previous,-5,100,1000,venue='SZSE')
+    assert cross_section([row])['declining_5pct_or_more']==expected
+
+
 @pytest.mark.parametrize("alter", ["date", "intraday", "different_time", "missing", "duplicate", "type", "return", "boundaries", "columns"])
 def test_SSE_incomplete_or_inconsistent_snapshot_is_rejected(alter):
     pages = sse_pages()

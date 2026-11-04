@@ -2,7 +2,21 @@ import type {
   Dossier, EvidencePackAuditRecord, Experience, ExperienceAutoAcceptance, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
   ExperienceReviewQueue, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
   DailyIntelligence,
+  LearningStatus,
+  MarketRiskStatus,
 } from './types'
+
+export async function getLearningStatus(signal?:AbortSignal):Promise<LearningStatus> {
+  const response=await fetch('/api/v1/learning/status',{signal,cache:'no-store'})
+  if(!response.ok)throw new Error(`更新与复盘服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getMarketRiskStatus(signal?:AbortSignal):Promise<MarketRiskStatus> {
+  const response=await fetch('/api/v1/market-risk/status',{signal,cache:'no-store'})
+  if(!response.ok)throw new Error(`大盘环境服务返回 ${response.status}`)
+  return response.json()
+}
 
 export function parseNdjson(buffer: string, chunk: string) {
   const lines = `${buffer}${chunk}`.split('\n')

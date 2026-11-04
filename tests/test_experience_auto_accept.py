@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import pytest
 
 from experience_auto_accept import POLICY_ID, auto_accept_all, auto_accept_candidate
 from experience_contract import ExperienceCandidateInput, ExperienceStatus, ExperienceType
@@ -139,3 +140,30 @@ def test_batch_reuses_the_same_regression_result(tmp_path) -> None:
 
     assert [row.outcome for row in results] == ["accepted", "accepted"]
     assert executor.calls == ["regression:entity_scope_boundary"]
+
+
+def test_invalid_source_run_cannot_count_as_replication(tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    valid = _run(ledger, "valid")
+    invalid = ledger.record(ResearchRunCreate(
+        request_id="invalid", question_text="错误回答", normalized_intent="comparison",
+        evidence_pack_ids=["EP-AAAAAAAAAAAAAAAAAAAA"], final_answer="未通过校验。",
+        validation_report={"valid": False}, source_freshness={}, agent_surface="test",
+    )).run_id
+    record = repository.propose(_candidate([valid, invalid, valid, "RUN-MISSING"]))
+    executor = FakeExecutor()
+    result = auto_accept_candidate(record, repository=repository, ledger=ledger, executor=executor)
+    assert result.distinct_source_runs == 1
+    assert result.outcome == "waiting_for_replication"
+    assert executor.calls == []
+
+
+def test_minimum_cannot_be_lowered_before_mutating_candidate(tmp_path) -> None:
+    ledger = ResearchRunLedger(tmp_path / "runs.sqlite3")
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    record = repository.propose(_candidate([_run(ledger, "single")]))
+    with pytest.raises(ValueError, match="至少"):
+        auto_accept_candidate(record, repository=repository, ledger=ledger,
+                              executor=FakeExecutor(), minimum_source_runs=1)
+    assert repository.get(record.experience_id).status == ExperienceStatus.CANDIDATE

@@ -110,6 +110,11 @@ response split, not a claim that v1 responses validate as v0.
 
 React 经验中心、兼容问答、运行审计和个股面板位于 `web/`：
 
+更新与复盘位于 `/learning`，区分已接受库存、定期复验、实际数据截止日和未测量效果。
+大盘环境位于 `/market`，把市场走势、ETF份额、市场宽度与流动性放在个股节点之前独立核查。
+两个新增GET接口只读；当前行情凭证过期时只展示有明确日期的历史背景，不发布当前风险等级。
+参数、材料化入口和持续goal的后续验收见 [MARKET_RISK_PRD.md](MARKET_RISK_PRD.md)。
+
 ```bash
 cd web
 npm install

@@ -125,6 +125,94 @@ export interface ExperienceGovernanceStatus {
   not_evidence:true
 }
 
+export type RegressionState = 'current'|'due'|'never_checked'|'needs_recheck'|'unverified'|'failed'|'unknown'
+export interface LearningMethod {
+  experience_id:string
+  title:string
+  status:ExperienceStatus
+  experience_version:number
+  source_ref_count:number
+  existing_source_runs:number|null
+  validator_passed_source_runs:number|null
+  unresolved_source_refs:string[]|null
+  unsupported_validation_refs:string[]
+  blocking_conflict:boolean
+  regression_state:RegressionState
+  last_checked_at:string|null
+  next_due_at:string|null
+  reviewed_at:string|null
+  reviewed_by:string|null
+}
+export interface LearningStatus {
+  contract_version:'v8_learning_status_v1'
+  generated_at:string
+  observation_date:string
+  timezone:string
+  availability:Record<string,'available'|'missing'|'invalid'>
+  gaps:string[]
+  counts:Record<ExperienceStatus,number>|null
+  runs:{total:number;validator_passed:number;with_experience_hits:number;latest_at:string|null}|null
+  regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
+  latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
+  conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
+  methods:LearningMethod[]
+  freshness:{
+    availability:'available'|'missing'|'invalid'
+    manifest_id?:string
+    generated_at?:string
+    declared_status?:string
+    universe_as_of?:string|null
+    research_symbol_count?:number
+    sources:Array<{source_id:string;label:string;as_of:string|null;checked_at:string|null;expected_through:string|null;declared_status:string;age_calendar_days:number|null;row_count:number|null;coverage_count:number|null;source_ref:string}>
+    blocking_gaps?:string[]
+    coverage_gaps?:string[]
+  }
+  quality_evaluation:{status:'not_measured';accuracy:null;reason:string}
+  automation:{promotion:string;minimum_source_runs:number;periodic_verification:string;schedule_status:'not_observed'}
+  read_only:true
+  not_evidence:true
+}
+
+export interface MarketRiskIndex {
+  code:string
+  name:string
+  through:string|null
+  historical_only:boolean
+  return_5d_pct:number|null
+  return_20d_pct:number|null
+  return_60d_pct:number|null
+  max_drawdown_60d_pct:number|null
+  from_60d_peak_pct:number|null
+  amount_5d_to_20d_ratio:number|null
+  path:Array<{date:string;close:number|null}>
+}
+export interface MarketRiskETF {
+  code:string
+  group:string
+  through:string|null
+  corporate_actions_checked:boolean
+  windows:Record<string,{share_change_pct:number|null;share_change_notional_yuan:number|null;estimated_net_subscription_yuan:number|null;status:string}>
+}
+export interface MarketRiskStatus {
+  contract_version:'market_risk_status_v1'
+  parameter_version:string
+  observation_date:string
+  generated_at:string
+  snapshot_digest:string|null
+  requested_through:string|null
+  status:'observed_snapshot'|'historical_only'|'unavailable'
+  current_risk_assessment:'not_calibrated'
+  indices:MarketRiskIndex[]
+  etfs:MarketRiskETF[]
+  etf_aggregate:Record<string,{observed_etfs:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
+  breadth:{status:string;through?:string;observed_trading_stocks?:number;advancing?:number;declining?:number;flat?:number;declining_5pct_or_more?:number;median_return_pct?:number;amount_yuan?:number|null;scope?:string}
+  last_attempt:{status:string;requested_through:string;reason?:string;completed_at:string}|null
+  parameters:{trend_windows_sessions:number[];etf_windows_sessions:number[];etf_basket:Record<string,string>;risk_weights:null;risk_thresholds:null}
+  limitations:string[]
+  sources:Array<{title:string;url:string}>
+  gaps:string[]
+}
+
 export interface ExperienceAutoAcceptance {
   experience_id:string
   outcome:'accepted'|'waiting_for_replication'|'blocked'|'unchanged'

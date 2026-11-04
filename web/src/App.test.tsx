@@ -1,10 +1,10 @@
-import {fireEvent,render,screen} from '@testing-library/react'
+import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {MemoryRouter} from 'react-router-dom'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {App} from './App'
 
 describe('App',()=>{
-  afterEach(()=>vi.restoreAllMocks())
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
 
   it('opens on reusable experience instead of raw question history',async()=>{
     const experiences=[{
@@ -35,7 +35,7 @@ describe('App',()=>{
   })
 
   it('resolves a non-episode announcement deep link into a dossier detail focus',async()=>{
-    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>String(input).includes('market-risk')?new Response('',{status:503}):new Response(JSON.stringify({
       symbol:'603398',display_name:'沐邦高科',as_of:'2026-01-02',
       price_series:[{date:'2026-01-02',close:13.5}],status_intervals:[],events:[{
         event_id:'announcement:1',date:'2026-01-01',title:'正式公告',
@@ -64,7 +64,7 @@ describe('App',()=>{
   })
 
   it('keeps announcements newer than the price snapshot visible and separated',async()=>{
-    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>String(input).includes('market-risk')?new Response('',{status:503}):new Response(JSON.stringify({
       symbol:'300123',display_name:'ST亚光',as_of:'2026-06-26',
       price_series:[{date:'2026-06-26',close:6.2}],status_intervals:[],events:[{
         event_id:'announcement:1225415538',date:'2026-07-08',title:'关于公开招募和遴选重整投资人的公告',

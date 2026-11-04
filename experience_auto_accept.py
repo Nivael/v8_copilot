@@ -63,10 +63,11 @@ def _existing_run_ids(record: ExperienceRecord, ledger: ResearchRunLedger) -> li
         if not run_id.startswith("RUN-"):
             continue
         try:
-            ledger.get(run_id)
+            run = ledger.get(run_id)
         except KeyError:
             continue
-        result.append(run_id)
+        if run.validation_report.get("valid") is True:
+            result.append(run_id)
     return result
 
 
@@ -92,6 +93,8 @@ def auto_accept_candidate(
     minimum_source_runs: int = 2,
 ) -> AutoAcceptanceResult:
     """Promote only replicated, executable and conflict-free methods."""
+    if minimum_source_runs < 2:
+        raise ValueError("自动晋级至少需要 2 个通过校验的来源运行")
     if record.status == ExperienceStatus.ACCEPTED:
         return AutoAcceptanceResult(
             experience_id=record.experience_id, outcome="unchanged",

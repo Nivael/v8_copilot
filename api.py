@@ -42,6 +42,8 @@ from experience_contract import (
     ExperienceStatus,
 )
 from experience_auto_accept import auto_accept_candidate
+from learning_status import build_learning_status
+from market_risk import build_market_risk_status
 from experience_distiller import distill_run_feedback
 from experience_governance import (
     ExperienceGovernanceRepository,
@@ -75,6 +77,7 @@ from settings import (
     MARKET_ACTIVITY_DB,
     MARKET_ACTIVITY_MANIFEST_PATH,
     P7_INTELLIGENCE_DB,
+    FRESHNESS_MANIFEST_PATH,
 )
 
 
@@ -479,6 +482,20 @@ def list_experiences(
 @app.get("/api/v1/experience-governance/status")
 def get_experience_governance_status() -> dict[str, object]:
     return governance_status(experience_repository, experience_governance_repository)
+
+
+@app.get("/api/v1/learning/status")
+def get_learning_status() -> dict[str, object]:
+    return build_learning_status(
+        experience_db=experience_repository.path, ledger_db=research_run_ledger.path,
+        governance_db=experience_governance_repository.path,
+        freshness_path=FRESHNESS_MANIFEST_PATH,
+    )
+
+
+@app.get("/api/v1/market-risk/status")
+def get_market_risk_status() -> dict[str, object]:
+    return build_market_risk_status()
 
 
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)

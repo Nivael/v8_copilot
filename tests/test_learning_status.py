@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from experience_contract import ExperienceCandidateInput, ExperienceReviewRequest
 from experience_governance import ExperienceGovernanceRepository, RegressionReport
 from learning_status import build_learning_status
+from experience_verification import method_digest, software_digest
 from research_repository import ExperienceRepository, ResearchRunCreate, ResearchRunLedger
 
 
@@ -87,8 +88,13 @@ def test_missing_sources_remain_missing_and_unknown_instead_of_zero(tmp_path):
 
 def test_reaccepted_expired_failed_and_future_checks_are_not_current(tmp_path):
     record, args = setup_sources(tmp_path)
+    record = record.model_copy(update={"reviewed_at": datetime(2026, 10, 1, tzinfo=timezone.utc)})
     with sqlite3.connect(args["experience_db"]) as connection:
-        connection.execute("update experiences set reviewed_at='2026-10-01T00:00:00+00:00'")
+        connection.execute("update experiences set reviewed_at=?,payload_json=?",
+                           (record.reviewed_at.isoformat(), record.model_dump_json()))
+    with sqlite3.connect(args["governance_db"]) as connection:
+        connection.execute("insert into experience_regression_bindings values (?,?,?,?)",
+                           (record.experience_id, "XRG-AAAAAAAAAAAAAAAAAAAA", method_digest(record), software_digest()))
     for checked, due, status, expected in [
         ("2026-11-01T00:00:00Z", "2026-12-01T00:00:00Z", "passed", "current"),
         ("2026-10-01T00:00:00Z", "2026-11-01T00:00:00Z", "passed", "due"),
@@ -102,6 +108,18 @@ def test_reaccepted_expired_failed_and_future_checks_are_not_current(tmp_path):
         result = build_learning_status(**args)
         assert result["regression_counts"][expected] == 1
         assert result["regression_counts"]["current"] == (expected == "current")
+
+
+def test_old_pass_without_input_binding_is_not_current(tmp_path):
+    record, args = setup_sources(tmp_path)
+    reviewed = record.reviewed_at.isoformat()
+    with sqlite3.connect(args["governance_db"]) as connection:
+        connection.execute("insert into experience_regression_status values (?,?,?,?,?)",
+                           (record.experience_id, "XRG-OLD", "passed", reviewed, "2027-01-01T00:00:00Z"))
+    args["now"] = datetime(2026, 12, 1, tzinfo=timezone.utc)
+    result = build_learning_status(**args)
+    assert result["regression_counts"]["current"] == 0
+    assert result["regression_counts"]["needs_recheck"] == 1
 
 
 def test_corrupt_source_degrades_independently_and_does_not_hide_methods(tmp_path):

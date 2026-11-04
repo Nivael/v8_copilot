@@ -1,6 +1,11 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
+from pathlib import Path
+import subprocess
+
+import pytest
 
 from experience_contract import (
     ExperienceCandidateInput,
@@ -10,6 +15,7 @@ from experience_contract import (
 )
 from experience_governance import (
     ExperienceGovernanceRepository,
+    PytestRegressionExecutor,
     RegressionCheckResult,
     detect_experience_conflicts,
     export_accepted_registry,
@@ -109,3 +115,64 @@ def test_successful_regression_is_not_repeated_before_next_due_date(tmp_path) ->
     assert first.passed == 1
     assert second.accepted_examined == 0
     assert executor.calls == 1
+
+
+@pytest.mark.parametrize("exit_code,xml,expected", [
+    (0, '<testsuite><testcase name="checked"/></testsuite>', "passed"),
+    (1, '<testsuite><testcase name="checked"><failure/></testcase></testsuite>', "failed"),
+    (0, '<testsuite><testcase name="skipped"><skipped/></testcase></testsuite>', "unverified"),
+    (0, '<testsuite/>', "unverified"),
+    (1, '<testsuite><testcase name="setup"><error/></testcase></testsuite>', "unverified"),
+    (2, '<testsuite/>', "unverified"),
+    (5, '<testsuite/>', "unverified"),
+])
+def test_runner_requires_actual_executed_test_evidence(monkeypatch, exit_code, xml, expected):
+    def run(command, **_kwargs):
+        assert "--frozen" in command
+        Path(command[-1]).write_text(xml)
+        return subprocess.CompletedProcess(command, exit_code, stdout="controlled test output", stderr="")
+    monkeypatch.setattr(subprocess, "run", run)
+    result = PytestRegressionExecutor().run("regression:source_absence_scope")
+    assert result.status == expected
+
+
+def test_runner_timeout_is_unverified_instead_of_failed(monkeypatch):
+    def timeout(*args, **kwargs):
+        raise subprocess.TimeoutExpired("pytest", 900)
+    monkeypatch.setattr(subprocess, "run", timeout)
+    assert PytestRegressionExecutor().run("regression:source_absence_scope").status == "unverified"
+
+
+def test_retrieval_is_not_a_semantic_verification_of_discipline_types():
+    result = PytestRegressionExecutor().run("regression:discipline_taxonomy")
+    assert result.status == "unverified"
+    assert "没有处分类型" in result.detail
+    assert not PytestRegressionExecutor.supports("regression:discipline_taxonomy")
+
+
+def test_method_change_invalidates_a_recent_pass_even_without_version_increment(tmp_path):
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    record = accept(repository, candidate())
+    governance = ExperienceGovernanceRepository(tmp_path / "governance.sqlite3")
+    executor = FakeExecutor("passed")
+    run_due_regressions(repository, governance, executor=executor)
+    updated = repository.propose(candidate(validation_ref="regression:new_check"))
+    assert updated.experience_version == record.experience_version
+    assert governance.due(updated, now=datetime.now(timezone.utc))
+    second = run_due_regressions(repository, governance, executor=executor)
+    assert second.accepted_examined == 1
+    assert executor.calls == 3  # first check, then both the original and the new check
+
+
+def test_code_change_during_failed_check_does_not_block_method(tmp_path, monkeypatch):
+    import experience_governance
+    versions = iter(["a" * 64, "b" * 64])
+    monkeypatch.setattr(experience_governance, "software_digest", lambda *_: next(versions))
+    repository = ExperienceRepository(tmp_path / "experiences.sqlite3")
+    record = accept(repository, candidate())
+    governance = ExperienceGovernanceRepository(tmp_path / "governance.sqlite3")
+    report = run_due_regressions(repository, governance, executor=FakeExecutor("failed"))
+    assert report.unverified == 1
+    assert report.failed == 0
+    assert repository.get(record.experience_id).status == ExperienceStatus.ACCEPTED
+    assert not report.results[0].auto_blocked

@@ -217,6 +217,10 @@ python experience_governance.py export --registry-version v1
 白名单回归；回归失败会自动把 accepted 转为 `blocked` 并重新导出 registry。修复后可由同一
 owner policy 重新跑自动门；未知 validation ref 保持 blocked，不伪报通过。
 
+只读核验可运行 `uv run python experience_audit.py`：在临时一致副本执行软件规则检查，保存带库存与代码绑定的报告，
+不修改原入库决定。`/learning`仅在报告与当前方法/代码匹配且未过期时显示结果。无实际执行、跳过、基础设施错误或
+验证期间输入变化均为未验证；软件检查通过仍不等于研究准确率或投资效果。详细边界见 `MARKET_RISK_PRD.md`。
+
 普通成功回答仍不会自动生成经验。这是主动的污染防线，不是尚未实现的功能。
 
 经验运营不新增浏览器窗口：`/runs` 每条运行只有四个固定反馈按钮；同类方法达到两次真实复现

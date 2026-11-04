@@ -74,7 +74,7 @@ def test_timing_narrative_explains_all_three_definitions() -> None:
     ]
 
 
-def test_microcap_question_uses_window_start_factor_and_has_no_c14_debt() -> None:
+def test_microcap_question_binds_factor_only_after_market_window_is_available() -> None:
     response = orchestrate(ResearchRequest(
         question="微盘 ST 两周异动分布和普通 ST 比怎么样？",
         object={"kind": "universe", "ref": "ST panel"},
@@ -88,8 +88,13 @@ def test_microcap_question_uses_window_start_factor_and_has_no_c14_debt() -> Non
     row_ids = {row["row_id"] for row in card["body_rows"]}
     if "microcap_comparison_gap" in row_ids:
         gap = next(row for row in card["body_rows"] if row["row_id"] == "microcap_comparison_gap")
-        assert gap["factor_snapshot_id"].startswith("MFS-")
-        assert "缺失端点不插值" in gap["缺口"]
+        if gap.get("gap_stage") == "market_window":
+            assert gap["factor_snapshot_id"] == "unavailable"
+            assert gap["factor_lookup_executed"] is False
+            assert "market_comparison_gap" in row_ids
+        else:
+            assert gap["factor_snapshot_id"] == "unavailable" or gap["factor_snapshot_id"].startswith("MFS-")
+            assert gap["缺口"]
     else:
         assert {
             "microcap_definition",
@@ -102,7 +107,11 @@ def test_microcap_question_uses_window_start_factor_and_has_no_c14_debt() -> Non
         )
         assert card["source_freshness"]["market_cap_as_of"] == definition["因子日期"]
         assert definition["因子日期"] == definition["收益窗口起点"]
-    assert any("market_factors_v1.sqlite3::market_cap_daily" in ref for ref in card["provenance"])
+    factor_source = any("market_factors_v1.sqlite3::market_cap_daily" in ref for ref in card["provenance"])
+    if "microcap_comparison_gap" in row_ids and gap.get("gap_stage") == "market_window":
+        assert not factor_source
+    else:
+        assert factor_source
     assert response.narrative is not None
     assert (
         "微盘 ST 平均收益" in response.narrative.direct_answer.text

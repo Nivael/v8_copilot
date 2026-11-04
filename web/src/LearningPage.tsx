@@ -6,7 +6,7 @@ import type {ExperienceStatus, LearningMethod, LearningStatus, RegressionState} 
 import './learning.css'
 
 const STATE_LABEL:Record<RegressionState,string>={
-  current:'本期通过',due:'已到复验期',never_checked:'尚未复验',needs_recheck:'接受后需复验',
+  current:'本期规则通过',due:'已到复验期',never_checked:'尚未复验',needs_recheck:'版本需复验',
   unverified:'未能验证',failed:'复验失败',unknown:'记录不可读',
 }
 const STATUS_LABEL:Record<ExperienceStatus,string>={accepted:'已接受',candidate:'候选',blocked:'已阻断',ignored:'已忽略',merged:'已合并',closed:'已关闭',superseded:'已取代'}
@@ -53,7 +53,7 @@ export function LearningPage(){
     .filter(([key])=>key!=='current').reduce((sum,[,value])=>sum+value,0)
   return <div className="learning-page">
     <header className="learning-header">
-      <div><p className="eyebrow">研究工作台 / 更新与复盘</p><h1>让改进有据可查</h1><p>从真实运行中总结方法，检查方法是否仍有效，再核对数据更新到哪里。</p></div>
+      <div><p className="eyebrow">研究工作台 / 更新与复盘</p><h1>让改进有据可查</h1><p>从真实运行中总结方法，检查是否符合既定规则，再核对数据更新到哪里。</p></div>
       <button className="learning-refresh" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/>{loading?'读取中…':'重新核对'}</button>
     </header>
     {loading&&<p role="status" className="learning-loading">正在核对本地运行、经验、复验记录和数据清单…</p>}
@@ -65,19 +65,19 @@ export function LearningPage(){
         <article><span>01 / 研究运行</span><strong>{count(data.runs?.total)}</strong><p>{count(data.runs?.validator_passed)} 条通过结构校验</p><Link to="/runs">追溯回答 <ArrowRight size={14}/></Link></article>
         <article><span>02 / 待沉淀方法</span><strong>{count(data.counts?.candidate)}</strong><p>{count(data.counts?.blocked)} 条方法被阻断</p><Link to="/">查看方法库 <ArrowRight size={14}/></Link></article>
         <article><span>03 / 已接受方法</span><strong>{count(data.counts?.accepted)}</strong><p>有接受记录，仍需定期复验</p><Link to="/#methods">查看经验 <ArrowRight size={14}/></Link></article>
-        <article className="learning-verified"><span>04 / 本期复验通过</span><strong>{count(data.regression_counts?.current)}<small> / {count(data.counts?.accepted)}</small></strong><p>{needsCheck==null?'复验来源不可读':`${needsCheck} 条已接受方法需要核对`}</p><a href="#method-audit">查看逐条结果 <ArrowRight size={14}/></a></article>
+        <article className="learning-verified"><span>04 / 本期规则检查通过</span><strong>{count(data.regression_counts?.current)}<small> / {count(data.counts?.accepted)}</small></strong><p>{needsCheck==null?'复验来源不可读':`${needsCheck} 条已接受方法需要核对`}</p><a href="#method-audit">查看逐条结果 <ArrowRight size={14}/></a></article>
       </section>
       <p className="learning-footnote">四项是各自的库存，统计单位不同。不能相除为转化率，也不能作为准确率。</p>
 
       <section className="learning-diagnosis" aria-label="自我提升与运行机制">
         <div><p className="eyebrow">自我提升</p><h2>效果尚未测量</h2><p>{data.quality_evaluation.reason}</p><p>{count(data.runs?.with_experience_hits)} 条运行记录过经验调用。调用表示使用过方法，不证明回答变好。</p></div>
-        <div><p className="eyebrow">自我更新</p><h2>触发机制与实际运行分开看</h2><dl><div><dt>方法晋级</dt><dd>候选或反馈触发；至少 {data.automation.minimum_source_runs} 个有效来源运行，并通过回归、冲突与通用性检查。</dd></div><div><dt>定期复验</dt><dd>由维护流程显式执行。此页没有读取排程状态，不能据此判断定时任务正在运行。</dd></div><div><dt>最近复验批次</dt><dd>{data.latest_regression?`${time(data.latest_regression.completed_at)}，检查 ${data.latest_regression.accepted_examined} 条方法。`:'尚无可读批次。'}{data.latest_regression?.accepted_examined===0&&' 空批次不能证明库存已验证。'}</dd></div></dl></div>
+        <div><p className="eyebrow">自我更新</p><h2>触发机制与实际运行分开看</h2><dl><div><dt>方法晋级</dt><dd>候选或反馈触发；至少 {data.automation.minimum_source_runs} 个有效来源运行，并通过回归、冲突与通用性检查。</dd></div><div><dt>定期复验</dt><dd>由维护流程显式执行。此页没有读取排程状态，不能据此判断定时任务正在运行。</dd></div><div><dt>原复验记录</dt><dd>{data.latest_regression?`${time(data.latest_regression.completed_at)}，检查 ${data.latest_regression.accepted_examined} 条方法。`:'尚无可读批次。'}{data.latest_regression?.accepted_examined===0&&' 空批次不能证明库存已验证。'}</dd></div>{data.readonly_audit?.availability==='current'&&<div><dt>最近只读复验</dt><dd>{time(data.readonly_audit.completed_at)}，检查 {data.readonly_audit.accepted_examined} 条；{data.readonly_audit.passed} 条规则通过，{data.readonly_audit.failed} 条失败，{data.readonly_audit.unverified} 条未验证。结果已绑定当前方法和代码；软件检查不代表研究效果。</dd></div>}</dl></div>
       </section>
 
       <section id="method-audit" className="learning-methods" aria-label="经验逐条核验">
         <header className="learning-section-head"><div><p className="eyebrow">经验总结</p><h2>每条方法的依据与状态</h2></div><Link to="/">进入经验中心 <ArrowRight size={14}/></Link></header>
         <div className="learning-filters"><label>查找方法<input type="search" value={query} onChange={event=>setQuery(event.target.value)} placeholder="方法标题或编号"/></label><label>状态<select value={filter} onChange={event=>setFilter(event.target.value)}><option value="active">在用与待验证</option><option value="accepted">已接受</option><option value="candidate">候选</option><option value="blocked">已阻断</option><option value="all">全部状态</option></select></label><span>{methods.length} 条</span></div>
-        {data.counts===null?<p className="learning-empty">经验库不可读，无法核对方法。</p>:methods.length===0?<p className="learning-empty">没有符合筛选条件的方法。</p>:<div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">方法</th><th scope="col">有效来源</th><th scope="col">定期复验</th><th scope="col">核对结果</th></tr></thead><tbody>{methods.map(method=><tr key={method.experience_id}><th scope="row"><strong>{method.title}</strong><span>{STATUS_LABEL[method.status]} · v{method.experience_version}</span><details><summary>审计出处</summary><p>{method.experience_id}</p><p>接受/审阅者：{method.reviewed_by||'无记录'}<br/>审阅：{time(method.reviewed_at)}</p><p>来源引用 {method.source_ref_count} 个；本地存在 {count(method.existing_source_runs)} 个运行。未解析引用 {method.unresolved_source_refs?.length??'—'} 个。</p>{method.unresolved_source_refs?.map(ref=><code key={ref}>{ref}</code>)}</details></th><td>{count(method.validator_passed_source_runs)}<small>通过结构校验的不同运行</small></td><td><span className={`learning-state state-${method.regression_state}`}>{STATE_LABEL[method.regression_state]}</span><small>上次：{time(method.last_checked_at)}</small><small>到期：{time(method.next_due_at)}</small></td><td>{method.status==='accepted'?<>{method.regression_state==='current'?'本期定期检查通过；仍须为每次研究重查事实。':'入库状态保留；当前有效性尚未确认。'}{method.unsupported_validation_refs.length>0&&<p>存在尚未绑定的验证项。</p>}</>:methodGap(method)}</td></tr>)}</tbody></table></div>}
+        {data.counts===null?<p className="learning-empty">经验库不可读，无法核对方法。</p>:methods.length===0?<p className="learning-empty">没有符合筛选条件的方法。</p>:<div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">方法</th><th scope="col">有效来源</th><th scope="col">定期复验</th><th scope="col">核对结果</th></tr></thead><tbody>{methods.map(method=><tr key={method.experience_id}><th scope="row"><strong>{method.title}</strong><span>{STATUS_LABEL[method.status]} · v{method.experience_version}</span><details><summary>审计出处</summary><p>{method.experience_id}</p><p>接受/审阅者：{method.reviewed_by||'无记录'}<br/>审阅：{time(method.reviewed_at)}</p><p>结果来源：{method.verification_source==='readonly_audit'?'只读复验':'原复验记录'}。</p><p>检查代码版本：{method.verification_binding?.software_digest.slice(0,12)||'未绑定'}；方法版本：{method.verification_binding?.method_digest.slice(0,12)||'未绑定'}。</p><p>来源引用 {method.source_ref_count} 个；本地存在 {count(method.existing_source_runs)} 个运行。未解析引用 {method.unresolved_source_refs?.length??'—'} 个。</p>{method.unresolved_source_refs?.map(ref=><code key={ref}>{ref}</code>)}</details></th><td>{count(method.validator_passed_source_runs)}<small>通过结构校验的不同运行</small></td><td><span className={`learning-state state-${method.regression_state}`}>{STATE_LABEL[method.regression_state]}</span><small>上次：{time(method.last_checked_at)}</small><small>到期：{time(method.next_due_at)}</small></td><td>{method.status==='accepted'?<>{method.regression_state==='current'?'本期规则检查通过；方法效果仍未测量。':method.regression_state==='failed'?'本轮软件规则检查未通过。':method.regression_state==='unverified'?'本轮规则未能完成验证。':'入库状态保留；尚无当前规则检查结果。'}{method.verification_notes?.map(note=><p key={note}>{note}</p>)}{method.unsupported_validation_refs.length>0&&!method.verification_notes?.length&&<p>存在尚未绑定的验证项。</p>}</>:methodGap(method)}</td></tr>)}</tbody></table></div>}
       </section>
 
       <section className="learning-freshness" aria-label="数据更新时点">

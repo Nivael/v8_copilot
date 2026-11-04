@@ -4,13 +4,15 @@ from __future__ import annotations
 import json
 import sqlite3
 from contextlib import closing
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
 from experience_contract import ExperienceRecord
-from experience_governance import PytestRegressionExecutor, detect_experience_conflicts
+from experience_governance import PytestRegressionExecutor, RegressionReport, detect_experience_conflicts
+from experience_verification import READONLY_AUDIT_PATH, inventory_digest, method_digest, software_digest
+from canonical_json import digest
 from freshness_manifest import FreshnessManifest
 from settings import (
     EXPERIENCE_GOVERNANCE_DB, EXPERIENCE_REPOSITORY_DB, FRESHNESS_MANIFEST_PATH,
@@ -37,7 +39,8 @@ def _instant(value: Any) -> datetime | None:
         return None
 
 
-def _regression_state(record: ExperienceRecord, row: dict[str, Any] | None, now: datetime) -> str:
+def _regression_state(record: ExperienceRecord, row: dict[str, Any] | None, now: datetime,
+                      binding: dict[str, Any] | None, code: str) -> str:
     if row is None:
         return "never_checked"
     checked = _instant(row["last_checked_at"])
@@ -47,6 +50,8 @@ def _regression_state(record: ExperienceRecord, row: dict[str, Any] | None, now:
     if record.reviewed_at and record.reviewed_at.tzinfo is None:
         return "unverified"
     if record.reviewed_at and checked < record.reviewed_at:
+        return "needs_recheck"
+    if not binding or binding.get("last_run_id") != row["last_run_id"] or binding.get("method_digest") != method_digest(record) or binding.get("software_digest") != code:
         return "needs_recheck"
     if row["last_status"] == "failed":
         return "failed"
@@ -88,11 +93,50 @@ def _freshness(path: Path, today: date) -> dict[str, Any]:
         return {"availability": "missing" if not path.exists() else "invalid", "sources": []}
 
 
+def _readonly_audit(path: Path, records: list[ExperienceRecord], code: str, now: datetime) -> tuple[dict, dict]:
+    try:
+        audit = json.loads(path.read_text())
+        content_digest = audit.pop("content_digest")
+        if audit.get("audit_version") != "readonly_experience_audit_v1" or digest(audit) != content_digest:
+            raise ValueError("audit integrity mismatch")
+        report = RegressionReport.model_validate(audit["report"])
+        results = {row.experience_id: row for row in report.results}
+        accepted = {row.experience_id: row for row in records if row.status.value == "accepted"}
+        if len(results) != len(report.results) or set(results) != set(accepted):
+            return {"availability": "stale"}, {}
+        if (report.accepted_examined != len(results)
+            or report.passed != sum(row.status == "passed" for row in results.values())
+            or report.failed != sum(row.status == "failed" for row in results.values())
+            or report.unverified != sum(row.status == "unverified" for row in results.values())):
+            raise ValueError("audit totals mismatch")
+        if any(row.status == "passed" and (not row.checks or any(check.status != "passed" for check in row.checks)) for row in results.values()):
+            raise ValueError("audit pass without passing checks")
+        if (audit.get("status") != "complete" or audit.get("source_unchanged") is not True
+            or audit.get("scope") != "software_rule_checks_only"
+            or audit.get("software_digest") != code
+            or audit.get("source_inventory_digest") != inventory_digest(records)
+            or any(audit["bindings"].get(eid) != method_digest(record) for eid, record in accepted.items())):
+            return {"availability": "stale"}, {}
+        checked = _instant(report.completed_at)
+        if checked is None or checked > now:
+            raise ValueError("invalid audit date")
+        if checked + timedelta(days=report.cadence_days) <= now:
+            return {"availability": "expired"}, {}
+        return {"availability": "current", "completed_at": report.completed_at,
+                "accepted_examined": report.accepted_examined, "passed": report.passed,
+                "failed": report.failed, "unverified": report.unverified,
+                "run_id": report.run_id, "content_digest": content_digest,
+                "source_unchanged": True, "cadence_days": report.cadence_days}, results
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return {"availability": "missing" if not path.exists() else "invalid"}, {}
+
+
 def build_learning_status(
     *, experience_db: Path = EXPERIENCE_REPOSITORY_DB,
     ledger_db: Path = RESEARCH_RUN_LEDGER_DB,
     governance_db: Path = EXPERIENCE_GOVERNANCE_DB,
     freshness_path: Path = FRESHNESS_MANIFEST_PATH,
+    audit_path: Path = READONLY_AUDIT_PATH,
     now: datetime | None = None,
 ) -> dict[str, Any]:
     now = now or datetime.now(timezone.utc)
@@ -153,8 +197,18 @@ def build_learning_status(
             gaps.append("runs:invalid_record")
 
     checks = read("regressions", governance_db,
-                  "select experience_id,last_checked_at,next_due_at,last_status from experience_regression_status")
+                  "select experience_id,last_run_id,last_checked_at,next_due_at,last_status from experience_regression_status")
     by_id = {row["experience_id"]: row for row in checks or []}
+    bindings = {}
+    if checks:
+        try:
+            bindings = {row["experience_id"]: row for row in _read_rows(
+                governance_db, "select * from experience_regression_bindings",
+            )}
+        except (OSError, sqlite3.Error):
+            pass  # Legacy checks are displayed as requiring a recheck, never as current passes.
+    code = software_digest()
+    readonly_audit, audited_results = _readonly_audit(audit_path, records, code, now)
     reports = read("regression_reports", governance_db,
                    "select report_json from regression_runs order by completed_at desc limit 1")
     latest_report = None
@@ -178,7 +232,20 @@ def build_learning_status(
         run_count = len(refs & existing_ids) if run_summary is not None else None
         valid_count = len(refs & valid_ids) if run_summary is not None else None
         unsupported = [ref for ref in record.validation_refs if not PytestRegressionExecutor.supports(ref)]
-        state = _regression_state(record, by_id.get(record.experience_id), now) if checks is not None else "unknown"
+        state = _regression_state(record, by_id.get(record.experience_id), now,
+                                   bindings.get(record.experience_id), code) if checks is not None else "unknown"
+        verification_source = "governance_ledger"
+        checked_at = by_id.get(record.experience_id, {}).get("last_checked_at")
+        next_due = by_id.get(record.experience_id, {}).get("next_due_at")
+        binding = bindings.get(record.experience_id)
+        audit_result = audited_results.get(record.experience_id)
+        audit_checked = _instant(readonly_audit.get("completed_at"))
+        if audit_result and audit_checked and (not _instant(checked_at) or audit_checked >= _instant(checked_at)):
+            state = "current" if audit_result.status == "passed" else audit_result.status
+            checked_at = readonly_audit["completed_at"]
+            next_due = (audit_checked + timedelta(days=readonly_audit["cadence_days"])).isoformat()
+            verification_source = "readonly_audit"
+            binding = {"last_run_id": readonly_audit["run_id"], "method_digest": method_digest(record), "software_digest": code}
         methods.append({
             "experience_id": record.experience_id, "title": record.title,
             "status": record.status.value, "experience_version": record.experience_version,
@@ -186,15 +253,17 @@ def build_learning_status(
             "validator_passed_source_runs": valid_count,
             "unresolved_source_refs": sorted(refs - existing_ids) if run_summary is not None else None,
             "unsupported_validation_refs": unsupported,
+            "verification_notes": [PytestRegressionExecutor.UNVERIFIED_REASONS[ref]
+                                   for ref in unsupported if ref in PytestRegressionExecutor.UNVERIFIED_REASONS],
             "blocking_conflict": record.experience_id in blocking_ids,
             "regression_state": state,
-            "last_checked_at": by_id.get(record.experience_id, {}).get("last_checked_at"),
-            "next_due_at": by_id.get(record.experience_id, {}).get("next_due_at"),
+            "last_checked_at": checked_at, "next_due_at": next_due,
             "reviewed_at": record.reviewed_at.isoformat() if record.reviewed_at else None,
             "reviewed_by": record.reviewed_by,
+            "verification_binding": binding, "verification_source": verification_source,
         })
     accepted = [row for row in methods if row["status"] == "accepted"]
-    regression_counts = None if counts is None or checks is None else {
+    regression_counts = None if counts is None or (checks is None and readonly_audit.get("availability") != "current") else {
         state: sum(row["regression_state"] == state for row in accepted)
         for state in ("current", "due", "never_checked", "needs_recheck", "unverified", "failed")
     }
@@ -207,7 +276,9 @@ def build_learning_status(
         "observation_date": today.isoformat(), "timezone": "Asia/Shanghai",
         "availability": availability, "gaps": gaps,
         "counts": counts, "runs": run_summary, "regression_counts": regression_counts,
+        "current_software_digest": code,
         "latest_regression": latest_report,
+        "readonly_audit": readonly_audit,
         "conflicts": [row.model_dump(mode="json") for row in conflicts],
         "methods": methods, "freshness": freshness,
         "quality_evaluation": {"status": "not_measured", "accuracy": None,

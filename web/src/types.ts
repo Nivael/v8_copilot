@@ -142,6 +142,9 @@ export interface LearningMethod {
   next_due_at:string|null
   reviewed_at:string|null
   reviewed_by:string|null
+  verification_binding?:{last_run_id:string;method_digest:string;software_digest:string}|null
+  verification_source?:'readonly_audit'|'governance_ledger'
+  verification_notes?:string[]
 }
 export interface LearningStatus {
   contract_version:'v8_learning_status_v1'
@@ -154,6 +157,7 @@ export interface LearningStatus {
   runs:{total:number;validator_passed:number;with_experience_hits:number;latest_at:string|null}|null
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
+  readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
   methods:LearningMethod[]
   freshness:{

@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import sys
+from contextlib import nullcontext
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,6 +13,7 @@ if str(ROOT) not in sys.path:
 
 from api import orchestrate_deterministic
 from api_contract import ResearchRequest
+from evals.frozen_inputs import frozen_announcement_inputs
 
 
 SET_PATH = Path(__file__).with_name("real_question_answerability_set_v1.jsonl")
@@ -29,11 +31,13 @@ def evaluate() -> tuple[int, int]:
     failures: list[str] = []
     cases = load_cases()
     for case in cases:
-        response = orchestrate_deterministic(ResearchRequest(
-            request_id=f"eval-{case['id'].lower()}",
-            question=case["question"],
-            llm_mode="off",
-        ))
+        fixture = case.get("announcement_fixture")
+        with frozen_announcement_inputs(fixture) if fixture else nullcontext():
+            response = orchestrate_deterministic(ResearchRequest(
+                request_id=f"eval-{case['id'].lower()}",
+                question=case["question"],
+                llm_mode="off",
+            ))
         if response.route.route != case["expected_route"]:
             failures.append(
                 f"{case['id']}: route={response.route.route}, expected={case['expected_route']}"

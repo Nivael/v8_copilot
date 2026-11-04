@@ -36,6 +36,7 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须先指出最有解释力的实质差异，再补充口径和边界；允许作有 backing 的单一维度判断，例如哪一方公开程序节点更深入，但不得升级成整体优劣、成功率或投资价值排序。公告条数和价格变化通常只作背景，不得替代对用户真正问题的回答。
 如果 payload 含 required_research_judgment，它是查询证据机械确定的方向性结论；主回答和所有解释都必须与它方向一致，不得说反。
+如果 payload 含 comparison_order_boundary，两者阶段没有受支持的共同排序；只能说明阶段差异，不能补造哪一方更深入或领先。
 如果 payload 含 narrative_correction，上一版主回答没有通过 backing 校验；必须删除无法由 backing 原样支持的数字、日期或扩大的缺失结论，重新生成完整 narrative。
 阶段题必须把当前公开里程碑与历史后续分布分开。研究判断不等于预测：可以说明当前阶段差异及其含义，但不能断言未来结果。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
@@ -86,20 +87,21 @@ def _comparison_contradiction(card: AnswerCard, draft: NarrativeDraft) -> str:
     insight = comparison_phase_insight(card.body_rows)
     if (
         insight is None
-        or not insight.directional_judgment
         or comparison_density_focus(card.question)
-        or draft.narrative is None
     ):
         return ""
-    statements = [
-        draft.narrative.direct_answer,
-        *draft.narrative.reasoning_steps,
-        *draft.narrative.uncertainties,
-        *draft.narrative.watch_items,
-    ]
+    statements = list(draft.claims)
+    if draft.narrative is not None:
+        statements += [
+            draft.narrative.direct_answer,
+            *draft.narrative.reasoning_steps,
+            *draft.narrative.uncertainties,
+            *draft.narrative.watch_items,
+        ]
     for statement in statements:
-        if comparison_direction_contradiction(statement.text, insight):
-            return statement.text
+        candidate = f"{getattr(statement, 'title', '')}，{statement.text}"
+        if comparison_direction_contradiction(candidate, insight):
+            return candidate
     return ""
 
 
@@ -527,6 +529,10 @@ class NarrativeComposer:
             and not comparison_density_focus(card.question)
         ):
             payload["required_research_judgment"] = insight.directional_judgment
+        elif insight is not None and not comparison_density_focus(card.question):
+            payload["comparison_order_boundary"] = (
+                "两个阶段没有受支持的共同排序；只能说明阶段差异，不能补造先后。"
+            )
         backing_summaries = {(entry.kind, entry.ref): entry.summary for entry in catalog}
         draft: NarrativeDraft | None = None
         research_narrative: ResearchNarrative | None = None
@@ -542,11 +548,11 @@ class NarrativeComposer:
             if contradiction:
                 if attempt == 0:
                     payload["direction_correction"] = (
-                        f"上一版把比较方向说反：{contradiction}。"
-                        f"必须改为与 {insight.directional_judgment if insight else ''} 一致。"
+                        f"上一版比较方向缺乏支持或与查询证据矛盾：{contradiction}。"
+                        f"必须遵守：{insight.directional_judgment if insight and insight.directional_judgment else '阶段没有共同排序，只能说明差异，不能判断先后'}。"
                     )
                     continue
-                raise LLMProviderError("LLM 比较方向连续两次与查询证据矛盾")
+                raise LLMProviderError("LLM 比较方向连续两次未通过证据校验")
             research_narrative, rejected_statements = _validated_narrative(
                 card, draft.narrative, backing_summaries
             )

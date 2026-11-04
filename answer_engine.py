@@ -409,6 +409,9 @@ def _attach_microcap_comparison(
             **{
                 "记录类型": "市值分层缺口",
                 "缺口": "市场共同交易日窗口不可用，无法绑定窗口起点市值",
+                "gap_stage": "market_window",
+                "factor_snapshot_id": "unavailable",
+                "factor_lookup_executed": False,
             },
         ))
         card.analysis_claims.append(AnalysisClaim(
@@ -1911,6 +1914,7 @@ def _historical_next_restructuring_rows(
     next_stage_transitions: list[tuple[str, int]] = []
     triggers: list[tuple[str, str, str]] = []
     stage_observed_triggers: set[tuple[str, str, str]] = set()
+    outcomes_by_trigger: dict[tuple[str, str, str], tuple[str, str] | None] = {}
 
     subsidiary_terms = ("孙公司", "子公司")
     related_entity_terms = (*subsidiary_terms, "控股股东")
@@ -1944,8 +1948,8 @@ def _historical_next_restructuring_rows(
         # current stage so frequent progress notices do not overweight a case.
         index, event_date, _ = eligible[-1]
         trigger_key = (episode_id, symbol, event_date)
-        triggers.append(trigger_key)
         start = _pd(event_date)
+        outcome = None
         for next_date, next_title in events[index + 1:]:
             if not subject_matches(next_title):
                 continue
@@ -1955,9 +1959,17 @@ def _historical_next_restructuring_rows(
             next_stage_label = _restructuring_stage(next_title)
             if next_stage_label in {stage, "非重整节点"}:
                 continue
-            stage_observed_triggers.add(trigger_key)
-            next_stage_transitions.append((next_stage_label, (end - start).days))
+            outcome = (next_stage_label, next_date)
             break
+        if trigger_key in outcomes_by_trigger:
+            if outcomes_by_trigger[trigger_key] != outcome:
+                raise ValueError("同一历史起点存在矛盾后续；不能选择其一计算分布")
+            continue
+        outcomes_by_trigger[trigger_key] = outcome
+        triggers.append(trigger_key)
+        if outcome is not None:
+            stage_observed_triggers.add(trigger_key)
+            next_stage_transitions.append((outcome[0], (_pd(outcome[1]) - start).days))
 
     def announcement_category(title: str) -> str:
         stage_label = _restructuring_stage(title)

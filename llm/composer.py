@@ -22,6 +22,7 @@ from llm.schemas import (
     NarrativeClaim,
     NarrativeDraft,
 )
+from discipline_backing import unsupported_discipline_clauses
 from research_judgments import (
     comparison_density_focus,
     comparison_direction_contradiction,
@@ -42,6 +43,7 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
 重整阶段历史比例必须说明 episode case 去重口径、起点总数、可观察后续数和右删失数；阶段类别百分比以可观察后续为分母。
 公告题必须根据公告正文证据片段总结，不得只复述标题。
+纪律相关陈述当前只接受本次引用的正式来源逐条事实；保留完整对象、类型、否定和时点，不可拼接来源中的关键词。缺少可引用事实时明确保留核验缺口。
 巨潮公告ID是披露平台文档标识，不是上市公司正文中的公告编号；只有“公告编号”字段才可称为公告编号。
 某一来源未找到记录，只能表述为该来源口径未找到或未披露；不得扩大成现实中尚未发生。若 backing 标出未覆盖渠道，必须单独说明该覆盖缺口。
 不得补造数字、日期、事件、因果或证据等级，不得输出买卖、持有、仓位、目标价或排序建议。
@@ -296,6 +298,14 @@ def _validated_statement(
               "ctx": {"error": ValueError(f"命中禁用交易措辞: {hit}")}}],
         )
     combined = " ".join(backing_summaries[key] for key in keys)
+    summaries = [backing_summaries[key] for key in keys]
+    for candidate, is_title in ((text, False), (title or "", True)):
+        if unsupported_discipline_clauses(candidate, summaries, title=is_title):
+            raise ValidationError.from_exception_data(
+                "StructuredNarrativeDraft",
+                [{"type": "value_error", "loc": ("title" if is_title else "text",), "input": candidate,
+                  "ctx": {"error": ValueError("纪律相关陈述未逐条匹配本次引用的正式来源事实，不能拼接对象、类型或先后关系")}}],
+            )
     unsupported_absence = _unsupported_source_absence(text, combined)
     if unsupported_absence:
         raise ValidationError.from_exception_data(
@@ -582,6 +592,9 @@ class NarrativeComposer:
                 continue
             if hit:
                 rejected.append(RejectedClaim(claim, f"命中禁用交易措辞: {hit}"))
+                continue
+            if unsupported_discipline_clauses(claim.text, [backing_summaries[backing_key]]):
+                rejected.append(RejectedClaim(claim, "纪律相关陈述未逐条匹配本次引用的正式来源事实"))
                 continue
             unsupported_numbers = _unsupported_numbers(
                 claim.text, backing_summaries[backing_key]

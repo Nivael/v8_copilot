@@ -342,7 +342,12 @@ class PytestRegressionExecutor:
         "regression:point_in_time_universe": ["tests/test_experience_retrieval.py", "tests/test_universe.py"],
     }
     UNVERIFIED_REASONS = {
-        "regression:discipline_taxonomy": "当前只有主题检索测试，没有处分类型、受罚对象与时点的语义检查；不把检索通过当作方法复验通过。",
+        "regression:discipline_taxonomy": "已加入正式来源逐条事实的匹配约束，但没有处分类型、受罚对象与时点的完整语义检查；逐字匹配和主题检索均不等于方法复验通过。",
+    }
+    PARTIAL_TARGETS = {
+        # Execute these checks during audits without certifying the wider method
+        # or making this validation_ref eligible for automatic promotion.
+        "regression:discipline_taxonomy": ["tests/test_discipline_backing.py"],
     }
     ALLOWED_TEST_FILES = {
         "tests/test_recruitment_precedent.py",
@@ -358,6 +363,9 @@ class PytestRegressionExecutor:
 
     def run(self, validation_ref: str) -> RegressionCheckResult:
         targets = self.NAMED_TARGETS.get(validation_ref)
+        partial_scope = validation_ref in self.PARTIAL_TARGETS
+        if targets is None and partial_scope:
+            targets = self.PARTIAL_TARGETS[validation_ref]
         if targets is None and validation_ref in self.ALLOWED_TEST_FILES:
             targets = [validation_ref]
         if targets is None:
@@ -389,10 +397,18 @@ class PytestRegressionExecutor:
                 status = "passed"
             elif process.returncode == 1 and failures:
                 status = "failed"
+        scope_note = ""
+        if partial_scope:
+            if status == "passed":
+                status = "unverified"
+                scope_note = "局部事实匹配检查通过，完整方法仍未验证。"
+            else:
+                scope_note = "局部事实匹配检查未通过或未完成，不能确认完整方法。"
+            scope_note += self.UNVERIFIED_REASONS[validation_ref] + "\n"
         return RegressionCheckResult(
             validation_ref=validation_ref,
             status=status,
-            detail=f"tests={len(cases)}, failures={failures}, errors={errors}, skipped={skipped}; pytest exit {process.returncode}\n{output}",
+            detail=f"{scope_note}tests={len(cases)}, failures={failures}, errors={errors}, skipped={skipped}; pytest exit {process.returncode}\n{output}",
         )
 
 

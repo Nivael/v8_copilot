@@ -143,10 +143,12 @@ def test_runner_timeout_is_unverified_instead_of_failed(monkeypatch):
     assert PytestRegressionExecutor().run("regression:source_absence_scope").status == "unverified"
 
 
-def test_retrieval_is_not_a_semantic_verification_of_discipline_types():
+def test_partial_discipline_checks_run_without_certifying_the_method_or_promotion():
     result = PytestRegressionExecutor().run("regression:discipline_taxonomy")
     assert result.status == "unverified"
     assert "没有处分类型" in result.detail
+    assert "局部事实匹配检查通过" in result.detail
+    assert "failures=0, errors=0, skipped=0" in result.detail
     assert not PytestRegressionExecutor.supports("regression:discipline_taxonomy")
 
 

@@ -14,6 +14,7 @@ from freshness_manifest import load_freshness_manifest
 from settings import FRESHNESS_MANIFEST_PATH
 
 from canonical_json import canonical_json as _canonical_json, digest as _digest
+from discipline_backing import unsupported_discipline_clauses
 
 
 EVIDENCE_PACK_VERSION = "v8_evidence_pack_v2"
@@ -401,7 +402,7 @@ def validate_research_draft(pack: EvidencePack, draft: ResearchDraft) -> Validat
     ]
     checked_backings = 0
 
-    def check_statement(text: str, backings: list[ClaimBacking]) -> None:
+    def check_statement(text: str, backings: list[ClaimBacking], *, title: str = "", include_title_checks: bool = False) -> None:
         nonlocal checked_backings
         summaries: list[str] = []
         for backing in backings:
@@ -416,32 +417,41 @@ def validate_research_draft(pack: EvidencePack, draft: ResearchDraft) -> Validat
                 ))
             else:
                 summaries.append(summary)
-        forbidden = [term for term in LLM_FORBIDDEN_WORDING if term in text]
+        for value, is_title in ((text, False), (title, True)):
+            unsupported_clauses = unsupported_discipline_clauses(value, summaries, title=is_title)
+            if unsupported_clauses:
+                issues.append(ValidationIssue(
+                    code="unsupported_discipline_attribution",
+                    message="纪律相关陈述需逐条匹配本次引用的正式来源事实；不能凭关键词同现拼接对象、类型或先后关系。",
+                    statement=value,
+                ))
+        full_text = f"{title}：{text}" if include_title_checks else text
+        forbidden = [term for term in LLM_FORBIDDEN_WORDING if term in full_text]
         if forbidden:
             issues.append(ValidationIssue(
                 code="forbidden_wording",
                 message=f"命中禁用交易措辞: {forbidden}",
-                statement=text,
+                statement=full_text,
             ))
         if summaries:
             supported = _numeric_tokens(" ".join(summaries))
-            unsupported = sorted(_numeric_tokens(text) - supported)
+            unsupported = sorted(_numeric_tokens(full_text) - supported)
             if unsupported:
                 issues.append(ValidationIssue(
                     code="unsupported_number_or_date",
                     message=f"数字或日期没有被引用 backing 支持: {unsupported}",
-                    statement=text,
+                    statement=full_text,
                 ))
 
     for statement in statements:
-        check_statement(statement.text, statement.backing)
+        check_statement(statement.text, statement.backing, title=getattr(statement, "title", ""))
     audit = draft.decision_audit
     if audit is not None:
         check_statement(audit.judgment, audit.judgment_backing)
         for factor in audit.factors:
-            check_statement(f"{factor.label}：{factor.rationale}", factor.backing)
+            check_statement(factor.rationale, factor.backing, title=factor.label, include_title_checks=True)
         for alternative in audit.alternatives:
-            check_statement(f"{alternative.label}：{alternative.reason}", alternative.backing)
+            check_statement(alternative.reason, alternative.backing, title=alternative.label, include_title_checks=True)
     direct = draft.narrative.direct_answer.text.strip()
     if direct.startswith(("本分析", "本题", "查询结果", "描述性查询")):
         issues.append(ValidationIssue(

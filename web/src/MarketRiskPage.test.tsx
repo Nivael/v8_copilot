@@ -2,6 +2,7 @@ import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {MemoryRouter} from 'react-router-dom'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {MarketRiskBanner,MarketRiskPage} from './MarketRiskPage'
+import * as charts from 'lightweight-charts'
 import type {MarketRiskStatus} from './types'
 
 const fixture:MarketRiskStatus={
@@ -62,5 +63,28 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByText('-50 万份')).toBeInTheDocument()
     expect(screen.getByRole('combobox',{name:'ETF份额路径'})).toBeInTheDocument()
     expect(screen.getByText('未发布')).toBeInTheDocument()
+  })
+  it('keeps old ST history off the current index chart and discloses provisional SZSE shares',async()=>{
+    const addSeries=vi.fn(()=>({setData:vi.fn()}))
+    vi.spyOn(charts,'createChart').mockImplementation(()=>({addSeries,timeScale:()=>({fitContent:vi.fn()}),remove:vi.fn()}) as unknown as ReturnType<typeof charts.createChart>)
+    const path=Array.from({length:21},(_,i)=>({date:`2026-10-${String(i+1).padStart(2,'0')}`,close:100+i}))
+    const data:MarketRiskStatus={...fixture,status:'observed_snapshot',requested_through:'2026-11-04',
+      market_coverage:{indices_observed_at_target:3,declared_indices:3,st_style_at_target:false,breadth_at_target:false},
+      public_index_snapshot:{availability:'observed',through:'2026-11-04',scope:'three_price_indices_only'},
+      szse_etf_snapshot:{availability:'observed',through:'2026-11-04',share_revision_status:'final_revision_unverified'},
+      indices:[...['中证全指','沪深300','中证2000'].map((name,i)=>({...fixture.indices[0],code:`index-${i}`,name,through:'2026-11-04',historical_only:false,path})),
+        {...fixture.indices[0],code:'st_equal_weight_v1',name:'ST等权研究指数',path}],
+      parameters:{...fixture.parameters,etf_basket:{'159919.SZ':'沪深300'}},
+      etfs:[{...fixture.etfs[0],code:'159919.SZ',source:'szse_public',through:'2026-11-04',nav_through:'2026-11-03',share_revision_unverified:true}],
+      etf_aggregate:{'5':{observed_etfs:8,revision_unconfirmed_etfs:3,declared_etfs:8,estimated_net_subscription_yuan:null,reason:'未核验'}},
+    }
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByText('同日市场指数 3/3；同期ST风格未覆盖；涨跌分布未覆盖。')).toBeInTheDocument()
+    expect(screen.getByText(/ST等权研究指数 · 截至 2026-09-03 · 历史快照 · 未入同期图/)).toBeInTheDocument()
+    expect(addSeries).toHaveBeenCalledTimes(3)
+    expect(screen.getByText(/3只ETF的最新份额修订状态待核对/)).toBeInTheDocument()
+    expect(screen.getByText('净值截至 2026-11-03')).toBeInTheDocument()
+    expect(screen.getByText('最新份额待次日修订核对')).toBeInTheDocument()
   })
 })

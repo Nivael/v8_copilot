@@ -182,6 +182,8 @@ export interface MarketRiskIndex {
   name:string
   through:string|null
   historical_only:boolean
+  evaluation_through?:string|null
+  source?:string
   return_5d_pct:number|null
   return_20d_pct:number|null
   return_60d_pct:number|null
@@ -196,6 +198,8 @@ export interface MarketRiskETF {
   through:string|null
   corporate_actions_checked:boolean
   source?:string
+  nav_through?:string|null
+  share_revision_unverified?:boolean
   evaluation_through?:string|null
   path?:Array<{date:string;shares:number|null}>
   windows:Record<string,{window_start?:string|null;window_end?:string|null;share_change_ten_thousand?:number|null;share_change_pct:number|null;share_change_notional_yuan:number|null;estimated_net_subscription_yuan:number|null;status:string}>
@@ -212,7 +216,10 @@ export interface MarketRiskStatus {
   indices:MarketRiskIndex[]
   etfs:MarketRiskETF[]
   public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number}
-  etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
+  szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string}
+  public_index_snapshot?:{availability:string;through?:string;scope?:string}
+  market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean}
+  etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
   breadth:{status:string;through?:string;observed_trading_stocks?:number;advancing?:number;declining?:number;flat?:number;declining_5pct_or_more?:number;median_return_pct?:number;amount_yuan?:number|null;scope?:string}
   last_attempt:{status:string;requested_through:string;reason?:string;completed_at:string}|null
   parameters:{trend_windows_sessions:number[];etf_windows_sessions:number[];etf_basket:Record<string,string>;risk_weights:null;risk_thresholds:null}

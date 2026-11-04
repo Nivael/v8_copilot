@@ -25,6 +25,10 @@ INDEX_BASKET = {"000985.CSI": "中证全指", "000300.SH": "沪深300", "932000.
 HORIZONS = (5, 20, 60)
 ETF_SHARE_SOURCE = "https://www.sse.com.cn/market/funddata/volumn/etfvolumn/"
 ETF_SHARE_SQL = "COMMON_SSE_ZQPZ_ETFZL_XXPL_ETFGM_SEARCH_L"
+CSI_PERF_URL = "https://www.csindex.com.cn/csindex-home/perf/index-perf"
+CSI_SOURCE_URL = "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985"
+SZSE_ETF_SOURCE = "https://fund.szse.cn/marketdata/etf/"
+SZSE_ETF_API = "https://fund.szse.cn/api/report/ShowReport/data"
 
 
 def _number(value: Any) -> float | None:
@@ -148,6 +152,81 @@ def _public_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
         return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, []
 
 
+def _public_indices(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
+    try:
+        raw = json.loads((directory / "current.json").read_text())
+        expected = raw.pop("content_digest")
+        if (raw.get("contract_version") != "public_market_indices_raw_v1" or digest(raw) != expected
+            or raw.get("provider") != "csindex_official" or raw.get("amount_unit") != "CNY"
+            or raw.get("api_url") != CSI_PERF_URL or raw.get("source_url") != CSI_SOURCE_URL
+            or raw.get("scope") != "three_price_indices_only" or raw.get("calendar_version") != CALENDAR_VERSION):
+            raise ValueError("invalid public index snapshot")
+        calendar = raw["calendar"]
+        through = date.fromisoformat(raw["requested_through"])
+        fetched = datetime.fromisoformat(raw["fetched_at"])
+        if (fetched.tzinfo is None or fetched > now or fetched.date() < through
+            or through >= now.astimezone(ZoneInfo("Asia/Shanghai")).date()
+            or len(calendar) != 61 or calendar[-1] != through.isoformat()
+            or calendar != sessions_2026(date.fromisoformat(calendar[0]), through)
+            or set(raw["indices"]) != set(INDEX_BASKET)):
+            raise ValueError("invalid public index calendar/scope")
+        indices = []
+        for code, name in INDEX_BASKET.items():
+            rows = raw["indices"][code]
+            if any(row.get("ts_code") != code or row.get("trade_date") not in calendar
+                or (_number(row.get("close")) or 0) <= 0
+                or row.get("amount") is not None and (_number(row["amount"]) is None or _number(row["amount"]) < 0) for row in rows):
+                raise ValueError("invalid public index observations")
+            indices.append({"code": code, "name": name, "source": "csindex_official", "source_url": CSI_SOURCE_URL.replace("000985", code[:6]),
+                            "historical_only": False, **index_metrics(rows, calendar)})
+        if indices[0]["through"] != through.isoformat():
+            raise ValueError("broad market target missing")
+        return {"availability": "observed", "through": through.isoformat(), "scope": raw["scope"],
+                "fetched_at": raw["fetched_at"], "content_digest": expected,
+                "gap_count": len(raw["gaps"]), "availability_basis": raw["availability_basis"]}, indices
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError):
+        return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, []
+
+
+def _szse_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
+    try:
+        raw = json.loads((directory / "current.json").read_text())
+        expected = raw.pop("content_digest")
+        if (raw.get("contract_version") != "szse_etf_history_raw_v1" or digest(raw) != expected
+            or raw.get("provider") != "szse_public" or raw.get("share_unit") != "ten_thousand_shares"
+            or raw.get("nav_unit") != "CNY_per_share" or raw.get("api_url") != SZSE_ETF_API
+            or raw.get("source_url") != SZSE_ETF_SOURCE or raw.get("calendar_version") != CALENDAR_VERSION
+            or raw.get("share_revision_status") != "final_revision_unverified"):
+            raise ValueError("invalid SZSE snapshot")
+        calendar = raw["calendar"]
+        through = date.fromisoformat(raw["requested_through"])
+        fetched = datetime.fromisoformat(raw["fetched_at"])
+        if (fetched.tzinfo is None or fetched > now or fetched.date() < through
+            or through >= now.astimezone(ZoneInfo("Asia/Shanghai")).date()
+            or len(calendar) != 21 or calendar[-1] != through.isoformat()
+            or calendar != sessions_2026(date.fromisoformat(calendar[0]), through)):
+            raise ValueError("invalid SZSE calendar/date")
+        codes = {code for code in ETF_BASKET if code.endswith(".SZ")}
+        if set(raw["etf_shares"]) != codes or set(raw["etf_navs"]) != codes:
+            raise ValueError("unexpected SZSE scope")
+        etfs = []
+        for code in sorted(codes):
+            for key, day_key, value_key in (("etf_shares", "trade_date", "fd_share"), ("etf_navs", "nav_date", "unit_nav")):
+                if any(row.get("ts_code") != code or row.get(day_key) not in calendar
+                       or (_number(row.get(value_key)) or 0) <= 0 for row in raw[key][code]):
+                    raise ValueError("invalid SZSE ETF observations")
+            etfs.append({"code": code, "group": ETF_BASKET[code], "source": "szse_public",
+                         "source_url": SZSE_ETF_SOURCE, "share_revision_unverified": True,
+                         **etf_metrics(raw["etf_shares"][code], raw["etf_navs"][code], calendar)})
+        if not any(row["through"] == through.isoformat() for row in etfs):
+            raise ValueError("SZSE target missing")
+        return {"availability": "observed", "through": through.isoformat(), "fetched_at": raw["fetched_at"],
+                "content_digest": expected, "gap_count": len(raw["gaps"]),
+                "revision_note": raw["revision_note"], "share_revision_status": raw["share_revision_status"]}, etfs
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError):
+        return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, []
+
+
 def breadth_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
     # One cross-section, one observation per security. A provider-limit-sized response is not trusted.
     days = {_date(row["trade_date"]) for row in rows}
@@ -226,14 +305,21 @@ def build_market_risk_status(
         snapshot_id = None
         requested_through = None
         indices, etfs, breadth = [], [], {"status": "missing"}
-        gaps.append("当前大盘快照缺失或未通过完整性校验")
+        gaps.append("行情源综合快照缺失或未通过完整性校验；公开来源分别核对")
         try:
             indices = _historical_indices(database, manifest_path)
         except (OSError, ValueError, TypeError, KeyError, sqlite3.Error):
             gaps.append("本地历史市场基准也不可读")
     public_snapshot, public_etfs = _public_etfs(snapshot_dir / "public_etf", now)
+    szse_snapshot, szse_etfs = _szse_etfs(snapshot_dir / "public_etf_szse", now)
+    public_index_snapshot, public_indices = _public_indices(snapshot_dir / "public_indices", now)
+    if public_indices and (requested_through is None or public_index_snapshot["through"] > requested_through):
+        # Keep the older ST background explicitly dated; never splice it onto a new market path.
+        indices = public_indices + [row for row in indices if row["code"] == "st_equal_weight_v1"]
+        requested_through = public_index_snapshot["through"]
+        snapshot_id = public_index_snapshot["content_digest"]
     by_code = {row["code"]: row for row in etfs}
-    for row in public_etfs:
+    for row in [*public_etfs, *szse_etfs]:
         previous = by_code.get(row["code"])
         more_complete = previous is not None and sum(
             metric["share_change_pct"] is not None for metric in row["windows"].values()
@@ -256,10 +342,19 @@ def build_market_risk_status(
         "current_risk_assessment": "not_calibrated", "indices": indices, "etfs": etfs,
         "breadth": breadth, "last_attempt": attempt, "gaps": gaps,
         "public_etf_snapshot": public_snapshot,
+        "szse_etf_snapshot": szse_snapshot,
+        "public_index_snapshot": public_index_snapshot,
+        "market_coverage": {
+            "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
+            "declared_indices": len(INDEX_BASKET),
+            "breadth_at_target": breadth.get("status") == "observed" and breadth.get("through") == requested_through,
+            "st_style_at_target": any(row["code"] == "st_equal_weight_v1" and row["through"] == requested_through for row in indices),
+        },
         "etf_aggregate": {str(horizon): {
             "evaluation_through": etf_through,
             "observed_etfs": sum(row["evaluation_through"] == etf_through and row["windows"][str(horizon)]["share_change_pct"] is not None for row in etfs),
             "nav_observed_etfs": sum(row["evaluation_through"] == etf_through and row["windows"][str(horizon)]["share_change_notional_yuan"] is not None for row in etfs),
+            "revision_unconfirmed_etfs": sum(row["evaluation_through"] == etf_through and row.get("share_revision_unverified") is True and row["windows"][str(horizon)]["share_change_pct"] is not None for row in etfs),
             "declared_etfs": len(ETF_BASKET), "estimated_net_subscription_yuan": None,
             "reason": "份额事件未核验；不发布样本净申赎总金额",
         } for horizon in (1, 5, 20)},
@@ -274,6 +369,8 @@ def build_market_risk_status(
             "没有风险权重或交易阈值；无数据与过期数据不得解释为低风险。",
         ],
         "sources": [
+            {"title": "深交所ETF份额与净值", "url": SZSE_ETF_SOURCE},
+            {"title": "中证指数官方历史行情", "url": CSI_SOURCE_URL},
             {"title": "上交所ETF日终总份额（万份）", "url": ETF_SHARE_SOURCE},
             {"title": "上交所ETF申赎说明", "url": "https://etf.sse.com.cn/fund/quertion/"},
             {"title": "Tushare基金份额（万份）", "url": "https://tushare.pro/document/2?doc_id=207"},

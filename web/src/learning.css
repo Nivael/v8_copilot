@@ -104,6 +104,8 @@
 .market-breadth>div {padding:20px 15px 20px 0;display:grid;gap:10px}
 .market-breadth span {color:#7a867e;font-size:11px}
 .market-breadth strong {font-size:24px;font-weight:500;color:#45604a;font-variant-numeric:tabular-nums}
+.market-st-cross-section {margin-top:32px}
+.market-st-cross-section h3 {font-size:20px;font-weight:500;color:#3d5342;margin-bottom:12px}
 .market-risk-limits>p,.market-risk-limits li {font-size:13px;line-height:1.85;color:#6d7c71;max-width:95ch}
 .market-risk-limits ul {padding-left:18px}
 .market-risk-limits li {padding:6px 0}

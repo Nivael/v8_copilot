@@ -210,6 +210,19 @@ export interface MarketRiskETF {
   path?:Array<{date:string;shares:number|null}>
   windows:Record<string,{window_sessions?:number|null;window_start?:string|null;window_end?:string|null;share_change_ten_thousand?:number|null;share_change_pct:number|null;share_change_notional_yuan:number|null;estimated_net_subscription_yuan:number|null;status:string}>
 }
+export interface MarketBreadthSummary {
+  observed_trading_stocks?:number
+  listed_source_stocks?:number
+  nontrading_stocks?:number
+  advancing?:number
+  declining?:number
+  flat?:number
+  declining_5pct_or_more?:number
+  median_return_pct?:number|null
+  mean_return_pct?:number|null
+  declining_share_pct?:number|null
+  amount_yuan?:number|null
+}
 export interface MarketRiskStatus {
   contract_version:'market_risk_status_v1'
   parameter_version:string
@@ -225,12 +238,15 @@ export interface MarketRiskStatus {
   szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string}
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
+  public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}
   market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean}
   recent_window?:{availability:string;requested_start?:string;start?:string;end?:string;sessions?:number;points?:number;reason?:string}
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}
   node_market_comparison?:{status:string;reason:string}
   etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
-  breadth:{status:string;through?:string;observed_trading_stocks?:number;advancing?:number;declining?:number;flat?:number;declining_5pct_or_more?:number;median_return_pct?:number;amount_yuan?:number|null;scope?:string}
+  breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
+    venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;
+    st_name_group?:MarketBreadthSummary&{definition:string}}
   last_attempt:{status:string;requested_through:string;reason?:string;completed_at:string}|null
   parameters:{trend_windows_sessions:number[];etf_windows_sessions:number[];etf_basket:Record<string,string>;risk_weights:null;risk_thresholds:null}
   limitations:string[]

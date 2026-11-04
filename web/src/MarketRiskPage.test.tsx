@@ -95,7 +95,7 @@ describe('MarketRiskPage',()=>{
     }
     vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
     render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
-    expect(await screen.findByText('同日市场指数 3/3；同期ST风格未覆盖；涨跌分布未覆盖。')).toBeInTheDocument()
+    expect(await screen.findByText('同日市场指数 3/3；同期ST走势未覆盖；涨跌分布未覆盖。')).toBeInTheDocument()
     expect(screen.getByText(/ST等权研究指数 · 截至 2026-09-03 · 历史快照 · 未入同期图/)).toBeInTheDocument()
     expect(addSeries).toHaveBeenCalledTimes(3)
     expect(screen.getByText(/3只ETF的最新份额修订状态待核对/)).toBeInTheDocument()
@@ -123,5 +123,23 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByLabelText('近两个月市场基准归一化路径')).toBeInTheDocument()
     expect(screen.getByLabelText('510300.SH 近两个月总份额归一化路径')).toBeInTheDocument()
     expect(screen.getByText(/尚未完成节点与大盘因素的独立对照/)).toBeInTheDocument()
+  })
+  it('keeps two-exchange daily breadth and the current ST name group separate from historical style',async()=>{
+    const summary={listed_source_stocks:5,observed_trading_stocks:3,nontrading_stocks:2,advancing:0,declining:2,flat:1,
+      declining_5pct_or_more:2,median_return_pct:-10,declining_share_pct:66.666667,amount_yuan:195010}
+    const data:MarketRiskStatus={...fixture,breadth:{status:'observed',source:'exchange_public',through:'2026-11-04',scope:'沪深A股；不含北交所。',
+      historical_path_available:false,...summary,
+      venues:[{venue:'SSE',label:'上交所股票行情',url:'https://www.sse.com.cn/market/price/report/',source_rows:4,excluded_b_shares:1,through:'2026-11-04',...summary}],
+      st_name_group:{definition:'只按当日证券简称分组，不重建历史成员。',listed_source_stocks:3,observed_trading_stocks:1,advancing:0,declining:0,median_return_pct:0,mean_return_pct:0},
+    }}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByText('下跌占有成交股票')).toBeInTheDocument()
+    expect(screen.getByText('66.67%')).toBeInTheDocument()
+    expect(screen.getByText(/当前只有 2026-11-04 的收盘截面，近两个月的涨跌分布路径仍待补齐/)).toBeInTheDocument()
+    expect(screen.getByRole('columnheader',{name:'剔除B股'})).toBeInTheDocument()
+    expect(screen.getByRole('heading',{name:'ST名称分组 · 当日分布'})).toBeInTheDocument()
+    expect(screen.getByText(/同期ST走势仍需历史成员与价格数据/)).toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'上交所股票行情 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/market/price/report/')
   })
 })

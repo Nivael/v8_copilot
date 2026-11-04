@@ -99,7 +99,7 @@ export function MarketRiskPage(){
     {error&&<p role="alert" className="experience-error">{error}</p>}
     {data&&<>
       <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。各来源分别核对截止日，已取得指数不代表整体风险已测量。`:`观察日 ${data.observation_date}。当前没有通过校验的完整市场快照；市场基准仍为历史背景，ETF份额按下方独立截止日展示。`}</p>
-        {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；同期ST风格{data.market_coverage.st_style_at_target?'已取得':'未覆盖'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
+        {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；同期ST走势{data.market_coverage.st_style_at_target?'已取得':'未覆盖'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
         <details className="market-source-notes" open={data.status!=='observed_snapshot'}><summary>来源更新与待核对项</summary>
         {data.public_etf_snapshot?.availability==='observed'&&<p>上交所公开ETF份额已读到 {data.public_etf_snapshot.through}。</p>}
         {data.szse_etf_snapshot?.availability==='observed'&&<p>深交所ETF份额记录已读到 {data.szse_etf_snapshot.through}；最新份额的次日修订状态仍待核对。</p>}
@@ -122,7 +122,33 @@ export function MarketRiskPage(){
         <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终总份额</small>}{item?.source==='szse_public'&&<small>深交所份额 · 修订状态待核对</small>}{item?.nav_through&&<small>净值截至 {item.nav_through}</small>}{item?.nav_source_url&&<small><a href={item.nav_source_url} target="_blank" rel="noreferrer">{item.nav_source}单位净值 ↗</a></small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{metric?.status==='estimated'?'名义估算，不能识别资金身份':metric?.status==='corporate_actions_unchecked'?'份额事件未核验':metric?.status==='shares_only'?'份额已取得；净值与份额事件待核验':'缺少同窗份额或净值'}{item?.share_revision_unverified&&<small>最新份额待次日修订核对</small>}{(item?.nav_conflict_dates?.length??0)>0&&<small>净值来源有冲突，未采用新来源：{item?.nav_conflict_dates?.join('、')}</small>}{(item?.nav_crosscheck_observations??0)>0&&<small>已与交易所核对 {item?.nav_crosscheck_observations} 个重叠净值日</small>}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
       </section>
 
-      <section className="learning-freshness" aria-label="市场宽度"><header className="learning-section-head"><div><p className="eyebrow">市场宽度</p><h2>风险是否在同步扩散</h2></div><span>{data.breadth.through||'截止日未取得'}</span></header>{data.breadth.status==='observed'?<><div className="market-breadth"><div><span>有收益记录</span><strong>{number(data.breadth.observed_trading_stocks)}</strong></div><div><span>上涨 / 下跌</span><strong>{number(data.breadth.advancing)} / {number(data.breadth.declining)}</strong></div><div><span>跌幅至少5%</span><strong>{number(data.breadth.declining_5pct_or_more)}</strong></div><div><span>收益中位数</span><strong>{pct(data.breadth.median_return_pct)}</strong></div></div><p>{data.breadth.scope}。成交额 {amount(data.breadth.amount_yuan)}。</p></>:<p className="learning-empty">当日涨跌分布尚未取得，无法判断同步下跌的范围。</p>}</section>
+      <section className="learning-freshness" aria-label="市场宽度">
+        <header className="learning-section-head"><div><p className="eyebrow">市场宽度 / 当日收盘横截面</p><h2>风险是否在同步扩散</h2></div><span>{data.breadth.through||'截止日未取得'}</span></header>
+        {data.breadth.status==='observed'?<>
+          <div className="market-breadth">
+            <div><span>有收益记录</span><strong>{number(data.breadth.observed_trading_stocks)}</strong></div>
+            <div><span>上涨 / 下跌</span><strong>{number(data.breadth.advancing)} / {number(data.breadth.declining)}</strong></div>
+            <div><span>跌幅至少5%</span><strong>{number(data.breadth.declining_5pct_or_more)}</strong></div>
+            <div><span>收益中位数</span><strong>{pct(data.breadth.median_return_pct)}</strong></div>
+            {data.breadth.source==='exchange_public'&&<>
+              <div><span>下跌占有成交股票</span><strong>{data.breadth.declining_share_pct==null?'—':`${data.breadth.declining_share_pct.toFixed(2)}%`}</strong></div>
+              <div><span>当日收益算术均值</span><strong>{pct(data.breadth.mean_return_pct)}</strong></div>
+              <div><span>停牌或无成交</span><strong>{number(data.breadth.nontrading_stocks)}</strong></div>
+              <div><span>来源内A股</span><strong>{number(data.breadth.listed_source_stocks)}</strong></div>
+            </>}
+          </div>
+          <p>{data.breadth.scope} {data.breadth.source==='exchange_public'?`有成交股票中平盘 ${number(data.breadth.flat)} 只。`:''} 报告成交额 {amount(data.breadth.amount_yuan)}。</p>
+          {data.breadth.return_basis&&<p className="learning-footnote">{data.breadth.return_basis}</p>}
+          {data.breadth.historical_path_available===false&&<p>当前只有 {data.breadth.through} 的收盘截面，近两个月的涨跌分布路径仍待补齐；单日分布不证明风险持续扩散。</p>}
+          {data.breadth.venues&&<div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">官方来源</th><th scope="col">来源内A股</th><th scope="col">有成交</th><th scope="col">停牌或无成交</th><th scope="col">上涨 / 下跌 / 平盘</th><th scope="col">剔除B股</th><th scope="col">剔除优先股</th></tr></thead><tbody>{data.breadth.venues.map(venue=><tr key={venue.venue}><th scope="row"><a href={venue.url} target="_blank" rel="noreferrer">{venue.label} ↗</a><small>{venue.through} · 原报表 {number(venue.source_rows)} 条</small></th><td>{number(venue.listed_source_stocks)}</td><td>{number(venue.observed_trading_stocks)}</td><td>{number(venue.nontrading_stocks)}</td><td>{number(venue.advancing)} / {number(venue.declining)} / {number(venue.flat)}</td><td>{number(venue.excluded_b_shares)}</td><td>{number(venue.excluded_preferred_shares)}</td></tr>)}</tbody></table></div>}
+          {data.breadth.st_name_group&&<div className="market-st-cross-section" aria-label="ST名称分组当日分布"><h3>ST名称分组 · 当日分布</h3><p>{data.breadth.st_name_group.definition}</p><div className="market-breadth">
+            <div><span>名称组 / 有成交</span><strong>{number(data.breadth.st_name_group.listed_source_stocks)} / {number(data.breadth.st_name_group.observed_trading_stocks)}</strong></div>
+            <div><span>上涨 / 下跌</span><strong>{number(data.breadth.st_name_group.advancing)} / {number(data.breadth.st_name_group.declining)}</strong></div>
+            <div><span>当日收益中位数</span><strong>{pct(data.breadth.st_name_group.median_return_pct)}</strong></div>
+            <div><span>当日收益算术均值</span><strong>{pct(data.breadth.st_name_group.mean_return_pct)}</strong></div>
+          </div><p>当前名称分组只描述当日股票，不回填为历史ST成员；同期ST走势仍需历史成员与价格数据。</p></div>}
+        </>:<p className="learning-empty">当日涨跌分布尚未取得，无法判断同步下跌的范围。</p>}
+      </section>
 
       <section className="learning-freshness market-risk-limits" aria-label="参数与检验边界"><h2>这组参数怎样进入研究</h2><p>先描述大盘环境，再比较ST风格与个股节点。当前参数版本 {data.parameter_version}；尚不设置资金撤退概率、风险权重或交易阈值。</p><ul>{data.limitations.map(limit=><li key={limit}>{limit}</li>)}</ul><p>下一步比较“仅节点”与“节点＋市场环境”，固定样本、同一观察时点和交易日窗口；最近两月只作压力案例，另设独立时段检验，避免按已知结果调权重。</p><div className="market-risk-sources">{data.sources.map(source=><a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>)}</div></section>
       <footer className="learning-footer">页面重新核对只读取本地快照。当前数据不可用时保留未知，不发布“低风险”或“大资金撤退”的结论。</footer>

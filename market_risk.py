@@ -12,12 +12,13 @@ from zoneinfo import ZoneInfo
 
 from canonical_json import digest
 from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
+from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_calendar import CALENDAR_VERSION, sessions_2026
 from market_periods import price_period_summary, recent_calendar_window
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, MARKET_CONTEXT_MANIFEST_PATH
 
 
-PARAMETER_VERSION = "market_risk_parameters_v2"
+PARAMETER_VERSION = "market_risk_parameters_v3"
 MARKET_RISK_DIR = DATA_ROOT / "local_data/v8_copilot/market_risk"
 ETF_BASKET = {
     "510300.SH": "沪深300", "510310.SH": "沪深300", "510330.SH": "沪深300", "159919.SZ": "沪深300",
@@ -292,6 +293,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     sse_meta, sse = _public_etfs(snapshot_dir / "public_etf", now)
     szse_meta, szse = _szse_etfs(snapshot_dir / "public_etf_szse", now)
     issuer_meta, issuer_navs = load_issuer_navs(snapshot_dir / "issuer_nav", now)
+    breadth_meta, breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -304,6 +306,8 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
          "只显示实际取得的净值，不以前值补齐未披露日期。"),
         ("issuer_etf_nav", "5家基金公司 · ETF单位净值", issuer_meta, issuer_rows, "nav_through", "nav_observation_count", 8,
          "/market", "各基金原始链接见大盘页；首次取得日期不冒充历史当时可见，净值齐全不代表份额事件已核验。"),
+        ("exchange_breadth", "沪深交易所 · A股收盘横截面", breadth_meta, breadth.get("venues", []), "through", "listed_source_stocks", 2,
+         "/market", "两所A股范围分别核对；不含北交所，停牌及无成交单列；仅有当日截面，尚无两个月宽度路径。"),
     ]
     sources = []
     for key, label, meta, rows, through_key, count_key, size, url, note in definitions:
@@ -384,6 +388,9 @@ def build_market_risk_status(
     szse_snapshot, szse_etfs = _szse_etfs(snapshot_dir / "public_etf_szse", now)
     public_index_snapshot, public_indices = _public_indices(snapshot_dir / "public_indices", now)
     issuer_nav_snapshot, issuer_navs = load_issuer_navs(snapshot_dir / "issuer_nav", now)
+    public_breadth_snapshot, public_breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
+    if public_breadth.get("status") == "observed" and public_breadth["through"] >= breadth.get("through", ""):
+        breadth = public_breadth
     if public_indices and (requested_through is None or public_index_snapshot["through"] > requested_through):
         # Keep the older ST background explicitly dated; never splice it onto a new market path.
         indices = public_indices + [row for row in indices if row["code"] == "st_equal_weight_v1"]
@@ -427,6 +434,7 @@ def build_market_risk_status(
         "szse_etf_snapshot": szse_snapshot,
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
+        "public_breadth_snapshot": public_breadth_snapshot,
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),
@@ -451,6 +459,8 @@ def build_market_risk_status(
         } for horizon in (1, 5, 20, "recent")},
         "parameters": {"trend_windows_sessions": list(HORIZONS), "etf_windows_sessions": [1, 5, 20],
                        "recent_calendar_months": 2,
+                       "breadth_scope": "SSE_SZSE_A_shares", "breadth_session_window": 1,
+                       "breadth_st_group_version": "current_quote_name_prefix_v1",
                        "etf_basket": ETF_BASKET, "risk_weights": None, "risk_thresholds": None},
         "limitations": [
             "先看市场环境，再看ST风格与个股节点；节点不覆盖系统性风险。",
@@ -461,6 +471,7 @@ def build_market_risk_status(
             "没有风险权重或交易阈值；无数据与过期数据不得解释为低风险。",
         ],
         "sources": [
+            *[{"title": source["label"], "url": source["url"]} for source in BREADTH_SOURCES.values()],
             *[{"title": f"{definition['label']} {code[:6]} 单位净值", "url": definition["url"]}
               for code, definition in NAV_DEFINITIONS.items()],
             {"title": "深交所ETF份额与净值", "url": SZSE_ETF_SOURCE},

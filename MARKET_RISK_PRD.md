@@ -60,7 +60,8 @@
 
 ## 当前实测与阻碍
 
-- 最新为第五轮：公开指数3条各61个交易日；8只ETF各61日份额，共488条；深市另有30条净值，实际只到11-03。
+- 最新为第六轮：公开指数3条各61个交易日；8只ETF各61日份额，共488条；新取得5家基金公司8只ETF各61日单位净值，共488条。
+  基金公司净值截至11-04，与深交所原有30条、截至11-03的重叠记录一致；份额事件仍未核验，净申赎金额继续为空。
   数据目标为11-04；3只深市最新份额仍待次日修订核对。近两个月明确为09-04至11-04，共37个交易日跨度。
 - 实际本地库存：42 条运行（均记录结构校验通过）、15 条记录经验命中、9 条已接受方法、1 条候选。
 - 首轮定期复验状态表为空；旧账最近批次检查0条。第二轮使用隔离副本只读复验，当前软件规则通过8/9，详见下节；原入库决定未改写。
@@ -68,7 +69,7 @@
   新面板公开指数截至11-04，未冒充已修复内核ST同窗覆盖。
 - 首轮ETF与新市场快照未取得。两处现有行情配置均返回 token 已过期；刷新器真实执行截至2026-11-04的请求失败，
   原快照未推进，失败原因记录在独立 `market_risk/last_attempt.json`。不要反复重试同一过期凭证。
-- 不能把上述历史数据当作最近两月的证据。
+- 不能把个股内核的旧库存当作最近两月的证据；公开指数、份额与基金公司净值独立披露实际窗口。
 - 第三轮接通上交所公开份额侧车：预先声明8只样本中5只沪市ETF取得2026-09-30至11-04共21个交易日、105条份额记录。
   首次有10-12网络缺口，按原源记录复用20个完整日期后仅补取该日，最终缺口0。1/5/20日同窗份额覆盖均为5/8；
   深市3只、同期单位净值与份额折算核验仍缺失，净申赎金额为空。未以份额侧车冒充当前全市场基准。
@@ -150,6 +151,27 @@ uv run python experience_audit.py
 最终Python全量576项通过、Web46项通过；lint和构建通过。最终软件只读复验仍8通过、1未验证，原经验库存未变。
 真实桌面/390px已核对默认窗口、具体日期、份额路径与来源更新表，整页无横向溢出。
 
+## 第六轮：基金公司逐日单位净值
+
+- 独立`issuer_etf_nav_raw_v1`保存5家基金公司8只样本的61日单位净值：2026-08-04至11-04，共488条。
+  快照`2db61cd903984485a90e94a4b0c6edcf0ac94ba76c5eebf88dac6ffea8bb79f4`；首次实际取得时间保留在每份原响应引用中，
+  不冒充历史当时可见。所有代码、日期、表头/字段、分页及完整交易日历均需通过检查，才推进整组当前快照。
+- 华泰柏瑞使用官网`getFundNetTableJson`的`netvalue`，`pages=页码-10`；华夏采用正式历史净值表的“单位净值”，
+  `isQuery=true`仅首次查询使用，翻页不得再次重置。嘉实完整历史HTML核对隐藏代码与所选基金，取“份额净值”。
+  南方取`newValueList`的`fundNav`；该入口忽略日期范围，必须逐页遍历到下界并核对实际61个交易日，
+  不能用跨响应会波动的全历史`total`代替本窗口完整性。原响应及每页报告的全历史总数均留存。
+  易方达只将官网链接的`mk_510310_1y`字面量作为数据解析，按照官网字段说明取`EnumSourceTypeNetValue`，不执行下载的JS。
+- 缺失、中断或错误数据不发布；传输重试有上限。`--repair`只复用相同窗口、摘要通过且原响应哈希仍一致的完整基金序列，
+  补取其余基金；失败保留上一整组有效快照，更短或更旧窗口不能覆盖现有较完整窗口。全部数据与暂存均在任务专属目录。
+- 合并只适用于ETF份额相同终点，不移动份额窗口。已有交易所净值必须在重叠日期一致；冲突保留旧数据并显示冲突日期。
+  真实深市3只各10个重叠净值日一致，共30条；同窗净值覆盖现为8/8。净值来源链接、交叉核对数量与来源更新行已显示。
+- 净值齐全不解除份额事件和深市最新修订核验。未经事件校正的名义额仅在详情中披露；净申赎金额和样本合计继续为null，
+  不推断机构身份，不新增风险权重。纪律处分方法仍缺真实语义检查，维持未验证。
+
+Python全量591项通过，Web47项通过，lint和生产构建通过；实际桌面与390px核对了8/8净值覆盖、来源链接、
+30条交叉核对结果和“未发布”的申赎金额，整页无横向溢出。原研究事实库、经验库存及接受决定均未修改。
+本轮最终软件只读复验8通过、0失败、1未验证；纪律处分方法没有因为新市场数据接入而变成已验证。
+
 ## 运行与验证
 
 独立worktree需显式设置包含 shared_data 的 `V8_DATA_ROOT`。默认8765可能被其他应用占用，
@@ -180,6 +202,8 @@ uv run python etf_public_refresh.py --through YYYY-MM-DD --repair
 uv run python etf_public_refresh.py --through YYYY-MM-DD --sessions 61 --extend
 uv run python market_public_refresh.py --through YYYY-MM-DD
 uv run python etf_szse_refresh.py --through YYYY-MM-DD --sessions 61
+uv run python etf_nav_refresh.py --through YYYY-MM-DD --sessions 61
+uv run python etf_nav_refresh.py --through YYYY-MM-DD --sessions 61 --repair
 ```
 
 默认21个交易日，最多61个。`--repair`仅复用同窗、通过完整性核对的完整日期并补缺口；完整重采不用该选项。
@@ -187,6 +211,7 @@ uv run python etf_szse_refresh.py --through YYYY-MM-DD --sessions 61
 每页原响应保存SHA-256与查询参数，分页总数、日期、代码、单位和重复项核验后才取5只声明的沪市ETF。
 公开份额写入独立`market_risk/public_etf/`；失败保留原快照。未知年份不按周末或工作日猜交易日。
 中证指数写入`market_risk/public_indices/`，深市份额/NAV写入`market_risk/public_etf_szse/`，均保留原响应与查询参数。
+基金公司单位净值写入`market_risk/issuer_nav/`；原响应、逐基金暂存和整组快照分开保存，读取页不调用采集器。
 市场窗口、ETF窗口分别披露，跨来源或不同截止日不合算覆盖率，不把不同ETF原始份额相加当作资金金额。
 
 只接受观察日前已结束日期。当前凭证过期，须在本机原配置恢复有效凭证；不要把凭证粘贴到聊天、报告或提交。
@@ -199,7 +224,7 @@ uv run python etf_szse_refresh.py --through YYYY-MM-DD --sessions 61
 
 ## 下一轮顺序
 
-1. 补同期单位净值、深市最终修订来源和份额折算等事件；事件未核验前不开放净申赎估算。
+1. 同期单位净值已补齐；继续核对深市最终修订来源和份额折算等事件，核验前不开放净申赎估算。
 2. 补当前ST风格与市场宽度，保持实际可用日期与个股价格/公告清单独立。
 3. 在独立评估版本中完成节点/市场因素对照；近期描述窗口已完成，首次抓取的历史数据不冒充历史当时可见。
 4. 补纪律处分方法的真实语义检查，或继续明确未验证；只有有效效果评估后，才讨论可校准权重与风险分层。
@@ -213,6 +238,11 @@ uv run python etf_szse_refresh.py --through YYYY-MM-DD --sessions 61
 
 ## 数据定义依据
 
+- [华泰柏瑞510300产品及净值](https://www.huatai-pb.com/products/zhishu/510300/index.html)
+- [易方达510310产品及净值](https://www.efunds.com.cn/fund/510310.shtml)
+- [华夏510330历史净值](https://www.chinaamc.com/product/fundLishijingzhi.do?fundcode=510330)
+- [嘉实159919历史净值](https://www.jsfund.cn/Services/cn/jsp/product/NavHistory.jsp?SiteID=1&FundCode=159919)
+- [南方510500产品及净值](https://www.nffund.com/main/nffund/personal-financing/detail.shtml?fundCode=510500)
 - [中证指数官方行情入口](https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985)
 - [深交所ETF份额/净值及修订说明](https://fund.szse.cn/marketdata/etf/)
 - [上交所ETF申赎说明](https://etf.sse.com.cn/fund/quertion/)

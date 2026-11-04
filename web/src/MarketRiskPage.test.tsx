@@ -45,6 +45,21 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByText('大盘数据尚未确认，当前风险未知。')).toBeInTheDocument()
     expect(screen.getByRole('link',{name:/ETF、市场走势与流动性/})).toHaveAttribute('href','/market')
   })
+  it('discloses complete issuer NAV coverage while keeping flow estimates unpublished',async()=>{
+    const data:MarketRiskStatus={...fixture,
+      issuer_nav_snapshot:{availability:'observed',through:'2026-11-04'},
+      etfs:[{...fixture.etfs[0],nav_through:'2026-11-04',nav_source:'嘉实',nav_source_url:'https://www.jsfund.cn/',nav_crosscheck_observations:10}],
+      etf_aggregate:{'5':{observed_etfs:8,nav_observed_etfs:8,declared_etfs:8,estimated_net_subscription_yuan:null,reason:'未核验'}},
+    }
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByText(/同窗单位净值覆盖 8\/8/)).toBeInTheDocument()
+    expect(screen.getByText(/基金公司历史净值截至 2026-11-04/)).toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'嘉实单位净值 ↗'})).toHaveAttribute('href','https://www.jsfund.cn/')
+    expect(screen.getByText('已与交易所核对 10 个重叠净值日')).toBeInTheDocument()
+    expect(screen.getByText('未发布')).toBeInTheDocument()
+    expect(screen.getByText('份额事件未核验')).toBeInTheDocument()
+  })
   it('shows independent public share coverage while the current market remains unknown',async()=>{
     const data:MarketRiskStatus={...fixture,
       public_etf_snapshot:{availability:'observed',through:'2026-11-04'},

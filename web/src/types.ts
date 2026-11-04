@@ -201,6 +201,10 @@ export interface MarketRiskETF {
   corporate_actions_checked:boolean
   source?:string
   nav_through?:string|null
+  nav_source?:string
+  nav_source_url?:string
+  nav_conflict_dates?:string[]
+  nav_crosscheck_observations?:number
   share_revision_unverified?:boolean
   evaluation_through?:string|null
   path?:Array<{date:string;shares:number|null}>
@@ -220,6 +224,7 @@ export interface MarketRiskStatus {
   public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number}
   szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string}
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
+  issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean}
   recent_window?:{availability:string;requested_start?:string;start?:string;end?:string;sessions?:number;points?:number;reason?:string}
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}

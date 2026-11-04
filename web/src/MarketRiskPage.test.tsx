@@ -19,6 +19,27 @@ const fixture:MarketRiskStatus={
 
 describe('MarketRiskPage',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('keeps quarterly share disclosures, dashes and off-exchange scope distinct from current cash flow',async()=>{
+    const data:MarketRiskStatus={...fixture,etf_quarterly:{version:'etf_quarterly_share_accounting_v1',availability:'observed',
+      period_label:'2026Q3',period_start:'2026-07-01',period_end:'2026-09-30',observed_reports:2,declared_etfs:8,corporate_actions_checked:false,
+      note:'季报申赎为整个季度的份额披露，不是近两个月的资金金额。',reports:[
+        {code:'159919.SZ',availability:'observed',net_subscription_shares:'-72900000.00',split_entry:'-',accounting_residual_shares:'0.00'},
+        {code:'510310.SH',availability:'observed',publication_date:'2026-10-27',source_url:'https://www.sse.com.cn/report.pdf',
+          pdf_url:'https://www.sse.com.cn/report.pdf',table_page:13,net_subscription_shares:'387000000.00',split_entry:'-',
+          accounting_residual_shares:'0.00',off_exchange_closing_shares:'44159905',audit_status:'report_states_unaudited',
+          daily_comparison:{availability:'observed',date:'2026-09-30',reported_shares:'11987744000.0',difference_from_report_total:'-44159922.00',
+            difference_after_explicit_off_exchange:'-17.00',source_rounding_rule:'not_confirmed'}},
+      ]}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByRole('heading',{name:'季报申赎与日表范围核对'})).toBeInTheDocument()
+    expect(screen.getByText('-72,900,000.00 份')).toBeInTheDocument()
+    expect(screen.getByText(/季报期末总额明确包含场外 44,159,905 份/)).toBeInTheDocument()
+    expect(screen.getByText(/从季报总额扣除明示场外份额后，与日表差 -17.00 份/)).toBeInTheDocument()
+    expect(screen.getAllByText('横线不自动改写为零事件')).toHaveLength(2)
+    expect(screen.getByRole('link',{name:'季报 · PDF第13页 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/report.pdf#page=13')
+    expect(screen.getByText('未发布')).toBeInTheDocument()
+  })
   it('displays catalog coverage and cancellation material while leaving event conclusions unverified',async()=>{
     const data:MarketRiskStatus={...fixture,etf_announcements:{availability:'observed',through:'2026-11-05',
       window_start:'2026-08-04',window_end:'2026-11-04',catalog_etfs:8,declared_etfs:8,record_count:2468,review_required_count:105,
@@ -90,7 +111,7 @@ describe('MarketRiskPage',()=>{
     render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
     expect(await screen.findByRole('heading',{name:'当前无法确认'})).toBeInTheDocument()
     expect(screen.getByText(/同窗份额覆盖 5\/8，目标截至 2026-11-04/)).toBeInTheDocument()
-    expect(screen.getByText('上交所日终总份额')).toBeInTheDocument()
+    expect(screen.getByText('上交所日终公布份额')).toBeInTheDocument()
     expect(screen.getByText('份额已取得；净值与份额事件待核验')).toBeInTheDocument()
     expect(screen.getByText('-50 万份')).toBeInTheDocument()
     expect(screen.getByRole('combobox',{name:'ETF份额路径'})).toBeInTheDocument()
@@ -138,7 +159,7 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByRole('combobox',{name:'ETF观察窗口'})).toHaveValue('recent')
     expect(screen.getByText(/近两个月：2026-09-04 至 2026-11-04，37个交易日跨度/)).toBeInTheDocument()
     expect(screen.getByLabelText('近两个月市场基准归一化路径')).toBeInTheDocument()
-    expect(screen.getByLabelText('510300.SH 近两个月总份额归一化路径')).toBeInTheDocument()
+    expect(screen.getByLabelText('510300.SH 近两个月公布份额归一化路径')).toBeInTheDocument()
     expect(screen.getByText(/尚未完成节点与大盘因素的独立对照/)).toBeInTheDocument()
   })
   it('keeps two-exchange daily breadth and the current ST name group separate from historical style',async()=>{

@@ -223,6 +223,26 @@ export interface MarketBreadthSummary {
   declining_share_pct?:number|null
   amount_yuan?:number|null
 }
+export interface ETFQuarterlyReport {
+  code:string
+  availability:string
+  publication_date?:string
+  source_url?:string
+  pdf_url?:string|null
+  table_page?:number
+  opening_shares?:string
+  subscription_shares?:string
+  redemption_shares?:string
+  net_subscription_shares?:string
+  closing_shares?:string
+  split_entry?:string
+  reported_split_shares?:string|null
+  accounting_residual_shares?:string
+  off_exchange_opening_shares?:string|null
+  off_exchange_closing_shares?:string|null
+  audit_status?:string
+  daily_comparison?:{availability:string;date:string;reported_shares:string|null;difference_from_report_total:string|null;difference_after_explicit_off_exchange:string|null;source_url?:string|null;source_rounding_rule:string}
+}
 export interface MarketRiskStatus {
   contract_version:'market_risk_status_v1'
   parameter_version:string
@@ -239,6 +259,7 @@ export interface MarketRiskStatus {
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}
+  etf_quarterly?:{version:string;availability:string;period_label?:string;period_start?:string;period_end?:string;capture_completed_at?:string;observed_reports:number;declared_etfs:number;corporate_actions_checked:false;note:string;reports:ETFQuarterlyReport[]}
   etf_announcements?:{availability:string;through?:string;window_start?:string;window_end?:string;fetched_at?:string;catalog_etfs:number;declared_etfs:number;record_count:number|null;review_required_count:number|null;corporate_actions_checked:false;note:string;
     fulltext?:{availability:string;required:number|null;text_available:number|null;missing_or_unreadable:number|null;completed_at?:string;semantic_review:string};
     catalogs:Array<{code:string;source_url:string;record_count:number;oldest_publication:string;newest_publication:string;review_required_count:number;review_status:string;

@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 from canonical_json import digest
 from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
 from etf_announcements import announcement_status
+from etf_quarterly import quarterly_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_calendar import CALENDAR_VERSION, sessions_2026
 from market_periods import price_period_summary, recent_calendar_window
@@ -415,6 +416,7 @@ def build_market_risk_status(
             or row["evaluation_through"] == previous["evaluation_through"] and more_complete):
             by_code[row["code"]] = row
     etfs = _with_issuer_navs(list(by_code.values()), issuer_navs, issuer_nav_snapshot)
+    announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     etf_through = max((row["evaluation_through"] for row in etfs if row["evaluation_through"]), default=None)
     recent_window = recent_calendar_window(requested_through or etf_through)
     recent_indices, recent_shares = [], []
@@ -444,7 +446,8 @@ def build_market_risk_status(
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,
-        "etf_announcements": announcement_status(snapshot_dir / "etf_announcements", now),
+        "etf_announcements": announcements,
+        "etf_quarterly": quarterly_status(snapshot_dir / "etf_announcements", announcements, etfs, requested_through, now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),
@@ -486,7 +489,7 @@ def build_market_risk_status(
               for code, definition in NAV_DEFINITIONS.items()],
             {"title": "深交所ETF份额与净值", "url": SZSE_ETF_SOURCE},
             {"title": "中证指数官方历史行情", "url": CSI_SOURCE_URL},
-            {"title": "上交所ETF日终总份额（万份）", "url": ETF_SHARE_SOURCE},
+            {"title": "上交所ETF日终公布份额（万份）", "url": ETF_SHARE_SOURCE},
             {"title": "上交所ETF申赎说明", "url": "https://etf.sse.com.cn/fund/quertion/"},
             {"title": "Tushare基金份额（万份）", "url": "https://tushare.pro/document/2?doc_id=207"},
             {"title": "Tushare基金净值", "url": "https://tushare.pro/document/2?doc_id=119"},

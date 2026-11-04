@@ -114,6 +114,11 @@
 .market-announcement-table thead th:nth-child(5) {width:19%}
 .market-announcement-docs {max-width:100%;padding-left:18px}
 .market-announcement-docs li {margin:10px 0;white-space:normal;line-height:1.7}
+.market-quarterly-table {min-width:1000px}
+.market-quarterly-table thead th:first-child {width:18%}
+.market-quarterly-table thead th:nth-child(2) {width:24%}
+.market-quarterly-table thead th:nth-child(3) {width:22%}
+.market-quarterly-table thead th:nth-child(4) {width:36%}
 .market-risk-limits>p,.market-risk-limits li {font-size:13px;line-height:1.85;color:#6d7c71;max-width:95ch}
 .market-risk-limits ul {padding-left:18px}
 .market-risk-limits li {padding:6px 0}

@@ -44,4 +44,23 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByText('大盘数据尚未确认，当前风险未知。')).toBeInTheDocument()
     expect(screen.getByRole('link',{name:/ETF、市场走势与流动性/})).toHaveAttribute('href','/market')
   })
+  it('shows independent public share coverage while the current market remains unknown',async()=>{
+    const data:MarketRiskStatus={...fixture,
+      public_etf_snapshot:{availability:'observed',through:'2026-11-04'},
+      etf_aggregate:{'5':{observed_etfs:5,nav_observed_etfs:0,declared_etfs:8,evaluation_through:'2026-11-04',estimated_net_subscription_yuan:null,reason:'未核验'}},
+      etfs:[{...fixture.etfs[0],source:'sse_public',through:'2026-11-04',windows:{
+        ...fixture.etfs[0].windows,
+        '5':{share_change_pct:-5,share_change_ten_thousand:-50,share_change_notional_yuan:null,estimated_net_subscription_yuan:null,status:'shares_only'},
+      }}],
+    }
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByRole('heading',{name:'当前无法确认'})).toBeInTheDocument()
+    expect(screen.getByText(/同窗份额覆盖 5\/8，目标截至 2026-11-04/)).toBeInTheDocument()
+    expect(screen.getByText('上交所日终总份额')).toBeInTheDocument()
+    expect(screen.getByText('份额已取得；净值与份额事件待核验')).toBeInTheDocument()
+    expect(screen.getByText('-50 万份')).toBeInTheDocument()
+    expect(screen.getByRole('combobox',{name:'ETF份额路径'})).toBeInTheDocument()
+    expect(screen.getByText('未发布')).toBeInTheDocument()
+  })
 })

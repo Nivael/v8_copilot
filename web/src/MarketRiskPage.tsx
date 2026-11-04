@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {ArrowRight,RefreshCw} from 'lucide-react'
 import {ColorType,LineSeries,createChart,type Time} from 'lightweight-charts'
 import {getMarketRiskStatus} from './api'
-import type {MarketRiskIndex,MarketRiskStatus} from './types'
+import type {MarketRiskETF,MarketRiskIndex,MarketRiskStatus} from './types'
 import './learning.css'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -31,9 +31,37 @@ function Paths({indices,window}:{indices:MarketRiskIndex[];window:number}){
       )
     })
     chart.timeScale().fitContent()
-    return()=>chart.remove()
+    const observer=typeof ResizeObserver==='undefined'?null:new ResizeObserver(()=>chart.timeScale().fitContent())
+    observer?.observe(container.current)
+    return()=>{observer?.disconnect();chart.remove()}
   },[indices,window])
   return <div className="market-risk-chart" ref={container} aria-label={`${window}个交易日市场基准归一化路径`}/>
+}
+
+function ETFSharePath({item,window}:{item:MarketRiskETF|undefined;window:string}){
+  const container=useRef<HTMLDivElement>(null)
+  const metric=item?.windows[window]
+  const ready=metric?.share_change_pct!=null
+  useEffect(()=>{
+    if(!container.current||!ready)return
+    const points=item?.path?.slice(-Number(window)-1)??[]
+    if(points.length!==Number(window)+1||points.some(point=>point.shares==null||point.shares<=0))return
+    const chart=createChart(container.current,{autoSize:true,height:260,
+      layout:{background:{type:ColorType.Solid,color:'#fafbfa'},textColor:'#758177'},
+      grid:{vertLines:{color:'#edf1ec'},horzLines:{color:'#e6ece5'}},
+      rightPriceScale:{borderColor:'#cdd8ce'},timeScale:{borderColor:'#cdd8ce'},
+    })
+    const start=points[0].shares!
+    chart.addSeries(LineSeries,{color:'#3d684d',lineWidth:2,priceLineVisible:false}).setData(
+      points.map(point=>({time:point.date as Time,value:point.shares!/start*100})),
+    )
+    chart.timeScale().fitContent()
+    const observer=typeof ResizeObserver==='undefined'?null:new ResizeObserver(()=>chart.timeScale().fitContent())
+    observer?.observe(container.current)
+    return()=>{observer?.disconnect();chart.remove()}
+  },[item,window,ready])
+  if(!ready||!item?.path)return <p className="learning-empty">所选ETF缺少完整同窗份额，不补值或缩短窗口。</p>
+  return <><div className="market-risk-chart" ref={container} aria-label={`${item.code} ${window}个交易日总份额归一化路径`}/><p className="learning-footnote">{item.code} · {metric.window_start} 至 {metric.window_end}，起点归一为100。仅展示份额变化，未排除折算等事件；不代表资金金额或持有人身份。</p></>
 }
 
 export function MarketRiskBanner(){
@@ -48,6 +76,7 @@ export function MarketRiskPage(){
   const [loading,setLoading]=useState(true)
   const [window,setWindow]=useState(20)
   const [etfWindow,setETFWindow]=useState('5')
+  const [etfCode,setETFCode]=useState('510300.SH')
   const controller=useRef<AbortController|null>(null)
   const load=useCallback(async()=>{
     controller.current?.abort();const request=new AbortController();controller.current=request
@@ -62,7 +91,7 @@ export function MarketRiskPage(){
     {loading&&<p role="status" className="learning-loading">正在读取市场快照和数据截止日…</p>}
     {error&&<p role="alert" className="experience-error">{error}</p>}
     {data&&<>
-      <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`完整收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。快照日期不代表数据已经覆盖观察日。`:`观察日 ${data.observation_date}。当前没有通过校验的市场快照，以下历史数值只用于核对计算。`}</p>{data.last_attempt?.status==='failed'&&<p className="market-risk-failure">最近更新失败：{data.last_attempt.reason==='provider_token_expired'?'行情接口凭证已过期':data.last_attempt.reason}；请求截至 {data.last_attempt.requested_through}。</p>}</section>
+      <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`完整收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。快照日期不代表数据已经覆盖观察日。`:`观察日 ${data.observation_date}。当前没有通过校验的完整市场快照；市场基准仍为历史背景，ETF份额按下方独立截止日展示。`}</p>{data.public_etf_snapshot?.availability==='observed'&&<p>上交所公开ETF份额已读到 {data.public_etf_snapshot.through}；其余市场与深市ETF数据仍需补齐。</p>}{data.last_attempt?.status==='failed'&&<p className="market-risk-failure">行情源最近更新失败：{data.last_attempt.reason==='provider_token_expired'?'行情接口凭证已过期':data.last_attempt.reason}；请求截至 {data.last_attempt.requested_through}。</p>}</section>
       <section className="market-risk-order" aria-label="研究顺序"><span>01 大盘环境</span><ArrowRight size={15}/><span>02 ST与小盘风格</span><ArrowRight size={15}/><span>03 个股节点与自身风险</span></section>
       <section aria-label="市场趋势与回撤"><header className="learning-section-head"><div><p className="eyebrow">方向 / 风格 / 流动性</p><h2>同一窗口，分开看市场与ST</h2></div><div className="market-risk-windows" aria-label="图表窗口">{[5,20,60].map(value=><button key={value} aria-pressed={window===value} onClick={()=>setWindow(value)}>{value}日</button>)}</div></header>
         <div className="market-risk-legend">{data.indices.map((index,i)=><span key={index.code}><i className={`market-line-${i%3}`}/>{index.name} · 截至 {index.through||'未知'}{index.historical_only?' · 历史快照':''}</span>)}</div>
@@ -70,8 +99,10 @@ export function MarketRiskPage(){
       </section>
 
       <section className="learning-freshness" aria-label="ETF份额与申赎"><header className="learning-section-head"><div><p className="eyebrow">资金撤离线索 / ETF样本</p><h2>份额变化与净申赎估算</h2></div><label>ETF观察窗口 <select aria-label="ETF观察窗口" value={etfWindow} onChange={event=>setETFWindow(event.target.value)}>{[1,5,20].map(value=><option key={value} value={String(value)}>{value}个交易日</option>)}</select></label></header>
-        <p>固定观察8只沪深300、中证500和中证1000ETF。样本覆盖 {data.etf_aggregate[etfWindow]?.observed_etfs??0}/8；不外推全体ETF或机构持仓。净申赎金额需先排除份额折算等事件，当前尚未发布。</p>
-        <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small></th><td>{pct(metric?.share_change_pct)}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{metric?.status==='estimated'?'名义估算，不能识别资金身份':metric?.status==='corporate_actions_unchecked'?'份额事件未核验':'缺少同窗份额或净值'}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
+        <p>固定观察8只沪深300、中证500和中证1000ETF。同窗份额覆盖 {data.etf_aggregate[etfWindow]?.observed_etfs??0}/8{data.etf_aggregate[etfWindow]?.evaluation_through?`，目标截至 ${data.etf_aggregate[etfWindow].evaluation_through}`:''}；不外推全体ETF或机构持仓。净申赎金额需先核对净值和份额折算等事件，当前尚未发布。</p>
+        <label>份额路径 <select aria-label="ETF份额路径" value={etfCode} onChange={event=>setETFCode(event.target.value)}>{Object.entries(data.parameters.etf_basket).map(([code,group])=><option key={code} value={code}>{code} · {group}</option>)}</select></label>
+        <ETFSharePath item={data.etfs.find(item=>item.code===etfCode)} window={etfWindow}/>
+        <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终总份额</small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{metric?.status==='estimated'?'名义估算，不能识别资金身份':metric?.status==='corporate_actions_unchecked'?'份额事件未核验':metric?.status==='shares_only'?'份额已取得；净值与份额事件待核验':'缺少同窗份额或净值'}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
       </section>
 
       <section className="learning-freshness" aria-label="市场宽度"><header className="learning-section-head"><div><p className="eyebrow">市场宽度</p><h2>风险是否在同步扩散</h2></div><span>{data.breadth.through||'截止日未取得'}</span></header>{data.breadth.status==='observed'?<><div className="market-breadth"><div><span>有收益记录</span><strong>{number(data.breadth.observed_trading_stocks)}</strong></div><div><span>上涨 / 下跌</span><strong>{number(data.breadth.advancing)} / {number(data.breadth.declining)}</strong></div><div><span>跌幅至少5%</span><strong>{number(data.breadth.declining_5pct_or_more)}</strong></div><div><span>收益中位数</span><strong>{pct(data.breadth.median_return_pct)}</strong></div></div><p>{data.breadth.scope}。成交额 {amount(data.breadth.amount_yuan)}。</p></>:<p className="learning-empty">当日涨跌分布尚未取得，无法判断同步下跌的范围。</p>}</section>

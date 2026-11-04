@@ -11,6 +11,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 from canonical_json import digest
+from market_calendar import CALENDAR_VERSION, sessions_2026
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, MARKET_CONTEXT_MANIFEST_PATH
 
 
@@ -22,6 +23,8 @@ ETF_BASKET = {
 }
 INDEX_BASKET = {"000985.CSI": "中证全指", "000300.SH": "沪深300", "932000.CSI": "中证2000"}
 HORIZONS = (5, 20, 60)
+ETF_SHARE_SOURCE = "https://www.sse.com.cn/market/funddata/volumn/etfvolumn/"
+ETF_SHARE_SQL = "COMMON_SSE_ZQPZ_ETFZL_XXPL_ETFGM_SEARCH_L"
 
 
 def _number(value: Any) -> float | None:
@@ -84,7 +87,8 @@ def etf_metrics(
     output = {"through": share_days[-1] if share_days else None,
               "nav_through": nav_days[-1] if nav_days else None,
               "evaluation_through": days[-1] if days else None,
-              "corporate_actions_checked": corporate_actions_checked, "windows": {}}
+              "corporate_actions_checked": corporate_actions_checked, "windows": {},
+              "path": [{"date": day, "shares": share_by_day.get(day)} for day in days]}
     for horizon in (1, 5, 20):
         window = days[-horizon - 1:]
         unit_counts = [share_by_day.get(day) for day in window]
@@ -95,12 +99,53 @@ def etf_metrics(
         notional = sum((unit_counts[i] - unit_counts[i - 1]) * 10_000 * values[i - 1]
                        for i in range(1, len(window))) if nav_ready else None
         output["windows"][str(horizon)] = {
+            "window_start": window[0] if len(window) == horizon + 1 else None,
+            "window_end": days[-1] if days else None,
+            "share_change_ten_thousand": round(unit_counts[-1] - unit_counts[0], 6) if share_ready else None,
             "share_change_pct": round((unit_counts[-1] / unit_counts[0] - 1) * 100, 6) if share_ready else None,
             "share_change_notional_yuan": round(notional, 2) if notional is not None else None,
             "estimated_net_subscription_yuan": round(notional, 2) if notional is not None and corporate_actions_checked else None,
-            "status": "missing" if not nav_ready else "estimated" if corporate_actions_checked else "corporate_actions_unchecked",
+            "status": "missing" if not share_ready else "shares_only" if not nav_ready else "estimated" if corporate_actions_checked else "corporate_actions_unchecked",
         }
     return output
+
+
+def _public_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
+    try:
+        raw = json.loads((directory / "current.json").read_text())
+        expected = raw.pop("content_digest")
+        if (raw.get("contract_version") != "public_etf_shares_raw_v1" or digest(raw) != expected
+            or raw.get("provider") != "sse_public" or raw.get("share_unit") != "ten_thousand_shares"
+            or raw.get("source_url") != ETF_SHARE_SOURCE or raw.get("source_sql") != ETF_SHARE_SQL
+            or raw.get("calendar_version") != CALENDAR_VERSION):
+            raise ValueError("invalid public ETF snapshot")
+        calendar = raw["calendar"]
+        through = date.fromisoformat(raw["requested_through"])
+        fetched = datetime.fromisoformat(raw["fetched_at"])
+        today = now.astimezone(ZoneInfo("Asia/Shanghai")).date()
+        if (fetched.tzinfo is None or fetched > now or fetched.date() < through or through >= today
+            or not 21 <= len(calendar) <= 61 or calendar[-1] != through.isoformat()
+            or calendar != sessions_2026(date.fromisoformat(calendar[0]), through)):
+            raise ValueError("invalid public ETF calendar/date")
+        declared = {code for code in ETF_BASKET if code.endswith(".SH")}
+        if set(raw["declared_codes"]) != declared or set(raw["etf_shares"]) != declared:
+            raise ValueError("unexpected public ETF scope")
+        etfs = []
+        for code in sorted(declared):
+            rows = raw["etf_shares"][code]
+            if any(row.get("ts_code") != code or row.get("trade_date") not in calendar
+                   or (_number(row.get("fd_share")) or 0) <= 0 for row in rows):
+                raise ValueError("invalid public ETF observations")
+            etfs.append({"code": code, "group": ETF_BASKET[code], "source": "sse_public",
+                         "source_url": ETF_SHARE_SOURCE, **etf_metrics(rows, [], calendar)})
+        if not any(row["through"] == through.isoformat() for row in etfs):
+            raise ValueError("public ETF target missing")
+        return {"availability": "observed", "through": through.isoformat(), "fetched_at": raw["fetched_at"],
+                "content_digest": expected, "provider": "sse_public", "scope": "five_declared_SSE_ETFs",
+                "calendar_version": CALENDAR_VERSION, "gap_count": len(raw["gaps"]),
+                "availability_basis": raw["availability_basis"]}, etfs
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError):
+        return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, []
 
 
 def breadth_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -172,7 +217,7 @@ def build_market_risk_status(
             rows = raw["indices"].get(code, [])
             indices.append({"code": code, "name": name, "historical_only": False, **index_metrics(rows, calendar)})
         for code, group in ETF_BASKET.items():
-            etfs.append({"code": code, "group": group, **etf_metrics(
+            etfs.append({"code": code, "group": group, "source": "tushare_fund_share", **etf_metrics(
                 raw["etf_shares"].get(code, []), raw["etf_navs"].get(code, []), calendar,
             )})
         breadth = breadth_metrics(raw.get("breadth", []))
@@ -186,6 +231,18 @@ def build_market_risk_status(
             indices = _historical_indices(database, manifest_path)
         except (OSError, ValueError, TypeError, KeyError, sqlite3.Error):
             gaps.append("本地历史市场基准也不可读")
+    public_snapshot, public_etfs = _public_etfs(snapshot_dir / "public_etf", now)
+    by_code = {row["code"]: row for row in etfs}
+    for row in public_etfs:
+        previous = by_code.get(row["code"])
+        more_complete = previous is not None and sum(
+            metric["share_change_pct"] is not None for metric in row["windows"].values()
+        ) > sum(metric["share_change_pct"] is not None for metric in previous["windows"].values())
+        if (previous is None or row["evaluation_through"] > previous["evaluation_through"]
+            or row["evaluation_through"] == previous["evaluation_through"] and more_complete):
+            by_code[row["code"]] = row
+    etfs = list(by_code.values())
+    etf_through = max((row["evaluation_through"] for row in etfs if row["evaluation_through"]), default=None)
     attempt = None
     try:
         attempt = json.loads((snapshot_dir / "last_attempt.json").read_text())
@@ -198,8 +255,11 @@ def build_market_risk_status(
         "status": "observed_snapshot" if snapshot_id else "historical_only" if indices else "unavailable",
         "current_risk_assessment": "not_calibrated", "indices": indices, "etfs": etfs,
         "breadth": breadth, "last_attempt": attempt, "gaps": gaps,
+        "public_etf_snapshot": public_snapshot,
         "etf_aggregate": {str(horizon): {
-            "observed_etfs": sum(row["windows"][str(horizon)]["share_change_notional_yuan"] is not None for row in etfs),
+            "evaluation_through": etf_through,
+            "observed_etfs": sum(row["evaluation_through"] == etf_through and row["windows"][str(horizon)]["share_change_pct"] is not None for row in etfs),
+            "nav_observed_etfs": sum(row["evaluation_through"] == etf_through and row["windows"][str(horizon)]["share_change_notional_yuan"] is not None for row in etfs),
             "declared_etfs": len(ETF_BASKET), "estimated_net_subscription_yuan": None,
             "reason": "份额事件未核验；不发布样本净申赎总金额",
         } for horizon in (1, 5, 20)},
@@ -214,6 +274,7 @@ def build_market_risk_status(
             "没有风险权重或交易阈值；无数据与过期数据不得解释为低风险。",
         ],
         "sources": [
+            {"title": "上交所ETF日终总份额（万份）", "url": ETF_SHARE_SOURCE},
             {"title": "上交所ETF申赎说明", "url": "https://etf.sse.com.cn/fund/quertion/"},
             {"title": "Tushare基金份额（万份）", "url": "https://tushare.pro/document/2?doc_id=207"},
             {"title": "Tushare基金净值", "url": "https://tushare.pro/document/2?doc_id=119"},

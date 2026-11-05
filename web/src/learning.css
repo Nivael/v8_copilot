@@ -94,6 +94,13 @@
 .market-risk-legend .market-line-1 {background:#a47845}
 .market-risk-legend .market-line-2 {background:#7e8b91}
 .market-risk-chart {height:260px;width:100%;background:#fafbfa}
+.market-st-chart {display:block;width:100%;height:auto;min-height:160px;background:#fafbfa}
+.market-st-chart text {font-size:13px;fill:#6a796d}
+.market-st-chart path {fill:none;stroke-width:2;vector-effect:non-scaling-stroke}
+.market-st-slider {display:flex;align-items:center;gap:16px;color:#536d59;font-size:13px;margin-top:16px}
+.market-st-slider input {flex:1;min-width:0;accent-color:#3d684d}
+.market-st-readout {display:flex;flex-wrap:wrap;gap:10px 24px;padding:16px 0;font-size:12px;color:#536d59;line-height:1.8}
+.market-st-readout span:last-child {overflow-wrap:anywhere}
 .market-risk-table {table-layout:auto}
 .market-risk-table thead th:first-child {width:23%}
 .market-risk-table thead th:nth-child(2),.market-risk-table thead th:nth-child(3) {width:auto}
@@ -168,6 +175,7 @@
   .top nav a {white-space:nowrap;flex:none}
 }
 @media(max-width:600px){
+  .market-st-chart text {font-size:25px}
   .shell .top {height:auto;align-items:flex-start;flex-direction:column;padding:12px 14px;gap:10px}
   .shell .top .brand {font-size:12px}
   .shell .top nav {width:100%;overflow-x:auto;gap:3px;flex-wrap:nowrap}

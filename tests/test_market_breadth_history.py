@@ -113,6 +113,30 @@ def test_repair_does_not_reuse_a_day_whose_archived_source_bytes_changed(tmp_pat
     assert result['status']=='complete' and result['reused_days']==37 and client.calls==DAYS[:1]
 
 
+@pytest.mark.parametrize('damage',['changed','missing'])
+def test_readers_recheck_source_bytes_without_collecting_or_rewriting_history(tmp_path,damage):
+    folder=tmp_path/'history';refresh(folder);before=(folder/'current.json').read_bytes()
+    pointer=json.loads((folder/'staging'/f'{DAYS[0]}.json').read_text())
+    day=json.loads((folder/'days'/f"{pointer['content_digest']}.json").read_text())
+    source=tmp_path/'public_breadth/responses'/f"{day['responses'][0]['response_sha256']}.json"
+    if damage=='changed':source.write_bytes(b'changed archived response')
+    else:source.rename(source.with_suffix('.unavailable'))
+    status=load_breadth_history(folder,NOW)
+    assert status['availability']=='invalid' and status['points']==[]
+    assert (folder/'current.json').read_bytes()==before
+
+
+def test_frozen_history_read_does_not_depend_on_the_current_pointer(tmp_path):
+    folder=tmp_path/'history';refresh(folder)
+    key=json.loads((folder/'current.json').read_text())['content_digest']
+    (folder/'current.json').write_text('{invalid newer pointer')
+    frozen=load_breadth_history(folder,NOW,snapshot_digest=key)
+    assert frozen['availability']=='observed' and frozen['content_digest']==key
+    assert load_breadth_history(folder,NOW)['availability']=='invalid'
+    assert load_breadth_history(folder,NOW,snapshot_digest='../current')['availability']=='invalid'
+    assert (folder/'current.json').read_text()=='{invalid newer pointer'
+
+
 def test_code_change_during_collection_cannot_publish_a_mixed_processor_window(tmp_path,monkeypatch):
     folder=tmp_path/'history';refresh(folder);before=(folder/'current.json').read_bytes()
     from market_breadth_history import PROCESSOR_DIGEST

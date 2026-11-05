@@ -13,6 +13,7 @@ import {ETFSZSERecheck} from './ETFSZSERecheck'
 import {ETFIssuerHistory} from './ETFIssuerHistory'
 import {NodeMarketAudit} from './NodeMarketAudit'
 import {ExchangeRiskLists} from './ExchangeRiskLists'
+import {SZSESTReference} from './SZSESTReference'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -134,7 +135,7 @@ export function MarketRiskPage(){
     {error&&<p role="alert" className="experience-error">{error}</p>}
     {data&&<>
       <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。各来源分别核对截止日，已取得指数不代表整体风险已测量。`:`观察日 ${data.observation_date}。当前没有通过校验的完整市场快照；市场基准仍为历史背景，ETF份额按下方独立截止日展示。`}</p>
-        {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；同期ST走势{data.market_coverage.st_style_at_target?'已取得':'未覆盖'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
+        {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；沪深整体同期ST走势{data.market_coverage.st_style_at_target?'已取得':'未覆盖'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
         {data.market_coverage?.historical_breadth_venues_at_target!=null&&<p>同目标日期的历史涨跌分布来源 {data.market_coverage.historical_breadth_venues_at_target}/2；单一交易所不代表沪深整体。</p>}
         <details className="market-source-notes" open={data.status!=='observed_snapshot'}><summary>来源更新与待核对项</summary>
         {data.public_etf_snapshot?.availability==='observed'&&<p>上交所公开ETF份额已读到 {data.public_etf_snapshot.through}。</p>}
@@ -149,6 +150,7 @@ export function MarketRiskPage(){
         {data.indices.length>0?<><Paths indices={data.indices} window={window} through={data.requested_through}/><p className="learning-footnote">起点归一为100；仅绘制所选窗口完整且截止日一致的序列。较早的ST历史只保留在表中，不拼接成同期走势；ST等权仅消费覆盖率至少95%的日期。</p><div className="learning-table-wrap"><table className="learning-table market-risk-table"><thead><tr><th scope="col">市场基准</th><th scope="col">5日</th><th scope="col">20日</th><th scope="col">60日</th><th scope="col">60日最大回撤</th><th scope="col">5/20日成交额均值比</th></tr></thead><tbody>{data.indices.map(index=><tr key={index.code}><th scope="row">{index.name}<small>{index.through}</small></th><td>{pct(index.return_5d_pct)}</td><td>{pct(index.return_20d_pct)}</td><td>{pct(index.return_60d_pct)}</td><td>{pct(index.max_drawdown_60d_pct)}</td><td>{index.amount_5d_to_20d_ratio==null?'—':`${index.amount_5d_to_20d_ratio.toFixed(2)} 倍`}</td></tr>)}</tbody></table></div></>:<p className="learning-empty">市场基准缺失，无法计算趋势和回撤。</p>}
       </section>
 
+      {data.szse_st_reference&&<SZSESTReference data={data.szse_st_reference} indices={data.indices}/>}
       {data.breadth_history&&<section className="learning-freshness" aria-label="历史涨跌分布">
         <header className="learning-section-head"><div><p className="eyebrow">市场宽度 / 历史日表</p><h2>深市历史涨跌分布</h2></div><span>沪市历史仍缺</span></header>
         {data.breadth_history.availability==='observed'?<>

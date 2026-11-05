@@ -40,7 +40,7 @@ def _source_store(directory):
     return directory.parent / "public_breadth"
 
 
-def _read_day(directory, key, day, now, *, check_raw=False):
+def _read_day(directory, key, day, now, *, check_raw=False, verify_hashes=False):
     if not isinstance(key, str) or not re.fullmatch(r"[a-f0-9]{64}", key): raise ValueError("invalid daily key")
     raw = json.loads((directory / "days" / f"{key}.json").read_text())
     expected = raw.pop("content_digest")
@@ -70,7 +70,7 @@ def _read_day(directory, key, day, now, *, check_raw=False):
             or stamp.tzinfo is None or stamp > observed or stamp.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat() < day
             or not re.fullmatch(r"[a-f0-9]{64}", ref["response_sha256"])):
             raise ValueError("daily source query does not match complete unfiltered report")
-        if check_raw:
+        if check_raw or verify_hashes:
             body = (_source_store(directory) / "responses" / f"{ref['response_sha256']}.{'xlsx' if is_export else 'json'}").read_bytes()
             if hashlib.sha256(body).hexdigest() != ref["response_sha256"]: raise ValueError("source bytes changed")
             bodies.append(body)
@@ -81,14 +81,18 @@ def _read_day(directory, key, day, now, *, check_raw=False):
     return raw
 
 
-def load_breadth_history(directory: Path, now: datetime) -> dict:
+def load_breadth_history(directory: Path, now: datetime, *, snapshot_digest=None) -> dict:
     try:
-        raw = json.loads((directory / "current.json").read_text())
+        if snapshot_digest is not None and not re.fullmatch(r'[a-f0-9]{64}', snapshot_digest):
+            raise ValueError('invalid frozen history key')
+        path = directory / 'snapshots' / f'{snapshot_digest}.json' if snapshot_digest else directory / 'current.json'
+        raw = json.loads(path.read_text())
         expected = raw.pop("content_digest")
         observed = datetime.fromisoformat(raw["fetched_at"])
         materialized = datetime.fromisoformat(raw["materialized_at"])
         window = recent_calendar_window(raw["through"])
-        if (raw["contract_version"] != VERSION or digest(raw) != expected or raw["processor_digest"] != PROCESSOR_DIGEST
+        if (raw["contract_version"] != VERSION or digest(raw) != expected or snapshot_digest is not None and expected != snapshot_digest
+            or raw["processor_digest"] != PROCESSOR_DIGEST
             or processor_digest() != PROCESSOR_DIGEST or raw["calendar_version"] != CALENDAR_VERSION
             or raw["scope"] != SCOPE or raw["venues"] != SUPPORTED_VENUES or raw["required_venues"] != REQUIRED_VENUES
             or raw["availability_basis"] != "first_observed_at_fetch_not_historical_PIT"
@@ -99,7 +103,7 @@ def load_breadth_history(directory: Path, now: datetime) -> dict:
             raise ValueError("invalid historical source/window binding")
         points, source_times = [], []
         for day in raw["calendar"]:
-            daily = _read_day(directory, raw["daily_snapshots"][day], day, materialized)
+            daily = _read_day(directory, raw["daily_snapshots"][day], day, materialized, verify_hashes=True)
             source_times.append(datetime.fromisoformat(daily["fetched_at"]))
             block = daily["block"]
             points.append({"date": day, "source_rows": block["reported_total"], "excluded_b_shares": block["excluded_b_shares"],

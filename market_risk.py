@@ -22,6 +22,7 @@ from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
 from node_market_audit import audit_status as node_market_audit_status
 from exchange_risk_membership import list_status as risk_membership_status
+from szse_st_reference import reference_status as szse_st_reference_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -328,6 +329,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
+    st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -358,6 +360,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     "requested_through": history.get("through"), "fetched_at": history.get("fetched_at"),
                     "observed_through_min": history.get("start"), "observed_through_max": history.get("through"),
                     "observation_count": history.get("observation_count"), "series_at_target": len(history["covered_venues"]),
+                    "observation_unit": "股票日", "coverage_unit": "交易所",
                     "declared_series": 2, "snapshot_digest": history.get("content_digest"), "url": "/market",
                     "note": "记录数为逐日股票观测合计，非不同股票数；仅完整历史窗发布，沪市历史仍缺。采集进度另见大盘页。"})
     sources.append({"source_id": "etf_announcements", "label": "ETF公告目录 · 待事件核验", "availability": announcements["availability"],
@@ -375,6 +378,14 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'series_at_target':None,'observed_source_groups':len(membership['groups']) if observed else None,'declared_series':6,
                     'snapshot_digest':membership.get('content_digest'),'url':'/market','date_basis':'current_list_observation',
                     'note':'此日期为名单读取日，非统一数据截止日；深市表声明数据日，沪市未声明。表内记录含另列B股与退市整理股票，不推进个股或历史成员日期。'})
+    sources.append({'source_id':'szse_st_price_reference','label':'深市ST · 有成交样本价格参考','availability':st_reference['availability'],
+                    'requested_through':st_reference.get('through'),'fetched_at':st_reference.get('source_fetched_at'),
+                    'observed_through_min':st_reference.get('start'),'observed_through_max':st_reference.get('through'),
+                    'observation_count':st_reference.get('member_day_observations'),
+                    'observation_unit':'成员日','coverage_unit':'交易所',
+                    'series_at_target':1 if st_reference['availability']=='observed' else 0,'declared_series':2,
+                    'snapshot_digest':st_reference.get('content_digest'),'url':'/market',
+                    'note':'记录数为每日成员合计，包含停牌分母；不同成员数与每日成交覆盖见市场页。仅深市，沪市仍缺；回溯核对不代表历史当时可见或组合财富。'})
     return sources
 
 
@@ -445,6 +456,7 @@ def build_market_risk_status(
     issuer_nav_snapshot, issuer_navs = load_issuer_navs(snapshot_dir / "issuer_nav", now)
     public_breadth_snapshot, public_breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
     breadth_history = breadth_history_status(snapshot_dir / "public_breadth_history", now)
+    st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, market_db=database, now=now)
     if public_breadth.get("status") == "observed" and public_breadth["through"] >= breadth.get("through", ""):
         breadth = public_breadth
     if public_indices and (requested_through is None or public_index_snapshot["through"] > requested_through):
@@ -496,6 +508,7 @@ def build_market_risk_status(
                                "market_target": requested_through},
         "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit", now=now),
         "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
+        "szse_st_reference": st_reference,
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,
@@ -511,6 +524,7 @@ def build_market_risk_status(
             "breadth_at_target": breadth.get("status") == "observed" and breadth.get("through") == requested_through,
             "st_style_at_target": any(row["code"] == "st_equal_weight_v1" and row["through"] == requested_through for row in indices),
             "historical_breadth_venues_at_target": len(breadth_history["covered_venues"]) if breadth_history.get("through") == requested_through else 0,
+            "st_reference_venues_at_target": int(st_reference['availability']=='observed' and st_reference.get('through')==requested_through),
         },
         "recent_window": recent_window,
         "recent_observations": {"index_coverage": len(recent_indices),

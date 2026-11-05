@@ -93,6 +93,18 @@ describe('LearningPage',()=>{
     expect(await screen.findByText('检索至 2026-11-05')).toBeInTheDocument()
     expect(screen.getByText('目录取得不代表份额事件已核验。')).toBeInTheDocument()
   })
+  it('distinguishes member-day records from venue coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'szse_st_price_reference',label:'深市ST价格参考',availability:'observed',
+      requested_through:'2026-11-04',observed_through_min:'2026-09-04',observed_through_max:'2026-11-04',observation_count:4416,
+      observation_unit:'成员日',coverage_unit:'交易所',series_at_target:1,declared_series:2,snapshot_digest:'synthetic',url:'/market',
+      fetched_at:'2026-11-05T04:00:00Z',note:'每日成员合计，包含停牌分母；不同成员数另列。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('4,416 成员日')).toBeInTheDocument()
+    expect(within(section).getByText('目标日期覆盖 1/2 交易所')).toBeInTheDocument()
+    expect(within(section).queryByText('4,416 条')).not.toBeInTheDocument()
+    expect(screen.getByText('59 天')).toBeInTheDocument()
+  })
   it('labels current-list reads separately from dated source coverage',async()=>{
     const data:LearningStatus={...payload,market_updates:[{source_id:'exchange_risk_membership',label:'交易所名单',availability:'observed',
       requested_through:null,observed_through_min:null,observed_through_max:null,observation_count:199,series_at_target:null,declared_series:6,

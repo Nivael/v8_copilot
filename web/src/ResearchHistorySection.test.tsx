@@ -97,4 +97,18 @@ describe('original question retrospective',()=>{
     const full=screen.getByText('完整背景原问题');expect(full.closest('details')!.open).toBe(false)
     fireEvent.click(full);expect(screen.getByText('背景原文。'.repeat(60))).toBeVisible()
   })
+  it('only mounts an archived attachment after expansion and labels it as a rendered capture',async()=>{
+    const url='/api/v1/workbench/history-assets/'+'a'.repeat(64)
+    serve({...detail,questions:[{...question,question_visuals:[{kind:'rendered_capture',sha256:'a'.repeat(64),url,width:436,height:1043,captured_at:'2026-11-06T02:00:00Z',source_url:'https://chatgpt.com/c/source'}]}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    const toggle=screen.getByText('当时看到的附件 · 展示截图'),disclosure=toggle.closest('details')!
+    expect(disclosure.open).toBe(false)
+    expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument()
+    fireEvent.click(toggle)
+    expect(await screen.findByAltText('原聊天附件展示截图')).toHaveAttribute('src',url)
+    expect(screen.getByText(/不是原始文件，也不代表截图中的说法已核实/)).toBeVisible()
+    expect(screen.getByRole('img',{name:'原聊天附件展示截图'}).closest('a')).toHaveAttribute('href',url)
+    fireEvent.click(toggle)
+    await waitFor(()=>expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument())
+  })
 })

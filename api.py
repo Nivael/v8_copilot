@@ -10,7 +10,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response,StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -532,6 +532,15 @@ def get_history_detail(symbol: str = Path(pattern=r'^(?:[036]\d{5}\.(?:SH|SZ)|ma
     data=load(symbol)
     return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
             'refresh':{'in_progress':False,'last_error':None}}
+
+
+@app.get('/api/v1/workbench/history-assets/{identity}')
+def get_history_visual(identity: str = Path(pattern=r'^[a-f0-9]{64}$')) -> Response:
+    from research_history import load_visual
+    visual=load_visual(identity)
+    if visual is None:raise HTTPException(status_code=404,detail='附件当前不可用')
+    raw,mime=visual
+    return Response(content=raw,media_type=mime,headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
 
 
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)

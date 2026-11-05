@@ -54,6 +54,8 @@ def question_digest(record):
     if record.get('asked_at') is None:basis.update(asked_on=question_day(record),time_precision='day')
     if record.get('question_context'):
         basis['question_context']={k:record['question_context'][k] for k in ('version','question_id','question','asked_on','source_url')}
+    if record.get('question_visuals'):
+        basis['question_visuals']=[{k:v[k] for k in ('kind','sha256','source_message_id','source_thread_id')} for v in record['question_visuals']]
     return digest(basis)
 
 
@@ -100,8 +102,9 @@ def add_question_contexts(records,captured):
 
 def prepare_history_records(imported,*,root=ROOT):
     from research_history_captures import import_capture_files
+    from research_history_visuals import add_visuals
     captured,_=import_capture_files(root/'captures/cua_v1',imported.get('stock_names',{}))
-    return mark_answer_bindings(add_question_contexts(imported['records'],captured))
+    return mark_answer_bindings(add_visuals(add_question_contexts(imported['records'],captured),root=root))
 
 
 def mark_answer_bindings(records):
@@ -309,13 +312,14 @@ def publish(imported,*,root=ROOT):
     body={'version':'research_history_reading_v1','processor_digest':processor_digest(),'checked_at':datetime.now(timezone.utc).isoformat(),'as_of':paths['data']['calendar'][-1],
           'source_digest':source_manifest['content_digest'],'price_digest':paths['content_digest'],
           'inventory':{'availability':'available','as_of':paths['data']['calendar'][-1],'stocks':result['stocks'],'coverage':coverage,'categories':list(TOPICS)},
+          'visual_assets':{v['sha256']:v['asset'] for r in records for v in r.get('question_visuals',[])},
           'details':result['details'],'general_questions':[r for r in records if not r['symbols']]}
     body['content_digest']=digest(body);atomic_write_json(root/'snapshots'/(body['content_digest']+'.json'),body);atomic_write_json(root/'current.json',body)
     return body
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):
@@ -344,6 +348,19 @@ def load(symbol=None,*,root=ROOT):
         if value['version']!='research_history_reading_v1' or value['processor_digest']!=processor_digest():return {'availability':'updating'}
         return value['details'].get(symbol,{'availability':'not_found'}) if symbol else value['inventory']
     except (OSError,KeyError,ValueError,TypeError):return {'availability':'updating'}
+
+
+def load_visual(identity,*,root=ROOT):
+    from research_history_prices import bound
+    from research_history_visuals import SHA,asset_bytes
+    if not SHA.fullmatch(identity):return None
+    try:
+        packet=bound(root/'current.json')
+        if packet['version']!='research_history_reading_v1' or packet['processor_digest']!=processor_digest():return None
+        asset=packet.get('visual_assets',{}).get(identity)
+        if not asset or asset['sha256']!=identity:return None
+        return asset_bytes(asset,root=root),asset['mime_type']
+    except (OSError,KeyError,ValueError,TypeError):return None
 
 
 def main():

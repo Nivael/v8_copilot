@@ -172,7 +172,7 @@ describe('MarketRiskPage',()=>{
     expect(addSeries).toHaveBeenCalledTimes(3)
     expect(screen.getByText(/3只ETF的最新份额修订状态待核对/)).toBeInTheDocument()
     expect(screen.getByText('净值截至 2026-11-03')).toBeInTheDocument()
-    expect(screen.getByText('最新份额待次日修订核对')).toBeInTheDocument()
+    expect(screen.getByText('最新份额最终修订版仍待确认')).toBeInTheDocument()
   })
   it('defaults to an explicitly dated two-calendar-month window',async()=>{
     const recent={start:'2026-09-04',end:'2026-11-04',sessions:37,return_pct:-20,max_drawdown_pct:-20,from_peak_pct:-20}

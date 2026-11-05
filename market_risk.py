@@ -17,6 +17,8 @@ from etf_quarterly import quarterly_status
 from etf_report_continuity import report_continuity_status
 from etf_notice_review import notice_review_status
 from etf_prospectus_rules import prospectus_rule_status
+from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
+from etf_szse_recheck import recheck_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -37,8 +39,6 @@ ETF_SHARE_SOURCE = "https://www.sse.com.cn/market/funddata/volumn/etfvolumn/"
 ETF_SHARE_SQL = "COMMON_SSE_ZQPZ_ETFZL_XXPL_ETFGM_SEARCH_L"
 CSI_PERF_URL = "https://www.csindex.com.cn/csindex-home/perf/index-perf"
 CSI_SOURCE_URL = "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985"
-SZSE_ETF_SOURCE = "https://fund.szse.cn/marketdata/etf/"
-SZSE_ETF_API = "https://fund.szse.cn/api/report/ShowReport/data"
 
 
 def _number(value: Any) -> float | None:
@@ -238,7 +238,7 @@ def _szse_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
         expected = raw.pop("content_digest")
         if (raw.get("contract_version") != "szse_etf_history_raw_v1" or digest(raw) != expected
             or raw.get("provider") != "szse_public" or raw.get("share_unit") != "ten_thousand_shares"
-            or raw.get("nav_unit") != "CNY_per_share" or raw.get("api_url") != SZSE_ETF_API
+            or raw.get("nav_unit") != "CNY_per_share" or raw.get("api_url") not in (SZSE_ETF_API, SZSE_HTTP_API)
             or raw.get("source_url") != SZSE_ETF_SOURCE or raw.get("calendar_version") != CALENDAR_VERSION
             or raw.get("share_revision_status") != "final_revision_unverified"):
             raise ValueError("invalid SZSE snapshot")
@@ -480,6 +480,7 @@ def build_market_risk_status(
         "breadth_history": {**breadth_history, "matches_market_target": breadth_history.get("through") == requested_through if requested_through else False},
         "public_etf_snapshot": public_snapshot,
         "szse_etf_snapshot": szse_snapshot,
+        "szse_revision_recheck": recheck_status(snapshot_dir / "szse_revision_recheck", snapshot_dir / "public_etf_szse", now, issuer_navs),
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,

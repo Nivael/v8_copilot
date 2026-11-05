@@ -9,6 +9,7 @@ import {ETFShareEventReview} from './ETFShareEventReview'
 import {ETFReportContinuity} from './ETFReportContinuity'
 import {ETFNoticeReview} from './ETFNoticeReview'
 import {ETFProspectusRules} from './ETFProspectusRules'
+import {ETFSZSERecheck} from './ETFSZSERecheck'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -134,7 +135,7 @@ export function MarketRiskPage(){
         {data.market_coverage?.historical_breadth_venues_at_target!=null&&<p>同目标日期的历史涨跌分布来源 {data.market_coverage.historical_breadth_venues_at_target}/2；单一交易所不代表沪深整体。</p>}
         <details className="market-source-notes" open={data.status!=='observed_snapshot'}><summary>来源更新与待核对项</summary>
         {data.public_etf_snapshot?.availability==='observed'&&<p>上交所公开ETF份额已读到 {data.public_etf_snapshot.through}。</p>}
-        {data.szse_etf_snapshot?.availability==='observed'&&<p>深交所ETF份额记录已读到 {data.szse_etf_snapshot.through}；最新份额的次日修订状态仍待核对。</p>}
+        {data.szse_etf_snapshot?.availability==='observed'&&<p>深交所ETF份额记录已读到 {data.szse_etf_snapshot.through}；最终修订版仍待确认，重读情况见下方复核记录。</p>}
         {data.last_attempt?.status==='failed'&&<p className="market-risk-failure">账户行情源最近更新失败：{data.last_attempt.reason==='provider_token_expired'?'行情接口凭证已过期':data.last_attempt.reason}；请求截至 {data.last_attempt.requested_through}。</p>}
         </details>
       </section>
@@ -164,9 +165,10 @@ export function MarketRiskPage(){
         {(data.etf_aggregate[etfWindow]?.revision_unconfirmed_etfs??0)>0&&<p>{data.etf_aggregate[etfWindow].revision_unconfirmed_etfs}只ETF的最新份额修订状态待核对。深交所说明：T日晚间份额仅供参考，以T+1日早间更新为准；尚未取得最终修订标记。</p>}
         <label>份额路径 <select aria-label="ETF份额路径" value={etfCode} onChange={event=>setETFCode(event.target.value)}>{Object.entries(data.parameters.etf_basket).map(([code,group])=><option key={code} value={code}>{code} · {group}</option>)}</select></label>
         <ETFSharePath item={data.etfs.find(item=>item.code===etfCode)} window={etfWindow}/>
-        <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终公布份额</small>}{item?.source==='szse_public'&&<small>深交所份额 · 修订状态待核对</small>}{item?.nav_through&&<small>净值截至 {item.nav_through}</small>}{item?.nav_source_url&&<small><a href={item.nav_source_url} target="_blank" rel="noreferrer">{item.nav_source}单位净值 ↗</a></small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{metric?.status==='estimated'?'名义估算，不能识别资金身份':metric?.status==='corporate_actions_unchecked'?'份额事件未核验':metric?.status==='shares_only'?'份额已取得；净值与份额事件待核验':'缺少同窗份额或净值'}{item?.share_revision_unverified&&<small>最新份额待次日修订核对</small>}{(item?.nav_conflict_dates?.length??0)>0&&<small>净值来源有冲突，未采用新来源：{item?.nav_conflict_dates?.join('、')}</small>}{(item?.nav_crosscheck_observations??0)>0&&<small>已与交易所核对 {item?.nav_crosscheck_observations} 个重叠净值日</small>}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
+        <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终公布份额</small>}{item?.source==='szse_public'&&<small>深交所份额 · 最终修订版待确认</small>}{item?.nav_through&&<small>净值截至 {item.nav_through}</small>}{item?.nav_source_url&&<small><a href={item.nav_source_url} target="_blank" rel="noreferrer">{item.nav_source}单位净值 ↗</a></small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{metric?.status==='estimated'?'名义估算，不能识别资金身份':metric?.status==='corporate_actions_unchecked'?'份额事件未核验':metric?.status==='shares_only'?'份额已取得；净值与份额事件待核验':'缺少同窗份额或净值'}{item?.share_revision_unverified&&<small>最新份额最终修订版仍待确认</small>}{(item?.nav_conflict_dates?.length??0)>0&&<small>净值来源有冲突，未采用新来源：{item?.nav_conflict_dates?.join('、')}</small>}{(item?.nav_crosscheck_observations??0)>0&&<small>已与交易所核对 {item?.nav_crosscheck_observations} 个重叠净值日</small>}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
       </section>
 
+      {data.szse_revision_recheck&&<ETFSZSERecheck data={data.szse_revision_recheck}/>}
       {data.etf_notice_review&&<ETFNoticeReview data={data.etf_notice_review}/>}
       {data.etf_prospectus_rules&&<ETFProspectusRules data={data.etf_prospectus_rules}/>}
       {data.etf_report_continuity&&<ETFReportContinuity data={data.etf_report_continuity}/>}

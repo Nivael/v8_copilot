@@ -145,7 +145,12 @@
 .market-risk-limits ul {padding-left:18px}
 .market-risk-limits li {padding:6px 0}
 .market-risk-sources {display:flex;flex-wrap:wrap;gap:18px;margin-top:24px;font-size:11px;color:#68816d}
+.market-recheck-table thead th:first-child {width:25%}
+.market-recheck-table thead th:nth-child(2) {width:30%}
+.market-recheck-table thead th:nth-child(3) {width:45%}
+.market-recheck-scroll-hint {display:none}
 @media(max-width:900px){
+  .market-recheck-scroll-hint {display:block}
   .learning-page {width:calc(100% - 40px)}
   .learning-diagnosis {gap:28px}
   .learning-ledger article {padding:18px 14px}

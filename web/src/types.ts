@@ -194,6 +194,22 @@ export interface MarketRiskIndex {
   recent?:{start:string;end:string;sessions:number;return_pct:number|null;max_drawdown_pct:number|null;from_peak_pct:number|null}|null
   path:Array<{date:string;close:number|null}>
 }
+export interface SZSERecheckDifference {
+  overlap_observations:number
+  changed_observations:number
+  changes:Array<{date:string;before:string;after:string;difference:string}>
+  new_dates:string[]
+  missing_previous_dates:string[]
+}
+export interface SZSERevisionRecheck {
+  version:string;availability:string;share_observations:number;share_changes:number|null;nav_observations:number
+  start?:string;through?:string;sessions?:number;first_observed_at?:string;last_observed_at?:string;baseline_fetched_at?:string;baseline_digest?:string;transport?:string
+  final_revision_verified:false;share_revision_status:'final_revision_unverified';corporate_actions_checked:false;estimated_net_subscription_yuan:null;note:string
+  responses?:Array<{code:string;kind:string;page:number;url:string;observed_at:string;response_sha256:string}>
+  funds:Array<{code:string;latest_shares_ten_thousand:string;share_observations:number;nav_observations:number;nav_through:string;
+    share_comparison:SZSERecheckDifference;nav_comparison:SZSERecheckDifference;
+    issuer_nav_comparison:Pick<SZSERecheckDifference,'overlap_observations'|'changed_observations'|'changes'>}>
+}
 export interface MarketRiskETF {
   code:string
   group:string
@@ -280,6 +296,7 @@ export interface MarketRiskStatus {
   etfs:MarketRiskETF[]
   public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number}
   szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string}
+  szse_revision_recheck?:SZSERevisionRecheck
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}

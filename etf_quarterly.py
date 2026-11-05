@@ -56,23 +56,50 @@ def _one(pattern, text):
 
 def parse_report(pages: list[str], code: str, year: int, quarter: int) -> dict:
     """Accept a single-fund §6 table; multi-column or changed layouts remain unparsed."""
+    _, _, begin, end = completed_quarter(f"{year}-{quarter * 3:02d}-{calendar.monthrange(year, quarter * 3)[1]}")
+    return _parse_period_report(pages, code, f"{year}年第{quarter}季度报告", begin, end, 6)
+
+
+def parse_midyear_report(pages: list[str], code: str, year: int) -> dict:
+    """Read the reported whole-fund §9 table for January–June, never its publication window."""
+    return _parse_period_report(pages, code, f"{year}年中期报告", f"{year}-01-01", f"{year}-06-30", 9)
+
+
+def _parse_period_report(pages, code, title, expected_begin, expected_end, section):
     if code not in NAV_DEFINITIONS or not pages or any(not isinstance(page, str) for page in pages):
         raise ValueError("unknown report identity")
     normalized = [compact(page) for page in pages]
     text = "\n".join(normalized)
-    if f"{year}年第{quarter}季度报告" not in text or _one(r"基金主代码(\d{6})(?!\d)", text)[1] != code[:6]:
-        raise ValueError("wrong report fund or quarter")
+    if title not in text or _one(r"基金主代码(\d{6})(?!\d)", text)[1] != code[:6]:
+        raise ValueError("wrong report fund or period")
+    if section == 9:
+        # One reviewed midyear layout places the section heading before a page
+        # break. Only its own product name and exact printed page/count may be
+        # removed; arbitrary intervening text must still fail the unit check.
+        fund_name = _one(r"基金名称([^\n]{1,120}?)基金简称", text)[1]
+        for i, page in enumerate(normalized):
+            header = f"{fund_name}{title}第{i}页共{len(pages) - 1}页"
+            if i > 0 and page.startswith(header): normalized[i] = page[len(header):]
+        text = "\n".join(normalized)
     match = _one(PERIOD.pattern, text)
     begin = date(int(match[1]), int(match[2]), int(match[3])).isoformat()
     end = date(int(match[4] or match[1]), int(match[5]), int(match[6])).isoformat()
-    _, _, expected_begin, expected_end = completed_quarter(f"{year}-{quarter * 3:02d}-{calendar.monthrange(year, quarter * 3)[1]}")
-    if (begin, end) != (expected_begin, expected_end): raise ValueError("report period is not the requested quarter")
-    table_start = _one(r"§6开放式基金份额变动", text).end()
-    following = _one(r"§7", text[table_start:]).start() + table_start
-    block = text[table_start:following]
+    if (begin, end) != (expected_begin, expected_end): raise ValueError("report period is not the requested period")
+    heading = f"§{section}开放式基金份额变动"
+    # Midyear contents pages repeat the title, followed by dot leaders rather
+    # than the table unit. A second actual table still remains ambiguous.
+    table_start = _one(heading + (r"(?=\n?单位:份)" if section == 9 else ""), text).end()
+    following = _one(f"§{section + 1}", text[table_start:]).start() + table_start
+    block = compact(text[table_start:following])
     if not block.startswith("单位:份"): raise ValueError("share table has wrong or missing unit")
-    labels = [r"(?:本)?报告期期初基金份额总额", r"(?:本)?报告期期间基金总申购份额",
-              r"减:(?:本)?报告期期间基金总赎回份额", r"(?:本)?报告期期间基金拆分变动份额(?:\([^)]{0,30}\))?",
+    # Midyear reports also state the inception total before the period table.
+    # It is a different field and must never be used as the opening total.
+    if section == 9:
+        inception = _one(r"^单位:份基金合同生效日\(\d{4}年\d{1,2}月\d{1,2}日\)基金份额总额" + NUMBER + r"(?=(?:本)?报告期期初基金份额总额)", block)
+        block = "单位:份" + block[inception.end():]
+    during = r"期间" if section == 6 else ""
+    labels = [r"(?:本)?报告期期初基金份额总额", r"(?:本)?报告期" + during + r"基金总申购份额",
+              r"减:(?:本)?报告期" + during + r"基金总赎回份额", r"(?:本)?报告期" + during + r"基金拆分变动份额(?:\([^)]{0,30}\))?",
               r"(?:本)?报告期期末基金份额总额"]
     fields = [_one(label + f"(?P<value>-?{NUMBER}|[-—–])(?=" + (labels[i + 1] if i < 4 else r"(?:注:|§|$)") + ")", block)
               for i, label in enumerate(labels)]
@@ -92,8 +119,10 @@ def parse_report(pages: list[str], code: str, year: int, quarter: int) -> dict:
         off = _one(r"期初基金总份额包含场外份额(" + NUMBER + r")份;期末基金总份额包含场外份额(" + NUMBER + r")份", block)
         off_begin, off_end = amount(off[1]), amount(off[2])
         if off_begin > opening or off_end > closing: raise ValueError("off-exchange amount exceeds report total")
-    table_page = next(i for i, page in enumerate(normalized, 1) if "§6开放式基金份额变动" in page)
+    section_page = text[:table_start].count("\n")
+    table_page = next(i for i, page in enumerate(normalized[section_page:], section_page + 1) if fields[0][0] in page)
     return {"code": code, "period_start": begin, "period_end": end, "table_page": table_page,
+            "share_scope": "reported_whole_fund_total", "share_unit": "fund_share",
             "opening_shares": decimal_text(opening), "subscription_shares": decimal_text(subscribed),
             "redemption_shares": decimal_text(redeemed), "net_subscription_shares": decimal_text(subscribed - redeemed),
             "closing_shares": decimal_text(closing), "split_entry": raw_values[3],
@@ -126,6 +155,35 @@ def compare_daily(report: dict, etf: dict | None) -> dict:
             "within_reference_after_off_exchange": abs(after) < 100 if after is not None else None}
 
 
+def load_report_capture(directory, announcements, now):
+    capture = json.loads((directory / "document_capture.json").read_text())
+    content_digest = capture.pop("content_digest")
+    if (digest(capture) != content_digest or content_digest != announcements["fulltext"]["content_digest"]
+        or capture["catalog_digest"] != announcements["content_digest"]
+        or datetime.fromisoformat(capture["completed_at"]) > now):
+        raise ValueError("report capture binding mismatch")
+    return capture, content_digest
+
+
+def read_bound_report(directory, capture, document, period_end, cutoff, parser):
+    """Share the raw/text/date gates for both report types; the parser checks identity and period."""
+    result = capture["documents"][document["document_id"]]
+    if (not valid_ready(result, directory, document, capture["catalog_digest"])
+        or not period_end < document["published_on"] <= cutoff):
+        raise ValueError("unverified or incorrectly dated report document")
+    observed = datetime.fromisoformat(result["responses"][-1]["observed_at"])
+    if (observed.tzinfo is None or observed > datetime.fromisoformat(capture["completed_at"])
+        or observed.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat() < document["published_on"]):
+        raise ValueError("invalid document availability time")
+    body = (directory / "document_text" / f"{result['text_sha256']}.json").read_bytes()
+    if hashlib.sha256(body).hexdigest() != result["text_sha256"]: raise ValueError("report text changed")
+    report = parser(json.loads(body)["pages"])
+    return {**report, "availability": "observed", "document_id": document["document_id"],
+            "publication_date": document["published_on"], "source_url": document["url"],
+            "pdf_url": result["responses"][-1]["url"] if result["format"] == "pdf" else None,
+            "document_observed_at": result["responses"][-1]["observed_at"], "text_sha256": result["text_sha256"]}
+
+
 def quarterly_status(directory: Path, announcements: dict, etfs: list[dict], through: str | None, now: datetime) -> dict:
     base = {"version": VERSION, "availability": "missing", "reports": [], "observed_reports": 0, "declared_etfs": len(NAV_DEFINITIONS),
             "corporate_actions_checked": False, "note": "季报申赎为整个季度的份额披露，不是近两个月的资金金额；拆分栏横线保留原样，不能证明期间没有份额事件。报告期、披露日和本次取得时点分开，不作为季内当时已知信号。"}
@@ -136,12 +194,7 @@ def quarterly_status(directory: Path, announcements: dict, etfs: list[dict], thr
     base.update(period_start=begin, period_end=end, period_label=f"{year}Q{quarter}")
     if announcements.get("availability") != "observed" or announcements.get("fulltext", {}).get("availability") != "observed": return base
     try:
-        capture = json.loads((directory / "document_capture.json").read_text())
-        content_digest = capture.pop("content_digest")
-        if (digest(capture) != content_digest or content_digest != announcements["fulltext"]["content_digest"]
-            or capture["catalog_digest"] != announcements["content_digest"]
-            or datetime.fromisoformat(capture["completed_at"]) > now):
-            raise ValueError("quarterly capture binding mismatch")
+        capture, content_digest = load_report_capture(directory, announcements, now)
     except (OSError, ValueError, TypeError, KeyError): return {**base, "availability": "invalid"}
     reports = []
     by_code = {row["code"]: row for row in etfs}
@@ -154,20 +207,8 @@ def quarterly_status(directory: Path, announcements: dict, etfs: list[dict], thr
             continue
         doc = candidates[0]
         try:
-            result = capture["documents"][doc["document_id"]]
-            if (not valid_ready(result, directory, doc, capture["catalog_digest"])
-                or not end < doc["published_on"] <= announcements["through"]):
-                raise ValueError("unverified or incorrectly dated report document")
-            observed = datetime.fromisoformat(result["responses"][-1]["observed_at"])
-            if (observed.tzinfo is None or observed > datetime.fromisoformat(capture["completed_at"])
-                or observed.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat() < doc["published_on"]):
-                raise ValueError("invalid document availability time")
-            body = (directory / "document_text" / f"{result['text_sha256']}.json").read_bytes()
-            if hashlib.sha256(body).hexdigest() != result["text_sha256"]: raise ValueError("report text changed")
-            report = parse_report(json.loads(body)["pages"], code, year, quarter)
-            report.update(availability="observed", document_id=doc["document_id"], publication_date=doc["published_on"],
-                          source_url=doc["url"], pdf_url=result["responses"][-1]["url"] if result["format"] == "pdf" else None,
-                          document_observed_at=result["responses"][-1]["observed_at"], text_sha256=result["text_sha256"])
+            report = read_bound_report(directory, capture, doc, end, announcements["through"],
+                                       lambda pages: parse_report(pages, code, year, quarter))
             report["daily_comparison"] = compare_daily(report, by_code.get(code))
             reports.append(report)
         except (OSError, ValueError, TypeError, KeyError, StopIteration): reports.append(pending)

@@ -241,6 +241,9 @@ export interface ETFQuarterlyReport {
   off_exchange_opening_shares?:string|null
   off_exchange_closing_shares?:string|null
   audit_status?:string
+  period_start?:string
+  period_end?:string
+  document_observed_at?:string
   daily_comparison?:{availability:string;date:string;reported_shares:string|null;difference_from_report_total:string|null;difference_after_explicit_off_exchange:string|null;source_url?:string|null;source_rounding_rule:string}
 }
 export interface MarketRiskStatus {
@@ -260,6 +263,10 @@ export interface MarketRiskStatus {
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}
   etf_quarterly?:{version:string;availability:string;period_label?:string;period_start?:string;period_end?:string;capture_completed_at?:string;observed_reports:number;declared_etfs:number;corporate_actions_checked:false;note:string;reports:ETFQuarterlyReport[]}
+  etf_report_continuity?:{version:string;availability:string;period_start?:string;period_end?:string;following_period_start?:string;following_period_end?:string;
+    capture_completed_at?:string;declared_etfs:number;observed_midyear_reports:number;compared_etfs:number;matched_etfs:number;mismatched_etfs:number;corporate_actions_checked:false;note:string;
+    reports:Array<{code:string;midyear_report:ETFQuarterlyReport;quarterly_report:ETFQuarterlyReport;
+      comparison:{availability:string;total_relation:string;total_difference_shares:string|null;off_exchange_relation:string;off_exchange_difference_shares:string|null}}>}
   etf_share_events?:{version:string;availability:string;reviewed_events:number;reconciled_documents:number;selected_documents:number|null;pending_documents?:number;all_selected_documents_reconciled:false;corporate_actions_checked:false;note:string;
     events:Array<{event_id:string;code:string;kind:string;resolution:string;event_date:string;record_date?:string;registration_date?:string;ex_right_date?:string|null;planned_ratio:string|null;effective_ratio:string|null;resolution_published_on:string;within_catalog_window:boolean;holder_rounding?:string;plan_holder_rounding?:string[];source_scope?:string;unit_before_shares?:string;unit_after_shares?:string;
       reported_totals?:Array<{scope:string;before_shares:string;after_shares:string;after_minus_simple_ratio_shares:string}>;

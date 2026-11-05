@@ -14,6 +14,7 @@ from canonical_json import digest
 from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
 from etf_announcements import announcement_status
 from etf_quarterly import quarterly_status
+from etf_report_continuity import report_continuity_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -449,6 +450,7 @@ def build_market_risk_status(
             by_code[row["code"]] = row
     etfs = _with_issuer_navs(list(by_code.values()), issuer_navs, issuer_nav_snapshot)
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
+    quarterly = quarterly_status(snapshot_dir / "etf_announcements", announcements, etfs, requested_through, now)
     etf_through = max((row["evaluation_through"] for row in etfs if row["evaluation_through"]), default=None)
     recent_window = recent_calendar_window(requested_through or etf_through)
     recent_indices, recent_shares = [], []
@@ -481,7 +483,8 @@ def build_market_risk_status(
         "public_breadth_snapshot": public_breadth_snapshot,
         "etf_announcements": announcements,
         "etf_share_events": share_event_status(snapshot_dir / "etf_announcements", announcements, now),
-        "etf_quarterly": quarterly_status(snapshot_dir / "etf_announcements", announcements, etfs, requested_through, now),
+        "etf_quarterly": quarterly,
+        "etf_report_continuity": report_continuity_status(snapshot_dir / "etf_announcements", announcements, quarterly, now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),

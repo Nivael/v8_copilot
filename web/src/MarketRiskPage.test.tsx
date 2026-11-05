@@ -181,7 +181,7 @@ describe('MarketRiskPage',()=>{
     }
     vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
     render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
-    expect(await screen.findByText('同日市场指数 3/3；沪深整体同期ST走势未覆盖；涨跌分布未覆盖。')).toBeInTheDocument()
+    expect(await screen.findByText('同日市场指数 3/3；沪深ST完整核验未完成；涨跌分布未覆盖。')).toBeInTheDocument()
     expect(screen.getByText(/ST等权研究指数 · 截至 2026-09-03 · 历史快照 · 未入同期图/)).toBeInTheDocument()
     expect(addSeries).toHaveBeenCalledTimes(3)
     expect(screen.getByText(/3只ETF的最新份额修订状态待核对/)).toBeInTheDocument()

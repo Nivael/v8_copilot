@@ -26,6 +26,7 @@ from szse_st_reference import reference_status as szse_st_reference_status
 from sse_history_archive import archive_status as sse_history_archive_status
 from sse_gap_review import review_status as sse_gap_review_status
 from market_breadth_combined import history_status as combined_breadth_status
+from combined_st_reference import reference_status as st_reconstruction_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -334,6 +335,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
+    st_reconstruction = st_reconstruction_status(snapshot_dir / 'st_reconstruction', root=snapshot_dir, now=now)
     sse_archive = sse_history_archive_status(snapshot_dir / 'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now)
     gaps = sse_gap_review_status(snapshot_dir / 'sse_gap_review', root=snapshot_dir, now=now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
@@ -397,7 +399,16 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'observation_unit':'成员日','coverage_unit':'交易所',
                     'series_at_target':1 if st_reference['availability']=='observed' else 0,'declared_series':2,
                     'snapshot_digest':st_reference.get('content_digest'),'url':'/market',
-                    'note':'记录数为每日成员合计，包含停牌分母；不同成员数与每日成交覆盖见市场页。仅深市，沪市仍缺；回溯核对不代表历史当时可见或组合财富。'})
+                    'note':'记录数为每日成员合计，包含停牌分母；不同成员数与每日成交覆盖见市场页。独立逐日核验仅深市，沪市仍缺此项核验；回溯核对不代表历史当时可见或组合财富。'})
+    reconstructed = st_reconstruction['availability']=='reconstructed'
+    sources.append({'source_id':'combined_ST_reconstruction','label':'沪深ST · 成员重建价格参考','availability':st_reconstruction['availability'],
+                    'requested_through':st_reconstruction.get('through'),'fetched_at':st_reconstruction.get('newest_notice_observed_at'),
+                    'observed_through_min':st_reconstruction.get('start'),'observed_through_max':st_reconstruction.get('through'),
+                    'observation_count':st_reconstruction.get('metrics',{}).get('all',{}).get('member_day_observations'),
+                    'observation_unit':'成员日（重建）','series_at_target':None,'observed_source_groups':2 if reconstructed else None,
+                    'verified_membership_venues':1 if reconstructed else None,'declared_series':2,
+                    'snapshot_digest':st_reconstruction.get('content_digest'),'url':'/market','coverage_basis':'ST_reconstruction',
+                    'note':'价格来源覆盖两所；沪市日期锚点加3处生效公告重建成员，尚缺完整逐日名单/简称的独立核验。此项不提升ST完整核验或风险效果门槛。'})
     sources.append({'source_id':'sse_historical_price_archive','label':'上交所 · 历史价格来源核对','availability':sse_archive['availability'],
                     'requested_through':sse_archive.get('through'),'fetched_at':sse_archive.get('source_fetched_at'),
                     'observed_through_min':sse_archive.get('start'),'observed_through_max':sse_archive.get('through'),
@@ -486,6 +497,7 @@ def build_market_risk_status(
     breadth_history = breadth_history_status(snapshot_dir / "public_breadth_history", now)
     combined_history = combined_breadth_status(snapshot_dir / 'combined_breadth_history', root=snapshot_dir, now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, market_db=database, now=now)
+    st_reconstruction = st_reconstruction_status(snapshot_dir / 'st_reconstruction', root=snapshot_dir, market_db=database, now=now)
     if public_breadth.get("status") == "observed" and public_breadth["through"] >= breadth.get("through", ""):
         breadth = public_breadth
     if public_indices and (requested_through is None or public_index_snapshot["through"] > requested_through):
@@ -539,6 +551,7 @@ def build_market_risk_status(
         "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit", now=now),
         "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
         "szse_st_reference": st_reference,
+        "st_reconstruction": st_reconstruction,
         "sse_history_archive": sse_history_archive_status(snapshot_dir/'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now),
         "sse_gap_review": sse_gap_review_status(snapshot_dir/'sse_gap_review', root=snapshot_dir, now=now),
         "public_index_snapshot": public_index_snapshot,
@@ -558,6 +571,7 @@ def build_market_risk_status(
             "historical_breadth_venues_at_target": (2 if requested_through and combined_history['availability']=='observed' and combined_history.get('through')==requested_through
                                                     else len(breadth_history["covered_venues"]) if breadth_history.get("through") == requested_through else 0),
             "st_reference_venues_at_target": int(st_reference['availability']=='observed' and st_reference.get('through')==requested_through),
+            "st_reconstruction_source_venues_at_target": 2 if requested_through and st_reconstruction['availability']=='reconstructed' and st_reconstruction.get('through')==requested_through else 0,
         },
         "recent_window": recent_window,
         "recent_observations": {"index_coverage": len(recent_indices),

@@ -143,4 +143,16 @@ describe('LearningPage',()=>{
     expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
     expect(screen.getByText('59 天')).toBeInTheDocument()
   })
+  it('separates reconstructed price sources from independently checked daily membership',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'combined_ST_reconstruction',label:'沪深ST重建参考',availability:'reconstructed',
+      requested_through:'2026-11-04',observed_through_min:'2026-09-04',observed_through_max:'2026-11-04',observation_count:7529,
+      observation_unit:'成员日（重建）',coverage_basis:'ST_reconstruction',series_at_target:null,observed_source_groups:2,verified_membership_venues:1,
+      declared_series:2,snapshot_digest:'synthetic',url:'/market',fetched_at:'2026-11-05T04:00:00Z',note:'沪市逐日成员尚待独立核验。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('价格来源 2/2；逐日成员核验 1/2')).toBeInTheDocument()
+    expect(within(section).getByText('重建参考，成员待核')).toBeInTheDocument()
+    expect(within(section).getByText('7,529 成员日（重建）')).toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+  })
 })

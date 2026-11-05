@@ -1,0 +1,20 @@
+{
+  "version": "combined_ST_reconstruction_plan_v1",
+  "start": "2026-09-04",
+  "through": "2026-11-04",
+  "anchor_on": "2026-09-03",
+  "sse_anchor_members": 82,
+  "sse_anchor_digest": "c60403b84a62d6a99bc152471328874d783e466c644bc8d6f3f5560d4eaf1071",
+  "szse_reference": "461b381e3cea4ca59c6df35d0325ca5e749e8e97ef20e643b605c2c342af3a98",
+  "combined_breadth": "048d06701f3a96ea4f4588de1d2ce06f8bc89b5fd2320b8005c1e7f151177fff",
+  "risk_list": "a3bacca23d2a224e7cc087e3db7cf9f2484f50bdd006452e774494cceb1a36cc",
+  "minimum_daily_coverage": 0.95,
+  "coverage_rule": "Every day and each venue must pass the pre-existing 95% traded/all-member gate; no shortened success window",
+  "SSE_membership_basis": "Dated anchor plus three reviewed effective changes, with title-catalog triage and endpoint reconciliation; no independently observed complete daily SSE legal-membership/name table",
+  "SSE_daily_membership_verified": false,
+  "combined_ST_ready": false,
+  "historical_PIT": false,
+  "portfolio_wealth": false,
+  "effect_measured": false,
+  "return_basis": "Daily arithmetic mean across all observed trading members (not an unweighted average of venue means), compounded as a descriptive changing-sample reference; first plotted close rebased to 100 for comparison"
+}

@@ -60,7 +60,8 @@ def test_index_only_snapshot_does_not_invent_ST_breadth_ETF_or_risk_score(tmp_pa
     assert result["public_index_snapshot"]["availability"] == "observed"
     assert result["market_coverage"] == {"indices_observed_at_target": 3, "declared_indices": 3,
                                          "breadth_at_target": False, "st_style_at_target": False,
-                                         "historical_breadth_venues_at_target": 0, "st_reference_venues_at_target": 0}
+                                         "historical_breadth_venues_at_target": 0, "st_reference_venues_at_target": 0,
+                                         "st_reconstruction_source_venues_at_target": 0}
     assert result["indices"][0]["return_60d_pct"] == 60
     assert result["indices"][0]["amount_5d_to_20d_ratio"] == 1
     assert result["status"] == "observed_snapshot"

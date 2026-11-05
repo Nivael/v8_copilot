@@ -1,0 +1,460 @@
+{
+  "version": "sse_warning_title_triage_v1",
+  "source_ref": {
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": 100,
+      "pageHelp.pageNo": 1,
+      "pageHelp.beginPage": 1,
+      "pageHelp.endPage": 1,
+      "pageHelp.cacheSize": 1,
+      "START_DATE": "2026-09-01",
+      "END_DATE": "2026-11-04",
+      "TITLE": "风险警示",
+      "SECURITY_CODE": "",
+      "BULLETIN_TYPE": "",
+      "stockType": ""
+    },
+    "observed_at": "2026-11-05T05:07:15.064808+00:00",
+    "sha256": "b300fa29f56adb1cd1da5634d22d6615c120fa4f9dde50cbe51d92929f472a5f",
+    "bytes": 51882
+  },
+  "items": [
+    {
+      "symbol": "600080",
+      "published_on": "2026-10-31",
+      "title": "金花企业（集团）股份有限公司关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600080_20261031_0F8C.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600187",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600187_20261031_X51V.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600289",
+      "published_on": "2026-10-31",
+      "title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600289_20261031_SSHH.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600302",
+      "published_on": "2026-10-31",
+      "title": "标准股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600302_20261031_HE5B.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600363",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600363_20261031_9YMZ.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600365",
+      "published_on": "2026-10-31",
+      "title": "通化葡萄酒股份有限公司关于股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600365_20261031_EJB1.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600370",
+      "published_on": "2026-10-31",
+      "title": "江苏三房巷聚材股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600370_20261031_J41I.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600745",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600745_20261031_IID4.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600759",
+      "published_on": "2026-10-31",
+      "title": "公告编号：2026-080号  洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600759_20261031_1C84.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "601010",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/601010_20261031_KEOK.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "603008",
+      "published_on": "2026-10-31",
+      "title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/603008_20261031_0776.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "603729",
+      "published_on": "2026-10-31",
+      "title": "上海龙韵文创科技集团股份有限公司关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/603729_20261031_W8KJ.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "605199",
+      "published_on": "2026-10-31",
+      "title": "海南葫芦娃药业集团股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/605199_20261031_4D07.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688022",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/688022_20261031_1ZOA.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688033",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/688033_20261031_LKBQ.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688066",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/688066_20261031_02NU.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600238",
+      "published_on": "2026-10-30",
+      "title": "ST椰岛关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/600238_20261030_EQ4C.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600678",
+      "published_on": "2026-10-30",
+      "title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/600678_20261030_JGFJ.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600818",
+      "published_on": "2026-10-30",
+      "title": "关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/600818_20261030_JJ46.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "603359",
+      "published_on": "2026-10-30",
+      "title": "东珠生态环保股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/603359_20261030_9G24.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "603922",
+      "published_on": "2026-10-30",
+      "title": "金鸿顺关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/603922_20261030_EU6V.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688089",
+      "published_on": "2026-10-30",
+      "title": "嘉必优生物技术（武汉）股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/688089_20261030_WM2D.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600965",
+      "published_on": "2026-10-28",
+      "title": "福成股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-28/600965_20261028_0978.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688201",
+      "published_on": "2026-10-28",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-28/688201_20261028_7QHQ.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688184",
+      "published_on": "2026-10-27",
+      "title": "浙江帕瓦新能源股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-27/688184_20261027_H8TY.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600180",
+      "published_on": "2026-10-24",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-24/600180_20261024_E0LC.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688053",
+      "published_on": "2026-10-24",
+      "title": "成都思科瑞微电子股份有限公司关于申请撤销对公司股票实施其他风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-24/688053_20261024_4AF7.pdf",
+      "triage": "application_only_title"
+    },
+    {
+      "symbol": "603517",
+      "published_on": "2026-10-19",
+      "title": "关于撤销其他风险警示暨临时停牌的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-19/603517_20261019_6EOE.pdf",
+      "triage": "effective_transition_with_primary_date_clause"
+    },
+    {
+      "symbol": "603838",
+      "published_on": "2026-10-17",
+      "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-17/603838_20261017_GXKU.pdf",
+      "triage": "effective_transition_with_primary_date_clause"
+    },
+    {
+      "symbol": "600735",
+      "published_on": "2026-10-13",
+      "title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-13/600735_20261013_GA0U.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "603517",
+      "published_on": "2026-10-13",
+      "title": "关于公司股票申请撤销其他风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-13/603517_20261013_THJW.pdf",
+      "triage": "application_only_title"
+    },
+    {
+      "symbol": "600745",
+      "published_on": "2026-10-09",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-09/600745_20261009_7AXF.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600187",
+      "published_on": "2026-10-08",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-08/600187_20261008_7HPW.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600818",
+      "published_on": "2026-10-01",
+      "title": "关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-01/600818_20261001_PEFY.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "605199",
+      "published_on": "2026-10-01",
+      "title": "海南葫芦娃药业集团股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-01/605199_20261001_GG0S.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688121",
+      "published_on": "2026-10-01",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-01/688121_20261001_ZR58.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600080",
+      "published_on": "2026-09-30",
+      "title": "金花企业（集团）股份有限公司关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600080_20260930_GHNE.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600238",
+      "published_on": "2026-09-30",
+      "title": "ST椰岛关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600238_20260930_W85B.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600302",
+      "published_on": "2026-09-30",
+      "title": "标准股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600302_20260930_E36M.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600370",
+      "published_on": "2026-09-30",
+      "title": "江苏三房巷聚材股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600370_20260930_HJTF.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600678",
+      "published_on": "2026-09-30",
+      "title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600678_20260930_MJZT.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600759",
+      "published_on": "2026-09-30",
+      "title": "洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600759_20260930_4Z8B.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "601010",
+      "published_on": "2026-09-30",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/601010_20260930_YNXP.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "603922",
+      "published_on": "2026-09-30",
+      "title": "金鸿顺关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/603922_20260930_6B55.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688022",
+      "published_on": "2026-09-30",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/688022_20260930_ZI4E.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688033",
+      "published_on": "2026-09-30",
+      "title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/688033_20260930_OM9X.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688089",
+      "published_on": "2026-09-30",
+      "title": "嘉必优生物技术（武汉）股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/688089_20260930_QD2J.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600289",
+      "published_on": "2026-09-29",
+      "title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/600289_20260929_X482.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600363",
+      "published_on": "2026-09-29",
+      "title": "关于实施其他风险警示暨停牌的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/600363_20260929_H600.pdf",
+      "triage": "effective_transition_with_primary_date_clause"
+    },
+    {
+      "symbol": "603008",
+      "published_on": "2026-09-29",
+      "title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/603008_20260929_PSEO.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688201",
+      "published_on": "2026-09-28",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-28/688201_20260928_GCHL.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600365",
+      "published_on": "2026-09-25",
+      "title": "通化葡萄酒股份有限公司关于股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-25/600365_20260925_JCYP.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600965",
+      "published_on": "2026-09-25",
+      "title": "福成股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-25/600965_20260925_U3AX.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688184",
+      "published_on": "2026-09-25",
+      "title": "浙江帕瓦新能源股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-25/688184_20260925_G8RO.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600180",
+      "published_on": "2026-09-24",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-24/600180_20260924_OJHX.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600735",
+      "published_on": "2026-09-12",
+      "title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/600735_20260912_UBET.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688121",
+      "published_on": "2026-09-12",
+      "title": "关于叠加实施退市风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/688121_20260912_88JS.pdf",
+      "triage": "layered_warning_title"
+    },
+    {
+      "symbol": "688496",
+      "published_on": "2026-09-02",
+      "title": "清越科技关于公司股票可能被实施重大违法强制退市暨继续实施退市风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-02/688496_20260902_6S3E.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600187",
+      "published_on": "2026-09-01",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/600187_20260901_7L06.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600289",
+      "published_on": "2026-09-01",
+      "title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/600289_20260901_VCCS.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "600745",
+      "published_on": "2026-09-01",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/600745_20260901_QXIP.pdf",
+      "triage": "progress_or_continuation_title"
+    },
+    {
+      "symbol": "688022",
+      "published_on": "2026-09-01",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/688022_20260901_X6BL.pdf",
+      "triage": "progress_or_continuation_title"
+    }
+  ],
+  "level": "Metadata title triage and three separately verified primary effective-date notices; not a full-body or daily legal-membership certification"
+}

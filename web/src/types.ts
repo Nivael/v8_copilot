@@ -158,7 +158,7 @@ export interface LearningStatus {
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
   readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
-  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number|null;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;observation_unit?:string;coverage_unit?:string;coverage_basis?:string}>
+  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number|null;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;verified_membership_venues?:number|null;observation_unit?:string;coverage_unit?:string;coverage_basis?:string}>
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
   methods:LearningMethod[]
   freshness:{
@@ -224,6 +224,19 @@ export interface SZSESTReference {
   source_fetched_at?:string;source_materialized_at?:string;note?:string
   points?:Array<{date:string;member_count:number;observed_members:number;coverage_ratio:number;missing_symbols:string[];daily_return_pct:number|null;close:number|null}>
   events?:Array<{symbol:string;effective_on:string;kind:string;old_name:string;new_name:string|null;source_url:string;proof_page:number;observed_at:string}>
+}
+export interface STReconstruction {
+  version:string;availability:string;start?:string;through?:string;content_digest?:string;materialized_at?:string
+  combined_ST_ready:false;historical_membership_verified:false;historical_PIT:false;portfolio_wealth:false;effect_measured:false
+  source_venues?:string[];verified_daily_membership_venues?:string[];reconstructed_membership_venues?:string[];coverage_threshold?:number
+  sse_anchor_members?:number;sse_distinct_members?:number;sse_endpoint_members?:number;szse_distinct_members?:number;szse_endpoint_members?:number
+  sse_reviewed_transitions?:number;szse_reviewed_transitions?:number
+  endpoint_list_observed_on?:string;sse_price_fetched_at?:string;szse_price_fetched_at?:string;newest_notice_observed_at?:string;note?:string
+  points:Array<{date:string}&Record<'all'|'SSE'|'SZSE',{member_count:number;observed_members:number;coverage_ratio:number;missing_symbols:string[];daily_return_pct:number|null;close:number|null}>>
+  metrics?:Record<'all'|'SSE'|'SZSE',{return_pct:number|null;max_drawdown_pct:number|null;minimum_coverage:number;member_day_observations:number;observed_member_days:number}>
+  memberships?:Array<{date:string;SSE:string[];SZSE:string[]}>
+  events?:Array<{symbol:string;old_name:string;new_name:string;kind:string;effective_on:string;source_url:string;proof_page:number;published_on:string;observed_at:string}>
+  catalog?:{items:Array<{symbol:string;published_on:string;title:string;catalog_url:string;triage:string}>;review_level:string;observed_at:string;full_body_review:false;daily_membership_certificate:false}
 }
 export interface SZSERecheckDifference {
   overlap_observations:number
@@ -384,13 +397,14 @@ export interface MarketRiskStatus {
     fulltext?:{availability:string;required:number|null;text_available:number|null;missing_or_unreadable:number|null;completed_at?:string;semantic_review:string};
     catalogs:Array<{code:string;source_url:string;record_count:number;oldest_publication:string;newest_publication:string;review_required_count:number;review_status:string;
       required_documents:Array<{document_id:string;code:string;published_on:string;title:string;url:string;review_reason:string}>}>}
-  market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean;historical_breadth_venues_at_target?:number;st_reference_venues_at_target?:number}
+  market_coverage?:{indices_observed_at_target:number;declared_indices:number;breadth_at_target:boolean;st_style_at_target:boolean;historical_breadth_venues_at_target?:number;st_reference_venues_at_target?:number;st_reconstruction_source_venues_at_target?:number}
   recent_window?:{availability:string;requested_start?:string;start?:string;end?:string;sessions?:number;points?:number;reason?:string}
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}
   node_market_comparison?:{status:string;reason:string}
   node_market_input_audit?:NodeMarketInputAudit
   exchange_risk_membership?:ExchangeRiskMembership
   szse_st_reference?:SZSESTReference
+  st_reconstruction?:STReconstruction
   sse_history_archive?:SSEHistoryArchive
   sse_gap_review?:SSEGapReview
   combined_breadth_history?:CombinedBreadthHistory

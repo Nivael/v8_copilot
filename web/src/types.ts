@@ -373,6 +373,20 @@ export interface ETFProspectusRules {
     historical_restatement:{classification:string;event_on:string;registered_on:string;stated_ratio:string;rounding_in_this_version:string;pages:number[];not_historical_point_in_time_evidence:true};
     illustration:{classification:string;before_shares:string;stated_ratio:string;after_shares:string;pages:number[];not_a_verified_event:true}|null}>
 }
+export interface ETFReviewScope {
+  version:string;availability:string;window_start?:string;window_end?:string;publication_cutoff?:string;
+  catalog_digest?:string;capture_digest?:string;content_digest?:string;materialized_at?:string;capture_completed_at?:string;note?:string;
+  selected_document_items?:number;items_with_scoped_review?:number;items_without_scoped_review?:number;all_selected_items_have_scoped_review:boolean;
+  scope_counts?:Record<string,number>;scope_labels?:Record<string,string>;pdf_items?:number;distinct_pdf_originals?:number;pdf_pages_by_item?:number;distinct_pdf_pages?:number;issuer_html_items?:number;
+  supplemental_items?:number;supplemental_counts?:Record<string,number>;distinct_creation_unit_declarations?:number;duplicate_unit_reminders?:number;
+  full_document_semantics_checked:false;all_window_share_events_verified:false;corporate_actions_checked:false;daily_share_scope_verified:false;share_precision_verified:false;final_revision_verified:false;
+  estimated_net_subscription_yuan:null;historical_PIT:false;effect_measured:false;
+  documents:Array<{document_id:string;code:string;published_on:string;title:string;url:string;source_url:string;review_reason:string;review_scopes:string[];format:string;page_count:number|null;reviewed_pages:number[];raw_sha256:string;observed_at:string}>;
+  supplemental_documents:Array<{document_id:string;code:string;published_on:string;title:string;source_url:string;format:string;kind:string;observed_at:string;
+    proofs:Array<{page:number|null;text:string;role:string}>;announced_effective_on:string;provider?:string;unit_before_shares?:string|null;unit_after_shares?:string;unit_scope?:string;
+    announced_resume_on?:string;record_on?:string;creation_redemption_code?:string;related_event_id?:string;related_event_date?:string;implementation_verified:false;current_validity_verified:false;fund_total_share_conversion:false;market_window_correction_applied:false;estimated_net_subscription_yuan:null}>;
+  creation_unit_groups?:Array<{code:string;announced_effective_on:string;unit_before_shares:string|null;unit_after_shares:string;document_ids:string[]}>;
+}
 export interface MarketRiskStatus {
   contract_version:'market_risk_status_v1'
   parameter_version:string
@@ -398,6 +412,7 @@ export interface MarketRiskStatus {
       comparison:{availability:string;total_relation:string;total_difference_shares:string|null;off_exchange_relation:string;off_exchange_difference_shares:string|null}}>}
   etf_notice_review?:ETFNoticeReview
   etf_prospectus_rules?:ETFProspectusRules
+  etf_review_scope?:ETFReviewScope
   etf_share_events?:{version:string;availability:string;reviewed_events:number;reconciled_documents:number;selected_documents:number|null;pending_documents?:number;all_selected_documents_reconciled:false;corporate_actions_checked:false;note:string;
     events:Array<{event_id:string;code:string;kind:string;resolution:string;event_date:string;record_date?:string;registration_date?:string;ex_right_date?:string|null;planned_ratio:string|null;effective_ratio:string|null;resolution_published_on:string;within_catalog_window:boolean;holder_rounding?:string;plan_holder_rounding?:string[];source_scope?:string;unit_before_shares?:string;unit_after_shares?:string;
       reported_totals?:Array<{scope:string;before_shares:string;after_shares:string;after_minus_simple_ratio_shares:string}>;

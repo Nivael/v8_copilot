@@ -170,3 +170,21 @@ describe('LearningPage',()=>{
     expect(within(section).queryByText(/逐日成员核验 62/)).not.toBeInTheDocument()
   })
 })
+
+describe('ETF document source scope',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('uses fund-document scope coverage without promoting it to date or market coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'etf_document_scope',label:'ETF文档 · 指定范围核对',availability:'scoped_reviewed',
+      requested_through:'2026-11-04',observed_through_min:'2026-11-05',observed_through_max:'2026-11-05',observation_count:105,
+      observation_unit:'基金文档项',series_at_target:null,observed_source_groups:105,declared_series:105,snapshot_digest:'scopes',url:'/market',
+      fetched_at:'2026-11-05T00:00:00Z',coverage_basis:'ETF_scoped_review',date_basis:'catalog_search_cutoff',note:'日份额与现金估算仍待验收。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('105 基金文档项')).toBeVisible()
+    expect(within(section).getByText('有指定范围依据 105/105 项')).toBeVisible()
+    expect(within(section).getByText('指定范围已核对')).toBeVisible()
+    expect(within(section).getByText('检索至 2026-11-05')).toBeVisible()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+    expect(screen.getByText('59 天')).toBeInTheDocument()
+  })
+})

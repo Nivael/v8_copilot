@@ -17,6 +17,7 @@ from etf_quarterly import quarterly_status
 from etf_report_continuity import report_continuity_status
 from etf_notice_review import notice_review_status
 from etf_prospectus_rules import prospectus_rule_status
+from etf_review_scope import scope_status as etf_scope_status
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
@@ -334,6 +335,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     combined = combined_breadth_status(snapshot_dir / 'combined_breadth_history', root=snapshot_dir, now=now)
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
+    etf_scopes = etf_scope_status(snapshot_dir / 'etf_review_scope', root=snapshot_dir, now=now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
     st_reconstruction = st_reconstruction_status(snapshot_dir / 'st_reconstruction', root=snapshot_dir, now=now)
@@ -386,7 +388,14 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     "declared_series": announcements["declared_etfs"], "snapshot_digest": announcements.get("content_digest"),
                     "url": "/market", "date_basis": "catalog_search_cutoff",
                     "note": "日期为采集时点的公告检索上界；最近公告日逐基金列出。目录取得不代表份额事件已核验。"
-                            + (f"已逐条核对{event_review['reviewed_events']}条历史事项，涉及{event_review['reconciled_documents']}份材料；其余{event_review['pending_documents']}份尚未完成这类核对。" if event_review['availability']=='partial' else "")})
+                            + (f"已逐条核对{event_review['reviewed_events']}条历史事项，涉及{event_review['reconciled_documents']}份材料；其余{event_review['pending_documents']}份不在本事项链核对范围，其他指定范围另列。" if event_review['availability']=='partial' else "")})
+    sources.append({'source_id':'etf_document_scope','label':'ETF文档 · 指定范围核对','availability':etf_scopes['availability'],
+                    'requested_through':etf_scopes.get('window_end'),'fetched_at':etf_scopes.get('capture_completed_at'),
+                    'observed_through_min':etf_scopes.get('publication_cutoff'),'observed_through_max':etf_scopes.get('publication_cutoff'),
+                    'observation_count':etf_scopes.get('selected_document_items'),'observation_unit':'基金文档项',
+                    'series_at_target':None,'observed_source_groups':etf_scopes.get('items_with_scoped_review'),'declared_series':etf_scopes.get('selected_document_items'),
+                    'snapshot_digest':etf_scopes.get('content_digest'),'url':'/market','coverage_basis':'ETF_scoped_review','date_basis':'catalog_search_cutoff',
+                    'note':'每项仅有已列范围的原文依据；不代表全部正文或全窗份额事件已验收。日份额范围、精度及最新修订仍待核，净申赎金额继续未发布。'})
     observed = membership['availability']=='observed'
     sources.append({'source_id':'exchange_risk_membership','label':'交易所 · 风险警示与退市整理名单','availability':membership['availability'],
                     'requested_through':None,'fetched_at':membership.get('completed_at'),'observed_through_min':None,'observed_through_max':None,
@@ -573,6 +582,7 @@ def build_market_risk_status(
         "etf_report_continuity": report_continuity_status(snapshot_dir / "etf_announcements", announcements, quarterly, now),
         "etf_notice_review": notice_review_status(snapshot_dir / "etf_announcements", announcements, now),
         "etf_prospectus_rules": prospectus_rule_status(snapshot_dir / "etf_announcements", announcements, now),
+        "etf_review_scope": etf_scope_status(snapshot_dir / 'etf_review_scope', root=snapshot_dir, now=now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),

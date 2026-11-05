@@ -6,6 +6,7 @@ import {getMarketRiskStatus} from './api'
 import type {MarketRiskETF,MarketRiskIndex,MarketRiskStatus} from './types'
 import './learning.css'
 import {ETFShareEventReview} from './ETFShareEventReview'
+import {ETFReviewScope} from './ETFReviewScope'
 import {ETFReportContinuity} from './ETFReportContinuity'
 import {ETFNoticeReview} from './ETFNoticeReview'
 import {ETFProspectusRules} from './ETFProspectusRules'
@@ -187,6 +188,7 @@ export function MarketRiskPage(){
         {data.etf_issuer_history&&<ETFIssuerHistory data={data.etf_issuer_history}/>}
       </section>
 
+      {data.etf_review_scope&&<ETFReviewScope data={data.etf_review_scope}/>}
       {data.node_market_input_audit&&<NodeMarketAudit data={data.node_market_input_audit}/>}
       {data.szse_revision_recheck&&<ETFSZSERecheck data={data.szse_revision_recheck}/>}
       {data.etf_notice_review&&<ETFNoticeReview data={data.etf_notice_review}/>}
@@ -203,11 +205,11 @@ export function MarketRiskPage(){
       {data.etf_share_events&&<ETFShareEventReview data={data.etf_share_events}/>}
       {data.etf_announcements&&<section className="learning-freshness" aria-label="ETF份额事件核对">
         <header className="learning-section-head"><div><p className="eyebrow">份额事件 / 公告依据</p><h2>公告目录与事件核验分开看</h2></div><span>{data.etf_announcements.availability==='observed'?`目录 ${data.etf_announcements.catalog_etfs}/${data.etf_announcements.declared_etfs}`:'目录尚未通过校验'}</span></header>
-        <p>公告检索至 {data.etf_announcements.through||'未取得'} 的采集时点，观察窗 {data.etf_announcements.window_start||'未取得'} 至 {data.etf_announcements.window_end||'未取得'}。已取得目录 {number(data.etf_announcements.record_count)} 条；待核对文档 {number(data.etf_announcements.review_required_count)} 份。</p>
+        <p>公告检索至 {data.etf_announcements.through||'未取得'} 的采集时点，观察窗 {data.etf_announcements.window_start||'未取得'} 至 {data.etf_announcements.window_end||'未取得'}。已取得目录 {number(data.etf_announcements.record_count)} 条；选中文档项 {number(data.etf_announcements.review_required_count)} 项。</p>
         <p>{data.etf_announcements.note}</p>
-        {data.etf_announcements.fulltext&&<p>已提取文本 {number(data.etf_announcements.fulltext.text_available)} / {number(data.etf_announcements.fulltext.required)} 份；{data.etf_announcements.fulltext.availability==='observed'?`缺失或不可读 ${number(data.etf_announcements.fulltext.missing_or_unreadable)} 份`:'提取记录尚未通过当前来源校验'}。文本提取不代表逐页完整或份额事件核验通过，待审文档数量保持不变。</p>}
-        {data.etf_announcements.availability==='observed'&&<div className="learning-table-wrap"><table className="learning-table market-announcement-table"><thead><tr><th scope="col">ETF / 公告来源</th><th scope="col">目录数量</th><th scope="col">最早 / 最近公告</th><th scope="col">待核对文档</th><th scope="col">事件核验</th></tr></thead><tbody>{data.etf_announcements.catalogs.map(catalog=><tr key={catalog.code}><th scope="row"><a href={catalog.source_url} target="_blank" rel="noreferrer">{catalog.code} ↗</a></th><td>{number(catalog.record_count)}</td><td>{catalog.oldest_publication}<small>至 {catalog.newest_publication}</small></td><td><details><summary>查看文档（{catalog.review_required_count}）</summary><ul className="market-announcement-docs">{catalog.required_documents.map(doc=><li key={doc.document_id}><a href={doc.url} target="_blank" rel="noreferrer">{doc.title} ↗</a><small>{doc.published_on} · {doc.review_reason==='historical_share_title'?'历史份额相关标题':'观察窗内或后续披露'}</small></li>)}</ul></details></td><td>全文与生效日尚未完成核对</td></tr>)}</tbody></table></div>}
-        <p>实施计划、取消公告和实施结果都保留在待审材料中。最小申赎单位调整、现金分红与基金总份额折算需分别核对，当前净申赎金额继续未发布。</p>
+        {data.etf_announcements.fulltext&&<p>已提取文本 {number(data.etf_announcements.fulltext.text_available)} / {number(data.etf_announcements.fulltext.required)} 份；{data.etf_announcements.fulltext.availability==='observed'?`缺失或不可读 ${number(data.etf_announcements.fulltext.missing_or_unreadable)} 份`:'提取记录尚未通过当前来源校验'}。文本提取不代表逐页完整或份额事件核验通过，选中文档项与文本提取分别计数。</p>}
+        {data.etf_announcements.availability==='observed'&&<div className="learning-table-wrap"><table className="learning-table market-announcement-table"><thead><tr><th scope="col">ETF / 公告来源</th><th scope="col">目录数量</th><th scope="col">最早 / 最近公告</th><th scope="col">选中文档项</th><th scope="col">事件核验</th></tr></thead><tbody>{data.etf_announcements.catalogs.map(catalog=><tr key={catalog.code}><th scope="row"><a href={catalog.source_url} target="_blank" rel="noreferrer">{catalog.code} ↗</a></th><td>{number(catalog.record_count)}</td><td>{catalog.oldest_publication}<small>至 {catalog.newest_publication}</small></td><td><details><summary>查看文档（{catalog.review_required_count}）</summary><ul className="market-announcement-docs">{catalog.required_documents.map(doc=><li key={doc.document_id}><a href={doc.url} target="_blank" rel="noreferrer">{doc.title} ↗</a><small>{doc.published_on} · {doc.review_reason==='historical_share_title'?'历史份额相关标题':'观察窗内或后续披露'}</small></li>)}</ul></details></td><td>指定范围另列；全窗事件尚未验收</td></tr>)}</tbody></table></div>}
+        <p>实施计划、取消公告和实施结果都保留在选中材料中。最小申赎单位调整、现金分红与基金总份额折算需分别核对，当前净申赎金额继续未发布。</p>
       </section>}
 
       <section className="learning-freshness" aria-label="市场宽度">

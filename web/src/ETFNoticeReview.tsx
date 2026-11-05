@@ -15,7 +15,7 @@ export function ETFNoticeReview({data}:{data:Review}){
     {data.catalog_window_start&&data.catalog_window_end&&<p>公告筛选窗 {data.catalog_window_start} 至 {data.catalog_window_end}，按披露日筛选；与主图的近两个月市场窗口分开。披露日不等于证券获配日期，首次取得时间也不回填为当时已知。</p>}
     {data.notices.length===0?<p>所列正文事项尚未通过当前原文核对，暂不展示已失效的分类或金额。</p>:<>
       <p>持仓获配或认购 {(data.category_counts.portfolio_allocation||0)+(data.category_counts.private_placement||0)} 条；新股估值提示 {data.category_counts.listing_valuation_risk||0} 条；申赎代办机构 {data.category_counts.creation_redemption_agent||0} 条；流动性服务商 {data.category_counts.liquidity_provider||0} 条。</p>
-      <p>覆盖 {data.reviewed_funds} 只ETF，按基金目录条目计 {data.reviewed_notices} 条，对应 {data.distinct_original_pdfs} 份不同PDF。公告筛选窗内其余 {data.window_documents_outside_this_review??'—'}/{data.window_selected_documents??'—'} 份尚未做本项正文核对，包含定期报告及招募说明书；定期报告份额表、招募规则另列。</p>
+      <p>覆盖 {data.reviewed_funds} 只ETF，按基金目录条目计 {data.reviewed_notices} 条，对应 {data.distinct_original_pdfs} 份不同PDF。公告筛选窗内其余 {data.window_documents_outside_this_review??'—'}/{data.window_selected_documents??'—'} 份不在本项正文核对范围；定期报告份额表与招募规则另列。</p>
       <p>发现 {data.repeat_disclosure_groups.length} 组同一基金与证券的获配数量、金额重复披露，分开回链，不累计成新增申赎。股、张均属于持仓证券，不是ETF份额。</p>
       <details className="market-source-notes"><summary>查看正文核对（{data.reviewed_notices}条）</summary>
         <div className="learning-filters">

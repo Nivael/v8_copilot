@@ -20,7 +20,7 @@ export function ETFShareEventReview({data}:{data:Review}){
     </header>
     <p>{data.note}</p>
     {data.events.length===0?<p>本批事项尚未通过当前原文、日期和关系核对；公告目录与文本提取仍单独列出。</p>:<>
-      <p>已核对 {new Set(data.events.map(event=>event.code)).size} 只ETF的 {data.reviewed_events} 条历史事项，涉及 {data.reconciled_documents}/{data.selected_documents??'—'} 份筛选材料；其余 {data.pending_documents??'—'} 份尚未完成这类核对。多份提示公告合为同一事项，不重复计作折算。</p>
+      <p>已核对 {new Set(data.events.map(event=>event.code)).size} 只ETF的 {data.reviewed_events} 条历史事项，涉及 {data.reconciled_documents}/{data.selected_documents??'—'} 份筛选材料；其余 {data.pending_documents??'—'} 份未纳入本事项链范围，其他指定范围另列。多份提示公告合为同一事项，不重复计作折算。</p>
       <div className="learning-filters"><label>ETF事项 <select aria-label="ETF事项筛选" value={selectedCode} onChange={event=>setSelectedCode(event.target.value)}>
         <option value="all">全部ETF</option>{codes.map(code=><option key={code} value={code}>{code}</option>)}
         {selectedCode!=='all'&&!codes.includes(selectedCode)&&<option value={selectedCode} disabled>{selectedCode}（当前未取得）</option>}

@@ -210,6 +210,18 @@ export interface SZSERevisionRecheck {
     share_comparison:SZSERecheckDifference;nav_comparison:SZSERecheckDifference;
     issuer_nav_comparison:Pick<SZSERecheckDifference,'overlap_observations'|'changed_observations'|'changes'>}>
 }
+export interface IssuerDistribution {
+  record_on:string;cash_paid_on:string;ex_dividend_on:string|null;off_exchange_record_on:string|null;off_exchange_cash_paid_on:string|null;evaluation_reference_on:string|null
+  source_amount_text:string;source_unit_shares:number;amount_yuan_per_share:string
+}
+export interface ETFIssuerHistory {
+  version:string;availability:string;declared_etfs:number;history_tables_observed:number;empty_tables_unconfirmed:number;query_failed_etfs:number
+  window_start?:string;through?:string;query_cutoff?:string;completed_at?:string;reparsed_at?:string|null;market_target?:string|null;note:string
+  corporate_actions_checked:false;estimated_net_subscription_yuan:null
+  funds:Array<{code:string;issuer:string;availability:string;source_url:string;observed_at:string;table_records:number|null;latest_listed_distribution:IssuerDistribution|null
+    window_record_date_count:number|null;window_cash_paid_date_count:number|null;window_split_count:number|null;split_table_status:string;splits:Array<{effective_on:string;ratio:string}>
+    responses:Array<{method:string;url:string;params:Record<string,unknown>|null;observed_at:string}>}>
+}
 export interface MarketRiskETF {
   code:string
   group:string
@@ -297,6 +309,7 @@ export interface MarketRiskStatus {
   public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number}
   szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string}
   szse_revision_recheck?:SZSERevisionRecheck
+  etf_issuer_history?:ETFIssuerHistory
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
   issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}

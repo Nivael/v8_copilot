@@ -149,6 +149,10 @@
 .market-recheck-table thead th:nth-child(2) {width:30%}
 .market-recheck-table thead th:nth-child(3) {width:45%}
 .market-recheck-scroll-hint {display:none}
+.market-issuer-history-table thead th:first-child {width:20%}
+.market-issuer-history-table thead th:nth-child(2) {width:20%}
+.market-issuer-history-table thead th:nth-child(3) {width:35%}
+.market-issuer-history-table thead th:nth-child(4) {width:25%}
 @media(max-width:900px){
   .market-recheck-scroll-hint {display:block}
   .learning-page {width:calc(100% - 40px)}

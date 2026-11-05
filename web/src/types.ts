@@ -225,6 +225,15 @@ export interface SZSESTReference {
   points?:Array<{date:string;member_count:number;observed_members:number;coverage_ratio:number;missing_symbols:string[];daily_return_pct:number|null;close:number|null}>
   events?:Array<{symbol:string;effective_on:string;kind:string;old_name:string;new_name:string|null;source_url:string;proof_page:number;observed_at:string}>
 }
+export interface SSESTNoticeReview {
+  version:string;availability:string;review_scope?:string;start?:string;through?:string;latest_publication?:string
+  catalog_items?:number;reviewed_items?:number;distinct_companies?:number;pdf_pages?:number;counts?:Record<string,number>
+  content_digest?:string;materialized_at?:string;newest_document_observed_at?:string;metadata_observed_at?:string;note?:string
+  full_body_semantics_reviewed:false;full_window_membership_certificate:false;historical_membership_verified:false
+  historical_PIT:false;combined_ST_ready:false;effect_measured:false
+  items:Array<{symbol:string;name_as_reported:string;company:string;published_on:string;title:string;source_url:string;catalog_url:string
+    kind:string;effective_on:string|null;stated_since_on:string|null;proofs:Array<{page:number;text:string;role:string}>;observed_at:string}>
+}
 export interface STReconstruction {
   version:string;availability:string;start?:string;through?:string;content_digest?:string;materialized_at?:string
   combined_ST_ready:false;historical_membership_verified:false;historical_PIT:false;portfolio_wealth:false;effect_measured:false
@@ -405,6 +414,7 @@ export interface MarketRiskStatus {
   exchange_risk_membership?:ExchangeRiskMembership
   szse_st_reference?:SZSESTReference
   st_reconstruction?:STReconstruction
+  sse_st_notice_review?:SSESTNoticeReview
   sse_history_archive?:SSEHistoryArchive
   sse_gap_review?:SSEGapReview
   combined_breadth_history?:CombinedBreadthHistory

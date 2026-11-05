@@ -155,4 +155,18 @@ describe('LearningPage',()=>{
     expect(within(section).getByText('7,529 成员日（重建）')).toBeInTheDocument()
     expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
   })
+  it('counts specific notice-clause reviews separately from membership or venue coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'sse_ST_notice_clauses',label:'沪市ST公告条款',availability:'reviewed',
+      requested_through:'2026-11-04',observed_through_min:'2026-11-04',observed_through_max:'2026-11-04',observation_count:62,
+      observation_unit:'目录项',coverage_basis:'ST_notice_clause_review',date_basis:'catalog_search_cutoff',series_at_target:null,observed_source_groups:62,
+      declared_series:62,snapshot_digest:'synthetic',url:'/market',fetched_at:'2026-11-05T09:00:00Z',note:'仅指定条款，逐日名单仍待核验。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('62 目录项')).toBeInTheDocument()
+    expect(within(section).getByText('原文身份及状态条款 62/62 项')).toBeInTheDocument()
+    expect(within(section).getByText('已核对指定条款')).toBeInTheDocument()
+    expect(within(section).getByText('检索至 2026-11-04')).toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+    expect(within(section).queryByText(/逐日成员核验 62/)).not.toBeInTheDocument()
+  })
 })

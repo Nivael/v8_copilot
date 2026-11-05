@@ -1,7 +1,7 @@
 import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {afterEach,describe,expect,it} from 'vitest'
 import {STReconstruction} from './STReconstruction'
-import type {MarketRiskIndex,STReconstruction as Reference} from './types'
+import type {MarketRiskIndex,SSESTNoticeReview,STReconstruction as Reference} from './types'
 
 const sample=(close:number)=>({close,member_count:20,observed_members:19,coverage_ratio:.95,missing_symbols:['600001.SH'],daily_return_pct:0})
 const points=['2026-09-04','2026-09-07','2026-09-08'].map((date,i)=>({date,all:sample(1000-i*50),SSE:sample(1000-i*40),SZSE:sample(1000-i*60)}))
@@ -74,5 +74,21 @@ describe('STReconstruction',()=>{
     expect(screen.getByRole('region',{name:'可滚动的风险警示目录筛查表'})).toHaveAttribute('tabindex','0')
     fireEvent.click(screen.getByText('查看逐日成员代码'))
     expect(screen.getByRole('region',{name:'可滚动的ST重建每日成员表'})).toHaveAttribute('tabindex','0')
+  })
+  it.each(['matching','other_end','other_member','partial','wrong_scope'])('binds supplemental review to the exact catalog without promoting daily membership (%s)',bad=>{
+    const review:SSESTNoticeReview={version:'synthetic',availability:'reviewed',review_scope:'security_identity_and_member_status_clauses_only',
+      through:data.through,catalog_items:1,reviewed_items:1,full_body_semantics_reviewed:false,full_window_membership_certificate:false,
+      historical_membership_verified:false,historical_PIT:false,combined_ST_ready:false,effect_measured:false,items:[{symbol:'600001',published_on:'2026-09-04',
+        name_as_reported:'ST公司',company:'公司股份有限公司',title:'申请其他风险警示',source_url:'https://static.cninfo.com.cn/synthetic.PDF',catalog_url:'https://www.sse.com.cn/synthetic.PDF',
+        kind:'application_pending',effective_on:null,stated_since_on:null,proofs:[],observed_at:'2026-11-05T04:00:00Z'}]}
+    if(bad==='other_end')review.through='2026-09-07'
+    if(bad==='other_member')review.items[0].symbol='600002'
+    if(bad==='partial')review.reviewed_items=0
+    if(bad==='wrong_scope')review.review_scope='full_membership'
+    render(<STReconstruction data={data} indices={[]} noticeReview={review}/>)
+    if(bad==='matching')expect(screen.getByText(/补充核对已覆盖这 1 项公告/)).toBeVisible()
+    else expect(screen.queryByText(/补充核对已覆盖/)).not.toBeInTheDocument()
+    expect(screen.getByText('沪市逐日成员待独立核验')).toBeVisible()
+    expect(screen.getByText('价格来源覆盖沪深两所，完整ST核验尚未通过。')).toBeVisible()
   })
 })

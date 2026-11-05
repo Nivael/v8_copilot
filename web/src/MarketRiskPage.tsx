@@ -18,6 +18,7 @@ import {SSEHistorySources} from './SSEHistorySources'
 import {SSEGapReview} from './SSEGapReview'
 import {CombinedBreadthHistory} from './CombinedBreadthHistory'
 import {STReconstruction} from './STReconstruction'
+import {SSESTNoticeReview} from './SSESTNoticeReview'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -157,7 +158,8 @@ export function MarketRiskPage(){
         {data.indices.length>0?<><Paths indices={data.indices} window={window} through={data.requested_through}/><p className="learning-footnote">起点归一为100；仅绘制所选窗口完整且截止日一致的序列。较早的ST历史只保留在表中，不拼接成同期走势；ST等权仅消费覆盖率至少95%的日期。</p><div className="learning-table-wrap"><table className="learning-table market-risk-table"><thead><tr><th scope="col">市场基准</th><th scope="col">5日</th><th scope="col">20日</th><th scope="col">60日</th><th scope="col">60日最大回撤</th><th scope="col">5/20日成交额均值比</th></tr></thead><tbody>{data.indices.map(index=><tr key={index.code}><th scope="row">{index.name}<small>{index.through}</small></th><td>{pct(index.return_5d_pct)}</td><td>{pct(index.return_20d_pct)}</td><td>{pct(index.return_60d_pct)}</td><td>{pct(index.max_drawdown_60d_pct)}</td><td>{index.amount_5d_to_20d_ratio==null?'—':`${index.amount_5d_to_20d_ratio.toFixed(2)} 倍`}</td></tr>)}</tbody></table></div></>:<p className="learning-empty">市场基准缺失，无法计算趋势和回撤。</p>}
       </section>
 
-      {data.st_reconstruction&&<STReconstruction data={data.st_reconstruction} indices={data.indices}/>}
+      {data.st_reconstruction&&<STReconstruction data={data.st_reconstruction} indices={data.indices} noticeReview={data.sse_st_notice_review}/>}
+      {data.sse_st_notice_review&&<details className="market-source-notes"><summary>沪市ST公告原文条款核对</summary><SSESTNoticeReview data={data.sse_st_notice_review}/></details>}
       {data.szse_st_reference&&<details className="market-source-notes" open={!reconstructionReady}><summary>深市独立核验的ST样本参考</summary><SZSESTReference data={data.szse_st_reference} indices={data.indices}/></details>}
       {data.combined_breadth_history&&<CombinedBreadthHistory data={data.combined_breadth_history}/>}
       {data.breadth_history&&<details className="market-source-notes" open={!combinedReady}><summary>{combinedReady?'深市名称组与原始日表来源':'历史日表与原始来源'}</summary><section className="learning-freshness" aria-label="历史涨跌分布">

@@ -233,7 +233,7 @@ def project(inputs):
             'endpoint_list_observed_on': inputs['endpoint_list_observed_on'], 'events': inputs['events'], 'catalog': inputs['catalog'],
             'sse_price_fetched_at': inputs['sse_price_fetched_at'], 'szse_price_fetched_at': inputs['szse_price_fetched_at'],
             'newest_notice_observed_at': inputs['newest_notice_observed_at'],
-            'note': '沪深ST回溯重建的有成交样本价格参考。沪市由日期锚点和已核公告重建，目录仅做标题筛查，尚无完整逐日名单/简称的独立交叉核验；期初期末相符不证明中间无遗漏。每日有成交成员等权合并，不平均两所均值，停牌保留分母且不填零。成员和成交样本变化，路径不是组合财富、全收益、已完整核验的ST指数或可交易回报；不校准风险权重，也不证明大盘因素优于节点。'}
+            'note': '沪深ST回溯重建的有成交样本价格参考。沪市由日期锚点和已核公告重建，尚无完整逐日名单/简称的独立交叉核验；期初期末相符不证明中间无遗漏。每日有成交成员等权合并，不平均两所均值，停牌保留分母且不填零。成员和成交样本变化，路径不是组合财富、全收益、已完整核验的ST指数或可交易回报；不校准风险权重，也不证明大盘因素优于节点。'}
 
 
 def reference_status(directory=OUTPUT, *, root=ROOT, market_db=MARKET_CONTEXT_DB, now=None):

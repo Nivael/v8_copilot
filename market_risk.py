@@ -27,6 +27,7 @@ from sse_history_archive import archive_status as sse_history_archive_status
 from sse_gap_review import review_status as sse_gap_review_status
 from market_breadth_combined import history_status as combined_breadth_status
 from combined_st_reference import reference_status as st_reconstruction_status
+from sse_st_notice_review import review_status as sse_st_notice_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -336,6 +337,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
     st_reconstruction = st_reconstruction_status(snapshot_dir / 'st_reconstruction', root=snapshot_dir, now=now)
+    sse_notices = sse_st_notice_status(snapshot_dir / 'sse_st_notice_review', now=now)
     sse_archive = sse_history_archive_status(snapshot_dir / 'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now)
     gaps = sse_gap_review_status(snapshot_dir / 'sse_gap_review', root=snapshot_dir, now=now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
@@ -409,6 +411,13 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'verified_membership_venues':1 if reconstructed else None,'declared_series':2,
                     'snapshot_digest':st_reconstruction.get('content_digest'),'url':'/market','coverage_basis':'ST_reconstruction',
                     'note':'价格来源覆盖两所；沪市日期锚点加3处生效公告重建成员，尚缺完整逐日名单/简称的独立核验。此项不提升ST完整核验或风险效果门槛。'})
+    sources.append({'source_id':'sse_ST_notice_clauses','label':'沪市ST · 公告身份与成员状态条款','availability':sse_notices['availability'],
+                    'requested_through':sse_notices.get('through'),'fetched_at':sse_notices.get('metadata_observed_at'),
+                    'observed_through_min':sse_notices.get('through'),'observed_through_max':sse_notices.get('through'),
+                    'observation_count':sse_notices.get('reviewed_items'),'observation_unit':'目录项',
+                    'series_at_target':None,'observed_source_groups':sse_notices.get('reviewed_items'),'declared_series':sse_notices.get('catalog_items'),
+                    'snapshot_digest':sse_notices.get('content_digest'),'url':'/market','coverage_basis':'ST_notice_clause_review','date_basis':'catalog_search_cutoff',
+                    'note':'核对固定目录内的原PDF身份及成员状态条款；不代表全文语义、所有公司公告完整或逐日ST名单已核验，不推进旧个股清单日期。'})
     sources.append({'source_id':'sse_historical_price_archive','label':'上交所 · 历史价格来源核对','availability':sse_archive['availability'],
                     'requested_through':sse_archive.get('through'),'fetched_at':sse_archive.get('source_fetched_at'),
                     'observed_through_min':sse_archive.get('start'),'observed_through_max':sse_archive.get('through'),
@@ -552,6 +561,7 @@ def build_market_risk_status(
         "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
         "szse_st_reference": st_reference,
         "st_reconstruction": st_reconstruction,
+        "sse_st_notice_review": sse_st_notice_status(snapshot_dir/'sse_st_notice_review', now=now),
         "sse_history_archive": sse_history_archive_status(snapshot_dir/'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now),
         "sse_gap_review": sse_gap_review_status(snapshot_dir/'sse_gap_review', root=snapshot_dir, now=now),
         "public_index_snapshot": public_index_snapshot,

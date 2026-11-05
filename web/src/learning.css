@@ -38,6 +38,9 @@
 .learning-filters input {width:320px}
 .learning-filters>span {margin-left:auto;font-size:12px;color:#738078;padding-bottom:8px}
 .learning-table-wrap {overflow-x:auto;max-width:100%}
+.market-notice-clauses {max-height:34rem;overflow:auto}
+.market-notice-clauses .learning-table {table-layout:fixed}
+.market-notice-clauses thead th {position:sticky;top:0;background:#f4f7f2;z-index:1}
 .learning-table {border-collapse:collapse;width:100%;font-size:13px;table-layout:fixed}
 .learning-table thead {border-top:1px solid #bccabe;border-bottom:1px solid #bccabe}
 .learning-table thead th {text-align:left;font-size:11px;font-weight:500;color:#6b7b70;padding:12px 16px}

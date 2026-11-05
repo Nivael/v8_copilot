@@ -123,7 +123,7 @@ def setup_reader(folder,monkeypatch):
         source={**doc,'code':case['code'],'url':f'https://www.sse.com.cn/{doc["document_id"]}.pdf',
                 'title':'基金份额合并结果的公告' if role=='result' else '实施基金份额合并业务的公告'}
         records.append(source)
-        captured[doc['document_id']]={'text_sha256':key,'responses':[{'url':source['url'],'observed_at':NOW.isoformat()}]}
+        captured[doc['document_id']]={'text_sha256':key,'format':'pdf','responses':[{'url':source['url'],'observed_at':NOW.isoformat()}]}
     capture={'catalog_digest':'catalog','completed_at':NOW.isoformat(),'documents':captured}
     capture['content_digest']=digest(capture)
     (folder/'document_capture.json').write_text(json.dumps(capture))

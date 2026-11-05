@@ -12,9 +12,18 @@ from zoneinfo import ZoneInfo
 from canonical_json import digest
 from etf_document_capture import valid_ready
 from etf_quarterly import compact, decimal_text
+from etf_share_event_profiles import EXTRA_CASES, parse_profile
 
-VERSION = "etf_share_event_review_v1"
-PARSER_DIGEST = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+VERSION = "etf_share_event_review_v2"
+
+
+def parser_digest():
+    root=Path(__file__).parent
+    return digest({name:hashlib.sha256((root/name).read_bytes()).hexdigest()
+                   for name in (Path(__file__).name,'etf_share_event_profiles.py','etf_quarterly.py')})
+
+
+PARSER_DIGEST = parser_digest()
 # Explicitly reviewed source chains, not title-based discovery or a claim that no
 # other event exists. New candidates require another evidence-backed review.
 CASES = [
@@ -33,6 +42,7 @@ CASES = [
     {"id":"512100-creation-unit-20240221", "code":"512100.SH", "kind":"creation_unit", "resolution":"announced_effective", "documents":[
         ("f86bac85a324499603fb2c577e86fd088ffd5466c3245d94163bd7d5ae942454","unit_notice")]},
 ]
+CASES += EXTRA_CASES
 DATE = r"\d{4}年\d{1,2}月\d{1,2}日"
 NUMBER = r"(?:0|[1-9]\d{0,2}(?:,\d{3})+|[1-9]\d*)(?:\.\d{1,2})?"
 
@@ -122,25 +132,33 @@ def reconcile_case(case, documents):
     expected_role = {'implemented':'result','cancelled':'cancellation','announced_effective':'unit_notice'}[case['resolution']]
     if role != expected_role:
         raise ValueError('terminal source role does not prove this resolution')
+    known = {}
     if plans:
-        first = plans[0][1]
+        for key in ('record_date','event_date','ratio','ex_right_date','registration_date'):
+            values={plan[key] for _,plan in plans if plan.get(key) is not None}
+            if len(values)>1:raise ValueError('conflicting plan facts')
+            known[key]=next(iter(values)) if values else None
         for source,plan in plans:
-            if (any(plan.get(key) != first.get(key) for key in ('record_date','event_date','ratio','ex_right_date'))
-                or source['published_on'] > doc['published_on'] or source['published_on'] > plan['event_date']):
+            post_event_reminder=(case.get('allow_post_event_reminder') is True
+                                and any(item is source and source_role=='reminder' for item,source_role,_ in documents))
+            if source['published_on'] > doc['published_on'] or source['published_on'] > plan['event_date'] and not post_event_reminder:
                 raise ValueError("conflicting or incorrectly ordered plan")
-        if any(result.get(key) != first.get(key) for key in ('record_date','event_date')):
+        if any(result.get(key) is not None and known.get(key) is not None and result[key]!=known[key]
+               for key in ('record_date','event_date','registration_date')):
             raise ValueError("terminal notice resolves a different plan")
-        if case['resolution']=='implemented' and result.get('ratio') != first['ratio']:
+        if case['resolution']=='implemented' and known.get('ratio') is not None and result.get('ratio')!=known['ratio']:
             raise ValueError("result ratio differs from plan")
         if case['resolution']=='cancelled' and doc['published_on'] >= result['event_date']:
             raise ValueError("cancellation chronology is not the reviewed case")
-    elif case['kind'] != 'creation_unit': raise ValueError("missing plan")
+    elif case['kind'] != 'creation_unit' and case.get('source_scope')!='result_only': raise ValueError("missing plan")
     if case['resolution'] in ('implemented','announced_effective') and doc['published_on'] < result['event_date']:
         raise ValueError("a future proposal cannot prove an implementation")
     return {"event_id":case['id'],"code":case['code'],"kind":case['kind'],"resolution":case['resolution'],
             **{key:value for key,value in result.items() if key not in ('ratio','evidence_pages')},
-            "planned_ratio":plans[0][1]['ratio'] if plans else None,
-            "ex_right_date":plans[0][1].get('ex_right_date') if plans else None,
+            "planned_ratio":known.get('ratio'),
+            "ex_right_date":result.get('ex_right_date') or known.get('ex_right_date'),
+            "plan_holder_rounding":sorted({plan['holder_rounding'] for _,plan in plans if plan.get('holder_rounding') and plan['holder_rounding']!='not_stated'}),
+            "source_scope":case.get('source_scope','selected_plan_and_result' if plans else 'unit_notice'),
             "effective_ratio":result.get('ratio') if case['resolution']=='implemented' else None,
             "resolution_published_on":doc['published_on'],"not_a_subscription_flow":True}
 
@@ -149,7 +167,7 @@ def share_event_status(directory: Path, announcements: dict, now: datetime) -> d
     base = {"version":VERSION,"availability":"missing","events":[],"reviewed_events":0,"reconciled_documents":0,
             "selected_documents":announcements.get('review_required_count'),"all_selected_documents_reconciled":False,
             "corporate_actions_checked":False,"note":"仅逐条核对已列事项；计划、取消、实施结果及最小申赎单位分开。历史事项不证明当前窗没有其他份额事件，未用于净申赎校正。"}
-    if hashlib.sha256(Path(__file__).read_bytes()).hexdigest() != PARSER_DIGEST: return {**base,"availability":"reload_required"}
+    if parser_digest() != PARSER_DIGEST: return {**base,"availability":"reload_required"}
     if announcements.get('availability') != 'observed' or announcements.get('fulltext',{}).get('availability') != 'observed': return base
     try:
         capture = json.loads((directory/'document_capture.json').read_text()); key=capture.pop('content_digest')
@@ -165,7 +183,7 @@ def share_event_status(directory: Path, announcements: dict, now: datetime) -> d
             for document_id,role in case['documents']:
                 doc=selected[document_id]; result=capture['documents'][document_id]
                 title=compact(doc['title'])
-                if ((role=='result' and '合并结果' not in title) or (role=='cancellation' and '取消基金份额拆分' not in title)
+                if ((role=='result' and {'merge':'合并','split':'拆分','conversion':'折算'}.get(case['kind'],'')+'结果' not in title) or (role=='cancellation' and '取消基金份额拆分' not in title)
                     or (role=='reminder' and '提示性公告' not in title) or (role=='plan' and any(word in title for word in ('结果','取消','提示性公告')))
                     or (role=='unit_notice' and ('调整最小申购、赎回单位的公告' not in title or any(word in title for word in ('合并','拆分'))))):
                     raise ValueError('source title has a different role')
@@ -177,10 +195,13 @@ def share_event_status(directory: Path, announcements: dict, now: datetime) -> d
                 body=(directory/'document_text'/f"{result['text_sha256']}.json").read_bytes()
                 if hashlib.sha256(body).hexdigest()!=result['text_sha256']: raise ValueError('event text changed')
                 pages=json.loads(body)['pages']
-                parsed=parse_document(pages,case['code'],case['kind'],role)
+                parsed=(parse_profile(pages,case['code'],case['kind'],role,case['profile'][role])
+                        if case.get('profile') else parse_document(pages,case['code'],case['kind'],role))
                 chain.append((doc,role,parsed))
                 evidence.append({'document_id':document_id,'role':role,'published_on':doc['published_on'],'title':doc['title'],
-                    'url':result['responses'][-1]['url'],'pages':parsed['evidence_pages'],'text_sha256':result['text_sha256'],
+                    'url':doc['url'] if result['format']=='issuer_html' else result['responses'][-1]['url'],
+                    'format':result['format'],'pages':[] if result['format']=='issuer_html' else parsed['evidence_pages'],
+                    'announced_ratio':parsed.get('ratio') if role in ('plan','reminder') else None,'text_sha256':result['text_sha256'],
                     'observed_at':result['responses'][-1]['observed_at']})
             event=reconcile_case(case,chain)
             event.update(documents=evidence,within_catalog_window=announcements['window_start']<=event['event_date']<=announcements['window_end'])

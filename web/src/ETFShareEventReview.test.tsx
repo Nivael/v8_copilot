@@ -1,4 +1,4 @@
-import {cleanup,fireEvent,render,screen} from '@testing-library/react'
+import {cleanup,fireEvent,render,screen,within} from '@testing-library/react'
 import {afterEach,describe,expect,it} from 'vitest'
 import {ETFShareEventReview} from './ETFShareEventReview'
 import type {MarketRiskStatus} from './types'
@@ -50,8 +50,8 @@ describe('ETFShareEventReview',()=>{
     expect(screen.getByText('份额合并日 2024-09-20')).toBeInTheDocument()
     expect(screen.getByText('除权日 2024-09-23')).toBeInTheDocument()
     fireEvent.click(screen.getAllByText('登记总额与比例乘积')[0])
-    expect(screen.getByText(/场外：合并前 708,041,821.00 份，登记后 353,862,232.00 份/)).toBeInTheDocument()
-    expect(screen.getByText(/48,100.8947756500 份。该差额不计作净申购/)).toBeInTheDocument()
+    expect(screen.getByText(/场外：变更前 708,041,821.00 份，登记后 353,862,232.00 份/)).toBeInTheDocument()
+    expect(screen.getByText(/48,100.8947756500 份。该差额不计作净申赎/)).toBeInTheDocument()
     fireEvent.click(screen.getByText('原文链（2份）'))
     expect(screen.getByRole('link',{name:'结果 · PDF第2页 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/synthetic-er.pdf#page=2')
   })
@@ -60,5 +60,56 @@ describe('ETFShareEventReview',()=>{
     expect(screen.getByText(/本批事项尚未通过当前原文、日期和关系核对/)).toBeInTheDocument()
     expect(screen.queryByText('0.49977589')).not.toBeInTheDocument()
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
+  })
+  it('distinguishes conversion, registration, rounding modes and a result-only source',()=>{
+    const data:Review={...fixture,reviewed_events:3,events:[
+      {event_id:'nearest',code:'510300.SH',kind:'conversion',resolution:'implemented',event_date:'2012-05-11',registration_date:'2012-05-14',
+        source_scope:'result_only',holder_rounding:'nearest_whole_share',planned_ratio:null,effective_ratio:'0.37094933',resolution_published_on:'2012-05-15',within_catalog_window:false,
+        reported_totals:[{scope:'fund_total',before_shares:'32968633875.00',after_shares:'12229687690.00',after_minus_simple_ratio_shares:'-4956.9465537500'}],documents:[document('nearest','result')]},
+      {event_id:'floor',code:'159919.SZ',kind:'conversion',resolution:'implemented',event_date:'2012-11-30',holder_rounding:'floor_to_whole_share',
+        planned_ratio:'0.38221954',effective_ratio:'0.38221954',resolution_published_on:'2012-12-03',within_catalog_window:false,
+        reported_totals:[{scope:'fund_total',before_shares:'42045307392',after_shares:'16070506477',after_minus_simple_ratio_shares:'-31573.52883968'}],documents:[document('floor','result')]},
+      {event_id:'unknown',code:'510330.SH',kind:'conversion',resolution:'implemented',event_date:'2013-01-09',registration_date:'2013-01-10',
+        holder_rounding:'not_stated',plan_holder_rounding:['floor_to_whole_share'],planned_ratio:null,effective_ratio:'0.40932601',resolution_published_on:'2013-01-11',within_catalog_window:false,
+        reported_totals:[{scope:'fund_total',before_shares:'16020609566',after_shares:'6557649828',after_minus_simple_ratio_shares:'-2363.41861166'}],documents:[document('unknown','result')]},
+    ]}
+    render(<ETFShareEventReview data={data}/>)
+    expect(screen.getByText('份额折算日 2012-05-11')).toBeInTheDocument()
+    expect(screen.getByText('变更登记日 2012-05-14')).toBeInTheDocument()
+    expect(screen.getByText('本条仅核对结果原文')).toBeInTheDocument()
+    expect(screen.getByText(/份额四舍五入到整数位；简单比例/)).toBeInTheDocument()
+    expect(screen.getByText(/逐户截去小数部分；简单比例/)).toBeInTheDocument()
+    expect(screen.getByText(/结果公告未重述逐户舍入方式；简单比例/)).toBeInTheDocument()
+    expect(screen.getByText(/计划公告载明：逐户截去小数部分。与结果公告分开记录/)).toBeInTheDocument()
+    expect(screen.getByText(/-31,573.52883968 份。该差额不计作净申赎/)).toBeInTheDocument()
+    expect(screen.queryByText('拆分已取消')).not.toBeInTheDocument()
+  })
+  it('links issuer HTML without PDF pages and keeps each plan disclosure at its own time',()=>{
+    const event:Review['events'][number]={...fixture.events[2],event_id:'html',documents:[
+      {...document('html-plan','plan',[]),format:'issuer_html',url:'https://www.jsfund.cn/main/fund/noticedetails.shtml?adId=synthetic',published_on:'2022-08-01',announced_ratio:null},
+      {...document('html-reminder','reminder',[]),format:'issuer_html',published_on:'2022-09-03',announced_ratio:'0.36555'},
+    ]}
+    render(<ETFShareEventReview data={{...fixture,events:[event]}}/>)
+    fireEvent.click(screen.getByText('原文链（2份）'))
+    const row=screen.getByRole('rowheader',{name:/512100.SH/})
+    expect(within(row).getByText('本公告未给定确定比例')).toBeInTheDocument()
+    expect(within(row).getByText('本公告给定比例 0.36555')).toBeInTheDocument()
+    expect(within(row).getByText('生效日后的提示，不回填为事前已知')).toBeInTheDocument()
+    const links=within(row).getAllByRole('link',{name:'发行人正文 ↗'})
+    expect(links[0]).toHaveAttribute('href','https://www.jsfund.cn/main/fund/noticedetails.shtml?adId=synthetic')
+    expect(within(row).queryByRole('link',{name:/PDF第/})).not.toBeInTheDocument()
+  })
+  it('filters the review without changing global coverage and exposes a source lost on refresh',()=>{
+    const {rerender}=render(<ETFShareEventReview data={fixture}/>)
+    fireEvent.change(screen.getByRole('combobox',{name:'ETF事项筛选'}),{target:{value:'510310.SH'}})
+    expect(screen.getByText(/当前显示 1\/4 条/)).toBeInTheDocument()
+    expect(screen.getByText(/涉及 10\/105 份筛选材料/)).toBeInTheDocument()
+    expect(screen.getAllByRole('row')).toHaveLength(2)
+    rerender(<ETFShareEventReview data={{...fixture,events:fixture.events.filter(event=>event.code!=='510310.SH')}}/>)
+    expect(screen.getByText(/该ETF当前没有通过原文核对的事项/)).toBeInTheDocument()
+    expect(screen.getByRole('combobox',{name:'ETF事项筛选'})).toHaveValue('510310.SH')
+    expect(screen.getByRole('option',{name:'510310.SH（当前未取得）'})).toBeDisabled()
+    fireEvent.change(screen.getByRole('combobox',{name:'ETF事项筛选'}),{target:{value:'all'}})
+    expect(screen.getByText(/当前显示 3\/3 条/)).toBeInTheDocument()
   })
 })

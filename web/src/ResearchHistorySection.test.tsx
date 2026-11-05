@@ -71,4 +71,12 @@ describe('original question retrospective',()=>{
     fireEvent.click(previous)
     expect(screen.getByText('错误：卖压被解释成洗盘')).toBeVisible()
   })
+  it('identifies supplemental stock history separately from the ST benchmark inside sources',async()=>{
+    serve({...detail,stock_history_note:'完整历史窗口已与重叠价格核对。',source_urls:{...detail.source_urls,stock_history:'https://example.test/qfq'}})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.getByText('完整历史窗口已与重叠价格核对。')).not.toBeVisible()
+    fireEvent.click(screen.getByText('价格口径与来源'))
+    expect(screen.getByText('完整历史窗口已与重叠价格核对。')).toBeVisible()
+    expect(screen.getByRole('link',{name:'补充历史行情（腾讯） ↗'})).toHaveAttribute('href','https://example.test/qfq')
+  })
 })

@@ -18,7 +18,8 @@ ALIASES={'沐邦':'603398.SH','宝馨':'002514.SZ','准油':'002207.SZ','联翔'
          '通脉':'603559.SH','金鸿':'000669.SZ','联光':'600363.SH','联创光电':'600363.SH','威领':'002667.SZ',
          '思科瑞':'688053.SH','亚光':'300123.SZ','金顶':'600678.SH','得润':'002055.SZ','景谷':'600265.SH',
          '帅电':'605336.SH','帅丰':'605336.SH','源杰':'688498.SH','华丰科技':'688629.SH','华峰测控':'688200.SH',
-         '正邦':'002157.SZ','东易':'002713.SZ','新研':'300159.SZ','芯原':'688521.SH','中微':'688012.SH'}
+         '正邦':'002157.SZ','东易':'002713.SZ','新研':'300159.SZ','芯原':'688521.SH','中微':'688012.SH',
+         '金刚':'300093.SZ','瑞和':'002620.SZ'}
 TOPICS={'重整与节点':('重整','法院','路条','招募','投资人','财投','产投','债权','债转股'),
         '控制权与股权':('股权','拍卖','控制权','实控人','收购'),
         '估值与摊薄':('估值','市值','转增','摊薄','定价','股本'),
@@ -237,7 +238,8 @@ def assemble(records,paths,*,reviews=None):
         stocks.append({'symbol':symbol,'name':stock['name'],**stats,'first_asked_on':rows[0]['asked_on'],'last_asked_on':rows[-1]['asked_on']})
         details[symbol]={'availability':'available','symbol':symbol,'name':stock['name'],'as_of':paths['calendar'][-1],'questions':rows,
                          'chart_sources':{**({'stock':stock['points']} if symbol!='market' else {}),'market':paths['market'],'st':paths['st']},'st_name':paths['st_name'],
-                         'st_note':paths['st_note'],'source_urls':{'stock':'https://www.sse.com.cn/' if symbol.endswith('.SH') else 'https://www.szse.cn/market/stock/','market':'https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985','st':paths['st_source_url']},
+                         'st_note':paths['st_note'],'stock_history_note':stock.get('history_note'),
+                         'source_urls':{'stock':'https://www.sse.com.cn/' if symbol.endswith('.SH') else 'https://www.szse.cn/market/stock/','market':'https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985','st':paths['st_source_url'],**({'stock_history':stock['history_source_url']} if stock.get('history_source_url') else {})},
                          'stats':stats}
     stocks.sort(key=lambda r:(r['symbol']!='002514.SZ',-r['original_questions'],r['symbol']))
     unique={r['id']:r for r in records};return {'stocks':stocks,'details':details,'unique':unique}

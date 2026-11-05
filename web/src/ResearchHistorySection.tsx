@@ -7,6 +7,7 @@ import type {ReadingSeries} from './readingTypes'
 import './researchHistory.css'
 
 const windows=[['one_day','次日'],['five_day','5个交易日'],['twenty_day','20个交易日'],['sixty_day','60个交易日'],['latest','至今']] as const
+const sourceLabels:Record<string,string>={stock:'个股行情',market:'中证全指',st:'ST板块行情',stock_history:'补充历史行情（腾讯）'}
 function readable(text:string){return text.replace(/:chatgpt-content-reference\{[^}]*\}/g,'〔原引用见聊天〕').replace(/\[User attached[^\]]*\]/g,'〔原图未随文字档案保存〕').replace(/<image[\s\S]*?<\/image>/g,'〔原图未随文字档案保存〕').replace(/\*\*/g,'')}
 function preview(text:string){return readable(text).replace(/〔原图未随文字档案保存〕/g,'').trim()||'原图问题（文字档案未包含图片）'}
 function timestamp(value:string){return new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}
@@ -44,7 +45,7 @@ function HistoryBody({symbol}:{symbol:string}){
         <p className="reading-caption">{question.time_precision==='day'?`具体时刻不详，以${question.anchor_date||'最近有效交易日'}收盘作事后比较。`:`从当时已完成的最近收盘（${question.anchor_date||'待定位'}）起比较。`}曲线上圆点可切换到那天的原问题。{symbol==='market'&&'本组只对照大盘和ST；未定位的个股不会猜配行情。'}</p>
         <details className="reading-disclosure"><summary>同一窗口，大盘和ST分别走了多少？</summary><div className="reading-scroll"><table><thead><tr><th>窗口</th><th>{data.name}</th><th>中证全指</th><th>{data.st_name}</th><th>相对ST</th></tr></thead><tbody>{windows.map(([key,label])=>{const own=outcomes?.[key]?.change_pct,st=question.outcomes.st?.[key]?.change_pct;return <tr key={key}><th>{label}</th><td>{percent(own)}</td><td>{percent(question.outcomes.market?.[key]?.change_pct)}</td><td>{percent(st)}</td><td>{own==null||st==null?'待更新':`${(own-st).toFixed(2)}个百分点`}</td></tr>})}</tbody></table></div></details>
         {review&&<details className="reading-disclosure history-logic"><summary>为什么这样判断 · 大盘 / ST / 个股</summary>{review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}<small>复盘于 {timestamp(review.reviewed_at)}。同期涨跌是对照，不是因果贡献比例。</small></details>}
-        <details className="reading-disclosure reading-secondary"><summary>价格口径与来源</summary><p>{question.basis_note}</p><p>早期价格使用本地保存的前复权日线，后期按交易所收盘与前收盘的比值衔接；这是价格路径，不是你的实际交易盈亏。原图未归档的盘口问题不据此认定做T成交或收益。</p><p>{data.st_note}</p>{Object.entries(data.source_urls).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{key==='stock'?'个股行情':key==='market'?'中证全指':'ST板块行情'} ↗</a>)}</details>
+        <details className="reading-disclosure reading-secondary"><summary>价格口径与来源</summary><p>{question.basis_note}</p><p>早期价格使用保存的前复权日线，后期按交易所收盘与前收盘的比值衔接；这是价格路径，不是你的实际交易盈亏。原图未归档的盘口问题不据此认定做T成交或收益。</p>{data.stock_history_note&&<p>{data.stock_history_note}</p>}<p>{data.st_note}</p>{Object.entries(data.source_urls).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{sourceLabels[key]||'行情来源'} ↗</a>)}</details>
       </article></div>
   </>
 }

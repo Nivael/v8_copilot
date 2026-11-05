@@ -20,6 +20,17 @@ PREFIX='HISTORY_DOM_V1:'
 UUID=re.compile(r'^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$')
 
 
+def marked_captures(text):
+    """CUA can coalesce several writes into one text item; bound each JSON value."""
+    offset=0;decoder=json.JSONDecoder();marker=re.compile(re.escape(PREFIX)+r'(?=\{)')
+    while match:=marker.search(text,offset):
+        start=match.start()
+        capture,end=decoder.raw_decode(text,start+len(PREFIX))
+        yield start,end,validate_capture(capture)
+        # Skip markers inside the JSON string content itself.
+        offset=end
+
+
 def validate_capture(value):
     if value.get('version')!='history_dom_capture_v1' or not UUID.fullmatch(value['thread_id']):raise ValueError('invalid conversation capture identity')
     stamp=instant(value['captured_at'])
@@ -62,16 +73,19 @@ def collect_outputs(log_path,directory,*,tail_bytes=8_000_000):
             if payload.get('type')!='function_call_output' or calls.get(payload.get('call_id'))!=('mcp__cua_repl','js'):continue
             outputs=payload.get('output',[])
             if not isinstance(outputs,list):continue
-            for item in outputs:
+            for item_index,item in enumerate(outputs):
                 text=item.get('text','')
-                if not text.startswith(PREFIX):continue
-                capture=validate_capture(json.loads(text[len(PREFIX):]))
-                value={'version':'research_history_dom_original_v1','capture':capture,'original_output':text,
-                       'output_sha256':sha256(text.encode()).hexdigest(),'source_file':log_path.name,
-                       'source_record_sha256':sha256(raw).hexdigest(),'byte_offset':offset,'tool_call_id':payload['call_id']}
-                value['content_digest']=digest(value);path=directory/(value['content_digest']+'.json')
-                if not path.exists():atomic_write_json(path,value)
-                found.append(path)
+                for start,end,capture in marked_captures(text):
+                    original=text[start:end]
+                    value={'version':'research_history_dom_original_v1','capture':capture,'original_output':original,
+                           'output_sha256':sha256(original.encode()).hexdigest(),'source_file':log_path.name,
+                           'source_record_sha256':sha256(raw).hexdigest(),'byte_offset':offset,'tool_call_id':payload['call_id']}
+                    if original!=text:
+                        value.update(tool_output_text=text,tool_output_sha256=sha256(text.encode()).hexdigest(),
+                                     capture_text_range=[start,end],output_item_index=item_index)
+                    value['content_digest']=digest(value);path=directory/(value['content_digest']+'.json')
+                    if not path.exists():atomic_write_json(path,value)
+                    found.append(path)
     return found
 
 
@@ -82,6 +96,11 @@ def import_capture_files(directory,known):
         if value['version']!='research_history_dom_original_v1':raise ValueError('unexpected capture wrapper')
         raw=value['original_output']
         if not raw.startswith(PREFIX) or sha256(raw.encode()).hexdigest()!=value['output_sha256'] or json.loads(raw[len(PREFIX):])!=value['capture']:raise ValueError('original capture changed')
+        if 'tool_output_text' in value:
+            text=value['tool_output_text'];start,end=value['capture_text_range']
+            if (not isinstance(start,int) or not isinstance(end,int) or not 0<=start<end<=len(text)
+                    or text[start:end]!=raw or sha256(text.encode()).hexdigest()!=value['tool_output_sha256']):
+                raise ValueError('coalesced tool output changed')
         capture=validate_capture(value['capture']);context=mentioned(capture['title'],known)
         source={'kind':'chatgpt_rendered','thread_id':capture['thread_id'],'title':capture['title'],'capture_digest':value['content_digest'],
                 'source_record_sha256':value['source_record_sha256'],'capture_scope':'visible_returned_DOM; not a claim of complete thread'}

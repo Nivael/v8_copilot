@@ -101,10 +101,54 @@ def parse_sse_history(raw,ref,symbol,through):
     return points
 
 
+def supplemental_history(root,symbol,calendar,historical,official):
+    """A complete, separately bound qfq window for stocks missing from the old DB."""
+    refpath=root/'inputs/tencent_qfq'/(symbol[:6]+'.json')
+    if not refpath.exists():return historical,None
+    ref=json.loads(refpath.read_text());folder=refpath.parent
+    raw=(folder/(ref['sha256']+'.json')).read_bytes();code=symbol[:6];key=('sh' if symbol.endswith('.SH') else 'sz')+code
+    end=date.fromisoformat(ref['through']).isoformat()
+    expected='https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?'+urlencode({'param':f'{key},day,{calendar[0]},{end},640,qfq'})
+    observed=datetime.fromisoformat(ref['observed_at'])
+    if (ref['url']!=expected or ref.get('response_url')!=expected or sha256(raw).hexdigest()!=ref['sha256']
+            or len(raw)!=ref['bytes'] or observed.tzinfo is None or observed>datetime.now(timezone.utc)
+            or end>calendar[-1] or end<'2026-09-03' or end>observed.astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()):
+        raise ValueError('supplemental stock original changed')
+    payload=json.loads(raw);data=payload.get('data',{}).get(key,{});quote=data.get('qt',{}).get(key,[])
+    if payload.get('code')!=0 or len(quote)<3 or quote[2]!=code or not quote[1]:raise ValueError('supplemental stock identity changed')
+    rows=data.get('qfqday',[]);result={};previous='';valid_days=set(calendar)
+    for row in rows:
+        if len(row)!=6:raise ValueError('supplemental stock columns changed')
+        day=date.fromisoformat(row[0]).isoformat();values=[Decimal(v) for v in row[1:]];op,close,high,low,volume=values
+        if (day<=previous or day not in valid_days or day>end or any(not v.is_finite() for v in values)
+                or min(op,close,low)<=0 or high<max(op,close,low) or low>min(op,close) or volume<=0):
+            raise ValueError('supplemental stock dates or prices changed')
+        previous=day;result[day]={'close':float(close),'volume':float(volume)}
+    endpoint=official.get(end)
+    if (not result or next(iter(result))!=calendar[0] or previous!=end or not endpoint or not endpoint['is_trading']
+            or abs(result[end]['close']-endpoint['close'])>.011 or '2026-09-03' not in result):
+        raise ValueError('supplemental stock endpoint or hand-off is unverified')
+    overlap=[day for day in result if day<'2026-09-04' and day in historical and historical[day]['close'] and historical[day]['volume']>0]
+    differs=not overlap or any(abs(result[day]['close']-historical[day]['close'])>.011 for day in overlap)
+    checked=0;previous_close=None
+    for day,row in result.items():
+        point=official.get(day)
+        if day>='2026-09-04' and previous_close and point and point['is_trading']:
+            if min(point['close'],point['previous_close'])<=0 or abs(row['close']/previous_close-point['close']/point['previous_close'])>.0008:
+                raise ValueError('supplemental stock official return differs')
+            checked+=1
+        previous_close=row['close']
+    if differs and (ref.get('historical_basis_replaced') is not True or not ref.get('basis_review_note') or checked<20):
+        raise ValueError('supplemental stock adjustment basis differs; reviewed replacement and twenty official sessions required')
+    # Replace the entire early window, not isolated prices from different adjustments.
+    return {**{day:row for day,row in historical.items() if day>='2026-09-04'},
+            **{day:row for day,row in result.items() if day<'2026-09-04'}},ref
+
+
 def stock_path(calendar,historical,official):
     """Historical qfq ratios, then exact official close/previous-close chaining.
 
-    The chart is a price comparison. An unknown gap after the hand-off withdraws
+    The chart is a price comparison. An unknown gap across the hand-off withdraws
     the chain; a confirmed suspension is a visible gap, never a zero-return dot.
     """
     first=next((Decimal(str(historical[d]['close'])) for d in calendar if d<'2026-09-04' and d in historical and historical[d]['close'] is not None and historical[d]['close']>0),None)
@@ -114,8 +158,10 @@ def stock_path(calendar,historical,official):
         if day<'2026-09-04':
             active=old and old['close'] is not None and old['close']>0 and old['volume']>0
             if active:
-                level=Decimal(str(old['close']))/first*100;result.append({'date':day,'value':old['close'],'level':float(level),'basis':'historical_qfq'})
-            else:result.append({'date':day,'value':None,'level':None,'basis':'historical_gap'})
+                level=Decimal(str(old['close']))/first*100;unknown=False;result.append({'date':day,'value':old['close'],'level':float(level),'basis':'historical_qfq'})
+            else:
+                if not old or old.get('volume')!=0:unknown=True
+                result.append({'date':day,'value':None,'level':None,'basis':'historical_gap'})
             continue
         if point is None:
             unknown=True;result.append({'date':day,'value':None,'level':None,'basis':'missing'});continue
@@ -162,8 +208,11 @@ def build_paths(symbols,market,*,start='2026-05-06',through='2026-11-05',root=RO
                     row=rows[symbol];official[day]={'close':row['last'],'previous_close':row['prev_close'],'is_trading':row['is_trading']}
         if symbol in fresh:
             row=fresh[symbol];official[through]={'close':row['last'],'previous_close':row['prev_close'],'is_trading':row['is_trading']}
-        path=stock_path(calendar,by_symbol[symbol[:6]],official)
+        historical,override=supplemental_history(root,symbol,calendar,by_symbol[symbol[:6]],official)
+        if override:source_keys['supplemental_'+symbol]=digest(override)
+        path=stock_path(calendar,historical,official)
         stocks[symbol]={'name':fresh.get(symbol,{}).get('security_name',symbol),'points':path,'as_of':through}
+        if override:stocks[symbol].update(history_source_url=override['url'],history_note='早期库存在缺档或复权差异，本标的历史段改用腾讯完整前复权窗口，并核对已有重叠价格、交易所后续日收益及末日收盘；旧库无可比重叠或复权不一致时，单独核查整段替换，不混拼不同复权口径。之后按交易所收盘/前收盘比值衔接，停牌留空。')
         if not path[-1]['level']:warnings[symbol]='latest_path_incomplete'
     broad,broad_digest=csi_path(root,calendar);source_keys['market']=broad_digest
     members=bound(root/'inputs/historical_members.json');source_keys['historical_members']=members['content_digest'];by_day=defaultdict(list)

@@ -51,6 +51,35 @@ def test_rehashed_projection_cannot_change_returned_original(tmp_path):
     with pytest.raises(ValueError,match='original capture changed'):import_capture_files(paths[0].parent,{'603398.SH'})
 
 
+@pytest.mark.parametrize('prefix,suffix',[('', '\n{"dates":["2026-07-07"]}'),('[]\n',''),('{"tab":"test"}', '\nrange checked')])
+def test_coalesced_cua_text_retains_exact_capture_and_the_complete_returned_item(tmp_path,prefix,suffix):
+    log=log_capture(tmp_path);events=[json.loads(line) for line in log.read_text().splitlines()]
+    original=events[-1]['payload']['output'][0]['text']
+    text=prefix+original+suffix;events[-1]['payload']['output'][0]['text']=text
+    log.write_text('\n'.join(json.dumps(e,ensure_ascii=False) for e in events)+'\n')
+    files=collect_outputs(log,tmp_path/'captures');assert len(files)==1
+    packet=json.loads(files[0].read_text())
+    assert packet['original_output']==original and packet['tool_output_text']==text
+    assert packet['capture_text_range']==[len(prefix),len(prefix)+len(original)]
+    assert len(import_capture_files(files[0].parent,{'603398.SH'})[0])==2
+    packet['capture_text_range'][0]+=1;packet['content_digest']=digest({k:v for k,v in packet.items() if k!='content_digest'})
+    atomic_write_json(files[0],packet)
+    with pytest.raises(ValueError,match='coalesced'):import_capture_files(files[0].parent,{'603398.SH'})
+
+
+def test_capture_marker_inside_an_original_question_is_not_a_second_packet(tmp_path):
+    value=capture();value['turns'][0]['question']='原文可以包含 '+PREFIX+'，仍然是原问题'
+    files=collect_outputs(log_capture(tmp_path,value),tmp_path/'captures')
+    assert len(files)==1 and import_capture_files(files[0].parent,{'603398.SH'})[0][0]['question']==value['turns'][0]['question']
+
+
+def test_printed_capture_helper_code_is_not_a_returned_capture(tmp_path):
+    log=log_capture(tmp_path);events=[json.loads(line) for line in log.read_text().splitlines()]
+    events[-1]['payload']['output'][0]['text']="nodeRepl.write('"+PREFIX+"'+JSON.stringify(packet))"
+    log.write_text('\n'.join(json.dumps(e) for e in events)+'\n')
+    assert collect_outputs(log,tmp_path/'captures')==[]
+
+
 def test_independent_timestamp_required_and_thread_url_identity_cannot_drift():
     original=capture()
     changed=deepcopy(original);changed['url']='https://chatgpt.com/c/'+Q1

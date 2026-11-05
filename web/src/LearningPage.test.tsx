@@ -93,6 +93,18 @@ describe('LearningPage',()=>{
     expect(await screen.findByText('检索至 2026-11-05')).toBeInTheDocument()
     expect(screen.getByText('目录取得不代表份额事件已核验。')).toBeInTheDocument()
   })
+  it('counts a historical price archive by security originals without asserting date completeness',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'sse_historical_price_archive',label:'沪市历史价格来源',availability:'observed',
+      requested_through:'2026-11-04',observed_through_min:'2026-09-04',observed_through_max:'2026-11-04',observation_count:78,
+      observation_unit:'有成交股票日',coverage_basis:'price_archives',date_basis:'historical_price_archive',series_at_target:null,
+      observed_source_groups:3,declared_series:3,snapshot_digest:'synthetic',url:'/market',fetched_at:'2026-11-05T05:00:00Z',note:'缺日待核，历史分布与ST未发布。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('78 有成交股票日')).toBeInTheDocument()
+    expect(within(section).getByText('价格原件 3/3 只证券')).toBeInTheDocument()
+    expect(within(section).getByText('价格记录窗 2026-09-04 至 2026-11-04')).toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+  })
   it('distinguishes member-day records from venue coverage',async()=>{
     const data:LearningStatus={...payload,market_updates:[{source_id:'szse_st_price_reference',label:'深市ST价格参考',availability:'observed',
       requested_through:'2026-11-04',observed_through_min:'2026-09-04',observed_through_max:'2026-11-04',observation_count:4416,

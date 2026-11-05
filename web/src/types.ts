@@ -158,7 +158,7 @@ export interface LearningStatus {
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
   readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
-  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;observation_unit?:string;coverage_unit?:string}>
+  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number|null;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;observation_unit?:string;coverage_unit?:string;coverage_basis?:string}>
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
   methods:LearningMethod[]
   freshness:{
@@ -193,6 +193,16 @@ export interface MarketRiskIndex {
   amount_5d_to_20d_ratio:number|null
   recent?:{start:string;end:string;sessions:number;return_pct:number|null;max_drawdown_pct:number|null;from_peak_pct:number|null}|null
   path:Array<{date:string;close:number|null}>
+}
+export interface SSEHistoryArchive {
+  version:string;availability:string;start?:string;through?:string;content_digest?:string;materialized_at?:string
+  historical_breadth_ready:false;historical_ST_ready:false;historical_PIT?:false;effect_measured:false
+  distinct_securities?:number;expected_security_days?:number;price_responses?:number;observed_trading_days?:number
+  not_returned_days?:number;explicit_nontrading_days?:number;registry_source_rows?:number;basis_responses?:number;endpoint_compared_trading?:number
+  source_fetched_at?:string;first_price_observed_at?:string;basis_fetched_at?:string;note?:string
+  new_listings?:Array<{code:string;listed_on:string;ended_on:string|null;observed_name:string;board:string}>
+  ended_listings?:Array<{code:string;listed_on:string;ended_on:string|null;observed_name:string;board:string}>
+  days?:Array<{date:string;listed_members:number;observed_trading:number;explicit_nontrading:string[];not_returned:string[];unclosed_observations_included:false}>
 }
 export interface SZSESTReference {
   availability:string;version?:string;content_digest?:string;materialized_at?:string
@@ -361,6 +371,7 @@ export interface MarketRiskStatus {
   node_market_input_audit?:NodeMarketInputAudit
   exchange_risk_membership?:ExchangeRiskMembership
   szse_st_reference?:SZSESTReference
+  sse_history_archive?:SSEHistoryArchive
   etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
   breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
     venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;

@@ -23,6 +23,7 @@ from etf_issuer_history import history_status
 from node_market_audit import audit_status as node_market_audit_status
 from exchange_risk_membership import list_status as risk_membership_status
 from szse_st_reference import reference_status as szse_st_reference_status
+from sse_history_archive import archive_status as sse_history_archive_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -330,6 +331,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
+    sse_archive = sse_history_archive_status(snapshot_dir / 'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -386,6 +388,14 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'series_at_target':1 if st_reference['availability']=='observed' else 0,'declared_series':2,
                     'snapshot_digest':st_reference.get('content_digest'),'url':'/market',
                     'note':'记录数为每日成员合计，包含停牌分母；不同成员数与每日成交覆盖见市场页。仅深市，沪市仍缺；回溯核对不代表历史当时可见或组合财富。'})
+    sources.append({'source_id':'sse_historical_price_archive','label':'上交所 · 历史价格来源核对','availability':sse_archive['availability'],
+                    'requested_through':sse_archive.get('through'),'fetched_at':sse_archive.get('source_fetched_at'),
+                    'observed_through_min':sse_archive.get('start'),'observed_through_max':sse_archive.get('through'),
+                    'observation_count':sse_archive.get('observed_trading_days'),'observation_unit':'有成交股票日',
+                    'series_at_target':None,'observed_source_groups':sse_archive.get('price_responses'),
+                    'declared_series':sse_archive.get('distinct_securities'),'snapshot_digest':sse_archive.get('content_digest'),
+                    'url':'/market','coverage_basis':'price_archives','date_basis':'historical_price_archive',
+                    'note':'计数是有成交价格记录；原件覆盖按证券归档，不是每只股票在目标日都应有成交。缺日待核，不推进沪市完整历史分布、ST覆盖或旧个股清单。'})
     return sources
 
 
@@ -509,6 +519,7 @@ def build_market_risk_status(
         "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit", now=now),
         "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
         "szse_st_reference": st_reference,
+        "sse_history_archive": sse_history_archive_status(snapshot_dir/'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now),
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,

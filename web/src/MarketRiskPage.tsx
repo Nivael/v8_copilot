@@ -14,6 +14,7 @@ import {ETFIssuerHistory} from './ETFIssuerHistory'
 import {NodeMarketAudit} from './NodeMarketAudit'
 import {ExchangeRiskLists} from './ExchangeRiskLists'
 import {SZSESTReference} from './SZSESTReference'
+import {SSEHistorySources} from './SSEHistorySources'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -162,6 +163,7 @@ export function MarketRiskPage(){
           <details className="market-source-notes"><summary>逐日核对（{data.breadth_history.observed_days}个日期）</summary><div className="learning-table-wrap"><table className="learning-table market-history-table"><thead><tr><th scope="col">日期 / 来源内A股</th><th scope="col">有成交 / 无成交</th><th scope="col">上涨 / 下跌 / 平盘</th><th scope="col">下跌比例</th><th scope="col">ST名称组 / 有成交</th><th scope="col">ST组下跌比例</th></tr></thead><tbody>{data.breadth_history.points.map(point=><tr key={point.date}><th scope="row">{point.date}<small>{number(point.listed_source_stocks)}只；原报表{number(point.source_rows)}条</small><small>剔除B股{point.excluded_b_shares}、优先股{point.excluded_preferred_shares}</small></th><td>{number(point.observed_trading_stocks)} / {number(point.nontrading_stocks)}</td><td>{number(point.advancing)} / {number(point.declining)} / {number(point.flat)}</td><td>{ratio(point.declining_share_pct)}</td><td>{number(point.st_name_group.listed_source_stocks)} / {number(point.st_name_group.observed_trading_stocks)}</td><td>{ratio(point.st_name_group.declining_share_pct)}</td></tr>)}</tbody></table></div></details>
           <p><a href={data.breadth_history.source_url} target="_blank" rel="noreferrer">深交所历史日表 ↗</a> · 当前仅深市完整窗发布，沪深合并历史分布仍待补齐。</p>
         </>:<p>历史窗尚未完整发布，暂不展示缩短的曲线。{data.breadth_history.last_recorded_attempt?`最近采集记录已核对 ${data.breadth_history.last_recorded_attempt.completed_days}/${data.breadth_history.last_recorded_attempt.expected_days} 个日期（${new Date(data.breadth_history.last_recorded_attempt.recorded_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}）。`:''}{data.breadth_history.last_recorded_attempt?.status==='failed'?'最近一次采集中断，已核对日期保留用于续采。':''}</p>}
+        {data.sse_history_archive&&<SSEHistorySources data={data.sse_history_archive}/>}
       </section>}
 
       <section className="learning-freshness" aria-label="ETF份额与申赎"><header className="learning-section-head"><div><p className="eyebrow">资金撤离线索 / ETF样本</p><h2>份额变化与净申赎估算</h2></div><label>ETF观察窗口 <select aria-label="ETF观察窗口" value={etfWindow} onChange={event=>setETFWindow(event.target.value)}>{recentAvailable&&<option value="recent">近2个月</option>}{[1,5,20].map(value=><option key={value} value={String(value)}>{value}个交易日</option>)}</select></label></header>

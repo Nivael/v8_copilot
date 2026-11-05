@@ -21,6 +21,7 @@ describe('original question retrospective',()=>{
     expect(await screen.findByText('错误：卖压被解释成洗盘')).toBeVisible()
     expect(screen.getByText(/2026\/06\/02 16:50/)).toBeVisible()
     expect(screen.getByRole('img',{name:/从2026-06-02起/})).toBeVisible()
+    expect(screen.queryByRole('region',{name:'追问背景'})).not.toBeInTheDocument()
     expect(screen.getAllByText('-20.43%')[0]).toBeVisible()
     const source=screen.getByText('展开原回答与聊天来源').closest('details')!
     expect(source.open).toBe(false)
@@ -78,5 +79,22 @@ describe('original question retrospective',()=>{
     fireEvent.click(screen.getByText('价格口径与来源'))
     expect(screen.getByText('完整历史窗口已与重叠价格核对。')).toBeVisible()
     expect(screen.getByRole('link',{name:'补充历史行情（腾讯） ↗'})).toHaveAttribute('href','https://example.test/qfq')
+  })
+  it('makes a brief follow-up readable while retaining its literal words and missing-image boundary',async()=>{
+    const context={version:'history_question_context_v1',question_id:'earlier',question:'这份材料是否影响后续进度？',asked_on:'2026-06-02',source_url:'https://chatgpt.com/c/source'}
+    serve({...detail,questions:[{...question,question:'就是这个',asked_at:null,time_precision:'day',question_context:context,unavailable_attachments:1}]})
+    render(<ResearchHistorySection/>);await screen.findByRole('heading',{name:'就是这个'})
+    const background=screen.getByRole('region',{name:'追问背景'})
+    expect(within(background).getByText(context.question)).toBeVisible()
+    expect(within(background).getByRole('link',{name:'打开这轮原聊天 ↗'})).toHaveAttribute('href',context.source_url)
+    expect(within(background).getByText('这条追问附有原图，文字档案未包含图片。')).toBeVisible()
+    expect(within(screen.getByRole('complementary',{name:'*ST宝馨历史提问'})).getByText(/这轮在问：这份材料/)).toBeVisible()
+    expect(screen.getByText(/具体时刻未归档/)).toBeVisible()
+  })
+  it('keeps a long background question expandable',async()=>{
+    serve({...detail,questions:[{...question,question:'继续看',question_context:{version:'history_question_context_v1',question_id:'earlier',question:'背景原文。'.repeat(60),asked_on:'2026-06-02',source_url:'https://chatgpt.com/c/source'}}]})
+    render(<ResearchHistorySection/>);await screen.findByRole('region',{name:'追问背景'})
+    const full=screen.getByText('完整背景原问题');expect(full.closest('details')!.open).toBe(false)
+    fireEvent.click(full);expect(screen.getByText('背景原文。'.repeat(60))).toBeVisible()
   })
 })

@@ -52,7 +52,56 @@ def question_order(record):
 def question_digest(record):
     basis={'asked_at':record.get('asked_at'),'question':record['question'],'answers':record['answers']}
     if record.get('asked_at') is None:basis.update(asked_on=question_day(record),time_precision='day')
+    if record.get('question_context'):
+        basis['question_context']={k:record['question_context'][k] for k in ('version','question_id','question','asked_on','source_url')}
     return digest(basis)
+
+
+def add_question_contexts(records,captured):
+    """Quote an independently captured group opener, never a guessed nearby ask."""
+    result=[{k:v for k,v in row.items() if k!='question_context'} for row in records]
+    by_id=defaultdict(list);owners=defaultdict(list);candidates=defaultdict(dict)
+    def threads(row):return {s['thread_id'] for s in row['sources'] if s['kind'] in {'chatgpt','chatgpt_rendered'} and s.get('thread_id')}
+    for row in result:
+        if row['kind']!='original_question':continue
+        ids={row['id'],*(o['id'] for o in row.get('occurrences',[])),*('QUESTION-'+s['turn_id'] for s in row['sources'] if s['kind'] in {'chatgpt','chatgpt_rendered'} and s.get('turn_id'))}
+        for identity in ids:by_id[identity].append(row)
+    for row in captured:
+        if row.get('asked_at') and row.get('source_date_owner_id')==row['id'].removeprefix('QUESTION-') and row.get('source_group_offset')==0:
+            owners[row['id']].append(row)
+    for child in captured:
+        matches=by_id.get(child['id'],[]);owner_id='QUESTION-'+str(child.get('source_date_owner_id'))
+        parents=by_id.get(owner_id,[])
+        if len(matches)!=1 or len(parents)!=1:continue
+        row,parent=matches[0],parents[0]
+        if (row is parent or len(row['question'])>40 or row.get('asked_at') is not None or child.get('asked_at') is not None
+                or child.get('source_group_offset',0)<=0 or row.get('source_date_owner_id')!=child.get('source_date_owner_id')
+                or row.get('source_group_offset')!=child.get('source_group_offset')
+                or not row.get('source_date_marker') or instant(row['source_date_marker'])!=instant(child['source_date_marker'])
+                or row['question']!=child['question'] or question_day(row)!=question_day(child)):
+            continue
+        for opener in owners.get(owner_id,[]):
+            shared=threads(child)&threads(opener)&threads(row)&threads(parent)
+            if (len(shared)!=1 or parent['question']!=opener['question'] or question_day(parent)!=question_day(child)
+                    or not parent.get('asked_at') or instant(parent['asked_at'])!=instant(opener['asked_at'])
+                    or instant(child['source_date_marker'])!=instant(opener['asked_at'])):
+                continue
+            thread=next(iter(shared))
+            context={'version':'history_question_context_v1','question_id':parent['id'],'question':parent['question'],
+                     'asked_on':question_day(parent),'source_url':'https://chatgpt.com/c/'+thread}
+            key=digest(context);item=candidates[row['id']].setdefault(key,{**context,'source_capture_digests':set()})
+            item['source_capture_digests'].update(s['capture_digest'] for r in (child,opener) for s in r['sources'] if s.get('capture_digest'))
+    for row in result:
+        choices=candidates[row['id']]
+        if len(choices)==1:
+            context=next(iter(choices.values()));row['question_context']={**context,'source_capture_digests':sorted(context['source_capture_digests'])}
+    return result
+
+
+def prepare_history_records(imported,*,root=ROOT):
+    from research_history_captures import import_capture_files
+    captured,_=import_capture_files(root/'captures/cua_v1',imported.get('stock_names',{}))
+    return mark_answer_bindings(add_question_contexts(imported['records'],captured))
 
 
 def mark_answer_bindings(records):
@@ -247,7 +296,7 @@ def assemble(records,paths,*,reviews=None):
 
 def publish(imported,*,root=ROOT):
     from research_history_prices import bound
-    paths=bound(root/'price_paths/current.json');records=mark_answer_bindings(imported['records'])
+    paths=bound(root/'price_paths/current.json');records=prepare_history_records(imported,root=root)
     if paths.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed; rebuild paths before publishing')
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
     result=assemble(records,paths['data'],reviews=reviews)
@@ -274,7 +323,7 @@ def freeze_reviews(imported,*,root=ROOT):
     from research_history_prices import bound
     packet=bound(root/'price_paths/current.json')
     if packet.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed')
-    paths=packet['data'];records={r['id']:r for r in mark_answer_bindings(imported['records'])}
+    paths=packet['data'];records={r['id']:r for r in prepare_history_records(imported,root=root)}
     reviews=json.loads((root/'reviews.json').read_text());frozen={}
     for identity,review in reviews.items():
         record=records.get(identity)

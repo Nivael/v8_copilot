@@ -1,6 +1,6 @@
 """Private, dated conversation history. Original questions never become fabricated runs."""
 from collections import defaultdict
-from datetime import datetime,timedelta,timezone
+from datetime import date,datetime,timedelta,timezone
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -31,6 +31,39 @@ def instant(value):
     stamp=datetime.fromtimestamp(value,timezone.utc) if isinstance(value,(int,float)) else datetime.fromisoformat(value.replace('Z','+00:00'))
     if stamp.tzinfo is None:raise ValueError('history date has no timezone')
     return stamp
+
+
+def question_day(record):
+    if record.get('asked_at') is not None:return instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()
+    if record.get('time_precision')!='day':raise ValueError('question has neither timestamp nor verified date')
+    return date.fromisoformat(record['asked_on']).isoformat()
+
+
+def question_order(record):
+    # A group marker orders a dated follow-up; it is never its displayed ask time.
+    day=question_day(record)
+    stamp=record.get('asked_at') or record.get('source_date_marker') or day+'T00:00:00+08:00'
+    if instant(stamp).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()!=day:raise ValueError('question date group mismatch')
+    return instant(stamp),record.get('source_group_offset',0)
+
+
+def question_digest(record):
+    basis={'asked_at':record.get('asked_at'),'question':record['question'],'answers':record['answers']}
+    if record.get('asked_at') is None:basis.update(asked_on=question_day(record),time_precision='day')
+    return digest(basis)
+
+
+def mark_answer_bindings(records):
+    groups=defaultdict(list)
+    for record in records:
+        for answer in record['answers']:
+            if record['kind']=='original_question' and answer.get('completed_at'):
+                groups[(answer.get('source_thread_id'),str(answer['completed_at']),answer['text'])].append((record['id'],answer))
+    for group in groups.values():
+        ids=sorted({identity for identity,_ in group})
+        if len(ids)>1:
+            for _,answer in group:answer['binding']='shared_turn_answer';answer['source_question_ids']=ids
+    return records
 
 
 def clean_question(value):
@@ -83,7 +116,8 @@ def import_pages(directory,known):
                          'answers':[],'sources':[]})
                 record['symbols']=sorted(set(record['symbols'])|set(symbols))
                 record['sources'].append({'kind':'chatgpt','thread_id':thread['id'],'title':thread['title'],'turn_id':turn['id'],
-                                          'url':'https://chatgpt.com/c/'+thread['id'],'capture_sha256':sha256(raw).hexdigest()})
+                                          'url':'https://chatgpt.com/c/'+thread['id'],'capture_sha256':sha256(raw).hexdigest(),
+                                          'asked_at':stamp,'time_precision':'instant'})
                 if answer and not any(a['text']==answer for a in record['answers']):
                     record['answers'].append({'text':answer,'summary':judgment(answer),'completed_at':turn.get('completedAt'),
                                               'truncated':len(answer)>=20000,'source_thread_id':thread['id']})
@@ -125,11 +159,13 @@ def import_ledger(path,known):
 def deduplicate(records):
     """Exact retries/branch copies only. Different wording is not silently merged."""
     result=[];seen={}
-    for record in sorted(records,key=lambda r:instant(r['asked_at'])):
-        day=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()
+    for record in sorted(records,key=question_order):
+        day=question_day(record)
         key=(day,re.sub(r'\s+','',record['question']),record['kind'])
         if key in seen:
             old=seen[key];old['sources'].extend(record['sources'])
+            occurrence=lambda r:{'id':r['id'],'asked_at':r.get('asked_at'),'asked_on':question_day(r),'time_precision':r.get('time_precision','instant'),'source_date_marker':r.get('source_date_marker')}
+            old['occurrences']=[*old.get('occurrences',[occurrence(old)]),*record.get('occurrences',[occurrence(record)])]
             for answer in record['answers']:
                 if not any(a['text']==answer['text'] for a in old['answers']):old['answers'].append(answer)
             old['retry_or_branch_count']=old.get('retry_or_branch_count',1)+1
@@ -160,17 +196,25 @@ def assemble(records,paths,*,reviews=None):
         if not history:continue
         rows=[]
         for record in history:
-            item={**record};asked=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai'));day=asked.date().isoformat()
-            cutoff=day if asked.hour>=15 else (asked.date()-timedelta(days=1)).isoformat()
+            item={**record};day=question_day(record);asked=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')) if record.get('asked_at') else None
+            completed=[instant(a['completed_at']).astimezone(ZoneInfo('Asia/Shanghai')) for a in record['answers'] if a.get('completed_at') is not None]
+            finished=max(completed) if completed else None
+            effective=max(asked,finished) if asked and finished else asked
+            basis_day=effective.date().isoformat() if effective else day
+            cutoff=basis_day if effective is None or effective.hour>=15 else (effective.date()-timedelta(days=1)).isoformat()
             candidates=[p for p in stock['points'] if p['date']<=cutoff and p['level'] is not None]
             anchor=candidates[-1] if candidates else None
             item['asked_on']=day;item['anchor_date']=anchor['date'] if anchor else None
-            item['basis_note']='从提问时已经完成的最近有效收盘起比较；15点前的问题采用此前收盘，不使用当日尚未完成的收盘价。日线不代表实际成交价。'
+            item['answer_completed_at']=finished.isoformat() if finished else None
+            item['anchor_basis']='original_answer_time' if finished and asked and finished>asked else 'question_time'
+            item['basis_note']='比较基准采用提问及原回答完成两者较晚时点，取当时已完成的最近有效收盘；15点前不使用尚未完成的当日收盘价。日线不代表实际成交价。'
+            if asked is None:
+                item['anchor_basis']='date_only_retrospective_close';item['basis_note']='原页面只确认提问日期，未提供这条追问的独立时刻；以该日或此前最近有效收盘作事后日线比较，不认定当时可见或可成交，也不据此验证盘中指令。'
             if anchor:
                 series=[('stock',stock['name'],stock['points']),('market','中证全指',paths['market']),('st',paths['st_name'],paths['st'])]
                 item['outcomes']={key:outcome(points,anchor['date'],calendar) for key,_,points in series}
             else:item['outcomes']={}
-            item['question_digest']=digest({'asked_at':record['asked_at'],'question':record['question'],'answers':record['answers']})
+            item['question_digest']=question_digest(record)
             review=reviews.get(record['id'])
             if review and review.get('question_digest')==item['question_digest'] and review.get('price_digest')==price_digest:
                 quote=re.sub(r'[\s*_>#`]','',review['then_quote']);texts=re.sub(r'[\s*_>#`]','',' '.join(a['text'] for a in record['answers']))
@@ -178,7 +222,7 @@ def assemble(records,paths,*,reviews=None):
                 item['review']=review
             else:item['review']=None
             rows.append(item)
-        rows.sort(key=lambda r:instant(r['asked_at']))
+        rows.sort(key=question_order)
         stats={'original_questions':sum(r['kind']=='original_question' for r in rows),'saved_research':sum(r['kind']=='saved_research' for r in rows),'reviewed':sum(bool(r['review']) for r in rows)}
         stocks.append({'symbol':symbol,'name':stock['name'],**stats,'first_asked_on':rows[0]['asked_on'],'last_asked_on':rows[-1]['asked_on']})
         details[symbol]={'availability':'available','symbol':symbol,'name':stock['name'],'as_of':paths['calendar'][-1],'questions':rows,
@@ -191,7 +235,7 @@ def assemble(records,paths,*,reviews=None):
 
 def publish(imported,*,root=ROOT):
     from research_history_prices import bound
-    paths=bound(root/'price_paths/current.json');records=imported['records']
+    paths=bound(root/'price_paths/current.json');records=mark_answer_bindings(imported['records'])
     if paths.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed; rebuild paths before publishing')
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
     result=assemble(records,paths['data'],reviews=reviews)
@@ -210,7 +254,7 @@ def publish(imported,*,root=ROOT):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py']})
 
 
 def load(symbol=None,*,root=ROOT):

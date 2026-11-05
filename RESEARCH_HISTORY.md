@@ -15,13 +15,13 @@
 
 ## 内容与时间
 
-本轮找回148条去重后的原问题、43份另存研究题，关联30只证券；29条有逐项复核或明确的盘中证据边界评估。
-这些不是“全部历史已找齐”的声明：已保存35份ChatGPT聊天的工具返回片段和16份Codex档案的提取记录；
+本轮找回160条去重后的原问题、43份另存研究题，关联30只证券；37条有逐项复核或明确的盘中证据边界评估。
+这些不是“全部历史已找齐”的声明：已保存35份ChatGPT聊天的工具返回片段、16份Codex档案的提取记录及已返回的原页面补档；
 部分长聊天只返回较近数轮，更早消息仍需继续补找。精确重复的分支/重试合并，不同措辞不模糊合并。
 保存研究的完成日期明确标为保存时间，不当作用户最初提问日期。
 
-所有展示日期转为北京时间。基准采用提问时已完成的最近有效日收盘：15点前不使用尚未完成的当日收盘。
-非交易日回到此前有效收盘。D+1/5/20/60按共同交易日历定位，不能用自然日或跳过停牌补齐。
+所有展示日期转为北京时间。有独立时刻时，基准采用提问及原回答完成两者较晚时点已形成的最近有效日收盘：15点前不使用尚未完成的当日收盘。研究跨收盘完成时，不把回答之前的当日变化记为预测结果。
+页面日期分组只支持日期，不将上一问的时刻复制给后续追问；这些记录的 `asked_at=null`，以提问日或此前最近有效收盘作事后比较，UI明确只显示日期。非交易日回到此前有效收盘。D+1/5/20/60按共同交易日历定位，不能用自然日或跳过停牌补齐。
 没有后续价格时显示待更新，不能显示0%。盘中问题的日线对照不等于实际成交和做T收益。
 
 旧回答不改写；复盘绑定问题、时间、原回答及价格路径摘要，引用必须为原回答中的非空片段。
@@ -42,16 +42,20 @@
 
 由Codex从有权限的原聊天/档案提取实际用户消息和最终回答，保留原始消息ID、日期、来源校验值与缺口。
 不读取推理文本作为用户问题，不将工具参数或引用的工程说明计为投资提问。
+`research_history_captures.py` 可从明确指定的本地会话日志保存已经返回的CUA结构化页面文本，只接受专用标记及对应CUA调用，不读取浏览器状态或隐藏接口。原页面文本、工具结果摘要、来源字节位置和消息ID分别保存；消息级ID合并可重放，展开后的用户内容替换含页面按钮的旧渲染，不改写原工具消息。共享一轮最终回答的多个追问明确标记，不冒充各自独立回复。
+
 导入文件为 `records` / `sources`；`reviews.json` 以问题ID索引，包含
-`question_digest`、`then_quote`、`headline`、`assessment`、`lessons`、`explanation`、`reviewed_at`。
+`question_digest`、`price_digest`、`then_quote`、`headline`、`assessment`、`lessons`、`explanation`、`reviewed_at`。
 该文件只保存逐条复核结果，不自动晋级为通用accepted经验。
 
 显式更新作业如下，参数路径使用本机私有文件；请求处理器不执行联网、全库核对或价格重建：
 
 ```bash
+uv run python research_history_captures.py --log <explicit-owner-tool-log.jsonl> \
+  --import-file <private-import.json> --output <enriched-private-import.json>
 uv run python research_history_prices.py --through 2026-11-05 \
-  --import-file <private-import.json> --prepare-inputs --capture-missing
-uv run python research_history.py --publish-import <private-import.json>
+  --import-file <enriched-private-import.json> --prepare-inputs --capture-missing
+uv run python research_history.py --publish-import <enriched-private-import.json>
 ```
 
 重建前必须已有同日两交易所收盘、日历史与风险警示成员原件；缺失时失败，不推断新数据已完成。

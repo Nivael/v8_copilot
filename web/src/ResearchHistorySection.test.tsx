@@ -7,11 +7,11 @@ const dates=['2026-06-01','2026-06-02','2026-06-03','2026-06-04','2026-06-05','2
 const path=(values:number[])=>dates.map((date,i)=>({date,value:values[i],level:values[i]}))
 const question:HistoryQuestion={id:'q1',asked_at:'2026-06-02T08:50:00Z',asked_on:'2026-06-02',question:'尾盘偷袭是什么意思？',kind:'original_question',anchor_date:'2026-06-02',basis_note:'最近已完成收盘',categories:['短线量价'],answers:[{text:'原回答：更像洗盘。',summary:'更像洗盘。',truncated:false}],sources:[{kind:'chatgpt',url:'https://chatgpt.com/c/source',title:'宝馨开板分析'}],outcomes:{stock:{five_day:{date:'2026-06-09',change_pct:-20.43}},market:{five_day:{date:'2026-06-09',change_pct:-1.79}},st:{five_day:{date:'2026-06-09',change_pct:-5.69}}},review:{headline:'错误：卖压被解释成洗盘',assessment:'后续方向与原乐观判断不符。',then_quote:'更像洗盘。',lessons:['不由盘口猜资金身份。'],explanation:[{lens:'个股与判断逻辑',text:'公司风险需要公告确认。'}],reviewed_at:'2026-11-06T02:00:00Z'}}
 const detail:HistoryDetail={availability:'available',symbol:'002514.SZ',name:'*ST宝馨',as_of:'2026-06-09',questions:[question,{...question,id:'q2',asked_at:'2026-06-03T08:00:00Z',asked_on:'2026-06-03',anchor_date:'2026-06-03',question:'黑历史有哪些？',categories:['财报与监管'],answers:[],review:null}],chart_sources:{stock:path([100,95,90,85,80,77,75]),market:path([100,99,98,98,98,97,97]),st:path([100,99,98,97,96,95,94])},st_name:'ST板块（东财）',st_note:'供应商板块，不拼接自建参考。',source_urls:{st:'https://quote.eastmoney.com/bk/90.BK0511.html'}}
-function serve(){return vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
+function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
   const url=String(input);let data:unknown
   if(url.endsWith('/history'))data={availability:'available',as_of:'2026-06-09',stocks:[{symbol:'002514.SZ',name:'*ST宝馨',original_questions:2},{symbol:'603398.SH',name:'*ST沐邦',original_questions:1}],coverage:{original_questions:3,saved_research:1,reviewed_questions:1,stocks:2,source_note:'部分长聊天更早消息待补齐'}}
   else if(url.includes('603398.SH'))data={...detail,symbol:'603398.SH',name:'*ST沐邦',questions:[{...question,id:'mu',question:'财投以后必须涨吗？'}]}
-  else data=detail
+  else data=custom
   return new Response(JSON.stringify({availability:'available',data,refresh:{in_progress:false,last_error:null}}))
 })}
 describe('original question retrospective',()=>{
@@ -43,5 +43,13 @@ describe('original question retrospective',()=>{
     fireEvent.change(screen.getByRole('combobox',{name:'历史复盘标的'}),{target:{value:'603398.SH'}})
     await waitFor(()=>expect(screen.getByRole('heading',{name:'财投以后必须涨吗？'})).toBeVisible())
     expect(screen.queryByRole('article',{name:'*ST宝馨历史复盘详情'})).not.toBeInTheDocument()
+  })
+  it('shows date-only follow-ups without a made-up clock and labels a shared final answer',async()=>{
+    serve({...detail,questions:[{...question,asked_at:null,time_precision:'day',answers:[{...question.answers[0],binding:'shared_turn_answer',source_question_ids:['q1','q2']}]}]})
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText(/2026-06-02 · 具体时刻未归档/)).toBeVisible()
+    expect(screen.getByText('该轮最终回答（多条提问共同归档）')).toBeVisible()
+    expect(screen.queryByText(/1970/)).not.toBeInTheDocument()
+    expect(screen.getByText(/具体时刻不详，以2026-06-02收盘作事后比较/)).toBeVisible()
   })
 })

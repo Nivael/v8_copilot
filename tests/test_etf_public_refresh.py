@@ -4,7 +4,8 @@ import json
 import pytest
 
 from canonical_json import digest
-from etf_public_refresh import PUBLIC_CODES, parse_share_pages, refresh_public_etfs
+from etf_public_refresh import PUBLIC_CODES, parse_share_pages
+from etf_source_fixtures import refresh_public_etfs
 from market_calendar import sessions_2026
 from market_risk import ETF_BASKET, build_market_risk_status
 

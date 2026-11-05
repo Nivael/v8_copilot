@@ -387,6 +387,13 @@ export interface ETFReviewScope {
     announced_resume_on?:string;record_on?:string;creation_redemption_code?:string;related_event_id?:string;related_event_date?:string;implementation_verified:false;current_validity_verified:false;fund_total_share_conversion:false;market_window_correction_applied:false;estimated_net_subscription_yuan:null}>;
   creation_unit_groups?:Array<{code:string;announced_effective_on:string;unit_before_shares:string|null;unit_after_shares:string;document_ids:string[]}>;
 }
+export interface ETFDailyRawReconciliation {
+  version:string;availability:string;source_response_count:number;snapshot_digest:string;start:string;through:string;
+  share_observations:number;nav_observations:number;exact_source_projection_verified:boolean;note:string;
+  whole_fund_daily_scope_verified:false;source_rounding_rule_verified:false;share_precision_verified:false;final_revision_verified:false;corporate_actions_checked:false;estimated_net_subscription_yuan:null;
+  funds:Array<{code:string;share_field:string;share_unit:string;fractional_digit_counts:Record<string,number>;
+    records:Array<{code:string;date:string;raw_text:string;source_value:string;ten_thousand_shares:string;shares:string;fractional_digits:number;source_url:string;response_sha256:string;observed_at:string}>}>;
+}
 export interface MarketRiskStatus {
   contract_version:'market_risk_status_v1'
   parameter_version:string
@@ -398,8 +405,8 @@ export interface MarketRiskStatus {
   current_risk_assessment:'not_calibrated'
   indices:MarketRiskIndex[]
   etfs:MarketRiskETF[]
-  public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number}
-  szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string}
+  public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number;raw_reconciliation?:ETFDailyRawReconciliation}
+  szse_etf_snapshot?:{availability:string;through?:string;revision_note?:string;share_revision_status?:string;raw_reconciliation?:ETFDailyRawReconciliation}
   szse_revision_recheck?:SZSERevisionRecheck
   etf_issuer_history?:ETFIssuerHistory
   public_index_snapshot?:{availability:string;through?:string;scope?:string}

@@ -18,6 +18,7 @@ from etf_report_continuity import report_continuity_status
 from etf_notice_review import notice_review_status
 from etf_prospectus_rules import prospectus_rule_status
 from etf_review_scope import scope_status as etf_scope_status
+from etf_daily_sources import reconcile_sse, reconcile_szse
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
@@ -188,6 +189,7 @@ def _public_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
         declared = {code for code in ETF_BASKET if code.endswith(".SH")}
         if set(raw["declared_codes"]) != declared or set(raw["etf_shares"]) != declared:
             raise ValueError("unexpected public ETF scope")
+        source_audit = reconcile_sse(directory, {**raw, 'content_digest':expected}, now)
         etfs = []
         for code in sorted(declared):
             rows = raw["etf_shares"][code]
@@ -201,7 +203,7 @@ def _public_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
         return {"availability": "observed", "through": through.isoformat(), "fetched_at": raw["fetched_at"],
                 "content_digest": expected, "provider": "sse_public", "scope": "five_declared_SSE_ETFs",
                 "calendar_version": CALENDAR_VERSION, "gap_count": len(raw["gaps"]),
-                "availability_basis": raw["availability_basis"]}, etfs
+                "availability_basis": raw["availability_basis"], 'raw_reconciliation':source_audit}, etfs
     except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError):
         return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, []
 
@@ -263,6 +265,7 @@ def _szse_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
         codes = {code for code in ETF_BASKET if code.endswith(".SZ")}
         if set(raw["etf_shares"]) != codes or set(raw["etf_navs"]) != codes:
             raise ValueError("unexpected SZSE scope")
+        source_audit = reconcile_szse(directory, {**raw, 'content_digest':expected}, now)
         etfs = []
         for code in sorted(codes):
             for key, day_key, value_key in (("etf_shares", "trade_date", "fd_share"), ("etf_navs", "nav_date", "unit_nav")):
@@ -276,7 +279,7 @@ def _szse_etfs(directory: Path, now: datetime) -> tuple[dict, list[dict]]:
             raise ValueError("SZSE target missing")
         return {"availability": "observed", "through": through.isoformat(), "fetched_at": raw["fetched_at"],
                 "content_digest": expected, "gap_count": len(raw["gaps"]),
-                "revision_note": raw["revision_note"], "share_revision_status": raw["share_revision_status"]}, etfs
+                "revision_note": raw["revision_note"], "share_revision_status": raw["share_revision_status"], 'raw_reconciliation':source_audit}, etfs
     except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError):
         return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, []
 
@@ -347,9 +350,9 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
          "指数可用不代表同期ST风格和市场宽度已覆盖。"),
         ("sse_etf_shares", "上交所 · ETF份额", sse_meta, sse, "through", "share_observation_count", 5, ETF_SHARE_SOURCE,
-         "份额折算等事件未核验，不作为已确认净申赎金额。"),
+         "原响应与日表逐条核对；源端舍入、全基金范围及份额事件未验收，不作为已确认净申赎金额。"),
         ("szse_etf_shares", "深交所 · ETF份额", szse_meta, szse, "through", "share_observation_count", 3, SZSE_ETF_SOURCE,
-         "最新份额的次日修订状态待核对。"),
+         "原响应与日表逐条核对；源端舍入及全基金范围未确认，最新份额最终修订版待核对。"),
         ("szse_etf_nav", "深交所 · ETF净值", szse_meta, szse, "nav_through", "nav_observation_count", 3, SZSE_ETF_SOURCE,
          "只显示实际取得的净值，不以前值补齐未披露日期。"),
         ("issuer_etf_nav", "5家基金公司 · ETF单位净值", issuer_meta, issuer_rows, "nav_through", "nav_observation_count", 8,

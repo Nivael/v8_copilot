@@ -3,8 +3,9 @@ import json
 
 import pytest
 
-from etf_public_refresh import PUBLIC_CODES, refresh_public_etfs
-from etf_szse_refresh import refresh_szse_etfs
+from etf_public_refresh import PUBLIC_CODES
+from etf_source_fixtures import refresh_public_etfs
+from etf_source_fixtures import refresh_szse_etfs
 from learning_status import build_learning_status
 from market_calendar import sessions_2026
 from market_public_refresh import refresh_public_indices

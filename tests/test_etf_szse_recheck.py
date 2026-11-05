@@ -8,7 +8,8 @@ import pytest
 
 from canonical_json import digest
 from etf_szse_history import HTTP_API_URL, SZSE_CODES, archive_response, history_url
-from etf_szse_refresh import SZSEHistoryClient, refresh_szse_etfs
+from etf_szse_refresh import SZSEHistoryClient
+from etf_source_fixtures import refresh_szse_etfs
 from etf_szse_recheck import materialize_recheck, recheck_status, refresh_recheck
 from market_risk import build_market_risk_status
 from test_etf_szse_refresh import CALENDAR, Client, block, rows

@@ -5,8 +5,10 @@ import json
 import pytest
 
 from canonical_json import digest
-from etf_szse_refresh import SZSE_CODES, parse_history, refresh_szse_etfs
-from etf_public_refresh import PUBLIC_CODES, refresh_public_etfs
+from etf_szse_refresh import SZSE_CODES, parse_history
+from etf_source_fixtures import refresh_szse_etfs
+from etf_public_refresh import PUBLIC_CODES
+from etf_source_fixtures import refresh_public_etfs
 from market_calendar import sessions_2026
 from market_risk import build_market_risk_status
 

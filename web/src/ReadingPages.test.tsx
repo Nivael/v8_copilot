@@ -61,6 +61,19 @@ describe('trader reading pages',()=>{
     fireEvent.change(screen.getByRole('slider'),{target:{value:'0'}})
     expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext','2026-09-04')
   })
+  it('marks only an assessed cutoff present inside the displayed chart window',()=>{
+    const series=marketReading.chart
+    const through=series[0].points[0].date
+    const view=render(<ReadingChart label="复盘走势" series={series} reviewThrough={through}/>)
+    expect(screen.getByText(`复盘截至 ${through}`)).toBeVisible()
+    expect(view.container.querySelector('.reading-after-review')).toBeInTheDocument()
+    fireEvent.change(screen.getByRole('slider'),{target:{value:'0'}})
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext',through)
+    for(const cutoff of ['missing',series[0].points.at(-1)!.date]){
+      view.rerender(<ReadingChart label="复盘走势" series={series} reviewThrough={cutoff}/>)
+      expect(view.container.querySelector('.reading-review-boundary')).not.toBeInTheDocument()
+    }
+  })
   it('picks up a newly recorded Codex judgment on focus without submitting another question',async()=>{
     const request=serve(learningReading)
     render(<MemoryRouter><ExperienceHub/></MemoryRouter>)

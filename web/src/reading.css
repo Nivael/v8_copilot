@@ -20,3 +20,4 @@
 .reading-section-links {display:flex;flex-wrap:wrap;gap:12px 24px;margin:-10px 0 28px;font-size:13px}
 .reading-row-status {display:block;color:#777f7b;font-size:10px;margin-top:5px}
 #tracked-stocks,#swing-watch,#experience-library,.reading-capital-actions {scroll-margin-top:85px}
+.reading-after-review{fill:#82978b;opacity:.08}.reading-review-boundary line{stroke:#718b7b;stroke-dasharray:4 4;stroke-width:1}.reading-review-boundary text{fill:#5c7465;font-size:11px}

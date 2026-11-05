@@ -24,8 +24,10 @@
 页面日期分组只支持日期，不将上一问的时刻复制给后续追问；这些记录的 `asked_at=null`，以提问日或此前最近有效收盘作事后比较，UI明确只显示日期。非交易日回到此前有效收盘。D+1/5/20/60按共同交易日历定位，不能用自然日或跳过停牌补齐。
 没有后续价格时显示待更新，不能显示0%。盘中问题的日线对照不等于实际成交和做T收益。
 
-旧回答不改写；复盘绑定问题、时间、原回答及价格路径摘要，引用必须为原回答中的非空片段。
-原回答改变后旧复盘退出当前展示；正文或处理器改变后阅读快照退出当前展示，等待重新发布。
+旧回答不改写；复盘绑定问题、时间、原回答及**明确评估窗口内的相关价格**，引用必须为原回答中的非空片段。
+追加之后的行情保留旧复盘，显示其价格截止日，并提示有更长走势；后续曲线单独标出评估边界。
+无关个股、显示名或抓取时间变化不撤回原判断。原回答、相关窗口价格、有效基准或ST身份更正后，
+当前判断撤回，此前复盘收在展开层。正文或处理器改变后阅读快照退出当前展示，等待重新发布。
 方向判断、事实核对和盘中执行分开评价，不能只因后跌就认定资金在出货，或只因反弹就证明旧事实准确。
 
 ## 价格和对照
@@ -46,6 +48,12 @@
 
 导入文件为 `records` / `sources`；`reviews.json` 以问题ID索引，包含
 `question_digest`、`price_digest`、`then_quote`、`headline`、`assessment`、`lessons`、`explanation`、`reviewed_at`。
+`history_review_window_v1` 另保存 `price_through`、`scope_symbols`、`focused_symbol`、`anchor_date` 和
+`price_window_digest`。范围包括该问题涉及的证券及同窗大盘/ST，不绑定无关证券或未来行。
+关联股票页面明确注明主要评估哪只股票；各自的停牌基准不会改变原评估股票的绑定。
+`reviewed_at` 是实际写复盘的时间，`price_through` 是本次评估的行情窗口，二者不可混用。
+例如宝馨6月2日尾盘问题，本次短线复核只评价至D+20（7月1日），后续曲线仍延伸至11月5日；
+没有把现在写下的经验伪装成7月时已经形成的判断。
 该文件只保存逐条复核结果，不自动晋级为通用accepted经验。
 
 显式更新作业如下，参数路径使用本机私有文件；请求处理器不执行联网、全库核对或价格重建：
@@ -55,12 +63,15 @@ uv run python research_history_captures.py --log <explicit-owner-tool-log.jsonl>
   --import-file <private-import.json> --output <enriched-private-import.json>
 uv run python research_history_prices.py --through 2026-11-05 \
   --import-file <enriched-private-import.json> --prepare-inputs --capture-missing
+# 一次性迁移旧绑定：仅当原回答和整份旧价格摘要都仍匹配时才保存评估窗口；重复执行不延长窗口。
+uv run python research_history.py --freeze-reviews-import <enriched-private-import.json>
 uv run python research_history.py --publish-import <enriched-private-import.json>
 ```
 
 重建前必须已有同日两交易所收盘、日历史与风险警示成员原件；缺失时失败，不推断新数据已完成。
 `--prepare-inputs` 只读选择本地SQL快照并取得两个指数原件，不能替代交易所全市场行情的准备。
-价格发布绑定价格处理器，阅读发布绑定两个处理器及原问题/价格内容摘要。
+旧复盘绑定已过期时迁移失败，必须重新核查内容，不能只换摘要冒充复盘。迁移本身不改变复盘正文与写作日期。
+价格发布绑定价格处理器，阅读发布绑定采集、价格、窗口复盘和阅读处理器及原问题/价格内容摘要。
 
 继续工作：补齐长聊天更早消息；逐条复核其余回答；补未定位证券与原图/分钟级成交证据；
 将反复出现且有多个真实来源支持的经验送入原候选验证流程。未完成项不计为已验证投资效果。

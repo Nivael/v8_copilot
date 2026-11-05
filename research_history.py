@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 from canonical_json import digest
 from data_refresh import atomic_write_json
 from settings import DATA_ROOT
+from research_history_reviews import freeze_review,resolve_review
 
 ROOT=DATA_ROOT/'local_data/v8_copilot/research_history'
 ALIASES={'沐邦':'603398.SH','宝馨':'002514.SZ','准油':'002207.SZ','联翔':'603272.SH','美芝':'002856.SZ',
@@ -188,39 +189,48 @@ def outcome(points,anchor_date,calendar):
     return result
 
 
+def comparison_basis(record,points):
+    day=question_day(record);asked=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')) if record.get('asked_at') else None
+    completed=[instant(a['completed_at']).astimezone(ZoneInfo('Asia/Shanghai')) for a in record['answers'] if a.get('completed_at') is not None]
+    finished=max(completed) if completed else None
+    effective=max(asked,finished) if asked and finished else asked
+    basis_day=effective.date().isoformat() if effective else day
+    cutoff=basis_day if effective is None or effective.hour>=15 else (effective.date()-timedelta(days=1)).isoformat()
+    candidates=[p for p in points if p['date']<=cutoff and p['level'] is not None]
+    basis={'asked_on':day,'anchor_date':candidates[-1]['date'] if candidates else None,
+           'answer_completed_at':finished.isoformat() if finished else None,
+           'anchor_basis':'original_answer_time' if finished and asked and finished>asked else 'question_time',
+           'basis_note':'比较基准采用提问及原回答完成两者较晚时点，取当时已完成的最近有效收盘；15点前不使用尚未完成的当日收盘价。日线不代表实际成交价。'}
+    if asked is None:
+        basis.update(anchor_basis='date_only_retrospective_close',basis_note='原页面只确认提问日期，未提供这条追问的独立时刻；以该日或此前最近有效收盘作事后日线比较，不认定当时可见或可成交，也不据此验证盘中指令。')
+    return basis
+
+
+def review_anchor(record,review,paths):
+    scope=record['symbols'];focus=review.get('focused_symbol') or (scope[0] if len(scope)==1 else 'market' if not scope else None)
+    points=paths['market'] if focus=='market' else paths['stocks'].get(focus,{}).get('points',[])
+    return comparison_basis(record,points)['anchor_date']
+
+
 def assemble(records,paths,*,reviews=None):
-    calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {};price_digest=digest(paths)
+    calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {}
     scopes={**paths['stocks'],'market':{'name':'大盘、ST与待定位问题','points':paths['market']}}
     for symbol,stock in scopes.items():
         history=[r for r in records if (symbol in r['symbols'] if symbol!='market' else not r['symbols'])]
         if not history:continue
         rows=[]
         for record in history:
-            item={**record};day=question_day(record);asked=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')) if record.get('asked_at') else None
-            completed=[instant(a['completed_at']).astimezone(ZoneInfo('Asia/Shanghai')) for a in record['answers'] if a.get('completed_at') is not None]
-            finished=max(completed) if completed else None
-            effective=max(asked,finished) if asked and finished else asked
-            basis_day=effective.date().isoformat() if effective else day
-            cutoff=basis_day if effective is None or effective.hour>=15 else (effective.date()-timedelta(days=1)).isoformat()
-            candidates=[p for p in stock['points'] if p['date']<=cutoff and p['level'] is not None]
-            anchor=candidates[-1] if candidates else None
-            item['asked_on']=day;item['anchor_date']=anchor['date'] if anchor else None
-            item['answer_completed_at']=finished.isoformat() if finished else None
-            item['anchor_basis']='original_answer_time' if finished and asked and finished>asked else 'question_time'
-            item['basis_note']='比较基准采用提问及原回答完成两者较晚时点，取当时已完成的最近有效收盘；15点前不使用尚未完成的当日收盘价。日线不代表实际成交价。'
-            if asked is None:
-                item['anchor_basis']='date_only_retrospective_close';item['basis_note']='原页面只确认提问日期，未提供这条追问的独立时刻；以该日或此前最近有效收盘作事后日线比较，不认定当时可见或可成交，也不据此验证盘中指令。'
+            item={**record,**comparison_basis(record,stock['points'])};anchor=item['anchor_date']
             if anchor:
                 series=[('stock',stock['name'],stock['points']),('market','中证全指',paths['market']),('st',paths['st_name'],paths['st'])]
-                item['outcomes']={key:outcome(points,anchor['date'],calendar) for key,_,points in series}
+                item['outcomes']={key:outcome(points,anchor,calendar) for key,_,points in series}
             else:item['outcomes']={}
             item['question_digest']=question_digest(record)
             review=reviews.get(record['id'])
-            if review and review.get('question_digest')==item['question_digest'] and review.get('price_digest')==price_digest:
-                quote=re.sub(r'[\s*_>#`]','',review['then_quote']);texts=re.sub(r'[\s*_>#`]','',' '.join(a['text'] for a in record['answers']))
-                if not quote or quote not in texts:raise ValueError('review quote is not in original answer')
-                item['review']=review
-            else:item['review']=None
+            item.update(resolve_review(review,record,paths,item['question_digest'],review_anchor(record,review,paths) if review else None))
+            if review:
+                focus=review.get('focused_symbol')
+                item['review_focused_name']=paths['stocks'].get(focus,{}).get('name','大盘与ST' if focus=='market' else None)
             rows.append(item)
         rows.sort(key=question_order)
         stats={'original_questions':sum(r['kind']=='original_question' for r in rows),'saved_research':sum(r['kind']=='saved_research' for r in rows),'reviewed':sum(bool(r['review']) for r in rows)}
@@ -254,7 +264,26 @@ def publish(imported,*,root=ROOT):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py']})
+
+
+def freeze_reviews(imported,*,root=ROOT):
+    """Guarded metadata migration; never re-dates or extends an existing assessment."""
+    from research_history_prices import bound
+    packet=bound(root/'price_paths/current.json')
+    if packet.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed')
+    paths=packet['data'];records={r['id']:r for r in mark_answer_bindings(imported['records'])}
+    reviews=json.loads((root/'reviews.json').read_text());frozen={}
+    for identity,review in reviews.items():
+        record=records.get(identity)
+        if not record:raise ValueError('review original question is missing')
+        anchor=review_anchor(record,review,paths)
+        state=resolve_review(review,record,paths,question_digest(record),anchor)
+        if not state['review']:raise ValueError('review binding changed; substantive re-evaluation required')
+        frozen[identity]=review if review.get('review_binding_version') else freeze_review(review,record,paths,anchor)
+    # Complete all validation before the one atomic write; published snapshots retain old bytes.
+    atomic_write_json(root/'reviews.json',frozen)
+    return {'frozen_reviews':len(frozen),'as_of':paths['calendar'][-1]}
 
 
 def load(symbol=None,*,root=ROOT):
@@ -268,8 +297,12 @@ def load(symbol=None,*,root=ROOT):
 
 def main():
     import argparse
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--publish-import',type=Path,required=True);args=parser.parse_args()
-    value=publish(json.loads(args.publish_import.read_text()));print(json.dumps({'digest':value['content_digest'],**value['inventory']['coverage']},ensure_ascii=False))
+    parser=argparse.ArgumentParser(description=__doc__);action=parser.add_mutually_exclusive_group(required=True)
+    action.add_argument('--publish-import',type=Path);action.add_argument('--freeze-reviews-import',type=Path);args=parser.parse_args()
+    if args.freeze_reviews_import:result=freeze_reviews(json.loads(args.freeze_reviews_import.read_text()))
+    else:
+        value=publish(json.loads(args.publish_import.read_text()));result={'digest':value['content_digest'],**value['inventory']['coverage']}
+    print(json.dumps(result,ensure_ascii=False))
 
 
 if __name__=='__main__':main()

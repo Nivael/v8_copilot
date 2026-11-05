@@ -2,7 +2,7 @@ import {useEffect,useId,useState} from 'react'
 import type {ReadingSeries} from './readingTypes'
 import {percent} from './readingFormat'
 
-export function ReadingChart({series,label,markers=[],onMarker}:{series:ReadingSeries[];label:string;markers?:{date:string;id:string;label:string}[];onMarker?:(id:string)=>void}){
+export function ReadingChart({series,label,markers=[],onMarker,reviewThrough}:{series:ReadingSeries[];label:string;markers?:{date:string;id:string;label:string}[];onMarker?:(id:string)=>void;reviewThrough?:string}){
   const id=useId()
   const [cursor,setCursor]=useState<number|null>(null)
   const [compact,setCompact]=useState(()=>typeof window.matchMedia==='function'&&window.matchMedia('(max-width:700px)').matches)
@@ -27,6 +27,8 @@ export function ReadingChart({series,label,markers=[],onMarker}:{series:ReadingS
   const step=[1,2,5,10].find(value=>value*magnitude>=rough)!*magnitude
   const firstTick=Math.ceil(low/step)*step
   const ticks=Array.from({length:Math.floor((high-firstTick)/step)+1},(_,i)=>firstTick+i*step)
+  const reviewIndex=reviewThrough?dates.indexOf(reviewThrough):-1
+  const hasLater=reviewIndex>=0&&reviewIndex<dates.length-1
   return <figure className="reading-chart" aria-label={label}>
     <div className="reading-chart-legend">{aligned.map((item,index)=><span key={item.key} className={`reading-series reading-series-${index}`}><i/>{item.name}<strong>{percent(item.change_pct)}</strong></span>)}</div>
     <svg viewBox={`0 0 ${width} ${bottom+36}`} role="img" aria-labelledby={`${id}-title ${id}-desc`} onPointerMove={event=>{
@@ -34,9 +36,11 @@ export function ReadingChart({series,label,markers=[],onMarker}:{series:ReadingS
       setCursor(Math.max(0,Math.min(dates.length-1,Math.round(((event.clientX-rect.left)/rect.width*width-left)/(right-left)*(dates.length-1)))))
     }} onPointerLeave={()=>setCursor(null)}>
       <title id={`${id}-title`}>{label}</title><desc id={`${id}-desc`}>同一时期从零涨跌幅起算。可用下方日期滑块逐日查看。</desc>
+      {hasLater&&<rect x={x(reviewIndex)} y="26" width={right-x(reviewIndex)} height={bottom-26} className="reading-after-review"><title>复盘窗口之后的走势</title></rect>}
       {ticks.map(tick=><g key={tick}><line x1={left} x2={right} y1={y(tick+100)} y2={y(tick+100)} className="reading-grid"/><text x={left-10} y={y(tick+100)+4} textAnchor="end">{tick.toFixed(step<1?1:0)}%</text></g>)}
       <line x1={left} x2={right} y1={y(100)} y2={y(100)} className="reading-zero"/>
       {aligned.map((item,index)=>{let connected=false;return <path key={item.key} className={`reading-line reading-line-${index}`} d={item.points.map((point,i)=>{if(point.level==null){connected=false;return ''}const command=connected?'L':'M';connected=true;return `${command}${x(i).toFixed(2)},${y(point.level).toFixed(2)}`}).join(' ')}/>})}
+      {hasLater&&<g className="reading-review-boundary"><line x1={x(reviewIndex)} x2={x(reviewIndex)} y1="26" y2={bottom}/><text x={Math.max(left,Math.min(x(reviewIndex)+7,right-145))} y="17">复盘截至 {reviewThrough}</text></g>}
       {markers.filter(marker=>dates.includes(marker.date)).map(marker=>{const index=dates.indexOf(marker.date),level=aligned[0]?.points[index]?.level;return <g key={marker.id} role="button" tabIndex={0} aria-label={marker.label} className="reading-question-marker" onClick={()=>onMarker?.(marker.id)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();onMarker?.(marker.id)}}}><title>{marker.label}</title><circle cx={x(index)} cy={level==null?bottom:y(level)} r="7"/><circle cx={x(index)} cy={level==null?bottom:y(level)} r="14" fill="transparent" stroke="none"/></g>})}
       <line x1={x(selected)} x2={x(selected)} y1="26" y2={bottom} className="reading-cursor"/>
       {aligned.map((item,index)=>item.points[selected].level==null?null:<circle key={item.key} cx={x(selected)} cy={y(item.points[selected].level!)} r="4" className={`reading-dot-${index}`}/>)}

@@ -153,6 +153,9 @@
 .market-issuer-history-table thead th:nth-child(2) {width:20%}
 .market-issuer-history-table thead th:nth-child(3) {width:35%}
 .market-issuer-history-table thead th:nth-child(4) {width:25%}
+.market-node-date-table thead th:first-child {width:38%}
+.market-node-date-table thead th:nth-child(2) {width:30%}
+.market-node-date-table thead th:nth-child(3) {width:32%}
 @media(max-width:900px){
   .market-recheck-scroll-hint {display:block}
   .learning-page {width:calc(100% - 40px)}

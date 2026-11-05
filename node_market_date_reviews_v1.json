@@ -1,0 +1,48 @@
+{
+  "version": "node_market_date_reviews_v1",
+  "dates_are_conservative_document_days_not_exact_release_timestamps": true,
+  "reviews": [
+    {
+      "document_id": "cninfo:1213499094",
+      "symbol": "603007",
+      "company": "花王生态工程股份有限公司",
+      "signed_on": "2022-05-26",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2022-05-26/1213499094.PDF",
+      "observed_at": "2026-11-05T02:55:34.054418+00:00",
+      "raw_sha256": "250981120c9dbbec7ee94cb21c5d6efccbe00dd79766324c49dd6c6655378ebf",
+      "text_sha256": "c4c1dee783ede590f8a03620e54a867983955e2e655b66c59c725f809fd5a234",
+      "source_pages": 3,
+      "signature_page": 3,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
+    },
+    {
+      "document_id": "cninfo:1217204094",
+      "symbol": "000796",
+      "company": "凯撒同盛发展股份有限公司",
+      "signed_on": "2023-07-04",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2023-07-04/1217204094.PDF",
+      "observed_at": "2026-11-05T02:55:32.902957+00:00",
+      "raw_sha256": "a69ba4c8c737d1e3d1c26358d245fdf3c37c1c57b3d3ad73a5a077aaf7806bdd",
+      "text_sha256": "349522d212789cf0c03f2bc8313b3ec01b406d8f30f18ca0c4d6f48794f7aace",
+      "source_pages": 6,
+      "signature_page": 6,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
+    },
+    {
+      "document_id": "cninfo:1218770103",
+      "symbol": "600589",
+      "company": "广东榕泰实业股份有限公司",
+      "signed_on": "2023-12-30",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2023-12-30/1218770103.PDF",
+      "observed_at": "2026-11-05T02:55:32.090708+00:00",
+      "raw_sha256": "e4a91651efda91bbb0e891ba3ec9ae3cac99c9fee2a833d43ff1db6e45f666e7",
+      "text_sha256": "2d5b3a43bf230985e7e6a01bb1dc6e08d1fc6b54167a1fa00a5b4e72b65e7cbc",
+      "source_pages": 3,
+      "signature_page": 3,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
+    }
+  ]
+}

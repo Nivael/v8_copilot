@@ -222,6 +222,16 @@ export interface ETFIssuerHistory {
     window_record_date_count:number|null;window_cash_paid_date_count:number|null;window_split_count:number|null;split_table_status:string;splits:Array<{effective_on:string;ratio:string}>
     responses:Array<{method:string;url:string;params:Record<string,unknown>|null;observed_at:string}>}>
 }
+export interface NodeMarketInputAudit {
+  observed_at?:string
+  version:string;availability:string;outcomes_read:false;effect_measured:false
+  plan:{minimum_test_events:number;minimum_test_companies:number;horizon_sessions:number;anchor_start:string;anchor_end:string}
+  test_capacity_events?:number;test_capacity_companies?:number;active_run_linked_events?:number;event_table_rows?:number;unbound_table_rows?:number;main_window_nominations?:number;latest_deterministic_events?:number;conservative_date_shifts?:number
+  source_kind_counts?:Record<string,number>;deterministic_lineage_counts?:Record<string,number>;issues?:Record<string,number>;notice?:string;p6_run?:{verified_event_count:number}
+  date_reviews?:Array<{document_id:string;company:string;symbol:string;signed_on:string;availability:string;source_url:string;signature_page:number}>
+  folds?:Array<{test_year:number;train_events:number;train_companies:number;test_events:number;test_companies:number;train_capacity_pass:boolean}>
+  source_dates?:{benchmark_keys_through:string;historical_membership_through:string;node_information_through:string;price_keys_through:Record<string,string>}
+}
 export interface MarketRiskETF {
   code:string
   group:string
@@ -332,6 +342,7 @@ export interface MarketRiskStatus {
   recent_window?:{availability:string;requested_start?:string;start?:string;end?:string;sessions?:number;points?:number;reason?:string}
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}
   node_market_comparison?:{status:string;reason:string}
+  node_market_input_audit?:NodeMarketInputAudit
   etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
   breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
     venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;

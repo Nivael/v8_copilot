@@ -11,6 +11,7 @@ import {ETFNoticeReview} from './ETFNoticeReview'
 import {ETFProspectusRules} from './ETFProspectusRules'
 import {ETFSZSERecheck} from './ETFSZSERecheck'
 import {ETFIssuerHistory} from './ETFIssuerHistory'
+import {NodeMarketAudit} from './NodeMarketAudit'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -170,6 +171,7 @@ export function MarketRiskPage(){
         {data.etf_issuer_history&&<ETFIssuerHistory data={data.etf_issuer_history}/>}
       </section>
 
+      {data.node_market_input_audit&&<NodeMarketAudit data={data.node_market_input_audit}/>}
       {data.szse_revision_recheck&&<ETFSZSERecheck data={data.szse_revision_recheck}/>}
       {data.etf_notice_review&&<ETFNoticeReview data={data.etf_notice_review}/>}
       {data.etf_prospectus_rules&&<ETFProspectusRules data={data.etf_prospectus_rules}/>}

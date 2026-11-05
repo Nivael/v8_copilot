@@ -20,6 +20,7 @@ from etf_prospectus_rules import prospectus_rule_status
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
+from node_market_audit import audit_status as node_market_audit_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -484,6 +485,7 @@ def build_market_risk_status(
         "szse_revision_recheck": recheck_status(snapshot_dir / "szse_revision_recheck", snapshot_dir / "public_etf_szse", now, issuer_navs),
         "etf_issuer_history": {**history_status(snapshot_dir / "issuer_action_history", now),
                                "market_target": requested_through},
+        "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit", now=now),
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,

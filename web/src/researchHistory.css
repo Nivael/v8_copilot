@@ -7,3 +7,5 @@
 .history-visuals figure{margin:1rem 0;max-width:440px}
 .history-visuals img{display:block;width:100%;height:auto;border:1px solid var(--reading-line,#d8d4cc)}
 .history-visuals figcaption{font-size:.8rem;line-height:1.7;margin-top:.5rem;color:var(--reading-muted,#686863)}
+.history-search{flex:1;min-width:0}.history-search input{min-width:0;width:100%;max-width:300px;border:1px solid #cbd7cf;border-radius:4px;background:#fff;padding:9px 12px;color:#244739;font:inherit}.history-clear{border:0;background:transparent;padding:6px;color:#246b66;font:inherit;font-size:12px;cursor:pointer}.history-search input:focus-visible,.history-clear:focus-visible{outline:2px solid #246b66;outline-offset:2px}
+@media(max-width:700px){.history-search{flex-basis:100%}.history-search input{flex:1;max-width:none}.history-search+ .history-clear{padding-left:0}}

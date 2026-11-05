@@ -13,6 +13,13 @@ function preview(text:string){return readable(text).replace(/〔原图未随文�
 function timestamp(value:string){return new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}
 
 function questionDate(question:HistoryQuestion){return question.time_precision==='range'?`${question.asked_from}—${question.asked_through}（日期待确认）`:question.asked_on||'日期待确认'}
+function normalized(text:string){return text.normalize('NFKC').toLocaleLowerCase('zh-CN')}
+function matchesSearch(question:HistoryQuestion,terms:string[]){
+  if(!terms.length)return true
+  const review=question.review
+  const text=normalized([questionDate(question),readable(question.question),question.question_context?.question,review?.headline,review?.assessment,...(review?.lessons||[])].filter(Boolean).join(' '))
+  return terms.every(term=>text.includes(term))
+}
 
 function HistoryVisuals({visuals}:{visuals:HistoryVisual[]}){
   const [open,setOpen]=useState(false)
@@ -23,14 +30,18 @@ function HistoryBody({symbol}:{symbol:string}){
   const {packet,error}=useReadingView<HistoryDetail>(`history/${symbol}`)
   const [selected,setSelected]=useState<string|null>(null)
   const [category,setCategory]=useState('全部')
+  const [query,setQuery]=useState('')
   const [includeSaved,setIncludeSaved]=useState(false)
   const data=packet?.data
   if(!data||data.symbol!==symbol||data.availability!=='available')return <p role="status">{error||'正在读取这组原问题和后续走势…'}</p>
-  const questions=data.questions.filter(q=>(includeSaved||q.kind==='original_question')&&(category==='全部'||q.categories.includes(category)))
+  const terms=normalized(query).trim().split(/\s+/).filter(Boolean)
+  const questions=data.questions.filter(q=>(includeSaved||q.kind==='original_question')&&(category==='全部'||q.categories.includes(category))&&matchesSearch(q,terms))
   const question=questions.find(q=>q.id===selected)||questions[0]
   const choose=(id:string)=>setSelected(id)
   const categories=[...new Set(data.questions.flatMap(q=>q.categories))]
-  if(!question)return <p>这组暂时只有保存的研究题。<button onClick={()=>setIncludeSaved(true)}>显示保存研究</button></p>
+  const resetFilters=()=>{setQuery('');setCategory('全部');setSelected(null)}
+  const filters=<div className="history-filters"><label>研究视角<select aria-label="历史问题分类" value={category} onChange={e=>{setCategory(e.target.value);setSelected(null)}}>{['全部',...categories].map(c=><option key={c}>{c}</option>)}</select></label><label className="history-search">查找问题或经验<input type="search" aria-label="查找历史问题或经验" placeholder="关键词或日期，空格可组合" value={query} onChange={e=>{setQuery(e.target.value);setSelected(null)}}/></label>{query&&<button className="history-clear" onClick={()=>{setQuery('');setSelected(null)}}>清除搜索</button>}<label className="history-checkbox"><input type="checkbox" checked={includeSaved} onChange={e=>setIncludeSaved(e.target.checked)}/>同时显示保存的研究题</label></div>
+  if(!question)return <>{filters}<p role="status">{!includeSaved&&data.questions.length>0&&data.questions.every(q=>q.kind==='saved_research')?<>这组暂时只有保存的研究题。<button onClick={()=>{resetFilters();setIncludeSaved(true)}}>显示保存研究</button></>:<>没有符合当前条件的记录。<button onClick={resetFilters}>重置筛选</button></>}</p></>
   const series:ReadingSeries[]=Object.entries(data.chart_sources).map(([key,points])=>{
     const anchor=points.find(p=>p.date===question.anchor_date)?.level
     const rebased=anchor?points.filter(p=>p.date>=question.anchor_date!).map(p=>({...p,level:p.level==null?null:p.level/anchor*100})):[]
@@ -40,7 +51,7 @@ function HistoryBody({symbol}:{symbol:string}){
   const outcomes=question.outcomes[symbol==='market'?'market':'stock']
   const review=question.review
   return <>
-    <div className="history-filters"><label>研究视角<select aria-label="历史问题分类" value={category} onChange={e=>{setCategory(e.target.value);setSelected(null)}}>{['全部',...categories].map(c=><option key={c}>{c}</option>)}</select></label><label className="history-checkbox"><input type="checkbox" checked={includeSaved} onChange={e=>setIncludeSaved(e.target.checked)}/>同时显示保存的研究题</label></div>
+    {filters}
     <div className="history-layout"><aside className="history-timeline" aria-label={`${data.name}历史提问`}><p>{questions.length}条记录 · 按提问时间</p>{questions.map(q=><button key={q.id} aria-pressed={q.id===question.id} onClick={()=>choose(q.id)}><time>{questionDate(q)}</time><span>{preview(q.question).slice(0,110)}</span>{q.question_context&&<span className="history-context-preview">这轮在问：{preview(q.question_context.question).slice(0,90)}</span>}<small>{q.review_status==='new_observations'?'已有复盘 · 后续走势已追加':q.previous_review?'依据已更正 · 待重核':q.kind==='saved_research'?'保存研究 · 日期为保存时间':q.review?'已复核旧判断':q.time_precision==='range'?'原问题 · 日期待确认':'原问题 · 走势已对照'}</small></button>)}</aside>
       <article key={question.id} className="history-detail" aria-label={`${data.name}历史复盘详情`}>
         <header><p className="reading-kicker">{question.asked_at?`${timestamp(question.asked_at)} · 北京时间`:question.time_precision==='range'?questionDate(question):`${question.asked_on} · 具体时刻未归档`} · {question.kind==='saved_research'?'保存研究时间':'原提问时间'}</p><h3>{preview(question.question).slice(0,200)}</h3>{question.question_context&&<section className="history-question-context" aria-label="追问背景"><p className="reading-kicker">这轮先前的问题 · {question.question_context.asked_on}</p><blockquote>{preview(question.question_context.question).slice(0,200)}</blockquote>{question.question_context.question.length>200&&<details className="reading-disclosure"><summary>完整背景原问题</summary><p className="reading-prewrap">{readable(question.question_context.question)}</p></details>}<a href={question.question_context.source_url} target="_blank" rel="noreferrer">打开这轮原聊天 ↗</a>{!!question.unavailable_attachments&&<small>{question.question_visuals?.length?'已补回附件展示截图，可在下方展开。':'这条追问附有原图，文字档案未包含图片。'}</small>}</section>}{!question.question_context&&!!question.unavailable_attachments&&<p className="reading-caption">{question.question_visuals?.length?'可在下方展开附件展示截图。':'这条原问的附件画面待补齐。'}</p>}{question.question.length>200&&<details className="reading-disclosure"><summary>完整原问题</summary><p className="reading-prewrap">{readable(question.question)}</p></details>}</header>

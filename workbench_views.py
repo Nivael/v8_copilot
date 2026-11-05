@@ -28,9 +28,10 @@ ETF_NAMES = {
     '510500.SH': '南方中证500ETF', '159922.SZ': '嘉实中证500ETF',
     '512100.SH': '南方中证1000ETF', '159845.SZ': '华夏中证1000ETF',
 }
-# The owner explicitly asked to keep following 沐邦. Other companies are not
-# silently made watchlist members merely because a question mentioned them.
-WATCHED = ('603398.SH',)
+# Explicit owner watchlist; comparison mentions alone do not add companies.
+WATCHED = ('603398.SH', '600363.SH', '002667.SZ', '688053.SH')
+WATCH_LABELS={'603398.SH':'沐邦高科','600363.SH':'联创光电','002667.SZ':'威领股份','688053.SH':'思科瑞'}
+WATCH_ALIASES={'603398.SH':('沐邦',),'600363.SH':('联光','联创光电'),'002667.SZ':('威领',),'688053.SH':('思科瑞',)}
 CATEGORY_NAMES = ('重整进程', '市场与价格', '历史先例', '风险条件', '证据判断', '表达与复盘')
 CATEGORIES = {
     'EXP-E6A0A3C110D74FE7A6DF': '重整进程', 'EXP-D891F04538BD671515FF': '重整进程',
@@ -156,6 +157,8 @@ def market_view(data):
 
 
 def watch_basis(data, symbol, *, root=MARKET_ROOT):
+    if symbol.endswith('.SZ'):
+        return szse_watch_basis(data, symbol, root=root)
     if not symbol.endswith('.SH') or data.get('sse_history_archive', {}).get('availability') != 'observed':
         return {'symbol': symbol, 'availability': 'unavailable'}
     archive = root / 'sse_history_archive'; pointer = json.loads((archive / 'current.json').read_text())
@@ -199,9 +202,46 @@ def watch_basis(data, symbol, *, root=MARKET_ROOT):
         records.append({'date': day, 'close': close, 'previous_close': previous,'is_trading':True})
     if not records or seen != sorted(set(seen)) or records[-1]['date'] != end:
         raise ValueError('watch quote dates incomplete')
+    gap_review=data.get('sse_gap_review') or {}
+    if (gap_review.get('availability') in ('reviewed','partial') and gap_review.get('archive_digest')==data['sse_history_archive']['content_digest']):
+        existing={p['date'] for p in records}
+        for episode in gap_review.get('episodes',[]):
+            if episode['symbol']==symbol[:6] and episode.get('interval_closed') is True and episode.get('unresolved_missing_days')==0:
+                for day in episode['window_days']:
+                    if day not in existing and records[0]['date']<=day<=end:
+                        records.append({'date':day,'close':None,'previous_close':None,'is_trading':False,'price_status':'verified_suspension'})
+                        existing.add(day)
+        records.sort(key=lambda p:p['date'])
     name = next((r['name'] for r in data.get('exchange_risk_membership', {}).get('rows', []) if r['ts_code'] == symbol), symbol)
     return {'availability': 'available', 'symbol': symbol, 'name': name, 'as_of': end, 'prices': records,
-            'source_url': ref['url'] + '?' + urlencode(ref['params']), 'source_observed_at': ref['observed_at'], 'raw_sha256': ref['sha256']}
+            'source_url': ref['url'] + '?' + urlencode(ref['params']), 'source_label':'上交所原始行情',
+            'source_observed_at': ref['observed_at'], 'raw_sha256': ref['sha256']}
+
+
+def szse_watch_basis(data, symbol, *, root=MARKET_ROOT):
+    import market_breadth_history as history
+    source=data.get('breadth_history') or {}
+    if source.get('availability')!='observed':
+        return {'symbol':symbol,'availability':'unavailable'}
+    directory=root/'public_breadth_history';key=source['content_digest']
+    frozen=json.loads((directory/'snapshots'/(key+'.json')).read_text())
+    if (digest({k:v for k,v in frozen.items() if k!='content_digest'})!=key or frozen['content_digest']!=key
+        or frozen['processor_digest']!=history.PROCESSOR_DIGEST or history.processor_digest()!=history.PROCESSOR_DIGEST
+        or frozen['through']!=data['requested_through']):
+        raise ValueError('watch history not bound to the verified market source')
+    records=[];observed=[];refs=[];name=None;now=datetime.now(timezone.utc)
+    for day in frozen['calendar']:
+        daily=history._read_day(directory,frozen['daily_snapshots'][day],day,now,check_raw=True)
+        row,=[r for r in daily['block']['rows'] if r['ts_code']==symbol]
+        records.append({'date':day,'close':row['last'] if row['is_trading'] else None,
+                        'previous_close':row['prev_close'] if row['is_trading'] else None,'is_trading':row['is_trading']})
+        name=row['security_name'];observed.append(daily['fetched_at']);refs.extend(daily['responses'])
+    if not records or [p['date'] for p in records]!=sorted(set(frozen['calendar'])):
+        raise ValueError('watch history calendar incomplete')
+    last=refs[-1]
+    return {'availability':'available','symbol':symbol,'name':name,'as_of':frozen['through'],'prices':records,
+            'source_url':last['url']+'?'+urlencode(last['params']),'source_label':'深交所历史收盘日表',
+            'source_observed_at':max(observed),'source_snapshot_digest':key}
 
 
 def rows(path, query):
@@ -212,7 +252,7 @@ def rows(path, query):
         return [dict(r) for r in connection.execute(query)]
 
 
-def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=RESEARCH_RUN_LEDGER_DB, reviews_dir=OUTPUT / 'case_reviews'):
+def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=RESEARCH_RUN_LEDGER_DB, reviews_dir=OUTPUT / 'case_reviews', latest_quotes=()):
     methods = []
     for row in rows(experience_db, 'select experience_id,status,payload_json from experiences order by created_at desc'):
         value = json.loads(row['payload_json'])
@@ -227,24 +267,40 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
     cases = []
     for basis in packet.get('watch_bases', []):
         symbol = basis['symbol']; code = symbol[:6]
-        history = [r for r in runs if re.search(r'(?<!\d)' + code + r'(?!\d)', r['object_refs_json']) or code == '603398' and '沐邦' in r['question_text']]
+        history = [r for r in runs if re.search(r'(?<!\d)' + code + r'(?!\d)', r['object_refs_json'])
+                   or any(alias in r['question_text'] for alias in WATCH_ALIASES.get(symbol,()))]
         history.sort(key=lambda r: instant(r['completed_at']), reverse=True)
         case = {**basis, 'research_count': len(history), 'history': [], 'review': None}
+        latest=next((quote for quote in latest_quotes if quote['symbol']==symbol and quote['availability']=='available'
+                     and quote['as_of']>basis.get('as_of','')),None)
+        if latest:
+            case['latest_quote']={key:latest[key] for key in ('as_of','close','day_change_pct','five_day_change_pct','twenty_day_change_pct','stage')}
+            case['name']=latest['name']
+            case['current_observation']=latest.get('note')
+            case['last_close']=latest['close'];case['day_change_pct']=latest['day_change_pct']
         for run in history[:4]:
             case['history'].append({'run_id': run['run_id'], 'completed_at': run['completed_at'],
                                     'judgment': run['final_answer'].split('\n\n')[0], 'full_answer': run['final_answer'],
                                     'experience_hits': json.loads(run['experience_hits_json']), 'source_freshness': json.loads(run['source_freshness_json'])})
         if basis['availability'] == 'available':
             prices = basis['prices']; start = packet['market'].get('start'); current = prices[-1]
+            anchor_prices=prices
+            if latest:
+                current={'date':latest['as_of'],'close':latest['close'],'previous_close':latest['previous_close'],'is_trading':True}
+                anchor_prices=[*prices,current]
             period_prices = [p for p in prices if start and p['date'] >= start]
             case['last_close'] = current['close']; case['day_change_pct'] = change(current['previous_close'], current['close'])
             expected_dates=[p['date'] for p in packet['market'].get('chart',[{'points':[]}])[0]['points']]
-            complete=[p['date'] for p in period_prices]==expected_dates and bool(period_prices) and all(p.get('is_trading',True) for p in period_prices)
+            complete=([p['date'] for p in period_prices]==expected_dates and bool(period_prices)
+                      and period_prices[0].get('is_trading',True) and period_prices[-1].get('is_trading',True))
             level=1.0
             comparable=[]
             if complete:
                 comparable=[{'date':period_prices[0]['date'],'value':period_prices[0]['close'],'level':100.0}]
                 for point in period_prices[1:]:
+                    if not point.get('is_trading',True):
+                        comparable.append({'date':point['date'],'value':None,'level':None})
+                        continue
                     level*=point['close']/point['previous_close']
                     comparable.append({'date':point['date'],'value':point['close'],'level':level*100})
             case['period_change_pct'] = (level-1)*100 if complete else None
@@ -253,7 +309,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
             case['relative_to_st_pp'] = case['period_change_pct'] - st if case['period_change_pct'] is not None and st is not None else None
             if history:
                 completed = instant(history[0]['completed_at']).astimezone(ZoneInfo('Asia/Shanghai'))
-                anchors = [p for p in prices if p['date'] < completed.date().isoformat() or p['date'] == completed.date().isoformat() and completed.hour >= 15]
+                anchors = [p for p in anchor_prices if p.get('is_trading',True) and (p['date'] < completed.date().isoformat() or p['date'] == completed.date().isoformat() and completed.hour >= 15)]
                 anchor = anchors[-1] if anchors else None
                 case['last_research_anchor'] = anchor
                 case['since_research_change_pct'] = change(anchor['close'], current['close']) if anchor and current['date']>anchor['date'] else None
@@ -262,6 +318,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
             relevant_start=min(start,case['last_research_anchor']['date']) if case.get('last_research_anchor') and start else start
             relevant_prices=[p for p in prices if relevant_start and p['date']>=relevant_start]
             case['basis_digest'] = digest({'symbol': symbol, 'as_of': basis['as_of'], 'prices': relevant_prices,
+                                          'latest_quote':case.get('latest_quote'),'current_observation':case.get('current_observation'),
                                           'latest_run': history[0]['run_id'] if history else None,
                                           'market_metrics': packet['market'].get('metrics')})
             path = reviews_dir / (code + '.json')
@@ -277,12 +334,14 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
         cases.append(case)
     categories=list(CATEGORY_NAMES)+(['待分类'] if any(m['category']=='待分类' for m in methods) else [])
     return {'availability': 'available', 'methods': methods, 'categories': categories, 'cases': cases,'market_context':packet['market'],
+            'latest_price_as_of':max((case.get('latest_quote',{}).get('as_of',case.get('as_of','')) for case in cases),default=packet['market'].get('as_of')),
             'codex_sync_note': '在Codex里继续研究，新的判断和复盘记录会同步到这里。',
             'inventory': {'accepted': sum(m['status'] == 'accepted' for m in methods), 'candidate': sum(m['status'] == 'candidate' for m in methods)}}
 
 
 def processor_digest():
-    return sha256(Path(__file__).read_bytes()).hexdigest()
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
+                   for name in (Path(__file__).name,'broad_etf_reading.py','trader_research_notes.py')})
 
 
 PROCESSOR_DIGEST = processor_digest()
@@ -316,12 +375,17 @@ class ReadingViews:
         view = market_view(data)
         if view['availability'] != 'available':
             raise ValueError('no verified market reading available')
+        from broad_etf_reading import build_broad_etf_reading
+        try:
+            view['broad_etf']=build_broad_etf_reading(data)
+        except (OSError,ValueError,KeyError,TypeError,IndexError):
+            view['broad_etf']={'availability':'unavailable'}
         bases = []
         for symbol in WATCHED:
             try:
                 bases.append(watch_basis(data, symbol))
             except (OSError, ValueError, TypeError, KeyError, IndexError):
-                bases.append({'symbol': symbol, 'availability': 'unavailable'})
+                bases.append({'symbol': symbol, 'name':WATCH_LABELS.get(symbol,symbol), 'availability': 'unavailable'})
         packet = {'version': VERSION, 'processor_digest': PROCESSOR_DIGEST, 'checked_at': datetime.now(timezone.utc).isoformat(),
                   'market': view, 'watch_bases': bases, 'source_snapshot_digest': data['snapshot_digest']}
         packet['content_digest'] = digest(packet)
@@ -357,13 +421,18 @@ class ReadingViews:
 views = ReadingViews()
 
 
+def current_learning_view(packet,**kwargs):
+    from trader_swing_reading import load
+    return learning_view(packet,latest_quotes=load().get('watchlist',[]),**kwargs)
+
+
 def get_reading_view(kind, *, force=False, service=views, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=RESEARCH_RUN_LEDGER_DB):
     packet = service.read(); service.schedule(force)
     base = {'version': VERSION, 'availability': 'warming', 'refresh': service.status()}
     if packet is None:
         return base
-    result = packet['market'] if kind == 'market' else learning_view(packet, experience_db=experience_db, ledger_db=ledger_db)
-    return {**base, 'availability': 'available', 'checked_at': packet['checked_at'], 'as_of': packet['market']['as_of'],
+    result = packet['market'] if kind == 'market' else current_learning_view(packet, experience_db=experience_db, ledger_db=ledger_db)
+    return {**base, 'availability': 'available', 'checked_at': packet['checked_at'], 'as_of': result.get('latest_price_as_of',packet['market']['as_of']),
             'content_digest': packet['content_digest'], 'data': result}
 
 
@@ -376,7 +445,7 @@ def main():
     if args.review_symbol:
         packet=views.read()
         if packet is None:raise ValueError('publish the current reading view before reviewing a case')
-        case,=[c for c in learning_view(packet)['cases'] if c['symbol']==args.review_symbol]
+        case,=[c for c in current_learning_view(packet)['cases'] if c['symbol']==args.review_symbol]
         if not args.assessment or not args.takeaway or not case.get('basis_digest'):raise ValueError('case basis, assessment and takeaway are required')
         review={'version':'workbench_case_review_v1','symbol':case['symbol'],'basis_digest':case['basis_digest'],
                 'research_run_id':case['history'][0]['run_id'] if case['history'] else None,'reviewed_at':datetime.now(timezone.utc).isoformat(),

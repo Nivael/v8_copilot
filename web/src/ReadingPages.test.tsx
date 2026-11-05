@@ -6,7 +6,7 @@ import {ExperienceHub} from './ExperienceHub'
 import {ReadingChart} from './ReadingChart'
 import {marketReading,learningReading} from './test/readingFixtures'
 
-function serve(data:unknown){return vi.spyOn(globalThis,'fetch').mockImplementation(async()=>new Response(JSON.stringify({availability:'available',as_of:'2026-11-04',checked_at:'2026-11-05T16:00:00Z',data,refresh:{in_progress:false,last_error:null}}),{status:200}))}
+function serve(data:unknown){return vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify(String(input).includes('/swing')?{availability:'warming',refresh:{in_progress:false,last_error:null}}:{availability:'available',as_of:'2026-11-04',checked_at:'2026-11-05T16:00:00Z',data,refresh:{in_progress:false,last_error:null}}),{status:200}))}
 describe('trader reading pages',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
   it('leads with a dated judgment and a paired ST chart, with cash explanation behind disclosure',async()=>{
@@ -72,6 +72,6 @@ describe('trader reading pages',()=>{
     const visibleJudgment=await screen.findAllByText('新记录：继续分别核查受理和资金履约。')
     expect(visibleJudgment[0]).toBeVisible()
     expect(screen.getByRole('heading',{name:'需要结合新资料再复盘'})).toBeVisible()
-    expect(request.mock.calls.every(([url,options])=>String(url).includes('/workbench/learning')&&!options?.body)).toBe(true)
+    expect(request.mock.calls.every(([url,options])=>/\/workbench\/(learning|swing)/.test(String(url))&&!options?.body)).toBe(true)
   })
 })

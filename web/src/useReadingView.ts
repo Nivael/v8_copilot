@@ -3,7 +3,7 @@ import type {ReadingPacket} from './readingTypes'
 
 const cache=new Map<string,ReadingPacket<unknown>>()
 
-export function useReadingView<T>(kind:'market'|'learning'){
+export function useReadingView<T>(kind:'market'|'learning'|'swing'){
   const [packet,setPacket]=useState<ReadingPacket<T>|undefined>(()=>cache.get(kind) as ReadingPacket<T>|undefined)
   const [error,setError]=useState('')
   const [request,setRequest]=useState(0)
@@ -23,6 +23,11 @@ export function useReadingView<T>(kind:'market'|'learning'){
         if(!response.ok)throw new Error('暂时无法连接本地面板服务')
         const value=await response.json() as ReadingPacket<T>
         if(!active)return
+        if(value.availability==='available'){
+          const data=value.data as Record<string,unknown>|undefined
+          const collection=kind==='market'?'chart':kind==='learning'?'methods':'groups'
+          if(!data||!Array.isArray(data[collection]))throw new Error('页面数据格式正在更新，请稍后重试')
+        }
         if(value.availability==='available'&&value.data){cache.set(kind,value);setPacket(value)}
         else setPacket(previous=>previous?.data?previous:value)
         setError('')

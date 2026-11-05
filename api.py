@@ -510,6 +510,14 @@ def get_learning_reading(refresh: bool = False) -> dict[str, object]:
     return get_reading_view('learning', force=refresh, experience_db=experience_repository.path, ledger_db=research_run_ledger.path)
 
 
+@app.get('/api/v1/workbench/swing')
+def get_swing_reading() -> dict[str, object]:
+    from trader_swing_reading import load
+    data=load()
+    return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
+            'refresh':{'in_progress':False,'last_error':None}}
+
+
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)
 def get_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),

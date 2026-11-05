@@ -12,6 +12,7 @@ dependencies = [
   "pypdf>=5,<7",
   "python-dotenv>=1.2.2",
   "uvicorn>=0.35,<1",
+  "xlrd>=2,<3",
 ]
 
 [dependency-groups]

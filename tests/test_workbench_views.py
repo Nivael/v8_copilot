@@ -112,10 +112,33 @@ def test_new_codex_record_appears_without_rebuilding_market_and_invalidates_case
     assert result['since_research_change_pct'] is None  # No post-research close exists.
 
 
-def test_missing_or_nontrading_day_does_not_become_a_comparable_return(tmp_path):
+def test_nontrading_day_is_a_gap_not_a_zero_return_and_missing_day_stays_unavailable(tmp_path):
     data = packet(); data['watch_bases'][0]['prices'][1].update(close=None, previous_close=None, is_trading=False)
     result = w.learning_view(data, experience_db=tmp_path/'missing', ledger_db=tmp_path/'none')['cases'][0]
+    assert result['period_path'][1]['value'] is None and result['period_path'][1]['level'] is None
+    assert result['period_change_pct'] == pytest.approx(-12.5)
+    data['watch_bases'][0]['prices'].pop(1)
+    result = w.learning_view(data, experience_db=tmp_path/'missing', ledger_db=tmp_path/'none')['cases'][0]
     assert result['period_change_pct'] is None and result['relative_to_st_pp'] is None and result['period_path'] == []
+
+
+def test_latest_stock_close_does_not_extend_the_older_shared_market_comparison(tmp_path):
+    ledger=ResearchRunLedger(tmp_path/'runs.db');record(ledger,'按新材料判断。')
+    args=dict(experience_db=tmp_path/'none',ledger_db=ledger.path)
+    data=packet()
+    latest={'symbol':'603398.SH','name':'最新名称','availability':'available','as_of':'2026-11-05','close':4.2,'previous_close':3.5,
+            'day_change_pct':20,'five_day_change_pct':2,'twenty_day_change_pct':-30,'stage':'early_repair','note':{'judgment':'新的观察'}}
+    before=w.learning_view(data,**args)['cases'][0]
+    result=w.learning_view(data,latest_quotes=[latest],**args);case=result['cases'][0]
+    assert result['latest_price_as_of']=='2026-11-05' and case['name']=='最新名称'
+    assert case['last_close']==4.2 and case['day_change_pct']==pytest.approx(20)
+    assert case['as_of']=='2026-11-04' and case['period_path']==before['period_path']
+    assert case['period_change_pct']==before['period_change_pct']
+    assert case['basis_digest']!=before['basis_digest']
+    assert case['last_research_anchor']['date']=='2026-11-05'
+    assert case['since_research_change_pct'] is None
+    latest['as_of']='2026-11-03'
+    assert w.learning_view(data,latest_quotes=[latest],**args)['cases'][0]['last_close']==3.5
 
 
 def test_published_read_is_fast_and_single_flight_failure_preserves_previous(tmp_path, monkeypatch):

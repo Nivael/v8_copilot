@@ -1,3 +1,4 @@
+import {ETFName} from './ETFName'
 import type {MarketRiskStatus} from './types'
 import {formatShareCount as shares} from './numbers'
 import {useState} from 'react'
@@ -29,7 +30,7 @@ export function ETFShareEventReview({data}:{data:Review}){
       <div className="learning-table-wrap"><table className="learning-table market-event-table">
         <thead><tr><th scope="col">ETF / 事项与原文</th><th scope="col">结果与实际日期</th><th scope="col">比例或每笔单位</th><th scope="col">登记结果与口径</th></tr></thead>
         <tbody>{shownEvents.map(event=><tr key={event.event_id}>
-          <th scope="row">{event.code}<small>{kinds[event.kind]||'事项未分类'}</small>
+          <th scope="row"><ETFName code={event.code}/><small>{kinds[event.kind]||'事项未分类'}</small>
             {event.source_scope==='result_only'&&<small>本条仅核对结果原文</small>}
             <details><summary>原文链（{event.documents.length}份）</summary>
               <ul className="market-announcement-docs">{event.documents.map(doc=><li key={doc.document_id}>

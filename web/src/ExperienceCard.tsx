@@ -27,7 +27,7 @@ interface ExperienceCardProps {
 
 export function ExperienceCard({experience, busy, onReview}: ExperienceCardProps) {
   return (
-    <article className="experience-card">
+    <article className="experience-card" id={experience.experience_id}>
       <header>
         <div className="experience-title">
           <span className={`experience-type type-${experience.experience_type}`}>{TYPE_LABEL[experience.experience_type]}</span>

@@ -1,3 +1,4 @@
+import {ETFName} from './ETFName'
 import type {ETFIssuerHistory as History} from './types'
 import {formatShareCount as exact} from './numbers'
 
@@ -15,7 +16,7 @@ export function ETFIssuerHistory({data}:{data:History}){
       <p className="learning-footnote market-recheck-scroll-hint">左右滑动表格可查看日期、金额单位与核查范围。</p>
       <div className="learning-table-wrap" role="region" aria-label="可滚动的发行人分红核对表" tabIndex={0}><table className="learning-table market-issuer-history-table"><thead><tr><th scope="col">ETF / 发行人</th><th scope="col">实际返回状态</th><th scope="col">最近一条已列记录</th><th scope="col">本项窗口与拆分表</th></tr></thead><tbody>{data.funds.map(fund=>{
         const latest=fund.latest_listed_distribution
-        return <tr key={fund.code}><th scope="row">{fund.code}<small><a href={fund.source_url} target="_blank" rel="noreferrer">{fund.issuer} · 历史页 ↗</a></small><small>本次取得 {time(fund.observed_at)}（北京时间）</small></th>
+        return <tr key={fund.code}><th scope="row"><ETFName code={fund.code}/><small><a href={fund.source_url} target="_blank" rel="noreferrer">{fund.issuer} · 历史页 ↗</a></small><small>本次取得 {time(fund.observed_at)}（北京时间）</small></th>
           <td>{state[fund.availability]||'尚未核实'}{fund.table_records!=null&&<small>原表返回 {fund.table_records} 条分红记录</small>}{fund.availability!=='observed'&&<small>窗口内次数保持未知，未填零</small>}</td>
           <td>{latest?<><span>登记日 {latest.record_on}</span><small>现金发放日 {latest.cash_paid_on}</small><small>原表每{latest.source_unit_shares}份 {exact(latest.source_amount_text)} 元；折每份 {exact(latest.amount_yuan_per_share)} 元</small>{latest.off_exchange_record_on&&<small>场外登记 {latest.off_exchange_record_on}；场外发放 {latest.off_exchange_cash_paid_on}</small>}{latest.evaluation_reference_on&&<small>收益评价基准日 {latest.evaluation_reference_on}，不当作除息日</small>}<small>除息日未在本项核实</small></>:<span>未取得可用记录，未据空态推定无事件</span>}</td>
           <td>{fund.window_record_date_count==null?<span>分红窗口次数未知</span>:<><span>登记日在窗内 {fund.window_record_date_count} 条</span><small>现金发放日在窗内 {fund.window_cash_paid_date_count} 条</small></>}{fund.split_table_status==='observed'?<><small>拆分表已返回 {fund.splits.length} 条，其中本窗 {fund.window_split_count} 条</small><details><summary>原表所列拆分记录</summary>{fund.splits.map(split=><p key={split.effective_on}>{split.effective_on} · 比例 {split.ratio}</p>)}<p>属于本次取得的历史表，不回填为历史当时可见，不用于当前曲线校正。</p></details></>:<small>拆分表尚未核对</small>}</td>

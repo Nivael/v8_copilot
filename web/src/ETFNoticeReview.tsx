@@ -1,3 +1,4 @@
+import {ETFName} from './ETFName'
 import {useState} from 'react'
 import type {ETFNoticeReview as Review} from './types'
 import {formatShareCount as exact} from './numbers'
@@ -26,7 +27,7 @@ export function ETFNoticeReview({data}:{data:Review}){
         {shown.length===0?<p>当前筛选没有通过原文核对的事项，可切换ETF或类型查看。</p>:<div className="learning-table-wrap"><table className="learning-table market-notice-table"><thead><tr><th scope="col">ETF / 公告与原文</th><th scope="col">正文事项</th><th scope="col">持仓证券数值 / 服务安排</th><th scope="col">日期、重复披露与范围</th></tr></thead><tbody>{shown.map(row=>{
           const repeats=data.repeat_disclosure_groups.filter(group=>group.document_ids.includes(row.document_id))
           return <tr key={row.document_id}>
-            <th scope="row">{row.code}<small>披露于 {row.published_on}</small><small>{row.title}</small>{row.evidence_pages.map(page=><small key={page}><a href={`${row.url}#page=${page}`} target="_blank" rel="noreferrer">正文或表格 · PDF第{page}页 ↗</a></small>)}</th>
+            <th scope="row"><ETFName code={row.code}/><small>披露于 {row.published_on}</small><small>{row.title}</small>{row.evidence_pages.map(page=><small key={page}><a href={`${row.url}#page=${page}`} target="_blank" rel="noreferrer">正文或表格 · PDF第{page}页 ↗</a></small>)}</th>
             <td>{categories[row.category]||'范围待核对'}<small>不计作ETF份额申赎</small>{row.risk_clause&&<details><summary>IOPV与净值差异原文</summary><p>{row.risk_clause}</p></details>}</td>
             <td>{row.allocations.map(item=><div key={item.issuer}><p>{item.issuer}：{exact(item.quantity)} {item.asset_unit==='bond_piece'?'张（可转债）':'股（持仓证券）'}；{row.category==='private_placement'?'认购成本':'获配金额'} {exact(item.amount_yuan)} 元。</p></div>)}
               {row.service&&<><p>{row.service.provider}</p><small>公告角色：{row.service.role}</small><small>公告生效日 {row.service.effective_on}</small></>}

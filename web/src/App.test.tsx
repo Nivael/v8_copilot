@@ -6,32 +6,15 @@ import {App} from './App'
 describe('App',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
 
-  it('opens on reusable experience instead of raw question history',async()=>{
-    const experiences=[{
-      contract_version:'v8_research_experience_contract_v0',experience_id:'EXP-AAAAAAAAAAAAAAAAAAAA',
-      experience_version:2,status:'accepted',experience_type:'presentation_rule',title:'主回答先给判断',
-      value_summary:'总览先回答实质差异。',trigger_conditions:['比较问题'],topic_tags:['答案表达'],scope:['comparison'],
-      required_inputs:['evidence_pack'],query_plan:['识别实质差异'],definitions:[],
-      answer_rubric:['首段直接回答'],anti_patterns:['字段清单开头'],coverage_boundaries:['不改变证据强度'],
-      validation_refs:['regression:readability'],source_run_refs:['migration:p2.4'],supersedes:[],
-      created_at:'2026-07-14T00:00:00Z',reviewed_at:'2026-08-12T00:00:00Z',reviewed_by:'owner',not_evidence:true,
-    }]
-    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
-      const url=String(input)
-      const payload=url.includes('experience-governance')
-        ? {accepted_count:0,candidate_count:1,blocked_count:0,conflicts:[],latest_regression:null,ordinary_success_auto_capture:false,not_evidence:true}
-        : url.includes('experience-review') ? {review_session_id:'XRV-AAAAAAAAAAAAAAAAAAAA',review_version:'v8_experience_batch_review_v1',title:'批量审阅',source_packet:'sha256:abc',created_at:'2026-07-14T00:00:00Z',max_pending:10,cards:[{
-          card_id:experiences[0].experience_id,experience_id:experiences[0].experience_id,experience_version:1,title:experiences[0].title,
-          affected_area:'presentation_rule',target_field:'experience_status',scope:'experience_cluster',decision_requested:'是否沉淀这个方法？',why_surfaced:'迁移候选。',recommendation:'need_more_evidence',recommendation_label:'建议补证',recommendation_reason:'尚缺真实运行。',impact:'决定 1 个方法簇。',affected_count:1,
-          options:[{value:'need_more_evidence',label:'需要更多证据',description:'转为 blocked。'}],evidence_examples:[],counterexamples:[],prior_decisions:[],experience:experiences[0],
-        }]} : experiences
-      return new Response(JSON.stringify(payload),{status:200,headers:{'Content-Type':'application/json'}})
-    })
+  it('opens the market reading with exactly two primary tabs and no research composer',async()=>{
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({availability:'warming',refresh:{in_progress:false,last_error:null}}),{status:200}))
     render(<MemoryRouter initialEntries={['/']}><App/></MemoryRouter>)
-    expect(await screen.findByRole('heading',{name:'经验中心'})).toBeInTheDocument()
-    expect(await screen.findByRole('heading',{name:'主回答先给判断'})).toBeInTheDocument()
+    expect(await screen.findByRole('heading',{name:'市场判断',level:1})).toBeInTheDocument()
+    const nav=document.querySelector('nav')!
+    expect(Array.from(nav.querySelectorAll('a')).map(a=>a.textContent)).toEqual(['市场判断','跟踪与经验'])
     expect(screen.queryByRole('textbox',{name:'研究问题'})).not.toBeInTheDocument()
-    expect(screen.getByRole('link',{name:/研究问答（兼容）/})).toHaveAttribute('href','/legacy')
+    expect(screen.queryByRole('link',{name:/研究问答/})).not.toBeInTheDocument()
+    expect(vi.mocked(fetch).mock.calls.every(([url])=>String(url).includes('/workbench/market'))).toBe(true)
   })
 
   it('resolves a non-episode announcement deep link into a dossier detail focus',async()=>{

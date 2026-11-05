@@ -1,3 +1,4 @@
+import {ETFName} from './ETFName'
 import {useState} from 'react'
 import type {ETFReviewScope as Review} from './types'
 import {formatShareCount as shares} from './numbers'
@@ -29,7 +30,7 @@ export function ETFReviewScope({data}:{data:Review}){
         </div>
         <p>表格可左右滑动，向下滚动查看其余文档。PDF链接指向实际物理页；HTML正文没有PDF页码。</p>
         <div className="learning-table-wrap market-notice-clauses" role="region" aria-label="可滚动的ETF文档范围表" tabIndex={0}><table className="learning-table"><colgroup><col style={{width:'45%'}}/><col style={{width:'25%'}}/><col style={{width:'30%'}}/></colgroup><thead><tr><th scope="col">基金 / 公告</th><th scope="col">已核对的范围</th><th scope="col">原文依据</th></tr></thead><tbody>{shown.map(row=><tr key={row.document_id}>
-          <th scope="row">{row.code}<small>{row.published_on} · {row.title}</small><small>{row.review_reason==='historical_share_title'?'观察窗外的历史份额相关标题':'按披露日选入的文档'}</small></th>
+          <th scope="row"><ETFName code={row.code}/><small>{row.published_on} · {row.title}</small><small>{row.review_reason==='historical_share_title'?'观察窗外的历史份额相关标题':'按披露日选入的文档'}</small></th>
           <td>{row.review_scopes.map(key=><p key={key}>{labels[key]||key}</p>)}<small>仅限已列范围</small></td>
           <td>{row.format==='issuer_html'?<a href={row.source_url} target="_blank" rel="noreferrer">发行人HTML正文 ↗</a>:row.reviewed_pages.map(page=><small key={page}><a href={`${row.source_url}#page=${page}`} target="_blank" rel="noreferrer">原PDF第{page}页 ↗</a></small>)}<small>本次取得 {time(row.observed_at)}</small></td>
         </tr>)}</tbody></table></div>
@@ -42,7 +43,7 @@ export function ETFReviewScope({data}:{data:Review}){
         <p aria-live="polite">显示 {supplements.length}/{data.supplemental_items} 项补充条款</p>
         <p>表格可左右滑动，向下滚动查看其余条款。</p>
         <div className="learning-table-wrap market-notice-clauses" role="region" aria-label="可滚动的ETF历史业务条款表" tabIndex={0}><table className="learning-table"><colgroup><col style={{width:'28%'}}/><col style={{width:'30%'}}/><col style={{width:'42%'}}/></colgroup><thead><tr><th scope="col">基金 / 公告</th><th scope="col">声明的业务安排</th><th scope="col">原文与日期角色</th></tr></thead><tbody>{supplements.map(row=><tr key={row.document_id}>
-          <th scope="row">{row.code}<small>{row.published_on} · {row.title}</small><small>{labels[row.kind]}</small></th>
+          <th scope="row"><ETFName code={row.code}/><small>{row.published_on} · {row.title}</small><small>{labels[row.kind]}</small></th>
           <td>{row.kind==='creation_unit_declaration'?<><p>{row.unit_before_shares==null?'原单位未载明':`${shares(row.unit_before_shares)} 份`} → {shares(row.unit_after_shares||'—')} 份</p><small>每笔最小申购、赎回单位</small><small>未知原单位不从其他公告推算</small></>:row.kind==='liquidity_service_end'?<><p>{row.provider}</p><small>终止该券商为本基金提供流动性服务</small></>:<><p>基金主代码 {row.code.slice(0,6)}；申购赎回业务代码 {row.creation_redemption_code}</p><small>暂停申购及赎回，不新增一条折算</small></>}
             <small>公告声明{row.kind==='creation_redemption_pause'?'暂停起始日':'生效日'} {row.announced_effective_on}</small>
             {row.record_on&&<small>权益登记日 {row.record_on}</small>}{row.related_event_date&&<small>关联已核折算日 {row.related_event_date}</small>}{row.announced_resume_on&&<small>公告声明恢复日 {row.announced_resume_on}</small>}

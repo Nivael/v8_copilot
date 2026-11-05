@@ -1,3 +1,4 @@
+import {ETFName} from './ETFName'
 import type {ETFProspectusRules as Rules} from './types'
 import {formatShareCount as exact} from './numbers'
 
@@ -13,7 +14,7 @@ export function ETFProspectusRules({data}:{data:Rules}){
         <div className="learning-table-wrap"><table className="learning-table market-prospectus-table"><thead><tr><th scope="col">ETF / 版本与日期</th><th scope="col">本版本所述每笔业务单位</th><th scope="col">对价与分红规则</th><th scope="col">假设示例与历史事项复述</th></tr></thead><tbody>{data.versions.map(version=>{
           const history=version.historical_restatement
           return <tr key={`${version.code}-${version.publication_date}`}>
-            <th scope="row">{version.code}<small>发布于 {version.publication_date}</small><small>主要内容截止 {version.content_asof}</small><small>财务及表现数据截止 {version.financial_data_asof}</small>{version.cutoff_exception&&<small>{version.cutoff_exception}</small>}<small>财务数据未经审计</small>
+            <th scope="row"><ETFName code={version.code}/><small>发布于 {version.publication_date}</small><small>主要内容截止 {version.content_asof}</small><small>财务及表现数据截止 {version.financial_data_asof}</small>{version.cutoff_exception&&<small>{version.cutoff_exception}</small>}<small>财务数据未经审计</small>
               <details><summary>原文页码与取得时间</summary><p>所列条款涉及 {version.reviewed_pages.length} 页；原文共 {version.source_page_count} 页，未声称逐页完整核对。</p>{version.reviewed_pages.map(page=><small key={page}><a href={`${version.pdf_url}#page=${page}`} target="_blank" rel="noreferrer">所列条款 · PDF第{page}页 ↗</a></small>)}<small>本次取得 {new Date(version.document_observed_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}（北京时间）</small></details>
             </th>
             <td>{version.minimum_units.map(unit=><div key={unit.route}><p>{unit.label}：{exact(unit.stated_unit_shares)} 份</p><small><a href={`${version.pdf_url}#page=${unit.table_page}`} target="_blank" rel="noreferrer">业务单位条款 · 第{unit.table_page}页 ↗</a></small></div>)}<small>每笔单位，不是基金总份额的折算倍数</small><small>当前市场目标日是否仍有效：尚未核对</small></td>

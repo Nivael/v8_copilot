@@ -1,5 +1,5 @@
 import {useCallback,useEffect,useRef,useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link,useLocation} from 'react-router-dom'
 import {ArrowRight,RefreshCw} from 'lucide-react'
 import {ColorType,LineSeries,createChart,type Time} from 'lightweight-charts'
 import {getMarketRiskStatus} from './api'
@@ -14,6 +14,7 @@ import {ETFRegistrationRules} from './ETFRegistrationRules'
 import {MarketCloseReference} from './MarketCloseReference'
 import {ETFFundScopeRules} from './ETFFundScopeRules'
 import {ETFReportContinuity} from './ETFReportContinuity'
+import {ETFName} from './ETFName'
 import {ETFNoticeReview} from './ETFNoticeReview'
 import {ETFProspectusRules} from './ETFProspectusRules'
 import {ETFSZSERecheck} from './ETFSZSERecheck'
@@ -127,6 +128,7 @@ export function MarketRiskBanner(){
 }
 
 export function MarketRiskPage(){
+  const {hash}=useLocation()
   const [data,setData]=useState<MarketRiskStatus|null>(null)
   const [error,setError]=useState('')
   const [loading,setLoading]=useState(true)
@@ -147,6 +149,7 @@ export function MarketRiskPage(){
     finally{if(!request.signal.aborted)setLoading(false)}
   },[])
   useEffect(()=>{void load();return()=>controller.current?.abort()},[load])
+  useEffect(()=>{if(data&&hash)document.getElementById(hash.slice(1))?.scrollIntoView?.({block:"start"})},[data,hash])
   return <div className="learning-page market-risk-page">
     <header className="learning-header"><div><p className="eyebrow">研究工作台 / 大盘环境</p><h1>先看市场，再看节点</h1><p>ETF份额、市场走势、涨跌分布与流动性分别核对。大盘风险独立展示，个股事件不覆盖它。</p></div><button className="learning-refresh" disabled={loading} onClick={()=>void load()}><RefreshCw size={16}/>{loading?'读取中…':'重新核对'}</button></header>
     {loading&&<p role="status" className="learning-loading">正在读取市场快照和数据截止日…</p>}
@@ -170,7 +173,7 @@ export function MarketRiskPage(){
         {data.indices.length>0?<><Paths indices={data.indices} window={window} through={data.requested_through}/><p className="learning-footnote">起点归一为100；仅绘制所选窗口完整且截止日一致的序列。较早的ST历史只保留在表中，不拼接成同期走势；ST等权仅消费覆盖率至少95%的日期。</p><div className="learning-table-wrap"><table className="learning-table market-risk-table"><thead><tr><th scope="col">市场基准</th><th scope="col">5日</th><th scope="col">20日</th><th scope="col">60日</th><th scope="col">60日最大回撤</th><th scope="col">5/20日成交额均值比</th></tr></thead><tbody>{data.indices.map(index=><tr key={index.code}><th scope="row">{index.name}<small>{index.through}</small></th><td>{pct(index.return_5d_pct)}</td><td>{pct(index.return_20d_pct)}</td><td>{pct(index.return_60d_pct)}</td><td>{pct(index.max_drawdown_60d_pct)}</td><td>{index.amount_5d_to_20d_ratio==null?'—':`${index.amount_5d_to_20d_ratio.toFixed(2)} 倍`}</td></tr>)}</tbody></table></div></>:<p className="learning-empty">市场基准缺失，无法计算趋势和回撤。</p>}
       </section>
 
-      {data.st_reconstruction&&<STReconstruction data={data.st_reconstruction} indices={data.indices} noticeReview={data.sse_st_notice_review}/>}
+      <div id="st-reference">{data.st_reconstruction&&<STReconstruction data={data.st_reconstruction} indices={data.indices} noticeReview={data.sse_st_notice_review}/>}</div>
       {data.sse_st_notice_review&&<details className="market-source-notes"><summary>沪市ST公告原文条款核对</summary><SSESTNoticeReview data={data.sse_st_notice_review}/></details>}
       {data.szse_st_reference&&<details className="market-source-notes" open={!reconstructionReady}><summary>深市独立核验的ST样本参考</summary><SZSESTReference data={data.szse_st_reference} indices={data.indices}/></details>}
       {data.combined_breadth_history&&<CombinedBreadthHistory data={data.combined_breadth_history}/>}
@@ -195,7 +198,7 @@ export function MarketRiskPage(){
         {(data.etf_aggregate[etfWindow]?.revision_unconfirmed_etfs??0)>0&&<p>{data.etf_aggregate[etfWindow].revision_unconfirmed_etfs}只ETF的最新份额修订状态待核对。深交所说明：T日晚间份额仅供参考，以T+1日早间更新为准；尚未取得最终修订标记。</p>}
         <label>份额路径 <select aria-label="ETF份额路径" value={etfCode} onChange={event=>setETFCode(event.target.value)}>{Object.entries(data.parameters.etf_basket).map(([code,group])=><option key={code} value={code}>{code} · {group}</option>)}</select></label>
         <ETFSharePath item={data.etfs.find(item=>item.code===etfCode)} window={etfWindow}/>
-        <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终公布份额</small>}{item?.source==='szse_public'&&<small>深交所份额 · 最终修订版待确认</small>}{item?.nav_through&&<small>净值截至 {item.nav_through}</small>}{item?.nav_source_url&&<small><a href={item.nav_source_url} target="_blank" rel="noreferrer">{item.nav_source}单位净值 ↗</a></small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{flowStatus(metric?.status)}{item?.share_revision_unverified&&<small>最新份额最终修订版仍待确认</small>}{(item?.nav_conflict_dates?.length??0)>0&&<small>净值来源有冲突，未采用新来源：{item?.nav_conflict_dates?.join('、')}</small>}{(item?.nav_crosscheck_observations??0)>0&&<small>已与交易所核对 {item?.nav_crosscheck_observations} 个重叠净值日</small>}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
+        <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row"><ETFName code={code}/><small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终公布份额</small>}{item?.source==='szse_public'&&<small>深交所份额 · 最终修订版待确认</small>}{item?.nav_through&&<small>净值截至 {item.nav_through}</small>}{item?.nav_source_url&&<small><a href={item.nav_source_url} target="_blank" rel="noreferrer">{item.nav_source}单位净值 ↗</a></small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{flowStatus(metric?.status)}{item?.share_revision_unverified&&<small>最新份额最终修订版仍待确认</small>}{(item?.nav_conflict_dates?.length??0)>0&&<small>净值来源有冲突，未采用新来源：{item?.nav_conflict_dates?.join('、')}</small>}{(item?.nav_crosscheck_observations??0)>0&&<small>已与交易所核对 {item?.nav_crosscheck_observations} 个重叠净值日</small>}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
         {data.etf_issuer_history&&<ETFIssuerHistory data={data.etf_issuer_history}/>}
         <ETFDailySourceAudit sse={data.public_etf_snapshot?.raw_reconciliation} szse={data.szse_etf_snapshot?.raw_reconciliation} target={data.requested_through}/>
         <ETFUnitNAVAudit data={data.issuer_nav_snapshot?.raw_reconciliation} target={data.requested_through}/>
@@ -209,12 +212,12 @@ export function MarketRiskPage(){
       {data.szse_revision_recheck&&<ETFSZSERecheck data={data.szse_revision_recheck}/>}
       {data.etf_notice_review&&<ETFNoticeReview data={data.etf_notice_review}/>}
       {data.etf_prospectus_rules&&<ETFProspectusRules data={data.etf_prospectus_rules}/>}
-      {data.etf_report_continuity&&<ETFReportContinuity data={data.etf_report_continuity}/>}
+      <div id="etf-reports">{data.etf_report_continuity&&<ETFReportContinuity data={data.etf_report_continuity}/>}</div>
       {data.etf_quarterly&&<section className="learning-freshness" aria-label="ETF季报份额核对">
         <header className="learning-section-head"><div><p className="eyebrow">季报披露 / 份额范围</p><h2>季报申赎与日表范围核对</h2></div><span>{data.etf_quarterly.period_label||'季度未确定'} · {data.etf_quarterly.observed_reports}/{data.etf_quarterly.declared_etfs}</span></header>
         <p>报告期 {data.etf_quarterly.period_start||'未取得'} 至 {data.etf_quarterly.period_end||'未取得'}。{data.etf_quarterly.note}</p>
         {data.etf_quarterly.capture_completed_at&&<p>本次原文归档完成于 {new Date(data.etf_quarterly.capture_completed_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}（北京时间）；各基金的披露日和PDF页码列于下表。</p>}
-        {data.etf_quarterly.observed_reports===0?<p>尚未取得通过当前来源和表内平衡校验的匹配季报。</p>:<div className="learning-table-wrap"><table className="learning-table market-quarterly-table"><thead><tr><th scope="col">ETF / 季报原文</th><th scope="col">季度申购－赎回</th><th scope="col">拆分栏 / 表内平衡</th><th scope="col">期末份额与日表差额</th></tr></thead><tbody>{data.etf_quarterly.reports.map(report=><tr key={report.code}><th scope="row">{report.code}{report.availability==='observed'&&<><small>披露于 {report.publication_date}</small><small><a href={report.pdf_url?`${report.pdf_url}#page=${report.table_page}`:report.source_url} target="_blank" rel="noreferrer">季报 · PDF第{report.table_page}页 ↗</a></small><small>{report.audit_status==='report_states_unaudited'?'财务资料未经审计':'审计状态未确认'}</small></>}</th>{report.availability!=='observed'?<td colSpan={3}>匹配季报尚未通过校验</td>:<><td>{shareCount(report.net_subscription_shares)} 份<details><summary>申购、赎回与期初期末</summary><p>期初 {shareCount(report.opening_shares)} 份；申购 {shareCount(report.subscription_shares)} 份；赎回 {shareCount(report.redemption_shares)} 份；期末 {shareCount(report.closing_shares)} 份。</p></details></td><td>原栏 {report.split_entry}<small>表内平衡差 {shareCount(report.accounting_residual_shares)} 份</small><small>横线不自动改写为零事件</small></td><td>{report.daily_comparison?.availability==='observed'?<><span>日表－季报总额 {shareCount(report.daily_comparison.difference_from_report_total)} 份</span><small>日表公布 {shareCount(report.daily_comparison.reported_shares)} 份</small>{report.off_exchange_closing_shares!=null&&<><small>季报期末总额明确包含场外 {shareCount(report.off_exchange_closing_shares)} 份</small><small>从季报总额扣除明示场外份额后，与日表差 {shareCount(report.daily_comparison.difference_after_explicit_off_exchange)} 份</small></>}</>:<span>缺少同日交易所份额，未比较</span>}</td></>}</tr>)}</tbody></table></div>}
+        {data.etf_quarterly.observed_reports===0?<p>尚未取得通过当前来源和表内平衡校验的匹配季报。</p>:<div className="learning-table-wrap"><table className="learning-table market-quarterly-table"><thead><tr><th scope="col">ETF / 季报原文</th><th scope="col">季度申购－赎回</th><th scope="col">拆分栏 / 表内平衡</th><th scope="col">期末份额与日表差额</th></tr></thead><tbody>{data.etf_quarterly.reports.map(report=><tr key={report.code}><th scope="row"><ETFName code={report.code}/>{report.availability==='observed'&&<><small>披露于 {report.publication_date}</small><small><a href={report.pdf_url?`${report.pdf_url}#page=${report.table_page}`:report.source_url} target="_blank" rel="noreferrer">季报 · PDF第{report.table_page}页 ↗</a></small><small>{report.audit_status==='report_states_unaudited'?'财务资料未经审计':'审计状态未确认'}</small></>}</th>{report.availability!=='observed'?<td colSpan={3}>匹配季报尚未通过校验</td>:<><td>{shareCount(report.net_subscription_shares)} 份<details><summary>申购、赎回与期初期末</summary><p>期初 {shareCount(report.opening_shares)} 份；申购 {shareCount(report.subscription_shares)} 份；赎回 {shareCount(report.redemption_shares)} 份；期末 {shareCount(report.closing_shares)} 份。</p></details></td><td>原栏 {report.split_entry}<small>表内平衡差 {shareCount(report.accounting_residual_shares)} 份</small><small>横线不自动改写为零事件</small></td><td>{report.daily_comparison?.availability==='observed'?<><span>日表－季报总额 {shareCount(report.daily_comparison.difference_from_report_total)} 份</span><small>日表公布 {shareCount(report.daily_comparison.reported_shares)} 份</small>{report.off_exchange_closing_shares!=null&&<><small>季报期末总额明确包含场外 {shareCount(report.off_exchange_closing_shares)} 份</small><small>从季报总额扣除明示场外份额后，与日表差 {shareCount(report.daily_comparison.difference_after_explicit_off_exchange)} 份</small></>}</>:<span>缺少同日交易所份额，未比较</span>}</td></>}</tr>)}</tbody></table></div>}
         <p>日表按万份披露，本次比较以100份为披露精度参照，源端舍入方式未确认；小额差异仍原样显示。场外附注只用于对应期末的范围核对，不据此修改整个日序列或发布净申赎金额。</p>
       </section>}
 

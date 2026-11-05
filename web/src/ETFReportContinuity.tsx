@@ -1,5 +1,6 @@
 import type {ETFQuarterlyReport,MarketRiskStatus} from './types'
 import {formatShareCount as shares} from './numbers'
+import {ETFName} from './ETFName'
 
 function ReportSource({report,label}:{report:ETFQuarterlyReport;label:string}){
   if(report.availability!=='observed')return <small>{label}份额表尚未通过校验</small>
@@ -28,7 +29,7 @@ export function ETFReportContinuity({data}:{data:NonNullable<MarketRiskStatus['e
       <div className="learning-table-wrap"><table className="learning-table market-continuity-table"><thead><tr>
         <th scope="col">ETF / 报告原文</th><th scope="col">中报期末总份额</th><th scope="col">三季报期初总份额</th><th scope="col">三季报期初－中报期末</th>
       </tr></thead><tbody>{data.reports.map(({code,midyear_report:mid,quarterly_report:quarter,comparison})=><tr key={code}>
-        <th scope="row">{code}<ReportSource report={mid} label="中报"/><ReportSource report={quarter} label="三季报"/></th>
+        <th scope="row"><ETFName code={code}/><ReportSource report={mid} label="中报"/><ReportSource report={quarter} label="三季报"/></th>
         <td>{mid.availability==='observed'?<>{shares(mid.closing_shares)} 份<MidyearDetails report={mid}/></>:'中报缺失或校验未通过'}</td>
         <td>{quarter.availability==='observed'?<>{shares(quarter.opening_shares)} 份</>:'三季报缺失或校验未通过'}</td>
         <td>{comparison.availability!=='observed'?<span>缺少可比报告，未比较</span>:<>

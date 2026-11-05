@@ -44,6 +44,7 @@ from experience_contract import (
 from experience_auto_accept import auto_accept_candidate
 from learning_status import build_learning_status
 from market_risk import build_market_risk_status
+from workbench_views import get_reading_view
 from experience_distiller import distill_run_feedback
 from experience_governance import (
     ExperienceGovernanceRepository,
@@ -496,6 +497,17 @@ def get_learning_status() -> dict[str, object]:
 @app.get("/api/v1/market-risk/status")
 def get_market_risk_status() -> dict[str, object]:
     return build_market_risk_status()
+
+
+@app.get('/api/v1/workbench/market')
+def get_market_reading(refresh: bool = False) -> dict[str, object]:
+    return get_reading_view('market', force=refresh)
+
+
+@app.get('/api/v1/workbench/learning')
+def get_learning_reading(refresh: bool = False) -> dict[str, object]:
+    # A recorded Codex answer appears without repeating the deep market audit.
+    return get_reading_view('learning', force=refresh, experience_db=experience_repository.path, ledger_db=research_run_ledger.path)
 
 
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)

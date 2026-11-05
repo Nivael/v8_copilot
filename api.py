@@ -518,6 +518,22 @@ def get_swing_reading() -> dict[str, object]:
             'refresh':{'in_progress':False,'last_error':None}}
 
 
+@app.get('/api/v1/workbench/history')
+def get_history_inventory() -> dict[str, object]:
+    from research_history import load
+    data=load()
+    return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
+            'refresh':{'in_progress':False,'last_error':None}}
+
+
+@app.get('/api/v1/workbench/history/{symbol}')
+def get_history_detail(symbol: str = Path(pattern=r'^(?:[036]\d{5}\.(?:SH|SZ)|market)$')) -> dict[str, object]:
+    from research_history import load
+    data=load(symbol)
+    return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
+            'refresh':{'in_progress':False,'last_error':None}}
+
+
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)
 def get_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),

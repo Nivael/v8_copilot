@@ -3,7 +3,7 @@ import type {ReadingPacket} from './readingTypes'
 
 const cache=new Map<string,ReadingPacket<unknown>>()
 
-export function useReadingView<T>(kind:'market'|'learning'|'swing'){
+export function useReadingView<T>(kind:'market'|'learning'|'swing'|'history'|`history/${string}`){
   const [packet,setPacket]=useState<ReadingPacket<T>|undefined>(()=>cache.get(kind) as ReadingPacket<T>|undefined)
   const [error,setError]=useState('')
   const [request,setRequest]=useState(0)
@@ -25,17 +25,18 @@ export function useReadingView<T>(kind:'market'|'learning'|'swing'){
         if(!active)return
         if(value.availability==='available'){
           const data=value.data as Record<string,unknown>|undefined
-          const collection=kind==='market'?'chart':kind==='learning'?'methods':'groups'
+          const collection=kind==='market'?'chart':kind==='learning'?'methods':kind==='history'?'stocks':kind.startsWith('history/')?'questions':'groups'
           if(!data||!Array.isArray(data[collection]))throw new Error('页面数据格式正在更新，请稍后重试')
         }
         if(value.availability==='available'&&value.data){cache.set(kind,value);setPacket(value)}
-        else setPacket(previous=>previous?.data?previous:value)
+        else setPacket(previous=>previous?.data&&cache.get(kind)===previous?previous:value)
         setError('')
         timer=setTimeout(()=>{if(document.visibilityState!=='hidden')void read()},value.refresh.in_progress||value.availability==='warming'?2000:30000)
       }catch(reason){if(active&&!controller.signal.aborted)setError(reason instanceof Error?reason.message:'读取失败')}
       finally{inFlight=false;if(active)setBusy(false)}
     }
     const focus=()=>{if(document.visibilityState!=='hidden'){clearTimeout(timer);void read()}}
+    setPacket(cache.get(kind) as ReadingPacket<T>|undefined)
     void read(request>0&&kind==='market')
     window.addEventListener('focus',focus)
     document.addEventListener('visibilitychange',focus)

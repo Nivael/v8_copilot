@@ -2,7 +2,7 @@ import {useEffect,useId,useState} from 'react'
 import type {ReadingSeries} from './readingTypes'
 import {percent} from './readingFormat'
 
-export function ReadingChart({series,label}:{series:ReadingSeries[];label:string}){
+export function ReadingChart({series,label,markers=[],onMarker}:{series:ReadingSeries[];label:string;markers?:{date:string;id:string;label:string}[];onMarker?:(id:string)=>void}){
   const id=useId()
   const [cursor,setCursor]=useState<number|null>(null)
   const [compact,setCompact]=useState(()=>typeof window.matchMedia==='function'&&window.matchMedia('(max-width:700px)').matches)
@@ -37,6 +37,7 @@ export function ReadingChart({series,label}:{series:ReadingSeries[];label:string
       {ticks.map(tick=><g key={tick}><line x1={left} x2={right} y1={y(tick+100)} y2={y(tick+100)} className="reading-grid"/><text x={left-10} y={y(tick+100)+4} textAnchor="end">{tick.toFixed(step<1?1:0)}%</text></g>)}
       <line x1={left} x2={right} y1={y(100)} y2={y(100)} className="reading-zero"/>
       {aligned.map((item,index)=>{let connected=false;return <path key={item.key} className={`reading-line reading-line-${index}`} d={item.points.map((point,i)=>{if(point.level==null){connected=false;return ''}const command=connected?'L':'M';connected=true;return `${command}${x(i).toFixed(2)},${y(point.level).toFixed(2)}`}).join(' ')}/>})}
+      {markers.filter(marker=>dates.includes(marker.date)).map(marker=>{const index=dates.indexOf(marker.date),level=aligned[0]?.points[index]?.level;return <g key={marker.id} role="button" tabIndex={0} aria-label={marker.label} className="reading-question-marker" onClick={()=>onMarker?.(marker.id)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();onMarker?.(marker.id)}}}><title>{marker.label}</title><circle cx={x(index)} cy={level==null?bottom:y(level)} r="7"/><circle cx={x(index)} cy={level==null?bottom:y(level)} r="14" fill="transparent" stroke="none"/></g>})}
       <line x1={x(selected)} x2={x(selected)} y1="26" y2={bottom} className="reading-cursor"/>
       {aligned.map((item,index)=>item.points[selected].level==null?null:<circle key={item.key} cx={x(selected)} cy={y(item.points[selected].level!)} r="4" className={`reading-dot-${index}`}/>)}
       <text x={left} y={bottom+26}>{dates[0]}</text><text x={right} y={bottom+26} textAnchor="end">{dates.at(-1)}</text>

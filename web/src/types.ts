@@ -257,6 +257,16 @@ export interface ETFNoticeReview {
     allocations:Array<{issuer:string;asset_unit:string;quantity:string;amount_yuan:string;table_page:number}>;
     service?:{role:string;provider:string;effective_on:string}}>
 }
+export interface ETFProspectusRules {
+  version:string;availability:string;reviewed_versions:number;selected_prospectus_versions:number|null;
+  corporate_actions_checked:false;all_window_documents_reconciled:false;note:string;
+  versions:Array<{code:string;availability:string;publication_date:string;document_observed_at:string;pdf_url:string;content_asof:string;financial_data_asof:string;cutoff_exception:string|null;
+    financial_audit_status:string;source_page_count:number;reviewed_pages:number[];full_document_semantics_checked:false;corporate_actions_checked:false;market_window_correction_applied:false;
+    minimum_units:Array<{route:string;label:string;stated_unit_shares:string;table_page:number;quantity_scope:string;effective_at_market_target:string}>;
+    consideration_components:string[];cash_is_only_consideration:false;distribution_mode_as_stated:string;max_annual_distributions_as_stated:number;distribution_condition_as_stated:string;actual_distributions_in_market_window:null;current_cash_flow_yuan:null;
+    historical_restatement:{classification:string;event_on:string;registered_on:string;stated_ratio:string;rounding_in_this_version:string;pages:number[];not_historical_point_in_time_evidence:true};
+    illustration:{classification:string;before_shares:string;stated_ratio:string;after_shares:string;pages:number[];not_a_verified_event:true}|null}>
+}
 export interface MarketRiskStatus {
   contract_version:'market_risk_status_v1'
   parameter_version:string
@@ -279,6 +289,7 @@ export interface MarketRiskStatus {
     reports:Array<{code:string;midyear_report:ETFQuarterlyReport;quarterly_report:ETFQuarterlyReport;
       comparison:{availability:string;total_relation:string;total_difference_shares:string|null;off_exchange_relation:string;off_exchange_difference_shares:string|null}}>}
   etf_notice_review?:ETFNoticeReview
+  etf_prospectus_rules?:ETFProspectusRules
   etf_share_events?:{version:string;availability:string;reviewed_events:number;reconciled_documents:number;selected_documents:number|null;pending_documents?:number;all_selected_documents_reconciled:false;corporate_actions_checked:false;note:string;
     events:Array<{event_id:string;code:string;kind:string;resolution:string;event_date:string;record_date?:string;registration_date?:string;ex_right_date?:string|null;planned_ratio:string|null;effective_ratio:string|null;resolution_published_on:string;within_catalog_window:boolean;holder_rounding?:string;plan_holder_rounding?:string[];source_scope?:string;unit_before_shares?:string;unit_after_shares?:string;
       reported_totals?:Array<{scope:string;before_shares:string;after_shares:string;after_minus_simple_ratio_shares:string}>;

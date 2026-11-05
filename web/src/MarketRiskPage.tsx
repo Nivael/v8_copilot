@@ -8,6 +8,7 @@ import './learning.css'
 import {ETFShareEventReview} from './ETFShareEventReview'
 import {ETFReportContinuity} from './ETFReportContinuity'
 import {ETFNoticeReview} from './ETFNoticeReview'
+import {ETFProspectusRules} from './ETFProspectusRules'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -167,6 +168,7 @@ export function MarketRiskPage(){
       </section>
 
       {data.etf_notice_review&&<ETFNoticeReview data={data.etf_notice_review}/>}
+      {data.etf_prospectus_rules&&<ETFProspectusRules data={data.etf_prospectus_rules}/>}
       {data.etf_report_continuity&&<ETFReportContinuity data={data.etf_report_continuity}/>}
       {data.etf_quarterly&&<section className="learning-freshness" aria-label="ETF季报份额核对">
         <header className="learning-section-head"><div><p className="eyebrow">季报披露 / 份额范围</p><h2>季报申赎与日表范围核对</h2></div><span>{data.etf_quarterly.period_label||'季度未确定'} · {data.etf_quarterly.observed_reports}/{data.etf_quarterly.declared_etfs}</span></header>

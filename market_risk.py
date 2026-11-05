@@ -16,6 +16,7 @@ from etf_announcements import announcement_status
 from etf_quarterly import quarterly_status
 from etf_report_continuity import report_continuity_status
 from etf_notice_review import notice_review_status
+from etf_prospectus_rules import prospectus_rule_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -487,6 +488,7 @@ def build_market_risk_status(
         "etf_quarterly": quarterly,
         "etf_report_continuity": report_continuity_status(snapshot_dir / "etf_announcements", announcements, quarterly, now),
         "etf_notice_review": notice_review_status(snapshot_dir / "etf_announcements", announcements, now),
+        "etf_prospectus_rules": prospectus_rule_status(snapshot_dir / "etf_announcements", announcements, now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),

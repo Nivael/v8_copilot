@@ -296,6 +296,10 @@ export interface MarketRiskETF {
   group:string
   through:string|null
   corporate_actions_checked:boolean
+  whole_fund_daily_scope_verified?:boolean
+  share_precision_verified?:boolean
+  final_revision_verified?:boolean
+  flow_verification_gates_passed?:boolean
   source?:string
   nav_through?:string|null
   nav_source?:string
@@ -305,7 +309,7 @@ export interface MarketRiskETF {
   share_revision_unverified?:boolean
   evaluation_through?:string|null
   path?:Array<{date:string;shares:number|null}>
-  windows:Record<string,{window_sessions?:number|null;window_start?:string|null;window_end?:string|null;share_change_ten_thousand?:number|null;share_change_pct:number|null;share_change_notional_yuan:number|null;estimated_net_subscription_yuan:number|null;status:string}>
+  windows:Record<string,{window_sessions?:number|null;window_start?:string|null;window_end?:string|null;share_change_ten_thousand?:number|null;share_change_pct:number|null;share_change_notional_yuan:number|null;estimated_net_subscription_yuan:number|null;status:string;flow_estimate_ready?:boolean;cash_estimation_gaps?:string[]}>
 }
 export interface MarketBreadthSummary {
   observed_trading_stocks?:number
@@ -394,6 +398,16 @@ export interface ETFDailyRawReconciliation {
   funds:Array<{code:string;share_field:string;share_unit:string;fractional_digit_counts:Record<string,number>;
     records:Array<{code:string;date:string;raw_text:string;source_value:string;ten_thousand_shares:string;shares:string;fractional_digits:number;source_url:string;response_sha256:string;observed_at:string}>}>;
 }
+export interface ETFFundScopeRules {
+  version:string;availability:string;review_scope?:string;reviewed_documents:number|null;reviewed_passages:number|null;proof_pages:number[];content_digest?:string;materialized_at?:string;note?:string;
+  document?:{code:string;published_on:string;title:string;url:string;document_id:string;catalog_digest:string;response_url:string;observed_at:string;raw_sha256:string;text_sha256:string;bytes:number;page_count:number};
+  cutoffs?:Record<string,string>;financial_audit_status?:string;registrars?:{exchange:string;off_exchange:string;proof_pages:number[]};
+  transfer?:{declared_direction:string;conditional:boolean;requires_published_rules:boolean;reverse_requires_separate_announcement:boolean;actual_window_transfers:null;daily_adjustment_applied:false;proof_pages:number[]};
+  routes?:Array<{register:string;creation_application:string;redemption_application:string;consideration:string[];proof_page:number}>;
+  rounding_rules?:Array<{target:string;unit:string;fractional_digits:number;method:string;proof_page:number;applies_to_exchange_daily_share_field:false}>;
+  distribution_mode_as_stated?:string;distribution_mode_proof_page?:number;daily_exchange_share_rounding_rule?:null;current_business_availability_verified?:false;
+  whole_fund_daily_scope_verified:false;share_precision_verified:false;final_revision_verified:false;corporate_actions_checked:false;full_document_semantics_checked:false;all_window_share_events_verified:false;historical_PIT:false;effect_measured:false;estimated_net_subscription_yuan:null;
+}
 export interface MarketRiskStatus {
   contract_version:'market_risk_status_v1'
   parameter_version:string
@@ -420,6 +434,7 @@ export interface MarketRiskStatus {
   etf_notice_review?:ETFNoticeReview
   etf_prospectus_rules?:ETFProspectusRules
   etf_review_scope?:ETFReviewScope
+  etf_fund_scope_rules?:ETFFundScopeRules
   etf_share_events?:{version:string;availability:string;reviewed_events:number;reconciled_documents:number;selected_documents:number|null;pending_documents?:number;all_selected_documents_reconciled:false;corporate_actions_checked:false;note:string;
     events:Array<{event_id:string;code:string;kind:string;resolution:string;event_date:string;record_date?:string;registration_date?:string;ex_right_date?:string|null;planned_ratio:string|null;effective_ratio:string|null;resolution_published_on:string;within_catalog_window:boolean;holder_rounding?:string;plan_holder_rounding?:string[];source_scope?:string;unit_before_shares?:string;unit_after_shares?:string;
       reported_totals?:Array<{scope:string;before_shares:string;after_shares:string;after_minus_simple_ratio_shares:string}>;

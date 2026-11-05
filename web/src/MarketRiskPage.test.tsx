@@ -229,3 +229,16 @@ describe('MarketRiskPage',()=>{
     expect(screen.getByRole('link',{name:'上交所股票行情 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/market/price/report/')
   })
 })
+
+describe('flow verification statuses',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it.each([['share_scope_unverified','全基金日份额范围未核实'],['share_precision_unverified','源端份额精度未核实'],['share_revision_unverified','份额最终修订版未核实']])('shows the actual %s gate instead of inventing missing prices',async(status,label)=>{
+    const data:MarketRiskStatus={...fixture,etfs:[{...fixture.etfs[0],windows:{...fixture.etfs[0].windows,'5':{share_change_pct:10,share_change_notional_yuan:200000,estimated_net_subscription_yuan:null,status}}}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    await screen.findByRole('heading',{name:'份额变化与净申赎估算'})
+    fireEvent.change(screen.getByLabelText('ETF观察窗口'),{target:{value:'5'}})
+    expect(screen.getByText(label)).toBeVisible()
+    expect(screen.getByText('未发布')).toBeVisible()
+  })
+})

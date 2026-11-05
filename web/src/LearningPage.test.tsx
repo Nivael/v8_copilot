@@ -188,3 +188,22 @@ describe('ETF document source scope',()=>{
     expect(screen.getByText('59 天')).toBeInTheDocument()
   })
 })
+
+describe('prospectus publication source dates',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('uses one reviewed publication and 13 role clauses without calling the publication date a current data cutoff',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'etf_fund_scope_rules',label:'510310 · 指定版本的业务角色条款',availability:'scoped_rules_reviewed',
+      requested_through:null,observed_through_min:'2026-07-31',observed_through_max:'2026-07-31',observation_count:1,observation_unit:'说明书版本',
+      series_at_target:null,observed_source_groups:13,declared_series:13,snapshot_digest:'scope',url:'/market',fetched_at:'2026-11-05T10:57:45Z',
+      coverage_basis:'ETF_business_role_clauses',date_basis:'prospectus_publication',note:'不证明交易所字段舍入或全基金日份额范围。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('1 说明书版本')).toBeVisible()
+    expect(within(section).getByText('已核业务角色条款 13/13 条')).toBeVisible()
+    expect(within(section).getByText('指定业务条款已核对')).toBeVisible()
+    expect(within(section).getAllByText('版本发布 2026-07-31')).toHaveLength(1)
+    fireEvent.click(within(section).getByText('采集与范围'))
+    expect(within(section).queryByText(/目标截止 未取得/)).not.toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+  })
+})

@@ -19,6 +19,7 @@ from etf_notice_review import notice_review_status
 from etf_prospectus_rules import prospectus_rule_status
 from etf_review_scope import scope_status as etf_scope_status
 from etf_daily_sources import reconcile_sse, reconcile_szse
+from etf_fund_scope import scope_status as fund_scope_status
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
@@ -38,7 +39,7 @@ from market_periods import price_period_summary, recent_calendar_window
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, MARKET_CONTEXT_MANIFEST_PATH
 
 
-PARAMETER_VERSION = "market_risk_parameters_v5"
+PARAMETER_VERSION = "market_risk_parameters_v6"
 MARKET_RISK_DIR = DATA_ROOT / "local_data/v8_copilot/market_risk"
 ETF_BASKET = {
     "510300.SH": "沪深300", "510310.SH": "沪深300", "510330.SH": "沪深300", "159919.SZ": "沪深300",
@@ -100,8 +101,13 @@ def index_metrics(rows: list[dict[str, Any]], calendar: list[str]) -> dict[str, 
 
 def etf_metrics(
     shares: list[dict[str, Any]], navs: list[dict[str, Any]], calendar: list[str],
-    *, corporate_actions_checked: bool = False,
+    *, corporate_actions_checked: bool = False, whole_fund_daily_scope_verified: bool = False,
+    share_precision_verified: bool = False, final_revision_verified: bool = False,
 ) -> dict[str, Any]:
+    gates = {'corporate_actions_checked':corporate_actions_checked is True,
+             'whole_fund_daily_scope_verified':whole_fund_daily_scope_verified is True,
+             'share_precision_verified':share_precision_verified is True,'final_revision_verified':final_revision_verified is True}
+    flow_ready = all(gates.values())
     share_by_day = {_date(row["trade_date"]): _number(row.get("fd_share")) for row in shares}
     nav_by_day = {_date(row["nav_date"]): _number(row.get("unit_nav")) for row in navs}
     if len(share_by_day) != len(shares) or len(nav_by_day) != len(navs):
@@ -113,7 +119,7 @@ def etf_metrics(
               "nav_through": nav_days[-1] if nav_days else None,
               "share_observation_count": len(share_days), "nav_observation_count": len(nav_days),
               "evaluation_through": days[-1] if days else None,
-              "corporate_actions_checked": corporate_actions_checked, "windows": {},
+              **gates, "flow_verification_gates_passed":flow_ready, "windows": {},
               "nav_path": [{"nav_date": day, "unit_nav": nav_by_day[day]} for day in nav_days],
               "path": [{"date": day, "shares": share_by_day.get(day)} for day in days]}
     recent = recent_calendar_window(days[-1] if days else None)
@@ -134,8 +140,13 @@ def etf_metrics(
             "share_change_ten_thousand": round(unit_counts[-1] - unit_counts[0], 6) if share_ready else None,
             "share_change_pct": round((unit_counts[-1] / unit_counts[0] - 1) * 100, 6) if share_ready else None,
             "share_change_notional_yuan": round(notional, 2) if notional is not None else None,
-            "estimated_net_subscription_yuan": round(notional, 2) if notional is not None and corporate_actions_checked else None,
-            "status": "missing" if not share_ready else "shares_only" if not nav_ready else "estimated" if corporate_actions_checked else "corporate_actions_unchecked",
+            "estimated_net_subscription_yuan": round(notional, 2) if notional is not None and flow_ready else None,
+            "flow_estimate_ready": bool(nav_ready and flow_ready),
+            "cash_estimation_gaps": (["share_window_incomplete"] if not share_ready else ["NAV_window_incomplete"] if not nav_ready else [])
+                + [name for name,verified in gates.items() if not verified],
+            "status": "missing" if not share_ready else "shares_only" if not nav_ready else "corporate_actions_unchecked" if not gates['corporate_actions_checked']
+                else "share_scope_unverified" if not gates['whole_fund_daily_scope_verified'] else "share_precision_unverified" if not gates['share_precision_verified']
+                else "share_revision_unverified" if not gates['final_revision_verified'] else "estimated",
         }
     return output
 
@@ -339,6 +350,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     etf_scopes = etf_scope_status(snapshot_dir / 'etf_review_scope', root=snapshot_dir, now=now)
+    fund_scope = fund_scope_status(snapshot_dir / 'etf_fund_scope', root=snapshot_dir, now=now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
     st_reconstruction = st_reconstruction_status(snapshot_dir / 'st_reconstruction', root=snapshot_dir, now=now)
@@ -399,6 +411,14 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'series_at_target':None,'observed_source_groups':etf_scopes.get('items_with_scoped_review'),'declared_series':etf_scopes.get('selected_document_items'),
                     'snapshot_digest':etf_scopes.get('content_digest'),'url':'/market','coverage_basis':'ETF_scoped_review','date_basis':'catalog_search_cutoff',
                     'note':'每项仅有已列范围的原文依据；不代表全部正文或全窗份额事件已验收。日份额范围、精度及最新修订仍待核，净申赎金额继续未发布。'})
+    scope_doc=fund_scope.get('document',{})
+    sources.append({'source_id':'etf_fund_scope_rules','label':'510310 · 指定版本的业务角色条款','availability':fund_scope['availability'],
+                    'requested_through':None,'fetched_at':scope_doc.get('observed_at'),
+                    'observed_through_min':scope_doc.get('published_on'),'observed_through_max':scope_doc.get('published_on'),
+                    'observation_count':fund_scope.get('reviewed_documents'),'observation_unit':'说明书版本',
+                    'series_at_target':None,'observed_source_groups':fund_scope.get('reviewed_passages'),'declared_series':13,
+                    'snapshot_digest':fund_scope.get('content_digest'),'url':'/market','coverage_basis':'ETF_business_role_clauses','date_basis':'prospectus_publication',
+                    'note':'仅一只基金的一份发行版本；四类内容截止分别列在市场页。原105项选择不变，不证明当前业务实施、日份额全基金范围或交易所字段舍入。'})
     observed = membership['availability']=='observed'
     sources.append({'source_id':'exchange_risk_membership','label':'交易所 · 风险警示与退市整理名单','availability':membership['availability'],
                     'requested_through':None,'fetched_at':membership.get('completed_at'),'observed_through_min':None,'observed_through_max':None,
@@ -586,6 +606,7 @@ def build_market_risk_status(
         "etf_notice_review": notice_review_status(snapshot_dir / "etf_announcements", announcements, now),
         "etf_prospectus_rules": prospectus_rule_status(snapshot_dir / "etf_announcements", announcements, now),
         "etf_review_scope": etf_scope_status(snapshot_dir / 'etf_review_scope', root=snapshot_dir, now=now),
+        "etf_fund_scope_rules": fund_scope_status(snapshot_dir / 'etf_fund_scope', root=snapshot_dir, now=now),
         "market_coverage": {
             "indices_observed_at_target": sum(not row["historical_only"] and row["through"] == requested_through for row in indices),
             "declared_indices": len(INDEX_BASKET),
@@ -610,7 +631,7 @@ def build_market_risk_status(
             "nav_observed_etfs": sum(row["evaluation_through"] == etf_through and row["windows"][str(horizon)]["share_change_notional_yuan"] is not None for row in etfs),
             "revision_unconfirmed_etfs": sum(row["evaluation_through"] == etf_through and row.get("share_revision_unverified") is True and row["windows"][str(horizon)]["share_change_pct"] is not None for row in etfs),
             "declared_etfs": len(ETF_BASKET), "estimated_net_subscription_yuan": None,
-            "reason": "份额事件未核验；不发布样本净申赎总金额",
+            "reason": "全基金日份额范围、舍入精度、最终修订及全窗份额事件未验收；不发布样本净申赎总金额",
         } for horizon in (1, 5, 20, "recent")},
         "parameters": {"trend_windows_sessions": list(HORIZONS), "etf_windows_sessions": [1, 5, 20],
                        "recent_calendar_months": 2,
@@ -621,7 +642,8 @@ def build_market_risk_status(
         "limitations": [
             "先看市场环境，再看ST风格与个股节点；节点不覆盖系统性风险。",
             "ETF篮子是预先声明的8只宽基样本，不代表全体股票ETF；同指数产品可存在迁移。",
-            "份额变化乘当日单位净值是名义额；折算等份额事件未核对前，不当作净申赎金额。",
+            "份额变化乘当日单位净值是名义额；全基金日范围、精度、最终修订和份额事件均核实前，不当作净申赎估算，更不等于银行现金流。",
+            "单一登记范围的份额还可能受跨系统转托管影响；规则允许某种业务不代表本窗实际发生，不能用未知转托管量校正日表。",
             "二级市场成交额、价格下跌和基金规模下降均不是资金净流出；ETF申赎也不能识别资金身份。",
             "数据重建只作描述；未形成历史可见时点与独立检验，不证明最近两月大盘因素已优于节点。",
             "没有风险权重或交易阈值；无数据与过期数据不得解释为低风险。",

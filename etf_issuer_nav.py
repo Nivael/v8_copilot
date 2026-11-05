@@ -62,8 +62,10 @@ def load_issuer_navs(directory: Path, now: datetime) -> tuple[dict, dict[str, li
             raise ValueError("invalid issuer NAV dates/scope")
         for code, rows in raw["etf_navs"].items():
             validate_nav_rows(rows, code, calendar)
+        from etf_nav_sources import reconcile_issuer_navs
+        reconciliation = reconcile_issuer_navs(directory, {**raw, "content_digest": expected}, now)
         return {"availability": "observed", "through": through.isoformat(), "fetched_at": raw["fetched_at"],
                 "content_digest": expected, "nav_unit": "CNY_per_share", "calendar": calendar,
-                "availability_basis": raw["availability_basis"]}, raw["etf_navs"]
+                "availability_basis": raw["availability_basis"], "raw_reconciliation": reconciliation}, raw["etf_navs"]
     except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError, OverflowError):
         return {"availability": "missing" if not (directory / "current.json").exists() else "invalid"}, {}

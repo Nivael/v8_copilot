@@ -17,7 +17,7 @@ from zoneinfo import ZoneInfo
 from canonical_json import digest
 from data_refresh import atomic_write_json
 from etf_issuer_nav import NAV_DEFINITIONS
-from etf_nav_refresh import NAVTable
+from etf_nav_parsers import NAVTable
 from etf_szse_history import archive_response
 from settings import DATA_ROOT
 
@@ -40,7 +40,7 @@ NOTE = '只核对发行人当前返回的分红/拆分历史表；查询失败�
 def processor_digest():
     root = Path(__file__).parent
     return digest({name: hashlib.sha256((root/name).read_bytes()).hexdigest() for name in
-                   (Path(__file__).name, 'etf_nav_refresh.py', 'etf_issuer_nav.py', 'etf_szse_history.py', 'canonical_json.py')})
+                   (Path(__file__).name, 'etf_nav_parsers.py', 'etf_issuer_nav.py', 'etf_szse_history.py', 'canonical_json.py')})
 
 
 PROCESSOR_DIGEST = processor_digest()

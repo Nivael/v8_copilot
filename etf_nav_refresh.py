@@ -5,9 +5,7 @@ import argparse
 from datetime import date, datetime, timezone
 import hashlib
 from http.client import IncompleteRead
-from html.parser import HTMLParser
 import json
-import math
 from pathlib import Path
 import re
 from urllib.parse import urlencode
@@ -17,145 +15,12 @@ from zoneinfo import ZoneInfo
 from canonical_json import digest
 from data_refresh import atomic_write_json
 from etf_issuer_nav import NAV_DEFINITIONS, NAV_VERSION, load_issuer_navs, validate_nav_rows
+from etf_nav_parsers import NAVTable, parse_chinaamc, parse_efunds, parse_huatai, parse_jsfund, parse_nffund
 from market_calendar import CALENDAR_SOURCE, CALENDAR_VERSION, sessions_2026
+from etf_nav_sources import CHINAAMC_API, EFUNDS_SCHEMA, HUATAI_API, HUATAI_SITE, NF_API, reconcile_fund, reconcile_issuer_navs
 from settings import DATA_ROOT
 
 DEFAULT_OUTPUT = DATA_ROOT / "local_data/v8_copilot/market_risk/issuer_nav"
-HUATAI_API = "https://www.huatai-pb.com/common-web/chart/fundnettable/getFundNetTableJson"
-HUATAI_SITE = "9496d23c648f4a72a79150c3f2ac669b"
-NF_API = "https://www.nffund.com/nfwebApi/fund/newValueList"
-CHINAAMC_API = "https://www.chinaamc.com/product/fundLishijingzhi.do"
-EFUNDS_SCHEMA = "https://www.efunds.com.cn/js/fund_details/product-detail-overview.js?7905e4a6"
-
-
-class NAVTable(HTMLParser):
-    def __init__(self, text: str):
-        super().__init__()
-        self.tables, self.inputs, self.selected = [], {}, []
-        self.table = self.row = self.cell = None
-        if not re.search(r"</html>\s*$", text, re.I):
-            raise ValueError("incomplete HTML document")
-        self.feed(text)
-
-    def handle_starttag(self, tag, attrs):
-        attrs = dict(attrs)
-        if tag == "input" and attrs.get("name"):
-            self.inputs[attrs["name"]] = attrs.get("value")
-        elif tag == "option" and "selected" in attrs:
-            self.selected.append(attrs.get("value"))
-        elif tag == "table":
-            if self.table is not None:
-                raise ValueError("nested NAV tables are unsupported")
-            self.table = {"attrs": attrs, "rows": []}
-        elif tag == "tr" and self.table is not None:
-            self.row = []
-        elif tag in ("th", "td") and self.row is not None:
-            self.cell = []
-
-    def handle_data(self, data):
-        if self.cell is not None:
-            self.cell.append(data)
-
-    def handle_endtag(self, tag):
-        if tag in ("td", "th") and self.cell is not None:
-            self.row.append("".join(self.cell).strip())
-            self.cell = None
-        elif tag == "tr" and self.row is not None:
-            self.table["rows"].append(self.row)
-            self.row = None
-        elif tag == "table" and self.table is not None:
-            self.tables.append(self.table)
-            self.table = None
-
-    def table_rows(self, *, identifier=None, css_class=None):
-        matches = [table["rows"] for table in self.tables
-                   if (identifier is None or table["attrs"].get("id") == identifier)
-                   and (css_class is None or css_class in table["attrs"].get("class", "").split())]
-        if len(matches) != 1:
-            raise ValueError("missing or ambiguous NAV table")
-        return matches[0]
-
-
-def normalized(rows: list[tuple[str, object]], code: str, calendar: list[str], *, bounded: bool) -> list[dict]:
-    result, seen = [], set()
-    for day, value in rows:
-        if re.fullmatch(r"\d{8}", day):
-            day = f"{day[:4]}-{day[4:6]}-{day[6:]}"
-        day = date.fromisoformat(day).isoformat()
-        number = float(str(value).replace(",", ""))
-        if day in seen or isinstance(value, bool) or not math.isfinite(number) or number <= 0:
-            raise ValueError("duplicate date or invalid NAV")
-        seen.add(day)
-        if day not in calendar:
-            if bounded or calendar[0] <= day <= calendar[-1]:
-                raise ValueError("NAV date outside requested trading calendar")
-            continue
-        result.append({"ts_code": code, "nav_date": day, "unit_nav": number})
-    return sorted(result, key=lambda row: row["nav_date"])
-
-
-def parse_chinaamc(text: str, code: str, calendar: list[str], page: int) -> tuple[list[dict], int]:
-    parsed = NAVTable(text)
-    if (parsed.inputs.get("fundcode") != code[:6] or parsed.inputs.get("beginDate") != calendar[0]
-        or parsed.inputs.get("endDate") != calendar[-1]
-        or parsed.table_rows(identifier="hoverBox1") != [["净值日期", "单位净值", "累计净值", "资产净值"]]):
-        raise ValueError("wrong ChinaAMC code, dates or NAV columns")
-    current = re.findall(r"let\s+currentPage\s*=\s*'(\d+)'", text)
-    total = re.findall(r"let\s+totalPage\s*=\s*'(\d+)'", text)
-    if set(current) != {str(page)} or len(set(total)) != 1:
-        raise ValueError("wrong ChinaAMC page")
-    rows = parsed.table_rows(identifier="hoverBox1_1")
-    if not rows or any(len(row) != 4 for row in rows):
-        raise ValueError("invalid ChinaAMC NAV rows")
-    return normalized([(row[0], row[1]) for row in rows], code, calendar, bounded=True), int(total[0])
-
-
-def parse_jsfund(text: str, code: str, calendar: list[str]) -> list[dict]:
-    parsed = NAVTable(text)
-    if parsed.inputs.get("FundCode") != code[:6] or code[:6] not in parsed.selected:
-        raise ValueError("wrong JSFund instrument")
-    rows = parsed.table_rows(css_class="mm_r_table7")
-    if not rows or rows[0] != ["日期", "份额净值", "累计净值"] or any(len(row) != 3 for row in rows[1:]):
-        raise ValueError("wrong JSFund NAV columns")
-    return normalized([(row[0], row[1]) for row in rows[1:]], code, calendar, bounded=False)
-
-
-def parse_huatai(payload: dict, code: str, calendar: list[str], page: int) -> tuple[list[dict], int]:
-    rows = payload["dataList"]
-    if int(payload["currentPage"]) != page or not rows or any(row["fundcode"] != code[:6] for row in rows):
-        raise ValueError("wrong Huatai instrument/page")
-    return normalized([(row["date"], row["netvalue"]) for row in rows], code, calendar, bounded=True), int(payload["totalPage"])
-
-
-def parse_nffund(payload: dict, code: str, calendar: list[str], page: int) -> tuple[list[dict], int, str]:
-    if payload["code"] != "ETS-5BP00000":
-        raise ValueError("NFFund request failed")
-    block = payload["data"]["jjjzList"]
-    rows = block["list"]
-    # This endpoint ignores date ranges. Walk its dated pages until the lower boundary.
-    if (block["pageNum"] != page or block["pageSize"] != 10 or len(rows) != block["size"] or not rows
-        or block["pages"] != math.ceil(block["total"] / 10)
-        or len(rows) != min(10, block["total"] - (page - 1) * 10)
-        or any(row.get("fundCode") not in (None, code[:6]) for row in rows)):
-        raise ValueError("invalid NFFund pagination/instrument")
-    dates = [date.fromisoformat(row["fdate_ex"]).isoformat() for row in rows]
-    if dates != sorted(set(dates), reverse=True) or any(row["fdate"] != day.replace("-", "") for row, day in zip(rows, dates)):
-        raise ValueError("invalid NFFund dates/order")
-    return normalized([(row["fdate_ex"], row["fundNav"]) for row in rows], code, calendar, bounded=False), block["total"], dates[-1]
-
-
-def parse_efunds(text: str, code: str, calendar: list[str]) -> list[dict]:
-    # Parse the official literal as data; never evaluate downloaded JavaScript.
-    match = re.fullmatch(r'\s*mk_' + code[:6] + r'_1y="([\d_;.\-]+)";\s*', text)
-    if not match:
-        raise ValueError("invalid EFunds literal/instrument")
-    records = match[1].split(";")
-    if records[0] != "0_1_2_3_4" or records[-1] != "":
-        raise ValueError("unexpected EFunds column schema")
-    rows = [record.split("_") for record in records[1:-1]]
-    if any(len(row) != 5 for row in rows):
-        raise ValueError("truncated EFunds records")
-    return normalized([(row[0], row[2]) for row in rows], code, calendar, bounded=False)
 
 
 class IssuerNAVClient:
@@ -249,16 +114,14 @@ def _staged_navs(path: Path, code: str, calendar: list[str], now: datetime, resp
             or fetched.tzinfo is None or fetched > now or fetched.date().isoformat() < calendar[-1]):
             raise ValueError("staged NAV binding mismatch")
         validate_nav_rows(staged["rows"], code, calendar)
-        for ref in staged["responses"]:
-            key = ref["response_sha256"]
-            if not re.fullmatch(r"[a-f0-9]{64}", key) or hashlib.sha256((response_dir / f"{key}.raw").read_bytes()).hexdigest() != key:
-                raise ValueError("staged response missing or changed")
+        reconcile_fund(response_dir.parent, code, calendar, staged["rows"], staged["responses"], now)
         return staged["rows"], staged["responses"]
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         return None
 
 
 def refresh_issuer_navs(client, *, through: str, output: Path, sessions=61, now: datetime | None = None, repair=False) -> dict:
+    fixed_now = now
     now = now or datetime.now(timezone.utc)
     end = date.fromisoformat(through)
     if end >= now.astimezone(ZoneInfo("Asia/Shanghai")).date() or not 21 <= sessions <= 61:
@@ -282,6 +145,7 @@ def refresh_issuer_navs(client, *, through: str, output: Path, sessions=61, now:
             else:
                 rows, refs = client.get_navs(code, calendar)
             validate_nav_rows(rows, code, calendar)
+            reconcile_fund(output, code, calendar, rows, refs, fixed_now or datetime.now(timezone.utc))
             staged = {"definition": NAV_DEFINITIONS[code], "calendar": calendar, "nav_unit": "CNY_per_share",
                       "fetched_at": now.isoformat(), "rows": rows, "responses": refs}
             staged["content_digest"] = digest(staged)
@@ -295,15 +159,19 @@ def refresh_issuer_navs(client, *, through: str, output: Path, sessions=61, now:
               "completed_at": datetime.now(timezone.utc).isoformat(), "failures": failures,
               "reused_series": reused,
               "complete_series": len(raw["etf_navs"]), "declared_series": len(NAV_DEFINITIONS)}
-    previous, previous_rows = load_issuer_navs(output, now)
+    previous, previous_rows = load_issuer_navs(output, fixed_now or datetime.now(timezone.utc))
     if previous_rows and (previous["through"] > through or previous["through"] == through and len(previous["calendar"]) > sessions):
         report.update(status="failed", reason="would_regress_existing_window")
     if report["status"] == "complete":
         raw["content_digest"] = digest(raw)
-        atomic_write_json(output / "snapshots" / f"{raw['content_digest']}.json", raw)
-        atomic_write_json(output / "current.json", raw)
-        report.update(snapshot_digest=raw["content_digest"], nav_observations=sum(map(len, raw["etf_navs"].values())))
-    else:
+        try:
+            reconcile_issuer_navs(output, raw, fixed_now or datetime.now(timezone.utc))
+            atomic_write_json(output / "snapshots" / f"{raw['content_digest']}.json", raw)
+            atomic_write_json(output / "current.json", raw)
+            report.update(snapshot_digest=raw["content_digest"], nav_observations=sum(map(len, raw["etf_navs"].values())))
+        except (OSError, ValueError, TypeError, KeyError, IndexError, AttributeError, OverflowError) as exc:
+            report.update(status="failed", reason=type(exc).__name__)
+    if report["status"] != "complete":
         report["current_snapshot_preserved"] = True
     atomic_write_json(output / "last_attempt.json", report)
     return report

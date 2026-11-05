@@ -6,7 +6,8 @@ import pytest
 
 from canonical_json import digest
 from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
-from etf_nav_refresh import IssuerNAVClient, parse_chinaamc, parse_efunds, parse_huatai, parse_jsfund, parse_nffund, refresh_issuer_navs
+from etf_nav_refresh import IssuerNAVClient, parse_chinaamc, parse_efunds, parse_huatai, parse_jsfund, parse_nffund
+from tests.etf_nav_fixtures import refresh_issuer_navs
 from market_calendar import sessions_2026
 from market_risk import ETF_BASKET, _with_issuer_navs, build_market_risk_status, etf_metrics, market_update_status
 

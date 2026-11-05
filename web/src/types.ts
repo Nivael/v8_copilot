@@ -398,6 +398,13 @@ export interface ETFDailyRawReconciliation {
   funds:Array<{code:string;share_field:string;share_unit:string;fractional_digit_counts:Record<string,number>;
     records:Array<{code:string;date:string;raw_text:string;source_value:string;ten_thousand_shares:string;shares:string;fractional_digits:number;source_url:string;response_sha256:string;observed_at:string}>}>;
 }
+export interface ETFUnitNAVReconciliation {
+  version:string;availability:string;source_response_count:number;snapshot_digest:string;start:string;through:string;nav_observations:number;
+  exact_source_projection_verified:boolean;historical_PIT:false;corporate_actions_checked:false;whole_fund_daily_scope_verified:false;share_precision_verified:false;final_revision_verified:false;estimated_net_subscription_yuan:null;note:string;
+  funds:Array<{code:string;provider:string;source_field:string;source_url:string;unit:string;source_response_count:number;fractional_digit_counts:Record<string,number>;
+    source_responses:Array<{role:string;url:string;method:string;params:Record<string,string|number>;response_sha256:string;observed_at:string;bytes:number}>;
+    records:Array<{date:string;raw_text:string;source_value:string;fractional_digits:number;source_url:string;request_method:string;request_params:Record<string,string|number>;response_sha256:string;observed_at:string}>}>;
+}
 export interface ETFFundScopeRules {
   version:string;availability:string;review_scope?:string;reviewed_documents:number|null;reviewed_passages:number|null;proof_pages:number[];content_digest?:string;materialized_at?:string;note?:string;
   document?:{code:string;published_on:string;title:string;url:string;document_id:string;catalog_digest:string;response_url:string;observed_at:string;raw_sha256:string;text_sha256:string;bytes:number;page_count:number};
@@ -424,7 +431,7 @@ export interface MarketRiskStatus {
   szse_revision_recheck?:SZSERevisionRecheck
   etf_issuer_history?:ETFIssuerHistory
   public_index_snapshot?:{availability:string;through?:string;scope?:string}
-  issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string}
+  issuer_nav_snapshot?:{availability:string;through?:string;fetched_at?:string;raw_reconciliation?:ETFUnitNAVReconciliation}
   public_breadth_snapshot?:{availability:string;through?:string;fetched_at?:string;scope?:string}
   etf_quarterly?:{version:string;availability:string;period_label?:string;period_start?:string;period_end?:string;capture_completed_at?:string;observed_reports:number;declared_etfs:number;corporate_actions_checked:false;note:string;reports:ETFQuarterlyReport[]}
   etf_report_continuity?:{version:string;availability:string;period_start?:string;period_end?:string;following_period_start?:string;following_period_end?:string;

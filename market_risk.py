@@ -368,7 +368,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
         ("szse_etf_nav", "深交所 · ETF净值", szse_meta, szse, "nav_through", "nav_observation_count", 3, SZSE_ETF_SOURCE,
          "只显示实际取得的净值，不以前值补齐未披露日期。"),
         ("issuer_etf_nav", "5家基金公司 · ETF单位净值", issuer_meta, issuer_rows, "nav_through", "nav_observation_count", 8,
-         "/market", "各基金原始链接见大盘页；首次取得日期不冒充历史当时可见，净值齐全不代表份额事件已核验。"),
+         "/market", "逐条核对原响应的单位净值字段与日表；失配即停用。首次取得不冒充历史当时可见，净值齐全不代表份额范围、精度或事件已验收。"),
         ("exchange_breadth", "沪深交易所 · A股收盘横截面", breadth_meta, breadth.get("venues", []), "through", "listed_source_stocks", 2,
          "/market", "两所A股范围分别核对；不含北交所，停牌及无成交单列；此项是单日截面，历史窗口另作独立核对。"),
     ]

@@ -1,19 +1,10 @@
-import {useState,type KeyboardEvent} from 'react'
+import {useState} from 'react'
+import {scrollTable} from './tableScroll'
 import type {ETFDailyRawReconciliation as Audit} from './types'
 import {formatShareCount as shares} from './numbers'
 
 const ready=(data:Audit|undefined)=>data?.availability==='source_reconciled'&&data.exact_source_projection_verified
 const time=(value:string)=>new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})
-
-function scrollTable(event:KeyboardEvent<HTMLDivElement>){
-  if(event.target!==event.currentTarget||event.ctrlKey||event.metaKey||event.altKey||event.shiftKey)return
-  const page=Math.max(40,event.currentTarget.clientHeight-40)
-  const moves:Record<string,[number,number]>={ArrowLeft:[-40,0],ArrowRight:[40,0],ArrowUp:[0,-40],ArrowDown:[0,40],PageUp:[0,-page],PageDown:[0,page]}
-  const move=moves[event.key]
-  if(!move)return
-  event.preventDefault()
-  event.currentTarget.scrollBy({left:move[0],top:move[1],behavior:'auto'})
-}
 
 export function ETFDailySourceAudit({sse,szse,target}:{sse?:Audit;szse?:Audit;target:string|null}){
   const groups=[{id:'SSE',label:'沪市',data:sse},{id:'SZSE',label:'深市',data:szse}]

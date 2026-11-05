@@ -93,4 +93,17 @@ describe('LearningPage',()=>{
     expect(await screen.findByText('检索至 2026-11-05')).toBeInTheDocument()
     expect(screen.getByText('目录取得不代表份额事件已核验。')).toBeInTheDocument()
   })
+  it('labels current-list reads separately from dated source coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'exchange_risk_membership',label:'交易所名单',availability:'observed',
+      requested_through:null,observed_through_min:null,observed_through_max:null,observation_count:199,series_at_target:null,declared_series:6,
+      observed_source_groups:6,observation_date:'2026-11-05',snapshot_digest:'abc',url:'/market',fetched_at:'2026-11-05T03:49:15Z',
+      date_basis:'current_list_observation',note:'读取日非统一数据截止日，不推进历史成员日期。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('读取于 2026-11-05')).toBeInTheDocument()
+    expect(within(section).getByText('本次读取 6/6 张分类表')).toBeInTheDocument()
+    expect(within(section).getByRole('region',{name:'可滚动的市场来源更新表'})).toHaveAttribute('tabindex','0')
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+    expect(screen.getByText('59 天')).toBeInTheDocument()
+  })
 })

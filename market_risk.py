@@ -21,6 +21,7 @@ from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
 from node_market_audit import audit_status as node_market_audit_status
+from exchange_risk_membership import list_status as risk_membership_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -326,6 +327,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     history = breadth_history_status(snapshot_dir / "public_breadth_history", now)
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
+    membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -366,6 +368,13 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     "url": "/market", "date_basis": "catalog_search_cutoff",
                     "note": "日期为采集时点的公告检索上界；最近公告日逐基金列出。目录取得不代表份额事件已核验。"
                             + (f"已逐条核对{event_review['reviewed_events']}条历史事项，涉及{event_review['reconciled_documents']}份材料；其余{event_review['pending_documents']}份尚未完成这类核对。" if event_review['availability']=='partial' else "")})
+    observed = membership['availability']=='observed'
+    sources.append({'source_id':'exchange_risk_membership','label':'交易所 · 风险警示与退市整理名单','availability':membership['availability'],
+                    'requested_through':None,'fetched_at':membership.get('completed_at'),'observed_through_min':None,'observed_through_max':None,
+                    'observation_date':membership.get('observed_on'),'observation_count':len(membership['rows']) if observed else None,
+                    'series_at_target':None,'observed_source_groups':len(membership['groups']) if observed else None,'declared_series':6,
+                    'snapshot_digest':membership.get('content_digest'),'url':'/market','date_basis':'current_list_observation',
+                    'note':'此日期为名单读取日，非统一数据截止日；深市表声明数据日，沪市未声明。表内记录含另列B股与退市整理股票，不推进个股或历史成员日期。'})
     return sources
 
 
@@ -486,6 +495,7 @@ def build_market_risk_status(
         "etf_issuer_history": {**history_status(snapshot_dir / "issuer_action_history", now),
                                "market_target": requested_through},
         "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit", now=now),
+        "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,

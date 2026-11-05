@@ -158,7 +158,7 @@ export interface LearningStatus {
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
   readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
-  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number;snapshot_digest:string|null;url:string;note:string;date_basis?:string}>
+  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null}>
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
   methods:LearningMethod[]
   freshness:{
@@ -231,6 +231,12 @@ export interface NodeMarketInputAudit {
   date_reviews?:Array<{document_id:string;company:string;symbol:string;signed_on:string;availability:string;source_url:string;signature_page:number;signature_date_text?:string}>
   folds?:Array<{test_year:number;train_events:number;train_companies:number;test_events:number;test_companies:number;train_capacity_pass:boolean}>
   source_dates?:{benchmark_keys_through:string;historical_membership_through:string;node_information_through:string;price_keys_through:Record<string,string>}
+}
+export interface ExchangeRiskMembership {
+  availability:string;observed_on?:string;started_at?:string;completed_at?:string;reparsed_at?:string|null;is_today_observation?:boolean
+  historical_membership_ready:false;common_source_as_of?:null;risk_warning_a_shares?:number;delisting_a_shares?:number;excluded_b_shares?:number;note?:string
+  groups?:Array<{group:string;venue:string;board:string;kind:string;source_url:string;source_as_of:string|null;source_rows:number;pages_read:number;a_shares:number;b_shares:number}>
+  rows?:Array<{ts_code:string;name:string;share_class:string;kind:string;venue:string;group:string}>
 }
 export interface MarketRiskETF {
   code:string
@@ -343,6 +349,7 @@ export interface MarketRiskStatus {
   recent_observations?:{index_coverage:number;declining_indices:number;etf_share_coverage:number;increasing_share_records:number;decreasing_share_records:number;interpretation:string}
   node_market_comparison?:{status:string;reason:string}
   node_market_input_audit?:NodeMarketInputAudit
+  exchange_risk_membership?:ExchangeRiskMembership
   etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
   breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
     venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;

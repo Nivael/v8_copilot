@@ -12,6 +12,7 @@ import {ETFProspectusRules} from './ETFProspectusRules'
 import {ETFSZSERecheck} from './ETFSZSERecheck'
 import {ETFIssuerHistory} from './ETFIssuerHistory'
 import {NodeMarketAudit} from './NodeMarketAudit'
+import {ExchangeRiskLists} from './ExchangeRiskLists'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -220,6 +221,7 @@ export function MarketRiskPage(){
             <div><span>当日收益算术均值</span><strong>{pct(data.breadth.st_name_group.mean_return_pct)}</strong></div>
           </div><p>当前名称分组只描述当日股票，不回填为历史ST成员；同期ST走势仍需历史成员与价格数据。</p></div>}
         </>:<p className="learning-empty">当日涨跌分布尚未取得，无法判断同步下跌的范围。</p>}
+        {data.exchange_risk_membership&&<ExchangeRiskLists data={data.exchange_risk_membership} quoteDate={data.breadth.through}/>}
       </section>
 
       <section className="learning-freshness market-risk-limits" aria-label="参数与检验边界"><h2>这组参数怎样进入研究</h2><p>先描述大盘环境，再比较ST风格与个股节点。当前参数版本 {data.parameter_version}；尚不设置资金撤退概率、风险权重或交易阈值。</p><ul>{data.limitations.map(limit=><li key={limit}>{limit}</li>)}</ul><p>下一步比较“仅节点”与“节点＋市场环境”，固定样本、同一观察时点和交易日窗口；最近两月只作压力案例，另设独立时段检验，避免按已知结果调权重。</p><div className="market-risk-sources">{data.sources.map(source=><a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>)}</div></section>

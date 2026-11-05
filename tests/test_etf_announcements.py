@@ -126,7 +126,7 @@ def test_catalog_integration_does_not_unlock_net_subscription_or_claim_same_day_
     result = build_market_risk_status(snapshot_dir=tmp_path, database=tmp_path / "none", manifest_path=tmp_path / "none", now=NOW)
     assert result["etf_announcements"]["corporate_actions_checked"] is False
     assert result["etf_aggregate"]["recent"]["estimated_net_subscription_yuan"] is None
-    update = market_update_status(snapshot_dir=tmp_path, now=NOW)[-1]
+    update = next(row for row in market_update_status(snapshot_dir=tmp_path, now=NOW) if row['source_id']=='etf_announcements')
     assert update["date_basis"] == "catalog_search_cutoff" and update["observed_through_min"] == "2026-11-05"
     assert result["etf_announcements"]["catalogs"][0]["newest_publication"] == "2026-10-27"
 

@@ -19,12 +19,14 @@ from data_refresh import atomic_write_json
 from settings import BASE_DB, DATA_ROOT, MARKET_CONTEXT_DB, P8_QFQ_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
 from p8_event_graph import P6_EVENT_TO_NODE
 from node_publication_metadata import metadata_status, OUTPUT as PUBLICATION_OUTPUT
+from node_public_court_pool import pool_status, OUTPUT as COURT_OUTPUT
 
-VERSION = 'node_market_input_audit_v1'
-PLAN_PATH = Path(__file__).with_name('node_market_study_v2.json')
+VERSION = 'node_market_input_audit_v2'
+PLAN_PATH = Path(__file__).with_name('node_market_study_v3.json')
 PLAN = json.loads(PLAN_PATH.read_text())
 PLAN_DIGEST = digest(PLAN)
-DEFAULT_OUTPUT = DATA_ROOT/'local_data/v8_copilot/market_risk/node_market_audit'
+LEGACY_OUTPUT = DATA_ROOT/'local_data/v8_copilot/market_risk/node_market_audit'
+DEFAULT_OUTPUT = LEGACY_OUTPUT/'v2'
 P6A_DB = DATA_ROOT/'local_data/v8_copilot/restructuring_entities_v1.sqlite3'
 DATE_PROFILE = Path(__file__).with_name('node_market_date_reviews_v1.json')
 DATE_REVIEWS = json.loads(DATE_PROFILE.read_text())['reviews']
@@ -34,7 +36,8 @@ def processor_digest():
     root = Path(__file__).parent
     return digest({name: hashlib.sha256((root/name).read_bytes()).hexdigest()
                    for name in (Path(__file__).name, PLAN_PATH.name, DATE_PROFILE.name, 'canonical_json.py',
-                                'node_publication_metadata.py','node_publication_metadata_v1.json')})
+                                'node_publication_metadata.py','node_publication_metadata_v1.json',
+                                'node_public_court_pool.py','node_public_court_review_v1.json','node_public_court_admission_v1.json')})
 
 
 PROCESSOR_DIGEST = processor_digest()
@@ -96,8 +99,8 @@ def reviewed_dates(directory):
 
 
 def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_RESEARCH_DB,
-                   market=MARKET_CONTEXT_DB, base=BASE_DB, overlay=P8_QFQ_DB, date_sources=DEFAULT_OUTPUT/'date_sources',
-                   publication_sources=PUBLICATION_OUTPUT):
+                   market=MARKET_CONTEXT_DB, base=BASE_DB, overlay=P8_QFQ_DB, date_sources=LEGACY_OUTPUT/'date_sources',
+                   publication_sources=PUBLICATION_OUTPUT, court_sources=COURT_OUTPUT):
     """Read identifiers, dates and keys only; price-value reads are denied by SQLite."""
     with closing(ro(episodes)) as conn:
         run = conn.execute('select run_id,as_of,payload_json from valuation_episode_runs order by rowid desc limit 1').fetchone()
@@ -131,6 +134,8 @@ def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_R
         for item in p8: item['source_ids'] = json.loads(item['source_ids'])
     p6_identity={key:p6_run.get(key) for key in ('run_id','as_of','verified_event_count')}
     publication_metadata=metadata_status(p6_identity,publication_sources)
+    court_pool=pool_status(events,p6_identity,court_sources)
+    court_facts=court_pool['facts'] if court_pool['availability']=='observed' else []
     with closing(ro(market)) as conn:
         calendar = [row[0] for row in conn.execute("select trade_date from benchmark_daily where benchmark_id='csi_all_share' order by trade_date")]
         dates = set()
@@ -145,11 +150,14 @@ def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_R
         for review in publication_metadata['reviews']:
             index=bisect_right(calendar,review['official_catalog_date'])-1
             if index>=0:dates.add(calendar[index])
+        for fact in court_facts:
+            index=bisect_right(calendar,fact['information_available_date'])-1
+            if index>=0:dates.add(calendar[index])
         if not dates: raise ValueError('no historical benchmark dates')
         marks = ','.join('?' for _ in dates)
         membership = [list(row) for row in conn.execute(f'select trade_date,symbol from st_membership_daily where trade_date in ({marks}) order by trade_date,symbol', sorted(dates))]
         membership_through = conn.execute('select max(trade_date) from st_membership_daily').fetchone()[0]
-    symbols = sorted({item['symbol'] for item in events if item['source_kind'] == 'p6a_verified_fact'})
+    symbols = sorted({item['symbol'] for item in events if item['source_kind'] == 'p6a_verified_fact'} | {r['symbol'] for r in court_facts})
     price_sources = {}
     for name, path in (('p8_qfq_complete_window', overlay), ('base_qfq_complete_window', base)):
         with closing(ro(path)) as conn:
@@ -160,7 +168,7 @@ def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_R
     return {'p6_run': {key: p6_run.get(key) for key in ('run_id', 'as_of', 'verified_event_count')}, 'event_table_rows': all_rows,
             'events': events, 'parents': parents, 'p8_run': p8_run, 'derived_events': p8, 'calendar': calendar,
             'membership': membership, 'membership_through': membership_through, 'price_sources': price_sources,
-            'date_reviews': date_reviews, 'publication_metadata':publication_metadata,'node_map': dict(P6_EVENT_TO_NODE)}
+            'date_reviews': date_reviews, 'publication_metadata':publication_metadata,'public_court_pool':court_pool,'node_map': dict(P6_EVENT_TO_NODE)}
 
 
 def parent_issues(event, parents, review=None, publication=None):
@@ -208,6 +216,25 @@ def project(inputs):
     date_reviews = {row['document_id']: row for row in inputs['date_reviews'] if row['availability'] == 'observed'}
     publication_metadata=inputs.get('publication_metadata',{'availability':'missing','reviews':[]})
     publication_reviews={row['document_id']:row for row in publication_metadata['reviews'] if row['availability']=='observed'} if publication_metadata['availability']=='observed' else {}
+    def nominate(event, available, issues, review=None, publication=None):
+        index = bisect_right(calendar, available)
+        feature_date = calendar[index-1] if index else None
+        if not feature_date or feature_date not in members: issues.append('historical_membership_missing')
+        elif event['symbol'] not in members[feature_date]: issues.append('not_in_source_historical_st_membership')
+        path = calendar[index:index+PLAN['horizon_sessions']+1]
+        source = next((name for name in PLAN['price_source_priority'] if len(path) == PLAN['horizon_sessions']+1
+                       and all((event['symbol'], day) in prices[name] for day in path)), None)
+        if not source: issues.append('one_source_price_keys_incomplete')
+        if index < 61: issues.append('market_warmup_keys_incomplete')
+        issues_count.update(set(issues))
+        cohorts.append({'event_id': event['event_id'], 'symbol': event['symbol'], 'event_type': event['event_type'],
+                        'event_date':event['event_date'],'source_kind':event['source_kind'],
+                        'information_available_date': available, 'original_information_date': event['information_available_date'],
+                        'reviewed_document_day': review['signed_on'] if review else None, 'feature_through': feature_date,
+                        'official_catalog_date':publication['official_catalog_date'] if publication else
+                            available if event['source_kind']=='public_reviewed_court_clause' else None,
+                        'entry_date': path[0] if path else None, 'outcome_key_end': path[-1] if len(path) == PLAN['horizon_sessions']+1 else None,
+                        'price_key_source': source, 'source_ref': event['source_ref'], 'capacity_candidate': not issues, 'issues': sorted(set(issues))})
     for event in events:
         iso(event['event_date']); available = iso(event['information_available_date'])
         if not re.fullmatch(r'\d{6}', event['symbol']) or event['source_kind'] not in ('p6a_verified_fact', 'official_title_exact'):
@@ -231,29 +258,37 @@ def project(inputs):
             and urlparse(row['source_url'] or '').path==urlparse(publication['source_url']).path for row in inputs['parents'])):publication=None
         if publication and sorted({row['published_date'] for row in inputs['parents'] if row['source_document_id']==event['source_ref'] and row['symbol']==event['symbol']})!=publication['parent_published_dates']:publication=None
         issues = parent_issues(event, inputs['parents'], review,publication)
-        original_available = available
         if review: available = max(available, review['signed_on'])
         if publication:available=max(available,publication['official_catalog_date'])
         revised_key = (event['symbol'], available, event['event_type'])
         if revised_key in revised_keys: raise ValueError('reviewed dates collapse duplicate observations')
         revised_keys.add(revised_key)
         if event['event_type'] not in PLAN['node_types'] or event['evidence_status'] != 'verified_official_source': issues.append('node_definition_not_admitted')
-        index = bisect_right(calendar, available)
-        feature_date = calendar[index-1] if index else None
-        if not feature_date or feature_date not in members: issues.append('historical_membership_missing')
-        elif event['symbol'] not in members[feature_date]: issues.append('not_in_source_historical_st_membership')
-        path = calendar[index:index+PLAN['horizon_sessions']+1]
-        source = next((name for name in PLAN['price_source_priority'] if len(path) == PLAN['horizon_sessions']+1
-                       and all((event['symbol'], day) in prices[name] for day in path)), None)
-        if not source: issues.append('one_source_price_keys_incomplete')
-        if index < 61: issues.append('market_warmup_keys_incomplete')
-        issues_count.update(set(issues))
-        cohorts.append({'event_id': event['event_id'], 'symbol': event['symbol'], 'event_type': event['event_type'],
-                        'information_available_date': available, 'original_information_date': original_available,
-                        'reviewed_document_day': review['signed_on'] if review else None, 'feature_through': feature_date,
-                        'official_catalog_date':publication['official_catalog_date'] if publication else None,
-                        'entry_date': path[0] if path else None, 'outcome_key_end': path[-1] if len(path) == PLAN['horizon_sessions']+1 else None,
-                        'price_key_source': source, 'source_ref': event['source_ref'], 'capacity_candidate': not issues, 'issues': sorted(set(issues))})
+        nominate(event,available,issues,review,publication)
+    prior_nominations=len(cohorts)
+    court_pool=inputs.get('public_court_pool')
+    court_facts=court_pool['facts'] if court_pool and court_pool['availability']=='observed' else []
+    held=[];new_keys=set();new_ids=set()
+    for event in court_facts:
+        available=iso(event['information_available_date'])
+        if event['event_date'] is not None:iso(event['event_date'])
+        if (event['source_kind']!='public_reviewed_court_clause' or event['evidence_status']!='scoped_primary_clause_reviewed'
+            or event['event_type'] not in {'formal_restructuring_accepted','restructuring_plan_approved'}
+            or not re.fullmatch(r'\d{6}',event['symbol']) or event['event_id'] in by_id or event['event_id'] in new_ids):
+            raise ValueError('undeclared or duplicate new court clause')
+        key=(event['symbol'],available,event['event_type']);stage=(event['symbol'],event['event_type'])
+        if stage in new_keys:raise ValueError('duplicate new company stage')
+        new_keys.add(stage);new_ids.add(event['event_id'])
+        matches=[r for r in inputs['parents'] if r['source_document_id']==event['source_ref'] or
+                 (urlparse(r['source_url'] or '').hostname,urlparse(r['source_url'] or '').path)==
+                 (urlparse(event['source_url']).hostname,urlparse(event['source_url']).path)]
+        stage_matches=[r for r in inputs['parents'] if (r['symbol'],r['event_type'])==stage]
+        reason=('prior_primary_source_overlap' if matches else 'prior_company_stage_needs_procedure_review' if stage_matches else
+                'canonical_observation_overlap' if key in revised_keys else 'outside_declared_time_frame' if not PLAN['anchor_start']<=available<=PLAN['anchor_end'] else None)
+        if reason:
+            held.append({'event_id':event['event_id'],'symbol':event['symbol'],'source_ref':event['source_ref'],'reason':reason,
+                         'prior_event_ids':sorted({r['event_id'] for r in matches+stage_matches})});continue
+        revised_keys.add(key);nominate(event,available,[])
     lineage = Counter()
     deterministic = [row for row in inputs['derived_events'] if row['evidence_status'] == 'deterministic_verified']
     for row in deterministic:
@@ -273,8 +308,11 @@ def project(inputs):
                       'train_capacity_pass': len(train) >= PLAN['minimum_train_events'] and len({row['symbol'] for row in train}) >= PLAN['minimum_train_companies']})
     test_rows = [row for row in cohorts if row['capacity_candidate'] and int(row['information_available_date'][:4]) in PLAN['test_years']]
     n, companies = len(test_rows), len({row['symbol'] for row in test_rows})
-    passed = n >= PLAN['minimum_test_events'] and companies >= PLAN['minimum_test_companies'] and all(fold['train_capacity_pass'] for fold in folds)
-    return {'status': 'capacity_only_value_checks_pending' if passed else 'insufficient_source_linked_capacity',
+    pool_ready=court_pool is None or court_pool['availability']=='observed'
+    passed = pool_ready and n >= PLAN['minimum_test_events'] and companies >= PLAN['minimum_test_companies'] and all(fold['train_capacity_pass'] for fold in folds)
+    ceiling_rows=[r for r in cohorts if int(r['information_available_date'][:4]) in PLAN['test_years']]
+    ceiling_n=len(ceiling_rows);ceiling_companies=len({r['symbol'] for r in ceiling_rows})
+    return {'status': 'new_public_source_pool_unavailable' if not pool_ready else 'capacity_only_value_checks_pending' if passed else 'insufficient_source_linked_capacity',
             'outcomes_read': False, 'price_values_read': False, 'effect_measured': False, 'model_fitted': False,
             'p6_run': inputs['p6_run'], 'event_table_rows': inputs['event_table_rows'], 'active_run_linked_events': len(events),
             'unbound_table_rows': inputs['event_table_rows']-len(events), 'source_kind_counts': dict(origins),
@@ -283,13 +321,17 @@ def project(inputs):
             'historical_capacity_pass': passed, 'issues': dict(issues_count), 'folds': folds, 'candidate_rows': cohorts,
             'date_reviews': inputs['date_reviews'],
             'publication_metadata':publication_metadata,
+            'public_court_pool':court_pool,'prior_fact_nominations':prior_nominations,
+            'new_public_nominations':len(cohorts)-prior_nominations,'new_public_held':held,
+            'new_public_capacity':sum(r['capacity_candidate'] for r in cohorts if r['source_kind']=='public_reviewed_court_clause'),
             'source_pool_ceiling_events':len(cohorts),'source_pool_ceiling_companies':len({r['symbol'] for r in cohorts}),
-            'source_pool_can_reach_test_minimum':len(cohorts)>=PLAN['minimum_test_events'] and len({r['symbol'] for r in cohorts})>=PLAN['minimum_test_companies'],
+            'test_source_pool_ceiling_events':ceiling_n,'test_source_pool_ceiling_companies':ceiling_companies,
+            'source_pool_can_reach_test_minimum':ceiling_n>=PLAN['minimum_test_events'] and ceiling_companies>=PLAN['minimum_test_companies'],
             'conservative_date_shifts': sum(row['information_available_date'] != row['original_information_date'] for row in cohorts),
             'source_dates': {'benchmark_keys_through': calendar[-1], 'historical_membership_through': inputs['membership_through'],
                              'node_information_through': max((row['information_available_date'] for row in events), default=None),
                              'price_keys_through': {key: value['through'] for key, value in inputs['price_sources'].items()}},
-            'notice': '只盘点来源血缘、日期和键覆盖，未读取价格值或效果标签。标题与既有事实链分开；事实链对齐不等于本轮重审原文。日期线索冲突待核，不按文件路径直接改发布日期。'}
+            'notice': '只盘点来源血缘、日期和键覆盖，未读取价格值或效果标签。原事实链、新公开法院条款与原标题分开；新原件不冒充AN原标识的同一附件，不改写冻结运行。条款核对不等于全文或金标验收，日期键齐全不等于数值或效果通过。'}
 
 
 def validate_observation(inputs, observed):
@@ -309,6 +351,10 @@ def validate_observation(inputs, observed):
         for review in publication['reviews']:
             fetched=datetime.fromisoformat(review['observed_at'])
             if fetched.tzinfo is None or fetched>observed:raise ValueError('catalog date reviewed after audit')
+    pool=inputs.get('public_court_pool')
+    if pool and pool['availability']=='observed':
+        reviewed=datetime.fromisoformat(pool['reviewed_at'])
+        if reviewed.tzinfo is None or reviewed>observed:raise ValueError('court-source review after audit')
 
 
 def audit_status(directory=DEFAULT_OUTPUT, *, now=None, paths=None):

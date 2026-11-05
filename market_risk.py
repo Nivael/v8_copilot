@@ -611,7 +611,7 @@ def build_market_risk_status(
         "szse_revision_recheck": recheck_status(snapshot_dir / "szse_revision_recheck", snapshot_dir / "public_etf_szse", now, issuer_navs),
         "etf_issuer_history": {**history_status(snapshot_dir / "issuer_action_history", now),
                                "market_target": requested_through},
-        "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit", now=now),
+        "node_market_input_audit": node_market_audit_status(snapshot_dir / "node_market_audit" / "v2", now=now),
         "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
         "szse_st_reference": st_reference,
         "st_reconstruction": st_reconstruction,

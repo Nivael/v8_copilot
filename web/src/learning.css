@@ -187,6 +187,12 @@
 .market-node-date-table thead th:first-child {width:38%}
 .market-node-date-table thead th:nth-child(2) {width:30%}
 .market-node-date-table thead th:nth-child(3) {width:32%}
+.market-node-court-table {min-width:840px;table-layout:fixed}
+.market-node-court-table thead th:first-child {width:30%}
+.market-node-court-table thead th:nth-child(2) {width:24%}
+.market-node-court-table thead th:nth-child(3) {width:46%}
+.market-node-court-table td>span {display:block;white-space:normal}
+.market-node-court-table code {overflow-wrap:anywhere;word-break:break-all}
 @media(max-width:900px){
   .market-recheck-scroll-hint {display:block}
   .learning-page {width:calc(100% - 40px)}

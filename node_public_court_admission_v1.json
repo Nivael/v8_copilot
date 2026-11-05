@@ -1,0 +1,826 @@
+{
+  "version": "node_public_court_admission_v1",
+  "source_review_profile_sha256": "af8f5367a12a74a51a0dd3d0a26d8302a98acf16c7d9056eccab89a6c442bd9a",
+  "reviewed_at": "2026-11-05T15:25:51.734779+00:00",
+  "policy": "independent_court_stage_clauses_v1",
+  "information_date_basis": "company_and_attachment_bound_official_catalog_day_in_Asia_Shanghai",
+  "deduplication_policy": "one_company_stage_per_new_pool; exact_prior_document_or_company_stage_collision_is_held_pending_procedure_review",
+  "unknown_event_date_policy": "keep_null; do_not_substitute_receipt_catalog_or_signature_day",
+  "scope": "listed_company_court_stage_and_stated_dates_only",
+  "full_body_semantics_checked": false,
+  "P8_gold_validation_completed": false,
+  "historical_PIT": false,
+  "institutional_or_market_effect_claim": false,
+  "items": [
+    {
+      "announcement_id": "1209815619",
+      "symbol": "002323",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2021-04-27",
+      "stated_fields": {
+        "subject": "山东雅博科技股份有限公司",
+        "court": "山东省枣庄市中级人民法院",
+        "decision_date": "2021-04-25",
+        "receipt_date": "2021-04-26",
+        "court_case": "（2021）鲁04破申3号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "有限公司(以下简称“雅博股份”或“公司”)收到山东省枣庄市中级人民法院(以下简称“枣庄中院”)送达的(2021)鲁04破申3号《民事裁定书》,枣庄中院裁定受理江苏福斯特新能源科技有限公司(以下简称“江苏福斯特”或“申请人”)对公司的重整申请。公司股票将继续被实施退市风险警示特别处理,股票简称仍为“*ST雅博”,股票代码仍为“002323”,股票交易的日涨"
+      },
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ],
+      "discovery_event_id": "VEVT-C3C394DFD245ABC88DF8",
+      "original_discovery_source_ref": "cninfo:1209815619",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1209819891",
+      "symbol": "603555",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2021-04-27",
+      "stated_fields": {
+        "subject": "贵人鸟股份有限公司",
+        "court": "福建省泉州市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2021-04-26",
+        "court_case": "（2020）闽05破26号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "4月25日向泉州中院提交了《关于裁定批准重整计划的申请书》,2021年4月26日,管理人收到了泉州中院送达的(2020)闽05破26号《民事裁定书》,裁定批准贵人鸟重整计划,并终止贵人鸟重整程序。二、《民事裁定书》的主要内容泉州中院认为,案涉《重整计划草案》内容合法且具有可执行性。债权人会议对《重整计划草案》进行分组表决、出资人组对《重整计划草案》涉及出资"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-4D06DCA9D923E3ED5CBA",
+      "original_discovery_source_ref": "cninfo:AN202104261487938160",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1210169386",
+      "symbol": "600518",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2021-06-05",
+      "stated_fields": {
+        "subject": "康美药业股份有限公司",
+        "court": "广东省揭阳市中级人民法院",
+        "decision_date": "2021-06-04",
+        "receipt_date": "2021-06-04",
+        "court_case": "（2021）粤52破申1号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "份有限公司(以下简称“公司”)于2021年6月4日收到广东省揭阳市中级人民法院(以下简称“揭阳中院”)送达的(2021)粤52破申1号《民事裁定书》,裁定受理债权人广东揭东农村商业银行股份有限公司(以下简称“揭东农商行”)对公司的重整申请。公司2020年度经审计的期末净资产为负值,且2020年度财务会计报告被出具无法表示意见,根据《上海证券交易所股票上市"
+      },
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ],
+      "discovery_event_id": "VEVT-4F0C1DE295498F93B219",
+      "original_discovery_source_ref": "cninfo:AN202106041495959685",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1210466635",
+      "symbol": "002219",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2021-07-13",
+      "stated_fields": {
+        "subject": "恒康医疗集团股份有限公司",
+        "court": "甘肃省陇南市中级人民法院",
+        "decision_date": "2021-07-08",
+        "receipt_date": "2021-07-09",
+        "court_case": "（2020）甘12破申1号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "“公司”或“恒康医疗”)于2021年7月9日收到甘肃省陇南市中级人民法院(以下简称“陇南中院”)送达的《民事裁定书》、《决定书》及《通知书》,陇南中院裁定受理申请人广州中同汇达商业保理有限公司(以下简称“中同汇达”或“申请人”)对公司的重整申请。陇南中院作出(2020)甘12破申1-1号《决定书》指定由陇南市人民政府推荐的有关部门人员及北京市君合律师事务所"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-417E0E2A4331DBC38D58",
+      "original_discovery_source_ref": "cninfo:AN202107121503384263",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1211182614",
+      "symbol": "000523",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2021-09-30",
+      "stated_fields": {
+        "subject": "广州市浪奇实业股份有限公司",
+        "court": "广州市中级人民法院",
+        "decision_date": "2021-09-29",
+        "receipt_date": "2021-09-29",
+        "court_case": "（2021）粤01破申140号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "公司(以下简称“公司”或“浪奇公司”)收到了广州市中级人民法院(以下简称“广州中院”)送达的《民事裁定书》[(2021)粤01破申140号],广州中院裁定受理债权人立根融资租赁有限公司(以下简称“立根公司”)对公司的重整申请。2、公司2020年末经审计的净资产为-25.85亿元,根据《深圳证券交易所股票上市规则(2020修订)》(以下简称“《股票上市规则》"
+      },
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ],
+      "discovery_event_id": "VEVT-157582251D8B47EEFDCB",
+      "original_discovery_source_ref": "cninfo:1211182614",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1211511488",
+      "symbol": "002072",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2021-11-08",
+      "stated_fields": {
+        "subject": "凯瑞德控股股份有限公司",
+        "court": "湖北省荆门市中级人民法院",
+        "decision_date": "2021-11-05",
+        "receipt_date": "2021-11-05",
+        "court_case": "（2021）鄂08破申1号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "月5日,凯瑞德控股股份有限公司(以下简称凯瑞德或公司)收到湖北省荆门市中级人民法院(以下简称荆门中院)送达的(2021)鄂08破申1号《民事裁定书》,裁定受理申请人王建伟对公司的重整申请。2、凯瑞德前期已被实施“退市风险警示”及“其他风险警示”特别处理,具体内容详见公司于2021年1月30日披露的《关于公司股票交易被实施退市风险警示暨叠加实施其他风险警示的"
+      },
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ],
+      "discovery_event_id": "VEVT-A93F560400CEB200F279",
+      "original_discovery_source_ref": "cninfo:1211511488",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1211561917",
+      "symbol": "000523",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2021-11-12",
+      "stated_fields": {
+        "subject": "广州市浪奇实业股份有限公司",
+        "court": "广州市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2021-11-11",
+        "court_case": "（2021）粤01破282-1号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "本公司及董事会全体成员保证信息披露的内容真实、准确、完整,没有虚假记载、误导性陈述或重大遗漏。重要内容提示:广州市中级人民法院(以下简称“广州中院”)裁定批准《广州市浪奇实业股份有限公司重整计划》(以下简称“《重整计划》”),并终止广州市浪奇实业股份有限公司(以下简称“公司”或“广州浪奇”)重整程序。一、公司申请裁定批准重整计划公司第一次债权人会议、出资人"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-57F2B09B452F5FBF67DE",
+      "original_discovery_source_ref": "cninfo:1211561917",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1211709038",
+      "symbol": "600518",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2021-11-27",
+      "stated_fields": {
+        "subject": "康美药业股份有限公司",
+        "court": "揭阳市中级人民法院",
+        "decision_date": "2021-11-26",
+        "receipt_date": null,
+        "court_case": null
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "漏,并对其内容的真实性、准确性和完整性承担个别及连带责任。重要内容提示:揭阳市中级人民法院(以下简称“揭阳中院”或“法院”)于2021年11月26日裁定批准《康美药业股份有限公司重整计划》(以下简称“《重整计划》”),并终止康美药业股份有限公司(以下简称“康美药业”或“公司”)重整程序。2021年11月26日,揭阳中院裁定批准《康美药业股份有限公司重整计"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-B60D3BB1E48BF2B441E5",
+      "original_discovery_source_ref": "cninfo:AN202111261531237417",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1211724650",
+      "symbol": "002356",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2021-11-30",
+      "stated_fields": {
+        "subject": "深圳赫美集团股份有限公司",
+        "court": "深圳市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2021-11-29",
+        "court_case": "（2020）粤03破申827号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "日收到深圳市中级人民法院(以下简称“深圳中院”)送达的(2020)粤03破申827号《民事裁定书》及(2020)粤03破申827号《决定书》。深圳中院裁定受理债权人深圳市华远显示器件有限公司(以下简称“华远显示”)对公司的重整申请,并指定深圳诚信会计师事务所(特殊普通合伙)、北京市君合(深圳)律师事务所共同担任公司管理人。2、因公司主要银行账户被冻结、违反"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-74D31DD33938F3C7A6A6",
+      "original_discovery_source_ref": "cninfo:AN202111291531894973",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1211971947",
+      "symbol": "300278",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2021-12-20",
+      "stated_fields": {
+        "subject": "华昌达智能装备集团股份有限公司",
+        "court": "湖北省十堰市中级人民法院",
+        "decision_date": "2021-12-20",
+        "receipt_date": "2021-12-20",
+        "court_case": "（2021）鄂03破29号"
+      },
+      "refined_since_initial_review": [
+        "receipt_date"
+      ],
+      "stage_proof": {
+        "page": 2,
+        "text": "管理人于2021年12月20日向十堰中院提交了《关于批准华昌达智能装备集团股份有限公司重整计划的申请书》。同日,管理人收到了十堰中院送达的(2021)鄂03破29号《民事裁定书》,裁定批准华昌达重整计划,并终止华昌达重整程序。"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-42A82DDD5D5EFEC60410",
+      "original_discovery_source_ref": "cninfo:1211971947",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1212034575",
+      "symbol": "002766",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2021-12-28",
+      "stated_fields": {
+        "subject": "深圳市索菱实业股份有限公司",
+        "court": "深圳市中级人民法院",
+        "decision_date": "2021-12-27",
+        "receipt_date": null,
+        "court_case": "（2021）粤03破599号之一"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "司及董事会全体成员保证公告内容的真实、准确和完整,没有虚假记载、误导性陈述或重大遗漏。2021年12月27日,深圳中级人民法院(以下简称“深圳中院”)裁定批准《深圳市索菱实业股份有限公司重整计划》,并终止深圳市索菱实业股份有限公司(以下简称“索菱股份”或“公司”)重整程序。管理人现就法院裁定批准重整计划有关事宜公告如下:一、管理人申请裁定批准重整计划202"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-58ACFC2A8CBBDDF6A21C",
+      "original_discovery_source_ref": "cninfo:1212034575",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1212056976",
+      "symbol": "002356",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2021-12-29",
+      "stated_fields": {
+        "subject": "深圳赫美集团股份有限公司",
+        "court": "深圳市中级人民法院",
+        "decision_date": "2021-12-29",
+        "receipt_date": "2021-12-29",
+        "court_case": "（2021）粤03破618号之二"
+      },
+      "refined_since_initial_review": [
+        "receipt_date",
+        "court_case"
+      ],
+      "stage_proof": {
+        "page": 1,
+        "text": "有限公司重整计划》(以下简称“《重整计划》”)的申请。2021年12月29日,公司收到了深圳中院送达的(2021)粤03破618号之二《民事裁定书》,裁定批准赫美集团《重整计划》,并终止赫美集团重整程序。二、《民事裁定书》的主要内容本院认为,赫美集团在管理财产和营业事务期间,在法律规定的期限内依法"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-F7E8FB1458A5A9E5E362",
+      "original_discovery_source_ref": "cninfo:AN202112291537380290",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1213053331",
+      "symbol": "002219",
+      "event_type": "restructuring_plan_approved",
+      "information_available_date": "2022-04-23",
+      "stated_fields": {
+        "subject": "恒康医疗集团股份有限公司",
+        "court": "甘肃省陇南市中级人民法院",
+        "decision_date": "2022-04-22",
+        "receipt_date": null,
+        "court_case": null
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "19公告编号:2022-043恒康医疗集团股份有限公司管理人关于法院裁定批准重整计划的公告重要内容提示:甘肃省陇南市中级人民法院于2022年4月22日裁定批准《恒康医疗集团股份有限公司重整计划》(以下简称“《重整计划》”),并终止恒康医疗集团股份有限公司(以下简称“恒康医疗”)重整程序。特别提示:1、恒康医疗集团股份有限公司(以下简称“公司”或“恒康医疗”"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-D92F339172F931C3D87C",
+      "original_discovery_source_ref": "cninfo:AN202204221560905945",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1214333023",
+      "symbol": "002366",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2022-08-19",
+      "stated_fields": {
+        "subject": "台海玛努尔核电设备股份有限公司",
+        "court": "山东省烟台市中级人民法院",
+        "decision_date": "2022-08-18",
+        "receipt_date": "2022-08-18",
+        "court_case": "（2022）鲁06破申13号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "“台海核电”)于2022年8月18日收到山东省烟台市中级人民法院(以下简称“烟台中院”)送达的《民事裁定书》【(2022)鲁06破申13号】,烟台中院裁定受理青岛融发融资租赁有限公司(以下简称“融发租赁”)对公司的破产重整申请,并指定本案由山东省烟台市莱山区人民法院审理。2、公司因2021年度经审计的期末净资产为负值,触及《深圳证券交易所股票上市规则(20"
+      },
+      "reviewed_pages": [
+        1,
+        4
+      ],
+      "discovery_event_id": "VEVT-24B635D6CA989E6FFD14",
+      "original_discovery_source_ref": "cninfo:AN202208181577351338",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1214697472",
+      "symbol": "600601",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2022-09-28",
+      "stated_fields": {
+        "subject": "方正科技集团股份有限公司",
+        "court": "北京市第一中级人民法院",
+        "decision_date": "2022-09-27",
+        "receipt_date": "2022-09-27",
+        "court_case": "（2022）京01破申256号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "一中级人民法院(以下简称“北京一中院”或“法院”)送达的《民事裁定书》((2022)京01破申256号)及《决定书》((2022)京01破249号),裁定受理北京方正数码有限公司(以下简称“方正数码”或“申请人”)对公司的重整申请,并指定北京大成律师事务所担任管理人。●因2021年年末经审计的归属于上市公司股东的净资产为负值,公司股票已被实施退市风险警示。"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-70269C53D29A3A1B7FF5",
+      "original_discovery_source_ref": "cninfo:1214697472",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1214969075",
+      "symbol": "002427",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2022-10-31",
+      "stated_fields": {
+        "subject": "浙江尤夫高新纤维股份有限公司",
+        "court": "湖州市中级人民法院",
+        "decision_date": "2022-10-28",
+        "receipt_date": "2022-10-28",
+        "court_case": "（2022）浙05破申1号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "维股份有限公司(以下简称“公司”或“尤夫股份”)收到湖州市中级人民法院(以下简称“湖州中院”)送达的《民事裁定书》(2022)浙05破申1号,湖州中院裁定受理江西紫宸科技有限公司对公司的重整申请。2、同日,公司收到湖州中院送达的《决定书》(2022)浙05破4号、《公告》(2022)浙05破4号,湖州中院指定浙江京衡律师事务所、浙江京衡(湖州)律师事务所、"
+      },
+      "reviewed_pages": [
+        1,
+        3
+      ],
+      "discovery_event_id": "VEVT-B8F77AB2F3DB204AEB28",
+      "original_discovery_source_ref": "cninfo:AN202210301579631795",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1217119088",
+      "symbol": "600117",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-06-22",
+      "stated_fields": {
+        "subject": "西宁特殊钢股份有限公司",
+        "court": "青海省西宁市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2023-06-20",
+        "court_case": "（2023）青01破申8号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "3年6月20日收到青海省西宁市中级人民法院(以下简称“西宁中院”)送达的(2023)青01破申8号《民事裁定书》及(2023)青01破3号《决定书》,裁定受理债权人青海骏佰商贸有限公司(以下简称“申请人”或“骏佰商贸”)对公司的重整申请,并指定西宁特钢清算组担任西宁特钢管理人。公司股票因2022年度期末经审计的归属于上市公司股东的净资产为负值,及大华会计"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-16DD05F4B0099D99D538",
+      "original_discovery_source_ref": "cninfo:AN202306211591200581",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1217347888",
+      "symbol": "002721",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-07-21",
+      "stated_fields": {
+        "subject": "北京金一文化发展股份有限公司",
+        "court": "北京市第一中级人民法院",
+        "decision_date": "2023-07-20",
+        "receipt_date": "2023-07-20",
+        "court_case": "（2023）京01破申66号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "66号《北京市第一中级人民法院民事裁定书》(以下简称“裁定书”)和(2023)京01破238号《北京市第一中级人民法院决定书》(以下简称“决定书”),裁定受理北京海鑫资产管理有限公司(以下简称“海鑫资产”或者“申请人”、“海鑫公司”)对公司的重整申请,并指定北京金一文化发展股份有限公司清算组担任公司管理人。公司2022年度经审计的期末净资产为负值;同时,"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-73A6D768CC20E37C864D",
+      "original_discovery_source_ref": "cninfo:AN202307201592503321",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1217348496",
+      "symbol": "002157",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-07-21",
+      "stated_fields": {
+        "subject": "江西正邦科技股份有限公司",
+        "court": "江西省南昌市中级人民法院",
+        "decision_date": "2023-07-20",
+        "receipt_date": "2023-07-20",
+        "court_case": "（2022）赣01破申49号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "司(以下简称“公司”或“正邦科技”)收到江西省南昌市中级人民法院(以下简称“南昌中院”)送达的《民事裁定书》【(2022)赣01破申49号】,南昌中院裁定受理锦州天利粮贸有限公司对公司的重整申请。同日,公司收到南昌中院送达的《决定书》【(2023)赣01破16号】,南昌中院指定上海市锦天城律师事务所及上海市锦天城(南昌)律师事务所联合担任公司管理人。2、公"
+      },
+      "reviewed_pages": [
+        1,
+        3
+      ],
+      "discovery_event_id": "VEVT-731B1E4EEFC75B0A228E",
+      "original_discovery_source_ref": "cninfo:AN202307201592511794",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1218308590",
+      "symbol": "600306",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-11-11",
+      "stated_fields": {
+        "subject": "沈阳商业城股份有限公司",
+        "court": "辽宁省沈阳市中级人民法院",
+        "decision_date": "2023-11-10",
+        "receipt_date": "2023-11-10",
+        "court_case": "（2023）辽01破申2号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "辽宁省沈阳市中级人民法院(以下简称“沈阳中院”或“法院”)送达的《民事裁定书》【(2023)辽01破申2号】及《决定书》【(2023)辽01破4号】,裁定受理债权人上海佛罗伦思服饰有限公司(以下简称“佛罗伦思”)对公司的重整申请,并指定国浩律师(北京)事务所担任公司管理人。●因公司经审计后的2022年末净资产为负值,经审计后的2022年度净利润为负值且扣除"
+      },
+      "reviewed_pages": [
+        1,
+        3
+      ],
+      "discovery_event_id": "VEVT-4B620A2D41320CC436DB",
+      "original_discovery_source_ref": "cninfo:1218308590",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1218325952",
+      "symbol": "603030",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-11-14",
+      "stated_fields": {
+        "subject": "上海全筑控股集团股份有限公司",
+        "court": "上海市第三中级人民法院",
+        "decision_date": "2023-11-13",
+        "receipt_date": "2023-11-13",
+        "court_case": "（2023）沪03破870号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "第三中级人民法院(以下简称“上海三中院”或“法院”)送达的《民事裁定书》【(2023)沪03破870号】及《决定书》【(2023)沪03破870号】,裁定受理上海森西实业有限公司(以下简称“森西实业”)对公司的重整申请,并指定上海市方达律师事务所担任公司管理人。●公司经审计的2022年年度期末合并口径的净资产为负值,同时亚太(集团)会计师事务所(特殊普通合"
+      },
+      "reviewed_pages": [
+        1,
+        3
+      ],
+      "discovery_event_id": "VEVT-26971E1B472366111D6B",
+      "original_discovery_source_ref": "cninfo:AN202311131609933741",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1218352927",
+      "symbol": "300010",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-11-16",
+      "stated_fields": {
+        "subject": "豆神教育科技（北京）股份有限公司",
+        "court": "北京市第一中级人民法院",
+        "decision_date": "2023-11-15",
+        "receipt_date": "2023-11-15",
+        "court_case": "（2023）京01破申280号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "一中级人民法院(以下简称“北京一中院”或“法院”)送达的《民事裁定书》((2023)京01破申280号)及《决定书》((2023)京01破393号),裁定受理佟易虹对公司的重整申请,并指定北京大成律师事务所担任公司管理人。因公司2022年度经审计的期末净资产为负值,公司股票已被实施退市风险警示。同时,因公司2020年至2022年连续三个会计年度经审计扣除"
+      },
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ],
+      "discovery_event_id": "VEVT-E7BD45F8CD41BE50C7CB",
+      "original_discovery_source_ref": "cninfo:1218352927",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1218433916",
+      "symbol": "002021",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2023-11-25",
+      "stated_fields": {
+        "subject": "中捷资源投资股份有限公司",
+        "court": "浙江省台州市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2023-11-24",
+        "court_case": "（2023）浙10破申8号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "有限公司(以下简称“公司”或“中捷资源”)收到浙江省台州市中级人民法院(以下简称“台州中院”)送达的《民事裁定书》(2023)浙10破申8号,台州中院裁定受理公司的重整申请。2.同日,公司收到台州中院送达的《决定书》(2023)浙10破12号、《公告》(2023)浙10破12号,台州中院指定浙江智仁律师事务所担任公司管理人,通知债权人应在2023年12月2"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-72AD9A2427F2E9A97F6E",
+      "original_discovery_source_ref": "cninfo:AN202311241612315344",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1221637676",
+      "symbol": "603363",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2024-11-06",
+      "stated_fields": {
+        "subject": "福建傲农生物科技集团股份有限公司",
+        "court": "福建省漳州市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2024-11-05",
+        "court_case": "（2024）闽06破申59号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "省漳州市中级人民法院(以下简称“漳州中院”)送达的《民事裁定书》((2024)闽06破申59号)和《决定书》((2024)闽06破107号)。漳州中院裁定受理债权人广州市联鲲生物科技有限公司(以下简称“联鲲公司”或“申请人”)对公司的重整申请,并指定上海市锦天城律师事务所担任公司管理人(以下简称“管理人”)。因公司2023年度经审计的期末归属于上市公司股"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-9D59C1F10107486E0BA9",
+      "original_discovery_source_ref": "cninfo:AN202411051640727624",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1221817363",
+      "symbol": "002310",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2024-11-23",
+      "stated_fields": {
+        "subject": "北京东方园林环境股份有限公司",
+        "court": "北京市第一中级人民法院",
+        "decision_date": "2024-11-22",
+        "receipt_date": "2024-11-22",
+        "court_case": "（2024）京01破申469号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "司”)收到北京市第一中级人民法院(以下简称“北京一中院”)送达的(2024)京01破申469号《民事裁定书》及(2024)京01破577号《决定书》,裁定受理公司债权人北京朝阳国有资本运营管理有限公司(以下简称“朝阳国资公司”)对公司的重整申请,并指定北京东方园林环境股份有限公司清算组担任公司重整期间的管理人。2、因公司2023年度经审计的期末净资产为负值"
+      },
+      "reviewed_pages": [
+        1,
+        2,
+        3
+      ],
+      "discovery_event_id": "VEVT-3C62BC5667CBCB0BEEEF",
+      "original_discovery_source_ref": "cninfo:AN202411221641033485",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1224442594",
+      "symbol": "002742",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2025-08-09",
+      "stated_fields": {
+        "subject": "重庆三圣实业股份有限公司",
+        "court": "重庆市第五中级人民法院",
+        "decision_date": "2025-08-08",
+        "receipt_date": "2025-08-08",
+        "court_case": "（2025）渝05破申224号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "称“公司”或“三圣股份”)收到重庆市第五中级人民法院(以下简称“重庆五中院”或“法院”)送达的(2025)渝05破申224号《民事裁定书》,重庆五中院裁定受理公司的重整申请。同日,公司收到重庆五中院送达的(2025)渝05破297号《决定书》,重庆五中院指定北京市金杜(深圳)律师事务所和信永中和会计师事务所(特殊普通合伙)重庆分所担任公司管理人,管理人负责"
+      },
+      "reviewed_pages": [
+        1,
+        4
+      ],
+      "discovery_event_id": "VEVT-FB1FB56B1A3BE8CE8E3D",
+      "original_discovery_source_ref": "cninfo:1224442594",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1224520007",
+      "symbol": "002822",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2025-08-20",
+      "stated_fields": {
+        "subject": "深圳市中装建设集团股份有限公司",
+        "court": "广东省深圳市中级人民法院",
+        "decision_date": null,
+        "receipt_date": "2025-08-19",
+        "court_case": "（2024）粤03破申547号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "(以下简称“公司”或“中装建设”)收到广东省深圳市中级人民法院(以下简称“深圳中院”)送达的《民事裁定书》【(2024)粤03破申547号】,深圳中院裁定受理东莞市铭尚贸易有限公司(以下简称“东莞铭尚”)对公司的重整申请。2、因深圳中院依法裁定受理公司重整,根据《深圳证券交易所股票上市规则》第9.4.1条的相关规定,公司股票交易将被实施退市风险警示。公司股"
+      },
+      "reviewed_pages": [
+        1
+      ],
+      "discovery_event_id": "VEVT-FFDC1D054FAEE60251D9",
+      "original_discovery_source_ref": "cninfo:1224520007",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1224678015",
+      "symbol": "000697",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2025-09-24",
+      "stated_fields": {
+        "subject": "炼石航空科技股份有限公司",
+        "court": "四川省成都市中级人民法院",
+        "decision_date": "2025-09-23",
+        "receipt_date": "2025-09-23",
+        "court_case": "（2025）川01破申19号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "技股份有限公司(以下简称“公司”或“炼石航空”)收到四川省成都市中级人民法院(以下简称“成都中院”)送达的(2025)川01破申19号《民事裁定书》,裁定受理公司的重整申请。同日,公司收到成都中院送达的(2025)川01破13号《决定书》,成都中院指定北京金杜(成都)律师事务所担任公司管理人。2、因成都中院依法裁定受理公司的重整申请,根据《深圳证券交易所股"
+      },
+      "reviewed_pages": [
+        1,
+        3
+      ],
+      "discovery_event_id": "VEVT-902136FA61230273BF13",
+      "original_discovery_source_ref": "cninfo:AN202509231749216941",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1224690205",
+      "symbol": "300506",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2025-09-30",
+      "stated_fields": {
+        "subject": "深圳市名家汇科技股份有限公司",
+        "court": "广东省高级人民法院",
+        "decision_date": null,
+        "receipt_date": null,
+        "court_case": "（2025）粤破申1号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "份有限公司(以下简称“公司”或“ST名家汇”)于近日收到广东省高级人民法院(以下简称“省高院”)送达的《民事裁定书》【(2025)粤破申1号】,省高院裁定受理中山市古月灯饰制造有限公司(以下简称“中山古月”)对公司的重整申请。2、因公司触及《深圳证券交易所创业板股票上市规则》第10.4.1条第(九)项规定,被省高院裁定受理公司重整,公司股票将被实施退市风险"
+      },
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "discovery_event_id": "VEVT-7BA17292879C69397913",
+      "original_discovery_source_ref": "cninfo:1224690205",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1224737227",
+      "symbol": "002200",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2025-10-27",
+      "stated_fields": {
+        "subject": "云南交投生态科技股份有限公司",
+        "court": "云南省昆明市中级人民法院",
+        "decision_date": "2025-10-24",
+        "receipt_date": "2025-10-24",
+        "court_case": "（2025）云01破申6号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 1,
+        "text": "云南省昆明市中级人民法院(以下简称“昆明中院”或“法院”)送达的《通知书》、(2025)云01破申6号《民事裁定书》,昆明中院终止对公司的预重整并依法裁定受理申请人云南乐信建设工程有限公司(以下简称“申请人”)对公司的重整申请。同日,公司收到昆明中院送达的(2025)云01破3号《决定书》,昆明中院指定上海市通力律师事务所(主办机构)与国浩律师(昆明)事务"
+      },
+      "reviewed_pages": [
+        1,
+        3,
+        4
+      ],
+      "discovery_event_id": "VEVT-4AE80234F79FF92EDF1D",
+      "original_discovery_source_ref": "cninfo:AN202510261769368414",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    },
+    {
+      "announcement_id": "1224808326",
+      "symbol": "000615",
+      "event_type": "formal_restructuring_accepted",
+      "information_available_date": "2025-11-15",
+      "stated_fields": {
+        "subject": "奥园美谷科技股份有限公司",
+        "court": "湖北省襄阳市中级人民法院",
+        "decision_date": "2025-11-14",
+        "receipt_date": "2025-11-14",
+        "court_case": "（2024）鄂06破申48号"
+      },
+      "refined_since_initial_review": [],
+      "stage_proof": {
+        "page": 4,
+        "text": "决定对奥园美谷科技股份有限公司启动预重整,并依法指定奥园美谷科技股份有限公司清算组担任奥园美谷科技股份有限公司临时管理人。2025年11月14日,本院裁定受理奥园美谷科技股份有限公司破产重整一案。依照《中华人民共和国企业破产法》第十三条、第二十二条、第二十四条,《最高人民法院关于审理企业破产案件指定管理人的规定》第十八条、第十九条以及《湖北省高级人民法院关"
+      },
+      "reviewed_pages": [
+        1,
+        3,
+        4
+      ],
+      "discovery_event_id": "VEVT-D33ABE4125C8D444395E",
+      "original_discovery_source_ref": "cninfo:1224808326",
+      "primary_source_identity": "independent_canonical_CNINFO_attachment",
+      "original_discovery_alias_identity_asserted": false
+    }
+  ]
+}

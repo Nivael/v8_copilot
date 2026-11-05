@@ -126,8 +126,74 @@ def publication_review(inputs):
 
 def test_catalog_date_basis_is_explicitly_versioned_without_tuning_other_study_choices():
     old=json.loads(module.PLAN_PATH.with_name('node_market_study_v1.json').read_text())
-    assert old['version']=='node_market_study_v1' and module.PLAN['version']=='node_market_study_v2'
-    assert {k:v for k,v in old.items() if k not in ('version','information_date_review')}=={k:v for k,v in module.PLAN.items() if k not in ('version','information_date_review')}
+    prior=json.loads(module.PLAN_PATH.with_name('node_market_study_v2.json').read_text())
+    assert old['version']=='node_market_study_v1' and prior['version']=='node_market_study_v2'
+    assert {k:v for k,v in old.items() if k not in ('version','information_date_review')}=={k:v for k,v in prior.items() if k not in ('version','information_date_review')}
+
+
+def test_new_public_source_plan_changes_only_source_admission_without_tuning_outcomes():
+    prior=json.loads(module.PLAN_PATH.with_name('node_market_study_v2.json').read_text())
+    changed={'version','main_source_basis','new_public_court_source_policy'}
+    assert module.PLAN['version']=='node_market_study_v3'
+    assert {k:v for k,v in prior.items() if k not in changed}=={k:v for k,v in module.PLAN.items() if k not in changed}
+
+
+def add_public_fact(inputs, **changes):
+    fact={'event_id':'NCP-NEW','symbol':'000003','event_type':'formal_restructuring_accepted','event_date':None,
+          'information_available_date':'2023-06-01','source_kind':'public_reviewed_court_clause','source_ref':'cninfo:NEW',
+          'evidence_status':'scoped_primary_clause_reviewed','source_url':'https://static.cninfo.com.cn/finalpage/2023-06-01/NEW.PDF'}
+    fact.update(changes)
+    inputs['public_court_pool']={'availability':'observed','facts':[fact],'reviewed_at':'2026-11-05T03:00:00+00:00'}
+    for source in inputs['price_sources'].values():source['keys'].extend([fact['symbol'],day] for day in inputs['calendar'] if [fact['symbol'],day] not in source['keys'])
+    return fact
+
+
+def test_new_independent_clauses_keep_unknown_court_date_and_do_not_inflate_p6_or_title_counts(inputs):
+    prior=project(inputs);fact=add_public_fact(inputs);data=project(inputs)
+    assert data['active_run_linked_events']==prior['active_run_linked_events']==5
+    assert data['source_kind_counts']==prior['source_kind_counts']
+    assert data['deterministic_lineage_counts']==prior['deterministic_lineage_counts']
+    assert data['prior_fact_nominations']==4 and data['new_public_nominations']==data['new_public_capacity']==1
+    assert data['main_window_nominations']==5 and data['test_capacity_events']==3
+    row=next(r for r in data['candidate_rows'] if r['event_id']==fact['event_id'])
+    assert row['event_date'] is None and row['official_catalog_date']=='2023-06-01'
+    assert row['information_available_date']=='2023-06-01' and row['source_kind']=='public_reviewed_court_clause'
+    assert data['outcomes_read'] is data['price_values_read'] is data['effect_measured'] is False
+
+
+@pytest.mark.parametrize('kind',['exact_id','exact_attachment','same_stage'])
+def test_existing_primary_or_unresolved_prior_procedure_is_held_instead_of_double_counted(inputs,kind):
+    fact=add_public_fact(inputs);parent=inputs['parents'][0]
+    if kind=='exact_id':parent['source_document_id']=fact['source_ref']
+    elif kind=='exact_attachment':parent['source_url']=fact['source_url']
+    else:parent.update(symbol=fact['symbol'],event_type=fact['event_type'])
+    result=project(inputs)
+    assert result['new_public_nominations']==0 and len(result['new_public_held'])==1
+    assert result['new_public_held'][0]['reason']==('prior_company_stage_needs_procedure_review' if kind=='same_stage' else 'prior_primary_source_overlap')
+    assert not any(r['event_id']==fact['event_id'] for r in result['candidate_rows'])
+
+
+def test_training_only_sources_cannot_make_the_test_source_ceiling_pass(inputs,monkeypatch):
+    add_public_fact(inputs,information_available_date='2021-06-01')
+    plan={**module.PLAN,'minimum_test_events':3,'minimum_test_companies':2}
+    monkeypatch.setattr(module,'PLAN',plan);result=project(inputs)
+    assert result['source_pool_ceiling_events']==5 and result['source_pool_ceiling_companies']==3
+    assert result['test_source_pool_ceiling_events']==2 and result['test_source_pool_ceiling_companies']==1
+    assert result['source_pool_can_reach_test_minimum'] is False
+
+
+def test_unavailable_new_pool_does_not_reuse_old_counts_or_claim_a_pass(inputs):
+    add_public_fact(inputs);inputs['public_court_pool'].update(availability='invalid')
+    data=project(inputs)
+    assert data['new_public_nominations']==0 and data['test_capacity_events']==2
+    assert data['historical_capacity_pass'] is False and data['status']=='new_public_source_pool_unavailable'
+
+
+def test_duplicate_new_company_stage_or_forged_origin_is_not_admitted(inputs):
+    fact=add_public_fact(inputs);inputs['public_court_pool']['facts'].append({**fact,'event_id':'NCP-OTHER','information_available_date':'2023-07-01'})
+    with pytest.raises(ValueError,match='duplicate new company stage'):project(inputs)
+    inputs['public_court_pool']['facts']=[{**fact,'evidence_status':'verified_official_source'}]
+    with pytest.raises(ValueError,match='undeclared'):project(inputs)
 
 
 def test_official_catalog_day_corrects_only_information_alignment_and_keeps_original_events_and_source_pool(inputs):
@@ -285,8 +351,12 @@ def test_mid_audit_source_change_preserves_the_last_snapshot(inputs,tmp_path,mon
     assert (tmp_path/'current.json').read_bytes()==before
 
 
-def test_real_sql_collector_selects_one_run_and_reads_price_keys_only(inputs,tmp_path,monkeypatch):
+@pytest.mark.parametrize('with_public_pool',[False,True])
+def test_real_sql_collector_selects_one_run_and_reads_price_keys_only(inputs,tmp_path,monkeypatch,with_public_pool):
     monkeypatch.setattr(module,'DATE_REVIEWS',[])
+    if with_public_pool:
+        fact=add_public_fact(inputs)
+        monkeypatch.setattr(module,'pool_status',lambda *_:inputs['public_court_pool'])
     paths={name:tmp_path/(name+'.db') for name in ('episodes','facts','research','market','base','overlay')}
     event=inputs['events'][0];inactive={**event,'event_id':'inactive','symbol':'999999'};parent=inputs['parents'][0]
     with sqlite3.connect(paths['episodes']) as conn:
@@ -311,10 +381,12 @@ def test_real_sql_collector_selects_one_run_and_reads_price_keys_only(inputs,tmp
         conn.executescript('create table benchmark_daily(benchmark_id text,trade_date text,close real);create table st_membership_daily(trade_date text,symbol text);')
         conn.executemany('insert into benchmark_daily values(?,?,?)',[('csi_all_share',day,987654) for day in inputs['calendar']])
         conn.executemany('insert into st_membership_daily values(?,?)',[(day,event['symbol']) for day in inputs['calendar']])
+        if with_public_pool:conn.executemany('insert into st_membership_daily values(?,?)',[(day,fact['symbol']) for day in inputs['calendar']])
     for name in ('base','overlay'):
         with sqlite3.connect(paths[name]) as conn:
             conn.execute('create table daily_prices(symbol text,trade_date text,adjust text,close real)')
             conn.executemany('insert into daily_prices values(?,?,?,?)',[(event['symbol'],day,'qfq',None) for day in inputs['calendar']])
+            if with_public_pool:conn.executemany('insert into daily_prices values(?,?,?,?)',[(fact['symbol'],day,'qfq',None) for day in inputs['calendar']])
     data=collect_inputs(**paths,date_sources=tmp_path/'absent')
     assert data['event_table_rows']==2 and [row['event_id'] for row in data['events']]==[event['event_id']]
     assert data['p6_run']['run_id']==data['p8_run']['run_id']=='new'
@@ -322,3 +394,7 @@ def test_real_sql_collector_selects_one_run_and_reads_price_keys_only(inputs,tmp
     report=project(data)
     # Null price values are deliberately unread: this is a key-capacity audit.
     assert report['candidate_rows'][0]['capacity_candidate'] is True and report['price_values_read'] is False
+    if with_public_pool:
+        assert report['new_public_capacity']==1
+        assert [fact['symbol'],'2023-06-01'] in data['price_sources']['base_qfq_complete_window']['keys']
+        assert ['2023-06-01',fact['symbol']] in data['membership']

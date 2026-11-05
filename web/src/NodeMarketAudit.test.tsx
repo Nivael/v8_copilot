@@ -38,6 +38,19 @@ describe('NodeMarketAudit',()=>{
     expect(screen.getByText(/这个标签不等于正文已核证/)).toBeVisible()
     expect(screen.getByText(/不相加作剔除总数/)).toBeVisible()
   })
+  it('keeps training-inclusive nominations apart from the actual test-year source ceiling',()=>{
+    render(<NodeMarketAudit data={{...fixture,version:'node_market_input_audit_v2',test_capacity_events:73,test_capacity_companies:34,
+      main_window_nominations:120,prior_fact_nominations:89,new_public_nominations:31,new_public_capacity:27,
+      source_pool_ceiling_events:120,source_pool_ceiling_companies:51,test_source_pool_ceiling_events:86,test_source_pool_ceiling_companies:36,
+      source_pool_can_reach_test_minimum:false}}/>);open()
+    expect(screen.getByText(/仅 73 条、34 家公司/)).toBeVisible()
+    expect(screen.getByText(/原事实链 89 条、新公开法院条款 31 条/)).toBeVisible()
+    expect(screen.getByText(/120 条、51 家公司，包含训练年份，不能直接与测试门槛比较/)).toBeVisible()
+    expect(screen.getByText(/测试年份来源最多 86 条、36 家/)).toBeVisible()
+    expect(screen.getByText(/即使补齐当前窗口缺口仍不足/)).toBeVisible()
+    expect(screen.getByText(/本轮P6运行绑定 553 条节点，其中原事实链 91 条、精确标题来源 462 条/)).toBeVisible()
+    expect(screen.queryByText(/数量上限可容纳原门槛/)).not.toBeInTheDocument()
+  })
   it('links to the reviewed signature page while preserving conservative-date meaning',()=>{
     render(<NodeMarketAudit data={fixture}/>);open()
     expect(screen.getByRole('link',{name:'原始PDF第3页 ↗'})).toHaveAttribute('href',fixture.date_reviews?.[0].source_url+'#page=3')

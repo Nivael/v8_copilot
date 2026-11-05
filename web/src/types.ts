@@ -291,6 +291,17 @@ export interface NodePublicationMetadata {
   reviews:Array<{document_id:string;symbol:string;title:string;official_catalog_date:string;parent_published_dates:string[];source_url:string;announcement_time_raw_ms:number;utc_interpretation_date:string;utc_date_matches_parent:boolean;changed_from_parent_date:boolean;event_ids:string[];availability:string;query_ref:string;query_params:Record<string,string>;response_sha256:string;observed_at:string;date_precision:string}>;
   historical_PIT:false;full_body_semantics_checked:false;exact_release_timestamps_verified:false;
 }
+export interface NodeCourtSourcePool {
+  version:string;availability:string;primary_bound_clauses?:number;companies?:number;metadata_responses?:number;
+  archived_PDFs?:number;archived_pages?:number;scoped_review_documents?:number;selected_candidates?:number;selected_rejections?:number;
+  extra_related_entity_exclusions?:number;unreviewed_extra_attachments?:number;unknown_decision_dates?:number;unknown_receipt_dates?:number;
+  reviewed_at?:string;profile_sha256?:string;admission_sha256?:string;historical_PIT:false;full_body_semantics_checked:false;
+  P8_gold_validation_completed:false;original_alias_identity_asserted:false;
+  facts:Array<{event_id:string;symbol:string;event_type:string;event_date:string|null;decision_date:string|null;receipt_date:string|null;
+    information_available_date:string;subject:string;court:string;court_case:string|null;title:string;source_url:string;source_observed_at:string;
+    raw_sha256:string;text_sha256:string;source_pages:number;stage_proof:{page:number;text:string};reviewed_pages:number[];
+    original_discovery_source_ref:string;original_alias_asserted:false}>;
+}
 export interface NodeMarketInputAudit {
   observed_at?:string
   version:string;availability:string;outcomes_read:false;effect_measured:false
@@ -299,7 +310,11 @@ export interface NodeMarketInputAudit {
   source_kind_counts?:Record<string,number>;deterministic_lineage_counts?:Record<string,number>;issues?:Record<string,number>;notice?:string;p6_run?:{verified_event_count:number}
   date_reviews?:Array<{document_id:string;company:string;symbol:string;signed_on:string;availability:string;source_url:string;signature_page:number;signature_date_text?:string}>
   publication_metadata?:NodePublicationMetadata
+  public_court_pool?:NodeCourtSourcePool|null
+  prior_fact_nominations?:number;new_public_nominations?:number;new_public_capacity?:number
+  new_public_held?:Array<{event_id:string;symbol:string;source_ref:string;reason:string;prior_event_ids:string[]}>
   source_pool_ceiling_events?:number;source_pool_ceiling_companies?:number;source_pool_can_reach_test_minimum?:boolean
+  test_source_pool_ceiling_events?:number;test_source_pool_ceiling_companies?:number
   folds?:Array<{test_year:number;train_events:number;train_companies:number;test_events:number;test_companies:number;train_capacity_pass:boolean}>
   source_dates?:{benchmark_keys_through:string;historical_membership_through:string;node_information_through:string;price_keys_through:Record<string,string>}
 }

@@ -118,6 +118,50 @@ def test_a_signature_earlier_than_the_archive_hint_does_not_resolve_publication_
     assert row['capacity_candidate'] is False and 'publication_date_hint_conflict' in row['issues']
 
 
+def publication_review(inputs):
+    parent=inputs['parents'][0];parent['source_url']=parent['source_url'].replace('2022-05-25','2022-05-26')
+    return {'document_id':parent['document_id'],'symbol':parent['symbol'],'source_url':parent['source_url'],
+            'official_catalog_date':'2022-05-26','parent_published_dates':['2022-05-25'],'event_ids':['E1'],'availability':'observed','observed_at':'2026-11-05T02:00:00+00:00'}
+
+
+def test_catalog_date_basis_is_explicitly_versioned_without_tuning_other_study_choices():
+    old=json.loads(module.PLAN_PATH.with_name('node_market_study_v1.json').read_text())
+    assert old['version']=='node_market_study_v1' and module.PLAN['version']=='node_market_study_v2'
+    assert {k:v for k,v in old.items() if k not in ('version','information_date_review')}=={k:v for k,v in module.PLAN.items() if k not in ('version','information_date_review')}
+
+
+def test_official_catalog_day_corrects_only_information_alignment_and_keeps_original_events_and_source_pool(inputs):
+    review=publication_review(inputs)
+    inputs['publication_metadata']={'availability':'observed','reviews':[review],'captured_at':'2026-11-05T02:01:00+00:00'}
+    result=project(inputs);row=result['candidate_rows'][0]
+    assert row['capacity_candidate'] is True and row['original_information_date']=='2022-05-25'
+    assert row['official_catalog_date']==row['information_available_date']==row['feature_through']=='2022-05-26'
+    assert row['entry_date']=='2022-05-27' and inputs['events'][0]['event_date']=='2022-05-25'
+    assert result['source_kind_counts']['official_title_exact']==1 and result['main_window_nominations']==4
+    assert (result['source_pool_ceiling_events'],result['source_pool_ceiling_companies'])==(4,2)
+    assert result['source_pool_can_reach_test_minimum'] is False and result['outcomes_read'] is result['price_values_read'] is result['model_fitted'] is False
+
+
+@pytest.mark.parametrize('bad',['wrong_company','wrong_document','wrong_path','foreign_host','wrong_event','old_field_changed','unavailable'])
+def test_catalog_cannot_override_the_current_parent_or_use_unverified_metadata(inputs,bad):
+    review=publication_review(inputs);meta={'availability':'observed','reviews':[review]}
+    if bad=='wrong_company':review['symbol']='999999'
+    elif bad=='wrong_document':review['document_id']='cninfo:other'
+    elif bad=='wrong_path':review['source_url']=review['source_url'].replace('D1.PDF','D2.PDF')
+    elif bad=='foreign_host':review['source_url']=review['source_url'].replace('static.cninfo.com.cn','example.com')
+    elif bad=='wrong_event':review['event_ids']=['E2']
+    elif bad=='old_field_changed':review['parent_published_dates']=['2022-05-24']
+    elif bad=='unavailable':meta['availability']='invalid'
+    inputs['publication_metadata']=meta;row=project(inputs)['candidate_rows'][0]
+    assert row['information_available_date']=='2022-05-25' and row['official_catalog_date'] is None
+    assert row['capacity_candidate'] is False and 'publication_date_hint_conflict' in row['issues']
+
+
+def test_catalog_dates_and_capture_time_must_be_observed_before_the_audit(inputs):
+    inputs['publication_metadata']={'availability':'observed','captured_at':'2026-11-06T00:00:00+00:00','reviews':[]}
+    with pytest.raises(ValueError,match='capture after audit'):module.validate_observation(inputs,NOW)
+
+
 @pytest.mark.parametrize('text,expected',[
     ('二〇二三年七月二十五日','2023-07-25'),('二零二四年十月二十二日','2024-10-22'),
     ('二○二五年十一月十日','2025-11-10'),('二〇二四年十二月三十一日','2024-12-31'),

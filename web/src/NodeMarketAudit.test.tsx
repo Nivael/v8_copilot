@@ -25,6 +25,11 @@ describe('NodeMarketAudit',()=>{
     expect(screen.getByText(/尚未读取价格值、计算结果或拟合模型/)).toBeVisible()
     expect(screen.getByText('效果尚未测量')).toBeVisible()
   })
+  it('explains when repairing the entire current source pool still cannot reach the original sample gate',()=>{
+    render(<NodeMarketAudit data={{...fixture,source_pool_ceiling_events:89,source_pool_ceiling_companies:24,source_pool_can_reach_test_minimum:false}}/>);open()
+    expect(screen.getByText(/数量上限仍仅 89 条、24 家公司/)).toBeVisible()
+    expect(screen.getByText(/仅修补日期仍无法达到测试门槛，需要增加经核实的公司和事件来源/)).toBeVisible()
+  })
   it('keeps active-run, accumulated-table and label lineage denominators distinct',()=>{
     render(<NodeMarketAudit data={fixture}/>);open()
     expect(screen.getByText(/本轮P6运行绑定 553 条节点，其中原事实链 91 条、精确标题来源 462 条/)).toBeVisible()

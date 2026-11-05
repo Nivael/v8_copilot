@@ -18,9 +18,10 @@ from canonical_json import digest
 from data_refresh import atomic_write_json
 from settings import BASE_DB, DATA_ROOT, MARKET_CONTEXT_DB, P8_QFQ_DB, P8_RESEARCH_DB, VALUATION_EPISODE_DB
 from p8_event_graph import P6_EVENT_TO_NODE
+from node_publication_metadata import metadata_status, OUTPUT as PUBLICATION_OUTPUT
 
 VERSION = 'node_market_input_audit_v1'
-PLAN_PATH = Path(__file__).with_name('node_market_study_v1.json')
+PLAN_PATH = Path(__file__).with_name('node_market_study_v2.json')
 PLAN = json.loads(PLAN_PATH.read_text())
 PLAN_DIGEST = digest(PLAN)
 DEFAULT_OUTPUT = DATA_ROOT/'local_data/v8_copilot/market_risk/node_market_audit'
@@ -32,7 +33,8 @@ DATE_REVIEWS = json.loads(DATE_PROFILE.read_text())['reviews']
 def processor_digest():
     root = Path(__file__).parent
     return digest({name: hashlib.sha256((root/name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name, PLAN_PATH.name, DATE_PROFILE.name, 'canonical_json.py')})
+                   for name in (Path(__file__).name, PLAN_PATH.name, DATE_PROFILE.name, 'canonical_json.py',
+                                'node_publication_metadata.py','node_publication_metadata_v1.json')})
 
 
 PROCESSOR_DIGEST = processor_digest()
@@ -94,7 +96,8 @@ def reviewed_dates(directory):
 
 
 def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_RESEARCH_DB,
-                   market=MARKET_CONTEXT_DB, base=BASE_DB, overlay=P8_QFQ_DB, date_sources=DEFAULT_OUTPUT/'date_sources'):
+                   market=MARKET_CONTEXT_DB, base=BASE_DB, overlay=P8_QFQ_DB, date_sources=DEFAULT_OUTPUT/'date_sources',
+                   publication_sources=PUBLICATION_OUTPUT):
     """Read identifiers, dates and keys only; price-value reads are denied by SQLite."""
     with closing(ro(episodes)) as conn:
         run = conn.execute('select run_id,as_of,payload_json from valuation_episode_runs order by rowid desc limit 1').fetchone()
@@ -126,6 +129,8 @@ def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_R
             json_extract(payload_json,'$.source_ids') source_ids,json_extract(payload_json,'$.node') node
             from p8_records where run_id=? and record_type='derived_event' order by record_id""", (run['run_id'],))]
         for item in p8: item['source_ids'] = json.loads(item['source_ids'])
+    p6_identity={key:p6_run.get(key) for key in ('run_id','as_of','verified_event_count')}
+    publication_metadata=metadata_status(p6_identity,publication_sources)
     with closing(ro(market)) as conn:
         calendar = [row[0] for row in conn.execute("select trade_date from benchmark_daily where benchmark_id='csi_all_share' order by trade_date")]
         dates = set()
@@ -137,6 +142,9 @@ def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_R
         for review in date_reviews:
             index = bisect_right(calendar, review['signed_on'])-1
             if index >= 0: dates.add(calendar[index])
+        for review in publication_metadata['reviews']:
+            index=bisect_right(calendar,review['official_catalog_date'])-1
+            if index>=0:dates.add(calendar[index])
         if not dates: raise ValueError('no historical benchmark dates')
         marks = ','.join('?' for _ in dates)
         membership = [list(row) for row in conn.execute(f'select trade_date,symbol from st_membership_daily where trade_date in ({marks}) order by trade_date,symbol', sorted(dates))]
@@ -152,10 +160,10 @@ def collect_inputs(*, episodes=VALUATION_EPISODE_DB, facts=P6A_DB, research=P8_R
     return {'p6_run': {key: p6_run.get(key) for key in ('run_id', 'as_of', 'verified_event_count')}, 'event_table_rows': all_rows,
             'events': events, 'parents': parents, 'p8_run': p8_run, 'derived_events': p8, 'calendar': calendar,
             'membership': membership, 'membership_through': membership_through, 'price_sources': price_sources,
-            'date_reviews': date_reviews, 'node_map': dict(P6_EVENT_TO_NODE)}
+            'date_reviews': date_reviews, 'publication_metadata':publication_metadata,'node_map': dict(P6_EVENT_TO_NODE)}
 
 
-def parent_issues(event, parents, review=None):
+def parent_issues(event, parents, review=None, publication=None):
     matching = [row for row in parents if (row['symbol'], row['event_type'], row['information_available_date'], row['source_document_id']) ==
                 (event['symbol'], event['event_type'], event['information_available_date'], event['source_ref'])]
     if not matching: return ['parent_fact_missing']
@@ -175,7 +183,12 @@ def parent_issues(event, parents, review=None):
                           urlparse(review['source_url']).hostname == urlparse(row['source_url']).hostname and
                           urlparse(review['source_url']).path == urlparse(row['source_url']).path and
                           (not hint or iso(review['signed_on']) >= iso(hint[1])))
-        if hint and iso(hint[1]) != published and not matched_review: issues.add('publication_date_hint_conflict')
+        matched_catalog=(publication and publication['document_id']==event['source_ref'] and publication['symbol']==event['symbol']
+                         and urlparse(publication['source_url']).hostname=='static.cninfo.com.cn'
+                         and urlparse(publication['source_url']).path==urlparse(row['source_url']).path
+                         and urlparse(row['source_url']).hostname=='static.cninfo.com.cn'
+                         and (not hint or publication['official_catalog_date']==iso(hint[1])))
+        if hint and iso(hint[1]) != published and not (matched_review or matched_catalog): issues.add('publication_date_hint_conflict')
     return sorted(issues)
 
 
@@ -193,6 +206,8 @@ def project(inputs):
     cohorts = []; seen = set(); revised_keys = set(); issues_count = Counter(); origins = Counter()
     by_id = {row['event_id']: row for row in events}
     date_reviews = {row['document_id']: row for row in inputs['date_reviews'] if row['availability'] == 'observed'}
+    publication_metadata=inputs.get('publication_metadata',{'availability':'missing','reviews':[]})
+    publication_reviews={row['document_id']:row for row in publication_metadata['reviews'] if row['availability']=='observed'} if publication_metadata['availability']=='observed' else {}
     for event in events:
         iso(event['event_date']); available = iso(event['information_available_date'])
         if not re.fullmatch(r'\d{6}', event['symbol']) or event['source_kind'] not in ('p6a_verified_fact', 'official_title_exact'):
@@ -208,9 +223,17 @@ def project(inputs):
             and urlparse(row['source_url'] or '').hostname == urlparse(review['source_url']).hostname
             and urlparse(row['source_url'] or '').path == urlparse(review['source_url']).path for row in inputs['parents'])):
             review = None
-        issues = parent_issues(event, inputs['parents'], review)
+        publication=publication_reviews.get(event['source_ref'])
+        if publication and (publication['symbol']!=event['symbol'] or event['event_id'] not in publication['event_ids']
+            or urlparse(publication['source_url']).hostname!='static.cninfo.com.cn' or not any(
+            row['source_document_id']==event['source_ref'] and row['symbol']==event['symbol']
+            and urlparse(row['source_url'] or '').hostname=='static.cninfo.com.cn'
+            and urlparse(row['source_url'] or '').path==urlparse(publication['source_url']).path for row in inputs['parents'])):publication=None
+        if publication and sorted({row['published_date'] for row in inputs['parents'] if row['source_document_id']==event['source_ref'] and row['symbol']==event['symbol']})!=publication['parent_published_dates']:publication=None
+        issues = parent_issues(event, inputs['parents'], review,publication)
         original_available = available
         if review: available = max(available, review['signed_on'])
+        if publication:available=max(available,publication['official_catalog_date'])
         revised_key = (event['symbol'], available, event['event_type'])
         if revised_key in revised_keys: raise ValueError('reviewed dates collapse duplicate observations')
         revised_keys.add(revised_key)
@@ -228,6 +251,7 @@ def project(inputs):
         cohorts.append({'event_id': event['event_id'], 'symbol': event['symbol'], 'event_type': event['event_type'],
                         'information_available_date': available, 'original_information_date': original_available,
                         'reviewed_document_day': review['signed_on'] if review else None, 'feature_through': feature_date,
+                        'official_catalog_date':publication['official_catalog_date'] if publication else None,
                         'entry_date': path[0] if path else None, 'outcome_key_end': path[-1] if len(path) == PLAN['horizon_sessions']+1 else None,
                         'price_key_source': source, 'source_ref': event['source_ref'], 'capacity_candidate': not issues, 'issues': sorted(set(issues))})
     lineage = Counter()
@@ -258,6 +282,9 @@ def project(inputs):
             'main_window_nominations': len(cohorts), 'test_capacity_events': n, 'test_capacity_companies': companies,
             'historical_capacity_pass': passed, 'issues': dict(issues_count), 'folds': folds, 'candidate_rows': cohorts,
             'date_reviews': inputs['date_reviews'],
+            'publication_metadata':publication_metadata,
+            'source_pool_ceiling_events':len(cohorts),'source_pool_ceiling_companies':len({r['symbol'] for r in cohorts}),
+            'source_pool_can_reach_test_minimum':len(cohorts)>=PLAN['minimum_test_events'] and len({r['symbol'] for r in cohorts})>=PLAN['minimum_test_companies'],
             'conservative_date_shifts': sum(row['information_available_date'] != row['original_information_date'] for row in cohorts),
             'source_dates': {'benchmark_keys_through': calendar[-1], 'historical_membership_through': inputs['membership_through'],
                              'node_information_through': max((row['information_available_date'] for row in events), default=None),
@@ -275,6 +302,13 @@ def validate_observation(inputs, observed):
         if review['availability'] != 'observed': continue
         fetched = datetime.fromisoformat(review['observed_at'])
         if fetched.tzinfo is None or fetched > observed: raise ValueError('date review observed after audit')
+    publication=inputs.get('publication_metadata',{})
+    if publication.get('availability')=='observed':
+        captured=datetime.fromisoformat(publication['captured_at'])
+        if captured.tzinfo is None or captured>observed:raise ValueError('catalog capture after audit')
+        for review in publication['reviews']:
+            fetched=datetime.fromisoformat(review['observed_at'])
+            if fetched.tzinfo is None or fetched>observed:raise ValueError('catalog date reviewed after audit')
 
 
 def audit_status(directory=DEFAULT_OUTPUT, *, now=None, paths=None):

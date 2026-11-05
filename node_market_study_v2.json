@@ -1,0 +1,80 @@
+{
+  "version": "node_market_study_v2",
+  "purpose": "Conditional comparison of node-only and node-plus-market descriptions on registered restructuring events; no trading or causal claims",
+  "anchor_start": "2021-03-17",
+  "anchor_end": "2025-12-31",
+  "test_years": [
+    2023,
+    2024,
+    2025
+  ],
+  "horizon_sessions": 20,
+  "minimum_test_events": 100,
+  "minimum_test_companies": 40,
+  "minimum_train_events": 40,
+  "minimum_train_companies": 10,
+  "node_types": [
+    "restructuring_application_disclosed",
+    "pre_restructuring_started",
+    "administrator_appointed",
+    "investor_recruitment_started",
+    "formal_restructuring_accepted",
+    "restructuring_plan_published",
+    "restructuring_plan_approved",
+    "restructuring_completed",
+    "restructuring_terminated"
+  ],
+  "main_source_basis": "active-run-linked P6A prior verified facts with matching current parent metadata; titles are separate sensitivity candidates",
+  "deduplication_key": [
+    "symbol",
+    "information_available_date",
+    "event_type"
+  ],
+  "membership_basis": "historical ST membership on the last benchmark session on or before information availability",
+  "prediction_time": "after the information date closes; a date-only disclosure is not assumed available intraday",
+  "entry_basis": "next benchmark session close, with no delayed entry selected from future price availability",
+  "price_source_priority": [
+    "p8_qfq_complete_window",
+    "base_qfq_complete_window"
+  ],
+  "price_source_rule": "one source must contain every key in the 21-session outcome path; do not splice independently adjusted qfq snapshots",
+  "outcome": "maximum drawdown along 21 adjusted closing prices from entry through entry+20; qfq price path is not old-shareholder wealth",
+  "baseline_features": [
+    "declared node-type indicators",
+    "board indicators",
+    "annual-report season indicator"
+  ],
+  "additional_market_features": [
+    "CSI all-share trailing 20-session return",
+    "CSI all-share trailing 60-session maximum drawdown"
+  ],
+  "unavailable_historical_features": [
+    "ETF corporate-action-corrected subscription estimates",
+    "unverified historical breadth"
+  ],
+  "estimator": {
+    "kind": "ridge regression",
+    "penalty": 1,
+    "standardization": "continuous predictors using training data only",
+    "intercept_penalized": false,
+    "prediction_clip": [
+      -1,
+      0
+    ]
+  },
+  "training": "expanding past years; exclude training anchors whose outcome exit reaches the test year",
+  "primary_metric": "paired MAE(node-only) minus MAE(node-plus-market), positive means smaller held-out prediction error with market features",
+  "uncertainty": [
+    "company-cluster bootstrap",
+    "calendar-quarter block bootstrap"
+  ],
+  "missing_outcomes": "retain all candidate anchors and reasons; do not fill suspensions, missing prices or delisted paths with zero; bound missing MAE differences over possible drawdown outcomes in [-1,0]",
+  "promotion": "both uncertainty intervals must exclude zero positively, sample gates must pass and missing-outcome bounds must remain positive; even then retrospective candidate only",
+  "known_exposure": "recent market weakness is a user-provided hypothesis; historical periods were used in earlier project studies and are not a pristine untouched holdout",
+  "recent_stress_window": [
+    "2026-09-04",
+    "2026-11-04"
+  ],
+  "outcome_execution_gate": "capacity audit first, then numerical value validation and separate estimator implementation; this plan alone does not execute or validate an effect",
+  "information_date_review": "Preserve original event and information dates. For the fixed active prior-fact source pool, use the latest of original information day, byte-bound reviewed issuer signature day and company/attachment-bound official CNINFO catalog day decoded in Asia/Shanghai. Catalog midnight milliseconds are a date field, not an exact release timestamp. Current metadata observation does not establish historical PIT, and title-only candidates are not promoted to body-verified facts."
+}

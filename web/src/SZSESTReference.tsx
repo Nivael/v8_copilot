@@ -20,7 +20,7 @@ export function SZSESTReference({data,indices}:{data:Reference;indices:MarketRis
   const broad=matched?marketPath.map(p=>p.close!/marketPath[0].close!*100):[]
   const lo=Math.floor(Math.min(100,...st,...broad)/5)*5-2
   const hi=Math.ceil(Math.max(100,...st,...broad)/5)*5+2
-  const x=(i:number)=>48+i*760/(points.length-1)
+  const x=(i:number)=>68+i*740/(points.length-1)
   const y=(value:number)=>216-(value-lo)/(hi-lo)*190
   const path=(values:number[])=>values.map((value,i)=>`${i===0?'M':'L'}${x(i).toFixed(2)},${y(value).toFixed(2)}`).join(' ')
   return <section className="learning-freshness market-st-reference" aria-label="深市ST同期价格参考">
@@ -31,8 +31,8 @@ export function SZSESTReference({data,indices}:{data:Reference;indices:MarketRis
       <div className="market-risk-legend"><span><i/>深市ST有成交样本</span>{matched&&<span><i className="market-line-1"/>中证全指 · 同窗</span>}</div>
       <svg className="market-st-chart" viewBox="0 0 840 250" role="img" aria-label={matched?'深市ST与同期市场价格参考路径':'深市ST价格参考路径'}>
         <title>深市ST有成交样本价格参考，首个收盘点为100</title>
-        {[lo,(lo+hi)/2,hi].map(tick=><g key={tick}><line x1="48" x2="808" y1={y(tick)} y2={y(tick)} stroke="#e2e9df"/><text x="40" y={y(tick)+4} textAnchor="end">{Number.isInteger(tick)?tick.toFixed(0):tick.toFixed(1)}</text></g>)}
-        <line x1="48" x2="808" y1={y(100)} y2={y(100)} stroke="#aab8aa" strokeDasharray="4 4"/>
+        {[lo,(lo+hi)/2,hi].map(tick=><g key={tick}><line x1="68" x2="808" y1={y(tick)} y2={y(tick)} stroke="#e2e9df"/><text x="60" y={y(tick)+4} textAnchor="end">{Number.isInteger(tick)?tick.toFixed(0):tick.toFixed(1)}</text></g>)}
+        <line x1="68" x2="808" y1={y(100)} y2={y(100)} stroke="#aab8aa" strokeDasharray="4 4"/>
         <path d={path(st)} stroke="#3d684d"/>{matched&&<path d={path(broad)} stroke="#a47845"/>}
         <line x1={x(index)} x2={x(index)} y1="20" y2="216" stroke="#788d7b" strokeDasharray="3 3"/>
         <circle cx={x(index)} cy={y(st[index])} r="4" fill="#3d684d"/>

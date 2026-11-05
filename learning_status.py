@@ -15,6 +15,7 @@ from experience_verification import READONLY_AUDIT_PATH, inventory_digest, metho
 from canonical_json import digest
 from freshness_manifest import FreshnessManifest
 from market_risk import MARKET_RISK_DIR, market_update_status
+from market_snapshot_age import close_reference
 from settings import (
     EXPERIENCE_GOVERNANCE_DB, EXPERIENCE_REPOSITORY_DB, FRESHNESS_MANIFEST_PATH,
     RESEARCH_RUN_LEDGER_DB,
@@ -284,6 +285,7 @@ def build_learning_status(
         "conflicts": [row.model_dump(mode="json") for row in conflicts],
         "methods": methods, "freshness": freshness,
         "market_updates": market_update_status(snapshot_dir=market_snapshot_dir, now=now),
+        "market_close_reference": close_reference(now),
         "quality_evaluation": {"status": "not_measured", "accuracy": None,
                                "reason": "尚无独立留出题集的前后对照；库存、调用和回归通过均不等于研究准确率。"},
         "automation": {"promotion": "on_candidate_or_feedback", "minimum_source_runs": 2,

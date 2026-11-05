@@ -146,6 +146,14 @@ export interface LearningMethod {
   verification_source?:'readonly_audit'|'governance_ledger'
   verification_notes?:string[]
 }
+export interface MarketCloseReference {
+  version:string;availability:string;observed_at:string;timezone:string;reference_time:string;latest_scheduled_close:string|null;
+  calendar_version:string;calendar_source:string;hours_source:string;calendar_rule_digest?:string;reason?:string;
+  schedule_only:boolean;provider_deadline_verified:boolean;automatic_update_observed:boolean;
+}
+export interface MarketCloseDistance {
+  availability:string;minimum_sessions:number|null;maximum_sessions:number|null;series_compared:number;latest_scheduled_close:string|null;reason?:string;
+}
 export interface LearningStatus {
   contract_version:'v8_learning_status_v1'
   generated_at:string
@@ -158,7 +166,8 @@ export interface LearningStatus {
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
   readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
-  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number|null;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;verified_membership_venues?:number|null;observation_unit?:string;coverage_unit?:string;coverage_basis?:string}>
+  market_close_reference?:MarketCloseReference
+  market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number|null;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;verified_membership_venues?:number|null;observation_unit?:string;coverage_unit?:string;coverage_basis?:string;close_distance?:MarketCloseDistance}>
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>
   methods:LearningMethod[]
   freshness:{
@@ -438,6 +447,8 @@ export interface MarketRiskStatus {
   requested_through:string|null
   status:'observed_snapshot'|'historical_only'|'unavailable'
   current_risk_assessment:'not_calibrated'
+  close_reference?:MarketCloseReference
+  target_close_distance?:MarketCloseDistance
   indices:MarketRiskIndex[]
   etfs:MarketRiskETF[]
   public_etf_snapshot?:{availability:string;through?:string;fetched_at?:string;gap_count?:number;raw_reconciliation?:ETFDailyRawReconciliation}

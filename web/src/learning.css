@@ -95,6 +95,11 @@
 .market-registration-table thead th:first-child {width:26%}
 .market-registration-table thead th:nth-child(2) {width:22%}
 .market-registration-table thead th:nth-child(3) {width:52%}
+.market-close-reference {margin:16px 0;font-size:12px;line-height:1.8}
+.market-close-reference p {margin:8px 0}
+.market-close-reference details {margin:8px 0}
+.market-close-reference code {overflow-wrap:anywhere;word-break:break-word}
+.market-close-distance {display:block;margin-top:6px;font-size:12px;line-height:1.7;color:#586b5e}
 .market-risk-order {display:flex;align-items:center;gap:20px;margin:28px 0 40px;color:#69806e;font-size:12px}
 .market-risk-windows {display:flex;gap:4px}
 .market-recent-window>p {font-size:12px;line-height:1.8;color:#6b786f;margin:16px 0}

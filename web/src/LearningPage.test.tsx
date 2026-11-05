@@ -241,3 +241,17 @@ describe('institutional rule publication ranges',()=>{
     expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
   })
 })
+
+describe('daily close distance is separate from document publication dates',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('shows a verified daily endpoint range without assigning trading-day age to regulation versions',async()=>{
+    const row={source_id:'official_indices',label:'中证指数 · 市场基准',availability:'observed',requested_through:'2026-11-04',fetched_at:'2026-11-05T08:00:00Z',observed_through_min:'2026-11-03',observed_through_max:'2026-11-04',observation_count:183,series_at_target:2,declared_series:3,snapshot_digest:'old',url:'/market',note:'指数已核对。',
+      close_distance:{availability:'compared',minimum_sessions:1,maximum_sessions:2,series_compared:3,latest_scheduled_close:'2026-11-05'}}
+    const data:LearningStatus={...payload,market_updates:[row,{...row,source_id:'etf_registration_rules',label:'登记规则版本',close_distance:undefined,date_basis:'regulation_publication'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getAllByText('已取得数据的末日距参照 1～2 个收盘日')).toHaveLength(1)
+    expect(within(section).getByText('2026-11-03 至 2026-11-04')).toBeVisible()
+    expect(within(section).getByText('版本发布 2026-11-03 至 2026-11-04')).toBeVisible()
+  })
+})

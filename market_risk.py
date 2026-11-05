@@ -22,6 +22,7 @@ from etf_daily_sources import reconcile_sse, reconcile_szse
 from etf_fund_scope import scope_status as fund_scope_status
 from etf_asset_identity import identity_status as asset_identity_status
 from etf_registration_rules import rules_status as registration_rules_status
+from market_snapshot_age import close_reference, close_distance
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
@@ -376,6 +377,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
          "/market", "两所A股范围分别核对；不含北交所，停牌及无成交单列；此项是单日截面，历史窗口另作独立核对。"),
     ]
     sources = []
+    reference = close_reference(now)
     for key, label, meta, rows, through_key, count_key, size, url, note in definitions:
         observed = meta["availability"] == "observed"
         actual = [row[through_key] for row in rows if row.get(through_key)]
@@ -385,7 +387,8 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                         "observed_through_max": max(actual) if actual else None,
                         "observation_count": sum(row[count_key] for row in rows) if observed else None,
                         "series_at_target": sum(row.get(through_key) == meta.get("through") for row in rows) if observed else None,
-                        "declared_series": size, "snapshot_digest": meta.get("content_digest"), "url": url, "note": note})
+                        "declared_series": size, "snapshot_digest": meta.get("content_digest"), "url": url, "note": note,
+                        "close_distance": close_distance(actual if observed else [], reference)})
     sources.append({"source_id": "exchange_breadth_history", "label": "深交所 · 历史收盘日表", "availability": history["availability"],
                     "requested_through": history.get("through"), "fetched_at": history.get("fetched_at"),
                     "observed_through_min": history.get("start"), "observed_through_max": history.get("through"),
@@ -596,6 +599,8 @@ def build_market_risk_status(
         "contract_version": "market_risk_status_v1", "parameter_version": PARAMETER_VERSION,
         "observation_date": today, "generated_at": now.isoformat(), "snapshot_digest": snapshot_id,
         "requested_through": requested_through,
+        "close_reference": close_reference(now),
+        "target_close_distance": close_distance([requested_through] if requested_through else [], close_reference(now)),
         "status": "observed_snapshot" if snapshot_id else "historical_only" if indices else "unavailable",
         "current_risk_assessment": "not_calibrated", "indices": indices, "etfs": etfs,
         "breadth": breadth, "last_attempt": attempt, "gaps": gaps,

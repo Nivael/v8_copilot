@@ -11,6 +11,7 @@ import {ETFDailySourceAudit} from './ETFDailySourceAudit'
 import {ETFUnitNAVAudit} from './ETFUnitNAVAudit'
 import {ETFAssetIdentity} from './ETFAssetIdentity'
 import {ETFRegistrationRules} from './ETFRegistrationRules'
+import {MarketCloseReference} from './MarketCloseReference'
 import {ETFFundScopeRules} from './ETFFundScopeRules'
 import {ETFReportContinuity} from './ETFReportContinuity'
 import {ETFNoticeReview} from './ETFNoticeReview'
@@ -152,6 +153,7 @@ export function MarketRiskPage(){
     {error&&<p role="alert" className="experience-error">{error}</p>}
     {data&&<>
       <section className="market-risk-assessment" aria-label="当前风险可用性"><span>当前大盘风险</span><h2>{data.status==='observed_snapshot'?'已有快照，风险等级待校准':'当前无法确认'}</h2><p>{data.status==='observed_snapshot'?`收盘日目标 ${data.requested_through}；观察日 ${data.observation_date}。各来源分别核对截止日，已取得指数不代表整体风险已测量。`:`观察日 ${data.observation_date}。当前没有通过校验的完整市场快照；市场基准仍为历史背景，ETF份额按下方独立截止日展示。`}</p>
+        <MarketCloseReference data={data.close_reference} distance={data.target_close_distance}/>
         {data.market_coverage&&<p>同日市场指数 {data.market_coverage.indices_observed_at_target}/{data.market_coverage.declared_indices}；沪深ST完整核验{data.market_coverage.st_style_at_target?'已通过':'未完成'}；涨跌分布{data.market_coverage.breadth_at_target?'已取得':'未覆盖'}。</p>}
         {data.market_coverage?.historical_breadth_venues_at_target!=null&&<p>同目标日期的历史涨跌分布来源 {data.market_coverage.historical_breadth_venues_at_target}/2；单一交易所不代表沪深整体。</p>}
         {(data.market_coverage?.st_reconstruction_source_venues_at_target??0)>0&&<p>同目标日期的ST重建参考价格来源 {data.market_coverage?.st_reconstruction_source_venues_at_target}/2；沪市逐日成员尚待独立核验，不等同完整ST核验通过。</p>}

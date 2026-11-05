@@ -298,6 +298,15 @@ export interface MarketBreadthSummary {
   declining_share_pct?:number|null
   amount_yuan?:number|null
 }
+export interface CombinedBreadthHistory {
+  version:string;availability:string;start?:string;through?:string;content_digest?:string;materialized_at?:string
+  complete_market_history:boolean;historical_ST_ready:false;historical_PIT:false;effect_measured:false;matches_market_target?:boolean
+  covered_venues:string[];missing_venues:string[];observed_days?:number;expected_days?:number;observation_count?:number;traded_observation_count?:number
+  fetched_at?:string;first_suspension_observed_at?:string;sse_price_fetched_at?:string;szse_fetched_at?:string;source_url?:string;note?:string
+  points:Array<{date:string;all:MarketBreadthSummary;SSE:MarketBreadthSummary;SZSE:MarketBreadthSummary}>
+  sse_suspensions?:{source_rows:number;ordinary_A_records:number;excluded:Record<string,number>;notice_confirmed_days:number;additional_continuous_days:number
+    records:Array<{symbol:string;name_as_reported:string;start_on:string;last_suspended_on:string|null;kind:string;open_when_observed:boolean;reason:string;end_reason:string;window_days:string[]}>}
+}
 export interface ETFQuarterlyReport {
   code:string
   availability:string
@@ -384,6 +393,7 @@ export interface MarketRiskStatus {
   szse_st_reference?:SZSESTReference
   sse_history_archive?:SSEHistoryArchive
   sse_gap_review?:SSEGapReview
+  combined_breadth_history?:CombinedBreadthHistory
   etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
   breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
     venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;

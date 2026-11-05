@@ -19,6 +19,20 @@ const fixture:MarketRiskStatus={
 
 describe('MarketRiskPage',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('uses verified combined history while retaining the separately scoped SZSE source underneath',async()=>{
+    const summary={listed_source_stocks:2,observed_trading_stocks:2,nontrading_stocks:0,declining_share_pct:50}
+    const data:MarketRiskStatus={...fixture,combined_breadth_history:{version:'synthetic',availability:'observed',complete_market_history:true,
+      historical_ST_ready:false,historical_PIT:false,effect_measured:false,covered_venues:['SSE','SZSE'],missing_venues:[],
+      start:'2026-09-04',through:'2026-11-04',expected_days:2,points:[{date:'2026-09-04',all:summary,SSE:summary,SZSE:summary},{date:'2026-11-04',all:summary,SSE:summary,SZSE:summary}]},
+      breadth_history:{availability:'observed',complete_market_history:false,points:[],observed_days:0,expected_days:0}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)))
+    render(<MemoryRouter><MarketRiskPage/></MemoryRouter>)
+    expect(await screen.findByRole('heading',{name:'沪深历史涨跌分布'})).toBeInTheDocument()
+    expect(screen.getByRole('slider',{name:'市场宽度观察日期'})).toBeVisible()
+    expect(screen.getByText('深市名称组与原始日表来源').closest('details')).not.toHaveAttribute('open')
+    expect(screen.queryByText('沪市历史仍缺')).not.toBeInTheDocument()
+    expect(screen.queryByText(/沪深合并历史分布仍待补齐/)).not.toBeInTheDocument()
+  })
   it('keeps a complete single-venue historical path distinct from whole-market and ST style coverage',async()=>{
     const summary={listed_source_stocks:5,observed_trading_stocks:4,nontrading_stocks:1,advancing:1,declining:2,flat:1,
       declining_5pct_or_more:0,median_return_pct:-1,declining_share_pct:50,amount_yuan:1000}

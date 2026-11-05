@@ -25,6 +25,7 @@ from exchange_risk_membership import list_status as risk_membership_status
 from szse_st_reference import reference_status as szse_st_reference_status
 from sse_history_archive import archive_status as sse_history_archive_status
 from sse_gap_review import review_status as sse_gap_review_status
+from market_breadth_combined import history_status as combined_breadth_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -33,7 +34,7 @@ from market_periods import price_period_summary, recent_calendar_window
 from settings import DATA_ROOT, MARKET_CONTEXT_DB, MARKET_CONTEXT_MANIFEST_PATH
 
 
-PARAMETER_VERSION = "market_risk_parameters_v4"
+PARAMETER_VERSION = "market_risk_parameters_v5"
 MARKET_RISK_DIR = DATA_ROOT / "local_data/v8_copilot/market_risk"
 ETF_BASKET = {
     "510300.SH": "沪深300", "510310.SH": "沪深300", "510330.SH": "沪深300", "159919.SZ": "沪深300",
@@ -328,6 +329,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     issuer_meta, issuer_navs = load_issuer_navs(snapshot_dir / "issuer_nav", now)
     breadth_meta, breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
     history = breadth_history_status(snapshot_dir / "public_breadth_history", now)
+    combined = combined_breadth_status(snapshot_dir / 'combined_breadth_history', root=snapshot_dir, now=now)
     announcements = announcement_status(snapshot_dir / "etf_announcements", now)
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
@@ -347,7 +349,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
         ("issuer_etf_nav", "5家基金公司 · ETF单位净值", issuer_meta, issuer_rows, "nav_through", "nav_observation_count", 8,
          "/market", "各基金原始链接见大盘页；首次取得日期不冒充历史当时可见，净值齐全不代表份额事件已核验。"),
         ("exchange_breadth", "沪深交易所 · A股收盘横截面", breadth_meta, breadth.get("venues", []), "through", "listed_source_stocks", 2,
-         "/market", "两所A股范围分别核对；不含北交所，停牌及无成交单列；此项是单日截面，沪深合并历史路径仍缺。"),
+         "/market", "两所A股范围分别核对；不含北交所，停牌及无成交单列；此项是单日截面，历史窗口另作独立核对。"),
     ]
     sources = []
     for key, label, meta, rows, through_key, count_key, size, url, note in definitions:
@@ -360,13 +362,19 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                         "observation_count": sum(row[count_key] for row in rows) if observed else None,
                         "series_at_target": sum(row.get(through_key) == meta.get("through") for row in rows) if observed else None,
                         "declared_series": size, "snapshot_digest": meta.get("content_digest"), "url": url, "note": note})
-    sources.append({"source_id": "exchange_breadth_history", "label": "交易所 · 历史涨跌分布（当前仅深市）", "availability": history["availability"],
+    sources.append({"source_id": "exchange_breadth_history", "label": "深交所 · 历史收盘日表", "availability": history["availability"],
                     "requested_through": history.get("through"), "fetched_at": history.get("fetched_at"),
                     "observed_through_min": history.get("start"), "observed_through_max": history.get("through"),
                     "observation_count": history.get("observation_count"), "series_at_target": len(history["covered_venues"]),
                     "observation_unit": "股票日", "coverage_unit": "交易所",
                     "declared_series": 2, "snapshot_digest": history.get("content_digest"), "url": "/market",
-                    "note": "记录数为逐日股票观测合计，非不同股票数；仅完整历史窗发布，沪市历史仍缺。采集进度另见大盘页。"})
+                    "note": "此行仅深市原日表，逐日股票观测合计不代表不同股票数；沪深合并历史核对另列。"})
+    sources.append({'source_id':'combined_breadth_history','label':'沪深交易所 · 完整历史涨跌分布','availability':combined['availability'],
+                    'requested_through':combined.get('through'),'fetched_at':combined.get('fetched_at'),
+                    'observed_through_min':combined.get('start'),'observed_through_max':combined.get('through'),
+                    'observation_count':combined.get('observation_count'),'observation_unit':'股票日','coverage_unit':'交易所',
+                    'series_at_target':len(combined['covered_venues']),'declared_series':2,'snapshot_digest':combined.get('content_digest'),
+                    'url':'/market','note':'两所同窗挂牌范围、价格及沪市全部缺日停牌依据分别核对；家数合并，不平均两所百分比。不推进历史ST成员、旧个股清单或风险效果。'})
     sources.append({"source_id": "etf_announcements", "label": "ETF公告目录 · 待事件核验", "availability": announcements["availability"],
                     "requested_through": announcements.get("through"), "fetched_at": announcements.get("fetched_at"),
                     "observed_through_min": announcements.get("through"), "observed_through_max": announcements.get("through"),
@@ -397,7 +405,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'series_at_target':None,'observed_source_groups':sse_archive.get('price_responses'),
                     'declared_series':sse_archive.get('distinct_securities'),'snapshot_digest':sse_archive.get('content_digest'),
                     'url':'/market','coverage_basis':'price_archives','date_basis':'historical_price_archive',
-                    'note':'计数是有成交价格记录；原件覆盖按证券归档，不是每只股票在目标日都应有成交。缺日待核，不推进沪市完整历史分布、ST覆盖或旧个股清单。'})
+                    'note':'计数是有成交价格记录；原件覆盖按证券归档，不是每只股票在目标日都应有成交。缺日另以停复牌登记核对，本项不单独推进历史分布、ST覆盖或旧个股清单。'})
     sources.append({'source_id':'sse_missing_day_review','label':'沪市历史缺日 · 停复牌公告核对','availability':gaps['availability'],
                     'requested_through':gaps.get('through'),'fetched_at':gaps.get('source_fetched_at'),
                     'observed_through_min':gaps.get('start'),'observed_through_max':gaps.get('through'),
@@ -476,6 +484,7 @@ def build_market_risk_status(
     issuer_nav_snapshot, issuer_navs = load_issuer_navs(snapshot_dir / "issuer_nav", now)
     public_breadth_snapshot, public_breadth = load_public_breadth(snapshot_dir / "public_breadth", now)
     breadth_history = breadth_history_status(snapshot_dir / "public_breadth_history", now)
+    combined_history = combined_breadth_status(snapshot_dir / 'combined_breadth_history', root=snapshot_dir, now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, market_db=database, now=now)
     if public_breadth.get("status") == "observed" and public_breadth["through"] >= breadth.get("through", ""):
         breadth = public_breadth
@@ -521,6 +530,7 @@ def build_market_risk_status(
         "current_risk_assessment": "not_calibrated", "indices": indices, "etfs": etfs,
         "breadth": breadth, "last_attempt": attempt, "gaps": gaps,
         "breadth_history": {**breadth_history, "matches_market_target": breadth_history.get("through") == requested_through if requested_through else False},
+        "combined_breadth_history": {**combined_history, "matches_market_target": combined_history.get('through') == requested_through if requested_through else False},
         "public_etf_snapshot": public_snapshot,
         "szse_etf_snapshot": szse_snapshot,
         "szse_revision_recheck": recheck_status(snapshot_dir / "szse_revision_recheck", snapshot_dir / "public_etf_szse", now, issuer_navs),
@@ -545,7 +555,8 @@ def build_market_risk_status(
             "declared_indices": len(INDEX_BASKET),
             "breadth_at_target": breadth.get("status") == "observed" and breadth.get("through") == requested_through,
             "st_style_at_target": any(row["code"] == "st_equal_weight_v1" and row["through"] == requested_through for row in indices),
-            "historical_breadth_venues_at_target": len(breadth_history["covered_venues"]) if breadth_history.get("through") == requested_through else 0,
+            "historical_breadth_venues_at_target": (2 if requested_through and combined_history['availability']=='observed' and combined_history.get('through')==requested_through
+                                                    else len(breadth_history["covered_venues"]) if breadth_history.get("through") == requested_through else 0),
             "st_reference_venues_at_target": int(st_reference['availability']=='observed' and st_reference.get('through')==requested_through),
         },
         "recent_window": recent_window,
@@ -567,7 +578,7 @@ def build_market_risk_status(
         "parameters": {"trend_windows_sessions": list(HORIZONS), "etf_windows_sessions": [1, 5, 20],
                        "recent_calendar_months": 2,
                        "breadth_scope": "SSE_SZSE_A_shares", "breadth_session_window": 1,
-                       "breadth_history_venues": ["SZSE"], "breadth_history_calendar_months": 2,
+                       "breadth_history_venues": ["SSE", "SZSE"], "breadth_history_calendar_months": 2,
                        "breadth_st_group_version": "current_quote_name_prefix_v1",
                        "etf_basket": ETF_BASKET, "risk_weights": None, "risk_thresholds": None},
         "limitations": [

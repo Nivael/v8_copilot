@@ -45,4 +45,10 @@ describe('SSEHistorySources',()=>{
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
     expect(screen.queryByText(/目标范围共 80 股票日/)).not.toBeInTheDocument()
   })
+  it('preserves absent raw-quote counts after an independent interval reconciliation',()=>{
+    render(<SSEHistorySources data={data} reconciled/>);open()
+    expect(screen.getByText(/缺日已另由停复牌登记全部解释/)).toBeVisible()
+    expect(screen.getByText(/源端未返回 1 股票日/)).toBeVisible()
+    expect(screen.queryByText(/沪市完整历史分布、历史ST成员与价格路径仍未发布/)).not.toBeInTheDocument()
+  })
 })

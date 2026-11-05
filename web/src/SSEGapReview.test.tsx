@@ -43,4 +43,10 @@ describe('SSEGapReview',()=>{
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
     expect(screen.queryByText(/已解释 2\/5/)).not.toBeInTheDocument()
   })
+  it('keeps the notice-only limitation separate after exchange intervals close the remaining dates',()=>{
+    render(<SSEGapReview data={data} reconciled/>);fireEvent.click(screen.getByText('沪市历史缺日 · 仅公告解释 2/5 股票日'))
+    expect(screen.getByText(/这些日期现已由上方独立的停复牌登记全部核对/)).toBeVisible()
+    expect(screen.queryByText(/沪市完整历史涨跌分布继续待补/)).not.toBeInTheDocument()
+    expect(screen.getByText('公告未闭合 3 日')).toBeVisible()
+  })
 })

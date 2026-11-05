@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 
 from experience_contract import ExperienceRecord
 from experience_governance import PytestRegressionExecutor, RegressionReport, detect_experience_conflicts
-from experience_verification import READONLY_AUDIT_PATH, inventory_digest, method_digest, software_digest
+from experience_verification import READONLY_AUDIT_PATH, SOFTWARE_INPUT_SCOPE, inventory_digest, method_digest, software_digest
 from canonical_json import digest
 from freshness_manifest import FreshnessManifest
 from market_risk import MARKET_RISK_DIR, market_update_status
@@ -115,6 +115,7 @@ def _readonly_audit(path: Path, records: list[ExperienceRecord], code: str, now:
             raise ValueError("audit pass without passing checks")
         if (audit.get("status") != "complete" or audit.get("source_unchanged") is not True
             or audit.get("scope") != "software_rule_checks_only"
+            or audit.get("software_input_scope") != SOFTWARE_INPUT_SCOPE
             or audit.get("software_digest") != code
             or audit.get("source_inventory_digest") != inventory_digest(records)
             or any(audit["bindings"].get(eid) != method_digest(record) for eid, record in accepted.items())):
@@ -128,6 +129,7 @@ def _readonly_audit(path: Path, records: list[ExperienceRecord], code: str, now:
                 "accepted_examined": report.accepted_examined, "passed": report.passed,
                 "failed": report.failed, "unverified": report.unverified,
                 "run_id": report.run_id, "content_digest": content_digest,
+                "software_input_scope": SOFTWARE_INPUT_SCOPE,
                 "source_unchanged": True, "cadence_days": report.cadence_days}, results
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         return {"availability": "missing" if not path.exists() else "invalid"}, {}
@@ -280,6 +282,7 @@ def build_learning_status(
         "availability": availability, "gaps": gaps,
         "counts": counts, "runs": run_summary, "regression_counts": regression_counts,
         "current_software_digest": code,
+        "current_software_input_scope": SOFTWARE_INPUT_SCOPE,
         "latest_regression": latest_report,
         "readonly_audit": readonly_audit,
         "conflicts": [row.model_dump(mode="json") for row in conflicts],

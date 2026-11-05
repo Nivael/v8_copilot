@@ -178,3 +178,32 @@ def test_code_change_during_failed_check_does_not_block_method(tmp_path, monkeyp
     assert report.failed == 0
     assert repository.get(record.experience_id).status == ExperienceStatus.ACCEPTED
     assert not report.results[0].auto_blocked
+
+
+def test_recent_pass_is_due_again_after_only_a_rule_config_changes(tmp_path):
+    from experience_verification import software_digest
+    root=tmp_path/'software';root.mkdir();config=root/'rules.json';config.write_text('{"limit":1}')
+    repository=ExperienceRepository(tmp_path/'experiences.sqlite3');record=accept(repository,candidate())
+    governance=ExperienceGovernanceRepository(tmp_path/'governance.sqlite3');executor=FakeExecutor('passed');executor.project_root=root
+    report=run_due_regressions(repository,governance,executor=executor)
+    assert report.passed==1 and not governance.due(record,now=datetime.now(timezone.utc),code_digest=software_digest(root))
+    config.write_text('{"limit":2}')
+    assert governance.due(record,now=datetime.now(timezone.utc),code_digest=software_digest(root))
+    second=run_due_regressions(repository,governance,executor=executor)
+    assert second.accepted_examined==1 and second.passed==1
+
+
+@pytest.mark.parametrize('check_status',['passed','failed'])
+def test_rule_config_change_during_check_is_unverified_and_preserves_acceptance(tmp_path,check_status):
+    root=tmp_path/'software';root.mkdir();config=root/'rules.json';config.write_text('{"limit":1}')
+    class ConfigChangingExecutor:
+        project_root=root
+        def run(self,ref):
+            config.write_text('{"limit":2}')
+            return RegressionCheckResult(validation_ref=ref,status=check_status,detail='controlled check with changed configuration')
+    repository=ExperienceRepository(tmp_path/'experiences.sqlite3');record=accept(repository,candidate())
+    governance=ExperienceGovernanceRepository(tmp_path/'governance.sqlite3')
+    report=run_due_regressions(repository,governance,executor=ConfigChangingExecutor())
+    assert report.unverified==1 and report.failed==report.passed==0
+    assert report.results[0].auto_blocked is False and repository.get(record.experience_id).status==ExperienceStatus.ACCEPTED
+    assert '规则配置发生变化' in report.results[0].checks[-1].detail

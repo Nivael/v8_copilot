@@ -459,7 +459,7 @@ def run_due_regressions(
             result.status = "unverified"
             result.checks.append(RegressionCheckResult(
                 validation_ref="verification_input_binding", status="unverified",
-                detail="验证期间代码或方法发生变化；本轮不接受或封禁方法。",
+                detail="验证期间方法、代码或规则配置发生变化；本轮不接受或封禁方法。",
             ))
         if result.status == "failed":
             repository.review(result.experience_id, ExperienceReviewRequest(

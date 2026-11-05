@@ -11,6 +11,7 @@ const STATE_LABEL:Record<RegressionState,string>={
   unverified:'未能验证',failed:'复验失败',unknown:'记录不可读',
 }
 const STATUS_LABEL:Record<ExperienceStatus,string>={accepted:'已接受',candidate:'候选',blocked:'已阻断',ignored:'已忽略',merged:'已合并',closed:'已关闭',superseded:'已取代'}
+const AUDIT_STATE:Record<string,string>={stale:'旧报告与当前方法、代码或规则配置不匹配，需要重新复验。',expired:'只读报告已到复验期，需要重新执行。',invalid:'只读报告未通过校验，未沿用其中的通过记录。',missing:'尚无可用的只读复验报告。'}
 const count=(value:number|null|undefined)=>value==null?'—':value.toLocaleString('zh-CN')
 function time(value:string|null|undefined){
   if(!value)return '无记录'
@@ -72,7 +73,7 @@ export function LearningPage(){
 
       <section className="learning-diagnosis" aria-label="自我提升与运行机制">
         <div><p className="eyebrow">自我提升</p><h2>效果尚未测量</h2><p>{data.quality_evaluation.reason}</p><p>{count(data.runs?.with_experience_hits)} 条运行记录过经验调用。调用表示使用过方法，不证明回答变好。</p></div>
-        <div><p className="eyebrow">自我更新</p><h2>触发机制与实际运行分开看</h2><dl><div><dt>方法晋级</dt><dd>候选或反馈触发；至少 {data.automation.minimum_source_runs} 个有效来源运行，并通过回归、冲突与通用性检查。</dd></div><div><dt>定期复验</dt><dd>由维护流程显式执行。此页没有读取排程状态，不能据此判断定时任务正在运行。</dd></div><div><dt>原复验记录</dt><dd>{data.latest_regression?`${time(data.latest_regression.completed_at)}，检查 ${data.latest_regression.accepted_examined} 条方法。`:'尚无可读批次。'}{data.latest_regression?.accepted_examined===0&&' 空批次不能证明库存已验证。'}</dd></div>{data.readonly_audit?.availability==='current'&&<div><dt>最近只读复验</dt><dd>{time(data.readonly_audit.completed_at)}，检查 {data.readonly_audit.accepted_examined} 条；{data.readonly_audit.passed} 条规则通过，{data.readonly_audit.failed} 条失败，{data.readonly_audit.unverified} 条未验证。结果已绑定当前方法和代码；软件检查不代表研究效果。</dd></div>}</dl></div>
+        <div><p className="eyebrow">自我更新</p><h2>触发机制与实际运行分开看</h2><dl><div><dt>方法晋级</dt><dd>候选或反馈触发；至少 {data.automation.minimum_source_runs} 个有效来源运行，并通过回归、冲突与通用性检查。</dd></div><div><dt>定期复验</dt><dd>由维护流程显式执行。此页没有读取排程状态，不能据此判断定时任务正在运行。</dd></div><div><dt>原复验记录</dt><dd>{data.latest_regression?`${time(data.latest_regression.completed_at)}，检查 ${data.latest_regression.accepted_examined} 条方法。`:'尚无可读批次。'}{data.latest_regression?.accepted_examined===0&&' 空批次不能证明库存已验证。'}</dd></div>{data.readonly_audit?.availability==='current'&&<div><dt>最近只读复验</dt><dd>{time(data.readonly_audit.completed_at)}，检查 {data.readonly_audit.accepted_examined} 条；{data.readonly_audit.passed} 条规则通过，{data.readonly_audit.failed} 条失败，{data.readonly_audit.unverified} 条未验证。结果绑定复验使用的方法、代码与规则配置；软件检查不代表研究效果。</dd></div>}{data.readonly_audit&&data.readonly_audit.availability!=='current'&&<div><dt>最近只读复验</dt><dd>{AUDIT_STATE[data.readonly_audit.availability]||'只读复验状态尚未确认，未沿用旧报告。'}逐条方法状态按各自可用记录显示。</dd></div>}</dl></div>
       </section>
 
       <section id="method-audit" className="learning-methods" aria-label="经验逐条核验">

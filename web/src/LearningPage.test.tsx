@@ -255,3 +255,28 @@ describe('daily close distance is separate from document publication dates',()=>
     expect(within(section).getByText('版本发布 2026-11-03 至 2026-11-04')).toBeVisible()
   })
 })
+
+describe('read-only verification report input binding',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it.each([
+    ['stale','旧报告与当前方法、代码或规则配置不匹配，需要重新复验。'],
+    ['expired','只读报告已到复验期，需要重新执行。'],
+    ['invalid','只读报告未通过校验，未沿用其中的通过记录。'],
+    ['missing','尚无可用的只读复验报告。'],
+    ['other','只读复验状态尚未确认，未沿用旧报告。'],
+  ])('explains an unusable %s report without repeating its old passing counts',async(availability,message)=>{
+    const data:LearningStatus={...payload,readonly_audit:{availability,accepted_examined:9,passed:8,failed:0,unverified:1}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'自我提升与运行机制'})
+    expect(within(section).getByText(message,{exact:false})).toBeVisible()
+    expect(within(section).queryByText(/8 条规则通过/)).not.toBeInTheDocument()
+    expect(within(section).getByText(/逐条方法状态按各自可用记录显示/)).toBeVisible()
+  })
+  it('describes configuration binding for a current report while keeping effectiveness unmeasured',async()=>{
+    const data:LearningStatus={...payload,readonly_audit:{availability:'current',completed_at:'2026-11-05T13:00:00Z',accepted_examined:9,passed:8,failed:0,unverified:1}}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'自我提升与运行机制'})
+    expect(within(section).getByText(/结果绑定复验使用的方法、代码与规则配置；软件检查不代表研究效果/)).toBeVisible()
+    expect(within(section).getByText('效果尚未测量')).toBeVisible()
+  })
+})

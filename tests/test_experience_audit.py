@@ -84,3 +84,28 @@ def test_expired_copy_audit_does_not_stay_current(tmp_path):
                                  now=datetime.now(timezone.utc) + timedelta(days=31))
     assert view["readonly_audit"]["availability"] == "expired"
     assert view["regression_counts"] is None
+
+
+def test_rule_configuration_change_invalidates_old_copy_audit_without_touching_method_inventory(tmp_path,monkeypatch):
+    import experience_audit,experience_governance,learning_status
+    from experience_verification import software_digest
+    root=tmp_path/'software';root.mkdir();config=root/'rules.json';config.write_text('{"limit":1}')
+    current=lambda *_:software_digest(root)
+    for module in (experience_audit,experience_governance,learning_status):monkeypatch.setattr(module,'software_digest',current)
+    repo,_,_=inventory(tmp_path);before=hashlib.sha256(repo.path.read_bytes()).hexdigest();path=tmp_path/'audit/latest.json'
+    audit_inventory(source=repo.path,output=path,executor=Executor())
+    args=dict(experience_db=repo.path,audit_path=path,governance_db=tmp_path/'missing')
+    assert build_learning_status(**args)['readonly_audit']['availability']=='current'
+    old_report=path.read_bytes();config.write_text('{"limit":2}')
+    view=build_learning_status(**args)
+    assert view['readonly_audit']['availability']=='stale' and view['regression_counts'] is None
+    assert path.read_bytes()==old_report and hashlib.sha256(repo.path.read_bytes()).hexdigest()==before
+
+
+@pytest.mark.parametrize('scope',[None,'software_rule_inputs_v1','unknown'])
+def test_old_or_unspecified_input_scope_is_stale_even_if_the_report_is_rehashed(tmp_path,scope):
+    repo,_,_=inventory(tmp_path);path=tmp_path/'audit/latest.json'
+    audit=audit_inventory(source=repo.path,output=path,executor=Executor())
+    audit['software_input_scope']=scope;audit.pop('content_digest');audit['content_digest']=digest(audit);path.write_text(json.dumps(audit))
+    view=build_learning_status(experience_db=repo.path,audit_path=path,governance_db=tmp_path/'missing')
+    assert view['readonly_audit']['availability']=='stale' and view['regression_counts'] is None

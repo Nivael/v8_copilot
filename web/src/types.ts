@@ -165,7 +165,9 @@ export interface LearningStatus {
   runs:{total:number;validator_passed:number;with_experience_hits:number;latest_at:string|null}|null
   regression_counts:Record<Exclude<RegressionState,'unknown'>,number>|null
   latest_regression:{run_id:string;completed_at:string;accepted_examined:number;passed:number;failed:number;unverified:number}|null
-  readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean}
+  readonly_audit?:{availability:string;completed_at?:string;accepted_examined?:number;passed?:number;failed?:number;unverified?:number;content_digest?:string;source_unchanged?:boolean;software_input_scope?:string}
+  current_software_digest?:string
+  current_software_input_scope?:string
   market_close_reference?:MarketCloseReference
   market_updates?:Array<{source_id:string;label:string;availability:string;requested_through:string|null;fetched_at:string|null;observed_through_min:string|null;observed_through_max:string|null;observation_count:number|null;series_at_target:number|null;declared_series:number|null;snapshot_digest:string|null;url:string;note:string;date_basis?:string;observation_date?:string;observed_source_groups?:number|null;verified_membership_venues?:number|null;observation_unit?:string;coverage_unit?:string;coverage_basis?:string;close_distance?:MarketCloseDistance}>
   conflicts:Array<{conflict_id:string;severity:'blocking'|'review';detail:string}>

@@ -12,7 +12,7 @@ import tempfile
 from canonical_json import digest
 from data_refresh import atomic_write_json
 from experience_governance import ExperienceGovernanceRepository, PytestRegressionExecutor, run_due_regressions
-from experience_verification import READONLY_AUDIT_PATH, inventory_digest, method_digest, software_digest
+from experience_verification import READONLY_AUDIT_PATH, SOFTWARE_INPUT_SCOPE, inventory_digest, method_digest, software_digest
 from research_repository import ExperienceRepository
 from settings import EXPERIENCE_REPOSITORY_DB
 
@@ -47,6 +47,7 @@ def audit_inventory(*, source: Path = EXPERIENCE_REPOSITORY_DB, output: Path = A
         "status": "complete" if complete else "input_changed_or_incomplete",
         "source_inventory_digest": before, "source_file": source.name,
         "software_digest": code, "source_unchanged": before == after,
+        "software_input_scope": SOFTWARE_INPUT_SCOPE,
         "scope": "software_rule_checks_only", "not_evidence": True,
         "bindings": {row.experience_id: method_digest(row) for row in accepted},
         "report": report.model_dump(mode="json"),

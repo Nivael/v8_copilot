@@ -123,6 +123,11 @@
 .market-continuity-table thead th:first-child {width:20%}
 .market-continuity-table thead th:nth-child(2),.market-continuity-table thead th:nth-child(3) {width:23%}
 .market-continuity-table thead th:nth-child(4) {width:34%}
+.market-notice-table {min-width:1100px}
+.market-notice-table thead th:first-child {width:25%}
+.market-notice-table thead th:nth-child(2) {width:18%}
+.market-notice-table thead th:nth-child(3) {width:27%}
+.market-notice-table thead th:nth-child(4) {width:30%}
 .market-history-table {min-width:1100px}
 .market-history-table thead th:first-child {width:24%}
 .market-history-table thead th:nth-child(2),.market-history-table thead th:nth-child(3) {width:16%}

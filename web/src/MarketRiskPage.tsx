@@ -7,6 +7,7 @@ import type {MarketRiskETF,MarketRiskIndex,MarketRiskStatus} from './types'
 import './learning.css'
 import {ETFShareEventReview} from './ETFShareEventReview'
 import {ETFReportContinuity} from './ETFReportContinuity'
+import {ETFNoticeReview} from './ETFNoticeReview'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -165,6 +166,7 @@ export function MarketRiskPage(){
         <div className="learning-table-wrap"><table className="learning-table"><thead><tr><th scope="col">ETF代码 / 跟踪组</th><th scope="col">份额变化</th><th scope="col">净申赎金额估算</th><th scope="col">核验状态</th></tr></thead><tbody>{Object.entries(data.parameters.etf_basket).map(([code,group])=>{const item=data.etfs.find(etf=>etf.code===code);const metric=item?.windows[etfWindow];return <tr key={code}><th scope="row">{code}<small>{group} · 截至 {item?.through||'未取得'}</small>{item?.source==='sse_public'&&<small>上交所日终公布份额</small>}{item?.source==='szse_public'&&<small>深交所份额 · 修订状态待核对</small>}{item?.nav_through&&<small>净值截至 {item.nav_through}</small>}{item?.nav_source_url&&<small><a href={item.nav_source_url} target="_blank" rel="noreferrer">{item.nav_source}单位净值 ↗</a></small>}</th><td>{pct(metric?.share_change_pct)}{metric?.share_change_ten_thousand!=null&&<small>{metric.share_change_ten_thousand>0?'+':''}{number(metric.share_change_ten_thousand)} 万份</small>}</td><td>{amount(metric?.estimated_net_subscription_yuan)}</td><td>{metric?.status==='estimated'?'名义估算，不能识别资金身份':metric?.status==='corporate_actions_unchecked'?'份额事件未核验':metric?.status==='shares_only'?'份额已取得；净值与份额事件待核验':'缺少同窗份额或净值'}{item?.share_revision_unverified&&<small>最新份额待次日修订核对</small>}{(item?.nav_conflict_dates?.length??0)>0&&<small>净值来源有冲突，未采用新来源：{item?.nav_conflict_dates?.join('、')}</small>}{(item?.nav_crosscheck_observations??0)>0&&<small>已与交易所核对 {item?.nav_crosscheck_observations} 个重叠净值日</small>}{metric?.share_change_notional_yuan!=null&&<details><summary>未经份额事件校正的名义额</summary><p>{amount(metric.share_change_notional_yuan)}；不得当作已确认净申赎。</p></details>}</td></tr>})}</tbody></table></div>
       </section>
 
+      {data.etf_notice_review&&<ETFNoticeReview data={data.etf_notice_review}/>}
       {data.etf_report_continuity&&<ETFReportContinuity data={data.etf_report_continuity}/>}
       {data.etf_quarterly&&<section className="learning-freshness" aria-label="ETF季报份额核对">
         <header className="learning-section-head"><div><p className="eyebrow">季报披露 / 份额范围</p><h2>季报申赎与日表范围核对</h2></div><span>{data.etf_quarterly.period_label||'季度未确定'} · {data.etf_quarterly.observed_reports}/{data.etf_quarterly.declared_etfs}</span></header>

@@ -204,6 +204,17 @@ export interface SSEHistoryArchive {
   ended_listings?:Array<{code:string;listed_on:string;ended_on:string|null;observed_name:string;board:string}>
   days?:Array<{date:string;listed_members:number;observed_trading:number;explicit_nontrading:string[];not_returned:string[];unclosed_observations_included:false}>
 }
+export interface SSEGapReview {
+  version:string;availability:string;start?:string;through?:string;content_digest?:string;materialized_at?:string
+  historical_breadth_ready:boolean;historical_ST_ready:false;historical_PIT:false;effect_measured:false
+  reviewed_episodes?:number;distinct_companies?:number;closed_episodes?:number;original_pdfs?:number
+  not_returned_days?:number;confirmed_missing_days?:number;unresolved_missing_days?:number;unreviewed_missing_days?:number
+  source_fetched_at?:string;note?:string
+  episodes?:Array<{case_id:string;symbol:string;company:string;kind:string;start_on:string;end_exclusive:string|null
+    interval_closed:boolean;window_days:string[];confirmed_missing_days:number;unresolved_missing_days:number;endpoint_nontrading_confirmed:boolean|null
+    proofs:Array<{source_url:string;pages:number[];role:string;published_on:string;observed_at:string}>}>
+  days?:Array<{date:string;confirmed_suspended:string[];unresolved:string[]}>
+}
 export interface SZSESTReference {
   availability:string;version?:string;content_digest?:string;materialized_at?:string
   start?:string;through?:string;anchor_on?:string;anchor_members?:number;distinct_members?:number;endpoint_members?:number
@@ -372,6 +383,7 @@ export interface MarketRiskStatus {
   exchange_risk_membership?:ExchangeRiskMembership
   szse_st_reference?:SZSESTReference
   sse_history_archive?:SSEHistoryArchive
+  sse_gap_review?:SSEGapReview
   etf_aggregate:Record<string,{evaluation_through?:string|null;observed_etfs:number;nav_observed_etfs?:number;revision_unconfirmed_etfs?:number;declared_etfs:number;estimated_net_subscription_yuan:null;reason:string}>
   breadth:MarketBreadthSummary&{status:string;source?:string;through?:string;scope?:string;return_basis?:string;historical_path_available?:boolean;
     venues?:Array<MarketBreadthSummary&{venue:string;label:string;url:string;source_rows:number;excluded_b_shares:number;excluded_preferred_shares?:number;through:string}>;

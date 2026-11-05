@@ -105,6 +105,19 @@ describe('LearningPage',()=>{
     expect(within(section).getByText('价格记录窗 2026-09-04 至 2026-11-04')).toBeInTheDocument()
     expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
   })
+  it('keeps partially explained missing-day episodes separate from venue coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'sse_missing_day_review',label:'沪市缺日核对',availability:'partial',
+      requested_through:'2026-11-04',observed_through_min:'2026-09-04',observed_through_max:'2026-11-04',observation_count:148,
+      observation_unit:'已解释的缺失股票日',coverage_basis:'missing_day_episodes',date_basis:'historical_notice_review',series_at_target:null,
+      observed_source_groups:23,declared_series:25,snapshot_digest:'synthetic',url:'/market',fetched_at:'2026-11-05T06:00:00Z',note:'区间待补，不提升沪深历史覆盖。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('148 已解释的缺失股票日')).toBeInTheDocument()
+    expect(within(section).getByText('完整区间 23/25 组')).toBeInTheDocument()
+    expect(within(section).getByText('已核对部分依据')).toBeInTheDocument()
+    expect(within(section).getByText('公告核对窗 2026-09-04 至 2026-11-04')).toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+  })
   it('distinguishes member-day records from venue coverage',async()=>{
     const data:LearningStatus={...payload,market_updates:[{source_id:'szse_st_price_reference',label:'深市ST价格参考',availability:'observed',
       requested_through:'2026-11-04',observed_through_min:'2026-09-04',observed_through_max:'2026-11-04',observation_count:4416,

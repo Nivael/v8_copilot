@@ -1,0 +1,1119 @@
+{
+  "version": "sse_missing_day_notice_review_v1",
+  "archive_digest": "15528a83565dad12f3ca04802308a06429cfa447ae2e952d34567b094684b732",
+  "archive_input_digest": "7f1993f4ba7299a6241d72fade2acb48a17715f847013f67cde53386755a067f",
+  "archive_processor_digest": "0a783b8b4b503a02bc456acde9a9bcb365004d99b57ed4f887f59c0322524cf8",
+  "start": "2026-09-04",
+  "through": "2026-11-04",
+  "documents": {
+    "600293-2026-09-29": {
+      "symbol": "600293",
+      "company": "湖北三峡新型建材股份有限公司",
+      "published_on": "2026-10-20",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-20/1225611307.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-20/1225611307.PDF",
+      "observed_at": "2026-11-05T06:06:30.787254+00:00",
+      "raw_sha256": "ed9e456c6ccb5779e0a174d0da7c620ae9b5b58ba1e77bbdea80a7f051c38291",
+      "text_sha256": "0321ff58394227878a9fd360ada508ee26e78e8c8d57f1a2f524e38688a8c32a",
+      "page_count": 2,
+      "raw_bytes": 108619,
+      "text_bytes": 3767,
+      "title": "湖北三峡新型建材股份有限公司关于发行股份及支付现金购买资产并募集配套资金的一般风险提示暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-20/600293_20261020_1VIP.pdf"
+    },
+    "600301-2026-09-14": {
+      "symbol": "600301",
+      "company": "广西华锡有色金属股份有限公司",
+      "published_on": "2026-09-19",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225571318.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225571318.PDF",
+      "observed_at": "2026-11-05T06:06:30.819617+00:00",
+      "raw_sha256": "2577251f9a0c7b28321c3c90cd89887b8c3c58d4982c689d4ad0d99b6dbe104c",
+      "text_sha256": "dee5658bb1497c4bc7e106a64e3a351493b509a3b5f1a008dbd5c8ca3f0c61d5",
+      "page_count": 3,
+      "raw_bytes": 119131,
+      "text_bytes": 4708,
+      "title": "广西华锡有色金属股份有限公司关于控制权拟变更暨复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-19/600301_20260919_C3HL.pdf"
+    },
+    "600363-2026-09-29": {
+      "symbol": "600363",
+      "company": "江西联创光电科技股份有限公司",
+      "published_on": "2026-09-29",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225584110.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225584110.PDF",
+      "observed_at": "2026-11-05T06:06:30.930314+00:00",
+      "raw_sha256": "0e57d98df61f9060eb3e6f29eda39ef9ce0e079b9d0c1b32703249fa4f3d3228",
+      "text_sha256": "a5184312984d581f63a3635ecb7690a73d274a86d4c7e8bba2c26eb129be1103",
+      "page_count": 4,
+      "raw_bytes": 125209,
+      "text_bytes": 8657,
+      "title": "关于实施其他风险警示暨停牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/600363_20260929_H600.pdf"
+    },
+    "600621-2026-10-26": {
+      "symbol": "600621",
+      "company": "上海华鑫股份有限公司",
+      "published_on": "2026-10-28",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632083.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632083.PDF",
+      "observed_at": "2026-11-05T06:06:30.959378+00:00",
+      "raw_sha256": "7ad3a0e68f2559d4f70962efa3891d4bc731dd9a41828a4f88857f76eb3c8ca7",
+      "text_sha256": "1a3ef5118d78b41bd03986f08b804047adc44057e0f2a445ccb4626f3dca48dd",
+      "page_count": 10,
+      "raw_bytes": 277434,
+      "text_bytes": 20266,
+      "title": "华鑫股份关于公司控股股东拟发生变更暨复牌的提示性公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-28/600621_20261028_R80L.pdf"
+    },
+    "600621-start": {
+      "symbol": "600621",
+      "company": "上海华鑫股份有限公司",
+      "published_on": "2026-10-26",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-26/1225621903.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-26/1225621903.PDF",
+      "observed_at": "2026-11-05T06:07:37.567823+00:00",
+      "raw_sha256": "8c084ff608c45091d1e8a54ed56d187dd5a6fee3378b66002f447c24a17afbf1",
+      "text_sha256": "8c345435573afb7f2d1dda9d3483880efbaa16166231044f2828b140160125c8",
+      "page_count": 2,
+      "raw_bytes": 83205,
+      "text_bytes": 2252,
+      "title": "关于筹划控股股东变更事项的停牌公告"
+    },
+    "600825-2026-09-07": {
+      "symbol": "600825",
+      "company": "上海新华传媒股份有限公司",
+      "published_on": "2026-09-19",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225571469.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225571469.PDF",
+      "observed_at": "2026-11-05T06:06:31.143808+00:00",
+      "raw_sha256": "9f9745f3b6cad06fdb2d3b7965f7c861eb333e46cdf8fc211322bb1ed699c9ab",
+      "text_sha256": "d4a25a2b688e7142575a153dc6815c2312ea7086de5e818d3c1e28258c4c6398",
+      "page_count": 3,
+      "raw_bytes": 115618,
+      "text_bytes": 4005,
+      "title": "关于披露发行股份购买资产暨关联交易预案的一般性风险提示暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-19/600825_20260919_ZRIG.pdf"
+    },
+    "600825-2026-10-13": {
+      "symbol": "600825",
+      "company": "上海新华传媒股份有限公司",
+      "published_on": "2026-10-16",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-16/1225607741.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-16/1225607741.PDF",
+      "observed_at": "2026-11-05T06:06:31.179187+00:00",
+      "raw_sha256": "b3895231b55a8fd2b0af26a4e1bd774d0a6de105bc487fa1da1adaff5e483c65",
+      "text_sha256": "fdb7c18b4feb1806ef0e10a5345d64d2a9b616028df4d88d62d70b3e1a412c46",
+      "page_count": 6,
+      "raw_bytes": 130756,
+      "text_bytes": 13977,
+      "title": "关于股票交易停牌核查结果、股票交易风险提示暨复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-16/600825_20261016_KZJP.pdf"
+    },
+    "600929-2026-09-04": {
+      "symbol": "600929",
+      "company": "雪天盐业集团股份有限公司",
+      "published_on": "2026-09-12",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225560098.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225560098.PDF",
+      "observed_at": "2026-11-05T06:06:31.335930+00:00",
+      "raw_sha256": "dc3abaaef9e4fa7ca4b7adced058ce415427050ef58c7c07533d363f7d38b2d6",
+      "text_sha256": "972d14366f5ab3c4fc16e341ffbb27c0a2134d168d23a3a2b8c18c897871e7a3",
+      "page_count": 2,
+      "raw_bytes": 113057,
+      "text_bytes": 3416,
+      "title": "关于筹划发行股份及支付现金购买资产并募集配套资金暨关联交易事项的一般风险提示暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/600929_20260912_1EIW.pdf"
+    },
+    "601059-2026-09-15": {
+      "symbol": "601059",
+      "company": "信达证券股份有限公司",
+      "published_on": "2026-09-12",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225559841.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225559841.PDF",
+      "observed_at": "2026-11-05T06:06:31.403763+00:00",
+      "raw_sha256": "7913351b44148185e9d3947a846e8955b01027a395759b1d93893554135197b4",
+      "text_sha256": "b774106fea291095ad26f83066724fd29a905f8ff7fd91ce967662b27620413e",
+      "page_count": 2,
+      "raw_bytes": 115644,
+      "text_bytes": 3245,
+      "title": "信达证券股份有限公司关于公司A股股票连续停牌直至终止上市、实施换股吸收合并的提示性公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/601059_20260912_ESQG.pdf"
+    },
+    "601198-2026-09-15": {
+      "symbol": "601198",
+      "company": "东兴证券股份有限公司",
+      "published_on": "2026-09-12",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225559792.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225559792.PDF",
+      "observed_at": "2026-11-05T06:06:31.429182+00:00",
+      "raw_sha256": "cd1b0a96430403ec82519e8addad110300e34211e2bb86d18d358d76b1b249c6",
+      "text_sha256": "f353620d439df9e0ea0356f3a4b31822a77adc9a2fe579f21530a87953c53bf4",
+      "page_count": 2,
+      "raw_bytes": 124146,
+      "text_bytes": 3246,
+      "title": "东兴证券股份有限公司关于公司A股股票连续停牌直至终止上市、实施换股吸收合并的提示性公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/601198_20260912_JWPR.pdf"
+    },
+    "601238-2026-09-14": {
+      "symbol": "601238",
+      "company": "广州汽车集团股份有限公司",
+      "published_on": "2026-09-29",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225586271.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225586271.PDF",
+      "observed_at": "2026-11-05T06:06:31.523168+00:00",
+      "raw_sha256": "c0bd98a94cbb104b354dcac198d516c2c2d6f672cab638e1b4cc4ab767a18722",
+      "text_sha256": "7577e4e93cd527d9feffd4ba5a843a79d1a9b3c31e30ceb01519843bad3fc88d",
+      "page_count": 2,
+      "raw_bytes": 129502,
+      "text_bytes": 3711,
+      "title": "广汽集团关于披露《发行股份购买资产并募集配套资金暨关联交易预案》的一般风险提示暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/601238_20260929_HDPW.pdf"
+    },
+    "601326-2026-10-21": {
+      "symbol": "601326",
+      "company": "秦皇岛港股份有限公司",
+      "published_on": "2026-11-04",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-11-04/1225655805.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-11-04/1225655805.PDF",
+      "observed_at": "2026-11-05T06:06:31.544020+00:00",
+      "raw_sha256": "38289f0172537b7c8b2171097128344678b420b86f838079809478cfed01296b",
+      "text_sha256": "d37baa57b9af7c318b2e9851e4bdca4f5c4b3b58d8792246e6503e6d4219f78d",
+      "page_count": 2,
+      "raw_bytes": 64715,
+      "text_bytes": 3461,
+      "title": "秦皇岛港股份有限公司关于披露《发行股份及支付现金购买资产并募集配套资金暨关联交易预案》的一般风险提示暨公司股票复牌公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-11-04/601326_20261104_EOGZ.pdf"
+    },
+    "601995-2026-09-15": {
+      "symbol": "601995",
+      "company": "中国国际金融股份有限公司",
+      "published_on": "2026-09-23",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577325.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577325.PDF",
+      "observed_at": "2026-11-05T06:06:31.710593+00:00",
+      "raw_sha256": "8565ab0fd5e751d3b963dbac3c734e2af5e297726b962c4525c229b0796862ac",
+      "text_sha256": "6185e842b79c84fea2f2701cd18ce52d77ebaec9efc30f6dc757d9acac722474",
+      "page_count": 2,
+      "raw_bytes": 106098,
+      "text_bytes": 2977,
+      "title": "中金公司关于公司A股股票复牌的提示性公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-23/601995_20260923_E4HK.pdf"
+    },
+    "603159-2026-09-10": {
+      "symbol": "603159",
+      "company": "上海亚虹模具股份有限公司",
+      "published_on": "2026-09-17",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568804.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568804.PDF",
+      "observed_at": "2026-11-05T06:06:31.645934+00:00",
+      "raw_sha256": "3b926f1c0f1b01bc2ee0c8e8ec4236b0d0973d6b4b798ea1f4b13d115b12d456",
+      "text_sha256": "40362c9e935607f34813b8cd840cad44993584de44c3e6b1a27cf056d0a07347",
+      "page_count": 3,
+      "raw_bytes": 94848,
+      "text_bytes": 5728,
+      "title": "上海亚虹模具股份有限公司关于控股股东筹划控制权变更事项进展暨股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-17/603159_20260917_T7MO.pdf"
+    },
+    "603183-2026-09-30": {
+      "symbol": "603183",
+      "company": "苏州市建筑科学研究院集团股份有限公司",
+      "published_on": "2026-10-09",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-09/1225597696.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-09/1225597696.PDF",
+      "observed_at": "2026-11-05T06:06:31.884885+00:00",
+      "raw_sha256": "f98c71ecd19e23b0c5ba7fee0ec2ac476f052450aceed99ac032b92dc4209f27",
+      "text_sha256": "d135a28bcd4df20577c4b1dddf1f193d7d750b7702aa6974e0e606f4a82954b3",
+      "page_count": 2,
+      "raw_bytes": 106584,
+      "text_bytes": 3168,
+      "title": "关于筹划重大事项进展暨复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-09/603183_20261009_P35A.pdf"
+    },
+    "603400-2026-09-15": {
+      "symbol": "603400",
+      "company": "苏州华之杰电讯股份有限公司",
+      "published_on": "2026-09-30",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225588894.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225588894.PDF",
+      "observed_at": "2026-11-05T06:06:31.857203+00:00",
+      "raw_sha256": "9d13172940225aa643dccd5a26278050d7b689ea5a0bb823044ab9d765f71395",
+      "text_sha256": "b594cb4708d9c7543cbaf578223ff522ab2ba22e97af02287f58e10c477d3c10",
+      "page_count": 3,
+      "raw_bytes": 89504,
+      "text_bytes": 4466,
+      "title": "华之杰关于筹划发行股份及支付现金购买资产并募集配套资金事项的一般风险提示暨股票复牌公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/603400_20260930_L4P5.pdf"
+    },
+    "603517-2026-10-19": {
+      "symbol": "603517",
+      "company": "绝味食品股份有限公司",
+      "published_on": "2026-10-19",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF",
+      "observed_at": "2026-11-05T06:06:31.977645+00:00",
+      "raw_sha256": "33531fddb6a838242c0f899ca394c470c2e910fa4dc266796cff8b71b4d7cec0",
+      "text_sha256": "eb0ee27469a0d1b99141ee4527ca209a5ddc482ae2abdb815f36606f4cc7c3d1",
+      "page_count": 3,
+      "raw_bytes": 113748,
+      "text_bytes": 5238,
+      "title": "关于撤销其他风险警示暨临时停牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-19/603517_20261019_6EOE.pdf"
+    },
+    "603759-2026-10-19": {
+      "symbol": "603759",
+      "company": "海天水务集团股份公司",
+      "published_on": "2026-10-20",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-20/1225611487.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-20/1225611487.PDF",
+      "observed_at": "2026-11-05T06:06:32.009101+00:00",
+      "raw_sha256": "08c23fc547c71ef1a781f9d4c62c00394f57ebd03a3921f8e66744ce63ff1266",
+      "text_sha256": "330254379ef2e96168a34434c03858bb936e17d3c35851c1f9f1ada295ac640a",
+      "page_count": 2,
+      "raw_bytes": 106301,
+      "text_bytes": 2727,
+      "title": "关于终止筹划重大事项暨公司复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-20/603759_20261020_2YB6.pdf"
+    },
+    "603838-2026-10-19": {
+      "symbol": "603838",
+      "company": "广东四通集团股份有限公司",
+      "published_on": "2026-10-17",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF",
+      "observed_at": "2026-11-05T06:06:32.174599+00:00",
+      "raw_sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7",
+      "text_sha256": "2e6ba55ebf0553604b7fd84f4bb364e1345ba9ed5a9263aedbc2c5b624ffd0d5",
+      "page_count": 3,
+      "raw_bytes": 92751,
+      "text_bytes": 4243,
+      "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-17/603838_20261017_GXKU.pdf"
+    },
+    "605258-2026-10-26": {
+      "symbol": "605258",
+      "company": "江苏协和电子股份有限公司",
+      "published_on": "2026-10-31",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650783.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650783.PDF",
+      "observed_at": "2026-11-05T06:06:32.105907+00:00",
+      "raw_sha256": "859c8836dcc3e309aacbd65ae156c451b5ca413ea7b6975e9c210f742d9e01ae",
+      "text_sha256": "ab08112a37949d97e5b6f8e2b840819cf7904dcfe203783c5a3ec0876b730dc3",
+      "page_count": 2,
+      "raw_bytes": 114798,
+      "text_bytes": 3706,
+      "title": "关于控股股东筹划控制权变更事项进展暨股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/605258_20261031_D5A8.pdf"
+    },
+    "605303-2026-09-14": {
+      "symbol": "605303",
+      "company": "杭州市园林绿化股份有限公司",
+      "published_on": "2026-09-29",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225585581.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225585581.PDF",
+      "observed_at": "2026-11-05T06:06:32.230797+00:00",
+      "raw_sha256": "65b1689bf62d543d06caa5d13248dc0a380dc43c79d2e78ee9e00d7f6cbfd68e",
+      "text_sha256": "1450913bd49bfc2be8e71fe58d760430d2513efb35dcc59f654af89884b81faa",
+      "page_count": 2,
+      "raw_bytes": 88827,
+      "text_bytes": 3758,
+      "title": "关于发行股份及支付现金购买资产并募集配套资金的一般风险提示暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/605303_20260929_SSVU.pdf"
+    },
+    "605577-2026-09-09": {
+      "symbol": "605577",
+      "company": "黑龙江出版传媒股份有限公司",
+      "published_on": "2026-09-12",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225560934.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225560934.PDF",
+      "observed_at": "2026-11-05T06:06:32.383757+00:00",
+      "raw_sha256": "3298a248c0541c0f265d6dc82e82c1c4e52c058d78bd8b9be4821d74a10bb1ed",
+      "text_sha256": "bbd3b68d8ca125a44c43b86ece335ea5a56385fb3cfb698d278ba63cef318ac2",
+      "page_count": 4,
+      "raw_bytes": 138233,
+      "text_bytes": 8854,
+      "title": "关于股票交易停牌核查结果、股票交易风险提示暨复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/605577_20260912_I0A4.pdf"
+    },
+    "688121-2026-10-29": {
+      "symbol": "688121",
+      "company": "上海卓然工程技术股份有限公司",
+      "published_on": "2026-10-29",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636485.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636485.PDF",
+      "observed_at": "2026-11-05T06:06:32.437384+00:00",
+      "raw_sha256": "9dd060858c0f9abd133880bc35b7f1737b0eade289f114f7179d2a35218f331b",
+      "text_sha256": "0bcf9ef972aecdc1678fd7c433d480fd9fbdc10bdd393cc54b525201963ee6ab",
+      "page_count": 3,
+      "raw_bytes": 100052,
+      "text_bytes": 6113,
+      "title": "关于公司股票触及交易类强制退市的风险提示暨停牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-29/688121_20261029_RG1T.pdf"
+    },
+    "688291-2026-09-08": {
+      "symbol": "688291",
+      "company": "北京金橙子科技股份有限公司",
+      "published_on": "2026-09-15",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225564307.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225564307.PDF",
+      "observed_at": "2026-11-05T06:06:32.574935+00:00",
+      "raw_sha256": "e7152b3e9240a0bbc725eae1b935ee798f18ad37530b55f9d90e9d1b1efdba6d",
+      "text_sha256": "62f5e1096716ad95abfa63feee5dbd24c39dfe6acac5521e3fd795fe5b53a9ef",
+      "page_count": 2,
+      "raw_bytes": 123496,
+      "text_bytes": 4378,
+      "title": "关于终止筹划发行股份及支付现金购买资产事项暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-15/688291_20260915_FMH9.pdf"
+    },
+    "688432-2026-09-04": {
+      "symbol": "688432",
+      "company": "有研半导体硅材料股份公司",
+      "published_on": "2026-09-12",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225561494.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225561494.PDF",
+      "observed_at": "2026-11-05T06:06:32.551079+00:00",
+      "raw_sha256": "026b42096af80856f7ae69fb81fc7166d2e805e7dacfd3ddd2566d5278f891ea",
+      "text_sha256": "e2de8aaa0363e6e67575701a4e06bedc206ef532863cf94d3eda3005a228ece6",
+      "page_count": 3,
+      "raw_bytes": 116666,
+      "text_bytes": 4535,
+      "title": "有研硅关于披露发行股份及支付现金购买资产并募集配套资金预案的一般性风险提示暨公司股票复牌的公告",
+      "catalog_source_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/688432_20260912_QF57.pdf"
+    },
+    "688496-start": {
+      "symbol": "688496",
+      "company": "苏州清越光电科技股份有限公司",
+      "published_on": "2026-09-11",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-11/1225558617.PDF",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-09-11/1225558617.PDF",
+      "observed_at": "2026-11-05T06:07:37.748879+00:00",
+      "raw_sha256": "b27bf1830394c1441fc98974d6af40d782fc36dec7f6b8a0688c5adbdef7c2d2",
+      "text_sha256": "b1d4583d1ff8d477c28ac0b0b583a3b1fe49c3444683b2a47f35289f6a3a77ef",
+      "page_count": 3,
+      "raw_bytes": 133887,
+      "text_bytes": 5560,
+      "title": "关于公司股票触及交易类强制退市的风险提示暨停牌的公告",
+      "catalog_source_url": null
+    }
+  },
+  "episodes": [
+    {
+      "case_id": "600293-2026-09-29",
+      "symbol": "600293",
+      "company": "湖北三峡新型建材股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-29",
+      "end_exclusive": "2026-10-20",
+      "claims": [
+        {
+          "document_id": "600293-2026-09-29",
+          "pages": [
+            2
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-29",
+          "date_text": "2026年9月29日",
+          "quote": "自2026年9月29日（星期二）开市起开始停牌"
+        },
+        {
+          "document_id": "600293-2026-09-29",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-20",
+          "date_text": "2026年10月20日",
+          "quote": "自2026年10月20日（星期二）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "600301-2026-09-14",
+      "symbol": "600301",
+      "company": "广西华锡有色金属股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-14",
+      "end_exclusive": "2026-09-21",
+      "claims": [
+        {
+          "document_id": "600301-2026-09-14",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-14",
+          "date_text": "2026年9月14日",
+          "quote": "已于2026年9月14日、9月15日停牌"
+        },
+        {
+          "document_id": "600301-2026-09-14",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-21",
+          "date_text": "2026年9月21日",
+          "quote": "公司股票将于2026年9月21日（星期一）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "600363-2026-09-29",
+      "symbol": "600363",
+      "company": "江西联创光电科技股份有限公司",
+      "kind": "one_day",
+      "start_on": "2026-09-29",
+      "end_exclusive": "2026-09-30",
+      "claims": [
+        {
+          "document_id": "600363-2026-09-29",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-29",
+          "date_text": "2026年9月29日",
+          "quote": "公司股票将于2026年9月29日停牌一日"
+        }
+      ]
+    },
+    {
+      "case_id": "600621-2026-10-26",
+      "symbol": "600621",
+      "company": "上海华鑫股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-10-26",
+      "end_exclusive": "2026-10-28",
+      "claims": [
+        {
+          "document_id": "600621-start",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-26",
+          "date_text": "2026年10月26日",
+          "quote": "于2026年10月26日（星期一）开市起开始停牌"
+        },
+        {
+          "document_id": "600621-2026-10-26",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-28",
+          "date_text": "2026年10月28日",
+          "quote": "公司股票自2026年10月28日（星期三）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "600825-2026-09-07",
+      "symbol": "600825",
+      "company": "上海新华传媒股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-07",
+      "end_exclusive": "2026-09-21",
+      "claims": [
+        {
+          "document_id": "600825-2026-09-07",
+          "pages": [
+            1,
+            2
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-07",
+          "date_text": "2026年9月7日",
+          "quote": "已于2026年9月7日（星期2一）开市起停牌"
+        },
+        {
+          "document_id": "600825-2026-09-07",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-21",
+          "date_text": "2026年9月21日",
+          "quote": "将于2026年9月21日（星期一）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "600825-2026-10-13",
+      "symbol": "600825",
+      "company": "上海新华传媒股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-10-13",
+      "end_exclusive": "2026-10-16",
+      "claims": [
+        {
+          "document_id": "600825-2026-10-13",
+          "pages": [
+            3
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-13",
+          "date_text": "2026年10月13日",
+          "quote": "公司股票于2026年10月13日（星期二）开市起停牌"
+        },
+        {
+          "document_id": "600825-2026-10-13",
+          "pages": [
+            3
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-16",
+          "date_text": "2026年10月16日",
+          "quote": "公司股票将于2026年10月16日（星期五）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "600929-2026-09-04",
+      "symbol": "600929",
+      "company": "雪天盐业集团股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-08-31",
+      "end_exclusive": "2026-09-14",
+      "claims": [
+        {
+          "document_id": "600929-2026-09-04",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-08-31",
+          "date_text": "2026年8月31日",
+          "quote": "自2026年8月31日（星期一）开市起停牌"
+        },
+        {
+          "document_id": "600929-2026-09-04",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-14",
+          "date_text": "2026年9月14日",
+          "quote": "将于2026年9月14日（星期一）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "601059-2026-09-15",
+      "symbol": "601059",
+      "company": "信达证券股份有限公司",
+      "kind": "continuous_to_listing_end",
+      "start_on": "2026-09-15",
+      "end_exclusive": "2026-10-19",
+      "claims": [
+        {
+          "document_id": "601059-2026-09-15",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-15",
+          "date_text": "2026年9月15日",
+          "quote": "公司A股股票将自2026年9月15日（即A股异议股东现金选择权申报首日）开市起连续停牌"
+        },
+        {
+          "document_id": "601059-2026-09-15",
+          "pages": [
+            1
+          ],
+          "role": "continuous_until_listing_end",
+          "quote": "公司A股股票继续停牌直至终止上市。"
+        }
+      ]
+    },
+    {
+      "case_id": "601198-2026-09-15",
+      "symbol": "601198",
+      "company": "东兴证券股份有限公司",
+      "kind": "continuous_to_listing_end",
+      "start_on": "2026-09-15",
+      "end_exclusive": "2026-10-19",
+      "claims": [
+        {
+          "document_id": "601198-2026-09-15",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-15",
+          "date_text": "2026年9月15日",
+          "quote": "公司A股股票将自2026年9月15日（即A股异议股东现金选择权申报首日）开市起连续停牌"
+        },
+        {
+          "document_id": "601198-2026-09-15",
+          "pages": [
+            1
+          ],
+          "role": "continuous_until_listing_end",
+          "quote": "公司A股股票继续停牌直至终止上市。"
+        }
+      ]
+    },
+    {
+      "case_id": "601238-2026-09-14",
+      "symbol": "601238",
+      "company": "广州汽车集团股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-14",
+      "end_exclusive": "2026-09-29",
+      "claims": [
+        {
+          "document_id": "601238-2026-09-14",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-14",
+          "date_text": "2026年9月14日",
+          "quote": "于2026年9月14日（星期一）开市起停牌"
+        },
+        {
+          "document_id": "601238-2026-09-14",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-29",
+          "date_text": "2026年9月29日",
+          "quote": "公司股票将于2026年9月29日（星期二）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "601326-2026-10-21",
+      "symbol": "601326",
+      "company": "秦皇岛港股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-10-21",
+      "end_exclusive": "2026-11-04",
+      "claims": [
+        {
+          "document_id": "601326-2026-10-21",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-21",
+          "date_text": "2026年10月21日",
+          "quote": "于2026年10月21日（星期三）开市起停牌"
+        },
+        {
+          "document_id": "601326-2026-10-21",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-11-04",
+          "date_text": "2026年11月4日",
+          "quote": "公司A股股票将于2026年11月4日（星期三）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "601995-2026-09-15",
+      "symbol": "601995",
+      "company": "中国国际金融股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-15",
+      "end_exclusive": "2026-09-23",
+      "claims": [
+        {
+          "document_id": "601995-2026-09-15",
+          "pages": [
+            2
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-15",
+          "date_text": "2026年9月15日",
+          "quote": "公司A股股票于2026年9月15日开市起停牌"
+        },
+        {
+          "document_id": "601995-2026-09-15",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-23",
+          "date_text": "2026年9月23日",
+          "quote": "公司A股股票将于2026年9月23日开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "603159-2026-09-10",
+      "symbol": "603159",
+      "company": "上海亚虹模具股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-10",
+      "end_exclusive": "2026-09-17",
+      "claims": [
+        {
+          "document_id": "603159-2026-09-10",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-10",
+          "date_text": "2026年9月10日",
+          "quote": "已于2026年9月10日、2026年9月11日停牌"
+        },
+        {
+          "document_id": "603159-2026-09-10",
+          "pages": [
+            3
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-17",
+          "date_text": "2026年9月17日",
+          "quote": "公司股票将于2026年9月17日（星期四）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "603183-2026-09-30",
+      "symbol": "603183",
+      "company": "苏州市建筑科学研究院集团股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-30",
+      "end_exclusive": "2026-10-09",
+      "claims": [
+        {
+          "document_id": "603183-2026-09-30",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-30",
+          "date_text": "2026年9月30日",
+          "quote": "本公司股票将于2026年9月30日（星期三）开市起停牌"
+        },
+        {
+          "document_id": "603183-2026-09-30",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-09",
+          "date_text": "2026年10月9日",
+          "quote": "公司股票将于2026年10月9日（星期五）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "603400-2026-09-15",
+      "symbol": "603400",
+      "company": "苏州华之杰电讯股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-15",
+      "end_exclusive": "2026-09-30",
+      "claims": [
+        {
+          "document_id": "603400-2026-09-15",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-15",
+          "date_text": "2026年9月15日",
+          "quote": "自2026年9月15日（星期二）开市起开始停牌"
+        },
+        {
+          "document_id": "603400-2026-09-15",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-30",
+          "date_text": "2026年9月30日",
+          "quote": "将于2026年9月30日（星期三）上午开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "603517-2026-10-19",
+      "symbol": "603517",
+      "company": "绝味食品股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-10-19",
+      "end_exclusive": "2026-10-20",
+      "claims": [
+        {
+          "document_id": "603517-2026-10-19",
+          "pages": [
+            3
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-19",
+          "date_text": "2026年10月19日",
+          "quote": "公司股票将于2026年10月19日停牌1天"
+        },
+        {
+          "document_id": "603517-2026-10-19",
+          "pages": [
+            3
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-20",
+          "date_text": "2026年10月20日",
+          "quote": "自2026年10月20日起复牌交易"
+        }
+      ]
+    },
+    {
+      "case_id": "603759-2026-10-19",
+      "symbol": "603759",
+      "company": "海天水务集团股份公司",
+      "kind": "resumed",
+      "start_on": "2026-10-19",
+      "end_exclusive": "2026-10-20",
+      "claims": [
+        {
+          "document_id": "603759-2026-10-19",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-19",
+          "date_text": "2026年10月19日",
+          "quote": "于2026年10月19日(星期一)停牌"
+        },
+        {
+          "document_id": "603759-2026-10-19",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-20",
+          "date_text": "2026年10月20日",
+          "quote": "自2026年10月20日(星期二)起开始复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "603838-2026-10-19",
+      "symbol": "603838",
+      "company": "广东四通集团股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-10-19",
+      "end_exclusive": "2026-10-20",
+      "claims": [
+        {
+          "document_id": "603838-2026-10-19",
+          "pages": [
+            2
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-19",
+          "date_text": "2026年10月19日",
+          "quote": "公司股票将于2026年10月19日停牌一天"
+        },
+        {
+          "document_id": "603838-2026-10-19",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-10-20",
+          "date_text": "2026年10月20日",
+          "quote": "自2026年10月20日起复牌交易"
+        }
+      ]
+    },
+    {
+      "case_id": "605258-2026-10-26",
+      "symbol": "605258",
+      "company": "江苏协和电子股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-10-26",
+      "end_exclusive": "2026-11-02",
+      "claims": [
+        {
+          "document_id": "605258-2026-10-26",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-26",
+          "date_text": "2026年10月26日",
+          "quote": "于2026年10月26日、10月27日、10月28日、10月29日、10月30日连续停牌"
+        },
+        {
+          "document_id": "605258-2026-10-26",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-11-02",
+          "date_text": "2026年11月2日",
+          "quote": "公司股票将于2026年11月2日（星期一）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "605303-2026-09-14",
+      "symbol": "605303",
+      "company": "杭州市园林绿化股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-14",
+      "end_exclusive": "2026-09-29",
+      "claims": [
+        {
+          "document_id": "605303-2026-09-14",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-14",
+          "date_text": "2026年9月14日",
+          "quote": "自2026年9月14日（星期一）开始停牌"
+        },
+        {
+          "document_id": "605303-2026-09-14",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-29",
+          "date_text": "2026年9月29日",
+          "quote": "将于2026年9月29日（星期二）复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "605577-2026-09-09",
+      "symbol": "605577",
+      "company": "黑龙江出版传媒股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-09",
+      "end_exclusive": "2026-09-14",
+      "claims": [
+        {
+          "document_id": "605577-2026-09-09",
+          "pages": [
+            2
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-09",
+          "date_text": "2026年9月9日",
+          "quote": "公司股票于2026年9月9日开市起停牌"
+        },
+        {
+          "document_id": "605577-2026-09-09",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-14",
+          "date_text": "2026年9月14日",
+          "quote": "公司股票将于2026年9月14日(星期一)开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "688121-2026-10-29",
+      "symbol": "688121",
+      "company": "上海卓然工程技术股份有限公司",
+      "kind": "start_only",
+      "start_on": "2026-10-29",
+      "end_exclusive": null,
+      "claims": [
+        {
+          "document_id": "688121-2026-10-29",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-10-29",
+          "date_text": "2026年10月29日",
+          "quote": "公司股票自2026年10月29日（周四）开市起停牌"
+        }
+      ]
+    },
+    {
+      "case_id": "688291-2026-09-08",
+      "symbol": "688291",
+      "company": "北京金橙子科技股份有限公司",
+      "kind": "resumed",
+      "start_on": "2026-09-08",
+      "end_exclusive": "2026-09-15",
+      "claims": [
+        {
+          "document_id": "688291-2026-09-08",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-08",
+          "date_text": "2026年9月8日",
+          "quote": "公司股票自2026年9月8日（星期二）开市起停牌"
+        },
+        {
+          "document_id": "688291-2026-09-08",
+          "pages": [
+            1
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-15",
+          "date_text": "2026年9月15日",
+          "quote": "公司股票自2026年9月15日（星期二）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "688432-2026-09-04",
+      "symbol": "688432",
+      "company": "有研半导体硅材料股份公司",
+      "kind": "resumed",
+      "start_on": "2026-08-31",
+      "end_exclusive": "2026-09-14",
+      "claims": [
+        {
+          "document_id": "688432-2026-09-04",
+          "pages": [
+            2
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-08-31",
+          "date_text": "2026年8月31日",
+          "quote": "自2026年8月31日开市起开始停牌"
+        },
+        {
+          "document_id": "688432-2026-09-04",
+          "pages": [
+            2
+          ],
+          "role": "resume",
+          "effective_on": "2026-09-14",
+          "date_text": "2026年9月14日",
+          "quote": "将于2026年9月14日（星期一）开市起复牌"
+        }
+      ]
+    },
+    {
+      "case_id": "688496-2026-09-11",
+      "symbol": "688496",
+      "company": "苏州清越光电科技股份有限公司",
+      "kind": "start_only",
+      "start_on": "2026-09-11",
+      "end_exclusive": null,
+      "claims": [
+        {
+          "document_id": "688496-start",
+          "pages": [
+            1
+          ],
+          "role": "halt_start",
+          "effective_on": "2026-09-11",
+          "date_text": "2026年9月11日",
+          "quote": "公司股票自2026年9月11日（周五）开市起停牌"
+        }
+      ]
+    }
+  ],
+  "policy": "仅已复牌区间、明确停牌一日或持续停牌直至终止上市且已核对登记终止日的区间闭合；仅有起点及期末停牌状态不推断整个缺日区间。跨页引句保留PDF抽取中的打印页码；不回填0收益。"
+}

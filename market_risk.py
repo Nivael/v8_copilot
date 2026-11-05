@@ -24,6 +24,7 @@ from node_market_audit import audit_status as node_market_audit_status
 from exchange_risk_membership import list_status as risk_membership_status
 from szse_st_reference import reference_status as szse_st_reference_status
 from sse_history_archive import archive_status as sse_history_archive_status
+from sse_gap_review import review_status as sse_gap_review_status
 from etf_share_events import share_event_status
 from market_breadth import SOURCES as BREADTH_SOURCES, load_public_breadth
 from market_breadth_history import load_breadth_history
@@ -332,6 +333,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
     sse_archive = sse_history_archive_status(snapshot_dir / 'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now)
+    gaps = sse_gap_review_status(snapshot_dir / 'sse_gap_review', root=snapshot_dir, now=now)
     issuer_rows = [{"nav_through": rows[-1]["nav_date"], "nav_observation_count": len(rows)} for rows in issuer_navs.values()]
     definitions = [
         ("official_indices", "中证指数 · 市场基准", index_meta, indices, "through", "observation_count", 3, CSI_SOURCE_URL,
@@ -396,6 +398,14 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'declared_series':sse_archive.get('distinct_securities'),'snapshot_digest':sse_archive.get('content_digest'),
                     'url':'/market','coverage_basis':'price_archives','date_basis':'historical_price_archive',
                     'note':'计数是有成交价格记录；原件覆盖按证券归档，不是每只股票在目标日都应有成交。缺日待核，不推进沪市完整历史分布、ST覆盖或旧个股清单。'})
+    sources.append({'source_id':'sse_missing_day_review','label':'沪市历史缺日 · 停复牌公告核对','availability':gaps['availability'],
+                    'requested_through':gaps.get('through'),'fetched_at':gaps.get('source_fetched_at'),
+                    'observed_through_min':gaps.get('start'),'observed_through_max':gaps.get('through'),
+                    'observation_count':gaps.get('confirmed_missing_days'),'observation_unit':'已解释的缺失股票日',
+                    'series_at_target':None,'observed_source_groups':gaps.get('closed_episodes'),
+                    'declared_series':gaps.get('reviewed_episodes'),'snapshot_digest':gaps.get('content_digest'),
+                    'url':'/market','coverage_basis':'missing_day_episodes','date_basis':'historical_notice_review',
+                    'note':'完整停复牌区间与持续停牌至实际终止上市的区间分别核对；起点及期末状态不推断中间区间，不填零或提升整体历史覆盖。'})
     return sources
 
 
@@ -520,6 +530,7 @@ def build_market_risk_status(
         "exchange_risk_membership": risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now),
         "szse_st_reference": st_reference,
         "sse_history_archive": sse_history_archive_status(snapshot_dir/'sse_history_archive', endpoint_dir=snapshot_dir/'public_breadth', now=now),
+        "sse_gap_review": sse_gap_review_status(snapshot_dir/'sse_gap_review', root=snapshot_dir, now=now),
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "public_breadth_snapshot": public_breadth_snapshot,

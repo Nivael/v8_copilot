@@ -15,6 +15,7 @@ import {NodeMarketAudit} from './NodeMarketAudit'
 import {ExchangeRiskLists} from './ExchangeRiskLists'
 import {SZSESTReference} from './SZSESTReference'
 import {SSEHistorySources} from './SSEHistorySources'
+import {SSEGapReview} from './SSEGapReview'
 import {formatShareCount as shareCount} from './numbers'
 
 const pct=(value:number|null|undefined)=>value==null?'—':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -164,6 +165,7 @@ export function MarketRiskPage(){
           <p><a href={data.breadth_history.source_url} target="_blank" rel="noreferrer">深交所历史日表 ↗</a> · 当前仅深市完整窗发布，沪深合并历史分布仍待补齐。</p>
         </>:<p>历史窗尚未完整发布，暂不展示缩短的曲线。{data.breadth_history.last_recorded_attempt?`最近采集记录已核对 ${data.breadth_history.last_recorded_attempt.completed_days}/${data.breadth_history.last_recorded_attempt.expected_days} 个日期（${new Date(data.breadth_history.last_recorded_attempt.recorded_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}）。`:''}{data.breadth_history.last_recorded_attempt?.status==='failed'?'最近一次采集中断，已核对日期保留用于续采。':''}</p>}
         {data.sse_history_archive&&<SSEHistorySources data={data.sse_history_archive}/>}
+        {data.sse_gap_review&&<SSEGapReview data={data.sse_gap_review}/>}
       </section>}
 
       <section className="learning-freshness" aria-label="ETF份额与申赎"><header className="learning-section-head"><div><p className="eyebrow">资金撤离线索 / ETF样本</p><h2>份额变化与净申赎估算</h2></div><label>ETF观察窗口 <select aria-label="ETF观察窗口" value={etfWindow} onChange={event=>setETFWindow(event.target.value)}>{recentAvailable&&<option value="recent">近2个月</option>}{[1,5,20].map(value=><option key={value} value={String(value)}>{value}个交易日</option>)}</select></label></header>

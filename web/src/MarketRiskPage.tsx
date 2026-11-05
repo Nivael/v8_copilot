@@ -10,6 +10,7 @@ import {ETFReviewScope} from './ETFReviewScope'
 import {ETFDailySourceAudit} from './ETFDailySourceAudit'
 import {ETFUnitNAVAudit} from './ETFUnitNAVAudit'
 import {ETFAssetIdentity} from './ETFAssetIdentity'
+import {ETFRegistrationRules} from './ETFRegistrationRules'
 import {ETFFundScopeRules} from './ETFFundScopeRules'
 import {ETFReportContinuity} from './ETFReportContinuity'
 import {ETFNoticeReview} from './ETFNoticeReview'
@@ -198,6 +199,7 @@ export function MarketRiskPage(){
         <ETFUnitNAVAudit data={data.issuer_nav_snapshot?.raw_reconciliation} target={data.requested_through}/>
         <ETFAssetIdentity data={data.etf_asset_identity}/>
         {data.etf_fund_scope_rules&&<ETFFundScopeRules data={data.etf_fund_scope_rules}/>}
+        {data.etf_registration_rules&&<ETFRegistrationRules data={data.etf_registration_rules}/>}
       </section>
 
       {data.etf_review_scope&&<ETFReviewScope data={data.etf_review_scope}/>}

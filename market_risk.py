@@ -21,6 +21,7 @@ from etf_review_scope import scope_status as etf_scope_status
 from etf_daily_sources import reconcile_sse, reconcile_szse
 from etf_fund_scope import scope_status as fund_scope_status
 from etf_asset_identity import identity_status as asset_identity_status
+from etf_registration_rules import rules_status as registration_rules_status
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
@@ -352,6 +353,7 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
     event_review = share_event_status(snapshot_dir / "etf_announcements", announcements, now)
     etf_scopes = etf_scope_status(snapshot_dir / 'etf_review_scope', root=snapshot_dir, now=now)
     fund_scope = fund_scope_status(snapshot_dir / 'etf_fund_scope', root=snapshot_dir, now=now)
+    registration = registration_rules_status(snapshot_dir/'etf_registration_rules',now)
     membership = risk_membership_status(snapshot_dir / "exchange_risk_membership", now=now)
     st_reference = szse_st_reference_status(snapshot_dir / 'szse_st_reference', root=snapshot_dir, now=now)
     st_reconstruction = st_reconstruction_status(snapshot_dir / 'st_reconstruction', root=snapshot_dir, now=now)
@@ -427,6 +429,13 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'series_at_target':None,'observed_source_groups':asset['compared_points'],'declared_series':1,
                     'snapshot_digest':asset.get('comparison_digest'),'url':'/market','coverage_basis':'asset_disclosure_point','date_basis':'asset_disclosure',
                     'note':'仅归档单点的公布值算术核对；相等不证明独立来源、场外份额为零或逐日全基金范围，不新增一条已确认净申赎。'})
+    reg_docs=registration['documents'];reg_dates=[d['published_on'] for d in reg_docs]
+    sources.append({'source_id':'etf_registration_rules','label':'中国结算 · 登记数据范围条款','availability':registration['availability'],
+                    'requested_through':None,'observed_through_min':min(reg_dates) if reg_dates else None,'observed_through_max':max(reg_dates) if reg_dates else None,
+                    'fetched_at':registration.get('index',{}).get('observed_at'),'observation_count':registration['reviewed_versions'],'observation_unit':'机构文件版本',
+                    'series_at_target':None,'observed_source_groups':registration['reviewed_clauses'],'declared_series':12,'coverage_basis':'registration_rule_clauses',
+                    'date_basis':'regulation_publication','snapshot_digest':registration.get('content_digest'),'url':'/market',
+                    'note':'仅三个目录列示版本的指定条款；没有取得日登记数据，不是完整历史窗、ETF日范围/修订或实际机构资金进出的证明。'})
     observed = membership['availability']=='observed'
     sources.append({'source_id':'exchange_risk_membership','label':'交易所 · 风险警示与退市整理名单','availability':membership['availability'],
                     'requested_through':None,'fetched_at':membership.get('completed_at'),'observed_through_min':None,'observed_through_max':None,
@@ -607,6 +616,7 @@ def build_market_risk_status(
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
         "etf_asset_identity": asset_identity_status(issuer_nav_snapshot, public_snapshot, requested_through),
+        "etf_registration_rules": registration_rules_status(snapshot_dir/'etf_registration_rules',now),
         "public_breadth_snapshot": public_breadth_snapshot,
         "etf_announcements": announcements,
         "etf_share_events": share_event_status(snapshot_dir / "etf_announcements", announcements, now),

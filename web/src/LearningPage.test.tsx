@@ -224,3 +224,20 @@ describe('asset disclosure point counting',()=>{
     expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
   })
 })
+
+describe('institutional rule publication ranges',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('counts document versions and clauses with a publication range instead of claiming daily ETF coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'etf_registration_rules',label:'中国结算 · 登记数据范围条款',availability:'scoped_rules_reviewed',requested_through:null,
+      observed_through_min:'2026-05-22',observed_through_max:'2026-09-11',observation_count:3,observation_unit:'机构文件版本',series_at_target:null,observed_source_groups:12,declared_series:12,
+      snapshot_digest:'registration',url:'/market',fetched_at:'2026-11-05T12:27:00Z',coverage_basis:'registration_rule_clauses',date_basis:'regulation_publication',note:'不是实际日登记数据。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('3 机构文件版本')).toBeVisible()
+    expect(within(section).getByText('已核指定条款 12/12 条')).toBeVisible()
+    expect(within(section).getByText('版本发布 2026-05-22 至 2026-09-11')).toBeVisible()
+    fireEvent.click(within(section).getByText('采集与范围'))
+    expect(within(section).queryByText(/目标截止 未取得/)).not.toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+  })
+})

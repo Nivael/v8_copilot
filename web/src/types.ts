@@ -413,6 +413,12 @@ export interface ETFAssetIdentity {
   issuer_snapshot_digest?:string;share_snapshot_digest?:string;comparison_digest?:string;
   NAV_source?:{date:string;source_url:string;response_sha256:string;observed_at:string};share_source?:{date:string;source_url:string;response_sha256:string;observed_at:string};
 }
+export interface ETFRegistrationRules {
+  version:string;availability:string;reviewed_versions:number|null;reviewed_clauses:number|null;source_pages?:number;identity_and_proof_pages?:number;
+  content_digest?:string;materialized_at?:string;index?:{url:string;response_url:string;sha256:string;observed_at:string};note?:string;
+  documents:Array<{label:string;title:string;published_on:string;effective_on:string;url:string;response_url:string;observed_at:string;raw_sha256:string;text_sha256:string;bytes:number;pages:number;proof_pages:number[];clause_count:number;effective_proof_page:number}>;
+  daily_registration_data_acquired:false;full_document_semantics_checked:false;full_window_versions_checked:false;whole_fund_daily_scope_verified:false;share_precision_verified:false;final_revision_verified:false;corporate_actions_checked:false;historical_PIT:false;effect_measured:false;estimated_net_subscription_yuan:null;
+}
 export interface ETFFundScopeRules {
   version:string;availability:string;review_scope?:string;reviewed_documents:number|null;reviewed_passages:number|null;proof_pages:number[];content_digest?:string;materialized_at?:string;note?:string;
   document?:{code:string;published_on:string;title:string;url:string;document_id:string;catalog_digest:string;response_url:string;observed_at:string;raw_sha256:string;text_sha256:string;bytes:number;page_count:number};
@@ -451,6 +457,7 @@ export interface MarketRiskStatus {
   etf_review_scope?:ETFReviewScope
   etf_fund_scope_rules?:ETFFundScopeRules
   etf_asset_identity?:ETFAssetIdentity
+  etf_registration_rules?:ETFRegistrationRules
   etf_share_events?:{version:string;availability:string;reviewed_events:number;reconciled_documents:number;selected_documents:number|null;pending_documents?:number;all_selected_documents_reconciled:false;corporate_actions_checked:false;note:string;
     events:Array<{event_id:string;code:string;kind:string;resolution:string;event_date:string;record_date?:string;registration_date?:string;ex_right_date?:string|null;planned_ratio:string|null;effective_ratio:string|null;resolution_published_on:string;within_catalog_window:boolean;holder_rounding?:string;plan_holder_rounding?:string[];source_scope?:string;unit_before_shares?:string;unit_after_shares?:string;
       reported_totals?:Array<{scope:string;before_shares:string;after_shares:string;after_minus_simple_ratio_shares:string}>;

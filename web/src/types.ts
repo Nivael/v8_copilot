@@ -228,7 +228,7 @@ export interface NodeMarketInputAudit {
   plan:{minimum_test_events:number;minimum_test_companies:number;horizon_sessions:number;anchor_start:string;anchor_end:string}
   test_capacity_events?:number;test_capacity_companies?:number;active_run_linked_events?:number;event_table_rows?:number;unbound_table_rows?:number;main_window_nominations?:number;latest_deterministic_events?:number;conservative_date_shifts?:number
   source_kind_counts?:Record<string,number>;deterministic_lineage_counts?:Record<string,number>;issues?:Record<string,number>;notice?:string;p6_run?:{verified_event_count:number}
-  date_reviews?:Array<{document_id:string;company:string;symbol:string;signed_on:string;availability:string;source_url:string;signature_page:number}>
+  date_reviews?:Array<{document_id:string;company:string;symbol:string;signed_on:string;availability:string;source_url:string;signature_page:number;signature_date_text?:string}>
   folds?:Array<{test_year:number;train_events:number;train_companies:number;test_events:number;test_companies:number;train_capacity_pass:boolean}>
   source_dates?:{benchmark_keys_through:string;historical_membership_through:string;node_information_through:string;price_keys_through:Record<string,string>}
 }

@@ -39,6 +39,13 @@ describe('NodeMarketAudit',()=>{
     expect(screen.getByText('2022-05-26')).toBeVisible()
     expect(screen.getByText(/事件发生日保留，未恢复精确发布时间/)).toBeVisible()
     expect(screen.getByText('训练数量不足')).toBeVisible()
+    expect(screen.getByText(/落款早于归档日期线索时，披露时间冲突继续保留/)).toBeVisible()
+  })
+  it('preserves the Chinese signature alongside its calendar date',()=>{
+    const review={...fixture.date_reviews![0],signed_on:'2023-07-25',signature_date_text:'二〇二三年七月二十五日'}
+    render(<NodeMarketAudit data={{...fixture,date_reviews:[review]}}/>);open()
+    expect(screen.getByText('2023-07-25')).toBeVisible()
+    expect(screen.getByText('原文：二〇二三年七月二十五日')).toBeVisible()
   })
   it('preserves historical source dates and discloses untested ETF factors and recent gaps',()=>{
     render(<NodeMarketAudit data={fixture}/>);open()

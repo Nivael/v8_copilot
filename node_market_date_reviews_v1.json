@@ -43,6 +43,62 @@
       "signature_page": 3,
       "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
       "not_historical_first_observation": true
+    },
+    {
+      "document_id": "cninfo:1217377304",
+      "symbol": "002482",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2023-07-25/1217377304.PDF",
+      "observed_at": "2026-11-05T03:27:26.391624+00:00",
+      "raw_sha256": "340c480bb9a09c3dc7dfe1fad293b399ec7f7ab75c3342597e051686826432e8",
+      "text_sha256": "41cd00eb6f47c3800e1e1d1c0bce653c18359aee2d93975a5b510370627454d2",
+      "source_pages": 9,
+      "company": "深圳广田集团股份有限公司",
+      "signed_on": "2023-07-25",
+      "signature_page": 9,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
+    },
+    {
+      "document_id": "cninfo:1221451962",
+      "symbol": "600715",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2024-10-22/1221451962.PDF",
+      "observed_at": "2026-11-05T03:27:27.434639+00:00",
+      "raw_sha256": "fb93b3272ce30a9bfd5d013ba989802e32f67acd66d3e4e503203f7a987cb8b3",
+      "text_sha256": "dd2a0271f44ccf56e8c8033c9c682b9ce3cf9b237ba92d0b8e4e35829f401636",
+      "source_pages": 7,
+      "company": "文投控股股份有限公司",
+      "signed_on": "2024-10-22",
+      "signature_page": 7,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
+    },
+    {
+      "document_id": "cninfo:1221490844",
+      "symbol": "603559",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2024-10-24/1221490844.PDF",
+      "observed_at": "2026-11-05T03:27:26.672785+00:00",
+      "raw_sha256": "46da13e427c38bedb9fd55363cecc16efd149b7875193d3e8c16ea6a58b41eb8",
+      "text_sha256": "ce2bcfab42dd68e2a2e6219c3b2ea55e9470690964477e9360f84bdfd6c42705",
+      "source_pages": 9,
+      "company": "中通国脉通信股份有限公司",
+      "signed_on": "2024-10-24",
+      "signature_page": 9,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
+    },
+    {
+      "document_id": "cninfo:1222115766",
+      "symbol": "600715",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2024-12-24/1222115766.PDF",
+      "observed_at": "2026-11-05T03:27:26.846048+00:00",
+      "raw_sha256": "c32e0833a754ee0684c6b3e77ee61084c456dc1b7ff8dfc0c69ac8ac8b9a4568",
+      "text_sha256": "310fd21e9a4ff0a22f666f5cc9517f29c2f94c2afcebcdaad9c2637c7b86bd35",
+      "source_pages": 3,
+      "company": "文投控股股份有限公司",
+      "signed_on": "2024-12-24",
+      "signature_page": 3,
+      "review_method": "rendered_signature_page_and_byte_bound_text_with_first_page_security_code",
+      "not_historical_first_observation": true
     }
   ]
 }

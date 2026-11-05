@@ -110,6 +110,29 @@ def test_reviewed_signature_day_is_conservative_and_preserves_original_event_dat
     assert inputs['events'][0]['event_date']=='2022-05-25'
 
 
+def test_a_signature_earlier_than_the_archive_hint_does_not_resolve_publication_uncertainty(inputs):
+    parent=inputs['parents'][0];parent['source_url']=parent['source_url'].replace('2022-05-25','2022-05-27')
+    inputs['date_reviews']=[date_review(parent)]  # Signed May 26, archived May 27.
+    row=project(inputs)['candidate_rows'][0]
+    assert row['information_available_date']=='2022-05-26'
+    assert row['capacity_candidate'] is False and 'publication_date_hint_conflict' in row['issues']
+
+
+@pytest.mark.parametrize('text,expected',[
+    ('二〇二三年七月二十五日','2023-07-25'),('二零二四年十月二十二日','2024-10-22'),
+    ('二○二五年十一月十日','2025-11-10'),('二〇二四年十二月三十一日','2024-12-31'),
+    ('二〇二四年二月二十九日','2024-02-29'),('2024年02月09日','2024-02-09'),
+    ('2024年2月29日','2024-02-29'),('二〇〇一年一月一日','2001-01-01')])
+def test_signature_dates_preserve_arabic_and_chinese_calendar_meaning(text,expected):
+    assert module.signature_day(text)==expected
+
+
+@pytest.mark.parametrize('text',['二〇二三年二月二十九日','二〇二四年十三月一日','二〇二四年十月三十二日',
+    '二〇二四年二〇月一日','二〇二四年十一十月一日','二〇二四年十二月〇日','2024年01月日','签署日期待定'])
+def test_invalid_or_ambiguous_signature_dates_are_not_guessed(text):
+    with pytest.raises(ValueError): module.signature_day(text)
+
+
 @pytest.mark.parametrize('bad', ['wrong_company','wrong_url','unavailable'])
 def test_unmatched_or_unavailable_document_review_does_not_move_an_event_date(inputs,bad):
     parent=inputs['parents'][0];parent['source_url']=parent['source_url'].replace('2022-05-25','2022-05-26')
@@ -173,6 +196,27 @@ def test_reviewed_document_identity_signature_and_both_byte_hashes_are_bound(tmp
     assert reviewed_dates(tmp_path)[0]['availability']=='observed'
     (tmp_path/(case['raw_sha256']+'.pdf')).write_bytes(raw+b'changed')
     assert reviewed_dates(tmp_path)[0]['availability']=='unavailable'
+
+
+@pytest.mark.parametrize('kind',['chinese_board','lawyer_signature','plan_without_board','unsigned_form','different_company','missing_security_code','duplicate_board','wrong_date'])
+def test_only_one_identified_issuer_board_signature_can_support_a_review(tmp_path,monkeypatch,kind):
+    raw=b'%PDF-synthetic-signature-scope-fixture'
+    signature='示例公司董事会二〇二三年七月二十五日'
+    code='证券代码：000001'
+    if kind=='lawyer_signature': signature='示例公司重整计划执行完毕法律意见书示例律师事务所二〇二三年七月二十五日'
+    elif kind=='plan_without_board': signature='示例公司2023年7月25日'
+    elif kind=='unsigned_form': signature='示例公司董事会年月日'
+    elif kind=='different_company': signature='其他公司董事会二〇二三年七月二十五日'
+    elif kind=='missing_security_code': code='某附件'
+    elif kind=='duplicate_board': signature=signature+'\n'+signature
+    elif kind=='wrong_date': signature=signature.replace('二十五','二十六')
+    pages={'pages':[code,signature]};text=json.dumps(pages,ensure_ascii=False).encode()
+    case={'document_id':'D1','symbol':'000001','company':'示例公司','signed_on':'2023-07-25','source_pages':2,'signature_page':2,
+          'raw_sha256':hashlib.sha256(raw).hexdigest(),'text_sha256':hashlib.sha256(text).hexdigest()}
+    monkeypatch.setattr(module,'DATE_REVIEWS',[case]);(tmp_path/(case['raw_sha256']+'.pdf')).write_bytes(raw);(tmp_path/(case['text_sha256']+'.json')).write_bytes(text)
+    actual=reviewed_dates(tmp_path)[0]
+    assert actual['availability']==('observed' if kind=='chinese_board' else 'unavailable')
+    if kind=='chinese_board': assert actual['signature_date_text']=='二〇二三年七月二十五日'
 
 
 def test_foreign_output_is_preserved(tmp_path):

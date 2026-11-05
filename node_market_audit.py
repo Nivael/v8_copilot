@@ -55,20 +55,40 @@ def iso(value):
     return date.fromisoformat(value).isoformat()
 
 
+def signature_day(value):
+    """Parse a Gregorian issuer signature date, including 二〇二三年七月二十五日."""
+    match = re.fullmatch(r'([0-9〇零○一二三四五六七八九十]+)年([0-9〇零○一二三四五六七八九十]+)月([0-9〇零○一二三四五六七八九十]+)日', value)
+    if not match: raise ValueError('unsupported signature date')
+    digits = dict(zip('〇零○一二三四五六七八九', (0,0,0,1,2,3,4,5,6,7,8,9)))
+    year, month, day = match.groups()
+    if re.fullmatch(r'20[0-9]{2}', year): year = int(year)
+    elif re.fullmatch(r'[二][〇零○][〇零○一二三四五六七八九]{2}', year): year = int(''.join(str(digits[char]) for char in year))
+    else: raise ValueError('unsupported signature year')
+    def number(text):
+        if re.fullmatch(r'[0-9]{1,2}', text): return int(text)
+        if len(text) == 1 and text in digits: return digits[text]
+        if text.count('十') == 1:
+            left, right = text.split('十')
+            if (not left or len(left) == 1 and digits.get(left, 0) > 0) and (not right or len(right) == 1 and digits.get(right, 0) > 0):
+                return (digits[left] if left else 1)*10+(digits[right] if right else 0)
+        raise ValueError('unsupported signature month/day')
+    return date(year, number(month), number(day)).isoformat()
+
+
 def reviewed_dates(directory):
     results = []
     for case in DATE_REVIEWS:
         try:
             raw = (directory/(case['raw_sha256']+'.pdf')).read_bytes()
             text = (directory/(case['text_sha256']+'.json')).read_bytes()
-            pages = json.loads(text)['pages']; y,m,d = map(int,case['signed_on'].split('-'))
+            pages = json.loads(text)['pages']
             compact = lambda value: re.sub(r'\s+', '', value)
-            signature = case['company']+'董事会'+f'{y}年{m}月{d}日'
+            signatures = re.findall(re.escape(case['company']+'董事会')+r'([0-9〇零○一二三四五六七八九十]+年[0-9〇零○一二三四五六七八九十]+月[0-9〇零○一二三四五六七八九十]+日)', compact(pages[case['signature_page']-1]))
             if (hashlib.sha256(raw).hexdigest() != case['raw_sha256'] or not raw.startswith(b'%PDF-')
                 or hashlib.sha256(text).hexdigest() != case['text_sha256'] or len(pages) != case['source_pages']
                 or not re.search(r'证券代码[:：]'+case['symbol'], compact(pages[0]))
-                or compact(pages[case['signature_page']-1]).count(signature) != 1): raise ValueError('reviewed document changed')
-            results.append({**case,'availability':'observed'})
+                or [signature_day(value) for value in signatures] != [iso(case['signed_on'])]): raise ValueError('reviewed document changed')
+            results.append({**case,'availability':'observed','signature_date_text':signatures[0]})
         except (OSError, ValueError, KeyError, TypeError, IndexError): results.append({**case,'availability':'unavailable'})
     return results
 
@@ -153,7 +173,8 @@ def parent_issues(event, parents, review=None):
         hint = re.search(r'/finalpage/(\d{4}-\d{2}-\d{2})/', row['source_url'] or '')
         matched_review = (review and review['symbol'] == event['symbol'] and
                           urlparse(review['source_url']).hostname == urlparse(row['source_url']).hostname and
-                          urlparse(review['source_url']).path == urlparse(row['source_url']).path)
+                          urlparse(review['source_url']).path == urlparse(row['source_url']).path and
+                          (not hint or iso(review['signed_on']) >= iso(hint[1])))
         if hint and iso(hint[1]) != published and not matched_review: issues.add('publication_date_hint_conflict')
     return sorted(issues)
 

@@ -207,3 +207,20 @@ describe('prospectus publication source dates',()=>{
     expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
   })
 })
+
+describe('asset disclosure point counting',()=>{
+  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('shows one asset-date comparison point rather than advancing daily ETF or universe coverage',async()=>{
+    const data:LearningStatus={...payload,market_updates:[{source_id:'etf_asset_identity',label:'510310 · 资产披露值一致性',availability:'arithmetic_compared',requested_through:null,
+      observed_through_min:'2026-11-04',observed_through_max:'2026-11-04',observation_count:1,observation_unit:'披露时点',series_at_target:null,observed_source_groups:1,declared_series:1,
+      snapshot_digest:'identity',url:'/market',fetched_at:'2026-11-04T21:06:40Z',coverage_basis:'asset_disclosure_point',date_basis:'asset_disclosure',note:'不作全基金日份额证明。'}]}
+    vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify(data)));open()
+    const section=await screen.findByRole('region',{name:'市场来源更新'})
+    expect(within(section).getByText('1 披露时点')).toBeVisible()
+    expect(within(section).getByText('同日算术对照 1/1 披露时点')).toBeVisible()
+    expect(within(section).getByText('资产所属 2026-11-04')).toBeVisible()
+    fireEvent.click(within(section).getByText('采集与范围'))
+    expect(within(section).queryByText(/目标截止 未取得/)).not.toBeInTheDocument()
+    expect(within(section).queryByText(/目标日期覆盖/)).not.toBeInTheDocument()
+  })
+})

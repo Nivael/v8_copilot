@@ -10,6 +10,7 @@ from urllib.parse import urlencode
 from zoneinfo import ZoneInfo
 
 from etf_issuer_nav import NAV_DEFINITIONS
+from etf_asset_identity import parse_asset_disclosure
 from etf_nav_parsers import parse_chinaamc, parse_efunds, parse_huatai, parse_jsfund, parse_nffund
 
 VERSION='issuer_nav_raw_reconciliation_v1'
@@ -38,7 +39,7 @@ def request(ref,code,url,params=None,method='GET'):
 
 
 def reconcile_fund(directory:Path,code,calendar,rows,refs,now):
-    definition=NAV_DEFINITIONS[code];provider=definition['provider'];points=[]
+    definition=NAV_DEFINITIONS[code];provider=definition['provider'];points=[];asset=None
     if not refs or len(refs)>10:raise ValueError('missing or excessive NAV source references')
     originals=[response(directory,ref,now) for ref in refs]
     if provider=='jsfund':
@@ -54,6 +55,7 @@ def reconcile_fund(directory:Path,code,calendar,rows,refs,now):
             or '单位净值(元)' not in page or not re.search(r'2\s+EnumSourceTypeNetValue\s+单位净值',schema)):
             raise ValueError('EFunds identity, unit or field mapping changed')
         points=[(p,refs[2]) for p in parse_efunds(text,code,calendar,exact=True)]
+        asset=parse_asset_disclosure(page,refs[0],now)
     else:
         expected_pages=None;prior_oldest=None
         for page,(ref,raw) in enumerate(zip(refs,originals),1):
@@ -105,6 +107,7 @@ def reconcile_fund(directory:Path,code,calendar,rows,refs,now):
                   'url':ref['url'],'method':ref['method'],'params':ref['params'],'response_sha256':ref['response_sha256'],
                   'observed_at':ref['observed_at'],'bytes':ref['bytes']} for i,ref in enumerate(refs)]
     return {'code':code,'provider':provider,'source_field':definition['field'],'source_url':definition['url'],'unit':'CNY_per_share',
+            **({'asset_disclosure':asset} if asset is not None else {}),
             'source_responses':source_refs,
             'source_response_count':len(refs),'records':result,'fractional_digit_counts':dict(Counter(p['fractional_digits'] for p in result))}
 

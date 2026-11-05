@@ -20,6 +20,7 @@ from etf_prospectus_rules import prospectus_rule_status
 from etf_review_scope import scope_status as etf_scope_status
 from etf_daily_sources import reconcile_sse, reconcile_szse
 from etf_fund_scope import scope_status as fund_scope_status
+from etf_asset_identity import identity_status as asset_identity_status
 from etf_szse_history import SOURCE_URL as SZSE_ETF_SOURCE, API_URL as SZSE_ETF_API, HTTP_API_URL as SZSE_HTTP_API
 from etf_szse_recheck import recheck_status
 from etf_issuer_history import history_status
@@ -419,6 +420,13 @@ def market_update_status(*, snapshot_dir: Path = MARKET_RISK_DIR, now: datetime 
                     'series_at_target':None,'observed_source_groups':fund_scope.get('reviewed_passages'),'declared_series':13,
                     'snapshot_digest':fund_scope.get('content_digest'),'url':'/market','coverage_basis':'ETF_business_role_clauses','date_basis':'prospectus_publication',
                     'note':'仅一只基金的一份发行版本；四类内容截止分别列在市场页。原105项选择不变，不证明当前业务实施、日份额全基金范围或交易所字段舍入。'})
+    asset=asset_identity_status(issuer_meta,sse_meta,issuer_meta.get('through'));asset_doc=asset.get('asset',{})
+    sources.append({'source_id':'etf_asset_identity','label':'510310 · 资产披露值一致性','availability':asset['availability'],
+                    'requested_through':None,'observed_through_min':asset_doc.get('asset_asof'),'observed_through_max':asset_doc.get('asset_asof'),
+                    'fetched_at':asset_doc.get('observed_at'),'observation_count':asset['disclosed_points'],'observation_unit':'披露时点',
+                    'series_at_target':None,'observed_source_groups':asset['compared_points'],'declared_series':1,
+                    'snapshot_digest':asset.get('comparison_digest'),'url':'/market','coverage_basis':'asset_disclosure_point','date_basis':'asset_disclosure',
+                    'note':'仅归档单点的公布值算术核对；相等不证明独立来源、场外份额为零或逐日全基金范围，不新增一条已确认净申赎。'})
     observed = membership['availability']=='observed'
     sources.append({'source_id':'exchange_risk_membership','label':'交易所 · 风险警示与退市整理名单','availability':membership['availability'],
                     'requested_through':None,'fetched_at':membership.get('completed_at'),'observed_through_min':None,'observed_through_max':None,
@@ -598,6 +606,7 @@ def build_market_risk_status(
         "sse_gap_review": sse_gap_review_status(snapshot_dir/'sse_gap_review', root=snapshot_dir, now=now),
         "public_index_snapshot": public_index_snapshot,
         "issuer_nav_snapshot": {key: value for key, value in issuer_nav_snapshot.items() if key != "calendar"},
+        "etf_asset_identity": asset_identity_status(issuer_nav_snapshot, public_snapshot, requested_through),
         "public_breadth_snapshot": public_breadth_snapshot,
         "etf_announcements": announcements,
         "etf_share_events": share_event_status(snapshot_dir / "etf_announcements", announcements, now),

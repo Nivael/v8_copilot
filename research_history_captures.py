@@ -45,6 +45,10 @@ def validate_capture(value):
         ids.add(row['id'])
         if not isinstance(row['has_own_time'],bool) or not isinstance(row['question'],str):raise ValueError('invalid original message')
         if row.get('date_marker') and instant(row['date_marker'])>stamp:raise ValueError('future question date')
+        if row.get('date_bounds'):
+            lower=row['date_bounds'].get('not_before');upper=row['date_bounds'].get('not_after')
+            if any(instant(v)>stamp for v in (lower,upper) if v):raise ValueError('future question date bound')
+            if lower and upper and instant(lower)>instant(upper):raise ValueError('reversed question date bounds')
         if row['has_own_time'] and not row.get('date_marker'):raise ValueError('missing independent timestamp')
         owner=row.get('date_marker_owner')
         if owner and (not UUID.fullmatch(owner) or row['has_own_time'] and owner!=row['id']):raise ValueError('timestamp owner mismatch')
@@ -107,14 +111,22 @@ def import_capture_files(directory,known):
         sources.append(source)
         for index,turn in enumerate(capture['turns']):
             question=clean_question(turn['question'])
-            if not question or not turn.get('date_marker'):continue
-            marker=instant(turn['date_marker']);day=marker.astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()
-            exact=turn['has_own_time'];symbols=mentioned(question,known)
+            if not question:continue
+            date_fields={};exact=turn['has_own_time'];marker=instant(turn['date_marker']) if turn.get('date_marker') else None
+            if marker:
+                day=marker.astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat();precision='instant' if exact else 'day'
+            else:
+                bounds=turn.get('date_bounds',{});lower=bounds.get('not_before');upper=bounds.get('not_after')
+                if not lower or not upper:continue
+                lower_day=instant(lower).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat();upper_day=instant(upper).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()
+                day=lower_day if lower_day==upper_day else None;precision='day' if day else 'range'
+                date_fields={'source_date_bounds':bounds,**({'asked_from':lower_day,'asked_through':upper_day} if precision=='range' else {})}
+            symbols=mentioned(question,known)
             rows.append({'id':'QUESTION-'+turn['id'],'asked_at':marker.isoformat() if exact else None,'asked_on':day,
-                         'time_precision':'instant' if exact else 'day','source_date_marker':turn['date_marker'],
+                         'time_precision':precision,'source_date_marker':turn.get('date_marker'),**date_fields,
                          'source_date_owner_id':turn.get('date_marker_owner'),
                          'source_group_offset':turn.get('group_offset',index),'question':question,'original_question':question,
-                         'date_source':'original_chat_rendered_timestamp' if exact else 'original_chat_rendered_date_group',
+                         'date_source':'original_chat_rendered_timestamp' if exact else 'original_chat_rendered_time_bounds' if date_fields else 'original_chat_rendered_date_group',
                          'kind':'original_question','symbols':symbols or context,'scope_kind':'explicit' if symbols else 'conversation_context',
                          'question_representation':turn.get('question_node','user_bubble'),
                          'unavailable_attachments':turn.get('attachment_count',0),
@@ -123,7 +135,7 @@ def import_capture_files(directory,known):
                                      'source_thread_id':capture['thread_id'],'source_message_id':a.get('id'),
                                      'capture_scope':'rendered_answer_text','links':a.get('links',[])} for a in turn['answers'] if a['text'].strip()],
                          'sources':[{**source,'turn_id':turn['id'],'url':'https://chatgpt.com/c/'+capture['thread_id'],
-                                     'asked_at':marker.isoformat() if exact else None,'asked_on':day,'time_precision':'instant' if exact else 'day'}]})
+                                     'asked_at':marker.isoformat() if exact else None,'asked_on':day,'time_precision':precision,**date_fields}]})
     return rows,sources
 
 
@@ -143,9 +155,22 @@ def merge_records(existing,additions):
         if record.get('question_representation')=='user_content' and old.get('question_representation')!='user_content' and rendered_only:
             old.update({k:record[k] for k in ['question','original_question','question_representation','categories']})
         if not old['answers']:old['answers']=record['answers']
+        if old['question']==record['question']:
+            # Attachment controls may appear after the initial text render.
+            old['unavailable_attachments']=max(old.get('unavailable_attachments',0),record.get('unavailable_attachments',0))
         # Keep exact tool timestamps and the original answer representation.
-        if old.get('asked_at') is None and record.get('asked_at'):
+        was_range=old.get('time_precision')=='range'
+        if was_range and record.get('time_precision') in {'day','instant'}:
+            resolved_day=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat() if record.get('asked_at') else record['asked_on']
+            if not old['asked_from']<=resolved_day<=old['asked_through']:raise ValueError('new original date conflicts with captured bounds')
+        # A prior explicit day-only correction cannot be undone by replaying an old clock.
+        if old.get('asked_at') is None and record.get('asked_at') and (was_range or old.get('time_precision')!='day'):
             old.update({k:record[k] for k in ['asked_at','asked_on','time_precision','date_source']})
+            if was_range:old.update({k:record[k] for k in ['source_date_marker','source_date_owner_id','source_group_offset']})
+        elif old.get('time_precision')=='range' and record.get('time_precision')=='day':
+            old.update({k:record[k] for k in ['asked_at','asked_on','time_precision','date_source','source_date_marker','source_date_owner_id','source_group_offset']})
+        if old.get('time_precision')!='range':
+            for name in ('asked_from','asked_through'):old.pop(name,None)
         register(old)
     return result
 

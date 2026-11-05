@@ -19,7 +19,7 @@ ALIASES={'沐邦':'603398.SH','宝馨':'002514.SZ','准油':'002207.SZ','联翔'
          '思科瑞':'688053.SH','亚光':'300123.SZ','金顶':'600678.SH','得润':'002055.SZ','景谷':'600265.SH',
          '帅电':'605336.SH','帅丰':'605336.SH','源杰':'688498.SH','华丰科技':'688629.SH','华峰测控':'688200.SH',
          '正邦':'002157.SZ','东易':'002713.SZ','新研':'300159.SZ','芯原':'688521.SH','中微':'688012.SH',
-         '金刚':'300093.SZ','瑞和':'002620.SZ'}
+         '金刚':'300093.SZ','瑞和':'002620.SZ','正平':'603843.SH'}
 TOPICS={'重整与节点':('重整','法院','路条','招募','投资人','财投','产投','债权','债转股'),
         '控制权与股权':('股权','拍卖','控制权','实控人','收购'),
         '估值与摊薄':('估值','市值','转增','摊薄','定价','股本'),
@@ -36,7 +36,12 @@ def instant(value):
 
 
 def question_day(record):
+    if record.get('time_precision')=='range' and record.get('asked_at') is not None:raise ValueError('date range cannot also claim an exact question time')
     if record.get('asked_at') is not None:return instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()
+    if record.get('time_precision')=='range':
+        start=date.fromisoformat(record['asked_from']);end=date.fromisoformat(record['asked_through'])
+        if start>=end or record.get('asked_on') is not None:raise ValueError('invalid original question date range')
+        return None
     if record.get('time_precision')!='day':raise ValueError('question has neither timestamp nor verified date')
     return date.fromisoformat(record['asked_on']).isoformat()
 
@@ -44,14 +49,20 @@ def question_day(record):
 def question_order(record):
     # A group marker orders a dated follow-up; it is never its displayed ask time.
     day=question_day(record)
-    stamp=record.get('asked_at') or record.get('source_date_marker') or day+'T00:00:00+08:00'
+    if day is None:
+        lower=record.get('source_date_bounds',{}).get('not_before') or record['asked_from']+'T00:00:00+08:00'
+        if instant(lower).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()!=record['asked_from']:raise ValueError('question range lower bound mismatch')
+        return instant(lower),record.get('source_group_offset',0)
+    stamp=record.get('asked_at') or record.get('source_date_marker') or record.get('source_date_bounds',{}).get('not_before') or day+'T00:00:00+08:00'
     if instant(stamp).astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat()!=day:raise ValueError('question date group mismatch')
     return instant(stamp),record.get('source_group_offset',0)
 
 
 def question_digest(record):
     basis={'asked_at':record.get('asked_at'),'question':record['question'],'answers':record['answers']}
-    if record.get('asked_at') is None:basis.update(asked_on=question_day(record),time_precision='day')
+    if record.get('asked_at') is None:
+        day=question_day(record);basis.update(asked_on=day,time_precision='range' if day is None else 'day')
+        if day is None:basis.update(asked_from=record['asked_from'],asked_through=record['asked_through'])
     if record.get('question_context'):
         basis['question_context']={k:record['question_context'][k] for k in ('version','question_id','question','asked_on','source_url')}
     if record.get('question_visuals'):
@@ -215,7 +226,8 @@ def deduplicate(records):
     result=[];seen={}
     for record in sorted(records,key=question_order):
         day=question_day(record)
-        key=(day,re.sub(r'\s+','',record['question']),record['kind'])
+        # Identical words inside an uncertain date range do not prove a retry.
+        key=(day if day is not None else ('range',record['id']),re.sub(r'\s+','',record['question']),record['kind'])
         if key in seen:
             old=seen[key];old['sources'].extend(record['sources'])
             occurrence=lambda r:{'id':r['id'],'asked_at':r.get('asked_at'),'asked_on':question_day(r),'time_precision':r.get('time_precision','instant'),'source_date_marker':r.get('source_date_marker')}
@@ -244,6 +256,9 @@ def outcome(points,anchor_date,calendar):
 
 def comparison_basis(record,points):
     day=question_day(record);asked=instant(record['asked_at']).astimezone(ZoneInfo('Asia/Shanghai')) if record.get('asked_at') else None
+    if day is None:
+        return {'asked_on':None,'anchor_date':None,'answer_completed_at':None,'anchor_basis':'unresolved_question_day',
+                'basis_note':f"原页面只确认提问在{record['asked_from']}至{record['asked_through']}之间，未指定某一天，不连接收益或评估盘中指令。"}
     completed=[instant(a['completed_at']).astimezone(ZoneInfo('Asia/Shanghai')) for a in record['answers'] if a.get('completed_at') is not None]
     finished=max(completed) if completed else None
     effective=max(asked,finished) if asked and finished else asked
@@ -307,6 +322,8 @@ def publish(imported,*,root=ROOT):
               'saved_research':sum(r['kind']=='saved_research' for r in result['unique'].values()),
               'reviewed_questions':len({r['id'] for d in result['details'].values() for r in d['questions'] if r['review']}),
               'stocks':len(result['stocks'])-sum(s['symbol']=='market' for s in result['stocks']),'source_note':'已找回的ChatGPT、Codex原问题及保存研究；部分长聊天的更早消息仍待补齐，保存研究的日期不冒充原提问时间。'}
+    coverage['date_range_questions']=sum(r.get('time_precision')=='range' for r in result['unique'].values())
+    if coverage['date_range_questions']:coverage['source_note']+=f"其中{coverage['date_range_questions']}条只确认日期范围，保留原文，暂不选定某一天计算收益。"
     source_manifest={'version':'research_history_import_v1','sources':imported['sources'],'records':records};source_manifest['content_digest']=digest(source_manifest)
     atomic_write_json(root/'imports'/(source_manifest['content_digest']+'.json'),source_manifest)
     body={'version':'research_history_reading_v1','processor_digest':processor_digest(),'checked_at':datetime.now(timezone.utc).isoformat(),'as_of':paths['data']['calendar'][-1],

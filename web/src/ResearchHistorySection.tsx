@@ -13,6 +13,22 @@ function preview(text:string){return readable(text).replace(/〔原图未随文�
 function timestamp(value:string){return new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}
 function outcomeText(value?:HistoryOutcome){return value?.change_pct==null?(value?.date?'暂无可比价格':'待后续行情'):percent(value.change_pct)}
 
+function beijingClock(value:string){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(value))
+  const part=(type:Intl.DateTimeFormatPartTypes)=>parts.find(p=>p.type===type)!.value
+  return {day:`${part('year')}-${part('month')}-${part('day')}`,minutes:Number(part('hour'))*60+Number(part('minute'))}
+}
+function comparisonReference(question:HistoryQuestion,observedDays:Set<string>){
+  if(!question.anchor_date)return '尚未找到当时可比的有效收盘。'
+  if(!question.asked_at)return '提问时刻不详，这是事后按日线作的比较。'
+  const asked=beijingClock(question.asked_at)
+  const finishedLater=!!question.answer_completed_at&&new Date(question.answer_completed_at)>new Date(question.asked_at)
+  const effective=finishedLater?beijingClock(question.answer_completed_at!):asked
+  if(finishedLater&&(effective.day!==asked.day||(asked.minutes<15*60&&effective.minutes>=15*60)))return `原回答完成于${timestamp(question.answer_completed_at!)}，采用那时已完成的最近收盘。`
+  if(observedDays.has(asked.day)&&asked.minutes>=9*60+30&&asked.minutes<15*60&&question.anchor_date<asked.day)return '盘中提问：数字包含提问前已发生的当日涨跌，不等于问后可赚到的收益。'
+  return '从这个有效收盘起，比较后面各窗口的价格变化。'
+}
+
 function questionDate(question:HistoryQuestion){return question.time_precision==='range'?`${question.asked_from}—${question.asked_through}（日期待确认）`:question.asked_on||'日期待确认'}
 function normalized(text:string){return text.normalize('NFKC').toLocaleLowerCase('zh-CN')}
 function matchesSearch(question:HistoryQuestion,terms:string[]){
@@ -52,6 +68,8 @@ function HistoryBody({symbol}:{symbol:string}){
   })
   const markers=[...new Map(questions.filter(q=>q.anchor_date&&q.anchor_date>=question.anchor_date!).map(q=>[q.anchor_date!,{date:q.anchor_date!,id:q.id,label:`${q.asked_on} 的提问：${readable(q.question).slice(0,60)}`}])).values()].slice(0,16)
   const outcomes=question.outcomes[symbol==='market'?'market':'stock']
+  const comparedPoints=data.chart_sources[symbol==='market'?'market':'stock']||[]
+  const referenceNote=comparisonReference(question,new Set(comparedPoints.filter(p=>p.level!=null).map(p=>p.date)))
   const review=question.review
   const argumentOnly=review?.assessment_basis==='original_argument_only'
   const answeredIds=new Set(data.questions.filter(q=>q.answers.length).map(q=>q.id))
@@ -67,9 +85,9 @@ function HistoryBody({symbol}:{symbol:string}){
         {question.previous_review&&<details className="reading-disclosure history-previous"><summary>此前复盘（依据已变）</summary><p>{question.previous_review.assessment_basis==='original_argument_only'?'该版仅复核判断依据，未评估交易回报；':question.previous_review.price_through&&`评估价格截至${question.previous_review.price_through}；`}写于 {timestamp(question.previous_review.reviewed_at)}，保留作历史记录。</p><strong>{question.previous_review.headline}</strong><p>{question.previous_review.assessment}</p><ul>{question.previous_review.lessons.map(text=><li key={text}>{text}</li>)}</ul>{question.previous_review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}</details>}
         <div className="history-original"><p className="reading-kicker">{question.answers[0]?.binding==='shared_turn_answer'?'该轮最终回答（多条提问共同归档）':'当时怎么回答'}</p><blockquote>{readable(review?.then_quote||question.answers[0]?.summary||(followup?'这条当时未单独作答':'未找到原回答'))}</blockquote>{followup&&<p><button className="history-clear" onClick={openFollowup}>查看补充后的提问与原答</button></p>}<details className="reading-disclosure"><summary>展开原回答与聊天来源</summary>{question.answer_completed_at&&<p>原回答完成于 {timestamp(question.answer_completed_at)}（北京时间）。</p>}{question.answers.map((answer,index)=><div key={index}><p className="reading-prewrap">{readable(answer.text)}</p>{answer.binding==='shared_turn_answer'&&<p>来源只记录了这{answer.source_question_ids?.length||'多'}条问题所在轮次的最终答复，不能证明逐条回应。</p>}{answer.truncated&&<p>这一份文字截取未包含回答的末尾，请打开原聊天查看。</p>}{answer.links?.filter(link=>/^https?:\/\//.test(link.url)).map((link,i)=><p key={i}><a href={link.url} target="_blank" rel="noreferrer">{link.label||'原回答引用'} ↗</a></p>)}</div>)}{question.sources.filter(s=>s.url).map((source,index)=><p key={index}><a href={source.url} target="_blank" rel="noreferrer">{source.title||'打开原聊天'} ↗</a></p>)}</details></div>
         {!!question.question_visuals?.length&&<HistoryVisuals visuals={question.question_visuals}/>}
-        {question.time_precision==='range'?<section className="history-range-context" aria-label="提问日期待确认"><h4>提问区间与后来走势</h4><p className="reading-caption">提问发生在 {question.asked_from} 至 {question.asked_through} 之间。{rangeContext&&'阴影标出这段可能的提问时间。'}</p>{rangeContext?<><p className="reading-caption">观察参照：{rangeContext.reference_date}收盘＝100。只比较价格过程，未选定某个提问日计算回报。</p><ReadingChart key={question.id} series={series} label={`${data.name}提问区间与价格观察`} valueMode="index" dateRange={{from:question.asked_from!,through:question.asked_through!}}/></>:<p className="history-pending">尚缺区间之前共同有效的收盘参照，价格观察待补齐；原问题和原回答已保留，不选定某一天计算收益。</p>}</section>:<><h4>后来怎样了</h4><div className="history-outcomes">{windows.map(([key,label])=><div key={key}><span>{label}</span><strong>{outcomeText(outcomes?.[key])}</strong><small>{outcomes?.[key]?.date||'后续收盘待更新'}</small></div>)}</div>
+        {question.time_precision==='range'?<section className="history-range-context" aria-label="提问日期待确认"><h4>提问区间与后来走势</h4><p className="reading-caption">提问发生在 {question.asked_from} 至 {question.asked_through} 之间。{rangeContext&&'阴影标出这段可能的提问时间。'}</p>{rangeContext?<><p className="reading-caption">观察参照：{rangeContext.reference_date}收盘＝100。只比较价格过程，未选定某个提问日计算回报。</p><ReadingChart key={question.id} series={series} label={`${data.name}提问区间与价格观察`} valueMode="index" dateRange={{from:question.asked_from!,through:question.asked_through!}}/></>:<p className="history-pending">尚缺区间之前共同有效的收盘参照，价格观察待补齐；原问题和原回答已保留，不选定某一天计算收益。</p>}</section>:<><h4>后来怎样了</h4><p className="history-comparison-reference"><strong>{question.anchor_date?`涨跌从${question.anchor_date}收盘算起`:'比较起点待定位'}</strong><span>{referenceNote}</span></p><div className="history-outcomes">{windows.map(([key,label])=><div key={key}><span>{label}</span><strong>{outcomeText(outcomes?.[key])}</strong><small>{outcomes?.[key]?.date||'后续收盘待更新'}</small></div>)}</div>
         <ReadingChart key={question.id} series={series} label={`${data.name}从${question.anchor_date||'提问日'}起的后续走势`} markers={markers} onMarker={choose} reviewThrough={review?.price_through}/>
-        <p className="reading-caption">{question.time_precision==='day'?`具体时刻不详，以${question.anchor_date||'最近有效交易日'}收盘作事后比较。`:`从当时已完成的最近收盘（${question.anchor_date||'待定位'}）起比较。`}曲线上圆点可切换到那天的原问题。{symbol==='market'&&'本组只对照大盘和ST；未定位的个股不会猜配行情。'}</p>
+        <p className="reading-caption">曲线上圆点可切换到那天的原问题。{symbol==='market'&&'本组只对照大盘和ST；未定位的个股不会猜配行情。'}</p>
         <details className="reading-disclosure"><summary>同一窗口，大盘和ST分别走了多少？</summary><div className="reading-scroll"><table><thead><tr><th>窗口</th><th>{data.name}</th><th>中证全指</th><th>{data.st_name}</th><th>相对ST</th></tr></thead><tbody>{windows.map(([key,label])=>{const own=outcomes?.[key]?.change_pct,st=question.outcomes.st?.[key]?.change_pct;return <tr key={key}><th>{label}</th><td>{outcomeText(outcomes?.[key])}</td><td>{outcomeText(question.outcomes.market?.[key])}</td><td>{outcomeText(question.outcomes.st?.[key])}</td><td>{own==null||st==null?'—':`${(own-st).toFixed(2)}个百分点`}</td></tr>})}</tbody></table></div></details>
         </>}
         {review&&<details className="reading-disclosure history-logic"><summary>{argumentOnly?'为什么这样判断 · 原答与依据':'为什么这样判断 · 大盘 / ST / 个股'}</summary>{review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}<small>复盘于 {timestamp(review.reviewed_at)}。{argumentOnly?'本条只核对原答的依据与推理，未用价格涨跌验收。':'同期涨跌是对照，不是因果贡献比例。'}</small></details>}

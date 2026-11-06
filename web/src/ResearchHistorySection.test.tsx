@@ -68,8 +68,46 @@ describe('original question retrospective',()=>{
     expect(within(outcomes).getByText('下一个收盘')).toBeVisible()
     expect(within(outcomes).getByText('2026-06-02')).toBeVisible()
     expect(within(outcomes).getByText('-5.00%')).toBeVisible()
+    const reference=within(article).getByText('涨跌从2026-06-01收盘算起')
+    expect(reference).toBeVisible()
+    expect(within(article).getByText(/数字包含提问前已发生的当日涨跌/)).toBeVisible()
+    expect(reference.compareDocumentPosition(outcomes)&Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(within(article).queryByText('次日')).not.toBeInTheDocument()
     expect(screen.getByRole('img',{name:/从2026-06-01起/})).toBeVisible()
+  })
+  it.each(['2026-06-01','2026-06-02'])('explains a post-close answer with the actual %s anchor, including a missing stock close',async anchor_date=>{
+    serve({...detail,questions:[{...question,asked_at:'2026-06-02T06:50:00Z',answer_completed_at:'2026-06-02T07:05:00Z',anchor_date}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.getByText(`涨跌从${anchor_date}收盘算起`)).toBeVisible()
+    expect(screen.getByText('原回答完成于2026/06/02 15:05，采用那时已完成的最近收盘。')).toBeVisible()
+    expect(screen.queryByText(/盘中提问：数字/)).not.toBeInTheDocument()
+    expect(screen.getAllByText('-20.43%')[0]).toBeVisible()
+  })
+  it('keeps an overnight answer completion distinct from the earlier question date',async()=>{
+    serve({...detail,questions:[{...question,asked_at:'2026-06-01T16:10:00Z',answer_completed_at:'2026-06-02T16:05:00Z'}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.getByText('原回答完成于2026/06/03 00:05，采用那时已完成的最近收盘。')).toBeVisible()
+    expect(screen.getByText(/2026\/06\/02 00:10 · 北京时间 · 原提问时间/)).toBeVisible()
+    expect(screen.getByText('涨跌从2026-06-02收盘算起')).toBeVisible()
+  })
+  it.each([
+    ['before the open','2026-06-02T01:00:00Z'],
+    ['on a non-trading day','2026-06-06T04:00:00Z'],
+    ['after the close with no same-day stock price','2026-06-02T08:50:00Z'],
+    ['during a stock suspension','2026-06-02T04:00:00Z'],
+  ])('does not invent an intraday gain warning %s',async(_label,asked_at)=>{
+    serve({...detail,chart_sources:{...detail.chart_sources,stock:detail.chart_sources.stock.map(p=>p.date==='2026-06-02'?{...p,value:null,level:null}:p)},questions:[{...question,asked_at,anchor_date:'2026-06-01'}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.getByText('涨跌从2026-06-01收盘算起')).toBeVisible()
+    expect(screen.queryByText(/盘中提问：数字/)).not.toBeInTheDocument()
+  })
+  it('leaves the comparison start pending instead of making up a date when the anchor is missing',async()=>{
+    serve({...detail,questions:[{...question,anchor_date:null,outcomes:{},review:null}]})
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText('比较起点待定位')).toBeVisible()
+    expect(screen.getByText('尚未找到当时可比的有效收盘。')).toBeVisible()
+    expect(screen.queryByText(/涨跌从/)).not.toBeInTheDocument()
+    expect(screen.queryByText('-20.43%')).not.toBeInTheDocument()
   })
   it('distinguishes a dated historical price gap from a future horizon and preserves the gap date',async()=>{
     serve({...detail,questions:[{...question,outcomes:{...question.outcomes,stock:{five_day:{date:'2026-06-09',change_pct:null},sixty_day:{date:null,change_pct:null}}}}]})
@@ -100,7 +138,8 @@ describe('original question retrospective',()=>{
     expect(await screen.findByText(/2026-06-02 · 具体时刻未归档/)).toBeVisible()
     expect(screen.getByText('该轮最终回答（多条提问共同归档）')).toBeVisible()
     expect(screen.queryByText(/1970/)).not.toBeInTheDocument()
-    expect(screen.getByText(/具体时刻不详，以2026-06-02收盘作事后比较/)).toBeVisible()
+    expect(screen.getByText('涨跌从2026-06-02收盘算起')).toBeVisible()
+    expect(screen.getByText('提问时刻不详，这是事后按日线作的比较。')).toBeVisible()
   })
   it('keeps the assessed date explicit when the chart gains later observations',async()=>{
     serve({...detail,questions:[{...question,review_status:'new_observations',review:{...question.review!,price_through:'2026-06-05',focused_symbol:'603398.SH'},review_focused_name:'*ST沐邦'}]})

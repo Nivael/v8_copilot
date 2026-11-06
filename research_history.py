@@ -3,6 +3,7 @@ from collections import defaultdict
 from datetime import date,datetime,timedelta,timezone
 from hashlib import sha256
 import json
+from math import isfinite
 from pathlib import Path
 import re
 from zoneinfo import ZoneInfo
@@ -281,6 +282,20 @@ def review_anchor(record,review,paths):
     return comparison_basis(record,points)['anchor_date']
 
 
+def range_chart_context(record,paths,symbol):
+    """A common visual reference before the uncertain ask, never a return anchor."""
+    if record.get('time_precision')!='range':return None
+    question_day(record)
+    if not any(day>=record['asked_from'] for day in paths['calendar']):return None
+    series=[paths['market'],paths['st']]
+    if symbol!='market':series.append(paths['stocks'][symbol]['points'])
+    levels=[{p['date']:p['level'] for p in points} for points in series]
+    def valid(day):
+        return all(isinstance(value:=points.get(day),(int,float)) and isfinite(value) and value>0 for points in levels)
+    reference=next((day for day in reversed(paths['calendar']) if day<record['asked_from'] and valid(day)),None)
+    return {'kind':'pre_range_common_close','reference_date':reference} if reference else None
+
+
 def assemble(records,paths,*,reviews=None):
     calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {}
     scopes={**paths['stocks'],'market':{'name':'大盘、ST与待定位问题','points':paths['market']}}
@@ -290,6 +305,8 @@ def assemble(records,paths,*,reviews=None):
         rows=[]
         for record in history:
             item={**record,**comparison_basis(record,stock['points'])};anchor=item['anchor_date']
+            item.pop('range_context',None)
+            if record.get('time_precision')=='range':item['range_context']=range_chart_context(record,paths,symbol)
             if anchor:
                 series=[('stock',stock['name'],stock['points']),('market','中证全指',paths['market']),('st',paths['st_name'],paths['st'])]
                 item['outcomes']={key:outcome(points,anchor,calendar) for key,_,points in series}

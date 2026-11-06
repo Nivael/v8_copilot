@@ -2,7 +2,22 @@ import {useEffect,useId,useState} from 'react'
 import type {ReadingSeries} from './readingTypes'
 import {percent} from './readingFormat'
 
-export function ReadingChart({series,label,markers=[],onMarker,reviewThrough}:{series:ReadingSeries[];label:string;markers?:{date:string;id:string;label:string}[];onMarker?:(id:string)=>void;reviewThrough?:string}){
+type DateRange={from:string;through:string}
+function rangePositions(dates:string[],range:DateRange){
+  const time=(date:string)=>Date.parse(`${date}T00:00:00Z`)
+  const validDay=(date:string)=>Number.isFinite(time(date))&&new Date(time(date)).toISOString().slice(0,10)===date
+  if(!validDay(range.from)||!validDay(range.through)||range.from>range.through||range.through<dates[0]||range.from>dates.at(-1)!)return null
+  const position=(date:string,edge:number)=>{
+    const index=dates.findIndex(day=>day>=date)
+    if(index<0)return dates.length-1
+    if(dates[index]===date)return Math.max(0,Math.min(dates.length-1,index+edge))
+    if(index===0)return 0
+    return index-1+(time(date)-time(dates[index-1]))/(time(dates[index])-time(dates[index-1]))
+  }
+  return {from:position(range.from,-.35),through:position(range.through,.35)}
+}
+
+export function ReadingChart({series,label,markers=[],onMarker,reviewThrough,valueMode='change',dateRange}:{series:ReadingSeries[];label:string;markers?:{date:string;id:string;label:string}[];onMarker?:(id:string)=>void;reviewThrough?:string;valueMode?:'change'|'index';dateRange?:DateRange}){
   const id=useId()
   const [cursor,setCursor]=useState<number|null>(null)
   const [compact,setCompact]=useState(()=>typeof window.matchMedia==='function'&&window.matchMedia('(max-width:700px)').matches)
@@ -29,15 +44,20 @@ export function ReadingChart({series,label,markers=[],onMarker,reviewThrough}:{s
   const ticks=Array.from({length:Math.floor((high-firstTick)/step)+1},(_,i)=>firstTick+i*step)
   const reviewIndex=reviewThrough?dates.indexOf(reviewThrough):-1
   const hasLater=reviewIndex>=0&&reviewIndex<dates.length-1
+  const range=dateRange?rangePositions(dates,dateRange):null
+  const bandStart=range?Math.max(left,Math.min(right-2,x(range.from))):0
+  const bandEnd=range?Math.max(bandStart+2,Math.min(right,x(range.through))):0
+  const display=(level:number|null)=>valueMode==='index'?(level==null?'待更新':level.toFixed(2)):percent(level==null?null:level-100)
   return <figure className="reading-chart" aria-label={label}>
-    <div className="reading-chart-legend">{aligned.map((item,index)=><span key={item.key} className={`reading-series reading-series-${index}`}><i/>{item.name}<strong>{percent(item.change_pct)}</strong></span>)}</div>
+    <div className="reading-chart-legend">{aligned.map((item,index)=><span key={item.key} className={`reading-series reading-series-${index}`}><i/>{item.name}<strong>{valueMode==='index'?display(item.points.at(-1)?.level??null):percent(item.change_pct)}</strong></span>)}</div>
     <svg viewBox={`0 0 ${width} ${bottom+36}`} role="img" aria-labelledby={`${id}-title ${id}-desc`} onPointerMove={event=>{
       const rect=event.currentTarget.getBoundingClientRect()
       setCursor(Math.max(0,Math.min(dates.length-1,Math.round(((event.clientX-rect.left)/rect.width*width-left)/(right-left)*(dates.length-1)))))
     }} onPointerLeave={()=>setCursor(null)}>
-      <title id={`${id}-title`}>{label}</title><desc id={`${id}-desc`}>同一时期从零涨跌幅起算。可用下方日期滑块逐日查看。</desc>
+      <title id={`${id}-title`}>{label}</title><desc id={`${id}-desc`}>{valueMode==='index'?'以图中观察起点收盘为100，不以提问日计算收益。':'同一时期从零涨跌幅起算。'}{range&&`阴影表示可能提问区间：${dateRange!.from}至${dateRange!.through}。`}可用下方日期滑块逐日查看。</desc>
       {hasLater&&<rect x={x(reviewIndex)} y="26" width={right-x(reviewIndex)} height={bottom-26} className="reading-after-review"><title>复盘窗口之后的走势</title></rect>}
-      {ticks.map(tick=><g key={tick}><line x1={left} x2={right} y1={y(tick+100)} y2={y(tick+100)} className="reading-grid"/><text x={left-10} y={y(tick+100)+4} textAnchor="end">{tick.toFixed(step<1?1:0)}%</text></g>)}
+      {range&&<g className="reading-date-range" role="group" aria-label={`可能提问区间：${dateRange!.from}至${dateRange!.through}`}><rect x={bandStart} y="26" width={bandEnd-bandStart} height={bottom-26}/><line x1={bandStart} x2={bandStart} y1="26" y2={bottom}/><line x1={bandEnd} x2={bandEnd} y1="26" y2={bottom}/></g>}
+      {ticks.map(tick=><g key={tick}><line x1={left} x2={right} y1={y(tick+100)} y2={y(tick+100)} className="reading-grid"/><text x={left-10} y={y(tick+100)+4} textAnchor="end">{valueMode==='index'?(tick+100).toFixed(step<1?1:0):`${tick.toFixed(step<1?1:0)}%`}</text></g>)}
       <line x1={left} x2={right} y1={y(100)} y2={y(100)} className="reading-zero"/>
       {aligned.map((item,index)=>{let connected=false;return <path key={item.key} className={`reading-line reading-line-${index}`} d={item.points.map((point,i)=>{if(point.level==null){connected=false;return ''}const command=connected?'L':'M';connected=true;return `${command}${x(i).toFixed(2)},${y(point.level).toFixed(2)}`}).join(' ')}/>})}
       {hasLater&&<g className="reading-review-boundary"><line x1={x(reviewIndex)} x2={x(reviewIndex)} y1="26" y2={bottom}/><text x={Math.max(left,Math.min(x(reviewIndex)+7,right-145))} y="17">复盘截至 {reviewThrough}</text></g>}
@@ -46,9 +66,9 @@ export function ReadingChart({series,label,markers=[],onMarker,reviewThrough}:{s
       {aligned.map((item,index)=>item.points[selected].level==null?null:<circle key={item.key} cx={x(selected)} cy={y(item.points[selected].level!)} r="4" className={`reading-dot-${index}`}/>)}
       <text x={left} y={bottom+26}>{dates[0]}</text><text x={right} y={bottom+26} textAnchor="end">{dates.at(-1)}</text>
     </svg>
-    <div className="reading-chart-cursor"><time>{dates[selected]}</time>{aligned.map(item=><span key={item.key}>{item.name} <b>{percent(item.points[selected].level==null?null:item.points[selected].level!-100)}</b></span>)}</div>
+    <div className="reading-chart-cursor"><time>{dates[selected]}</time>{aligned.map(item=><span key={item.key}>{item.name} <b>{display(item.points[selected].level)}</b></span>)}</div>
     <input type="range" min={0} max={dates.length-1} value={selected} onChange={event=>setCursor(Number(event.target.value))} aria-label={`${label}，选择交易日`} aria-valuetext={dates[selected]}/>
     {aligned.some(item=>item.points.some(point=>point.level==null))&&<p className="reading-caption">曲线空档表示当日无有效成交价格，不按零涨跌补齐。</p>}
-    <details className="reading-chart-data"><summary>逐日数值</summary><div className="reading-scroll"><table><thead><tr><th>日期</th>{aligned.map(item=><th key={item.key}>{item.name}</th>)}</tr></thead><tbody>{dates.map((date,index)=><tr key={date}><th>{date}</th>{aligned.map(item=><td key={item.key}>{percent(item.points[index].level==null?null:item.points[index].level!-100)}</td>)}</tr>)}</tbody></table></div></details>
+    <details className="reading-chart-data"><summary>逐日数值</summary><div className="reading-scroll"><table><thead><tr><th>日期</th>{aligned.map(item=><th key={item.key}>{item.name}</th>)}</tr></thead><tbody>{dates.map((date,index)=><tr key={date}><th>{date}</th>{aligned.map(item=><td key={item.key}>{display(item.points[index].level)}</td>)}</tr>)}</tbody></table></div></details>
   </figure>
 }

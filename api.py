@@ -312,6 +312,12 @@ def list_research_runs(limit: int = Query(default=50, ge=1, le=200)) -> list[Res
     return research_run_ledger.list(limit=limit)
 
 
+@app.get("/api/v1/research/corrections")
+def get_research_corrections() -> dict[str, object]:
+    from research_corrections import reading_view
+    return reading_view(ledger_db=research_run_ledger.path)
+
+
 @app.get("/api/v1/research/runs/{run_id}", response_model=ResearchRunRecord)
 def get_research_run(
     run_id: str = Path(pattern=r"^RUN-[A-F0-9]{24}$"),

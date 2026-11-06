@@ -457,4 +457,37 @@ describe('original question retrospective',()=>{
     fireEvent.click(toggle)
     expect(screen.getByText(/该版仅复核判断依据，未评估交易回报/)).toBeVisible()
   })
+  it('connects original, corrected old study and replacement across filters without promoting the old assertion',async()=>{
+    const correction={old_run_id:'old-study',replacement_run_id:'new-study',original_question_id:'q1',headline:'原答已经列出长期借款',summary:'遗漏批评已经撤回，重新细化借款口径。',corrected_at:'2026-06-09T00:00:00Z'}
+    const original:HistoryQuestion={...question,research_corrections:[{...correction,role:'original_review'}]}
+    const old:HistoryQuestion={...question,id:'old-study',kind:'saved_research',outcomes:{stock:{}},question:'旧研究误称没有列长期借款',categories:['财报与监管'],review:null,answers:[{text:'这是已撤回的旧研究断言。',summary:'这是已撤回的旧研究断言。',truncated:false}],research_corrections:[{...correction,role:'corrected_study'}]}
+    const replacement:HistoryQuestion={...old,id:'new-study',question:'重新核对年报的借款口径',answers:[{text:'修正后的事实核对。',summary:'修正后的事实核对。',truncated:false}],research_corrections:[{...correction,role:'replacement_study'}]}
+    const records=[original,old,replacement],before=JSON.stringify(records),request=serve({...detail,questions:records})
+    render(<ResearchHistorySection/>);await screen.findByRole('region',{name:'研究更正'})
+    const calls=request.mock.calls.length
+    fireEvent.change(screen.getByRole('combobox',{name:'历史问题分类'}),{target:{value:'短线量价'}})
+    fireEvent.change(screen.getByRole('searchbox',{name:'查找历史问题或经验'}),{target:{value:'遗漏批评已经撤回'}})
+    expect(screen.getByRole('checkbox',{name:'同时显示保存的研究题'})).not.toBeChecked()
+    fireEvent.click(screen.getByRole('button',{name:'查看修正后的研究'}))
+    expect(screen.getByRole('heading',{name:'重新核对年报的借款口径'})).toBeVisible()
+    expect(screen.queryByText('后续走势已对照；这条原回答的事实与推理仍待逐项复核。')).not.toBeInTheDocument()
+    expect(screen.getByText('行情尚未覆盖这份研究保存后的交易日。可回到当时的原问题查看价格过程。')).toBeVisible()
+    expect(screen.queryByText('走势数据正在更新。')).not.toBeInTheDocument()
+    expect(screen.getByRole('checkbox',{name:'同时显示保存的研究题'})).toBeChecked()
+    expect(screen.getByRole('searchbox')).toHaveValue('')
+    expect(screen.getByRole('combobox',{name:'历史问题分类'})).toHaveValue('全部')
+    fireEvent.click(screen.getByRole('button',{name:'查看旧研究原文'}))
+    expect(screen.getByText('这份旧研究有更正')).toBeVisible()
+    expect(screen.getByText('这是已撤回的旧研究断言。')).not.toBeVisible()
+    expect(screen.queryByText('后续走势已对照；这条原回答的事实与推理仍待逐项复核。')).not.toBeInTheDocument()
+    const oldText=screen.getByText('展开旧研究原文（含已更正内容）').closest('details')!
+    expect(oldText.open).toBe(false);fireEvent.click(screen.getByText('展开旧研究原文（含已更正内容）'))
+    expect(screen.getByText('这是已撤回的旧研究断言。')).toBeVisible()
+    fireEvent.click(screen.getByRole('button',{name:'回到当时的原问题'}))
+    expect(screen.getByText('这条复盘曾作更正')).toBeVisible()
+    expect(screen.getByRole('heading',{name:question.question})).toBeVisible()
+    expect(request.mock.calls).toHaveLength(calls)
+    expect(JSON.stringify(records)).toBe(before)
+  })
+
 })

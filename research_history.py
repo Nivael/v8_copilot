@@ -303,7 +303,7 @@ def range_chart_context(record,paths,symbol):
     return {'kind':'pre_range_common_close','reference_date':reference} if reference else None
 
 
-def assemble(records,paths,*,reviews=None):
+def assemble(records,paths,*,reviews=None,correction_notes=None):
     calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {}
     scopes={**paths['stocks'],'market':{'name':'大盘、ST与待定位问题','points':paths['market']}}
     for symbol,stock in scopes.items():
@@ -319,6 +319,8 @@ def assemble(records,paths,*,reviews=None):
                 item['outcomes']={key:outcome(points,anchor,calendar) for key,_,points in series}
             else:item['outcomes']={}
             item['question_digest']=question_digest(record)
+            if correction_notes and record['id'] in correction_notes:
+                item['research_corrections']=correction_notes[record['id']]
             review=reviews.get(record['id'])
             item.update(resolve_review(review,record,paths,item['question_digest'],review_anchor(record,review,paths) if review else None))
             if review:
@@ -337,12 +339,16 @@ def assemble(records,paths,*,reviews=None):
     unique={r['id']:r for r in records};return {'stocks':stocks,'details':details,'unique':unique}
 
 
-def publish(imported,*,root=ROOT):
+def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
     from research_history_prices import bound
+    from research_corrections import annotations,verified_packet
+    from settings import RESEARCH_RUN_LEDGER_DB
     paths=bound(root/'price_paths/current.json');records=prepare_history_records(imported,root=root)
     if paths.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed; rebuild paths before publishing')
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
-    result=assemble(records,paths['data'],reviews=reviews)
+    corrections,runs=verified_packet(ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,
+                                    path=corrections_path or root.parent/'research_corrections/current.json')
+    result=assemble(records,paths['data'],reviews=reviews,correction_notes=annotations(records,corrections,runs))
     coverage={'original_questions':sum(r['kind']=='original_question' for r in result['unique'].values()),
               'saved_research':sum(r['kind']=='saved_research' for r in result['unique'].values()),
               'reviewed_questions':len({r['id'] for d in result['details'].values() for r in d['questions'] if r['review']}),
@@ -354,6 +360,7 @@ def publish(imported,*,root=ROOT):
     atomic_write_json(root/'imports'/(source_manifest['content_digest']+'.json'),source_manifest)
     body={'version':'research_history_reading_v1','processor_digest':processor_digest(),'checked_at':datetime.now(timezone.utc).isoformat(),'as_of':paths['data']['calendar'][-1],
           'source_digest':source_manifest['content_digest'],'price_digest':paths['content_digest'],
+          'corrections_digest':corrections['content_digest'],
           'inventory':{'availability':'available','as_of':paths['data']['calendar'][-1],'stocks':result['stocks'],'coverage':coverage,'categories':list(TOPICS)},
           'visual_assets':{v['sha256']:v['asset'] for r in records for v in r.get('question_visuals',[])},
           'details':result['details'],'general_questions':[r for r in records if not r['symbols']]}
@@ -362,7 +369,7 @@ def publish(imported,*,root=ROOT):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):
@@ -384,13 +391,24 @@ def freeze_reviews(imported,*,root=ROOT):
     return {'frozen_reviews':len(frozen),'as_of':paths['calendar'][-1]}
 
 
-def load(symbol=None,*,root=ROOT):
+def load(symbol=None,*,root=ROOT,ledger_db=None,corrections_path=None):
     from research_history_prices import bound
+    from research_corrections import annotations,verified_packet
+    from settings import RESEARCH_RUN_LEDGER_DB
+    import sqlite3
     try:
         value=bound(root/'current.json')
         if value['version']!='research_history_reading_v1' or value['processor_digest']!=processor_digest():return {'availability':'updating'}
+        corrections,runs=verified_packet(ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,
+                                        path=corrections_path or root.parent/'research_corrections/current.json')
+        if value.get('corrections_digest')!=corrections['content_digest']:return {'availability':'updating'}
+        all_questions=[q for d in value['details'].values() for q in d['questions']]
+        if corrections['entries'] or any(q.get('research_corrections') for q in all_questions):
+            records=list({q['id']:q for q in all_questions}.values())
+            expected=annotations(records,corrections,runs)
+            if any(q.get('research_corrections',[])!=expected.get(q['id'],[]) for q in all_questions):return {'availability':'updating'}
         return value['details'].get(symbol,{'availability':'not_found'}) if symbol else value['inventory']
-    except (OSError,KeyError,ValueError,TypeError):return {'availability':'updating'}
+    except (OSError,KeyError,ValueError,TypeError,sqlite3.Error):return {'availability':'updating'}
 
 
 def load_visual(identity,*,root=ROOT):

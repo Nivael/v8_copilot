@@ -1,3 +1,4 @@
+import type {ResearchCorrection} from './ResearchCorrectionNotice'
 import type {
   Dossier, EvidencePackAuditRecord, Experience, ExperienceAutoAcceptance, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
   ExperienceReviewQueue, ExperienceStatus, ResearchContext, ResearchRun, StreamEvent,
@@ -134,6 +135,20 @@ export async function submitRunFeedback(
 export async function getResearchRuns(signal?: AbortSignal): Promise<ResearchRun[]> {
   const response = await fetch('/api/v1/research/runs?limit=100', {signal})
   if (!response.ok) throw new Error(`运行审计服务返回 ${response.status}`)
+  return response.json()
+}
+
+export async function getResearchCorrections(signal?:AbortSignal):Promise<ResearchCorrection[]> {
+  const response=await fetch('/api/v1/research/corrections',{signal})
+  if(!response.ok)throw new Error('暂时无法读取研究更正')
+  const result=await response.json() as {availability:string;corrections:ResearchCorrection[]}
+  if(result.availability!=='available'||!Array.isArray(result.corrections))throw new Error('研究更正正在重新核对')
+  return result.corrections
+}
+
+export async function getResearchRun(runId:string,signal?:AbortSignal):Promise<ResearchRun> {
+  const response=await fetch(`/api/v1/research/runs/${encodeURIComponent(runId)}`,{signal})
+  if(!response.ok)throw new Error('暂时无法读取这份研究')
   return response.json()
 }
 

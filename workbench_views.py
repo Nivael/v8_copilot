@@ -115,8 +115,9 @@ def market_view(data):
                     'source_label': 'ST参考的来源与算法', 'source_url': '/market/evidence#st-reference'})
     else:
         st_summary = 'ST同窗参考正在更新。'
+    source_notes = []
     if membership_confirmation is not None:
-        why.append({'title': 'ST收盘分类已交叉核对', 'text': membership_confirmation['note'],
+        source_notes.append({'title': 'ST收盘分类已交叉核对', 'text': membership_confirmation['note'],
                     'source_label': '深交所风险警示名单原文',
                     'source_url': 'http://www.szse.cn/disclosure/listed/warn/index.html'})
     funds = []
@@ -145,7 +146,7 @@ def market_view(data):
             'summary': f'大盘最近20日{pct(month)}。{st_summary}',
             'metrics': {'day_change_pct': latest, 'five_day_change_pct': week, 'twenty_day_change_pct': month,
                         'period_change_pct': recent, 'st_change_pct': st_change, 'advancing_pct': advancing_pct},
-            'chart': chart, 'why': why,
+            'chart': chart, 'why': why, **({'source_notes': source_notes} if source_notes else {}),
             'watch_next': ['反弹能否延续到5日、20日走势改善', 'ST能否不再落后大盘'],
             'etf': {'headline': etf_headline, 'funds': funds, 'increasing': up, 'decreasing': down,
                     'cash_estimate_yuan': sum(f['cash_estimate_yuan'] for f in funds) if cash_ready else None,

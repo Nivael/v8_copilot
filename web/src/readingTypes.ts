@@ -7,6 +7,7 @@ export type MarketReading={
   latest_price?:{availability:'available';as_of:string;headline:string;stance:string;summary:string;metrics:{day_change_pct:number;five_day_change_pct:number;twenty_day_change_pct:number};reason:{title:string;text:string;source_label:string;source_url:string}}
   metrics:{day_change_pct:number|null;five_day_change_pct:number|null;twenty_day_change_pct:number|null;period_change_pct:number|null;st_change_pct:number|null;advancing_pct:number|null}
   chart:ReadingSeries[];why:{title:string;text:string;source_label:string;source_url:string}[]
+  source_notes?:{title:string;text:string;source_label:string;source_url:string}[]
   watch_next:string[];reading_note:string
   broad_etf?:BroadETFReading|{availability:'unavailable'}
   etf:{headline:string;interpretation:string;how_to_read:string;cash_estimate_yuan:number|null;funds:{code:string;name:string;group:string;share_change_pct:number}[]}

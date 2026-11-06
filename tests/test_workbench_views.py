@@ -50,8 +50,9 @@ def test_later_st_confirmation_displays_actual_reading_day_in_the_explanation():
     view = w.market_view(data)
     assert '名单实际读取于2026-11-07' in view['reading_note']
     assert '当日名单' not in view['reading_note']
-    assert view['why'][-1]['title'] == 'ST收盘分类已交叉核对'
-    assert '2026-11-07' in view['why'][-1]['text']
+    assert all(r['title'] != 'ST收盘分类已交叉核对' for r in view['why'])
+    assert view['source_notes'][0]['title'] == 'ST收盘分类已交叉核对'
+    assert '2026-11-07' in view['source_notes'][0]['text']
 
 
 def test_independent_index_judgment_does_not_change_the_stock_review_basis(tmp_path):

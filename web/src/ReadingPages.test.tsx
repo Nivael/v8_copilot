@@ -98,6 +98,15 @@ describe('trader reading pages',()=>{
     fireEvent.click(screen.getByText('这次复盘的依据'))
     expect(screen.getByRole('link',{name:'控制权变更公告 · 第2页 ↗'})).toHaveAttribute('href','https://static.cninfo.com.cn/example.pdf#page=2')
   })
+  it('keeps classification verification in the source expansion',async()=>{
+    serve({...marketReading,source_notes:[{title:'ST收盘分类已交叉核对',text:'名单实际读取于次日。',source_label:'独立名单',source_url:'https://www.szse.cn/source'}]})
+    render(<MemoryRouter><MarketOverview/></MemoryRouter>)
+    await screen.findByRole('heading',{name:marketReading.headline})
+    expect(screen.getByText('名单实际读取于次日。')).not.toBeVisible()
+    fireEvent.click(screen.getByText('数据口径与更多来源'))
+    expect(screen.getByText('名单实际读取于次日。')).toBeVisible()
+    expect(screen.getByRole('link',{name:'独立名单 ↗'})).toHaveAttribute('href','https://www.szse.cn/source')
+  })
   it('keeps the last loaded conclusion when the local service fails and permits retry',async()=>{
     const request=serve(marketReading)
     render(<MemoryRouter><MarketOverview/></MemoryRouter>)

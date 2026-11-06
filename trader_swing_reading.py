@@ -7,6 +7,7 @@ from decimal import Decimal
 from hashlib import sha256
 import json
 from pathlib import Path
+import re
 from urllib.parse import parse_qs,urlsplit
 from zoneinfo import ZoneInfo
 
@@ -17,13 +18,14 @@ from settings import DATA_ROOT
 ROOT=DATA_ROOT/'local_data/v8_copilot/market_risk'
 OUTPUT=ROOT/'trader_observations/swing_watch'
 VERSION='trader_swing_reading_v1'
+DATED_VERSION='trader_swing_reading_v2'
 RULES={'twenty_day_change_lte_pct':-15,'from_window_high_lte_pct':-20,'five_day_change_gt_pct':0,
        'five_day_change_lte_pct':15,'from_twenty_day_low_lte_pct':20,'latest_amount_gte_yuan':10_000_000,'latest_close_gte_yuan':1}
 
 
 def processor_digest():
     return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name,'workbench_views.py','market_breadth_refresh.py','market_breadth_export.py','market_breadth_history.py','market_periods.py','market_calendar.py','exchange_risk_membership.py')})
+                   for name in (Path(__file__).name,'workbench_views.py','market_breadth_refresh.py','market_breadth_export.py','market_breadth_history.py','market_periods.py','market_calendar.py','exchange_risk_membership.py','market_close_membership.py','canonical_json.py')})
 
 
 def packet(path):
@@ -75,18 +77,56 @@ def closing_day(root,through,venue):
     return {r['ts_code']:r for r in block['rows']},value['content_digest']
 
 
-def star_members(root,through):
+def star_members(root,through,*,directory=None):
     import pandas as pd
-    directory=root/'trader_observations/star50_members';ref=json.loads((directory/'current.json').read_text())
+    directory=directory if directory is not None else root/'trader_observations/star50_members'
+    ref=json.loads((directory/'current.json').read_text())
+    if not re.fullmatch(r'[a-f0-9]{64}',ref['sha256']):raise ValueError('invalid member source identity')
     expected='https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000688cons.xls'
     raw=(directory/(ref['sha256']+'.xls')).read_bytes()
     if ref['url']!=expected or ref['response_url']!=expected or sha256(raw).hexdigest()!=ref['sha256'] or len(raw)!=ref['bytes']:raise ValueError('member original changed')
     stamp=datetime.fromisoformat(ref['observed_at'])
     if stamp.tzinfo is None or stamp>datetime.now(timezone.utc):raise ValueError('invalid member observation time')
     rows=pd.read_excel(directory/(ref['sha256']+'.xls'),dtype=str).to_dict('records')
-    if len(rows)!=50 or len({r['成份券代码Constituent Code'] for r in rows})!=50:raise ValueError('not a complete STAR50 list')
+    if (len(rows)!=50 or len({r['成份券代码Constituent Code'] for r in rows})!=50
+        or any(not re.fullmatch(r'\d{6}',r['成份券代码Constituent Code']) or not r['成份券名称Constituent Name'].strip() for r in rows)):
+        raise ValueError('not a complete STAR50 list')
     if any(r['日期Date']!=through.replace('-','') or r['指数代码 Index Code']!='000688' or r['交易所Exchange']!='上海证券交易所' for r in rows):raise ValueError('member date, index or venue changed')
     return [{'ts_code':r['成份券代码Constituent Code']+'.SH','name':r['成份券名称Constituent Name']} for r in rows],ref['sha256']
+
+
+def membership_files(directory):
+    """Bind only the exact original inputs; never copy a mutable parent tree."""
+    risk=json.loads((directory/'risk/current.json').read_text())
+    star=json.loads((directory/'star50/current.json').read_text())
+    keys=[ref['response_sha256'] for ref in risk['responses']]+[star['sha256']]
+    if any(not re.fullmatch(r'[a-f0-9]{64}',key) for key in keys):raise ValueError('invalid membership input identity')
+    names=['risk/current.json','star50/current.json',*[f'risk/responses/{key}.raw' for key in keys[:-1]],f'star50/{keys[-1]}.xls']
+    result={}
+    for name in names:
+        path=directory/name
+        if directory.is_symlink() or path.is_symlink() or any(parent.is_symlink() for parent in path.parents if parent!=directory.parent) or not path.is_file():
+            raise ValueError('invalid membership input file')
+        result[name]=sha256(path.read_bytes()).hexdigest()
+    return result
+
+
+def closing_members(root,through,fresh,*,inputs=None):
+    if inputs is None:
+        from exchange_risk_membership import list_status
+        risk=list_status(root/'exchange_risk_membership',now=datetime.now(timezone.utc))
+        if risk['availability']!='observed' or risk['observed_on']!=through:raise ValueError('current ST list not independently observed for this date')
+        stars,member_digest=star_members(root,through)
+        confirmation=None
+    else:
+        from market_close_membership import load,confirm_close
+        membership_files(inputs)
+        risk=load(inputs/'risk');confirmation=confirm_close(risk,fresh,through)
+        stars,member_digest=star_members(root,through,directory=inputs/'star50')
+        if any(r['ts_code'] not in fresh or re.sub(r'\s+','',r['name'])!=re.sub(r'\s+','',fresh[r['ts_code']]['security_name']) for r in stars):
+            raise ValueError('STAR50 membership and complete closing names differ')
+    st=[{'ts_code':r['ts_code'],'name':r['name']} for r in risk['rows'] if r['kind']=='risk_warning' and r['share_class']=='A']
+    return st,stars,risk['content_digest'],member_digest,confirmation
 
 
 def price_observation(symbol,name,calendar,by_day,latest):
@@ -124,26 +164,25 @@ def watched_members(fresh):
     return [{'ts_code':symbol,'name':fresh.get(symbol,{}).get('security_name') or WATCH_LABELS[symbol]} for symbol in WATCHED]
 
 
-def build(data,*,through,root=ROOT):
+def build(data,*,through,root=ROOT,membership_inputs=None):
     from workbench_views import WATCHED,watch_basis
     from market_periods import recent_calendar_window
     from market_calendar import sessions_2026
     from market_breadth_history import _read_day
-    from exchange_risk_membership import list_status
     period=recent_calendar_window(through);calendar=period['calendar']
     if period['availability']!='defined' or len(calendar)<21:raise ValueError('completed common price calendar required')
-    risk=list_status(root/'exchange_risk_membership',now=datetime.now(timezone.utc))
-    if risk['availability']!='observed' or risk['observed_on']!=through:raise ValueError('current ST list not independently observed for this date')
-    st=[{'ts_code':r['ts_code'],'name':r['name']} for r in risk['rows'] if r['kind']=='risk_warning' and r['share_class']=='A']
-    stars,member_digest=star_members(root,through);sources={};fresh={};observed_days={}
+    sources={};fresh={};observed_days={}
     required=sessions_2026(datetime.fromisoformat(data['requested_through']).date(),datetime.fromisoformat(through).date())[1:]
     if not required or required[-1]!=through:raise ValueError('new close date required')
     for day in required:
         merged={}
         for venue in ('SSE','SZSE'):
-            rows,key=closing_day(root,day,venue);merged.update(rows);sources[venue+':'+day]=key
+            rows,key=closing_day(root,day,venue)
+            if set(rows)&set(merged):raise ValueError('duplicate cross-venue closing security')
+            merged.update(rows);sources[venue+':'+day]=key
         observed_days[day]=merged
     fresh=observed_days[through]
+    st,stars,risk_digest,member_digest,confirmation=closing_members(root,through,fresh,inputs=membership_inputs)
     hdir=root/'public_breadth_history';history=packet(hdir/'current.json')
     if history['content_digest']!=data['breadth_history']['content_digest']:raise ValueError('base history changed')
     daily={}
@@ -180,28 +219,60 @@ def build(data,*,through,root=ROOT):
         groups.append({'key':key,'name':label,'pool_count':len(members),'observed_count':len(valid),
                        'oversold_count':len(eligible),'early_repair_count':sum(r['stage']=='early_repair' for r in eligible),
                        'rows':eligible,'excluded':[r for r in all_rows if r['availability']!='available']})
-    return {'availability':'available','as_of':through,'start':calendar[0],'horizon':'1–4周反弹观察',
+    result={'availability':'available','as_of':through,'start':calendar[0],'horizon':'1–4周反弹观察',
             'groups':groups,'rules':RULES,'watchlist':[results[s] for s in WATCHED if s in results],
-            'source_digests':{'membership':risk['content_digest'],'star50_members':member_digest,'base_sse':data['sse_history_archive']['content_digest'],'base_szse':history['content_digest'],**sources},
+            'source_digests':{'membership':risk_digest,'star50_members':member_digest,'base_sse':data['sse_history_archive']['content_digest'],'base_szse':history['content_digest'],**sources},
             'reading_note':'这是按当前成员、历史收盘与已公开资料建立的反弹观察。初步修复表示价格条件，不表示公司风险已解决。'}
+    if membership_inputs is not None:
+        result['source_digests']['membership_inputs']=digest(membership_files(membership_inputs))
+        result['membership_confirmation']=confirmation
+    return result
+
+
+def materialize(data,through,*,membership_inputs=None,root=ROOT,output=OUTPUT):
+    processor=processor_digest();frozen=None;key=None
+    if membership_inputs is not None:
+        files=membership_files(membership_inputs);key=digest(files);frozen=output/'sources'/key
+        for name,expected in files.items():
+            raw=(membership_inputs/name).read_bytes()
+            if sha256(raw).hexdigest()!=expected:raise ValueError('membership input changed during copy')
+            target=frozen/name
+            if target.exists() and target.read_bytes()!=raw:raise ValueError('immutable membership source differs')
+            target.parent.mkdir(parents=True,exist_ok=True)
+            if not target.exists():target.write_bytes(raw)
+        if membership_files(frozen)!=files:raise ValueError('frozen membership source changed')
+    result=build(data,through=through,root=root,membership_inputs=frozen)
+    if processor_digest()!=processor:raise ValueError('reload changed observation processor')
+    value={'version':DATED_VERSION if frozen is not None else VERSION,'processor_digest':processor,
+           'checked_at':datetime.now(timezone.utc).isoformat(),'data':result}
+    if frozen is not None:
+        if digest(membership_files(frozen))!=key or result['source_digests']['membership_inputs']!=key:raise ValueError('membership input changed during publication')
+        value['membership_input_digest']=key
+    value['content_digest']=digest(value)
+    atomic_write_json(output/'snapshots'/(value['content_digest']+'.json'),value);atomic_write_json(output/'current.json',value)
+    return value
 
 
 def load(directory=OUTPUT):
     try:
         value=packet(directory/'current.json')
-        if value['version']!=VERSION or value['processor_digest']!=processor_digest():return {'availability':'updating'}
+        if value['version'] not in (VERSION,DATED_VERSION) or value['processor_digest']!=processor_digest():return {'availability':'updating'}
+        if value['version']==DATED_VERSION:
+            key=value.get('membership_input_digest')
+            if not isinstance(key,str) or not re.fullmatch(r'[a-f0-9]{64}',key) or value['data']['source_digests'].get('membership_inputs')!=key or not value['data'].get('membership_confirmation'):
+                return {'availability':'updating'}
+        elif 'membership_inputs' in value['data'].get('source_digests',{}) or value['data'].get('membership_confirmation'):
+            return {'availability':'updating'}
         from trader_research_notes import attach_swing_notes
         return attach_swing_notes(value['data'],value['content_digest'],directory.parent)
     except (OSError,ValueError,KeyError,TypeError):return {'availability':'updating'}
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--through',required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--through',required=True)
+    parser.add_argument('--membership-inputs',type=Path);args=parser.parse_args()
     from market_risk import build_market_risk_status
-    processor=processor_digest();data=build(build_market_risk_status(),through=args.through)
-    if processor_digest()!=processor:raise ValueError('reload changed observation processor')
-    value={'version':VERSION,'processor_digest':processor,'checked_at':datetime.now(timezone.utc).isoformat(),'data':data};value['content_digest']=digest(value)
-    atomic_write_json(OUTPUT/'snapshots'/(value['content_digest']+'.json'),value);atomic_write_json(OUTPUT/'current.json',value)
+    value=materialize(build_market_risk_status(),args.through,membership_inputs=args.membership_inputs);data=value['data']
     print(json.dumps({'as_of':data['as_of'],'groups':[{k:g[k] for k in ('name','pool_count','observed_count','oversold_count','early_repair_count')} for g in data['groups']]},ensure_ascii=False))
 
 

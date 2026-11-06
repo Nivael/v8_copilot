@@ -17,6 +17,9 @@ from canonical_json import digest
 from data_refresh import atomic_write_json
 
 PREFIX='HISTORY_ATTACHMENT_OBSERVATION_V1:'
+GROUP_PREFIX='HISTORY_ATTACHMENT_OBSERVATION_V2:'
+VERSIONS={'history_attachment_observation_v1':(PREFIX,'history_attachment_capture_v1'),
+          'history_attachment_observation_v2':(GROUP_PREFIX,'history_attachment_capture_v2')}
 UUID=re.compile(r'^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$')
 SHA=re.compile(r'^[a-f0-9]{64}$')
 MAX_BYTES=8_000_000
@@ -47,7 +50,7 @@ def image_info(raw):
 
 
 def validate_observation(value):
-    if value.get('version')!='history_attachment_observation_v1' or value.get('kind')!='rendered_capture':raise ValueError('unsupported attachment observation')
+    if value.get('version') not in VERSIONS or value.get('kind')!='rendered_capture':raise ValueError('unsupported attachment observation')
     identity=value['source_message_id']
     parts=urlsplit(value['source_url']);thread=parts.path.rsplit('/c/',1)[-1]
     if (not UUID.fullmatch(identity) or value['question_id']!='QUESTION-'+identity
@@ -61,6 +64,14 @@ def validate_observation(value):
     for name in ('x','y','width','height'):
         number=value['capture'][name]
         if type(number) is not int or number<(1 if name in {'width','height'} else 0):raise ValueError('invalid capture bounds')
+    if value['version']=='history_attachment_observation_v2':
+        count,index=value['attachment_count'],value['attachment_index']
+        if (type(count) is not int or not 2<=count<=5 or type(index) is not int or not 0<=index<count
+                or not isinstance(value['capture_group_id'],str) or not UUID.fullmatch(value['capture_group_id'])
+                or not isinstance(value['attachment_id'],str) or not UUID.fullmatch(value['attachment_id'])):
+            raise ValueError('invalid attachment group identity')
+    elif any(name in value for name in ('capture_group_id','attachment_id','attachment_index','attachment_count')):
+        raise ValueError('single attachment observation cannot declare a group')
     return thread
 
 
@@ -82,11 +93,15 @@ def collect_capture(log_path,call_id,*,root):
     if selected is None:raise ValueError('selected CUA attachment result was not found')
     outputs,record_sha,offset=selected;observations=[];images=[]
     for item in outputs:
-        if item.get('type')=='input_text' and item.get('text','').startswith(PREFIX):
-            observations.append((json.loads(item['text'][len(PREFIX):]),item['text']))
+        if item.get('type')=='input_text':
+            for prefix,_ in VERSIONS.values():
+                if item.get('text','').startswith(prefix):
+                    observations.append((json.loads(item['text'][len(prefix):]),item['text'],prefix))
         if item.get('type')=='input_image':images.append(item['image_url'])
     if len(observations)!=1 or len(images)!=1:raise ValueError('attachment requires one observation and one returned image')
-    observation,text=observations[0];validate_observation(observation)
+    observation,text,prefix=observations[0];validate_observation(observation)
+    expected_prefix,wrapper_version=VERSIONS[observation['version']]
+    if prefix!=expected_prefix:raise ValueError('attachment observation prefix/version mismatch')
     header,encoded=images[0].split(',',1)
     if header not in {'data:image/jpeg;base64','data:image/png;base64'} or len(encoded)>MAX_BYTES*4//3+4:raise ValueError('unsupported returned attachment image')
     raw=base64.b64decode(encoded,validate=True);info=image_info(raw)
@@ -97,7 +112,7 @@ def collect_capture(log_path,call_id,*,root):
         if path.read_bytes()!=raw:raise ValueError('existing attachment bytes changed')
     else:
         with path.open('xb') as stream:stream.write(raw)
-    wrapper={'version':'history_attachment_capture_v1','observation':observation,'asset':info,'original_output':text,
+    wrapper={'version':wrapper_version,'observation':observation,'asset':info,'original_output':text,
              'output_sha256':sha256(text.encode()).hexdigest(),'source_file':log_path.name,'source_record_sha256':record_sha,
              'byte_offset':offset,'tool_call_id':call_id}
     wrapper['content_digest']=digest(wrapper);atomic_write_json(root/'visuals/captures'/(wrapper['content_digest']+'.json'),wrapper)
@@ -116,31 +131,50 @@ def asset_bytes(asset,*,root):
 def add_visuals(records,*,root):
     """Rebuild optional visuals from bound sidecars; ignore imported annotations.
 
-    V1 deliberately supports questions with exactly one captured attachment;
-    multi-image questions need independent per-image identity before publication.
+    V1 remains single-image. V2 publishes only complete message-bound groups,
+    each with its own observed index and stable attachment identity.
     """
     from research_history_prices import bound
     result=[{k:v for k,v in row.items() if k!='question_visuals'} for row in records]
-    by_id=defaultdict(list);choices=defaultdict(list)
+    by_id=defaultdict(list);choices=defaultdict(list);groups=defaultdict(list)
     for row in result:by_id[row['id']].append(row)
     for path in sorted((root/'visuals/captures').glob('*.json')):
         value=bound(path)
-        if value['version']!='history_attachment_capture_v1':raise ValueError('unexpected attachment wrapper')
         observation=value['observation'];thread=validate_observation(observation);text=value['original_output']
-        if text!=PREFIX+json.dumps(observation,separators=(',',':'),ensure_ascii=False) or sha256(text.encode()).hexdigest()!=value['output_sha256']:raise ValueError('original attachment observation changed')
+        prefix,version=VERSIONS[observation['version']]
+        if value['version']!=version:raise ValueError('unexpected attachment wrapper')
+        if text!=prefix+json.dumps(observation,separators=(',',':'),ensure_ascii=False) or sha256(text.encode()).hexdigest()!=value['output_sha256']:raise ValueError('original attachment observation changed')
         asset=value['asset'];asset_bytes(asset,root=root)
         if (asset['width'],asset['height'])!=(observation['capture']['width'],observation['capture']['height']):raise ValueError('attachment capture dimensions changed')
         matches=by_id[observation['question_id']]
         if len(matches)!=1:continue
         row=matches[0]
-        if row['kind']!='original_question' or row['question']!=observation['question'] or row.get('unavailable_attachments')!=1:continue
+        count=observation.get('attachment_count',1)
+        if row['kind']!='original_question' or row['question']!=observation['question'] or row.get('unavailable_attachments')!=count:continue
         if not any(s.get('thread_id')==thread and s.get('turn_id')==observation['source_message_id'] and s['kind'] in {'chatgpt','chatgpt_rendered'} for s in row['sources']):continue
-        choices[row['id']].append({'kind':'rendered_capture','sha256':asset['sha256'],'source_message_id':observation['source_message_id'],
+        visual={'kind':'rendered_capture','sha256':asset['sha256'],'source_message_id':observation['source_message_id'],
                                   'source_thread_id':thread,'source_url':'https://chatgpt.com/c/'+thread,'captured_at':observation['observed_at'],
                                   'width':asset['width'],'height':asset['height'],'asset':asset,'capture_digest':value['content_digest'],
-                                  'url':'/api/v1/workbench/history-assets/'+asset['sha256']})
+                                  'url':'/api/v1/workbench/history-assets/'+asset['sha256']}
+        if observation['version']=='history_attachment_observation_v1':choices[row['id']].append([visual])
+        else:
+            visual.update({name:observation[name] for name in ('attachment_id','attachment_index','attachment_count')})
+            groups[(row['id'],observation['capture_group_id'])].append(visual)
+    latest=lambda visual:(datetime.fromisoformat(visual['captured_at'].replace('Z','+00:00')),visual['capture_digest'])
+    for (identity,_),entries in groups.items():
+        counts={v['attachment_count'] for v in entries}
+        if len(counts)!=1:continue
+        count=next(iter(counts));indexed=defaultdict(list)
+        for visual in entries:indexed[visual['attachment_index']].append(visual)
+        if set(indexed)!=set(range(count)):continue
+        # A replay can update an image, but cannot silently change its identity.
+        if any(len({v['attachment_id'] for v in values})!=1 for values in indexed.values()):continue
+        selected=[max(indexed[i],key=latest) for i in range(count)]
+        if len({v['attachment_id'] for v in selected})!=count:continue
+        choices[identity].append(selected)
     for row in result:
-        if choices[row['id']]:row['question_visuals']=[max(choices[row['id']],key=lambda v:(datetime.fromisoformat(v['captured_at'].replace('Z','+00:00')),v['capture_digest']))]
+        if choices[row['id']]:
+            row['question_visuals']=max(choices[row['id']],key=lambda group:(max(latest(v)[0] for v in group),tuple(v['capture_digest'] for v in group)))
     return result
 
 

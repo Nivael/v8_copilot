@@ -122,6 +122,21 @@ describe('original question retrospective',()=>{
     fireEvent.click(toggle)
     await waitFor(()=>expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument())
   })
+  it('opens a complete attachment group in original order and unloads both when collapsed',async()=>{
+    const visuals=[0,1].map(index=>({kind:'rendered_capture' as const,sha256:'a'.repeat(64),url:`/api/v1/workbench/history-assets/${index}`,
+      width:436,height:1043,captured_at:'2026-11-06T02:00:00Z',source_url:'https://chatgpt.com/c/source',
+      attachment_id:`attachment-${index}`,attachment_index:index,attachment_count:2}))
+    serve({...detail,questions:[{...question,unavailable_attachments:2,question_visuals:visuals}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument()
+    expect(screen.queryByText('这条原问的附件画面待补齐。')).not.toBeInTheDocument()
+    const toggle=screen.getByText('当时看到的附件 · 展示截图');fireEvent.click(toggle)
+    const images=await screen.findAllByAltText('原聊天附件展示截图')
+    expect(images.map(image=>image.getAttribute('src'))).toEqual(visuals.map(visual=>visual.url))
+    expect(screen.getByText(/附件 1\/2/)).toBeVisible();expect(screen.getByText(/附件 2\/2/)).toBeVisible()
+    fireEvent.click(toggle)
+    await waitFor(()=>expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument())
+  })
   it('keeps a date-range question readable without assigning it a return or a fake chart',async()=>{
     serve({...detail,questions:[{...question,asked_at:null,asked_on:null,time_precision:'range',asked_from:'2026-06-01',asked_through:'2026-06-04',anchor_date:null,outcomes:{},review:null}]})
     render(<ResearchHistorySection/>)

@@ -23,7 +23,7 @@ function matchesSearch(question:HistoryQuestion,terms:string[]){
 
 function HistoryVisuals({visuals}:{visuals:HistoryVisual[]}){
   const [open,setOpen]=useState(false)
-  return <details className="reading-disclosure history-visuals" onToggle={event=>setOpen(event.currentTarget.open)}><summary>当时看到的附件 · 展示截图</summary><p>从原聊天附件预览保存的画面，供还原当时的信息；不是原始文件，也不代表截图中的说法已核实。</p>{open&&visuals.map(visual=><figure key={visual.sha256}><a href={visual.url} target="_blank" rel="noreferrer"><img src={visual.url} width={visual.width} height={visual.height} alt="原聊天附件展示截图" loading="lazy"/></a><figcaption>画面归档于 {timestamp(visual.captured_at)} · 北京时间 <a href={visual.source_url} target="_blank" rel="noreferrer">打开原聊天 ↗</a></figcaption></figure>)}</details>
+  return <details className="reading-disclosure history-visuals" onToggle={event=>setOpen(event.currentTarget.open)}><summary>当时看到的附件 · 展示截图</summary><p>从原聊天附件预览保存的画面，供还原当时的信息；不是原始文件，也不代表截图中的说法已核实。</p>{open&&visuals.map(visual=><figure key={visual.attachment_id||visual.sha256}><a href={visual.url} target="_blank" rel="noreferrer"><img src={visual.url} width={visual.width} height={visual.height} alt="原聊天附件展示截图" loading="lazy"/></a><figcaption>{visual.attachment_count&&`附件 ${(visual.attachment_index??0)+1}/${visual.attachment_count} · `}画面归档于 {timestamp(visual.captured_at)} · 北京时间 <a href={visual.source_url} target="_blank" rel="noreferrer">打开原聊天 ↗</a></figcaption></figure>)}</details>
 }
 
 function HistoryBody({symbol}:{symbol:string}){

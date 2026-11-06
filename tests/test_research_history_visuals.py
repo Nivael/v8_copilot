@@ -10,7 +10,7 @@ from canonical_json import digest
 from data_refresh import atomic_write_json
 from research_history import assemble,load_visual,prepare_history_records,publish,question_digest
 from research_history_reviews import freeze_review
-from research_history_visuals import PREFIX,add_visuals,collect_capture,image_info
+from research_history_visuals import PREFIX,GROUP_PREFIX,add_visuals,collect_capture,image_info
 from test_research_history import sample
 
 THREAD='11111111-1111-4111-8111-111111111111'
@@ -26,8 +26,10 @@ def observation():
             'capture':{'x':10,'y':10,'width':1,'height':1},'note':'原附件展示截图'}
 
 
-def tool_log(tmp_path,value=None,raw=PNG,*,namespace='mcp__cua_repl',extra_image=False):
-    text=PREFIX+json.dumps(value or observation(),ensure_ascii=False,separators=(',',':'))
+def tool_log(tmp_path,value=None,raw=PNG,*,namespace='mcp__cua_repl',extra_image=False,prefix=None):
+    value=value or observation()
+    prefix=prefix or (GROUP_PREFIX if value['version']=='history_attachment_observation_v2' else PREFIX)
+    text=prefix+json.dumps(value,ensure_ascii=False,separators=(',',':'))
     output=[{'type':'input_text','text':text},{'type':'input_image','image_url':'data:image/png;base64,'+base64.b64encode(raw).decode()}]
     if extra_image:output.append(output[-1])
     log=tmp_path/'selected-log.jsonl'
@@ -151,3 +153,80 @@ def test_image_limit_rejects_excessive_dimensions_and_non_image_content():
     raw=bytearray(PNG);raw[16:20]=(10000).to_bytes(4,'big')
     with pytest.raises(ValueError,match='dimensions'):image_info(bytes(raw))
     with pytest.raises(ValueError):image_info(b'<html>not image</html>')
+
+
+GROUP='33333333-3333-4333-8333-333333333333'
+ATTACHMENTS=['44444444-4444-4444-8444-444444444444','55555555-5555-4555-8555-555555555555']
+
+
+def group_observation(index,**changes):
+    return {**observation(),'version':'history_attachment_observation_v2','capture_group_id':GROUP,
+            'attachment_id':ATTACHMENTS[index],'attachment_count':2,'attachment_index':index,**changes}
+
+
+def group_original():
+    return {**original(),'unavailable_attachments':2}
+
+
+def collect_group_image(tmp_path,index,**changes):
+    return collect_capture(tool_log(tmp_path,group_observation(index,**changes),PNG+bytes([index])),
+                           'capture-call',root=tmp_path)
+
+
+def test_group_is_published_only_when_complete_in_observed_order_and_serves_each_image(tmp_path):
+    second=collect_group_image(tmp_path,1)
+    assert 'question_visuals' not in add_visuals([group_original()],root=tmp_path)[0]
+    first=collect_group_image(tmp_path,0)
+    row=add_visuals([group_original()],root=tmp_path)[0]
+    assert [v['attachment_id'] for v in row['question_visuals']]==ATTACHMENTS
+    assert [v['sha256'] for v in row['question_visuals']]==[first['asset']['sha256'],second['asset']['sha256']]
+    publish_fixture(tmp_path,[group_original()])
+    for index,visual in enumerate(row['question_visuals']):
+        assert load_visual(visual['sha256'],root=tmp_path)==(PNG+bytes([index]),'image/png')
+
+
+@pytest.mark.parametrize('change',['other_group','duplicate_identity','ambiguous_index','wrong_count','wrong_question'])
+def test_incomplete_or_ambiguous_groups_are_not_stitched_or_partially_published(tmp_path,change):
+    collect_group_image(tmp_path,0)
+    changes={}
+    if change=='other_group':changes['capture_group_id']=ATTACHMENTS[0]
+    elif change=='duplicate_identity':changes['attachment_id']=ATTACHMENTS[0]
+    elif change=='ambiguous_index':collect_group_image(tmp_path,0,attachment_id=ATTACHMENTS[1])
+    elif change=='wrong_count':changes['attachment_count']=3
+    else:changes['question']='另一个问题'
+    collect_group_image(tmp_path,1,**changes)
+    assert 'question_visuals' not in add_visuals([group_original()],root=tmp_path)[0]
+
+
+@pytest.mark.parametrize('changes',[
+    {'attachment_index':-1},{'attachment_index':2},{'attachment_index':True},
+    {'attachment_count':1},{'attachment_count':6},{'attachment_count':True},
+    {'capture_group_id':None},{'attachment_id':'not-an-id'},
+    {'version':'history_attachment_observation_v1'},
+])
+def test_group_collector_requires_versioned_valid_per_image_identity(tmp_path,changes):
+    with pytest.raises(ValueError):
+        collect_capture(tool_log(tmp_path,group_observation(0,**changes)),'capture-call',root=tmp_path)
+    assert not (tmp_path/'visuals/assets').exists()
+
+
+def test_group_collector_rejects_prefix_version_mismatch(tmp_path):
+    with pytest.raises(ValueError,match='prefix/version'):
+        collect_capture(tool_log(tmp_path,group_observation(0),prefix=PREFIX),'capture-call',root=tmp_path)
+
+
+def test_attachment_identity_changes_withdraw_review_but_capture_replay_does_not(tmp_path):
+    for index in range(2):collect_group_image(tmp_path,index)
+    row=add_visuals([group_original()],root=tmp_path)[0];paths,_=sample()
+    review=freeze_review({'question_digest':question_digest(row),'then_quote':'更像洗盘','headline':'已读两图'},row,paths,'2026-06-02')
+    for index in range(2):collect_group_image(tmp_path,index,observed_at='2026-06-04T00:00:00Z')
+    replay=add_visuals([group_original()],root=tmp_path)[0]
+    assert question_digest(replay)==question_digest(row)
+    assert assemble([replay],paths,reviews={row['id']:review})['details']['002514.SZ']['questions'][0]['review']==review
+    for index in range(2):
+        collect_group_image(tmp_path,index,capture_group_id=ATTACHMENTS[0],
+                            attachment_id=GROUP if index==0 else ATTACHMENTS[1],observed_at='2026-06-05T00:00:00Z')
+    changed=add_visuals([group_original()],root=tmp_path)[0]
+    assert question_digest(changed)!=question_digest(row)
+    state=assemble([changed],paths,reviews={row['id']:review})['details']['002514.SZ']['questions'][0]
+    assert state['review'] is None and state['previous_review']==review

@@ -67,7 +67,9 @@ def question_digest(record):
     if record.get('question_context'):
         basis['question_context']={k:record['question_context'][k] for k in ('version','question_id','question','asked_on','source_url')}
     if record.get('question_visuals'):
-        basis['question_visuals']=[{k:v[k] for k in ('kind','sha256','source_message_id','source_thread_id')} for v in record['question_visuals']]
+        basis['question_visuals']=[{**{k:v[k] for k in ('kind','sha256','source_message_id','source_thread_id')},
+                                   **{k:v[k] for k in ('attachment_id','attachment_index','attachment_count') if k in v}}
+                                  for v in record['question_visuals']]
     return digest(basis)
 
 

@@ -5,7 +5,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from api_contract import ResearchRequest
+from api_contract import ResearchObject, ResearchRequest
 from api_contract_v2 import NarrativeStatement, ResearchNarrative
 from evidence_gateway import (
     DecisionAudit,
@@ -32,6 +32,52 @@ def test_evidence_pack_adapts_deterministic_answer_without_changing_contracts() 
     assert pack.deterministic_response["contract_version"] == "v8_copilot_api_contract_v2"
     assert pack.validation_catalog
     assert pack.not_evidence is False
+
+
+@pytest.mark.parametrize('ref,code',[
+    ('603398.SH','603398'),
+    (' 603398.sh ','603398'),
+    ('002207.SZ','002207'),
+    ('002207.sz','002207'),
+])
+@pytest.mark.parametrize('question',[
+    '预亏公告没给营收，能否从亏损倒推半年营收？',
+    '今天跌停，预亏公告没给营收，能否从亏损倒推半年营收？',
+])
+def test_explicit_stock_suffix_uses_the_same_real_evidence_as_its_six_digit_code(ref,code,question) -> None:
+    request=ResearchRequest(question=question,object=ResearchObject(kind='stock',ref=ref),llm_mode='off')
+    pack=build_evidence_pack(request)
+    plain=build_evidence_pack(ResearchRequest(question=question,object=ResearchObject(kind='stock',ref=code),llm_mode='off'))
+
+    assert pack.question_scope['object']=={'kind':'stock','ref':code}
+    assert pack.question_scope==plain.question_scope
+    assert pack.rows and pack.rows==plain.rows
+    assert pack.query_plan_id==plain.query_plan_id
+    assert request.object.ref==ref
+
+
+@pytest.mark.parametrize('ref',[
+    '603398.SZ',
+    '002207.SH',
+    '603398.CSI',
+    '603398.SH,002207.SZ',
+    '看603398.SH',
+    '1603398.SH',
+    '603398.SH/备选',
+])
+def test_invalid_explicit_stock_identity_requests_clarification_without_guessing(ref) -> None:
+    pack=build_evidence_pack(ResearchRequest(question='分析沐邦的营收与价格',object=ResearchObject(kind='stock',ref=ref),llm_mode='off'))
+
+    assert pack.question_scope['object']=={'kind':'unknown','ref':ref}
+    assert pack.question_scope['route']=='clarify'
+    assert not pack.rows
+
+
+def test_invalid_stock_identity_does_not_bypass_the_existing_action_boundary() -> None:
+    pack=build_evidence_pack(ResearchRequest(question='可以买沐邦吗？',object=ResearchObject(kind='stock',ref='603398.SZ'),llm_mode='off'))
+
+    assert pack.question_scope['route']=='refuse_or_rewrite'
+    assert not pack.rows
 
 
 def test_evidence_pack_detects_tampering() -> None:

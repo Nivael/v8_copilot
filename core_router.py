@@ -1,6 +1,8 @@
 """Deterministic interpretation and final routing for the W1 API."""
 from __future__ import annotations
 
+import re
+
 from api_contract import (
     QuestionInterpretation,
     ResearchObject,
@@ -14,6 +16,11 @@ from trading_boundary import is_trading_advice_request
 
 def _infer_object(request: ResearchRequest) -> ResearchObject:
     if request.object is not None:
+        if request.object.kind == 'stock':
+            ref = request.object.ref.strip().upper()
+            if re.fullmatch(r'[0-9]{6}|6[0-9]{5}\.SH|[03][0-9]{5}\.SZ', ref):
+                return request.object.model_copy(update={'ref': ref.split('.')[0]})
+            return ResearchObject(kind='unknown', ref=request.object.ref)
         return request.object
     if request.context and request.context.symbol:
         return ResearchObject(kind="stock", ref=request.context.symbol)
@@ -136,6 +143,18 @@ def decide_route(
     request: ResearchRequest,
     interpretation: QuestionInterpretation,
 ) -> RouteDecision:
+    if (
+        request.object is not None
+        and request.object.kind == 'stock'
+        and interpretation.object.kind == 'unknown'
+        and interpretation.intent != 'trading_advice_boundary'
+    ):
+        return RouteDecision(
+            route='clarify', status='clarify', view='clarify',
+            reason='请提供六位股票代码，或匹配沪深市场的代码后缀；单个股票标识不能混入其他对象。',
+            matched_rules=['invalid_explicit_stock_reference'],
+            required_lens_behavior='not_applicable',
+        )
     prediction = route_question({
         "user_question": request.question,
         "object": interpretation.object.model_dump(mode="json"),

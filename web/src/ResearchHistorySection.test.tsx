@@ -48,6 +48,21 @@ describe('original question retrospective',()=>{
     expect(within(article).queryByText('次日')).not.toBeInTheDocument()
     expect(screen.getByRole('img',{name:/从2026-06-01起/})).toBeVisible()
   })
+  it('distinguishes a dated historical price gap from a future horizon and preserves the gap date',async()=>{
+    serve({...detail,questions:[{...question,outcomes:{...question.outcomes,stock:{five_day:{date:'2026-06-09',change_pct:null},sixty_day:{date:null,change_pct:null}}}}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    const values=screen.getByRole('article',{name:'*ST宝馨历史复盘详情'}).querySelector<HTMLElement>('.history-outcomes')!
+    const historical=within(values).getByText('5个交易日').parentElement!
+    expect(within(historical).getByText('暂无可比价格')).toBeVisible()
+    expect(within(historical).getByText('2026-06-09')).toBeVisible()
+    const future=within(values).getByText('60个交易日').parentElement!
+    expect(within(future).getByText('待后续行情')).toBeVisible()
+    expect(within(future).getByText('后续收盘待更新')).toBeVisible()
+    fireEvent.click(screen.getByText('同一窗口，大盘和ST分别走了多少？'))
+    const row=screen.getByRole('row',{name:/5个交易日 暂无可比价格/})
+    expect(within(row).getByText('—')).toBeVisible()
+    expect(within(row).queryByText('0.00%')).not.toBeInTheDocument()
+  })
   it('changes stock without leaving another stock’s answer under its name and filters by lens',async()=>{
     serve();render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
     fireEvent.change(screen.getByRole('combobox',{name:'历史问题分类'}),{target:{value:'财报与监管'}})

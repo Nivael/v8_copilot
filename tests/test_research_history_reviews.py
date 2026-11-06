@@ -96,6 +96,43 @@ def test_missing_associated_stock_or_assessed_endpoint_cannot_keep_a_review():
     assert row(paths,record,review)['review_status']=='price_changed'
 
 
+def test_mixed_market_question_is_shared_across_market_and_stock_with_one_focused_review():
+    paths,record,_=fixture();record['market_scope']=True
+    review=freeze_review({'question_digest':question_digest(record),'then_quote':'更像洗盘','headline':'大盘与个股分开检验'},
+                         record,paths,review_anchor(record,{},paths))
+    result=assemble([record],paths,reviews={record['id']:review})
+    assert set(result['details'])=={'market','002514.SZ'} and len(result['unique'])==1
+    for detail in result['details'].values():
+        q=detail['questions'][0]
+        assert q['id']==record['id'] and q['review']==review and q['review_status']=='current'
+        assert q['review_focused_name']=='大盘与ST' and q['review']['focused_symbol']=='market'
+    assert 'stock' not in result['details']['market']['chart_sources']
+    paths['stocks']['002514.SZ']['points'][-1]['value']=19
+    assert row(paths,record,review)['review_status']=='price_changed'
+
+
+def test_market_scope_change_withdraws_review_and_cannot_be_inferred_from_a_stock_scope():
+    paths,record,review=fixture();before=question_digest(record)
+    with pytest.raises(ValueError,match='focused stock'):
+        freeze_review({**review,'focused_symbol':'market'},record,paths,review_anchor(record,review,paths))
+    record['market_scope']=False;assert question_digest(record)==before
+    record['market_scope']=True
+    assert row(paths,record,review)['review_status']=='original_changed'
+    record['market_scope']='true'
+    with pytest.raises(ValueError,match='market scope'):question_digest(record)
+
+
+def test_mixed_market_argument_review_has_no_return_binding_and_withdraws_when_scope_changes():
+    from research_history_reviews import freeze_argument_review
+    paths,record,_=fixture();record['market_scope']=True
+    review=freeze_argument_review({'question_digest':question_digest(record),'then_quote':'更像洗盘','headline':'只核逻辑'},record)
+    q=row(paths,record,review,'market')
+    assert q['review_status']=='argument_only' and q['review']['focused_symbol']=='market'
+    assert 'price_through' not in q['review']
+    record['market_scope']=False
+    assert row(paths,record,review)['review_status']=='original_changed'
+
+
 @pytest.mark.parametrize('through',['2026-06-11','2026-05-29','invalid'])
 def test_cannot_freeze_future_or_out_of_range_window(through):
     paths,record,review=fixture()

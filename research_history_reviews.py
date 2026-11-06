@@ -9,6 +9,16 @@ ARGUMENT_BASIS='original_argument_only'
 PRICE_FIELDS={'price_digest','price_through','anchor_date','price_window_digest'}
 
 
+def focus_options(record):
+    scope=record['symbols']
+    return [*scope,*(['market'] if not scope or record.get('market_scope') is True else [])]
+
+
+def default_focus(record):
+    scope=record['symbols']
+    return 'market' if not scope or record.get('market_scope') is True else scope[0] if len(scope)==1 else None
+
+
 def argument_review_claimed(review):
     return review.get('review_binding_version')==ARGUMENT_VERSION or review.get('assessment_basis')==ARGUMENT_BASIS
 
@@ -17,7 +27,7 @@ def argument_binding_matches(review,record):
     return (review.get('review_binding_version')==ARGUMENT_VERSION and review.get('assessment_basis')==ARGUMENT_BASIS
             and record['kind']=='original_question' and review.get('original_record_id')==record['id']
             and review.get('scope_symbols')==sorted(set(record['symbols']))
-            and review.get('focused_symbol') in (record['symbols'] or ['market'])
+            and review.get('focused_symbol') in focus_options(record)
             and not PRICE_FIELDS.intersection(review))
 
 
@@ -29,8 +39,8 @@ def freeze_argument_review(review,record):
     if review.get('question_digest')!=question_digest(record):raise ValueError('argument review original binding changed')
     validate_quote(review,record)
     scope=sorted(set(record['symbols']))
-    focus=review.get('focused_symbol') or (scope[0] if len(scope)==1 else 'market' if not scope else None)
-    if focus not in (scope or ['market']):raise ValueError('review needs an explicit related focused stock')
+    focus=review.get('focused_symbol') or default_focus(record)
+    if focus not in focus_options(record):raise ValueError('review needs an explicit related focused stock')
     if review.get('review_binding_version') and not argument_binding_matches(review,record):
         raise ValueError('argument review cannot rebind an existing assessment')
     for key,value in [('original_record_id',record['id']),('scope_symbols',scope),('assessment_basis',ARGUMENT_BASIS)]:
@@ -68,8 +78,8 @@ def freeze_review(review,record,paths,anchor,*,through=None):
     if argument_review_claimed(review):raise ValueError('argument-only review needs its separate binding')
     validate_quote(review,record)
     scope=sorted(set(record['symbols']))
-    focus=review.get('focused_symbol') or (scope[0] if len(scope)==1 else 'market' if not scope else None)
-    if focus not in (scope or ['market']):raise ValueError('review needs an explicit related focused stock')
+    focus=review.get('focused_symbol') or default_focus(record)
+    if focus not in focus_options(record):raise ValueError('review needs an explicit related focused stock')
     through=through or paths['calendar'][-1]
     return {**review,'review_binding_version':VERSION,'price_through':through,'scope_symbols':scope,
             'focused_symbol':focus,'anchor_date':anchor,'price_window_digest':window_digest(paths,scope,anchor,through)}
@@ -89,7 +99,7 @@ def resolve_review(review,record,paths,question_digest,anchor):
     else:
         matches=False
         if (review['review_binding_version']==VERSION and review.get('scope_symbols')==sorted(set(record['symbols']))
-                and review.get('anchor_date')==anchor and review.get('focused_symbol') in (record['symbols'] or ['market'])):
+                and review.get('anchor_date')==anchor and review.get('focused_symbol') in focus_options(record)):
             try:matches=review.get('price_window_digest')==window_digest(paths,review['scope_symbols'],anchor,review['price_through'])
             except (ValueError,KeyError,TypeError):pass
     if not matches:return {'review':None,'previous_review':review,'review_status':'price_changed'}

@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 from canonical_json import digest
 from data_refresh import atomic_write_json
 from settings import DATA_ROOT
-from research_history_reviews import argument_review_claimed,freeze_review,resolve_review
+from research_history_reviews import argument_review_claimed,default_focus,freeze_review,resolve_review
 
 ROOT=DATA_ROOT/'local_data/v8_copilot/research_history'
 ALIASES={'沐邦':'603398.SH','宝馨':'002514.SZ','准油':'002207.SZ','联翔':'603272.SH','美芝':'002856.SZ',
@@ -20,7 +20,7 @@ ALIASES={'沐邦':'603398.SH','宝馨':'002514.SZ','准油':'002207.SZ','联翔'
          '思科瑞':'688053.SH','亚光':'300123.SZ','金顶':'600678.SH','得润':'002055.SZ','景谷':'600265.SH',
          '帅电':'605336.SH','帅丰':'605336.SH','源杰':'688498.SH','华丰科技':'688629.SH','华峰测控':'688200.SH',
          '正邦':'002157.SZ','东易':'002713.SZ','新研':'300159.SZ','芯原':'688521.SH','中微':'688012.SH',
-         '金刚':'300093.SZ','瑞和':'002620.SZ','正平':'603843.SH'}
+         '金刚':'300093.SZ','瑞和':'002620.SZ','正平':'603843.SH','集友':'603429.SH'}
 TOPICS={'重整与节点':('重整','法院','路条','招募','投资人','财投','产投','债权','债转股'),
         '控制权与股权':('股权','拍卖','控制权','实控人','收购'),
         '估值与摊薄':('估值','市值','转增','摊薄','定价','股本'),
@@ -61,6 +61,8 @@ def question_order(record):
 
 def question_digest(record):
     basis={'asked_at':record.get('asked_at'),'question':record['question'],'answers':record['answers']}
+    if 'market_scope' in record and type(record['market_scope']) is not bool:raise ValueError('invalid market scope')
+    if record.get('market_scope'):basis['market_scope']=True
     if record.get('asked_at') is None:
         day=question_day(record);basis.update(asked_on=day,time_precision='range' if day is None else 'day')
         if day is None:basis.update(asked_from=record['asked_from'],asked_through=record['asked_through'])
@@ -279,7 +281,7 @@ def comparison_basis(record,points):
 
 def review_anchor(record,review,paths):
     if argument_review_claimed(review):return None
-    scope=record['symbols'];focus=review.get('focused_symbol') or (scope[0] if len(scope)==1 else 'market' if not scope else None)
+    focus=review.get('focused_symbol') or default_focus(record)
     points=paths['market'] if focus=='market' else paths['stocks'].get(focus,{}).get('points',[])
     return comparison_basis(record,points)['anchor_date']
 
@@ -302,7 +304,7 @@ def assemble(records,paths,*,reviews=None):
     calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {}
     scopes={**paths['stocks'],'market':{'name':'大盘、ST与待定位问题','points':paths['market']}}
     for symbol,stock in scopes.items():
-        history=[r for r in records if (symbol in r['symbols'] if symbol!='market' else not r['symbols'])]
+        history=[r for r in records if (symbol in r['symbols'] if symbol!='market' else not r['symbols'] or r.get('market_scope') is True)]
         if not history:continue
         rows=[]
         for record in history:

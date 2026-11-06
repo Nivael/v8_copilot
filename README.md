@@ -195,6 +195,7 @@ uv run python workbench_views.py --review-symbol 603398.SH \
 历史原问题的独立评估窗口仍截至11月5日，反弹观察池仍为明确标日的11月5日快照；二者不随共同基础自动改日。
 独立指数价格入口继续保留，供以后完整比较资料尚未到齐时使用，跟踪页与市场页采用一致的最新价格判断。
 日期边界、方案比较与迁移说明见 [MARKET_READING_DATES.md](MARKET_READING_DATES.md)。
+本次实际来源、公司判断和验收结果见 [11月6日共同比较更新](MARKET_READING_2026_11_07.md)。
 
 ```bash
 uv run python trader_swing_reading.py --through 2026-11-05

@@ -37,6 +37,17 @@ describe('original question retrospective',()=>{
     expect(screen.getByRole('img',{name:/从2026-06-03起/})).toBeVisible()
     expect(screen.queryByText('错误：卖压被解释成洗盘')).not.toBeInTheDocument()
   })
+  it('does not call an intraday question’s same-day first close the next day',async()=>{
+    serve({...detail,questions:[{...question,asked_at:'2026-06-02T04:00:00Z',answer_completed_at:'2026-06-02T12:05:00+08:00',anchor_date:'2026-06-01',outcomes:{stock:{one_day:{date:'2026-06-02',change_pct:-5}},market:{},st:{}}}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    const article=screen.getByRole('article',{name:'*ST宝馨历史复盘详情'})
+    const outcomes=article.querySelector<HTMLElement>('.history-outcomes')!
+    expect(within(outcomes).getByText('下一个收盘')).toBeVisible()
+    expect(within(outcomes).getByText('2026-06-02')).toBeVisible()
+    expect(within(outcomes).getByText('-5.00%')).toBeVisible()
+    expect(within(article).queryByText('次日')).not.toBeInTheDocument()
+    expect(screen.getByRole('img',{name:/从2026-06-01起/})).toBeVisible()
+  })
   it('changes stock without leaving another stock’s answer under its name and filters by lens',async()=>{
     serve();render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
     fireEvent.change(screen.getByRole('combobox',{name:'历史问题分类'}),{target:{value:'财报与监管'}})

@@ -16,6 +16,7 @@ from urllib.parse import urlencode
 from zoneinfo import ZoneInfo
 
 from canonical_json import digest
+from case_research_scopes import OUTPUT as RUN_SCOPES, current_company_runs
 from data_refresh import atomic_write_json
 from settings import DATA_ROOT, EXPERIENCE_REPOSITORY_DB, RESEARCH_RUN_LEDGER_DB
 
@@ -246,7 +247,7 @@ def rows(path, query):
         return [dict(r) for r in connection.execute(query)]
 
 
-def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=RESEARCH_RUN_LEDGER_DB, reviews_dir=OUTPUT / 'case_reviews', latest_quotes=()):
+def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=RESEARCH_RUN_LEDGER_DB, reviews_dir=OUTPUT / 'case_reviews', latest_quotes=(), run_scopes_path=RUN_SCOPES / 'current.json'):
     methods = []
     for row in rows(experience_db, 'select experience_id,status,payload_json from experiences order by created_at desc'):
         value = json.loads(row['payload_json'])
@@ -258,6 +259,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
                         'category': CATEGORIES.get(value['experience_id'], '表达与复盘' if value['experience_type']=='presentation_rule' else '待分类'), 'status': value['status'],
                         'when_to_use': value['trigger_conditions'], 'source_run_refs': value['source_run_refs']})
     runs = rows(ledger_db, 'select run_id,question_text,object_refs_json,final_answer,experience_hits_json,source_freshness_json,completed_at from research_runs order by completed_at desc')
+    runs = current_company_runs(runs, path=run_scopes_path)
     cases = []
     for basis in packet.get('watch_bases', []):
         symbol = basis['symbol']; code = symbol[:6]
@@ -341,7 +343,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
 
 def processor_digest():
     return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name,'broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py',
+                   for name in (Path(__file__).name,'case_research_scopes.py','broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py',
                                 'market_price_reading.py','market_public_refresh.py','market_calendar.py')})
 
 

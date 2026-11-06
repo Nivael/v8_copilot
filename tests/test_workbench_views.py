@@ -136,6 +136,29 @@ def test_new_codex_record_appears_without_rebuilding_market_and_invalidates_case
     assert result['since_research_change_pct'] is None  # No post-research close exists.
 
 
+def test_historical_check_does_not_replace_current_case_or_withdraw_its_review(tmp_path):
+    from case_research_scopes import mark_historical_review
+    ledger = ResearchRunLedger(tmp_path/'runs.db')
+    first = record(ledger, '当前公司判断。')
+    args = dict(experience_db=tmp_path/'none', ledger_db=ledger.path,
+                reviews_dir=tmp_path/'reviews', run_scopes_path=tmp_path/'roles/current.json')
+    data = packet(); original = w.learning_view(data, **args)['cases'][0]
+    review = {'version':'workbench_case_review_v1','symbol':'603398.SH','basis_digest':original['basis_digest'],
+              'research_run_id':first.run_id,'reviewed_at':datetime.now(timezone.utc).isoformat(),
+              'assessment':'当前复盘','takeaways':['看公司现状']}
+    review['content_digest'] = digest(review); atomic_write_json(tmp_path/'reviews/603398.json', review)
+    before = w.learning_view(data, **args)['cases'][0]
+    historical = record(ledger, '只核对五月交易规则。', question='复核沐邦五月原问中的规则。')
+    assert w.learning_view(data, **args)['cases'][0]['review'] is None
+    mark_historical_review(historical.run_id, '历史制度核查，不是今天的公司判断',
+                           ledger_db=ledger.path, directory=tmp_path/'roles')
+    assert w.learning_view(data, **args)['cases'][0] == before
+    latest = record(ledger, '公司新增事实改变判断。')
+    case = w.learning_view(data, **args)['cases'][0]
+    assert case['history'][0]['run_id'] == latest.run_id and case['research_count'] == 2
+    assert case['review'] is None and case['previous_review'] == review
+
+
 def test_nontrading_day_is_a_gap_not_a_zero_return_and_missing_day_stays_unavailable(tmp_path):
     data = packet(); data['watch_bases'][0]['prices'][1].update(close=None, previous_close=None, is_trading=False)
     result = w.learning_view(data, experience_db=tmp_path/'missing', ledger_db=tmp_path/'none')['cases'][0]

@@ -234,6 +234,71 @@ describe('original question retrospective',()=>{
     expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument()
     expect(screen.queryByRole('region',{name:'追问背景'})).not.toBeInTheDocument()
   })
+  it('surfaces missing images declared by a legacy ChatGPT capture without changing the original or loading assets',async()=>{
+    const text='这两张图说明什么？\n\n[User attached 2 images; image contents were not included]'
+    const original={...question,question:text}
+    const request=serve({...detail,questions:[original]});render(<ResearchHistorySection/>)
+    expect(await screen.findByText('这条原问的附件画面待补齐。')).toBeVisible()
+    expect(screen.getByRole('heading',{name:'这两张图说明什么？'})).toBeVisible()
+    expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument()
+    expect(original.question).toBe(text)
+    expect(request.mock.calls.every(([url])=>!String(url).includes('history-assets'))).toBe(true)
+  })
+  it('describes a file-only original as a missing file instead of calling it a picture',async()=>{
+    serve({...detail,questions:[{...question,question:'[User attached 1 file; file contents were not included]'}]})
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText('这条原问的附件文件内容待补齐。')).toBeVisible()
+    expect(screen.getByRole('heading',{name:'附件问题（文字档案未包含文件）'})).toBeVisible()
+    expect(screen.queryByText('这条原问的附件画面待补齐。')).not.toBeInTheDocument()
+    expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument()
+  })
+  it('puts one combined missing-file-and-image notice beside a short followup’s background',async()=>{
+    const context={version:'history_question_context_v1',question_id:'earlier',question:'看这份材料',asked_on:'2026-06-02',source_url:'https://chatgpt.com/c/source'}
+    serve({...detail,questions:[{...question,question:'就是这个\n\n[User attached 1 file; file contents were not included]\n[User attached 1 image; image contents were not included]',question_context:context}]})
+    render(<ResearchHistorySection/>)
+    const background=await screen.findByRole('region',{name:'追问背景'})
+    expect(within(background).getByText('这条追问的图片和文件内容待补齐。')).toBeVisible()
+    expect(screen.getAllByText('这条追问的图片和文件内容待补齐。')).toHaveLength(1)
+  })
+  it('keeps an unarchived file visible when the same original already has a verified image preview',async()=>{
+    const url='/api/v1/workbench/history-assets/'+'a'.repeat(64)
+    serve({...detail,questions:[{...question,question:'看附件\n\n[User attached 1 file; file contents were not included]\n[User attached 1 image; image contents were not included]',unavailable_attachments:1,question_visuals:[{kind:'rendered_capture',sha256:'a'.repeat(64),url,width:436,height:1043,captured_at:'2026-11-06T02:00:00Z',source_url:'https://chatgpt.com/c/source'}]}]})
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText('可在下方展开图片展示截图；原文件内容仍待补齐。')).toBeVisible()
+    expect(screen.queryByText('这条原问的附件画面待补齐。')).not.toBeInTheDocument()
+    expect(screen.queryByAltText('原聊天附件展示截图')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('当时看到的附件 · 展示截图'))
+    expect(await screen.findByAltText('原聊天附件展示截图')).toHaveAttribute('src',url)
+  })
+  it.each([
+    '引用：[User attached 2 images; image contents were not included]',
+    '> [User attached 2 images; image contents were not included]',
+    '```text\n[User attached 2 images; image contents were not included]\n```',
+    '```text\n```still quoted\n[User attached 2 images; image contents were not included]\n```',
+    '~~~text\n[User attached 2 images; image contents were not included]',
+    '[User attached 2 files; image contents were not included]',
+    '[User attached 0 images; image contents were not included]',
+  ])('does not infer missing pictures from quoted, fenced or invalid annotation text: %s',async text=>{
+    serve({...detail,questions:[{...question,question:text}]});render(<ResearchHistorySection/>)
+    await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.queryByText('这条原问的附件画面待补齐。')).not.toBeInTheDocument()
+    expect(screen.queryByText('这条原问的附件文件内容待补齐。')).not.toBeInTheDocument()
+  })
+  it.each(['codex','chatgpt_rendered'])('does not treat a %s message’s quoted ChatGPT-style marker as capture metadata',async kind=>{
+    serve({...detail,questions:[{...question,question:'看示例\n\n[User attached 2 images; image contents were not included]',sources:[{...question.sources[0],kind}]}]});render(<ResearchHistorySection/>)
+    await screen.findByText('错误：卖压被解释成洗盘')
+    expect(screen.queryByText('这条原问的附件画面待补齐。')).not.toBeInTheDocument()
+  })
+  it('recognizes a real capture annotation after a closed example block',async()=>{
+    serve({...detail,questions:[{...question,question:'```text\n示例\n```\n\n[User attached 1 image; image contents were not included]'}]});render(<ResearchHistorySection/>)
+    expect(await screen.findByText('这条原问的附件画面待补齐。')).toBeVisible()
+  })
+  it('does not infer an attachment from an annotation quoted in separately saved research',async()=>{
+    serve({...detail,questions:[{...question,kind:'saved_research',question:'看示例\n\n[User attached 2 images; image contents were not included]'}]})
+    render(<ResearchHistorySection/>);fireEvent.click(await screen.findByRole('button',{name:'显示保存研究'}))
+    expect(screen.getByText(/保存研究时间/)).toBeVisible()
+    expect(screen.queryByText('这条原问的附件画面待补齐。')).not.toBeInTheDocument()
+  })
   it('finds dated questions and current lessons with combined normalized terms without another request',async()=>{
     const request=serve();render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
     const search=screen.getByRole('searchbox',{name:'查找历史问题或经验'})

@@ -8,10 +8,37 @@ import './researchHistory.css'
 
 const windows=[['one_day','下一个收盘'],['five_day','5个交易日'],['twenty_day','20个交易日'],['sixty_day','60个交易日'],['latest','至今']] as const
 const sourceLabels:Record<string,string>={stock:'个股行情',market:'中证全指',st:'ST板块行情',stock_history:'补充历史行情（腾讯）'}
-function readable(text:string){return text.replace(/:chatgpt-content-reference\{[^}]*\}/g,'〔原引用见聊天〕').replace(/\[User attached[^\]]*\]/g,'〔原图未随文字档案保存〕').replace(/<image[\s\S]*?<\/image>/g,'〔原图未随文字档案保存〕').replace(/\*\*/g,'')}
-function preview(text:string){return readable(text).replace(/〔原图未随文字档案保存〕/g,'').trim()||'原图问题（文字档案未包含图片）'}
+function readable(text:string){return text.replace(/:chatgpt-content-reference\{[^}]*\}/g,'〔原引用见聊天〕').replace(/\[User attached[^\]]*\]/g,marker=>/files?; file contents were not included\]$/.test(marker)?'〔附件文件未随文字档案保存〕':'〔原图未随文字档案保存〕').replace(/<image[\s\S]*?<\/image>/g,'〔原图未随文字档案保存〕').replace(/\*\*/g,'')}
+function preview(text:string){return readable(text).replace(/〔(?:原图|附件文件)未随文字档案保存〕/g,'').trim()||(/files?; file contents were not included\]/.test(text)?'附件问题（文字档案未包含文件）':'原图问题（文字档案未包含图片）')}
 function timestamp(value:string){return new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}
 function outcomeText(value?:HistoryOutcome){return value?.change_pct==null?(value?.date?'暂无可比价格':'待后续行情'):percent(value.change_pct)}
+
+function attachmentNote(question:HistoryQuestion){
+  let images=Number.isSafeInteger(question.unavailable_attachments)&&(question.unavailable_attachments??0)>0
+  let files=false
+  if(question.kind==='original_question'&&question.sources.some(source=>source.kind==='chatgpt')){
+    let fence:string|null=null
+    for(const line of question.question.split(/\r?\n/)){
+      const delimiter=/^ {0,3}(`{3,}|~{3,})/.exec(line)?.[1]
+      if(delimiter){
+        if(!fence)fence=delimiter
+        else if(delimiter[0]===fence[0]&&delimiter.length>=fence.length&&!line.slice(line.indexOf(delimiter)+delimiter.length).trim())fence=null
+        continue
+      }
+      if(fence)continue
+      const marker=/^\[User attached [1-9]\d* (images?|files?); (image|file) contents were not included\]$/.exec(line)
+      if(!marker||!marker[1].startsWith(marker[2]))continue
+      if(marker[2]==='image')images=true
+      else files=true
+    }
+  }
+  if(question.question_visuals?.length)return files?'可在下方展开图片展示截图；原文件内容仍待补齐。':question.question_context?'已补回附件展示截图，可在下方展开。':'可在下方展开附件展示截图。'
+  const subject=question.question_context?'这条追问':'这条原问'
+  if(images&&files)return `${subject}的图片和文件内容待补齐。`
+  if(files)return `${subject}的附件文件内容待补齐。`
+  if(images)return question.question_context?'这条追问附有原图，文字档案未包含图片。':'这条原问的附件画面待补齐。'
+  return null
+}
 
 function beijingClock(value:string){
   const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(value))
@@ -70,6 +97,7 @@ function HistoryBody({symbol}:{symbol:string}){
   const outcomes=question.outcomes[symbol==='market'?'market':'stock']
   const comparedPoints=data.chart_sources[symbol==='market'?'market':'stock']||[]
   const referenceNote=comparisonReference(question,new Set(comparedPoints.filter(p=>p.level!=null).map(p=>p.date)))
+  const questionAttachmentNote=attachmentNote(question)
   const review=question.review
   const argumentOnly=review?.assessment_basis==='original_argument_only'
   const answeredIds=new Set(data.questions.filter(q=>q.answers.length).map(q=>q.id))
@@ -80,7 +108,7 @@ function HistoryBody({symbol}:{symbol:string}){
     {filters}
     <div className="history-layout"><aside className="history-timeline" aria-label={`${data.name}历史提问`}><p>{questions.length}条记录 · 按提问时间</p>{questions.map(q=><button key={q.id} aria-pressed={q.id===question.id} onClick={()=>choose(q.id)}><time>{questionDate(q)}</time><span>{preview(q.question).slice(0,110)}</span>{q.question_context&&<span className="history-context-preview">这轮在问：{preview(q.question_context.question).slice(0,90)}</span>}<small>{q.review_status==='new_observations'?'已有复盘 · 后续走势已追加':q.previous_review?'依据已更正 · 待重核':q.review_status==='argument_only'?'已复核判断依据 · 未评估回报':q.kind==='saved_research'?'保存研究 · 日期为保存时间':hasFollowup(q)?'当时未单独回复 · 有补充问答':q.review?'已复核旧判断':q.time_precision==='range'?'原问题 · 日期待确认':'原问题 · 走势已对照'}</small></button>)}</aside>
       <article key={question.id} className="history-detail" aria-label={`${data.name}历史复盘详情`}>
-        <header><p className="reading-kicker">{question.asked_at?`${timestamp(question.asked_at)} · 北京时间`:question.time_precision==='range'?questionDate(question):`${question.asked_on} · 具体时刻未归档`} · {question.kind==='saved_research'?'保存研究时间':'原提问时间'}</p><h3>{preview(question.question).slice(0,200)}</h3>{question.question_context&&<section className="history-question-context" aria-label="追问背景"><p className="reading-kicker">这轮先前的问题 · {question.question_context.asked_on}</p><blockquote>{preview(question.question_context.question).slice(0,200)}</blockquote>{question.question_context.question.length>200&&<details className="reading-disclosure"><summary>完整背景原问题</summary><p className="reading-prewrap">{readable(question.question_context.question)}</p></details>}<a href={question.question_context.source_url} target="_blank" rel="noreferrer">打开这轮原聊天 ↗</a>{!!question.unavailable_attachments&&<small>{question.question_visuals?.length?'已补回附件展示截图，可在下方展开。':'这条追问附有原图，文字档案未包含图片。'}</small>}</section>}{!question.question_context&&!!question.unavailable_attachments&&<p className="reading-caption">{question.question_visuals?.length?'可在下方展开附件展示截图。':'这条原问的附件画面待补齐。'}</p>}{question.question.length>200&&<details className="reading-disclosure"><summary>完整原问题</summary><p className="reading-prewrap">{readable(question.question)}</p></details>}</header>
+        <header><p className="reading-kicker">{question.asked_at?`${timestamp(question.asked_at)} · 北京时间`:question.time_precision==='range'?questionDate(question):`${question.asked_on} · 具体时刻未归档`} · {question.kind==='saved_research'?'保存研究时间':'原提问时间'}</p><h3>{preview(question.question).slice(0,200)}</h3>{question.question_context&&<section className="history-question-context" aria-label="追问背景"><p className="reading-kicker">这轮先前的问题 · {question.question_context.asked_on}</p><blockquote>{preview(question.question_context.question).slice(0,200)}</blockquote>{question.question_context.question.length>200&&<details className="reading-disclosure"><summary>完整背景原问题</summary><p className="reading-prewrap">{readable(question.question_context.question)}</p></details>}<a href={question.question_context.source_url} target="_blank" rel="noreferrer">打开这轮原聊天 ↗</a>{questionAttachmentNote&&<small>{questionAttachmentNote}</small>}</section>}{!question.question_context&&questionAttachmentNote&&<p className="reading-caption">{questionAttachmentNote}</p>}{question.question.length>200&&<details className="reading-disclosure"><summary>完整原问题</summary><p className="reading-prewrap">{readable(question.question)}</p></details>}</header>
         {review?<div className="history-verdict">{(argumentOnly||review.price_through)&&<p className="history-review-date">{argumentOnly?'仅复核判断依据 · 未评估交易回报':`复盘窗口截至 ${review.price_through}`}{review.focused_symbol&&review.focused_symbol!==symbol&&question.review_focused_name&&` · 主要评估${question.review_focused_name}`}</p>}<strong>{review.headline}</strong><p>{review.assessment}</p><ul>{review.lessons.map(text=><li key={text}>{text}</li>)}</ul>{question.review_status==='new_observations'&&<p className="history-review-update">图表已延伸至{data.as_of}，有更长走势可继续复盘；上面的判断仍对应原评估窗口。</p>}</div>:<p className="history-pending">{question.previous_review?(question.review_status==='original_changed'?'原问题、原回答、追问背景或附件已补正，需要重新复盘。':question.review_status==='review_basis_changed'?'复盘范围或依据已改变，需要重新复盘。':'复盘用到的历史价格已更正，需要重新复盘。'):question.answers.length?(question.time_precision==='range'?'原问题和原回答已保留；日期和原判断仍待复核。':'后续走势已对照；这条原回答的事实与推理仍待逐项复核。'):followup?'这条当时没有单独回复；随后补充的问题已有原回答。':'这条原问题尚未找到对应原回答，不补写当时的判断。'}</p>}
         {question.previous_review&&<details className="reading-disclosure history-previous"><summary>此前复盘（依据已变）</summary><p>{question.previous_review.assessment_basis==='original_argument_only'?'该版仅复核判断依据，未评估交易回报；':question.previous_review.price_through&&`评估价格截至${question.previous_review.price_through}；`}写于 {timestamp(question.previous_review.reviewed_at)}，保留作历史记录。</p><strong>{question.previous_review.headline}</strong><p>{question.previous_review.assessment}</p><ul>{question.previous_review.lessons.map(text=><li key={text}>{text}</li>)}</ul>{question.previous_review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}</details>}
         <div className="history-original"><p className="reading-kicker">{question.answers[0]?.binding==='shared_turn_answer'?'该轮最终回答（多条提问共同归档）':'当时怎么回答'}</p><blockquote>{readable(review?.then_quote||question.answers[0]?.summary||(followup?'这条当时未单独作答':'未找到原回答'))}</blockquote>{followup&&<p><button className="history-clear" onClick={openFollowup}>查看补充后的提问与原答</button></p>}<details className="reading-disclosure"><summary>展开原回答与聊天来源</summary>{question.answer_completed_at&&<p>原回答完成于 {timestamp(question.answer_completed_at)}（北京时间）。</p>}{question.answers.map((answer,index)=><div key={index}><p className="reading-prewrap">{readable(answer.text)}</p>{answer.binding==='shared_turn_answer'&&<p>来源只记录了这{answer.source_question_ids?.length||'多'}条问题所在轮次的最终答复，不能证明逐条回应。</p>}{answer.truncated&&<p>这一份文字截取未包含回答的末尾，请打开原聊天查看。</p>}{answer.links?.filter(link=>/^https?:\/\//.test(link.url)).map((link,i)=><p key={i}><a href={link.url} target="_blank" rel="noreferrer">{link.label||'原回答引用'} ↗</a></p>)}</div>)}{question.sources.filter(s=>s.url).map((source,index)=><p key={index}><a href={source.url} target="_blank" rel="noreferrer">{source.title||'打开原聊天'} ↗</a></p>)}</details></div>

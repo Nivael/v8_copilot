@@ -43,6 +43,17 @@ def test_conclusion_first_projection_keeps_st_and_does_not_invent_cash():
     assert result['etf']['funds'][0]['name'] == '华泰柏瑞沪深300ETF'
 
 
+def test_later_st_confirmation_displays_actual_reading_day_in_the_explanation():
+    data = market()
+    data['st_reconstruction']['daily_close_extension'] = {'membership_confirmation': {
+        'observed_on': '2026-11-07', 'note': '2026-11-06收盘名称与2026-11-07实际读取名单一致。'}}
+    view = w.market_view(data)
+    assert '名单实际读取于2026-11-07' in view['reading_note']
+    assert '当日名单' not in view['reading_note']
+    assert view['why'][-1]['title'] == 'ST收盘分类已交叉核对'
+    assert '2026-11-07' in view['why'][-1]['text']
+
+
 def test_independent_index_judgment_does_not_change_the_stock_review_basis(tmp_path):
     data = packet()
     args = dict(experience_db=tmp_path/'none', ledger_db=tmp_path/'none')

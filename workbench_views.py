@@ -95,6 +95,7 @@ def market_view(data):
     headline, stance = price_judgment(latest, week, month)
     chart = [{'key': 'market', 'name': '大盘 · 中证全指', 'points': path, 'change_pct': recent}]
     st = data.get('st_reconstruction') or {}
+    membership_confirmation = (st.get('daily_close_extension') or {}).get('membership_confirmation')
     st_path = series([{'date': p['date'], 'close': p['all']['close']} for p in st.get('points', [])], start, end)
     if st.get('availability') != 'reconstructed' or [p['date'] for p in st_path] != dates:
         st_path = []
@@ -114,6 +115,10 @@ def market_view(data):
                     'source_label': 'ST参考的来源与算法', 'source_url': '/market/evidence#st-reference'})
     else:
         st_summary = 'ST同窗参考正在更新。'
+    if membership_confirmation is not None:
+        why.append({'title': 'ST收盘分类已交叉核对', 'text': membership_confirmation['note'],
+                    'source_label': '深交所风险警示名单原文',
+                    'source_url': 'http://www.szse.cn/disclosure/listed/warn/index.html'})
     funds = []
     for fund in data.get('etfs', []):
         window = fund.get('windows', {}).get('recent') or {}
@@ -147,7 +152,9 @@ def market_view(data):
                     'interpretation': '价格下跌与ETF份额增加可以同时发生。这组样本的份额变化，不支持把本轮下跌简单说成ETF普遍撤出。' if funds and up == len(funds) else '把ETF份额的方向与价格方向放在一起看；两者相互印证或背离，含义不同。',
                     'how_to_read': '份额是基金发行的份数。净申购金额还需要核对折算、登记范围和修订；这里不会把份额增减直接换名为现金流入流出。'},
             'reading_note': '风险判断是根据已发生的短中期走势作出的定性解读，不是风险概率或经过校准的预警分数。图中同一起点比较，ST参考为自建样本价格参考，编制和原始来源可展开查看。'
-                            + ('最新交易日以两所完整收盘和当日名单核对后续接，停牌不补零收益。' if data.get('reading_update') else ''),
+                            + (('最新交易日以两所完整收盘和独立名单交叉核对后续接，名单实际读取于' + membership_confirmation['observed_on'] + '，停牌不补零收益。')
+                               if membership_confirmation is not None else
+                               ('最新交易日以两所完整收盘和当日名单核对后续接，停牌不补零收益。' if data.get('reading_update') else '')),
             'parameter_version': data['parameter_version'], 'source_snapshot_digest': data['snapshot_digest']}
 
 
@@ -343,7 +350,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
 
 def processor_digest():
     return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name,'case_research_scopes.py','broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py',
+                   for name in (Path(__file__).name,'case_research_scopes.py','broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py','market_close_membership.py',
                                 'market_price_reading.py','market_public_refresh.py','market_calendar.py')})
 
 

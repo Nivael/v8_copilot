@@ -187,11 +187,13 @@ uv run python workbench_views.py --review-symbol 603398.SH \
 50只和ST池195只（本轮191只有效成交、4只停牌单列）。筛选条件公开在展开层；
 价格形态与已核公司事实分开显示，未核公告的名单仅表示价格条件。没有训练胜率或分数。
 个股收盘、市场/ST同期对照与宽基份额各按已核日期显示，停牌留空，不补零收益。
-大盘/ST同窗、ETF与个股的共同基础截至2026-11-05：以两所完整收盘和当日观察名单核对后，向原自建ST参考续接一个交易日；
-四只跟踪股同步接续同日收盘，六组12只ETF份额与指数价格同日比较。历史原问题的独立评估窗口不改动。
-指数价格判断另独立更新至2026-11-06；主判断及日/5日/20日价格使用该日完整指数，
-ST对照图、上涨股票占比与ETF观察各自标明原截止日，不用新指数日期改标旧资料。
-跟踪页的市场入口引用同一条最新价格判断，个股价格与既有复盘的共同依据不变。
+大盘/ST同窗、ETF份额与四只跟踪股的共同基础已接续至2026-11-06：两所5224只A股完整收盘、
+六组12只ETF完整份额及194只ST的独立分类交叉核对一致。名单实际在北京时间11月7日读取，
+深市表内日期为11月6日；沪市没有声明数据日，不将后续确认冒充当日盘中可得。
+全体及分交易所原95%有成交覆盖门保持不变；深市净值截至11月5日且覆盖有限，不发布现金流量金额或买方身份。
+四只跟踪股分别复核新价格和公司信息，联光、威领的新公告判断与复盘附原文链接。
+历史原问题的独立评估窗口仍截至11月5日，反弹观察池仍为明确标日的11月5日快照；二者不随共同基础自动改日。
+独立指数价格入口继续保留，供以后完整比较资料尚未到齐时使用，跟踪页与市场页采用一致的最新价格判断。
 日期边界、方案比较与迁移说明见 [MARKET_READING_DATES.md](MARKET_READING_DATES.md)。
 
 ```bash
@@ -216,6 +218,8 @@ uv run python workbench_views.py --publish
 # 同日原件目录包含 public_indices、public_etf、public_etf_szse、
 # trader_observations/broad_indices、risk；须先由既有采集器取得并核对。
 uv run python market_reading_updates.py --through 2026-11-05 --inputs <同日原件目录>
+# 实际读取日在相邻非交易日、深市表内明确声明目标日且收盘分类完全一致时，显式采用新版规则：
+uv run python market_reading_updates.py --through 2026-11-06 --inputs <已核原件目录> --membership-rule declared_day_and_nontrading_confirmation_v1
 # 仅在处理程序更新后，以原件重放核验既有更新链：
 uv run python market_reading_updates.py --revalidate
 uv run python workbench_views.py --publish

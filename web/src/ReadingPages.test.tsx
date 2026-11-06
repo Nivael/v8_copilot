@@ -88,6 +88,16 @@ describe('trader reading pages',()=>{
     expect(details.open).toBe(false)
     expect(screen.getByText('保留原提醒，补充市场与同类对照')).not.toBeVisible()
   })
+  it('keeps review sources one expansion away from the conclusion',async()=>{
+    const stock=learningReading.cases[0]
+    serve({...learningReading,cases:[{...stock,review:{...stock.review!,sources:[{label:'控制权变更公告 · 第2页',url:'https://static.cninfo.com.cn/example.pdf#page=2'}]}}]})
+    render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
+    expect(await screen.findByRole('heading',{name:stock.review!.assessment})).toBeVisible()
+    const disclosure=screen.getByText('这次复盘的依据').closest('details')!
+    expect(disclosure.open).toBe(false)
+    fireEvent.click(screen.getByText('这次复盘的依据'))
+    expect(screen.getByRole('link',{name:'控制权变更公告 · 第2页 ↗'})).toHaveAttribute('href','https://static.cninfo.com.cn/example.pdf#page=2')
+  })
   it('keeps the last loaded conclusion when the local service fails and permits retry',async()=>{
     const request=serve(marketReading)
     render(<MemoryRouter><MarketOverview/></MemoryRouter>)

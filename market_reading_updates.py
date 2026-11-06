@@ -20,12 +20,14 @@ from exchange_risk_membership import list_status
 from market_breadth import cross_section, st_name
 from market_calendar import sessions_2026
 from market_periods import recent_calendar_window
+from market_close_membership import SAME_DAY, RULE as CONFIRMED_CLOSE, load as load_risk_dates, confirm_close
 from market_public_refresh import parse_index_perf
 from market_risk import MARKET_RISK_DIR, CSI_PERF_URL, _public_indices, _public_etfs, _szse_etfs
 from trader_research_notes import capital_actions
 from trader_swing_reading import closing_day
 
-VERSION = 'market_reading_daily_updates_v1'
+LEGACY_VERSION = 'market_reading_daily_updates_v1'
+VERSION = 'market_reading_daily_updates_v2'
 OUTPUT = MARKET_RISK_DIR / 'trader_observations/reading_updates'
 SOURCE_FOLDERS = ('public_indices', 'public_etf', 'public_etf_szse', 'trader_observations/broad_indices', 'risk')
 
@@ -33,7 +35,7 @@ SOURCE_FOLDERS = ('public_indices', 'public_etf', 'public_etf_szse', 'trader_obs
 def processor_digest():
     names = ('market_reading_updates.py', 'market_public_refresh.py', 'market_risk.py', 'broad_etf_reading.py',
              'etf_daily_sources.py', 'etf_szse_history.py', 'trader_swing_reading.py', 'combined_st_reference.py',
-             'exchange_risk_membership.py', 'market_breadth.py', 'market_calendar.py', 'market_periods.py')
+             'exchange_risk_membership.py', 'market_close_membership.py', 'market_breadth.py', 'market_calendar.py', 'market_periods.py')
     return digest({name: sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in names})
 
 
@@ -64,13 +66,18 @@ def next_session(previous, through):
         raise ValueError('each update must cover exactly the next trading session')
 
 
-def extend_st(base, rows, risk, through, calendar):
+def extend_st(base, rows, risk, through, calendar, *, membership_confirmation=None, now=None):
     previous = base['through']
     next_session(previous, through)
     if base['availability'] != 'reconstructed' or base['points'][-1]['date'] != previous:
         raise ValueError('complete ST base required')
-    if risk['availability'] != 'observed' or risk['observed_on'] != through:
+    if risk['availability'] != 'observed':
         raise ValueError('same-day independently observed risk list required')
+    if membership_confirmation is None:
+        if risk['observed_on'] != through:
+            raise ValueError('same-day independently observed risk list required')
+    elif membership_confirmation != confirm_close(risk, rows, through, now=now):
+        raise ValueError('independent closing membership confirmation changed')
     members = {r['ts_code']: r['name'] for r in risk['rows'] if r['kind'] == 'risk_warning' and r['share_class'] == 'A'}
     flagged = {code for code, row in rows.items() if st_name(row['security_name'])}
     if not members or set(members) != flagged:
@@ -115,6 +122,9 @@ def extend_st(base, rows, risk, through, calendar):
     result['daily_close_extension'] = {'through': through, 'membership_digest': risk['content_digest'],
                                        'observed_members': len(values), 'member_count': total}
     result['version'] = 'reading_ST_daily_extension_v1'
+    if membership_confirmation is not None:
+        result['version'] = 'reading_ST_daily_extension_v2'
+        result['daily_close_extension']['membership_confirmation'] = membership_confirmation
     result['base_reference_digest'] = base.get('base_reference_digest', base.get('content_digest'))
     result['content_digest'] = digest({k: v for k, v in result.items() if k != 'content_digest'})
     return result
@@ -136,10 +146,12 @@ def extend_watch(bases, rows, previous, through):
     return result
 
 
-def project_step(data, bases, folder, through, *, root=MARKET_RISK_DIR, now=None):
+def project_step(data, bases, folder, through, *, root=MARKET_RISK_DIR, now=None, membership_rule=SAME_DAY):
     now = now or datetime.now(timezone.utc)
     if through >= now.astimezone(ZoneInfo('Asia/Shanghai')).date().isoformat():
         raise ValueError('completed daily observations only')
+    if membership_rule not in (SAME_DAY, CONFIRMED_CLOSE):
+        raise ValueError('undeclared close-membership rule')
     next_session(data['requested_through'], through)
     index_meta, indices = _public_indices(folder / 'public_indices', now)
     share_meta, sse_funds = _public_etfs(folder / 'public_etf', now)
@@ -164,14 +176,16 @@ def project_step(data, bases, folder, through, *, root=MARKET_RISK_DIR, now=None
     period = recent_calendar_window(through)
     if period['availability'] != 'defined':
         raise ValueError('common recent calendar required')
-    risk = list_status(folder / 'risk', now=now)
+    risk = list_status(folder / 'risk', now=now) if membership_rule == SAME_DAY else load_risk_dates(folder / 'risk', now=now)
     closes = {}; close_digests = {}
     for venue in ('SSE', 'SZSE'):
         rows, key = closing_day(root, through, venue)
         if set(rows) & set(closes):
             raise ValueError('duplicate cross-venue security')
         closes.update(rows); close_digests[venue] = key
-    st = extend_st(data['st_reconstruction'], closes, risk, through, period['calendar'])
+    confirmation = confirm_close(risk, closes, through, now=now) if membership_rule == CONFIRMED_CLOSE else None
+    st = extend_st(data['st_reconstruction'], closes, risk, through, period['calendar'],
+                   membership_confirmation=confirmation, now=now)
     result = {**data, 'requested_through': through, 'indices': indices, 'etfs': funds, 'recent_window': period,
               'public_etf_snapshot': share_meta, 'szse_etf_snapshot': szse_meta, 'public_index_snapshot': index_meta,
               'st_reconstruction': st,
@@ -182,6 +196,8 @@ def project_step(data, bases, folder, through, *, root=MARKET_RISK_DIR, now=None
                             [{'date': through, 'all': cross_section(list(closes.values()))}]}}
     sources = {'indices': index_meta['content_digest'], 'sse_shares': share_meta['content_digest'],
                'szse_shares': szse_meta['content_digest'], 'risk': risk['content_digest'], 'closes': close_digests}
+    if confirmation is not None:
+        sources['membership_confirmation'] = confirmation
     result['snapshot_digest'] = digest({'base': data['snapshot_digest'], 'through': through, 'sources': sources})
     result['reading_update'] = {'base_through': data['requested_through'], 'through': through, 'sources': sources}
     broad = build_broad_etf_reading(result, root=folder)
@@ -198,7 +214,7 @@ def project_step(data, bases, folder, through, *, root=MARKET_RISK_DIR, now=None
 
 def replay(data, bases, raw, *, output=OUTPUT, root=MARKET_RISK_DIR, now=None):
     now = now or datetime.now(timezone.utc)
-    if raw['version'] != VERSION or raw['base_binding'] != base_binding(data):
+    if raw['version'] not in (LEGACY_VERSION, VERSION) or raw['base_binding'] != base_binding(data):
         raise ValueError('daily update base or implementation changed')
     checked = datetime.fromisoformat(raw['checked_at'])
     if checked.tzinfo is None or checked > now:
@@ -211,7 +227,11 @@ def replay(data, bases, raw, *, output=OUTPUT, root=MARKET_RISK_DIR, now=None):
         folder = output / 'sources' / key
         if digest(source_files(folder)) != key:
             raise ValueError('daily source bytes changed')
-        current, watch, broad, sources = project_step(current, watch, folder, step['through'], root=root, now=checked)
+        rule = step.get('membership_rule', SAME_DAY)
+        if raw['version'] == LEGACY_VERSION and rule != SAME_DAY:
+            raise ValueError('legacy updates cannot adopt a later membership observation')
+        current, watch, broad, sources = project_step(current, watch, folder, step['through'], root=root,
+                                                     now=checked, membership_rule=rule)
         if sources != step['bindings']:
             raise ValueError('daily close or membership binding changed')
     if not raw['steps'] or current['requested_through'] != raw['through']:
@@ -245,7 +265,7 @@ def revalidate(data, bases, *, output=OUTPUT, root=MARKET_RISK_DIR):
     return updated
 
 
-def materialize(data, bases, inputs, through, *, output=OUTPUT, root=MARKET_RISK_DIR):
+def materialize(data, bases, inputs, through, *, output=OUTPUT, root=MARKET_RISK_DIR, membership_rule=SAME_DAY):
     processor = processor_digest(); existing = load_update(data, bases, output=output, root=root)
     previous = bound_packet(output / 'current.json') if existing else None
     current, watch = existing[:2] if existing else (data, bases)
@@ -261,10 +281,12 @@ def materialize(data, bases, inputs, through, *, output=OUTPUT, root=MARKET_RISK
         dest.parent.mkdir(parents=True, exist_ok=True)
         if not dest.exists():
             dest.write_bytes(raw)
-    _, _, _, bindings = project_step(current, watch, target, through, root=root)
+    _, _, _, bindings = project_step(current, watch, target, through, root=root, membership_rule=membership_rule)
+    step = {'through': through, 'source_digest': source_digest, 'bindings': bindings}
+    if membership_rule != SAME_DAY:
+        step['membership_rule'] = membership_rule
     raw = {'version': VERSION, 'processor_digest': processor, 'base_binding': base_binding(data),
-           'through': through, 'steps': [*(previous['steps'] if previous else []),
-                                       {'through': through, 'source_digest': source_digest, 'bindings': bindings}],
+           'through': through, 'steps': [*(previous['steps'] if previous else []), step],
            'checked_at': datetime.now(timezone.utc).isoformat()}
     if processor_digest() != processor or digest(source_files(target)) != source_digest:
         raise ValueError('daily sources or code changed during publication')
@@ -279,6 +301,7 @@ def main():
     parser.add_argument('--through')
     parser.add_argument('--inputs', type=Path)
     parser.add_argument('--revalidate', action='store_true')
+    parser.add_argument('--membership-rule', choices=(SAME_DAY, CONFIRMED_CLOSE), default=SAME_DAY)
     args = parser.parse_args()
     if args.revalidate and (args.through or args.inputs) or not args.revalidate and not (args.through and args.inputs):
         parser.error('use either --revalidate or both --through and --inputs')
@@ -286,7 +309,10 @@ def main():
     from workbench_views import WATCHED, watch_basis
     data = build_market_risk_status()
     bases = [watch_basis(data, symbol) for symbol in WATCHED]
-    value = revalidate(data, bases) if args.revalidate else materialize(data, bases, args.inputs, args.through)
+    if args.revalidate and args.membership_rule != SAME_DAY:
+        parser.error('--revalidate replays the recorded rule; it cannot select a new membership rule')
+    value = revalidate(data, bases) if args.revalidate else materialize(data, bases, args.inputs, args.through,
+                                                                    membership_rule=args.membership_rule)
     print(json.dumps({'through': value['through'], 'content_digest': value['content_digest']}, ensure_ascii=False))
 
 

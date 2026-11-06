@@ -12,7 +12,7 @@ export type MarketReading={
   etf:{headline:string;interpretation:string;how_to_read:string;cash_estimate_yuan:number|null;funds:{code:string;name:string;group:string;share_change_pct:number}[]}
 }
 export type MethodReading={id:string;title:string;summary:string;category:string;status:string;when_to_use:string[];source_run_refs:string[]}
-export type CaseReview={assessment:string;takeaways:string[];reviewed_at:string}
+export type CaseReview={assessment:string;takeaways:string[];reviewed_at:string;sources?:{label:string;url:string}[]}
 export type CaseReading={
   symbol:string;name?:string;as_of?:string;availability:string;last_close?:number|null;headline?:string
   day_change_pct?:number|null;period_change_pct?:number|null;relative_to_st_pp?:number|null;since_research_change_pct?:number|null

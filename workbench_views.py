@@ -152,7 +152,8 @@ def market_view(data):
                     'cash_estimate_yuan': sum(f['cash_estimate_yuan'] for f in funds) if cash_ready else None,
                     'interpretation': '价格下跌与ETF份额增加可以同时发生。这组样本的份额变化，不支持把本轮下跌简单说成ETF普遍撤出。' if funds and up == len(funds) else '把ETF份额的方向与价格方向放在一起看；两者相互印证或背离，含义不同。',
                     'how_to_read': '份额是基金发行的份数。净申购金额还需要核对折算、登记范围和修订；这里不会把份额增减直接换名为现金流入流出。'},
-            'reading_note': '风险判断是根据已发生的短中期走势作出的定性解读，不是风险概率或经过校准的预警分数。图中同一起点比较，ST参考为自建样本价格参考，编制和原始来源可展开查看。',
+            'reading_note': '风险判断是根据已发生的短中期走势作出的定性解读，不是风险概率或经过校准的预警分数。图中同一起点比较，ST参考为自建样本价格参考，编制和原始来源可展开查看。'
+                            + ('最新交易日以两所完整收盘和当日名单核对后续接，停牌不补零收益。' if data.get('reading_update') else ''),
             'parameter_version': data['parameter_version'], 'source_snapshot_digest': data['snapshot_digest']}
 
 
@@ -272,7 +273,13 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
         history.sort(key=lambda r: instant(r['completed_at']), reverse=True)
         case = {**basis, 'research_count': len(history), 'history': [], 'review': None}
         latest=next((quote for quote in latest_quotes if quote['symbol']==symbol and quote['availability']=='available'
-                     and quote['as_of']>basis.get('as_of','')),None)
+                     and quote['as_of']>=basis.get('as_of','')),None)
+        if latest and latest['as_of']==basis.get('as_of'):
+            closing=(basis.get('prices') or [{}])[-1]
+            if (not closing.get('is_trading',True) or closing.get('date')!=latest['as_of']
+                or number(closing.get('close'))!=number(latest.get('close'))
+                or number(closing.get('previous_close'))!=number(latest.get('previous_close'))):
+                latest=None
         if latest:
             case['latest_quote']={key:latest[key] for key in ('as_of','close','day_change_pct','five_day_change_pct','twenty_day_change_pct','stage')}
             case['name']=latest['name']
@@ -285,7 +292,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
         if basis['availability'] == 'available':
             prices = basis['prices']; start = packet['market'].get('start'); current = prices[-1]
             anchor_prices=prices
-            if latest:
+            if latest and latest['as_of']>basis.get('as_of',''):
                 current={'date':latest['as_of'],'close':latest['close'],'previous_close':latest['previous_close'],'is_trading':True}
                 anchor_prices=[*prices,current]
             period_prices = [p for p in prices if start and p['date'] >= start]
@@ -341,7 +348,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
 
 def processor_digest():
     return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name,'broad_etf_reading.py','trader_research_notes.py')})
+                   for name in (Path(__file__).name,'broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py')})
 
 
 PROCESSOR_DIGEST = processor_digest()
@@ -372,20 +379,29 @@ class ReadingViews:
             data = build_market_risk_status()
         else:
             data = self.builder()
-        view = market_view(data)
-        if view['availability'] != 'available':
-            raise ValueError('no verified market reading available')
-        from broad_etf_reading import build_broad_etf_reading
-        try:
-            view['broad_etf']=build_broad_etf_reading(data)
-        except (OSError,ValueError,KeyError,TypeError,IndexError):
-            view['broad_etf']={'availability':'unavailable'}
         bases = []
         for symbol in WATCHED:
             try:
                 bases.append(watch_basis(data, symbol))
             except (OSError, ValueError, TypeError, KeyError, IndexError):
                 bases.append({'symbol': symbol, 'name':WATCH_LABELS.get(symbol,symbol), 'availability': 'unavailable'})
+        broad = None
+        if self.builder is None:
+            from market_reading_updates import load_update
+            update = load_update(data, bases)
+            if update:
+                data, bases, broad = update
+        view = market_view(data)
+        if view['availability'] != 'available':
+            raise ValueError('no verified market reading available')
+        from broad_etf_reading import build_broad_etf_reading
+        if broad is not None:
+            view['broad_etf'] = broad
+        else:
+            try:
+                view['broad_etf']=build_broad_etf_reading(data)
+            except (OSError,ValueError,KeyError,TypeError,IndexError):
+                view['broad_etf']={'availability':'unavailable'}
         packet = {'version': VERSION, 'processor_digest': PROCESSOR_DIGEST, 'checked_at': datetime.now(timezone.utc).isoformat(),
                   'market': view, 'watch_bases': bases, 'source_snapshot_digest': data['snapshot_digest']}
         packet['content_digest'] = digest(packet)

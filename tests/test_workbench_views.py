@@ -141,6 +141,21 @@ def test_latest_stock_close_does_not_extend_the_older_shared_market_comparison(t
     assert w.learning_view(data,latest_quotes=[latest],**args)['cases'][0]['last_close']==3.5
 
 
+def test_same_day_note_survives_aligned_bases_without_duplicating_the_close(tmp_path):
+    data=packet(); basis=data['watch_bases'][0]
+    latest={'symbol':basis['symbol'],'name':basis['name'],'availability':'available','as_of':'2026-11-04',
+            'close':3.5,'previous_close':4,'day_change_pct':-12.5,'five_day_change_pct':2,
+            'twenty_day_change_pct':-30,'stage':'early_repair','note':{'judgment':'同日已核公司判断'}}
+    args=dict(experience_db=tmp_path/'none',ledger_db=tmp_path/'none')
+    before=w.learning_view(data,**args)['cases'][0]
+    result=w.learning_view(data,latest_quotes=[latest],**args)['cases'][0]
+    assert result['current_observation']==latest['note'] and result['latest_quote']['as_of']==basis['as_of']
+    assert result['period_path']==before['period_path'] and len(result['period_path'])==3
+    latest['previous_close']=5
+    mismatch=w.learning_view(data,latest_quotes=[latest],**args)['cases'][0]
+    assert mismatch.get('current_observation') is None and mismatch['last_close']==3.5
+
+
 def test_published_read_is_fast_and_single_flight_failure_preserves_previous(tmp_path, monkeypatch):
     gate = Event(); entered = Event(); calls = []
     def builder():

@@ -37,6 +37,29 @@ describe('original question retrospective',()=>{
     expect(screen.getByRole('img',{name:/从2026-06-03起/})).toBeVisible()
     expect(screen.queryByText('错误：卖压被解释成洗盘')).not.toBeInTheDocument()
   })
+  it('navigates an unanswered ask to its verified expanded followup without copying the later answer',async()=>{
+    const expanded={...question,id:'expanded',question:'补充后的完整问题',asked_at:'2026-06-03T08:00:00Z',asked_on:'2026-06-03',categories:['财报与监管'],review:{...question.review!,headline:'补充问题的复盘'}}
+    const first={...question,id:'first',question:'原来的短问题',answers:[],review:null,unanswered_followup:{version:'history_unanswered_followup_v1' as const,question_id:expanded.id,question:expanded.question,asked_at:expanded.asked_at,asked_on:expanded.asked_on,source_url:'https://chatgpt.com/c/source',target_question_digest:'bound-target'}}
+    serve({...detail,questions:[first,expanded]});render(<ResearchHistorySection/>)
+    expect(await screen.findByText('这条当时没有单独回复；随后补充的问题已有原回答。')).toBeVisible()
+    expect(screen.queryByText('更像洗盘。')).not.toBeInTheDocument()
+    fireEvent.change(screen.getByRole('combobox',{name:'历史问题分类'}),{target:{value:'短线量价'}})
+    fireEvent.change(screen.getByRole('searchbox',{name:'查找历史问题或经验'}),{target:{value:'2026-06-02'}})
+    fireEvent.click(screen.getByRole('button',{name:'查看补充后的提问与原答'}))
+    expect(screen.getByText('补充问题的复盘')).toBeVisible()
+    expect(screen.getByRole('heading',{name:'补充后的完整问题'})).toBeVisible()
+    expect(screen.getByRole('combobox',{name:'历史问题分类'})).toHaveValue('全部')
+    expect(screen.getByRole('searchbox',{name:'查找历史问题或经验'})).toHaveValue('')
+    expect(screen.queryByText('这条当时未单独作答')).not.toBeInTheDocument()
+    expect(first.answers).toEqual([])
+  })
+  it('does not offer a followup jump when its answered target is absent from the same packet',async()=>{
+    const followup={version:'history_unanswered_followup_v1' as const,question_id:'missing',question:'另一个问题',asked_at:question.asked_at!,asked_on:question.asked_on!,source_url:'https://chatgpt.com/c/source',target_question_digest:'bound-target'}
+    serve({...detail,questions:[{...question,answers:[],review:null,unanswered_followup:followup}]});render(<ResearchHistorySection/>)
+    expect(await screen.findByText('这条原问题尚未找到对应原回答，不补写当时的判断。')).toBeVisible()
+    expect(screen.queryByRole('button',{name:'查看补充后的提问与原答'})).not.toBeInTheDocument()
+    expect(screen.queryByText('当时未单独回复 · 有补充问答')).not.toBeInTheDocument()
+  })
   it('does not call an intraday question’s same-day first close the next day',async()=>{
     serve({...detail,questions:[{...question,asked_at:'2026-06-02T04:00:00Z',answer_completed_at:'2026-06-02T12:05:00+08:00',anchor_date:'2026-06-01',outcomes:{stock:{one_day:{date:'2026-06-02',change_pct:-5}},market:{},st:{}}}]})
     render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')

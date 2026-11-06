@@ -68,6 +68,8 @@ def question_digest(record):
         if day is None:basis.update(asked_from=record['asked_from'],asked_through=record['asked_through'])
     if record.get('question_context'):
         basis['question_context']={k:record['question_context'][k] for k in ('version','question_id','question','asked_on','source_url')}
+    if record.get('unanswered_followup'):
+        basis['unanswered_followup']=record['unanswered_followup']
     if record.get('question_visuals'):
         basis['question_visuals']=[{**{k:v[k] for k in ('kind','sha256','source_message_id','source_thread_id')},
                                    **{k:v[k] for k in ('attachment_id','attachment_index','attachment_count') if k in v}}
@@ -118,9 +120,10 @@ def add_question_contexts(records,captured):
 
 def prepare_history_records(imported,*,root=ROOT):
     from research_history_captures import import_capture_files
+    from research_history_followups import add_unanswered_followups
     from research_history_visuals import add_visuals
     captured,_=import_capture_files(root/'captures/cua_v1',imported.get('stock_names',{}))
-    return mark_answer_bindings(add_visuals(add_question_contexts(imported['records'],captured),root=root))
+    return add_unanswered_followups(mark_answer_bindings(add_visuals(add_question_contexts(imported['records'],captured),root=root)),root=root)
 
 
 def mark_answer_bindings(records):
@@ -359,7 +362,7 @@ def publish(imported,*,root=ROOT):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):

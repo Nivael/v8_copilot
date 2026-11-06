@@ -43,6 +43,30 @@ def test_conclusion_first_projection_keeps_st_and_does_not_invent_cash():
     assert result['etf']['funds'][0]['name'] == '华泰柏瑞沪深300ETF'
 
 
+def test_independent_index_judgment_does_not_change_the_stock_review_basis(tmp_path):
+    data = packet()
+    args = dict(experience_db=tmp_path/'none', ledger_db=tmp_path/'none')
+    before = w.learning_view(data, **args)
+    data['market']['latest_price'] = {'availability': 'available', 'as_of': '2026-11-05',
+                                    'headline': '新指数判断', 'metrics': {'day_change_pct': -2}}
+    after = w.learning_view(data, **args)
+    assert after['cases'] == before['cases']
+    assert after['market_context']['latest_price']['as_of'] == '2026-11-05'
+    assert after['latest_price_as_of'] == before['latest_price_as_of'] == '2026-11-04'
+
+
+def test_publisher_adds_independent_index_without_relabeling_the_common_basis(tmp_path, monkeypatch):
+    import market_price_reading
+    latest = {'availability': 'available', 'as_of': '2026-11-05', 'headline': '新指数判断'}
+    monkeypatch.setattr(market_price_reading, 'newer_price', lambda base, **kwargs: latest)
+    service = w.ReadingViews(tmp_path/'reading', builder=market, price_directory=tmp_path/'prices')
+    published = service.publish()['market']
+    original = w.market_view(market())
+    for key in ('as_of', 'start', 'metrics', 'chart', 'etf', 'why'):
+        assert published[key] == original[key]
+    assert published['latest_price'] == latest
+
+
 def test_cash_requires_all_declared_funds_and_strict_ready_flags():
     data = market()
     for fund in data['etfs']:

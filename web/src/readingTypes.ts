@@ -4,6 +4,7 @@ export type CapitalAction={name:string;date:string;judgment:string;detail:string
 export type BroadETFReading={availability:'available';as_of:string;start:string;headline:string;interpretation:string;institution_reading:string;sample_funds:number;source_url:string;capital_actions?:{headline:string;summary:string;actions:CapitalAction[]}|null;groups:{name:string;sample_count:number;increasing_5d:number;decreasing_5d:number;five_day_price_change_pct:number;twenty_day_price_change_pct:number;reading:string;source_url:string;funds:{code:string;name:string;five_day_share_change_pct:number;twenty_day_share_change_pct:number;period_share_change_pct:number}[]}[]}
 export type MarketReading={
   availability:string;as_of:string;start:string;headline:string;stance:string;summary:string
+  latest_price?:{availability:'available';as_of:string;headline:string;stance:string;summary:string;metrics:{day_change_pct:number;five_day_change_pct:number;twenty_day_change_pct:number};reason:{title:string;text:string;source_label:string;source_url:string}}
   metrics:{day_change_pct:number|null;five_day_change_pct:number|null;twenty_day_change_pct:number|null;period_change_pct:number|null;st_change_pct:number|null;advancing_pct:number|null}
   chart:ReadingSeries[];why:{title:string;text:string;source_label:string;source_url:string}[]
   watch_next:string[];reading_note:string

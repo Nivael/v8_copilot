@@ -90,15 +90,8 @@ def market_view(data):
     recent = change(path[0]['value'], path[-1]['value'])
     latest = change(path[-2]['value'], path[-1]['value']) if len(path) > 1 else None
     month, week = number(index.get('return_20d_pct')), number(index.get('return_5d_pct'))
-    if month is not None and month < 0:
-        headline = '大盘风险仍偏高，反弹尚未改变近月弱势' if latest is not None and latest > 0 else '大盘风险仍偏高，短期压力尚在'
-        stance = '弱势判断'
-    elif month is not None and week is not None and month > 0 and week > 0:
-        headline, stance = '短中期走势同向回升', '回升'
-    elif month is not None and month > 0:
-        headline, stance = '近月回升，短线仍有反复', '分化'
-    else:
-        headline, stance = '方向仍不清晰，先看已有的价格变化', '待观察'
+    from market_price_reading import price_judgment
+    headline, stance = price_judgment(latest, week, month)
     chart = [{'key': 'market', 'name': '大盘 · 中证全指', 'points': path, 'change_pct': recent}]
     st = data.get('st_reconstruction') or {}
     st_path = series([{'date': p['date'], 'close': p['all']['close']} for p in st.get('points', [])], start, end)
@@ -348,15 +341,17 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
 
 def processor_digest():
     return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name,'broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py')})
+                   for name in (Path(__file__).name,'broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py',
+                                'market_price_reading.py','market_public_refresh.py','market_calendar.py')})
 
 
 PROCESSOR_DIGEST = processor_digest()
 
 
 class ReadingViews:
-    def __init__(self, directory=OUTPUT, builder=None, ttl_seconds=600):
+    def __init__(self, directory=OUTPUT, builder=None, ttl_seconds=600, price_directory=MARKET_ROOT / 'trader_observations/latest_index'):
         self.directory = directory; self.builder = builder; self.ttl_seconds = ttl_seconds
+        self.price_directory = price_directory
         self.lock = Lock(); self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix='reading-view')
         self.future: Future | None = None; self.last_error = None; self.last_attempt = None
 
@@ -402,6 +397,10 @@ class ReadingViews:
                 view['broad_etf']=build_broad_etf_reading(data)
             except (OSError,ValueError,KeyError,TypeError,IndexError):
                 view['broad_etf']={'availability':'unavailable'}
+        from market_price_reading import newer_price
+        latest = newer_price(view, directory=self.price_directory)
+        if latest is not None:
+            view['latest_price'] = latest
         packet = {'version': VERSION, 'processor_digest': PROCESSOR_DIGEST, 'checked_at': datetime.now(timezone.utc).isoformat(),
                   'market': view, 'watch_bases': bases, 'source_snapshot_digest': data['snapshot_digest']}
         packet['content_digest'] = digest(packet)

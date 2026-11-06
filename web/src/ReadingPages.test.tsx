@@ -6,6 +6,8 @@ import {ExperienceHub} from './ExperienceHub'
 import {ReadingChart} from './ReadingChart'
 import {marketReading,learningReading} from './test/readingFixtures'
 
+const latestPrice:NonNullable<typeof marketReading.latest_price>={availability:'available',as_of:'2026-11-05',headline:'大盘风险仍偏高，短期压力尚在',stance:'弱势判断',summary:'新收盘仍弱，短线反弹未变成近月回升。',metrics:{day_change_pct:-2,five_day_change_pct:3,twenty_day_change_pct:-8},reason:{title:'先看最新的价格方向',text:'新收盘的价格依据。',source_label:'最新收盘原始来源',source_url:'https://www.csindex.com.cn/latest'}}
+
 function serve(data:unknown){return vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify(String(input).includes('/swing')?{availability:'warming',refresh:{in_progress:false,last_error:null}}:{availability:'available',as_of:'2026-11-04',checked_at:'2026-11-05T16:00:00Z',data,refresh:{in_progress:false,last_error:null}}),{status:200}))}
 describe('trader reading pages',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
@@ -35,6 +37,47 @@ describe('trader reading pages',()=>{
     expect(screen.getByRole('heading',{name:'对照ST参考'})).toBeVisible()
     expect(screen.queryByRole('heading',{name:'签约和受理分开看'})).not.toBeInTheDocument()
     expect(screen.getByText('待验证')).toBeVisible()
+  })
+  it('updates the price judgment while dating the older comparison, breadth and ETF separately',async()=>{
+    const olderReason={title:'ST同窗观察',text:'ST只比较已经完整的窗口。',source_label:'ST依据',source_url:'/market/evidence'}
+    const request=serve({...marketReading,why:[...marketReading.why,olderReason],latest_price:latestPrice})
+    render(<MemoryRouter><MarketOverview/></MemoryRouter>)
+    expect(await screen.findByRole('heading',{name:latestPrice.headline})).toBeVisible()
+    expect(screen.getByText('指数收盘截至 2026-11-05')).toBeVisible()
+    expect(screen.getByText('-2.00%')).toBeVisible()
+    expect(screen.getByText('-8.00%')).toBeVisible()
+    expect(screen.getByText('上涨股票占比（2026-11-04）')).toBeVisible()
+    expect(screen.getByText('2026-09-04 — 2026-11-04 · 同期累计涨跌')).toBeVisible()
+    expect(screen.getByText('ETF资金观察 · 份额与同窗价格截至2026-11-04')).toBeVisible()
+    expect(screen.getByRole('heading',{name:'ST同窗观察 · 截至2026-11-04'})).toBeVisible()
+    expect(screen.queryByRole('heading',{name:marketReading.why[0].title})).not.toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'最新收盘原始来源 ↗'})).toHaveAttribute('href',latestPrice.reason.source_url)
+    expect(request.mock.calls.every(([url,options])=>String(url).includes('/workbench/market')&&!options?.body)).toBe(true)
+  })
+  it.each(['2026-11-04','2026-11-03'])('keeps the existing judgment when the extra price date is %s',async as_of=>{
+    serve({...marketReading,latest_price:{...latestPrice,as_of}})
+    render(<MemoryRouter><MarketOverview/></MemoryRouter>)
+    expect(await screen.findByText('收盘数据截至 2026-11-04')).toBeVisible()
+    expect(screen.getByRole('heading',{name:marketReading.headline})).toBeVisible()
+    expect(screen.queryByRole('heading',{name:latestPrice.headline})).not.toBeInTheDocument()
+    expect(screen.getByRole('heading',{name:marketReading.why[0].title})).toBeVisible()
+  })
+  it('returns to the dated common basis when an available reading withdraws the extra price source',async()=>{
+    const request=serve({...marketReading,latest_price:latestPrice})
+    render(<MemoryRouter><MarketOverview/></MemoryRouter>)
+    await screen.findByRole('heading',{name:latestPrice.headline})
+    await waitFor(()=>expect(screen.getByRole('button',{name:'刷新判断'})).not.toBeDisabled())
+    request.mockImplementation(async()=>new Response(JSON.stringify({availability:'available',data:marketReading,refresh:{in_progress:false,last_error:null}}),{status:200}))
+    fireEvent.click(screen.getByRole('button',{name:'刷新判断'}))
+    expect(await screen.findByText('收盘数据截至 2026-11-04')).toBeVisible()
+    expect(screen.queryByRole('heading',{name:latestPrice.headline})).not.toBeInTheDocument()
+  })
+  it('uses the same latest market judgment in the learning crosslink without relabeling stock prices or reviews',async()=>{
+    serve({...learningReading,market_context:{...marketReading,latest_price:latestPrice}})
+    render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
+    expect(await screen.findByText(`${latestPrice.headline} · 2026-11-05`)).toBeVisible()
+    expect(screen.getByRole('heading',{name:'保留原提醒，补充市场与同类对照'})).toBeVisible()
+    expect(screen.getByText('价格截至 2026-11-04')).toBeVisible()
   })
   it('shows a new-price review as pending while retaining the previous review inside an expansion',async()=>{
     const stock=learningReading.cases[0]

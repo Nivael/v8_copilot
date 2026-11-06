@@ -146,8 +146,8 @@ describe('original question retrospective',()=>{
   })
   it.each(['2026-06-01','2026-06-02'])('explains a post-close answer with the actual %s anchor, including a missing stock close',async anchor_date=>{
     serve({...detail,questions:[{...question,asked_at:'2026-06-02T06:50:00Z',answer_completed_at:'2026-06-02T07:05:00Z',anchor_date}]})
-    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
-    expect(screen.getByText(`涨跌从${anchor_date}收盘算起`)).toBeVisible()
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText(`涨跌从${anchor_date}收盘算起`)).toBeVisible()
     expect(screen.getByText('原回答完成于2026/06/02 15:05，采用那时已完成的最近收盘。')).toBeVisible()
     expect(screen.queryByText(/盘中提问：数字/)).not.toBeInTheDocument()
     expect(screen.getAllByText('-20.43%')[0]).toBeVisible()

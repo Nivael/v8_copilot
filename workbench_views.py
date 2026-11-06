@@ -354,7 +354,9 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
 
 def processor_digest():
     return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                   for name in (Path(__file__).name,'case_research_scopes.py','research_corrections.py','broad_etf_reading.py','trader_research_notes.py','market_reading_updates.py','market_close_membership.py',
+                   for name in (Path(__file__).name,'case_research_scopes.py','research_corrections.py','broad_etf_reading.py','broad_fund_evidence.py',
+                                'etf_issuer_nav.py','etf_nav_sources.py','etf_nav_parsers.py','etf_announcements.py','etf_document_capture.py','etf_quarterly.py',
+                                'trader_research_notes.py','market_reading_updates.py','market_close_membership.py',
                                 'market_price_reading.py','market_public_refresh.py','market_calendar.py')})
 
 
@@ -410,6 +412,11 @@ class ReadingViews:
                 view['broad_etf']=build_broad_etf_reading(data)
             except (OSError,ValueError,KeyError,TypeError,IndexError):
                 view['broad_etf']={'availability':'unavailable'}
+        if view.get('broad_etf',{}).get('availability')=='available':
+            from broad_fund_evidence import reading
+            supplement = reading(view['broad_etf'])
+            if any(value['availability']=='available' for value in supplement.values()):
+                view['broad_etf']['fund_evidence'] = supplement
         from market_price_reading import newer_price
         latest = newer_price(view, directory=self.price_directory)
         if latest is not None:

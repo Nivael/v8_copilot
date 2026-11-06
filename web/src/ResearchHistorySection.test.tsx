@@ -7,6 +7,7 @@ const dates=['2026-06-01','2026-06-02','2026-06-03','2026-06-04','2026-06-05','2
 const path=(values:number[])=>dates.map((date,i)=>({date,value:values[i],level:values[i]}))
 const question:HistoryQuestion={id:'q1',asked_at:'2026-06-02T08:50:00Z',asked_on:'2026-06-02',question:'尾盘偷袭是什么意思？',kind:'original_question',anchor_date:'2026-06-02',basis_note:'最近已完成收盘',categories:['短线量价'],answers:[{text:'原回答：更像洗盘。',summary:'更像洗盘。',truncated:false}],sources:[{kind:'chatgpt',url:'https://chatgpt.com/c/source',title:'宝馨开板分析'}],outcomes:{stock:{five_day:{date:'2026-06-09',change_pct:-20.43}},market:{five_day:{date:'2026-06-09',change_pct:-1.79}},st:{five_day:{date:'2026-06-09',change_pct:-5.69}}},review:{headline:'错误：卖压被解释成洗盘',assessment:'后续方向与原乐观判断不符。',then_quote:'更像洗盘。',lessons:['不由盘口猜资金身份。'],explanation:[{lens:'个股与判断逻辑',text:'公司风险需要公告确认。'}],reviewed_at:'2026-11-06T02:00:00Z'}}
 const detail:HistoryDetail={availability:'available',symbol:'002514.SZ',name:'*ST宝馨',as_of:'2026-06-09',questions:[question,{...question,id:'q2',asked_at:'2026-06-03T08:00:00Z',asked_on:'2026-06-03',anchor_date:'2026-06-03',question:'黑历史有哪些？',categories:['财报与监管'],answers:[],review:null}],chart_sources:{stock:path([100,95,90,85,80,77,75]),market:path([100,99,98,98,98,97,97]),st:path([100,99,98,97,96,95,94])},st_name:'ST板块（东财）',st_note:'供应商板块，不拼接自建参考。',source_urls:{st:'https://quote.eastmoney.com/bk/90.BK0511.html'}}
+const longQuestion='我想比较沐邦与整个ST板块最近一个月的走势，看看反弹有没有跟上大盘，同时区分它自己的公司风险。尤其想知道公开招募之后的价格变化，是否足以支持此前关于资金集中、核心仓安全的说法；请把当时判断和后续事实分开列出，最后也看看新公告有没有改变结论。'
 function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
   const url=String(input);let data:unknown
   if(url.endsWith('/history'))data={availability:'available',as_of:'2026-06-09',stocks:[{symbol:'002514.SZ',name:'*ST宝馨',original_questions:2},{symbol:'603398.SH',name:'*ST沐邦',original_questions:1}],coverage:{original_questions:3,saved_research:1,reviewed_questions:1,stocks:2,source_note:'部分长聊天更早消息待补齐'}}
@@ -22,12 +23,80 @@ describe('original question retrospective',()=>{
     expect(screen.getByText(/2026\/06\/02 16:50/)).toBeVisible()
     expect(screen.getByRole('img',{name:/从2026-06-02起/})).toBeVisible()
     expect(screen.queryByRole('region',{name:'追问背景'})).not.toBeInTheDocument()
+    expect(screen.queryByText('完整原问题')).not.toBeInTheDocument()
     expect(screen.getAllByText('-20.43%')[0]).toBeVisible()
     const source=screen.getByText('展开原回答与聊天来源').closest('details')!
     expect(source.open).toBe(false)
     fireEvent.click(screen.getByText('展开原回答与聊天来源'))
     expect(screen.getByRole('link',{name:'宝馨开板分析 ↗'})).toHaveAttribute('href','https://chatgpt.com/c/source')
     expect(request.mock.calls.every(([,options])=>!options?.body)).toBe(true)
+  })
+  it('keeps a medium-length question compact with its full words available before the judgment',async()=>{
+    expect(longQuestion.length).toBeLessThan(200)
+    const original={...question,question:longQuestion},request=serve({...detail,questions:[original]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    const article=screen.getByRole('article',{name:'*ST宝馨历史复盘详情'}),heading=within(article).getByRole('heading',{level:3})
+    expect(heading.textContent).toMatch(/^我想比较沐邦.*…$/)
+    expect(heading.textContent).not.toContain('新公告有没有改变结论')
+    const full=within(article).getByText('完整原问题').closest('details')!,content=full.querySelector('p')!
+    expect(full.open).toBe(false);expect(content).not.toBeVisible()
+    const calls=request.mock.calls.length
+    fireEvent.click(within(article).getByText('完整原问题'))
+    expect(content).toBeVisible();expect(content.textContent).toBe(longQuestion)
+    expect(screen.getByText('错误：卖压被解释成洗盘')).toBeVisible()
+    expect(screen.getByRole('img',{name:/从2026-06-02起/})).toBeVisible()
+    fireEvent.click(within(article).getByText('完整原问题'));expect(full.open).toBe(false)
+    expect(request.mock.calls).toHaveLength(calls);expect(original.question).toBe(longQuestion)
+  })
+  it('collapses short multiline headings while preserving their original paragraph layout on expansion',async()=>{
+    const text='第一行：先看同窗大盘。\n\n第二行：再核个股公告。'
+    serve({...detail,questions:[{...question,question:text}]});render(<ResearchHistorySection/>)
+    const heading=await screen.findByRole('heading',{name:'第一行：先看同窗大盘。 第二行：再核个股公告。'})
+    expect(heading.textContent).not.toMatch(/\n/)
+    const full=screen.getByText('完整原问题').closest('details')!;expect(full.open).toBe(false)
+    fireEvent.click(screen.getByText('完整原问题'))
+    expect(full.querySelector('p')!.textContent).toBe(text)
+  })
+  it.each(['👩🏽‍💻','🇨🇳'])('does not split the visible %s character when shortening the excerpt',async emoji=>{
+    const text='要'.repeat(78)+emoji+'继续检查问题是否完整。'
+    serve({...detail,questions:[{...question,question:text}]});render(<ResearchHistorySection/>)
+    await screen.findByText('错误：卖压被解释成洗盘')
+    const heading=within(screen.getByRole('article',{name:'*ST宝馨历史复盘详情'})).getByRole('heading',{level:3})
+    expect(heading.textContent).toBe('要'.repeat(78)+emoji+'…')
+    fireEvent.click(screen.getByText('完整原问题'))
+    expect(screen.getByText('完整原问题').closest('details')!.querySelector('p')!.textContent).toBe(text)
+  })
+  it('makes a compact verified background expandable even when it is shorter than the previous cutoff',async()=>{
+    const context={version:'history_question_context_v1',question_id:'earlier',question:longQuestion,asked_on:'2026-06-02',source_url:'https://chatgpt.com/c/context'}
+    serve({...detail,questions:[{...question,question:'继续看',question_context:context}]});render(<ResearchHistorySection/>)
+    const background=await screen.findByRole('region',{name:'追问背景'}),quote=background.querySelector('blockquote')!
+    expect(quote.textContent).toMatch(/…$/);expect(quote.textContent).not.toContain('新公告有没有改变结论')
+    const full=within(background).getByText('完整背景原问题').closest('details')!;expect(full.open).toBe(false)
+    fireEvent.click(within(background).getByText('完整背景原问题'))
+    expect(full.querySelector('p')!.textContent).toBe(longQuestion)
+    expect(within(background).getByRole('link',{name:'打开这轮原聊天 ↗'})).toHaveAttribute('href',context.source_url)
+    expect(context.question).toBe(longQuestion)
+  })
+  it('finds words outside the visible excerpt without fetching or rewriting the archived question',async()=>{
+    const request=serve({...detail,questions:[{...question,question:longQuestion},detail.questions[1]]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    const calls=request.mock.calls.length
+    fireEvent.change(screen.getByRole('searchbox',{name:'查找历史问题或经验'}),{target:{value:'新公告有没有改变结论'}})
+    expect(within(screen.getByRole('complementary',{name:'*ST宝馨历史提问'})).getAllByRole('button')).toHaveLength(1)
+    const article=screen.getByRole('article',{name:'*ST宝馨历史复盘详情'})
+    expect(within(article).getByRole('heading',{level:3}).textContent).not.toContain('新公告有没有改变结论')
+    fireEvent.click(within(article).getByText('完整原问题'))
+    expect(within(article).getByText('完整原问题').closest('details')!.querySelector('p')!.textContent).toBe(longQuestion)
+    expect(request.mock.calls).toHaveLength(calls)
+  })
+  it('starts the next question’s complete text folded after switching from an expanded question',async()=>{
+    serve({...detail,questions:[{...question,question:longQuestion},{...question,id:'q2',asked_on:'2026-06-03',anchor_date:'2026-06-03',question:'另一个长问题：'+longQuestion}]})
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    fireEvent.click(screen.getByText('完整原问题'));expect(screen.getByText('完整原问题').closest('details')!.open).toBe(true)
+    fireEvent.click(within(screen.getByRole('complementary',{name:'*ST宝馨历史提问'})).getByRole('button',{name:/另一个长问题/}))
+    const full=screen.getByText('完整原问题').closest('details')!
+    expect(full.open).toBe(false);expect(full.querySelector('p')!.textContent).toBe('另一个长问题：'+longQuestion)
+    expect(full.querySelector('p')).not.toBeVisible()
   })
   it('switches by question marker and does not fabricate a missing answer',async()=>{
     serve();render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')

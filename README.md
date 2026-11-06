@@ -88,6 +88,11 @@ fallback 与回归面，不再承担默认研究主持人职责。
 孙公司进展推母公司安全和未经校准的延期概率。泛科技/小金属选股题移回市场，只核论证，不拿指数认证候选收益。
 原诉讼数字及累计披露依据经原件支持，债务披露不等于出清；后来的预亏与正式受理状态分别核查。
 此前108条复盘、307条记录原文及全部行情不变；新增事实核对按当前时间保存，不自动晋级通用方法。
+研究工具另修正公告日期绑定：只写月日不自动套用旧公告年份，日期无效或命中多份公告时保留明确缺口。
+指定完整日期只定位对应公告，不混入最近其他公告；检索日期与全卡各维度的材料截至日分别表达，
+不会把当前状态或后来的材料包装成原提问当时已知。原问题、旧回答和既有价格窗口保持原样。
+招募先例查询同样不把机器年份填进历史原问；当前个案日期须同时落在已验证的上市公司招募开始日与截止日之间，
+并分别核对价格覆盖起止。日期未确定不影响独立历史样本的描述统计，也不据此认证题面当日跌停或后续结果。
 采集、日期、独立ST口径与更新说明见 [RESEARCH_HISTORY.md](RESEARCH_HISTORY.md)。
 
 两页首屏改用轻量只读接口 `GET /api/v1/workbench/market`、`GET /api/v1/workbench/learning`。
@@ -243,8 +248,8 @@ claim backing 校验；`llm_adapter.py` 只负责把这套边界注入 W1 API。
 `llm_mode=off` 是纯确定性模式。
 
 The current HTTP boundary accepts `v8_copilot_api_contract_v0` requests and
-returns `v8_copilot_api_contract_v1` responses. This is an explicit request /
-response split, not a claim that v1 responses validate as v0.
+returns `v8_copilot_api_contract_v2` responses. This is an explicit request /
+response split, not a claim that v2 responses validate as v0.
 
 React 经验中心、兼容问答、运行审计和个股面板位于 `web/`：
 

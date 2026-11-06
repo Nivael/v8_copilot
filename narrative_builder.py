@@ -228,6 +228,16 @@ def _stock_overview_narrative(
         None,
     )
 
+    if announcement_search and announcement_search.get('待确认事项'):
+        ref=_row_id(announcement_search)
+        return ResearchNarrative(
+            direct_answer=_statement(announcement_search['待确认事项'],'query_row',ref),
+            reasoning_steps=[NarrativeStep(title='先确认所指公告',
+                text=f"检索日期：{announcement_search.get('检索日期')}；候选只用于核对，未据此解释公告内容。",
+                backing=[_backing('query_row',ref)])],
+            uncertainties=[_statement('其他日期的公告不能替代本次问题；各维度快照也不能直接当作原提问当时已知的信息。','query_row',ref)],
+            watch_items=[],basis_note=_basis_note(card))
+
     if body and not price_coverage:
         excerpts = list(body.get("正文证据片段") or [])
         preferred_markers = [
@@ -244,6 +254,8 @@ def _stock_overview_narrative(
             next((item for item in excerpts if item != first_fact), ""),
         )
         direct_text = "；".join(str(item) for item in (first_fact, uncertainty) if item)
+        if announcement_search and announcement_search.get('日期确认')=='完整日期':
+            direct_text=f"按 {body.get('日期')} 这份公告："+direct_text
         steps = [NarrativeStep(
             title=f"正文证据 {index}",
             text=str(item),
@@ -256,7 +268,7 @@ def _stock_overview_narrative(
             ),
             reasoning_steps=steps,
             uncertainties=[_statement(
-                "正文片段用于回链核对；事项影响和后续进度仍需以后续正式公告为准。",
+                "正文说明的是该公告披露时的信息；事项影响、后续进度及其他维度快照需分别核对，不能由此回放原提问当时的全部已知信息。",
                 "query_row",
                 _row_id(body),
             )],
@@ -1008,18 +1020,21 @@ def _recruitment_precedent_narrative(
         and not (premise and "题面所述" in claim.text)
         and not (premise and "当前招募截止日" in claim.text)
     ]
-    if premise and not premise.get("本地是否覆盖"):
+    if premise and premise.get('日期确认')!='完整日期':
+        uncertainties.insert(0,_statement('题面当日的年份或具体日期尚未确认，不使用机器年份补全，也不据此认定当前个案仍在招募窗口。',
+                                         'query_row',_row_id(premise)))
+    elif premise and premise.get("本地是否覆盖") is False:
         uncertainties.insert(0, _statement(
             (
-                f"题面所述 {premise.get('题面日期')} 跌停晚于本地价格截止日 "
-                f"{premise.get('本地价格截至')}，这里只把它作为未独立核验的提问前提。"
+                f"本地价格区间 {premise.get('本地价格起始')} 至 {premise.get('本地价格截至')} "
+                f"未覆盖题面日期 {premise.get('题面日期')}，这里只把价格陈述作为未独立核验的提问前提。"
             ),
             "query_row",
             _row_id(premise),
         ))
     if premise and premise.get("本地是否验证处于招募截止前") == "未验证":
         uncertainties.append(_statement(
-            "当前个案的招募截止日未进入公司公告口径材料化；题面所述“截止前”也未由本卡独立核验。",
+            "尚无与题面日期及上市公司主体对上的已验证招募窗口；题面所述“截止前”未由本卡独立核验。",
             "query_row",
             _row_id(premise),
         ))

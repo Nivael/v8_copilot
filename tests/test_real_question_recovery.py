@@ -3,15 +3,15 @@ import json
 import answer_engine
 from api import orchestrate
 from api_contract import ResearchRequest
-from evals.run_real_question_eval_v1 import evaluate
+from evals.run_real_question_eval_v2 import evaluate
 
 
 def ask(question: str):
     return orchestrate(ResearchRequest(question=question, llm_mode="off"))
 
 
-def test_real_question_answerability_v1() -> None:
-    assert evaluate() == (14, 14)
+def test_real_question_answerability_v2() -> None:
+    assert evaluate() == (18, 18)
 
 
 def test_answer_inventory_uses_validated_refresh_without_reading_body(
@@ -31,7 +31,7 @@ def test_answer_inventory_uses_validated_refresh_without_reading_body(
         }],
     }, ensure_ascii=False), encoding="utf-8")
 
-    response = ask("ST南都7月8日为什么被申请预重整和重整？")
+    response = ask("ST南都2026年7月8日为什么被申请预重整和重整？")
 
     row = next(
         row for row in response.answer_card["body_rows"]
@@ -54,9 +54,15 @@ def test_multi_stock_query_executes_a_two_stock_comparison() -> None:
 
 
 def test_answer_card_as_of_tracks_the_dimensions_used_by_the_question() -> None:
-    announcement = ask("ST亚光7月8日公开招募重整投资人的公告说了什么？")
-    announcement_and_price = ask("ST亚光7月8日公告后股价怎么走？")
+    announcement = ask("ST亚光2026年7月8日公开招募重整投资人的公告说了什么？")
+    announcement_and_price = ask("ST亚光2026年7月8日公告后股价怎么走？")
 
-    assert announcement.answer_card["as_of"] == "2026-07-08"
     assert announcement.answer_card["source_freshness"]["company_announcements_as_of"] > "2026-07-08"
-    assert announcement_and_price.answer_card["as_of"] == "2026-07-08"
+    for response in [announcement, announcement_and_price]:
+        # A dated document filter does not roll the other included snapshots back.
+        card=response.answer_card
+        assert card['as_of']>=card['source_freshness']['company_announcements_as_of']
+        official=[row for row in card['body_rows'] if row.get('记录类型')=='近期官方公告']
+        assert official and all(row['日期']=='2026-07-08' for row in official)
+    window=next(row for row in announcement_and_price.answer_card['body_rows'] if row.get('row_id')=='requested_event_price_window')
+    assert window['公告日期']=='2026-07-08'

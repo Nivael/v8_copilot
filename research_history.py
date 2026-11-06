@@ -341,10 +341,12 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
 
 def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
     from research_history_prices import bound
+    from research_history_subjects import validate_extension
     from research_corrections import annotations,verified_packet
     from settings import RESEARCH_RUN_LEDGER_DB
     paths=bound(root/'price_paths/current.json');records=prepare_history_records(imported,root=root)
     if paths.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed; rebuild paths before publishing')
+    validate_extension(paths,root=root)
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
     corrections,runs=verified_packet(ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,
                                     path=corrections_path or root.parent/'research_corrections/current.json')
@@ -369,14 +371,16 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):
     """Guarded metadata migration; never re-dates or extends an existing assessment."""
     from research_history_prices import bound
+    from research_history_subjects import validate_extension
     packet=bound(root/'price_paths/current.json')
     if packet.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed')
+    validate_extension(packet,root=root)
     paths=packet['data'];records={r['id']:r for r in prepare_history_records(imported,root=root)}
     reviews=json.loads((root/'reviews.json').read_text());frozen={}
     for identity,review in reviews.items():

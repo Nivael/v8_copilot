@@ -17,6 +17,24 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 describe('original question retrospective',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('does not label a pending post-question price comparison as completed',async()=>{
+    const archived:HistoryQuestion={...question,asked_at:'2026-06-10T08:50:00Z',asked_on:'2026-06-10',anchor_date:'2026-06-09',review:null,outcomes:{stock:{latest:{date:'2026-06-09',change_pct:null}}}}
+    const original=JSON.stringify(archived)
+    serve({...detail,questions:[archived]});render(<ResearchHistorySection/>)
+    expect(await screen.findByText('原问题 · 可比行情待补')).toBeVisible()
+    expect(screen.getByText('原问题和原回答已保留；可比后续行情仍待补齐，判断也待复核。')).toBeVisible()
+    expect(screen.queryByText('原问题 · 走势已对照')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('展开原回答与聊天来源'))
+    expect(screen.getByText('原回答：更像洗盘。')).toBeVisible()
+    expect(JSON.stringify(archived)).toBe(original)
+  })
+  it('keeps a measured flat return distinct from missing followup prices',async()=>{
+    serve({...detail,questions:[{...question,review:null,outcomes:{stock:{five_day:{date:'2026-06-09',change_pct:0}}}}]})
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText('原问题 · 走势已对照')).toBeVisible()
+    expect(screen.getByText('后续走势已对照；这条原回答的事实与推理仍待逐项复核。')).toBeVisible()
+    expect(screen.queryByText('原问题 · 可比行情待补')).not.toBeInTheDocument()
+  })
   it('leads with the corrected judgment, dated original and common-window paths',async()=>{
     const request=serve();render(<ResearchHistorySection/>)
     expect(await screen.findByText('错误：卖压被解释成洗盘')).toBeVisible()
@@ -171,10 +189,12 @@ describe('original question retrospective',()=>{
     expect(screen.queryByText(/盘中提问：数字/)).not.toBeInTheDocument()
   })
   it('leaves the comparison start pending instead of making up a date when the anchor is missing',async()=>{
-    serve({...detail,questions:[{...question,anchor_date:null,outcomes:{},review:null}]})
+    serve({...detail,questions:[{...question,asked_at:'2025-09-24T01:34:15Z',asked_on:'2025-09-24',anchor_date:null,outcomes:{},review:null}]})
     render(<ResearchHistorySection/>)
-    expect(await screen.findByText('比较起点待定位')).toBeVisible()
-    expect(screen.getByText('尚未找到当时可比的有效收盘。')).toBeVisible()
+    expect(await screen.findByText('现有行情尚未覆盖可用的比较起点，暂不显示后续收益。原问题和原回答已保留。')).toBeVisible()
+    expect(screen.getByText('原问题 · 可比行情待补')).toBeVisible()
+    expect(screen.queryByText('走势数据正在更新。')).not.toBeInTheDocument()
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
     expect(screen.queryByText(/涨跌从/)).not.toBeInTheDocument()
     expect(screen.queryByText('-20.43%')).not.toBeInTheDocument()
   })

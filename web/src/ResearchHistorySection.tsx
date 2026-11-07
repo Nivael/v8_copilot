@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react'
 import {ReadingChart} from './ReadingChart'
+import {HistoryAnswerCohort} from './HistoryAnswerCohort'
 import {HistoryEventTimeline} from './HistoryEventTimeline'
 import {HistoryJourneyPeriod} from './HistoryJourneyPeriod'
 import {HistoryCasePeriod} from './HistoryCasePeriod'
@@ -171,6 +172,7 @@ function HistoryBody({symbol,initialQuestionId,onOpenQuestion}:{symbol:string;in
         <div className="history-original"><p className="reading-kicker">{question.answers[0]?.binding==='shared_turn_answer'?'该轮最终回答（多条提问共同归档）':question.answers[0]?.binding==='embedded_research_report'?'当时完成的内嵌研究':'当时怎么回答'}</p>{!correctedStudy&&<blockquote>{readable(review?.then_quote||question.answers[0]?.summary||responseNote(question)||(followup?'这条当时未单独作答':'未找到原回答'))}</blockquote>}{followup&&<p><button className="history-clear" onClick={openFollowup}>查看补充后的提问与原答</button></p>}<details className="reading-disclosure"><summary>{correctedStudy?'展开旧研究原文（含已更正内容）':'展开原回答与聊天来源'}</summary>{question.answer_completed_at&&<p>原回答完成于 {timestamp(question.answer_completed_at)}（北京时间）。</p>}{question.answers.map((answer,index)=><div key={index}>{answer.capture_note&&<p className="reading-caption">{answer.capture_note}</p>}<p className="reading-prewrap">{readable(answer.text)}</p>{answer.binding==='shared_turn_answer'&&<p>来源只记录了这{answer.source_question_ids?.length||'多'}条问题所在轮次的最终答复，不能证明逐条回应。</p>}{answer.truncated&&<p>这一份文字截取未包含回答的末尾，请打开原聊天查看。</p>}{answer.links?.filter(link=>/^https?:\/\//.test(link.url)).map((link,i)=><p key={i}><a href={link.url} target="_blank" rel="noreferrer">{link.label||'原回答引用'} ↗</a></p>)}</div>)}{question.sources.filter(s=>s.url).map((source,index)=><p key={index}><a href={source.url} target="_blank" rel="noreferrer">{source.title||'打开原聊天'} ↗</a></p>)}</details></div>
         {!!question.question_visuals?.length&&<HistoryVisuals visuals={question.question_visuals}/>}
         {!!question.question_files?.length&&<HistoryFiles files={question.question_files}/>}
+        <HistoryAnswerCohort key={question.id} cohort={review?.answer_cohort} questionId={question.id} sourceRunId={review?.source_run_id}/>
         {timeline&&(timeline.version==='history_event_timeline_v6'||timeline.version==='history_event_timeline_v7')&&<HistoryJourneyPeriod timeline={timeline} event={activeEvent} onSelect={chooseEvent} askedOn={question.asked_on}/>}
         {timeline?.version==='history_event_timeline_v3'&&<HistoryCasePeriod timeline={timeline} event={activeEvent} onSelect={chooseEvent} askedOn={question.asked_on}/>}
         {timeline?.version==='history_event_timeline_v3'&&!question.anchor_date&&activeEvent&&<HistoryEventTimeline timeline={timeline} event={activeEvent} onSelect={chooseEvent} stName={data.st_name}/>}

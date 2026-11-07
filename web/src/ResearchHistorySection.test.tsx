@@ -38,6 +38,17 @@ describe('original question retrospective',()=>{
     expect(screen.getByText('真实原报告正文')).toBeVisible()
     expect(screen.getByRole('link',{name:'原报告引用1 ↗'})).toHaveAttribute('href','https://example.com/original')
   })
+  it.each([true,false])('shows a group scope only for an argument review (%s)',async argumentOnly=>{
+    const review={...question.review!,focused_symbol:'market',scope_label:'这33家公司的原分组',price_through:detail.as_of,...(argumentOnly?{assessment_basis:'original_argument_only' as const}:{})}
+    serve({...detail,questions:[{...question,review,review_focused_name:'大盘与ST'}]});render(<ResearchHistorySection/>)
+    await screen.findByText('错误：卖压被解释成洗盘')
+    if(argumentOnly){expect(screen.getByText(/范围：这33家公司的原分组/)).toBeVisible();expect(screen.queryByText(/主要评估大盘与ST/)).not.toBeInTheDocument()}
+    else{expect(screen.getByText(/主要评估大盘与ST/)).toBeVisible();expect(screen.queryByText(/范围：这33家公司的原分组/)).not.toBeInTheDocument()}
+  })
+  it('keeps the existing focused-company caption for an argument review without a group label',async()=>{
+    serve({...detail,questions:[{...question,review:{...question.review!,assessment_basis:'original_argument_only',focused_symbol:'603398.SH'},review_focused_name:'*ST沐邦'}]});render(<ResearchHistorySection/>)
+    expect(await screen.findByText(/主要评估\*ST沐邦/)).toBeVisible()
+  })
   it('shows the BSE vendor basis without claiming a later exchange splice or a Tencent history',async()=>{
     const note='本股整段使用东方财富前复权日线，未拼接交易所逐日表。'
     const bse:HistoryDetail={...detail,symbol:'920023.BJ',name:'*ST田野',stock_price_basis_note:note,source_urls:{stock_bse_history:'https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.920023'}}

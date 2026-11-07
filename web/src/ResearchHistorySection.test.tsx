@@ -715,6 +715,16 @@ describe('group argument timeline projection',()=>{
 })
 
 describe('unanswered question event followthrough',()=>{
+  it.each(['plan_only','research_stopped'] as const)('does not describe a verified %s original as a lost complete report',async status=>{
+    const q:HistoryQuestion={...question,answers:[],original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'},review_status:'question_followthrough',review:{...question.review!,then_quote:'',assessment_basis:'question_followthrough'}}
+    serve({...detail,questions:[q]});render(<ResearchHistorySection/>);
+    expect(await screen.findByText('本次补做事件复盘 · 原研究当时未完成')).toBeVisible()
+    expect(screen.getByText('已补事件复盘 · 原任务未完成')).toBeVisible()
+    expect(screen.getByText('原任务当时未形成完整报告；这里对照后来的真实事件与价格，不补写当时答案。')).toBeVisible()
+    expect(screen.queryByText('已补事件复盘 · 原答待恢复')).not.toBeInTheDocument()
+    expect(screen.queryByText(/原答尚未找回；/)).not.toBeInTheDocument()
+    expect(screen.getByText(status==='plan_only'?'当时只形成了研究计划，没有完成报告。':'当时的研究已停止，没有形成完整报告。')).toBeVisible()
+  })
   it.each([true,false])('shows a later study without inventing an old answer; matching basis %s',async matching=>{
     const {question_id,symbol,initial_event_id,events,content_digest}=eventTimeline
     const t={question_id:question.id||question_id,symbol,initial_event_id,events,content_digest,version:'history_event_timeline_v5' as const,assessment_basis:'question_followthrough' as const,learning:{lesson:'先核定价与履约',next_check:'跟踪失败和未完成分支'}}

@@ -2,13 +2,14 @@
 from hashlib import sha256
 import json
 
-from etf_issuer_nav import NAV_DEFINITIONS
+from etf_issuer_nav import NAV_VERSION, nav_definitions
 from etf_nav_refresh import refresh_issuer_navs as refresh
 from etf_nav_sources import CHINAAMC_API, EFUNDS_SCHEMA, HUATAI_API, HUATAI_SITE, NF_API
 
 
-def archive(directory,code,calendar,rows,now):
-    provider=NAV_DEFINITIONS[code]['provider'];refs=[];data={r['nav_date']:str(r['unit_nav']) for r in rows}
+def archive(directory,code,calendar,rows,now,*,version=NAV_VERSION):
+    definitions=nav_definitions(version)
+    provider=definitions[code]['provider'];refs=[];data={r['nav_date']:str(r['unit_nav']) for r in rows}
     def save(url,body,params=None,method='GET',**extra):
         raw=(body if isinstance(body,str) else json.dumps(body)).encode();key=sha256(raw).hexdigest()
         folder=directory/'responses';folder.mkdir(exist_ok=True,parents=True);(folder/(key+'.raw')).write_bytes(raw)
@@ -16,10 +17,10 @@ def archive(directory,code,calendar,rows,now):
                      'response_sha256':key,'bytes':len(raw),'content_type':'synthetic-test-only',**extra})
     if provider=='jsfund':
         body=''.join(f'<tr><td>{d}</td><td>{data[d]}</td><td>99</td></tr>' for d in reversed(calendar))
-        save(NAV_DEFINITIONS[code]['url'],f'<html><input name="FundCode" value="{code[:6]}"><option value="{code[:6]}" selected>ETF</option><table class="mm_r_table7"><tr><td>日期</td><td>份额净值</td><td>累计净值</td></tr>{body}</table></html>')
+        save(definitions[code]['url'],f'<html><input name="FundCode" value="{code[:6]}"><option value="{code[:6]}" selected>ETF</option><table class="mm_r_table7"><tr><td>日期</td><td>份额净值</td><td>累计净值</td></tr>{body}</table></html>')
     elif provider=='efunds':
         literal=f'https://cdn.efunds.com.cn/market/2.0/{code[:6]}_1y.js'
-        save(NAV_DEFINITIONS[code]['url'],f'<html><script>var fundCode="{code[:6]}";</script>单位净值(元)<script src="{literal}"></script></html>')
+        save(definitions[code]['url'],f'<html><script>var fundCode="{code[:6]}";</script>单位净值(元)<script src="{literal}"></script></html>')
         save(EFUNDS_SCHEMA,'2 EnumSourceTypeNetValue 单位净值')
         body=''.join(f'{d.replace("-","")}_1_{data[d]}_99_0;' for d in calendar)
         save(literal,f'mk_{code[:6]}_1y="0_1_2_3_4;{body}";')
@@ -45,5 +46,5 @@ def refresh_issuer_navs(client,**kw):
     class Captured:
         def get_navs(self,code,calendar):
             rows,refs=client.get_navs(code,calendar)
-            return rows,refs or archive(kw['output'],code,calendar,rows,kw['now'])
+            return rows,refs or archive(kw['output'],code,calendar,rows,kw['now'],version=kw.get('version',NAV_VERSION))
     return refresh(Captured(),**kw)

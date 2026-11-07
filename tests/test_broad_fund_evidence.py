@@ -58,14 +58,14 @@ def test_no_threshold_disclosure_does_not_create_zero_huijin_or_insurer_holdings
     with pytest.raises(ValueError):b.holder_row(entry,pages,report)
 
 
-def nav_fixture(monkeypatch):
+def nav_fixture(monkeypatch, *, definitions=b.NAV_DEFINITIONS, share_change=-2, direction=1):
     dates=sessions_2026(date(2026,10,1),date(2026,11,6))[-21:]
-    source={code:[{'nav_date':day,'unit_nav':1+i/100} for i,day in enumerate(dates)] for code in b.NAV_DEFINITIONS}
-    reconciled=[{'code':code,'records':[{'date':day,'source_value':f'{1+i/100:.4f}'} for i,day in enumerate(dates)]} for code in source]
+    source={code:[{'nav_date':day,'unit_nav':1+direction*i/100} for i,day in enumerate(dates)] for code in definitions}
+    reconciled=[{'code':code,'records':[{'date':day,'source_value':f'{1+direction*i/100:.4f}'} for i,day in enumerate(dates)]} for code in source]
     meta={'availability':'observed','through':'2026-11-06','fetched_at':'2026-11-07T00:00:00+08:00',
           'calendar':dates,'content_digest':'0'*64,'raw_reconciliation':{'funds':reconciled}}
     monkeypatch.setattr(b,'load_issuer_navs',lambda *args:(meta,source))
-    broad={'as_of':'2026-11-06','groups':[{'funds':[{'code':code,'five_day_share_change_pct':-2} for code in source]}]}
+    broad={'as_of':'2026-11-06','groups':[{'funds':[{'code':code,'five_day_share_change_pct':share_change} for code in source]}]}
     return broad,meta,source
 
 
@@ -103,3 +103,24 @@ def test_missing_review_and_nav_do_not_create_a_false_empty_market_reading(tmp_p
     result=b.reading({'as_of':'2026-11-06'},directory=tmp_path,announcement_root=tmp_path/'none')
     assert result=={'unit_nav':{'availability':'unavailable'},'holders':{'availability':'unavailable'}}
     assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize('shares,direction,headline', [
+    (2,1,'12只样本近5日份额和净值都回升'),
+    (2,-1,'12只样本份额都增加，净值却仍下跌'),
+    (-2,-1,'12只样本份额与净值同步回落'),
+    (0,0,'近5日：0只份额增加、0只减少，0只净值回升'),
+])
+def test_complete_broad_samples_get_directional_conclusion_without_named_buyer(shares,direction,headline,monkeypatch):
+    broad,_,_=nav_fixture(monkeypatch,definitions=b.BROAD_NAV_DEFINITIONS,share_change=shares,direction=direction)
+    result=b.navs(broad)
+    assert result['observed_funds']==result['sample_funds']==12 and result['headline']==headline
+    assert '不能据此认定买方身份' in result['basis_note']
+    if direction<0:assert '12只近20日净值仍下跌' in result['interpretation'] and '短反弹' not in result['interpretation']
+    assert not any(key in result for key in ('national_team','insurance','estimated_net_subscription_yuan'))
+
+
+@pytest.mark.parametrize('shares',[True,float('nan'),float('inf'),None,'invalid'])
+def test_missing_or_invalid_share_comparison_cannot_create_a_combined_conclusion(shares,monkeypatch):
+    broad,_,_=nav_fixture(monkeypatch,share_change=shares)
+    assert b.navs(broad)=={'availability':'unavailable'}

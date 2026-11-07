@@ -20,6 +20,7 @@ _COMPANY_SUFFIXES = (
     "有限责任公司",
     "有限公司",
 )
+_INSTITUTION_NAMES = ("中央汇金投资有限责任公司", "中央汇金资产管理有限责任公司", "中央汇金")
 
 
 @dataclass(frozen=True)
@@ -44,6 +45,17 @@ def normalize_stock_name(value: str) -> str:
             text = text[: -len(suffix)]
             break
     return text
+
+
+def _name_hits(value: str):
+    normalized = normalize_stock_name(value)
+    institutions = [match.span() for name in _INSTITUTION_NAMES
+                    for match in re.finditer(re.escape(normalize_stock_name(name)), normalized)]
+    for alias, symbol, display_name in _alias_catalog():
+        for match in re.finditer(re.escape(alias), normalized):
+            start, end = match.span()
+            if not any(left <= start and end <= right for left, right in institutions):
+                yield start, alias, symbol, display_name
 
 
 @lru_cache(maxsize=1)
@@ -83,11 +95,7 @@ def resolve_stock(value: str) -> StockResolution | None:
         }
         return StockResolution(symbol, names.get(symbol, symbol), symbol)
 
-    normalized_question = normalize_stock_name(value)
-    matches = [
-        item for item in _alias_catalog()
-        if item[0] and item[0] in normalized_question
-    ]
+    matches = [(alias, symbol, name) for _, alias, symbol, name in _name_hits(value)]
     if not matches:
         return None
     longest = len(matches[0][0])
@@ -110,11 +118,8 @@ def resolve_stocks(value: str) -> list[StockResolution]:
         symbol = match.group(1)
         hits.append((match.start(), -6, StockResolution(symbol, names.get(symbol, symbol), symbol)))
 
-    normalized = normalize_stock_name(value)
-    for alias, symbol, display_name in _alias_catalog():
-        start = normalized.find(alias)
-        if start >= 0:
-            hits.append((start, -len(alias), StockResolution(symbol, display_name, alias)))
+    for start, alias, symbol, display_name in _name_hits(value):
+        hits.append((start, -len(alias), StockResolution(symbol, display_name, alias)))
 
     resolved: list[StockResolution] = []
     seen: set[str] = set()

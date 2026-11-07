@@ -42,4 +42,19 @@ describe('dated broad-fund source observations',()=>{
     rerender(<BroadFundEvidenceSection data={{unit_nav:{availability:'unavailable'},holders:{availability:'unavailable'}}}/>)
     expect(screen.queryByRole('region',{name:'宽基ETF净值与披露持有人'})).not.toBeInTheDocument()
   })
+  it('leads with the twelve-sample judgment while keeping quarterly coverage independent',()=>{
+    const updated:BroadFundEvidence={...data,unit_nav:{...data.unit_nav,observed_funds:12,
+      headline:'12只样本近5日份额和净值都回升',
+      interpretation:'短线承接出现改善，但12只近20日净值仍下跌。',
+      basis_note:'这里比较同一窗口的份额方向与单位净值，不能据此认定买方身份。'}}
+    render(<BroadFundEvidenceSection data={updated}/>)
+    expect(screen.getByRole('heading',{name:updated.unit_nav.headline!})).toBeVisible()
+    expect(screen.getByText(updated.unit_nav.interpretation!)).toBeVisible()
+    const nav=screen.getByText('净值已补至2026-11-06 · 12/12只宽基样本').closest('details')!
+    expect(nav.open).toBe(false)
+    expect(screen.getByText(updated.unit_nav.basis_note!)).not.toBeVisible()
+    fireEvent.click(screen.getByText('哪些基金在增加持有 · 三季报原文'))
+    expect(screen.getByText(/此处核对2只基金的季度披露/)).toBeVisible()
+    expect(nav.open).toBe(false)
+  })
 })

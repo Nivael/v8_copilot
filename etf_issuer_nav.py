@@ -30,10 +30,30 @@ NAV_DEFINITIONS = {
                   "url": "https://www.chinaamc.com/product/fundLishijingzhi.do?fundcode=159845"},
 }
 NAV_VERSION = "issuer_etf_nav_raw_v1"
+BROAD_NAV_VERSION = "issuer_broad_etf_nav_raw_v2"
+BROAD_NAV_DEFINITIONS = {
+    **NAV_DEFINITIONS,
+    "510050.SH": {"provider": "chinaamc", "label": "华夏", "field": "单位净值",
+                  "url": "https://www.chinaamc.com/product/fundLishijingzhi.do?fundcode=510050"},
+    "563360.SH": {"provider": "huatai_pb", "label": "华泰柏瑞", "field": "netvalue",
+                  "url": "https://www.huatai-pb.com/products/zhishu/563360/index.html"},
+    "588000.SH": {"provider": "chinaamc", "label": "华夏", "field": "单位净值",
+                  "url": "https://www.chinaamc.com/product/fundLishijingzhi.do?fundcode=588000"},
+    "588080.SH": {"provider": "efunds", "label": "易方达", "field": "EnumSourceTypeNetValue",
+                  "url": "https://www.efunds.com.cn/fund/588080.shtml"},
+}
 
 
-def validate_nav_rows(rows: list[dict], code: str, calendar: list[str]) -> None:
-    if code not in NAV_DEFINITIONS or [row["nav_date"] for row in rows] != calendar:
+def nav_definitions(version=NAV_VERSION):
+    if version == NAV_VERSION:
+        return NAV_DEFINITIONS
+    if version == BROAD_NAV_VERSION:
+        return BROAD_NAV_DEFINITIONS
+    raise ValueError("unsupported issuer NAV profile")
+
+
+def validate_nav_rows(rows: list[dict], code: str, calendar: list[str], *, version=NAV_VERSION) -> None:
+    if code not in nav_definitions(version) or [row["nav_date"] for row in rows] != calendar:
         raise ValueError("NAV window is incomplete, duplicated or out of order")
     for row in rows:
         value = row["unit_nav"]
@@ -46,8 +66,10 @@ def load_issuer_navs(directory: Path, now: datetime) -> tuple[dict, dict[str, li
     try:
         raw = json.loads((directory / "current.json").read_text())
         expected = raw.pop("content_digest")
-        if (raw.get("contract_version") != NAV_VERSION or digest(raw) != expected
-            or raw.get("nav_unit") != "CNY_per_share" or raw.get("definitions") != NAV_DEFINITIONS
+        version = raw.get("contract_version")
+        definitions = nav_definitions(version)
+        if (digest(raw) != expected
+            or raw.get("nav_unit") != "CNY_per_share" or raw.get("definitions") != definitions
             or raw.get("availability_basis") != "first_observed_at_fetch_not_historical_PIT"
             or raw.get("calendar_version") != CALENDAR_VERSION):
             raise ValueError("invalid issuer NAV definition/digest")
@@ -58,10 +80,10 @@ def load_issuer_navs(directory: Path, now: datetime) -> tuple[dict, dict[str, li
             or through >= now.astimezone(ZoneInfo("Asia/Shanghai")).date()
             or not 21 <= len(calendar) <= 61 or calendar[-1] != through.isoformat()
             or calendar != sessions_2026(date.fromisoformat(calendar[0]), through)
-            or set(raw["etf_navs"]) != set(NAV_DEFINITIONS)):
+            or set(raw["etf_navs"]) != set(definitions)):
             raise ValueError("invalid issuer NAV dates/scope")
         for code, rows in raw["etf_navs"].items():
-            validate_nav_rows(rows, code, calendar)
+            validate_nav_rows(rows, code, calendar, version=version)
         from etf_nav_sources import reconcile_issuer_navs
         reconciliation = reconcile_issuer_navs(directory, {**raw, "content_digest": expected}, now)
         return {"availability": "observed", "through": through.isoformat(), "fetched_at": raw["fetched_at"],

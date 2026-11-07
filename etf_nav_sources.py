@@ -9,7 +9,7 @@ import re
 from urllib.parse import urlencode
 from zoneinfo import ZoneInfo
 
-from etf_issuer_nav import NAV_DEFINITIONS
+from etf_issuer_nav import NAV_VERSION, nav_definitions
 from etf_asset_identity import parse_asset_disclosure
 from etf_nav_parsers import parse_chinaamc, parse_efunds, parse_huatai, parse_jsfund, parse_nffund
 
@@ -38,8 +38,8 @@ def request(ref,code,url,params=None,method='GET'):
         raise ValueError('NAV source query identity changed')
 
 
-def reconcile_fund(directory:Path,code,calendar,rows,refs,now):
-    definition=NAV_DEFINITIONS[code];provider=definition['provider'];points=[];asset=None
+def reconcile_fund(directory:Path,code,calendar,rows,refs,now,*,version=NAV_VERSION):
+    definition=nav_definitions(version)[code];provider=definition['provider'];points=[];asset=None
     if not refs or len(refs)>10:raise ValueError('missing or excessive NAV source references')
     originals=[response(directory,ref,now) for ref in refs]
     if provider=='jsfund':
@@ -55,7 +55,8 @@ def reconcile_fund(directory:Path,code,calendar,rows,refs,now):
             or '单位净值(元)' not in page or not re.search(r'2\s+EnumSourceTypeNetValue\s+单位净值',schema)):
             raise ValueError('EFunds identity, unit or field mapping changed')
         points=[(p,refs[2]) for p in parse_efunds(text,code,calendar,exact=True)]
-        asset=parse_asset_disclosure(page,refs[0],now)
+        # The separate whole-fund asset review is scoped to 510310, not other EFunds products.
+        if code=='510310.SH':asset=parse_asset_disclosure(page,refs[0],now)
     else:
         expected_pages=None;prior_oldest=None
         for page,(ref,raw) in enumerate(zip(refs,originals),1):
@@ -113,9 +114,11 @@ def reconcile_fund(directory:Path,code,calendar,rows,refs,now):
 
 
 def reconcile_issuer_navs(directory,raw,now):
-    refs=raw['responses'];codes=set(NAV_DEFINITIONS)
+    version=raw['contract_version'];definitions=nav_definitions(version)
+    if raw['definitions']!=definitions or set(raw['etf_navs'])!=set(definitions):raise ValueError('NAV profile or scope changed')
+    refs=raw['responses'];codes=set(definitions)
     if any(ref['code'] not in codes for ref in refs):raise ValueError('foreign NAV source reference')
-    funds=[reconcile_fund(directory,code,raw['calendar'],raw['etf_navs'][code],[r for r in refs if r['code']==code],now) for code in NAV_DEFINITIONS]
+    funds=[reconcile_fund(directory,code,raw['calendar'],raw['etf_navs'][code],[r for r in refs if r['code']==code],now,version=version) for code in definitions]
     return {'version':VERSION,'availability':'source_reconciled','snapshot_digest':raw['content_digest'],'start':raw['calendar'][0],
             'through':raw['requested_through'],'source_response_count':len(refs),'nav_observations':sum(len(f['records']) for f in funds),
             'funds':funds,'exact_source_projection_verified':True,'historical_PIT':False,'corporate_actions_checked':False,

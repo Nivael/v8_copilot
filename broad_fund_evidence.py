@@ -1,6 +1,6 @@
 """Supplementary issuer NAVs and explicitly disclosed holders, with separate dates."""
 from datetime import date, datetime, timezone
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -9,7 +9,7 @@ import re
 from broad_etf_reading import NAMES, positive
 from canonical_json import digest
 from etf_announcements import announcement_status
-from etf_issuer_nav import NAV_DEFINITIONS, load_issuer_navs
+from etf_issuer_nav import NAV_DEFINITIONS, BROAD_NAV_DEFINITIONS, load_issuer_navs
 from etf_quarterly import compact, load_report_capture, parse_report, read_bound_report
 from settings import DATA_ROOT
 
@@ -120,25 +120,49 @@ def navs(broad, *, directory=OUTPUT/'issuer_nav', now=None):
     try:
         rows = []
         reconciled = {fund['code']: fund for fund in meta['raw_reconciliation']['funds']}
-        for code in NAV_DEFINITIONS:
+        if set(source) not in (set(NAV_DEFINITIONS),set(BROAD_NAV_DEFINITIONS)):
+            raise ValueError('unsupported broad NAV scope')
+        for code in source:
             if code not in funds:
                 raise ValueError('NAV outside current broad sample')
             points = source[code]
-            latest = positive(points[-1]['unit_nav'])
             values = {r['date']: Decimal(r['source_value']) for r in reconciled[code]['records']}
+            latest = positive(values[meta['through']])
+            shares = funds[code]['five_day_share_change_pct']
+            if isinstance(shares,bool) or not Decimal(str(shares)).is_finite():
+                raise ValueError('invalid share comparison')
             row = {'code':code, 'name':NAMES[code], 'as_of':meta['through'],
-                   'unit_nav':str(values[meta['through']]), 'five_day_share_change_pct':funds[code]['five_day_share_change_pct'],
-                   'source_url':NAV_DEFINITIONS[code]['url'], 'source_label':NAV_DEFINITIONS[code]['label']}
+                   'unit_nav':str(latest), 'five_day_share_change_pct':shares,
+                   'source_url':BROAD_NAV_DEFINITIONS[code]['url'], 'source_label':BROAD_NAV_DEFINITIONS[code]['label']}
             for days, key in [(5,'five_day_nav_change_pct'), (20,'twenty_day_nav_change_pct')]:
                 anchor = points[-days-1]['nav_date']
                 row[key] = float((latest/values[anchor]-1)*100)
                 row[key.replace('_change_pct','_anchor')] = anchor
             rows.append(row)
+        n=len(rows);share_up=sum(r['five_day_share_change_pct']>0 for r in rows);share_down=sum(r['five_day_share_change_pct']<0 for r in rows)
+        nav_up=sum(r['five_day_nav_change_pct']>0 for r in rows);nav_down=sum(r['five_day_nav_change_pct']<0 for r in rows)
+        longer_down=sum(r['twenty_day_nav_change_pct']<0 for r in rows)
+        if share_up==n and nav_up==n:
+            headline=f'{n}只样本近5日份额和净值都回升'
+            interpretation='份额扩张与价格修复同向，短线承接出现改善。'
+        elif share_up==n and nav_down==n:
+            headline=f'{n}只样本份额都增加，净值却仍下跌'
+            interpretation='有承接迹象，但尚未转成价格修复。'
+        elif share_down==n and nav_down==n:
+            headline=f'{n}只样本份额与净值同步回落'
+            interpretation='样本份额收缩与净值下跌同向，近期都在承压。'
+        else:
+            headline=f'近5日：{share_up}只份额增加、{share_down}只减少，{nav_up}只净值回升'
+            interpretation='份额与价格的方向仍有分化，需逐组看强弱。'
+        if longer_down:
+            interpretation+=f'但{longer_down}只近20日净值仍下跌，'+('短反弹还不能当作趋势反转。' if nav_up else '较长窗口也仍承压。')
+        else:
+            interpretation+='近20日净值均未下跌，'+('继续观察修复能否延续。' if nav_up else '仍需观察近期是否转弱。')
         return {'availability':'available', 'as_of':meta['through'], 'fetched_at':meta['fetched_at'],
                 'sample_funds':len(funds), 'observed_funds':len(rows), 'sessions':len(meta['calendar']),
-                'source_digest':meta['content_digest'], 'rows':rows,
-                'interpretation':'净值是每份基金资产的价格，份额是发行份数。两者同向或背离可帮助理解价格与申赎，但不能据此认定买方身份。'}
-    except (KeyError, ValueError, TypeError, IndexError):
+                'source_digest':meta['content_digest'], 'rows':rows,'headline':headline,'interpretation':interpretation,
+                'basis_note':'净值是每份基金资产的价格，份额是发行份数。这里比较同一窗口的份额方向与单位净值；单位净值变化并非含分红再投资的总回报，也不能据此认定买方身份。'}
+    except (KeyError, ValueError, TypeError, IndexError, InvalidOperation):
         return {'availability':'unavailable'}
 
 

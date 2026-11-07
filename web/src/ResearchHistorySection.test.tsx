@@ -18,6 +18,18 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 afterEach(()=>{cleanup();vi.restoreAllMocks()})
 describe('original question retrospective',()=>{
+  it('keeps an older case and its announcements accessible when post-question prices have no anchor',async()=>{
+    const oldEvent={...eventTimeline.events[0],published_on:'2021-05-18',occurred_on:null,relation:'before_question' as const,context_period:'case_period' as const}
+    const points=[{date:'2021-05-17',value:100,level:100},{date:'2021-05-19',value:106,level:106}]
+    const oldTimeline={version:'history_event_timeline_v3' as const,assessment_basis:'original_argument_only' as const,question_id:question.id,symbol:detail.symbol,initial_event_id:oldEvent.id,events:[oldEvent],content_digest:'bound',learning:{lesson:'分别看公开时序',next_check:'继续补后续价格'},case_period:{title:'当年案例走势',summary:'历史机制观察',source_note:'价格变化',source_refs:[],gap_notes:[],paths:{calendar:points.map(p=>p.date),stocks:{[detail.symbol]:{name:detail.name,points}},market:points,st:points,st_name:detail.st_name}}}
+    serve({...detail,questions:[{...question,asked_at:'2024-06-01T08:00:00Z',asked_on:'2024-06-01',anchor_date:null,outcomes:{},review:{...question.review!,assessment_basis:'original_argument_only',event_timeline:oldTimeline}}]})
+    render(<ResearchHistorySection/>)
+    expect(await screen.findByText('当年案例走势')).toBeVisible()
+    expect(screen.getByRole('combobox',{name:'查看历史公告'})).toBeVisible()
+    expect(screen.getByText('当年案例窗口 · 价格变化，未计现金分红')).toBeVisible()
+    expect(screen.getByText(/现有行情尚未覆盖可用的比较起点/)).toBeVisible()
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
   it.each([['plan_only','当时只形成了研究计划，没有完成报告。'],['research_stopped','当时的研究已停止，没有形成完整报告。']] as const)('explains an unfinished %s without inventing an answer',async(status,note)=>{
     const q:HistoryQuestion={...question,answers:[],review:null,original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'}}
     serve({...detail,questions:[q]});render(<ResearchHistorySection/>)

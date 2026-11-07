@@ -23,6 +23,7 @@ export function HistoryEventTimeline({timeline,event,onSelect,stName}:{timeline:
       <p className="history-event-impact"><strong>怎样更新判断：</strong>{event.interpretation}</p>
       <a href={event.source.url} target="_blank" rel="noreferrer">查看原公告 · 第{event.source.page}页 ↗</a>
       <div className="history-event-context">
+        {event.context_period==='case_period'&&<p className="reading-caption">当年案例窗口 · 价格变化，未计现金分红</p>}
         <p>披露日之后5个完整交易日</p>
         <div>{(['stock','market','st'] as const).map(key=><span key={key}>{key==='stock'?'个股':key==='market'?'大盘':stName}<strong>{change(five?.change_pct[key])}</strong></span>)}</div>
         <small>{event.context.reference_close?`从${event.context.reference_close}收盘起`:'披露日前收盘未覆盖'}{five?.through?` · 至${five.through}`:' · 当前行情档案未覆盖完整窗口'}，与原问题起算的图表分别比较。</small>

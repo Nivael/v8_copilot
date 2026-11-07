@@ -163,6 +163,17 @@ class MaintenanceStateRepository:
             ).fetchall()
         return [self._checkpoint(row) for row in rows]
 
+    def earliest_fetch_start(self, source_id: str, symbol: str) -> str:
+        if not self.path.is_file():
+            return ""
+        with sqlite3.connect(f"file:{self.path}?mode=ro", uri=True) as connection:
+            row = connection.execute(
+                "select min(fetch_start) from refresh_runs "
+                "where source_id=? and symbol=? and status='success'",
+                (source_id, symbol),
+            ).fetchone()
+        return _iso_date(str(row[0]), field="fetch_start") if row and row[0] else ""
+
     def record_success(
         self,
         *,
@@ -623,24 +634,105 @@ class TushareHttpClient:
 
 class CninfoHttpClient:
     URL = "https://www.cninfo.com.cn/new/hisAnnouncement/query"
+    STOCK_INDEX_URL = "https://www.cninfo.com.cn/new/data/szse_stock.json"
+    coverage_version = "cninfo_issuer_pagination_v1"
 
-    def __init__(self, *, timeout_seconds: int = 20, page_size: int = 50, max_pages: int = 100):
+    def __init__(self, *, timeout_seconds: int = 20, page_size: int = 30, max_pages: int = 100):
+        if type(page_size) is not int or page_size < 1 or type(max_pages) is not int or max_pages < 1:
+            raise ValueError("CNINFO 分页大小与安全上限必须是正整数")
         self.timeout_seconds = timeout_seconds
-        self.page_size = page_size
+        # Larger requests can silently return the first 30 records again.
+        self.page_size = min(page_size, 30)
         self.max_pages = max_pages
+        self._stock_index: list[dict[str, Any]] | None = None
+        self._stock_index_digest = ""
+        self._coverage: dict[tuple[str, str, str], dict[str, Any]] = {}
+
+    def _issuer_org_id(self, symbol: str) -> str:
+        if self._stock_index is None:
+            request = Request(self.STOCK_INDEX_URL, headers={"User-Agent": "Mozilla/5.0"})
+            with urlopen(request, timeout=self.timeout_seconds) as response:
+                raw = response.read()
+            payload = json.loads(raw.decode("utf-8"))
+            rows = payload.get("stockList") if isinstance(payload, dict) else None
+            if not isinstance(rows, list) or not all(isinstance(row, dict) for row in rows):
+                raise ValueError("CNINFO 主体目录不可用")
+            self._stock_index = rows
+            self._stock_index_digest = hashlib.sha256(raw).hexdigest()
+        matches = [row.get("orgId") for row in self._stock_index if row.get("code") == symbol]
+        if (not matches or any(not isinstance(value, str) or not value.strip() or "," in value for value in matches)
+                or len(set(matches)) != 1):
+            raise ValueError(f"CNINFO {symbol} 主体未唯一确认，未退回关键词检索")
+        return matches[0]
+
+    def coverage_for(self, *, symbol: str, start_date: str, end_date: str) -> dict[str, Any] | None:
+        value = self._coverage.get((_symbol(symbol), start_date, end_date))
+        return json.loads(json.dumps(value)) if value is not None else None
+
+    def coverage_matches(self, coverage, rows, *, symbol: str, through: str, start_date: str = "") -> bool:
+        """A receipt covers only its issuer/window and unchanged fetched metadata."""
+        if not isinstance(coverage, dict):
+            return False
+        try:
+            start = _iso_date(coverage["start_date"], field="coverage_start")
+            end = _iso_date(coverage["end_date"], field="coverage_end")
+            requested_start = _iso_date(start_date, field="start_date") if start_date else through
+            identities = coverage["announcement_ids"]
+            if (coverage["version"] != self.coverage_version or coverage["symbol"] != symbol
+                    or not start <= requested_start <= through <= end
+                    or coverage["terminal_has_more"] is not False
+                    or type(coverage["record_count"]) is not int
+                    or type(coverage["reported_total"]) is not int
+                    or coverage["record_count"] != coverage["reported_total"]
+                    or not isinstance(identities, list) or len(set(identities)) != len(identities)
+                    or len(identities) != coverage["record_count"]
+                    or type(coverage["page_count"]) is not int or coverage["page_count"] < 1
+                    or not isinstance(coverage["pages"], list)
+                    or coverage["page_count"] != len(coverage["pages"])):
+                return False
+            for number, page in enumerate(coverage["pages"], 1):
+                if (not isinstance(page, dict) or page.get("number") != number
+                        or type(page.get("rows")) is not int or page["rows"] < 0
+                        or page.get("has_more") is not (number < coverage["page_count"])
+                        or not isinstance(page.get("sha256"), str) or not re.fullmatch(r"[a-f0-9]{64}", page["sha256"])):
+                    return False
+            if sum(page["rows"] for page in coverage["pages"]) != coverage["record_count"]:
+                return False
+            by_id = {row["announcement_id"]: row for row in rows}
+            expected = []
+            for identity in identities:
+                stored = by_id[identity]
+                if not isinstance(stored.get("raw_item"), dict):
+                    return False
+                normalized = self._normalize(stored["raw_item"], symbol)
+                if (normalized is None or not start <= normalized["announcement_date"] <= end
+                        or any(stored.get(key) != value for key, value in normalized.items() if key != "body_text")):
+                    return False
+                expected.append(normalized)
+            return hashlib.sha256(_canonical(expected).encode()).hexdigest() == coverage["records_digest"]
+        except (KeyError, TypeError, ValueError, OverflowError, OSError):
+            return False
 
     def fetch(self, *, symbol: str, start_date: str, end_date: str) -> list[dict[str, Any]]:
         compact = _symbol(symbol)
         start = _iso_date(start_date, field="start_date")
         end = _iso_date(end_date, field="end_date")
+        if start > end:
+            raise ValueError("start_date 不得晚于 end_date")
+        if compact[0] not in {"0", "3", "6"}:
+            raise ValueError("CNINFO 公告维护范围仅包含沪深A股")
+        key = (compact, start, end)
+        self._coverage.pop(key, None)
+        org_id = self._issuer_org_id(compact)
+        query = {"pageSize": str(self.page_size), "column": "sse" if compact.startswith("6") else "szse",
+                 "tabName": "fulltext", "plate": "sh" if compact.startswith("6") else "sz",
+                 "stock": f"{compact},{org_id}", "searchkey": "", "secid": "", "category": "", "trade": "",
+                 "seDate": f"{start}~{end}", "sortName": "", "sortType": "", "isHLtitle": "true"}
         records: dict[str, dict[str, Any]] = {}
+        pages = []
+        expected_total = None
         for page in range(1, self.max_pages + 1):
-            form = urlencode({
-                "pageNum": str(page), "pageSize": str(self.page_size), "column": "",
-                "tabName": "fulltext", "plate": "", "stock": "", "searchkey": compact,
-                "secid": "", "category": "", "trade": "", "seDate": f"{start}~{end}",
-                "sortName": "", "sortType": "", "isHLtitle": "true",
-            }).encode("utf-8")
+            form = urlencode({**query, "pageNum": str(page)}).encode("utf-8")
             request = Request(
                 self.URL, data=form,
                 headers={
@@ -652,22 +744,53 @@ class CninfoHttpClient:
                 method="POST",
             )
             with urlopen(request, timeout=self.timeout_seconds) as response:
-                payload = json.loads(response.read().decode("utf-8"))
-            items = list(payload.get("announcements") or [])
-            if not items:
-                break
+                raw = response.read()
+            payload = json.loads(raw.decode("utf-8"))
+            if (not isinstance(payload, dict) or type(payload.get("hasMore")) is not bool
+                    or type(payload.get("totalAnnouncement")) is not int or payload["totalAnnouncement"] < 0
+                    or "announcements" not in payload
+                    or payload["announcements"] is not None and not isinstance(payload["announcements"], list)):
+                raise ValueError(f"CNINFO {compact} 缺少可核验的分页与总数")
+            total = payload["totalAnnouncement"]
+            if "totalRecordNum" in payload and (type(payload["totalRecordNum"]) is not int or payload["totalRecordNum"] != total):
+                raise ValueError(f"CNINFO {compact} 总数字段不一致")
+            if expected_total is not None and expected_total != total:
+                raise RuntimeError(f"CNINFO {compact} 分页期间总数变化，需重新核查")
+            expected_total = total
+            items = payload["announcements"] or []
             for item in items:
+                if (not isinstance(item, dict) or str(item.get("secCode") or "") != compact
+                        or not str(item.get("announcementId") or "").strip()
+                        or str(item.get("orgId") or org_id) != org_id):
+                    raise ValueError(f"CNINFO {compact} 公告主体或身份不一致")
                 row = self._normalize(item, compact)
-                if row:
-                    records[row["announcement_id"]] = row
-            if len(items) < self.page_size:
+                if row is None or not start <= row["announcement_date"] <= end:
+                    raise ValueError(f"CNINFO {compact} 公告无效或超出请求日期")
+                if row["announcement_id"] in records:
+                    raise RuntimeError(f"CNINFO {compact} 返回重复公告，未确认完整覆盖")
+                records[row["announcement_id"]] = row
+            pages.append({"number": page, "rows": len(items), "has_more": payload["hasMore"],
+                          "sha256": hashlib.sha256(raw).hexdigest()})
+            if len(records) > total or not payload["hasMore"] and len(records) != total:
+                raise RuntimeError(f"CNINFO {compact} 公告总数与实际覆盖不一致")
+            if not payload["hasMore"]:
                 break
+            if not items or len(records) >= total:
+                raise RuntimeError(f"CNINFO {compact} 后页标记与实际覆盖不一致")
         else:
             raise RuntimeError(f"CNINFO {compact} 分页达到安全上限 {self.max_pages}")
-        return sorted(
+        result = sorted(
             records.values(), key=lambda row: (row["announcement_date"], row["announcement_id"]),
             reverse=True,
         )
+        self._coverage[key] = {"version": self.coverage_version, "symbol": compact, "issuer_org_id": org_id,
+            "start_date": start, "end_date": end, "observed_at": _now(), "query_url": self.URL, "query": query,
+            "stock_index_sha256": self._stock_index_digest, "page_count": len(pages), "pages": pages,
+            "record_count": len(result), "reported_total": expected_total, "terminal_has_more": False,
+            "announcement_ids": [row["announcement_id"] for row in result],
+            "records_digest": hashlib.sha256(_canonical(result).encode()).hexdigest(),
+            "scope": "Only this issuer and requested date window; retained records absent from this receipt are not reverified."}
+        return result
 
     @staticmethod
     def _normalize(item: dict[str, Any], symbol: str) -> dict[str, Any] | None:
@@ -889,9 +1012,16 @@ class AnnouncementRefreshService:
     ) -> RefreshResult:
         compact = _symbol(symbol)
         target = _iso_date(through, field="through")
-        current, legacy_checked = self._load_overlay(compact)
+        current, legacy_checked, overlay_coverage = self._load_overlay(compact)
         checkpoint = self.state.get(CNINFO_SOURCE_ID, compact)
-        if checkpoint and checkpoint.status == "success" and checkpoint.checked_through >= target and not force:
+        coverage_version = getattr(self.provider, "coverage_version", "")
+        coverage_verified = not coverage_version or (
+            checkpoint is not None and overlay_coverage == checkpoint.metadata.get("source_coverage")
+            and self.provider.coverage_matches(overlay_coverage, current,
+                symbol=compact, through=target, start_date=start_date)
+        )
+        if (checkpoint and checkpoint.status == "success" and checkpoint.checked_through >= target
+                and coverage_verified and not force):
             return RefreshResult(
                 run_id=f"DM-{uuid4().hex[:20].upper()}", source_id=CNINFO_SOURCE_ID,
                 symbol=compact, requested_through=target, fetch_start="", status="skipped",
@@ -911,12 +1041,23 @@ class AnnouncementRefreshService:
             if not cursor:
                 raise ValueError(f"{compact} 没有公告基线；首次刷新必须传 --start-date")
             fetch_start = _back(cursor, overlap_days)
+            if coverage_version and not coverage_verified:
+                candidates = [fetch_start, self.state.earliest_fetch_start(CNINFO_SOURCE_ID, compact),
+                              min((row["announcement_date"] for row in current), default=""), self._base_min(compact)]
+                fetch_start = min(value for value in candidates if value)
+                origin = "unverified_coverage_recheck"
         if fetch_start > target:
             fetch_start = target
         run_id = f"DM-{uuid4().hex[:20].upper()}"
         started = _now()
         try:
             fetched = self.provider.fetch(symbol=compact, start_date=fetch_start, end_date=target)
+            coverage = None
+            if coverage_version:
+                coverage = self.provider.coverage_for(symbol=compact, start_date=fetch_start, end_date=target)
+                if not self.provider.coverage_matches(coverage, fetched,
+                        symbol=compact, through=target, start_date=fetch_start):
+                    raise ValueError("CNINFO 完整分页凭据未与本次结果匹配")
             merged = {str(row.get("announcement_id") or ""): row for row in current}
             changed = 0
             unchanged = 0
@@ -943,6 +1084,8 @@ class AnnouncementRefreshService:
                 "fetch_window": {"start": fetch_start, "end": target, "overlap_days": overlap_days},
                 "records": records,
             }
+            if coverage is not None:
+                payload["source_coverage"] = coverage
             destination = self.refresh_dir / f"{compact}.json"
             atomic_write_json(destination, payload)
             observed = max((str(row.get("announcement_date") or "") for row in records), default="")
@@ -950,7 +1093,8 @@ class AnnouncementRefreshService:
                 run_id=run_id, source_id=CNINFO_SOURCE_ID, symbol=compact,
                 fetch_start=fetch_start, checked_through=target, observed_as_of=observed,
                 rows_seen=len(fetched), rows_written=changed,
-                metadata={"provider": "cninfo", "overlap_days": overlap_days, "overlay_count": len(records)},
+                metadata={"provider": "cninfo", "overlap_days": overlap_days, "overlay_count": len(records),
+                          **({"source_coverage": coverage} if coverage is not None else {})},
                 started_at=started,
             )
             return RefreshResult(
@@ -967,10 +1111,10 @@ class AnnouncementRefreshService:
             )
             raise
 
-    def _load_overlay(self, symbol: str) -> tuple[list[dict[str, Any]], str]:
+    def _load_overlay(self, symbol: str) -> tuple[list[dict[str, Any]], str, dict[str, Any] | None]:
         path = self.refresh_dir / f"{symbol}.json"
         if not path.is_file():
-            return [], ""
+            return [], "", None
         payload = json.loads(path.read_text(encoding="utf-8"))
         if payload.get("source") != "cninfo" or str(payload.get("symbol") or "") != symbol:
             raise ValueError(f"现有公告 overlay 非法: {path.name}")
@@ -981,7 +1125,16 @@ class AnnouncementRefreshService:
         checked = str(payload.get("checked_through") or "")[:10]
         if not checked:
             checked = datetime.fromtimestamp(path.stat().st_mtime).date().isoformat()
-        return validated, checked
+        return validated, checked, payload.get("source_coverage")
+
+    def _base_min(self, symbol: str) -> str:
+        if not self.base_database.is_file():
+            return ""
+        with sqlite3.connect(f"file:{self.base_database}?mode=ro", uri=True) as connection:
+            row = connection.execute(
+                "select min(announcement_date) from company_announcements where symbol=?", (symbol,)
+            ).fetchone()
+        return str(row[0] or "")[:10]
 
     def _base_max(self, symbol: str) -> str:
         if not self.base_database.is_file():

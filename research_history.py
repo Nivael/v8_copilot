@@ -306,6 +306,21 @@ def range_chart_context(record,paths,symbol):
     return {'kind':'pre_range_common_close','reference_date':reference} if reference else None
 
 
+def original_response_state(record):
+    """A stopped/plan widget is source context, never a recovered answer."""
+    state=record.get('original_response_state')
+    if not isinstance(state,dict) or record.get('kind')!='original_question' or record.get('answers'):return None
+    labels={'plan_only':'Plan edited...','research_stopped':'Research stopped'}
+    status=state.get('status')
+    if (state.get('version')!='history_original_response_state_v1' or not isinstance(status,str) or status not in labels
+        or state.get('question_id')!=record['id'] or state.get('question_digest')!=question_digest(record)
+        or state.get('observed_label')!=labels[status]
+        or not re.fullmatch(r'[a-f0-9]{64}',str(state.get('capture_sha256','')))
+        or not str(state.get('source_url','')).startswith('https://chatgpt.com/c/')
+        or state['source_url'] not in {s.get('url') for s in record.get('sources',[])}):return None
+    return {k:state[k] for k in ('version','status','source_url','observed_label')}
+
+
 def assemble(records,paths,*,reviews=None,correction_notes=None):
     calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {}
     scopes={**paths['stocks'],'market':{'name':'大盘、ST与待定位问题','points':paths['market']}}
@@ -315,6 +330,9 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
         rows=[]
         for record in history:
             item={**record,**comparison_basis(record,stock['points'])};anchor=item['anchor_date']
+            item.pop('original_response_state',None)
+            response_state=original_response_state(record)
+            if response_state:item['original_response_state']=response_state
             item.pop('range_context',None)
             if record.get('time_precision')=='range':item['range_context']=range_chart_context(record,paths,symbol)
             if anchor:

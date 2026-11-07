@@ -144,3 +144,36 @@ def test_history_api_routes_are_read_only_and_reject_invalid_symbol(monkeypatch)
     assert client.get('/api/v1/workbench/history/002514.SZ').json()['data']['symbol']=='002514.SZ'
     assert client.get('/api/v1/workbench/history/unknown').status_code==422
     assert client.post('/api/v1/workbench/history').status_code==405
+
+
+def unfinished_record():
+    from research_history import question_digest
+    paths,record=sample();record['answers']=[]
+    record['sources']=[{'kind':'chatgpt','url':'https://chatgpt.com/c/original'}]
+    record['original_response_state']={'version':'history_original_response_state_v1','status':'research_stopped','observed_label':'Research stopped','question_id':record['id'],'question_digest':question_digest(record),'capture_sha256':'a'*64,'source_url':record['sources'][0]['url']}
+    return paths,record
+
+
+@pytest.mark.parametrize('status,label',[('plan_only','Plan edited...'),('research_stopped','Research stopped')])
+def test_unfinished_widget_is_context_not_an_answer_or_review(status,label):
+    paths,record=unfinished_record();record['original_response_state'].update(status=status,observed_label=label)
+    result=assemble([record],paths);q=result['details']['002514.SZ']['questions'][0]
+    assert q['original_response_state']['status']==status
+    assert not q['answers'] and q['review'] is None
+    assert result['stocks'][0]['reviewed']==0
+
+
+@pytest.mark.parametrize('mutation',['question','answer','foreign_question','foreign_source','label','capture','version','status','kind'])
+def test_unfinished_widget_is_hidden_if_answer_exists_or_source_binding_changes(mutation):
+    paths,record=unfinished_record();state=record['original_response_state']
+    if mutation=='question':record['question']+='变动'
+    elif mutation=='answer':record['answers']=[{'text':'已找回原答'}]
+    elif mutation=='foreign_question':state['question_id']='other'
+    elif mutation=='foreign_source':state['source_url']='https://chatgpt.com/c/foreign'
+    elif mutation=='label':state['observed_label']='Research completed'
+    elif mutation=='capture':state['capture_sha256']='missing'
+    elif mutation=='version':state['version']='unknown'
+    elif mutation=='status':state['status']='completed'
+    else:record['kind']='saved_research'
+    q=assemble([record],paths)['details']['002514.SZ']['questions'][0]
+    assert 'original_response_state' not in q

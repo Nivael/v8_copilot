@@ -18,6 +18,25 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 describe('original question retrospective',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it.each([['plan_only','当时只形成了研究计划，没有完成报告。'],['research_stopped','当时的研究已停止，没有形成完整报告。']] as const)('explains an unfinished %s without inventing an answer',async(status,note)=>{
+    const q:HistoryQuestion={...question,answers:[],review:null,original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'}}
+    serve({...detail,questions:[q]});render(<ResearchHistorySection/>)
+    await screen.findByText(note,{selector:'.history-pending'})
+    expect(screen.getByText(note,{selector:'blockquote'})).toBeVisible()
+    expect(screen.queryByText('未找到原回答')).not.toBeInTheDocument()
+    expect(screen.queryByText('错误：卖压被解释成洗盘')).not.toBeInTheDocument()
+  })
+  it('keeps the recovered report scope and original citation index in the expandable answer',async()=>{
+    const note='补回已完成内嵌报告的渲染正文；没有取得原生导出文件或原图。'
+    const q:HistoryQuestion={...question,answers:[{text:'真实原报告正文',summary:'原报告摘要',truncated:false,binding:'embedded_research_report',capture_note:note,links:[{label:'原报告引用1',url:'https://example.com/original'}]}]}
+    serve({...detail,questions:[q]});render(<ResearchHistorySection/>)
+    await screen.findByText('当时完成的内嵌研究')
+    expect(screen.getByText(note)).not.toBeVisible()
+    fireEvent.click(screen.getByText('展开原回答与聊天来源'))
+    expect(screen.getByText(note)).toBeVisible()
+    expect(screen.getByText('真实原报告正文')).toBeVisible()
+    expect(screen.getByRole('link',{name:'原报告引用1 ↗'})).toHaveAttribute('href','https://example.com/original')
+  })
   it('shows the BSE vendor basis without claiming a later exchange splice or a Tencent history',async()=>{
     const note='本股整段使用东方财富前复权日线，未拼接交易所逐日表。'
     const bse:HistoryDetail={...detail,symbol:'920023.BJ',name:'*ST田野',stock_price_basis_note:note,source_urls:{stock_bse_history:'https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.920023'}}

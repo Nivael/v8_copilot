@@ -125,6 +125,22 @@ def record(ledger, answer, question='沐邦目前是什么情况？'):
                          validation_report={'valid': True}, source_freshness={}, agent_surface='test'))
 
 
+@pytest.mark.parametrize('tags,category', [
+    (['公告证据包','事件时点','价格路径','历史先例'], '表达与复盘'),
+    (['事件时点','价格路径'], '待分类'),
+])
+def test_new_event_review_candidate_has_a_useful_category_without_changing_its_record(tmp_path,tags,category):
+    repo=ExperienceRepository(tmp_path/'experience.db');ledger=ResearchRunLedger(tmp_path/'runs.db')
+    method=repo.propose(ExperienceCandidateInput(experience_type='query_plan',title='核对增量事件再复盘',value_summary='区分公开日期、状态变化和反例',
+        trigger_conditions=['历史问答复盘'],topic_tags=tags,scope=['history'],required_inputs=['原问','公告'],answer_rubric=['区分新旧事实'],anti_patterns=['由涨跌补写动机'],
+        coverage_boundaries=['不认定唯一因果'],validation_refs=['regression:event_learning_chronology'],source_run_refs=['migration:test']))
+    before=method.model_dump(mode='json')
+    result=w.learning_view(packet(),experience_db=repo.path,ledger_db=ledger.path,reviews_dir=tmp_path/'reviews')
+    displayed=next(r for r in result['methods'] if r['id']==method.experience_id)
+    assert displayed['category']==category and displayed['status']=='candidate'
+    assert repo.get(method.experience_id).model_dump(mode='json')==before
+
+
 def test_new_codex_record_appears_without_rebuilding_market_and_invalidates_case_review(tmp_path):
     repo = ExperienceRepository(tmp_path / 'experience.db'); ledger = ResearchRunLedger(tmp_path / 'runs.db')
     method = repo.propose(ExperienceCandidateInput(experience_type='query_plan', title='先看事实', value_summary='分清事实与预测',

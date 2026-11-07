@@ -43,6 +43,18 @@ CATEGORIES = {
 }
 
 
+def method_category(value):
+    if value['experience_id'] in CATEGORIES:
+        return CATEGORIES[value['experience_id']]
+    if value['experience_type'] == 'presentation_rule':
+        return '表达与复盘'
+    # A review workflow needs the joint topic scope; an isolated price or event
+    # tag does not turn a new research rule into a retrospective method.
+    if {'事件时点', '价格路径', '历史先例'} <= set(value.get('topic_tags', [])):
+        return '表达与复盘'
+    return '待分类'
+
+
 def number(value):
     if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
         return None
@@ -264,7 +276,7 @@ def learning_view(packet, *, experience_db=EXPERIENCE_REPOSITORY_DB, ledger_db=R
         if row['status'] not in ('accepted', 'candidate'):
             continue
         methods.append({'id': value['experience_id'], 'title': value['title'], 'summary': value['value_summary'],
-                        'category': CATEGORIES.get(value['experience_id'], '表达与复盘' if value['experience_type']=='presentation_rule' else '待分类'), 'status': value['status'],
+                        'category': method_category(value), 'status': value['status'],
                         'when_to_use': value['trigger_conditions'], 'source_run_refs': value['source_run_refs']})
     runs = rows(ledger_db, 'select run_id,question_text,object_refs_json,final_answer,experience_hits_json,source_freshness_json,completed_at from research_runs order by completed_at desc')
     runs = current_company_runs(runs, path=run_scopes_path)

@@ -18,6 +18,25 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 afterEach(()=>{cleanup();vi.restoreAllMocks()})
 describe('original question retrospective',()=>{
+  it.each(['dated','range','missing'] as const)('keeps an explicitly source-only concept focused on its argument with %s price context',async mode=>{
+    const row:HistoryQuestion={...question,question:`什么是可转债？（${mode}）`,answers:[{text:'原回答：转债有债性。',summary:'转债有债性。',truncated:false}],review:{...question.review!,assessment_basis:'original_argument_only',price_context_mode:'not_applicable',headline:'概念先看条款',then_quote:'转债有债性。',explanation:[{lens:'产品定义',text:'核条款和生效状态。',sources:[{label:'产品原件',url:'https://example.com/product'}]}]},review_status:'argument_only',...(mode==='missing'?{anchor_date:null,outcomes:{}}:mode==='range'?{asked_at:null,asked_on:null,time_precision:'range',asked_from:'2026-06-02',asked_through:'2026-06-04',anchor_date:null,outcomes:{},range_context:{kind:'pre_range_common_close',reference_date:'2026-06-01'}}:{})}
+    const archived=JSON.stringify(row),market={...detail,symbol:'market',name:'大盘、ST与待定位问题',questions:[row],chart_sources:{market:detail.chart_sources.market,st:detail.chart_sources.st}}
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify({availability:'available',data:String(input).endsWith('/history')?{availability:'available',as_of:detail.as_of,stocks:[{symbol:'market',name:market.name,original_questions:1}],coverage:{original_questions:1,saved_research:0,reviewed_questions:1,stocks:0,source_note:'原问已归档'}}:market,refresh:{in_progress:false,last_error:null}})))
+    const view=render(<ResearchHistorySection/>);fireEvent.change(await screen.findByRole('combobox',{name:'历史复盘标的'}),{target:{value:'market'}});await screen.findByRole('heading',{name:row.question});expect(screen.getByText('概念先看条款')).toBeVisible()
+    expect(screen.queryByRole('img',{name:/背景走势|价格观察/})).not.toBeInTheDocument()
+    expect(screen.queryByText(/现有行情尚未覆盖可用的比较起点|尚缺区间之前共同有效的收盘参照/)).not.toBeInTheDocument()
+    expect(screen.queryByText('同期市场背景')).not.toBeInTheDocument();expect(screen.queryByText('提问区间与后来走势')).not.toBeInTheDocument()
+    expect(screen.queryByText('价格口径与来源')).not.toBeInTheDocument();expect(view.container.querySelector('.history-outcomes')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('为什么这样判断 · 原答与依据'));expect(screen.getByText('核条款和生效状态。')).toBeVisible();expect(screen.getByRole('link',{name:'产品原件 ↗'})).toHaveAttribute('href','https://example.com/product')
+    fireEvent.click(screen.getByText('展开原回答与聊天来源'));expect(screen.getByText('原回答：转债有债性。')).toBeVisible();expect(JSON.stringify(row)).toBe(archived)
+    if(mode==='range')expect(screen.getAllByText(/2026-06-02—2026-06-04/).length).toBeGreaterThan(0)
+  })
+  it.each(['company','market-price'] as const)('does not let a concept display marker remove %s price evidence',async mode=>{
+    const row:HistoryQuestion={...question,question:`模式保护 ${mode}`,review:{...question.review!,price_context_mode:'not_applicable',...(mode==='company'?{assessment_basis:'original_argument_only' as const}:{})},review_status:mode==='company'?'argument_only':'current'}
+    const market=mode==='market-price',current={...detail,...(market?{symbol:'market',name:'大盘、ST与待定位问题',chart_sources:{market:detail.chart_sources.market,st:detail.chart_sources.st}}:{}),questions:[row]}
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify({availability:'available',data:String(input).endsWith('/history')?{availability:'available',as_of:detail.as_of,stocks:[{symbol:current.symbol,name:current.name,original_questions:1}],coverage:{original_questions:1,saved_research:0,reviewed_questions:1,stocks:market?0:1,source_note:'原问已归档'}}:current,refresh:{in_progress:false,last_error:null}})))
+    render(<ResearchHistorySection/>);if(market)fireEvent.change(await screen.findByRole('combobox',{name:'历史复盘标的'}),{target:{value:'market'}});await screen.findByRole('heading',{name:row.question});expect(screen.getByRole('heading',{name:market?'同期市场背景':'同期价格背景'})).toBeVisible();expect(screen.getByRole('img',{name:/背景走势/})).toBeVisible();expect(screen.getByText('价格口径与来源')).toBeVisible()
+  })
   it('opens the exact related company question and can return to the original',async()=>{
     const original={...question,related_questions:[{question_id:'mu',symbol:'603398.SH',name:'*ST沐邦',question:'融资还缺什么条件？'}]}
     const company={...detail,symbol:'603398.SH',name:'*ST沐邦',questions:[{...question,id:'other',question:'默认旧问'},{...question,id:'mu',question:'融资还缺什么条件？',related_questions:[{question_id:'q1',symbol:'002514.SZ',name:'*ST宝馨',question:question.question}]}]}
@@ -594,7 +613,8 @@ describe('original question retrospective',()=>{
     expect(view.container.querySelector('.history-outcomes')!.children).toHaveLength(5)
     expect(screen.getByRole('heading',{name:'后来怎样了'})).toBeVisible()
     fireEvent.change(screen.getByRole('combobox',{name:'历史复盘标的'}),{target:{value:'market'}})
-    expect(await screen.findByRole('heading',{name:'同期市场背景'})).toBeVisible()
+    await screen.findByRole('heading',{name:original.question})
+    expect(screen.getByRole('heading',{name:'同期市场背景'})).toBeVisible()
     expect(screen.getByText('这里只对照大盘和ST，不代表原问所提个股或组合的回报。')).toBeVisible()
     expect(screen.getByRole('img',{name:/背景走势/})).toBeVisible()
     expect(view.container.querySelector('.history-outcomes')).not.toBeInTheDocument()

@@ -52,6 +52,7 @@ function attachmentNote(question:HistoryQuestion){
   }
   if(question.question_files?.some(file=>file.media_kind==='image'))images=false
   if(question.question_files?.some(file=>file.media_kind==='document'))files=false
+  if(question.question_files?.some(file=>file.source_mode==='connector_preview'))return '已找回当时的低清附件预览，可在下方展开；部分小字无法辨认。'
   if(question.question_files?.length&&!images&&!files)return '已补回当时的附件，可在下方展开。'
   if(question.question_visuals?.length)return files?'可在下方展开图片展示截图；原文件内容仍待补齐。':question.question_context?'已补回附件展示截图，可在下方展开。':'可在下方展开附件展示截图。'
   const subject=question.question_context?'这条追问':'这条原问'
@@ -98,7 +99,7 @@ function HistoryTextFile({file}:{file:HistoryFile}){
 
 function HistoryFiles({files}:{files:HistoryFile[]}){
   const [open,setOpen]=useState(false),[documentOpen,setDocumentOpen]=useState<string|null>(null)
-  return <details className="reading-disclosure history-files" onToggle={event=>{setOpen(event.currentTarget.open);if(!event.currentTarget.open)setDocumentOpen(null)}}><summary>当时的附件与参考文件</summary><p>保留原聊天中下载的副本，供还原当时的信息。文件里的判断和规则仍需核对。</p>{open&&files.map(file=><section key={file.sha256}><h4>{file.label}</h4>{file.media_kind==='image'?<a href={file.url} target="_blank" rel="noreferrer"><img src={file.url} width={file.width} height={file.height} alt={file.label} loading="lazy" style={{maxWidth:'100%',height:'auto'}}/></a>:<details className="reading-disclosure" onToggle={event=>{event.stopPropagation();setDocumentOpen(event.currentTarget.open?file.sha256:null)}}><summary>展开{file.file_name||'参考文档'}全文</summary>{documentOpen===file.sha256&&<HistoryTextFile file={file}/>}</details>}<small>归档于 {timestamp(file.captured_at)} · <a href={file.source_url} target="_blank" rel="noreferrer">打开原聊天 ↗</a></small></section>)}</details>
+  return <details className="reading-disclosure history-files" onToggle={event=>{setOpen(event.currentTarget.open);if(!event.currentTarget.open)setDocumentOpen(null)}}><summary>当时的附件与参考文件</summary><p>保留从原聊天找回的附件副本，供还原当时的信息。文件里的判断和规则仍需核对。</p>{open&&files.map(file=><section key={file.sha256}><h4>{file.label}</h4>{file.media_kind==='image'?<a href={file.url} target="_blank" rel="noreferrer"><img src={file.url} width={file.width} height={file.height} alt={file.label} loading="lazy" style={{maxWidth:'100%',height:'auto'}}/></a>:<details className="reading-disclosure" onToggle={event=>{event.stopPropagation();setDocumentOpen(event.currentTarget.open?file.sha256:null)}}><summary>展开{file.file_name||'参考文档'}全文</summary>{documentOpen===file.sha256&&<HistoryTextFile file={file}/>}</details>}<small>归档于 {timestamp(file.captured_at)} · <a href={file.source_url} target="_blank" rel="noreferrer">打开原聊天 ↗</a></small></section>)}</details>
 }
 
 function HistoryVisuals({visuals}:{visuals:HistoryVisual[]}){

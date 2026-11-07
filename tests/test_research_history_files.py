@@ -80,3 +80,45 @@ def test_file_api_is_read_only_plain_text_and_never_routes_an_arbitrary_file(mon
     assert r.headers['cache-control']=='private, no-store' and r.headers['x-content-type-options']=='nosniff'
     assert client.get('/api/v1/workbench/history-files/'+'a'*64).status_code==404
     assert client.get('/api/v1/workbench/history-files/invalid').status_code==422 and client.post(url).status_code==405
+
+
+def preview_observation():
+    value=observation();value['version']='history_attachment_preview_observation_v1'
+    value.update(source_mode='connector_preview',source_asset_sha256=sha256(PNG).hexdigest(),
+                 acquisition_record_sha256=value.pop('download_record_sha256'),
+                 acquisition_tool_call_id=value.pop('download_tool_call_id'),label='原附件低清预览，小字未核清')
+    return value
+
+
+def test_connector_preview_retains_its_exact_bytes_and_discloses_source_without_claiming_download(tmp_path):
+    before=deepcopy(original());value=archive_file(PNG,preview_observation(),root=tmp_path)
+    assert value['version']=='history_attachment_preview_capture_v1'
+    row=add_files([original()],root=tmp_path)[0]
+    assert row['question_files'][0]['source_mode']=='connector_preview'
+    assert row['question_files'][0]['label']=='原附件低清预览，小字未核清'
+    assert before==original()
+    publish_fixture(tmp_path,[original()]);assert load_file(sha256(PNG).hexdigest(),root=tmp_path)==(PNG,'image/png')
+
+
+@pytest.mark.parametrize('change',['media','source','missing_acquisition','bad_acquisition','bad_source_hash','foreign_bytes'])
+def test_preview_requires_its_own_acquisition_and_exact_source_asset(tmp_path,change):
+    o=preview_observation()
+    if change=='media':o['media_kind']='document'
+    elif change=='source':o['source_mode']='download'
+    elif change=='missing_acquisition':o.pop('acquisition_tool_call_id')
+    elif change=='bad_acquisition':o['acquisition_record_sha256']='not-a-sha'
+    elif change=='bad_source_hash':o['source_asset_sha256']='invalid'
+    else:o['source_asset_sha256']='b'*64
+    with pytest.raises((ValueError,KeyError)):archive_file(PNG,o,root=tmp_path)
+
+
+@pytest.mark.parametrize('change',['capture_kind','asset_binding'])
+def test_resealed_preview_cannot_masquerade_as_download_or_another_source_asset(tmp_path,change):
+    from data_refresh import atomic_write_json
+    from canonical_json import digest
+    value=archive_file(PNG,preview_observation(),root=tmp_path)
+    if change=='capture_kind':value['version']='history_download_capture_v1'
+    else:value['observation']['source_asset_sha256']='b'*64
+    value['content_digest']=digest({k:v for k,v in value.items() if k!='content_digest'})
+    path=next((tmp_path/'files/captures').glob('*.json'));atomic_write_json(path,value)
+    with pytest.raises(ValueError):add_files([original()],root=tmp_path)

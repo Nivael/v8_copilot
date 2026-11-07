@@ -661,3 +661,16 @@ describe('group argument timeline projection',()=>{
     }else expect(screen.queryByRole('combobox',{name:'查看历史公告'})).not.toBeInTheDocument()
   })
 })
+
+describe('original attachment preview quality',()=>{
+  it('keeps a low resolution connector preview distinct from an original readable download',async()=>{
+    const file={media_kind:'image' as const,source_mode:'connector_preview' as const,label:'美芝原附件预览（低清长图，小字未核清）',file_name:'original.jpeg',sha256:'a'.repeat(64),mime_type:'image/jpeg',size_bytes:72908,width:130,height:1536,captured_at:'2026-11-07T08:00:00Z',source_url:'https://chatgpt.com/c/source',url:'/api/v1/workbench/history-files/preview'}
+    serve({...detail,questions:[{...question,question_files:[file],unavailable_attachments:1}]});render(<ResearchHistorySection/>);
+    expect(await screen.findByText(/已找回当时的低清附件预览/)).toBeVisible()
+    expect(screen.queryByRole('img',{name:file.label})).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('当时的附件与参考文件'))
+    expect(screen.getByText(/保留从原聊天找回的附件副本/)).toBeVisible()
+    expect(await screen.findByRole('img',{name:file.label})).toHaveAttribute('width','130')
+    expect(screen.queryByText(/保留原聊天中下载的副本/)).not.toBeInTheDocument()
+  })
+})

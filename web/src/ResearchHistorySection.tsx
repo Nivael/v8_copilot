@@ -1,5 +1,7 @@
 import {useEffect,useState} from 'react'
 import {ReadingChart} from './ReadingChart'
+import {HistoryEventTimeline} from './HistoryEventTimeline'
+import {eventMarkers} from './historyEventMarkers'
 import {ResearchCorrectionNotice} from './ResearchCorrectionNotice'
 import {percent} from './readingFormat'
 import {useReadingView} from './useReadingView'
@@ -100,6 +102,7 @@ function HistoryVisuals({visuals}:{visuals:HistoryVisual[]}){
 function HistoryBody({symbol}:{symbol:string}){
   const {packet,error}=useReadingView<HistoryDetail>(`history/${symbol}`)
   const [selected,setSelected]=useState<string|null>(null)
+  const [selectedEvent,setSelectedEvent]=useState<{questionId:string;eventId:string}|null>(null)
   const [category,setCategory]=useState('全部')
   const [query,setQuery]=useState('')
   const [includeSaved,setIncludeSaved]=useState(false)
@@ -128,6 +131,9 @@ function HistoryBody({symbol}:{symbol:string}){
   const questionTitle=questionExcerpt(question.question)
   const contextTitle=question.question_context?questionExcerpt(question.question_context.question):null
   const review=question.review
+  const timeline=review?.event_timeline?.version==='history_event_timeline_v1'&&review.event_timeline.question_id===question.id&&review.event_timeline.symbol===symbol?review.event_timeline:undefined
+  const activeEvent=timeline?.events.find(e=>e.id===(selectedEvent?.questionId===question.id?selectedEvent.eventId:timeline.initial_event_id))||timeline?.events[0]
+  const chooseEvent=(eventId:string)=>setSelectedEvent({questionId:question.id,eventId})
   const correctedStudy=question.research_corrections?.some(note=>note.role==='corrected_study')
   const replacementStudy=question.research_corrections?.some(note=>note.role==='replacement_study')
   const awaitingSavedPrices=question.kind==='saved_research'&&!Object.values(outcomes||{}).some(value=>value.change_pct!=null)
@@ -154,8 +160,10 @@ function HistoryBody({symbol}:{symbol:string}){
         {(argumentOnly||marketBackgroundOnly)&&<p className="reading-caption">{marketBackgroundOnly?'这里只对照大盘和ST，不代表原问所提个股或组合的回报。':'这里只展示该股的同期价格，未用这些涨跌验证本条判断的回报。'}</p>}
         <p className="history-comparison-reference"><strong>{question.anchor_date?`涨跌从${question.anchor_date}收盘算起`:'比较起点待定位'}</strong><span>{referenceNote}</span></p>
         {!argumentOnly&&!marketBackgroundOnly&&<div className="history-outcomes">{windows.map(([key,label])=><div key={key}><span>{label}</span><strong>{outcomeText(outcomes?.[key])}</strong><small>{outcomes?.[key]?.date||'后续收盘待更新'}</small></div>)}</div>}
-        <ReadingChart key={question.id} series={series} label={`${data.name}从${question.anchor_date||'提问日'}起的${argumentOnly||marketBackgroundOnly?'背景走势':'后续走势'}`} markers={markers} onMarker={choose} reviewThrough={review?.price_through}/>
-        <p className="reading-caption">曲线上圆点可切换到那天的原问题。{symbol==='market'&&'本组只对照大盘和ST；未定位的个股不会猜配行情。'}</p>
+        <ReadingChart key={question.id} series={series} label={`${data.name}从${question.anchor_date||'提问日'}起的${argumentOnly||marketBackgroundOnly?'背景走势':'后续走势'}`} markers={markers} onMarker={choose} reviewThrough={review?.price_through} eventMarkers={eventMarkers(timeline,activeEvent)} onEventMarker={chooseEvent}/>
+        <p className="reading-caption">{timeline?'圆点切换原问题，菱形切换重点公告；同日公告合并标记，全部已核记录在下方选看。':'曲线上圆点可切换到那天的原问题。'}{symbol==='market'&&'本组只对照大盘和ST；未定位的个股不会猜配行情。'}</p>
+        {timeline&&activeEvent&&<HistoryEventTimeline timeline={timeline} event={activeEvent} onSelect={chooseEvent} stName={data.st_name}/>}
+        {review?.event_timeline_status==='needs_refresh'&&<p className="reading-caption">事件记录需按更新后的问题或行情重新核对，暂保留下面的原复盘。</p>}
         <details className="reading-disclosure"><summary>{marketBackgroundOnly?'同期大盘与ST数值':argumentOnly?'同期个股、大盘与ST数值':'同一窗口，大盘和ST分别走了多少？'}</summary><div className="reading-scroll"><table><thead><tr><th>窗口</th>{!marketBackgroundOnly&&<th>{data.name}</th>}<th>中证全指</th><th>{data.st_name}</th>{!marketBackgroundOnly&&<th>相对ST</th>}</tr></thead><tbody>{windows.map(([key,label])=>{const own=outcomes?.[key]?.change_pct,st=question.outcomes.st?.[key]?.change_pct;return <tr key={key}><th scope="row">{label}</th>{!marketBackgroundOnly&&<td>{outcomeText(outcomes?.[key])}</td>}<td>{outcomeText(question.outcomes.market?.[key])}</td><td>{outcomeText(question.outcomes.st?.[key])}</td>{!marketBackgroundOnly&&<td>{own==null||st==null?'—':`${(own-st).toFixed(2)}个百分点`}</td>}</tr>})}</tbody></table></div></details>
         </>}
         {review&&<details className="reading-disclosure history-logic"><summary>{argumentOnly?'为什么这样判断 · 原答与依据':'为什么这样判断 · 大盘 / ST / 个股'}</summary>{review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}<small>复盘于 {timestamp(review.reviewed_at)}。{argumentOnly?'本条只核对原答的依据与推理，未用价格涨跌验收。':'同期涨跌是对照，不是因果贡献比例。'}</small></details>}

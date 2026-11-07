@@ -1,6 +1,7 @@
 import {cleanup,fireEvent,render,screen,waitFor,within} from '@testing-library/react'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {ResearchHistorySection} from './ResearchHistorySection'
+import {timeline as eventTimeline} from './test/historyEventFixture'
 import type {HistoryDetail,HistoryQuestion} from './researchHistoryTypes'
 
 const dates=['2026-06-01','2026-06-02','2026-06-03','2026-06-04','2026-06-05','2026-06-08','2026-06-09']
@@ -592,4 +593,20 @@ describe('original question retrospective',()=>{
     expect(JSON.stringify(records)).toBe(before)
   })
 
+})
+
+
+describe('event timeline inside the original question',()=>{
+  it('connects selection and the chart while keeping the original question reference',async()=>{
+    const reviewed={...question,review:{...question.review!,event_timeline:{...eventTimeline,question_id:question.id}}}
+    serve({...detail,questions:[reviewed,detail.questions[1]]});render(<ResearchHistorySection/> )
+    const select=await screen.findByRole('combobox',{name:'查看历史公告'})
+    expect(screen.getByText('涨跌从2026-06-02收盘算起')).toBeVisible()
+    fireEvent.change(select,{target:{value:'second'}})
+    expect(within(screen.getByRole('article',{name:'选中公告的判断变化'})).getByRole('heading',{name:'同日披露财报'})).toBeVisible()
+    expect(screen.getByRole('button',{name:/公告 2026-06-06/})).toHaveAttribute('aria-pressed','true')
+    fireEvent.click(screen.getByRole('button',{name:/2026-06-03 黑历史有哪些/}))
+    expect(screen.queryByRole('combobox',{name:'查看历史公告'})).not.toBeInTheDocument()
+    expect(screen.getByText('涨跌从2026-06-03收盘算起')).toBeVisible()
+  })
 })

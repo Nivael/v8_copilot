@@ -326,6 +326,12 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
                 item['research_corrections']=correction_notes[record['id']]
             review=reviews.get(record['id'])
             item.update(resolve_review(review,record,paths,item['question_digest'],review_anchor(record,review,paths) if review else None))
+            if item.get('review') and 'event_timeline' in item['review']:
+                from research_history_events import project_timeline
+                projected=project_timeline(item['review']['event_timeline'],record=record,review=item['review'],paths=paths,symbol=symbol)
+                item['review']={k:v for k,v in item['review'].items() if k!='event_timeline'}
+                if projected:item['review']['event_timeline']=projected
+                else:item['review']['event_timeline_status']='needs_refresh'
             if review:
                 focus=review.get('focused_symbol')
                 item['review_focused_name']=paths['stocks'].get(focus,{}).get('name','大盘与ST' if focus=='market' else None)
@@ -376,7 +382,7 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_events.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):

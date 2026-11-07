@@ -310,6 +310,9 @@ def original_response_state(record):
     """A stopped/plan widget is source context, never a recovered answer."""
     state=record.get('original_response_state')
     if not isinstance(state,dict) or record.get('kind')!='original_question' or record.get('answers'):return None
+    if state.get('version')=='history_original_response_state_v2':
+        from research_history_response_states import project_stopped_response
+        return project_stopped_response(state,record)
     labels={'plan_only':'Plan edited...','research_stopped':'Research stopped'}
     status=state.get('status')
     if (state.get('version')!='history_original_response_state_v1' or not isinstance(status,str) or status not in labels
@@ -420,7 +423,7 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_events.py','research_history_case_period.py','research_history_question_period.py','research_history_market_context.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_response_states.py','research_history_events.py','research_history_case_period.py','research_history_question_period.py','research_history_market_context.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):

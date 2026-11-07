@@ -70,8 +70,8 @@ describe('original question retrospective',()=>{
     expect(screen.getByText(/现有行情尚未覆盖可用的比较起点/)).toBeVisible()
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
-  it.each([['plan_only','当时只形成了研究计划，没有完成报告。'],['research_stopped','当时的研究已停止，没有形成完整报告。']] as const)('explains an unfinished %s without inventing an answer',async(status,note)=>{
-    const q:HistoryQuestion={...question,answers:[],review:null,original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'}}
+  it.each([['plan_only','当时只形成了研究计划，没有完成报告。'],['research_stopped','当时的研究已停止，没有形成完整报告。'],['response_stopped','当时已停止，没有留下独立回答。']] as const)('explains an unfinished %s without inventing an answer',async(status,note)=>{
+    const q:HistoryQuestion={...question,answers:[],review:null,original_response_state:{version:status==='response_stopped'?'history_original_response_state_v2':'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':status==='response_stopped'?'Stopped thinking':'Research stopped'}}
     serve({...detail,questions:[q]});render(<ResearchHistorySection/>)
     await screen.findByText(note,{selector:'.history-pending'})
     expect(screen.getByText(status==='plan_only'?'原研究 · 只形成计划':'原研究 · 已停止')).toBeVisible()

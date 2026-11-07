@@ -22,6 +22,7 @@ describe('original question retrospective',()=>{
     const q:HistoryQuestion={...question,answers:[],review:null,original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'}}
     serve({...detail,questions:[q]});render(<ResearchHistorySection/>)
     await screen.findByText(note,{selector:'.history-pending'})
+    expect(screen.getByText(status==='plan_only'?'原研究 · 只形成计划':'原研究 · 已停止')).toBeVisible()
     expect(screen.getByText(note,{selector:'blockquote'})).toBeVisible()
     expect(screen.queryByText('未找到原回答')).not.toBeInTheDocument()
     expect(screen.queryByText('错误：卖压被解释成洗盘')).not.toBeInTheDocument()

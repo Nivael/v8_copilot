@@ -602,6 +602,8 @@ describe('original question retrospective',()=>{
     fireEvent.change(screen.getByRole('combobox',{name:'历史问题分类'}),{target:{value:'短线量价'}})
     fireEvent.change(screen.getByRole('searchbox',{name:'查找历史问题或经验'}),{target:{value:'遗漏批评已经撤回'}})
     expect(screen.getByRole('checkbox',{name:'同时显示保存的研究题'})).not.toBeChecked()
+    expect(screen.getByRole('region',{name:'研究更正'}).querySelector('details')!.open).toBe(false)
+    fireEvent.click(screen.getByText('展开原因与原文'))
     fireEvent.click(screen.getByRole('button',{name:'查看修正后的研究'}))
     expect(screen.getByRole('heading',{name:'重新核对年报的借款口径'})).toBeVisible()
     expect(screen.queryByText('后续走势已对照；这条原回答的事实与推理仍待逐项复核。')).not.toBeInTheDocument()

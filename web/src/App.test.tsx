@@ -17,6 +17,35 @@ describe('App',()=>{
     expect(vi.mocked(fetch).mock.calls.every(([url])=>String(url).includes('/workbench/market'))).toBe(true)
   })
 
+  it('keeps a submitted compatibility question and its completed answer on the legacy page',async()=>{
+    const answer='当前快照没有该股票的可复算价格窗口。'
+    const response={
+      contract_version:'v8_copilot_api_contract_v2',route:{route:'answer_query'},interpretation:{},
+      answer_card:null,claims:[],gaps:[],sedimentation_candidates:[],degraded:false,
+      degraded_reasons:[],llm_used:false,query_template_id:null,question_cards:[],
+      data_debt_candidates:[],navigation_refs:[],
+      narrative:{direct_answer:{text:answer,backing:[]},reasoning_steps:[],
+        uncertainties:[],watch_items:[],basis_note:'合成测试的行情覆盖缺口。'},
+    }
+    const stream={request_id:'compatibility-test',sequence:1,event:'completed',payload:{response}}
+    const fetchMock=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>
+      String(input).includes('/answers/stream')
+        ?new Response(`${JSON.stringify(stream)}\n`,{status:200,headers:{'Content-Type':'application/x-ndjson'}})
+        :new Response(JSON.stringify({availability:'warming',refresh:{in_progress:false,last_error:null}}),{status:200}))
+    render(<MemoryRouter initialEntries={['/legacy?symbol=000033']}><App/></MemoryRouter>)
+    const composer=await screen.findByRole('textbox',{name:'研究问题'})
+    fireEvent.change(composer,{target:{value:'最近股价和换手率怎样？'}})
+    fireEvent.click(screen.getByRole('button',{name:'提交',exact:true}))
+
+    expect(await screen.findByText(answer)).toBeInTheDocument()
+    expect(screen.getByRole('textbox',{name:'研究问题'})).toHaveValue('最近股价和换手率怎样？')
+    expect(screen.queryByRole('heading',{name:'市场判断',level:1})).not.toBeInTheDocument()
+    expect(fetchMock.mock.calls).toHaveLength(1)
+    const request=JSON.parse(String(fetchMock.mock.calls[0][1]?.body))
+    expect(request.object).toEqual({kind:'stock',ref:'000033'})
+    expect(Array.from(document.querySelectorAll('nav a')).map(a=>a.textContent)).toEqual(['市场判断','跟踪与经验'])
+  })
+
   it('resolves a non-episode announcement deep link into a dossier detail focus',async()=>{
     vi.spyOn(globalThis,'fetch').mockImplementation(async input=>String(input).includes('market-risk')?new Response('',{status:503}):new Response(JSON.stringify({
       symbol:'603398',display_name:'沐邦高科',as_of:'2026-01-02',

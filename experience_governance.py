@@ -343,6 +343,9 @@ class PytestRegressionExecutor:
         # Verifies review construction boundaries, not causal identification or
         # empirical profitability/generalization of a lesson.
         "regression:event_learning_chronology": ["tests/test_event_learning.py"],
+        # Compares supplied report versions and arithmetic; never certifies
+        # accounting truth or selects a later vintage as historical knowledge.
+        "regression:reported_financial_comparison": ["tests/test_reported_financial_checks.py"],
     }
     UNVERIFIED_REASONS = {
         "regression:discipline_taxonomy": "已加入正式来源逐条事实的匹配约束，但没有处分类型、受罚对象与时点的完整语义检查；逐字匹配和主题检索均不等于方法复验通过。",

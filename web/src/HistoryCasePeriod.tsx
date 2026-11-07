@@ -18,7 +18,7 @@ export function HistoryCasePeriod({timeline,event,onSelect,askedOn}:{timeline:Hi
       <ReadingChart series={series} label={`${stock.name}当年案例走势`} eventMarkers={eventMarkers(timeline,event)} onEventMarker={onSelect}/>
       <details className="reading-disclosure"><summary>当年价格口径与来源</summary>
         <p>{period.source_note}</p>
-        {period.gap_notes.map(note=><p key={note.date}>{note.date}：{note.reason} <a href={note.url} target="_blank" rel="noreferrer">停牌公告 ↗</a></p>)}
+        {period.gap_notes.map(note=><p key={note.date}>{note.date}：{note.reason} <a href={note.url} target="_blank" rel="noreferrer">{note.support_kind==='unverified_source_gap'?'缺报来源':'停牌公告'} ↗</a></p>)}
         {period.source_refs.map(source=><p key={source.key}><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a></p>)}
       </details>
     </>}

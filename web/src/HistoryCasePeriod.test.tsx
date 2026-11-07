@@ -21,7 +21,7 @@ describe('separate historical case period',()=>{
     expect(screen.getByText(/原问题提出于2026-06-01/)).toBeVisible()
     expect(screen.getByRole('img',{name:/案例公司当年案例走势/})).toBeVisible()
     expect(screen.getByRole('slider')).toHaveAttribute('max','2')
-    expect(screen.getByText(/曲线空档表示当日无有效成交价格/)).toBeVisible()
+    expect(screen.getByText(/曲线空档表示缺少可用报价/)).toBeVisible()
     expect(screen.queryByRole('button',{name:/公告 2026-06-06/})).not.toBeInTheDocument()
     fireEvent.keyDown(screen.getByRole('button',{name:/公告 2021-05-18/}),{key:'Enter'})
     expect(choose).toHaveBeenCalledWith('historical')
@@ -31,6 +31,16 @@ describe('separate historical case period',()=>{
   it('does not add a historical case chart to a legacy timeline',()=>{
     render(<HistoryCasePeriod timeline={timeline} onSelect={()=>{}} askedOn="2026-06-01"/>)
     expect(screen.queryByText(/当年案例走势/)).not.toBeInTheDocument()
+  })
+  it('links an unverified quote gap to its provider without calling it a suspension',()=>{
+    const gapValue={...value,case_period:{...value.case_period,gap_notes:[{date:'2021-05-18',reason:'缺少报价，原因待核',support_kind:'unverified_source_gap' as const,url:'https://example.com/quotes'}]}}
+    render(<HistoryCasePeriod timeline={gapValue} onSelect={()=>{}} askedOn="2026-06-01"/>)
+    const details=screen.getByText(gapValue.case_period.title).closest('details')!
+    details.open=true;fireEvent(details,new Event('toggle'))
+    fireEvent.click(screen.getByText('当年价格口径与来源'))
+    expect(screen.getByRole('link',{name:'缺报来源 ↗'})).toHaveAttribute('href','https://example.com/quotes')
+    expect(screen.queryByRole('link',{name:'停牌公告 ↗'})).not.toBeInTheDocument()
+    expect(screen.getByText(/曲线空档表示缺少可用报价/)).toBeVisible()
   })
   it('labels the historical announcement window and keeps missing prices separate from zero',()=>{
     render(<HistoryEventTimeline timeline={value} event={historical} onSelect={()=>{}} stName="ST板块（东财）"/>)

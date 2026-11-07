@@ -6,10 +6,12 @@ import re
 from canonical_json import digest
 
 VERSION = 'history_case_period_sources_v1'
+GAP_VERSION = 'history_case_period_sources_v2'
+SOURCE_GAP_REASON = '行情来源在这一天缺少报价，尚未核定停牌或缺报原因；不补前值。'
 
 
 def case_period_paths(value, *, symbol, asked_on, current_start):
-    if (not isinstance(value, dict) or value.get('version') != VERSION
+    if (not isinstance(value, dict) or value.get('version') not in {VERSION, GAP_VERSION}
             or value.get('price_basis') != 'unadjusted_price'
             or value.get('symbol') != symbol
             or digest({k: v for k, v in value.items() if k != 'content_digest'}) != value.get('content_digest')):
@@ -51,6 +53,13 @@ def case_period_paths(value, *, symbol, asked_on, current_start):
     if len(notes) != len(gaps) or sorted(n['date'] for n in notes) != gaps:
         raise ValueError('case gaps need one explicit primary note each')
     for note in notes:
+        if value['version'] == GAP_VERSION and note.get('support_kind') == 'unverified_source_gap':
+            if (set(note) != {'date', 'reason', 'support_kind', 'source_key', 'source_sha256', 'url'}
+                    or note['reason'] != SOURCE_GAP_REASON or note['source_key'] != 'tencent_unadjusted'):
+                raise ValueError('an unverified quote gap cannot claim a suspension cause')
+            continue
+        if value['version'] == GAP_VERSION and note.get('support_kind') != 'verified_suspension':
+            raise ValueError('case gap needs an explicit evidence kind')
         if (not isinstance(note.get('reason'), str) or not note['reason'].strip()
                 or not re.fullmatch(r'\d{10}', note['announcement_id'])
                 or not re.fullmatch(r'https://static\.cninfo\.com\.cn/finalpage/\d{4}-\d{2}-\d{2}/'
@@ -84,4 +93,10 @@ def case_period_paths(value, *, symbol, asked_on, current_start):
                 or stamp.tzinfo is None or stamp > datetime.now(timezone.utc) or stamp.date().isoformat() < end
                 or not ref.get('title')):
             raise ValueError('case source identity or observation time changed')
+    if value['version'] == GAP_VERSION:
+        raw_source = next(r for r in refs if r['key'] == 'tencent_unadjusted')
+        for note in notes:
+            if note['support_kind'] == 'unverified_source_gap' and (
+                    note['url'] != raw_source['url'] or note['source_sha256'] != raw_source['sha256']):
+                raise ValueError('quote gap observation differs from its own raw-price source')
     return paths

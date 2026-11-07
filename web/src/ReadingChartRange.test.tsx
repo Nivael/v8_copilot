@@ -54,7 +54,7 @@ describe('uncertain date interval price observation',()=>{
     expect(line.match(/M/g)).toHaveLength(2);expect(line).not.toContain('NaN')
     fireEvent.change(screen.getByRole('slider'),{target:{value:'1'}})
     expect(view.container.querySelector('.reading-chart-cursor')).toHaveTextContent('示例股票 待更新')
-    expect(screen.getByText(/曲线空档表示当日无有效成交价格/)).toBeVisible()
+    expect(screen.getByText(/曲线空档表示缺少可用报价/)).toBeVisible()
   })
   it('does not silently normalize an impossible date into a different day',()=>{
     const points=['2026-02-27','2026-03-02','2026-03-03'].map(date=>({date,value:100,level:100}))

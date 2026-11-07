@@ -81,7 +81,7 @@ export function ReadingChart({series,label,markers=[],onMarker,reviewThrough,val
     </svg>
     <div className="reading-chart-cursor"><time>{dates[selected]}</time>{aligned.map(item=><span key={item.key}>{item.name} <b>{display(item.points[selected].level)}</b></span>)}</div>
     <input type="range" min={0} max={dates.length-1} value={selected} onChange={event=>setCursor(Number(event.target.value))} aria-label={`${label}，选择交易日`} aria-valuetext={dates[selected]}/>
-    {aligned.some(item=>item.points.some(point=>point.level==null))&&<p className="reading-caption">曲线空档表示当日无有效成交价格，不按零涨跌补齐。</p>}
+    {aligned.some(item=>item.points.some(point=>point.level==null))&&<p className="reading-caption">曲线空档表示缺少可用报价，不按零涨跌补齐。</p>}
     <details className="reading-chart-data"><summary>逐日数值</summary><div className="reading-scroll"><table><thead><tr><th>日期</th>{aligned.map(item=><th key={item.key}>{item.name}</th>)}</tr></thead><tbody>{dates.map((date,index)=><tr key={date}><th>{date}</th>{aligned.map(item=><td key={item.key}>{display(item.points[index].level)}</td>)}</tr>)}</tbody></table></div></details>
   </figure>
 }

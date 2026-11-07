@@ -200,3 +200,24 @@ def test_cli_requires_all_activity_scope_arguments(monkeypatch):
     monkeypatch.setattr("sys.argv", ["research_workbench.py", "evidence", "--question", "历史活动状态", "--activity-symbol", "839680"])
     with pytest.raises(SystemExit) as error: research_workbench.main()
     assert error.value.code == 2
+
+
+def test_current_name_resolving_to_new_code_keeps_verified_historical_member_scope(prepared):
+    from api_contract import ResearchObject, ResearchRequest
+    from evidence_gateway import build_evidence_pack
+    reading = read(prepared)
+    pack = build_evidence_pack(ResearchRequest(question="核实广道这段历史的实际交易状态", object=ResearchObject(kind="stock", ref="920680"), llm_mode="off"))
+    augmented = arc.augment_activity_reading(pack, reading)
+    assert augmented.question_scope["object"] == {"kind": "stock", "ref": "920680"}
+    assert augmented.question_scope["activity_reading_scope"]["historical_member_code"] == "839680"
+    assert augmented.rows[-1]["activity_reading"]["rows"][0]["symbol"] == "839680"
+    assert augmented.deterministic_response == pack.deterministic_response
+
+
+def test_new_code_scope_cannot_be_joined_without_the_verified_identity(prepared):
+    from api_contract import ResearchObject, ResearchRequest
+    from evidence_gateway import build_evidence_pack
+    reading = read(prepared); reading["verified_member_identity"] = None
+    reading["content_digest"] = digest({k: v for k, v in reading.items() if k != "content_digest"})
+    pack = build_evidence_pack(ResearchRequest(question="核实历史活动状态", object=ResearchObject(kind="stock", ref="920680"), llm_mode="off"))
+    with pytest.raises(ValueError, match="research subject"): arc.augment_activity_reading(pack, reading)

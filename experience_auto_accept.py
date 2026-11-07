@@ -63,10 +63,11 @@ def _existing_run_ids(record: ExperienceRecord, ledger: ResearchRunLedger) -> li
         if not run_id.startswith("RUN-"):
             continue
         try:
-            ledger.get(run_id)
+            run = ledger.get(run_id)
         except KeyError:
             continue
-        result.append(run_id)
+        if run.validation_report.get("valid") is True:
+            result.append(run_id)
     return result
 
 
@@ -92,6 +93,8 @@ def auto_accept_candidate(
     minimum_source_runs: int = 2,
 ) -> AutoAcceptanceResult:
     """Promote only replicated, executable and conflict-free methods."""
+    if minimum_source_runs < 2:
+        raise ValueError("自动晋级至少需要 2 个通过校验的来源运行")
     if record.status == ExperienceStatus.ACCEPTED:
         return AutoAcceptanceResult(
             experience_id=record.experience_id, outcome="unchanged",
@@ -123,7 +126,7 @@ def auto_accept_candidate(
             distinct_source_runs=len(run_ids), minimum_source_runs=minimum_source_runs,
             reason=note,
         )
-    active = repository.list(status=ExperienceStatus.ACCEPTED, limit=1000)
+    active = repository.list(status=ExperienceStatus.ACCEPTED, limit=None)
     blocking = [
         conflict for conflict in detect_experience_conflicts([*active, record])
         if conflict.severity == "blocking" and record.experience_id in {
@@ -193,8 +196,8 @@ def auto_accept_all(
 ) -> list[AutoAcceptanceResult]:
     runner = CachedRegressionExecutor(executor or PytestRegressionExecutor())
     records = [
-        *repository.list(status=ExperienceStatus.CANDIDATE, limit=1000),
-        *repository.list(status=ExperienceStatus.BLOCKED, limit=1000),
+        *repository.list(status=ExperienceStatus.CANDIDATE, limit=None),
+        *repository.list(status=ExperienceStatus.BLOCKED, limit=None),
     ]
     return [
         auto_accept_candidate(
@@ -213,8 +216,8 @@ def main() -> int:
     ledger = ResearchRunLedger(RESEARCH_RUN_LEDGER_DB)
     if args.dry_run:
         rows = [
-            *repository.list(status=ExperienceStatus.CANDIDATE, limit=1000),
-            *repository.list(status=ExperienceStatus.BLOCKED, limit=1000),
+            *repository.list(status=ExperienceStatus.CANDIDATE, limit=None),
+            *repository.list(status=ExperienceStatus.BLOCKED, limit=None),
         ]
         print(json.dumps({"policy_id": POLICY_ID, "eligible_status_count": len(rows)}, ensure_ascii=False))
         return 0

@@ -1,0 +1,15 @@
+{
+  "fixture_version": "research_announcement_fixture_v1",
+  "purpose": "Frozen official-metadata subset for source-absence and comparable-stage regression, not current company facts.",
+  "observed_through": "2026-07-14",
+  "announcements": {
+    "603398": [
+      {"announcement_id": "1225376687", "announcement_date": "2026-06-17", "title": "江西沐邦高科股份有限公司关于全资孙公司被债权人申请重整的提示性公告", "url": "https://static.cninfo.com.cn/finalpage/2026-06-18/1225376687.PDF"},
+      {"announcement_id": "1224986293", "announcement_date": "2026-02-26", "title": "江西沐邦高科股份有限公司关于预重整进展相关事项的重大风险提示公告", "url": "https://static.cninfo.com.cn/finalpage/2026-02-27/1224986293.PDF"}
+    ],
+    "300068": [
+      {"announcement_id": "1225423611", "announcement_date": "2026-07-14", "title": "关于被债权人申请预重整及重整的专项自查报告", "url": "https://static.cninfo.com.cn/finalpage/2026-07-14/1225423611.PDF"},
+      {"announcement_id": "1225415810", "announcement_date": "2026-07-08", "title": "关于被债权人申请预重整及重整的提示性公告", "url": "https://static.cninfo.com.cn/finalpage/2026-07-08/1225415810.PDF"}
+    ]
+  }
+}

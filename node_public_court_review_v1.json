@@ -1,0 +1,4441 @@
+{
+  "version": "node_public_court_review_v1",
+  "scope": "listed_company_court_stage_and_stated_dates_only",
+  "p6_run": {
+    "run_id": "P6B3R-2EEDD6679474DB3E72B6",
+    "as_of": "2026-07-20",
+    "verified_event_count": 685
+  },
+  "selection_rule": "all active title-only candidates; court-stage batch chosen by event type and time only, before outcomes",
+  "frame_sha256": "d10b937c18e10a6828e4e2dd8759ce57e6cec732ae9c305a6fb419a1881e038c",
+  "metadata_captured_at": "2026-11-05T14:20:05.420788+00:00",
+  "archive_completed_at": "2026-11-05T14:22:09.169894+00:00",
+  "review_completed_at": "2026-11-05T14:55:56.910535+00:00",
+  "metadata_refs": [
+    {
+      "label": "lookup-000523",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "000523",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:56.371143+00:00",
+      "sha256": "2dacebb407d1bf73f0b535847e2cccf26a750135d228eef6d64987aca927b987",
+      "bytes": 149
+    },
+    {
+      "label": "lookup-000615",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "000615",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:56.522287+00:00",
+      "sha256": "3eef4311248b34cdbcb7a7be554ac6b906646c6bf90c59e936990e668f084ab1",
+      "bytes": 146
+    },
+    {
+      "label": "lookup-000697",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "000697",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:56.679000+00:00",
+      "sha256": "2733cddc4dd2197ff468c8de93d3b31c11dd5d59925cc0f6e401f83ebcadeb2d",
+      "bytes": 149
+    },
+    {
+      "label": "lookup-002021",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002021",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:56.856721+00:00",
+      "sha256": "8eccb194c66649385cb47d21805dbdc600f68cb926611c4eca122cc939afa6cf",
+      "bytes": 149
+    },
+    {
+      "label": "lookup-002072",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002072",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.031508+00:00",
+      "sha256": "d90a21c92a6f110c0af6f4b638b6a46b8df4e8fe9d5251b32028f3a59eb1e1f4",
+      "bytes": 144
+    },
+    {
+      "label": "lookup-002157",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002157",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.178218+00:00",
+      "sha256": "5e0bee9c208fa2228cc0fb5c7a10fde45e530a024ea6a2b99aaad67da0865d07",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002200",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002200",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.288621+00:00",
+      "sha256": "83b4eb0e52100e98f9e9cc03af9143065b758ede9900802772d49126f32ffca7",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002219",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002219",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.404165+00:00",
+      "sha256": "036f3ad8cb4e925ab88d10f50a8146235851b75d267bdc872926e2ffb55410d7",
+      "bytes": 144
+    },
+    {
+      "label": "lookup-002310",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002310",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.557552+00:00",
+      "sha256": "c48a34d48ac7088b4946cdce3e7b423d3dc86c46df6dd1184ccfa925075646ce",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002323",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002323",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.704033+00:00",
+      "sha256": "9c3067ad8190eb1061f4d112cf91cc5072df3b9f5d0bbe7884d6f2db5deaa09b",
+      "bytes": 145
+    },
+    {
+      "label": "lookup-002356",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002356",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.822345+00:00",
+      "sha256": "c19109502ac515ccd6b2422b5e41dcc8aa6dc80b2aae5102ccbfba9aa5ee121b",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002366",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002366",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:57.991507+00:00",
+      "sha256": "3d3c325a80e9e87d7c5b34d214085972a38bd8baf354af04e3b0a330eeea99e2",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002427",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002427",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:58.158782+00:00",
+      "sha256": "8c7b6015796bdce6cdcf02a2855d065db4c5023e66de51014082f100b58f220f",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002721",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002721",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:58.299193+00:00",
+      "sha256": "fdc9b9e8c0d4f5e49454507beb06490cc0a8e696dda572b82cfc2ef1d0decaa4",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002742",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002742",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:58.450798+00:00",
+      "sha256": "d7fedefb884d1d332d4f5f8db32b1886fb9a8a01a509566aec53d6ab4af30474",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002766",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002766",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:58.606127+00:00",
+      "sha256": "39cf279010e295ab6ef5a42c53889ab586e9c84751b99fa0914c43314d40bfb4",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-002822",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "002822",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:58.976233+00:00",
+      "sha256": "4f3255b150d2beca6c9f29b44f85985b3a4637dc83411b7bd815e70732571a65",
+      "bytes": 144
+    },
+    {
+      "label": "lookup-300010",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "300010",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:59.135319+00:00",
+      "sha256": "0e87deadedf6f8b66c8122ea5cd3025385466d3e180c872238baa55856b8f864",
+      "bytes": 144
+    },
+    {
+      "label": "lookup-300278",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "300278",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:59.295975+00:00",
+      "sha256": "cd2884155f151fff49bd128f34a4c7a53dbff04141e81adeb49a2e9447e00ca2",
+      "bytes": 144
+    },
+    {
+      "label": "lookup-300506",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "300506",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:59.441800+00:00",
+      "sha256": "1b5e1622427e0b76cc345dc5a53a9c7659801b87be32fe25a24f2415a71f86dd",
+      "bytes": 144
+    },
+    {
+      "label": "lookup-600117",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "600117",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:59.654786+00:00",
+      "sha256": "455322ee2a7706851ec563d8d9c31ab5b4a81e7147a9f2a22808c4c123126948",
+      "bytes": 149
+    },
+    {
+      "label": "lookup-600306",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "600306",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:59.806414+00:00",
+      "sha256": "87d94618a85ad94117fc6871efc766145c5ceb0c2970ac80eb27808d0908c8a1",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-600518",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "600518",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:16:59.958887+00:00",
+      "sha256": "435645e58e75fa83da53ca34e3fb96c30fffe04bef862ed0c0b1f5df58ce05db",
+      "bytes": 149
+    },
+    {
+      "label": "lookup-600601",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "600601",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:17:00.099670+00:00",
+      "sha256": "c822adddb21b8b46660d8f239aa5f7f3a018edad0d75393a586ad9783fb4410d",
+      "bytes": 149
+    },
+    {
+      "label": "lookup-603030",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "603030",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:17:00.326080+00:00",
+      "sha256": "be3507f88dbc34ecc01c60b7bafddec34a5c75e6ef6b85c88117eddc404b1990",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-603363",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "603363",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:17:00.434447+00:00",
+      "sha256": "c01c4eb04930474ddf394fec0a35b8dc70d5979b32e847ec0295609a43766d73",
+      "bytes": 148
+    },
+    {
+      "label": "lookup-603555",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "response_url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "method": "POST",
+      "params": {
+        "keyWord": "603555",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T14:17:00.572400+00:00",
+      "sha256": "067e0a43eb16c0c4af4ddbcb79a6fdf954d4c51de6fd4225a7bae8e08aac5dc3",
+      "bytes": 143
+    },
+    {
+      "label": "query-VEVT-157582251D8B47EEFDCB",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "000523,gssz0000523",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-09-27~2021-10-02",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:00.701161+00:00",
+      "sha256": "08dc6f5c316e282fcf4a8427fa8338074d99930bb4605d95385e4b6942dc9cdf",
+      "bytes": 1591
+    },
+    {
+      "label": "query-VEVT-57F2B09B452F5FBF67DE",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "000523,gssz0000523",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-11-09~2021-11-14",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:00.882726+00:00",
+      "sha256": "bb3a4f9b86fbec12201b0683b5e63475d73a7138f2ede156ed29a8017ad8394a",
+      "bytes": 6852
+    },
+    {
+      "label": "query-VEVT-D33ABE4125C8D444395E",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "000615,gssz0000615",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2025-11-12~2025-11-17",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.013217+00:00",
+      "sha256": "897460fc89eb80386ac5c448c130e93624263804f456c84424230668ef8b0260",
+      "bytes": 4390
+    },
+    {
+      "label": "query-VEVT-902136FA61230273BF13",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "000697,gssz0000697",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2025-09-21~2025-09-25",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.146722+00:00",
+      "sha256": "153014010199eb5920c9bbf66242f35e56ef53e6cfd5df67c5d42d2b7e11cce6",
+      "bytes": 4872
+    },
+    {
+      "label": "query-VEVT-72AD9A2427F2E9A97F6E",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002021,gssz0002021",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-11-22~2023-11-26",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.374408+00:00",
+      "sha256": "df3e95184985f46c85c91e64476c86ebb227942663f76a62cae101172d636344",
+      "bytes": 1044
+    },
+    {
+      "label": "query-VEVT-A93F560400CEB200F279",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002072,9900000881",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-11-05~2021-11-10",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.497959+00:00",
+      "sha256": "9d51622601cc6287c41fd846995f285f7c06e1889343a0455cc1f06a5f6c2faa",
+      "bytes": 2221
+    },
+    {
+      "label": "query-VEVT-731B1E4EEFC75B0A228E",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002157,9900003434",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-07-18~2023-07-22",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.630379+00:00",
+      "sha256": "89e6d9b194a08636ad7d0f2923a8a589ad982421bd238cf0d08320c90b922354",
+      "bytes": 3092
+    },
+    {
+      "label": "query-VEVT-4AE80234F79FF92EDF1D",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002200,9900003907",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2025-10-24~2025-10-28",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.754057+00:00",
+      "sha256": "9431ee0171aa46abebdc50561a5e75835573c22d05e9844f410f5584dfa3d53a",
+      "bytes": 11986
+    },
+    {
+      "label": "query-VEVT-417E0E2A4331DBC38D58",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002219,9900004301",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-07-10~2021-07-14",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:01.886269+00:00",
+      "sha256": "c0d8621280cc248f88e2a71b65e41e23cf911e3e19a3268a7eb5b973af9b50d6",
+      "bytes": 2875
+    },
+    {
+      "label": "query-VEVT-D92F339172F931C3D87C",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002219,9900004301",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-04-20~2022-04-24",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.114962+00:00",
+      "sha256": "26391ebb027dd0a6e8dd904d753238dce7b582407539d4b65fcf6f4b6ddc3cdd",
+      "bytes": 1492
+    },
+    {
+      "label": "query-VEVT-3C62BC5667CBCB0BEEEF",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002310,9900009031",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2024-11-20~2024-11-24",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.276004+00:00",
+      "sha256": "f77aea7fe9da88ff3e45f9643dc3e4b69570aaa79295a6689f7d7a01d1677e95",
+      "bytes": 5053
+    },
+    {
+      "label": "query-VEVT-C3C394DFD245ABC88DF8",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002323,9900009449",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-04-24~2021-04-29",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.400059+00:00",
+      "sha256": "ef632926b529d1f4651254b25a64e545e6920151adb2840623e85a22b27b206a",
+      "bytes": 899
+    },
+    {
+      "label": "query-VEVT-74D31DD33938F3C7A6A6",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002356,9900010491",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-11-27~2021-12-01",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.526419+00:00",
+      "sha256": "a2c22184ab89c85e0757355ac00d414b9b380b58667916229bd026899bdde232",
+      "bytes": 2257
+    },
+    {
+      "label": "query-VEVT-F7E8FB1458A5A9E5E362",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002356,9900010491",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-12-26~2021-12-30",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.648611+00:00",
+      "sha256": "7d0f29a9de07a46acb077229ec1c5150ceda8a4661f599b12b069fd79a5bac61",
+      "bytes": 9240
+    },
+    {
+      "label": "query-VEVT-24B635D6CA989E6FFD14",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002366,9900010927",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-08-16~2022-08-20",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.798226+00:00",
+      "sha256": "c137148384f7256e72a6defead17c1953e740abd50fc978907e4a99c7ba57a3b",
+      "bytes": 1720
+    },
+    {
+      "label": "query-VEVT-B8F77AB2F3DB204AEB28",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002427,9900012833",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-10-28~2022-11-01",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:02.918702+00:00",
+      "sha256": "c9ca26506b99533abf99af3ee99d816a9f165b186fbe4b752ed850a5ba49114b",
+      "bytes": 4727
+    },
+    {
+      "label": "query-VEVT-73A6D768CC20E37C864D",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002721,9900023233",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-07-18~2023-07-22",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.116274+00:00",
+      "sha256": "7b387a79d97d64993d834c17659b166d99875c93778ca39a91182844867a6822",
+      "bytes": 4362
+    },
+    {
+      "label": "query-VEVT-FB1FB56B1A3BE8CE8E3D",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002742,9900022970",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2025-08-06~2025-08-11",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.322700+00:00",
+      "sha256": "909c556f2f87dbd43635a84059ff7350b96ba3ce14385775339a871c61c0fedd",
+      "bytes": 971
+    },
+    {
+      "label": "query-VEVT-58ACFC2A8CBBDDF6A21C",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002766,9900023703",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-12-25~2021-12-30",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.452816+00:00",
+      "sha256": "c731819b5925426f5a3b916fd52fc578e96e00ba8ab684267fb0b435419f479c",
+      "bytes": 11989
+    },
+    {
+      "label": "query-VEVT-AAE3693EC85E73F51047",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002766,9900023703",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-01-05~2022-01-10",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.586637+00:00",
+      "sha256": "2ab0a593351a3547bcf815dd2e5c9fa77c3746c11abf5f5f6ca41ab99ddfee28",
+      "bytes": 3654
+    },
+    {
+      "label": "query-VEVT-87B2543014C6029CFABE",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002766,9900023703",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-01-12~2022-01-17",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.716239+00:00",
+      "sha256": "2e4e449dd3b29cee1404699a9cefa52f4ef47e0169f073df10278ef64733592f",
+      "bytes": 2639
+    },
+    {
+      "label": "query-VEVT-FE07D68464CF8ECFA016",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002766,9900023703",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-01-14~2022-01-19",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.846775+00:00",
+      "sha256": "2e4e449dd3b29cee1404699a9cefa52f4ef47e0169f073df10278ef64733592f",
+      "bytes": 2639
+    },
+    {
+      "label": "query-VEVT-FFDC1D054FAEE60251D9",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002822,9900027671",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2025-08-17~2025-08-22",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:03.970141+00:00",
+      "sha256": "7eb00b4925e62258b4d5605ec1a486f3e16568563a276599344978c3e49abebb",
+      "bytes": 6435
+    },
+    {
+      "label": "query-VEVT-E7BD45F8CD41BE50C7CB",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "300010,9900008267",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-11-13~2023-11-18",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.125433+00:00",
+      "sha256": "5a324232f89686b13c8c91c5c8feb9ab823a684eae780ee830434eab7bfba572",
+      "bytes": 2283
+    },
+    {
+      "label": "query-VEVT-42A82DDD5D5EFEC60410",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "300278,9900021487",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-12-18~2021-12-22",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.242952+00:00",
+      "sha256": "8c90fc1dcc060e541425ecaf18e409ec4ea4c3cac59676befef421723ff21933",
+      "bytes": 5118
+    },
+    {
+      "label": "query-VEVT-7BA17292879C69397913",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "300506,9900026515",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2025-09-27~2025-10-02",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.373332+00:00",
+      "sha256": "d48c52756c797f8c95a8600f30c3113e2ce31ca8ea146eb68b50cb2880e35d92",
+      "bytes": 2361
+    },
+    {
+      "label": "query-VEVT-16DD05F4B0099D99D538",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600117,gssh0600117",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-06-19~2023-06-23",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.493757+00:00",
+      "sha256": "911505bf7c6ea6f008b3e28ba2d01c5b0e03d5d0ea3020890b10912354a69a29",
+      "bytes": 13188
+    },
+    {
+      "label": "query-VEVT-4B620A2D41320CC436DB",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600306,gssh0600306",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-11-08~2023-11-13",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.634101+00:00",
+      "sha256": "81f813b9d40dab02ab18f8d3312480fb24dbda6ac6c20f7cf57b6f9a2badb606",
+      "bytes": 2544
+    },
+    {
+      "label": "query-VEVT-4F0C1DE295498F93B219",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600518,gssh0600518",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-06-02~2021-06-06",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.770432+00:00",
+      "sha256": "94a42eb7cf7e76a7a74a6f72306dffcd604f0e83f1698d83908cd52e8c4ae797",
+      "bytes": 2444
+    },
+    {
+      "label": "query-VEVT-B60D3BB1E48BF2B441E5",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600518,gssh0600518",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-11-24~2021-11-28",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:04.895302+00:00",
+      "sha256": "bf730ac2b77f80e5d4eaa028683d122f471d5ea601f9977c62d44226955f7e51",
+      "bytes": 2190
+    },
+    {
+      "label": "query-VEVT-70269C53D29A3A1B7FF5",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600601,gssh0600601",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2022-09-25~2022-09-30",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:05.031178+00:00",
+      "sha256": "e1fec9af81004a90735973d9b4517b16c6835aff00baa9d2e760fc711d69ce7e",
+      "bytes": 3326
+    },
+    {
+      "label": "query-VEVT-26971E1B472366111D6B",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603030,9900023461",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2023-11-11~2023-11-15",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:05.160191+00:00",
+      "sha256": "e97b1a5c509b913d916c4526c639d3416462af2755495bd1b9afadc3fad67e14",
+      "bytes": 4350
+    },
+    {
+      "label": "query-VEVT-9D59C1F10107486E0BA9",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603363,9900033003",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2024-11-03~2024-11-07",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:05.421824+00:00",
+      "sha256": "72ebdc2d1d810f5f76d89422b3295160f246320d28c76311f29a236625e71d54",
+      "bytes": 4877
+    },
+    {
+      "label": "query-VEVT-4D06DCA9D923E3ED5CBA",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "response_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "method": "POST",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603555,9900023248",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2021-04-24~2021-04-28",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T14:17:05.588778+00:00",
+      "sha256": "7b6fbd54bc7200ee6cf0e87bc8c6c1ffb75c72a075aef337082de46181f6b280",
+      "bytes": 19965
+    }
+  ],
+  "documents": [
+    {
+      "announcement_id": "1209815619",
+      "title": "关于法院裁定受理公司重整暨股票被继续实施退市风险警示的公告",
+      "sec_name": "*ST雅博",
+      "org_id": "9900009449",
+      "catalog_date": "2021-04-27",
+      "announcement_time_raw_ms": 1619452800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209815619.PDF",
+      "existing_body_id": false,
+      "symbol": "002323",
+      "discovery_event_ids": [
+        "VEVT-C3C394DFD245ABC88DF8"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209815619.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209815619.PDF",
+        "observed_at": "2026-11-05T14:21:57.867379+00:00",
+        "raw_sha256": "3375244732ac9c7bcb86384a2066df03700e6a9e5f0bfa7128c62e833b68889f",
+        "bytes": 214198
+      },
+      "pages": 5,
+      "text_sha256": "92425e319a9bbd6fd0394fdce1c3f3af4181223b08dcf05d297d9b0e65074e5e",
+      "secondary_text_sha256": "ac4cc8fb9e517348e8111ee8bcee60fdd9b6bb84b163c3d4253ecc235965aeb4",
+      "normalized_text_digests": [
+        "cac88b5586477a381b07885d1b11018587cca36a5cedf7f2c8c0d39f2ec71510",
+        "cac88b5586477a381b07885d1b11018587cca36a5cedf7f2c8c0d39f2ec71510"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1209819891",
+      "title": "贵人鸟股份有限公司管理人关于法院裁定批准重整计划的公告",
+      "sec_name": "*ST贵人",
+      "org_id": "9900023248",
+      "catalog_date": "2021-04-27",
+      "announcement_time_raw_ms": 1619452800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209819891.PDF",
+      "existing_body_id": false,
+      "symbol": "603555",
+      "discovery_event_ids": [
+        "VEVT-4D06DCA9D923E3ED5CBA"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209819891.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209819891.PDF",
+        "observed_at": "2026-11-05T14:21:58.167547+00:00",
+        "raw_sha256": "dfcc7140ada86860110beabb6e9adf5a479da08ff2557cbbe5ff163c7552eae8",
+        "bytes": 119757
+      },
+      "pages": 2,
+      "text_sha256": "0cb5d22cf16501f117e3d03a2e309425c1ea3a5c41bbc22fc32f1c3750a0ea28",
+      "secondary_text_sha256": "f6ea539cca5bca149841c2866329898aed4381387e0e1f80b3d9a66f7feaba6c",
+      "normalized_text_digests": [
+        "bf0ebc4e695c0a33f1fc2151b6ff639aa92c63344b70a6a836973aa422ab07b1",
+        "bf0ebc4e695c0a33f1fc2151b6ff639aa92c63344b70a6a836973aa422ab07b1"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1210169386",
+      "title": "康美药业关于法院裁定受理公司重整暨股票继续被实施退市风险警示的公告",
+      "sec_name": "*ST康美",
+      "org_id": "gssh0600518",
+      "catalog_date": "2021-06-05",
+      "announcement_time_raw_ms": 1622822400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-06-05/1210169386.PDF",
+      "existing_body_id": false,
+      "symbol": "600518",
+      "discovery_event_ids": [
+        "VEVT-4F0C1DE295498F93B219"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-06-05/1210169386.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-06-05/1210169386.PDF",
+        "observed_at": "2026-11-05T14:21:58.301820+00:00",
+        "raw_sha256": "1f28537eb908ad3ba4f6a7605ac1f2ccf33185aa6840a70087c3bf656c40fb38",
+        "bytes": 153651
+      },
+      "pages": 4,
+      "text_sha256": "2fb2f59b15b91d12b4c9c38707cdb93d4fa2e7e19cf880108c687970ae2a25e7",
+      "secondary_text_sha256": "88cbec6237468bd151ef226f582547e196a170dc8978c2bff2e431d06cd05780",
+      "normalized_text_digests": [
+        "a0f471aa7553b73f62cbcc46a734a66e9685160f1fc8c2a5cf26a0d425afa0b3",
+        "a0f471aa7553b73f62cbcc46a734a66e9685160f1fc8c2a5cf26a0d425afa0b3"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1210466635",
+      "title": "关于法院裁定受理公司重整的公告",
+      "sec_name": "*ST恒康",
+      "org_id": "9900004301",
+      "catalog_date": "2021-07-13",
+      "announcement_time_raw_ms": 1626105600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-07-13/1210466635.PDF",
+      "existing_body_id": false,
+      "symbol": "002219",
+      "discovery_event_ids": [
+        "VEVT-417E0E2A4331DBC38D58"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-07-13/1210466635.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-07-13/1210466635.PDF",
+        "observed_at": "2026-11-05T14:21:58.667750+00:00",
+        "raw_sha256": "c0628fa5630ed68d6a8b88b5796a82c5a018644dfe0b328aa20cf23d824b4e3b",
+        "bytes": 151481
+      },
+      "pages": 6,
+      "text_sha256": "3e96d0d514b2844d204090318d1fd042340c97d2ae9eeef0303da1b8df6d06df",
+      "secondary_text_sha256": "e1a138fe2a8eddb6f96e2f1ac62a4b54f58ee0390ac896abb948bfe0946f8d6b",
+      "normalized_text_digests": [
+        "381aaebc08a0e3316492c259290fba13ba191ce8484a2af8654f8ba0711c23ae",
+        "381aaebc08a0e3316492c259290fba13ba191ce8484a2af8654f8ba0711c23ae"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211182614",
+      "title": "关于法院裁定受理公司重整暨股票被继续实施退市风险警示的公告",
+      "sec_name": "*ST浪奇",
+      "org_id": "gssz0000523",
+      "catalog_date": "2021-09-30",
+      "announcement_time_raw_ms": 1632931200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-09-30/1211182614.PDF",
+      "existing_body_id": false,
+      "symbol": "000523",
+      "discovery_event_ids": [
+        "VEVT-157582251D8B47EEFDCB"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-09-30/1211182614.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-09-30/1211182614.PDF",
+        "observed_at": "2026-11-05T14:21:58.786962+00:00",
+        "raw_sha256": "86a7267fb37aeab5b303bd791ad8400b5a6ca264e99b1e95475b0a40b929b245",
+        "bytes": 112050
+      },
+      "pages": 5,
+      "text_sha256": "43a5869e0b448661bade4cff554376cfd04f5f634eb2ce767c2433557db2dc95",
+      "secondary_text_sha256": "ecf3b3f5b12e937fb13db88e39b3f8a0ae7fe348d9a7ab880bbac634a161b1e7",
+      "normalized_text_digests": [
+        "e9ae0926cd1becd35ddaab4c6496c7ca4efbbdfc364c1210bd34ff088f374bc3",
+        "e9ae0926cd1becd35ddaab4c6496c7ca4efbbdfc364c1210bd34ff088f374bc3"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211511488",
+      "title": "关于法院裁定受理公司重整暨股票被叠加实施退市风险警示的公告",
+      "sec_name": "*ST凯瑞",
+      "org_id": "9900000881",
+      "catalog_date": "2021-11-08",
+      "announcement_time_raw_ms": 1636300800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-11-08/1211511488.PDF",
+      "existing_body_id": false,
+      "symbol": "002072",
+      "discovery_event_ids": [
+        "VEVT-A93F560400CEB200F279"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-08/1211511488.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-08/1211511488.PDF",
+        "observed_at": "2026-11-05T14:21:59.061409+00:00",
+        "raw_sha256": "412a1260838d41fd075d139a571133bacb4d195af9543c230570822313c5f78e",
+        "bytes": 272858
+      },
+      "pages": 6,
+      "text_sha256": "5e602a311c04d22a4c67cd0f3625bd4202764b5260ba6257d51ea9c76aa365e4",
+      "secondary_text_sha256": "2b4f2f344c44c14bc276c056ea5cac9e336c06c2c42b9b832c4197704122e69a",
+      "normalized_text_digests": [
+        "40711a03570b8152c326b09ab295897ea16794a495108805d439e37029666137",
+        "40711a03570b8152c326b09ab295897ea16794a495108805d439e37029666137"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211561917",
+      "title": "关于法院裁定批准重整计划的公告",
+      "sec_name": "*ST浪奇",
+      "org_id": "gssz0000523",
+      "catalog_date": "2021-11-12",
+      "announcement_time_raw_ms": 1636646400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-11-12/1211561917.PDF",
+      "existing_body_id": false,
+      "symbol": "000523",
+      "discovery_event_ids": [
+        "VEVT-57F2B09B452F5FBF67DE"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-12/1211561917.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-12/1211561917.PDF",
+        "observed_at": "2026-11-05T14:21:59.197019+00:00",
+        "raw_sha256": "7766f77591a37dcb1b0fb4f8d4622b4e939e51656f27ecf47726737a56fa7c23",
+        "bytes": 90121
+      },
+      "pages": 3,
+      "text_sha256": "b31223b42ab528cf39818583c1ad7392baf05ebb3ac72bdac60cd8a0e9a2e84d",
+      "secondary_text_sha256": "02e2e75cddff6918802460f25d8f5fbfd3357a72c9d457575ee0b34e44cca94d",
+      "normalized_text_digests": [
+        "ed046f0c55d89bdc2300a28af8b3d13afc819d49e8ab3054f34a2a9addaa2813",
+        "ed046f0c55d89bdc2300a28af8b3d13afc819d49e8ab3054f34a2a9addaa2813"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211709038",
+      "title": "康美药业关于法院裁定批准公司重整计划的公告",
+      "sec_name": "*ST康美",
+      "org_id": "gssh0600518",
+      "catalog_date": "2021-11-27",
+      "announcement_time_raw_ms": 1637942400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-11-27/1211709038.PDF",
+      "existing_body_id": false,
+      "symbol": "600518",
+      "discovery_event_ids": [
+        "VEVT-B60D3BB1E48BF2B441E5"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-27/1211709038.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-27/1211709038.PDF",
+        "observed_at": "2026-11-05T14:21:59.338076+00:00",
+        "raw_sha256": "409f8518a5fec272742ae6df39d414d836202227b1c2a484295eb8310fac4e16",
+        "bytes": 134181
+      },
+      "pages": 3,
+      "text_sha256": "c2ab44980eb07e18bcefa0e4d840f4773cf6784e04ed9a1281ab752169ce27f9",
+      "secondary_text_sha256": "1d59d918b5fc51a8f52a5101b0f8ddff691dad89254075e6cfa1d796f76afb2b",
+      "normalized_text_digests": [
+        "d33d419bcb3e5e223e3749a1da63cab4df8a7f0f147befa1d4f01b6b1547819b",
+        "d33d419bcb3e5e223e3749a1da63cab4df8a7f0f147befa1d4f01b6b1547819b"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211724649",
+      "title": "关于法院裁定受理公司全资子公司重整的公告",
+      "sec_name": "*ST赫美",
+      "org_id": "9900010491",
+      "catalog_date": "2021-11-30",
+      "announcement_time_raw_ms": 1638201600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724649.PDF",
+      "existing_body_id": false,
+      "symbol": "002356",
+      "discovery_event_ids": [
+        "VEVT-74D31DD33938F3C7A6A6"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724649.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724649.PDF",
+        "observed_at": "2026-11-05T14:21:59.615926+00:00",
+        "raw_sha256": "407b6276b6b82e2d56e030f15d1308bcaf3c474bb305979cd41204fec4ce988c",
+        "bytes": 257573
+      },
+      "pages": 8,
+      "text_sha256": "2b8b53bf4f3a9eba6a7535fb9bc2955bd6ff6da9ad8416d9a7c098d4d09a6edc",
+      "secondary_text_sha256": "515e311182a3ca91df1cc09484dcfaa4810c083e11b5a64a3a2431c747d7c496",
+      "normalized_text_digests": [
+        "b1ee776fe6326aed27e2055c3c9bb3e337e1ea4f43e5b9fb73d70793c491ac48",
+        "b1ee776fe6326aed27e2055c3c9bb3e337e1ea4f43e5b9fb73d70793c491ac48"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211724650",
+      "title": "关于法院裁定受理公司重整暨被叠加实施退市风险警示的公告",
+      "sec_name": "*ST赫美",
+      "org_id": "9900010491",
+      "catalog_date": "2021-11-30",
+      "announcement_time_raw_ms": 1638201600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724650.PDF",
+      "existing_body_id": false,
+      "symbol": "002356",
+      "discovery_event_ids": [
+        "VEVT-74D31DD33938F3C7A6A6"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724650.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724650.PDF",
+        "observed_at": "2026-11-05T14:21:59.787486+00:00",
+        "raw_sha256": "8e67ee3554320ea7fd1e8b723d5085e84701e6a93b5ace9e7dde3359448a359f",
+        "bytes": 364857
+      },
+      "pages": 10,
+      "text_sha256": "411989f7d98bc65e1bc3efd8b3e79a575ee4814e955fe9f2647f82c784659018",
+      "secondary_text_sha256": "17a2de43eefe713ff3bc8cccbe1d2ed822e5813d9867bdf84eb39c4a3aeed4a1",
+      "normalized_text_digests": [
+        "5a9a2251e2d511297213752b94af8c5113fcafba5e618a44d9c512410e0dcfba",
+        "5a9a2251e2d511297213752b94af8c5113fcafba5e618a44d9c512410e0dcfba"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1211971947",
+      "title": "20211220-华昌达-管理人关于法院裁定批准重整计划的公告-定149",
+      "sec_name": "*ST华昌",
+      "org_id": "9900021487",
+      "catalog_date": "2021-12-20",
+      "announcement_time_raw_ms": 1640003919000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-12-20/1211971947.PDF",
+      "existing_body_id": false,
+      "symbol": "300278",
+      "discovery_event_ids": [
+        "VEVT-42A82DDD5D5EFEC60410"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-20/1211971947.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-20/1211971947.PDF",
+        "observed_at": "2026-11-05T14:22:00.092838+00:00",
+        "raw_sha256": "81ee033528727eb60f5c85516f451da16c5a4a2b82f4b2123ba8fc5c30c9c6c5",
+        "bytes": 92633
+      },
+      "pages": 4,
+      "text_sha256": "39286f914645c5a3164b7e21d53032a5c54fbfae14cd4e139ecc14c3185af7c5",
+      "secondary_text_sha256": "71de491e224812c4bddc2dd7408bc45015679d4aa9b87aa15b89a72de59b8b1b",
+      "normalized_text_digests": [
+        "136cd72307a4f2d7a2416b73e6ce99b2e3e9497a93eec304f8ae24088cd5f501",
+        "136cd72307a4f2d7a2416b73e6ce99b2e3e9497a93eec304f8ae24088cd5f501"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1212034575",
+      "title": "管理人关于法院裁定批准重整计划的公告",
+      "sec_name": "*ST索菱",
+      "org_id": "9900023703",
+      "catalog_date": "2021-12-28",
+      "announcement_time_raw_ms": 1640620800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-12-28/1212034575.PDF",
+      "existing_body_id": false,
+      "symbol": "002766",
+      "discovery_event_ids": [
+        "VEVT-58ACFC2A8CBBDDF6A21C"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-28/1212034575.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-28/1212034575.PDF",
+        "observed_at": "2026-11-05T14:22:00.283157+00:00",
+        "raw_sha256": "62774023f351cff1b6f8e3a31b7f9de304db9b1afc9f1553efe560bbbc4a8c8b",
+        "bytes": 127055
+      },
+      "pages": 3,
+      "text_sha256": "65b8902b4cb781709a3e51b23e9840b2e112ef0278f11b3bea812952577cddee",
+      "secondary_text_sha256": "a484bd76fc52bd2600593cc679dc8fc9aece6374f03f3029b911155dc2a21160",
+      "normalized_text_digests": [
+        "7771018bd1a7697856a93c51ccfe2b2eb983ae317ede17731196da33810e1773",
+        "7771018bd1a7697856a93c51ccfe2b2eb983ae317ede17731196da33810e1773"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1212056976",
+      "title": "关于法院裁定批准重整计划的公告",
+      "sec_name": "*ST赫美",
+      "org_id": "9900010491",
+      "catalog_date": "2021-12-29",
+      "announcement_time_raw_ms": 1640791854000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056976.PDF",
+      "existing_body_id": false,
+      "symbol": "002356",
+      "discovery_event_ids": [
+        "VEVT-F7E8FB1458A5A9E5E362"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056976.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056976.PDF",
+        "observed_at": "2026-11-05T14:22:00.437656+00:00",
+        "raw_sha256": "94086e291f257445c03ec8246dedbeac2180b76dbae5e46c4176445ebfeff518",
+        "bytes": 253948
+      },
+      "pages": 3,
+      "text_sha256": "b48fa046b5447e19a96bf9618c03e67b0872e7b9a9504194616826ac81f5527c",
+      "secondary_text_sha256": "f1b4b78f6ffc8dd5b8d0a5a3446a22eec15abfe924d17e39423ab62bdbaed800",
+      "normalized_text_digests": [
+        "84833c88b28e006fb45eebd3277304b4f2d756d7b881ac6daac74ea8827122a0",
+        "84833c88b28e006fb45eebd3277304b4f2d756d7b881ac6daac74ea8827122a0"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1212056979",
+      "title": "关于法院裁定批准全资子公司重整计划的公告",
+      "sec_name": "*ST赫美",
+      "org_id": "9900010491",
+      "catalog_date": "2021-12-29",
+      "announcement_time_raw_ms": 1640791854000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056979.PDF",
+      "existing_body_id": false,
+      "symbol": "002356",
+      "discovery_event_ids": [
+        "VEVT-F7E8FB1458A5A9E5E362"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056979.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056979.PDF",
+        "observed_at": "2026-11-05T14:22:00.632936+00:00",
+        "raw_sha256": "d5b22774b4880f0da8b927711d457ec053770db842c96fe0db8fcaeec2e95ec7",
+        "bytes": 260558
+      },
+      "pages": 4,
+      "text_sha256": "787bbb228e731ac47fa60ce8fb1a7ab81e463623398596c3e6a9aa694f0a194e",
+      "secondary_text_sha256": "1a88b388646110edae3af788e6808b18d36305b1a8ee9ad10467c8e3599078f9",
+      "normalized_text_digests": [
+        "b53d068a4a74db0723b81036c9e8563541e50a1432c6baea7e7af2f0ff2d187e",
+        "b53d068a4a74db0723b81036c9e8563541e50a1432c6baea7e7af2f0ff2d187e"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1212122635",
+      "title": "关于申请撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示暨继续被实施退市风险警示及其他风险警示的公告",
+      "sec_name": "*ST索菱",
+      "org_id": "9900023703",
+      "catalog_date": "2022-01-08",
+      "announcement_time_raw_ms": 1641571200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-01-08/1212122635.PDF",
+      "existing_body_id": false,
+      "symbol": "002766",
+      "discovery_event_ids": [
+        "VEVT-AAE3693EC85E73F51047"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-01-08/1212122635.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-01-08/1212122635.PDF",
+        "observed_at": "2026-11-05T14:22:00.798670+00:00",
+        "raw_sha256": "b89e5c7d2ccb1abd1276807a1dddb51e409234fb95aabf571701c75a7150e20b",
+        "bytes": 166295
+      },
+      "pages": 3,
+      "text_sha256": "b03add3c7a4521b919349b2fff8a344389fa0a0d787ec4693ed8f91137f9f925",
+      "secondary_text_sha256": "efe670fa36271a38ccc69bf8cb24fb170ab269905cb0cc034184650ef8f6b27b",
+      "normalized_text_digests": [
+        "ce4101fa14d4644a312d120944748f6ef3f5c8d6cfc293c8cd226ba121870ba4",
+        "ce4101fa14d4644a312d120944748f6ef3f5c8d6cfc293c8cd226ba121870ba4"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1212191213",
+      "title": "关于撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示情形暨继续被实施退市风险警示及其他风险警示的提示性公告（已取消）",
+      "sec_name": "*ST索菱",
+      "org_id": "9900023703",
+      "catalog_date": "2022-01-15",
+      "announcement_time_raw_ms": 1642176000000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-01-15/1212191213.PDF",
+      "existing_body_id": false,
+      "symbol": "002766",
+      "discovery_event_ids": [
+        "VEVT-87B2543014C6029CFABE"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-01-15/1212191213.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-01-15/1212191213.PDF",
+        "observed_at": "2026-11-05T14:22:00.990947+00:00",
+        "raw_sha256": "f405785acd4c6af409a813272bee487308b21a35bcc0fa51ba500955d6a0e873",
+        "bytes": 174596
+      },
+      "pages": 4,
+      "text_sha256": "7c9f3e9c318276b54068c69ea8bd03e7856f8ad677bb7888987e785f5b2d1f73",
+      "secondary_text_sha256": "90c4bf8f2802b014d3dbbdd309f3151133d34d5bf9c2955d37bcfffaa5c3b8f5",
+      "normalized_text_digests": [
+        "3ff1e2ad4d5f59bd566b2a79864301ea9e424112600a4f36453c8dfa89806b6c",
+        "3ff1e2ad4d5f59bd566b2a79864301ea9e424112600a4f36453c8dfa89806b6c"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1212196494",
+      "title": "关于撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示情形暨继续被实施退市风险警示及其他风险警示的提示性公告（更新后）",
+      "sec_name": "*ST索菱",
+      "org_id": "9900023703",
+      "catalog_date": "2022-01-17",
+      "announcement_time_raw_ms": 1642348800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-01-17/1212196494.PDF",
+      "existing_body_id": false,
+      "symbol": "002766",
+      "discovery_event_ids": [
+        "VEVT-FE07D68464CF8ECFA016"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-01-17/1212196494.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-01-17/1212196494.PDF",
+        "observed_at": "2026-11-05T14:22:01.315558+00:00",
+        "raw_sha256": "ff085abb2c868e6b359849cf2667a28f259ae90fc6729d2a2830ad4c87468e68",
+        "bytes": 190079
+      },
+      "pages": 4,
+      "text_sha256": "725a0443c3ef92b8cd3b29a5abaa69e49993afa065e7b7131375654a556e2554",
+      "secondary_text_sha256": "8cc17c8fa094f98f8a10b14ccf8ea5db139d8412cd2353f915a01a07318d1772",
+      "normalized_text_digests": [
+        "d031fcc80a9f4fdb04543f70cf862c693de9b933e27a12c7bfcd429e04a829a4",
+        "d031fcc80a9f4fdb04543f70cf862c693de9b933e27a12c7bfcd429e04a829a4"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1213053331",
+      "title": "管理人关于法院裁定批准重整计划的公告",
+      "sec_name": "*ST恒康",
+      "org_id": "9900004301",
+      "catalog_date": "2022-04-23",
+      "announcement_time_raw_ms": 1650643200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-04-23/1213053331.PDF",
+      "existing_body_id": false,
+      "symbol": "002219",
+      "discovery_event_ids": [
+        "VEVT-D92F339172F931C3D87C"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-04-23/1213053331.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-04-23/1213053331.PDF",
+        "observed_at": "2026-11-05T14:22:01.670289+00:00",
+        "raw_sha256": "e4da3a01e8da3eadf3ec1e31b9aa3a5de3428d44e030efa153153153750c7fe7",
+        "bytes": 162012
+      },
+      "pages": 3,
+      "text_sha256": "4f715979802f863dbb0b46f020d62024f925c73db5e3dcf31e3734483ae2b721",
+      "secondary_text_sha256": "e5aae533a9a8dbc0317ca49041a9f38b0163ddf40ae553902fea4fb28fbb1d36",
+      "normalized_text_digests": [
+        "8a2eb882206703fcf2c7c000775add67ce3714cf8caf79759c62bd7376f43572",
+        "8a2eb882206703fcf2c7c000775add67ce3714cf8caf79759c62bd7376f43572"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1214333023",
+      "title": "关于法院裁定受理公司重整暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST海核",
+      "org_id": "9900010927",
+      "catalog_date": "2022-08-19",
+      "announcement_time_raw_ms": 1660838400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-08-19/1214333023.PDF",
+      "existing_body_id": false,
+      "symbol": "002366",
+      "discovery_event_ids": [
+        "VEVT-24B635D6CA989E6FFD14"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-08-19/1214333023.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-08-19/1214333023.PDF",
+        "observed_at": "2026-11-05T14:22:01.883315+00:00",
+        "raw_sha256": "9f6da09342db80a93f2759d3aed002b0f3dd45f5e6d2de3678615d5cb250a021",
+        "bytes": 269303
+      },
+      "pages": 7,
+      "text_sha256": "b3c717c39c11aa708c696baf54e96ff4ddc393f66fd9732a74803cb378064521",
+      "secondary_text_sha256": "30317265dad7452b46b07a3bdd84bc5a41e46a37c9a7e8aca6a7c88d60a97018",
+      "normalized_text_digests": [
+        "2f1ade73a64c5a27e200d14d21e692414bbf4ce7e3a8579bce7d6bb37f549516",
+        "2f1ade73a64c5a27e200d14d21e692414bbf4ce7e3a8579bce7d6bb37f549516"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1214697472",
+      "title": "方正科技集团股份有限公司关于法院裁定受理公司重整暨股票被叠加实施退市风险警示的公告",
+      "sec_name": "*ST方科",
+      "org_id": "gssh0600601",
+      "catalog_date": "2022-09-28",
+      "announcement_time_raw_ms": 1664294400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-09-28/1214697472.PDF",
+      "existing_body_id": false,
+      "symbol": "600601",
+      "discovery_event_ids": [
+        "VEVT-70269C53D29A3A1B7FF5"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-09-28/1214697472.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-09-28/1214697472.PDF",
+        "observed_at": "2026-11-05T14:22:02.074196+00:00",
+        "raw_sha256": "c25f600265577dcdefa578014361674eeb200267aba585df8ff4d3609f3690e2",
+        "bytes": 329170
+      },
+      "pages": 8,
+      "text_sha256": "29690a27c908cbccf96633e4589b12709797313f807d118a865499ee58024d14",
+      "secondary_text_sha256": "a8a472380a234373e8e551707b0ecc9d80a97365aafa9d11fbab9f74a1da214f",
+      "normalized_text_digests": [
+        "acc455cd03f6d3b45b630214128db80f4c51c0c578f0c9455731d6d4838d63fc",
+        "acc455cd03f6d3b45b630214128db80f4c51c0c578f0c9455731d6d4838d63fc"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1214969075",
+      "title": "关于法院裁定受理公司重整暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST尤夫",
+      "org_id": "9900012833",
+      "catalog_date": "2022-10-31",
+      "announcement_time_raw_ms": 1667145600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2022-10-31/1214969075.PDF",
+      "existing_body_id": false,
+      "symbol": "002427",
+      "discovery_event_ids": [
+        "VEVT-B8F77AB2F3DB204AEB28"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-10-31/1214969075.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-10-31/1214969075.PDF",
+        "observed_at": "2026-11-05T14:22:02.355112+00:00",
+        "raw_sha256": "a3e582f2e33c5fae79bf92f68d970597e1572176bee0cc790354dfeea47fadad",
+        "bytes": 351951
+      },
+      "pages": 9,
+      "text_sha256": "773522d30eec7a89781c655ec7e316c2518f8b94359393780d99db1cb626f036",
+      "secondary_text_sha256": "30b88c2c61665847d13f1369abe480bf27b8a46f5f9c140adab9515ee1a59d64",
+      "normalized_text_digests": [
+        "2d2657f1ef882cf47d331fef24b45ea4006577158ddae28089ca5477ce4394df",
+        "2d2657f1ef882cf47d331fef24b45ea4006577158ddae28089ca5477ce4394df"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        8,
+        9
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119082",
+      "title": "西宁特殊钢股份有限公司关于法院准许公司在重整期间继续营业及自行管理财产和营业事务的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119082.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119082.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119082.PDF",
+        "observed_at": "2026-11-05T14:22:02.845337+00:00",
+        "raw_sha256": "12415123315e5614310aa0ced830af0ecf379dca99e0ea54bbfc8b6ff4eee8d6",
+        "bytes": 345453
+      },
+      "pages": 5,
+      "text_sha256": "050870b9f7b047c32e2805e8c6469213f39d9da7938b04aa1cf3f5925f4f784e",
+      "secondary_text_sha256": "e879dfa686a99b4e0cd5f7bd2abc76509b0c38fda4454724131adcbc98a549e1",
+      "normalized_text_digests": [
+        "90f80552e3f516c621fc0cec7bac6a64cf25735f295dd94faeca099366c620b3",
+        "90f80552e3f516c621fc0cec7bac6a64cf25735f295dd94faeca099366c620b3"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        2,
+        4
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119086",
+      "title": "西宁特殊钢股份有限公司关于法院裁定受理子公司重整暨合并报表范围发生变化的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119086.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119086.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119086.PDF",
+        "observed_at": "2026-11-05T14:22:03.005599+00:00",
+        "raw_sha256": "6df909d0bac09ba3cae73a0823ab3c2ec5469c62407e16fa3bca610a3f65f531",
+        "bytes": 359195
+      },
+      "pages": 5,
+      "text_sha256": "40905af69f791a2f8a5f7e28d048f9e91c9eb8e4f9d70a840f2bbab9cf555448",
+      "secondary_text_sha256": "e852ba826f03d882b8cfbbde417ebd6d3a4fe8d491489c2c66f689263f1f36f0",
+      "normalized_text_digests": [
+        "14e91b5afef9cd5c45b13e578b2f3f88e276e08030263e244f07c5ae6f887626",
+        "14e91b5afef9cd5c45b13e578b2f3f88e276e08030263e244f07c5ae6f887626"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119087",
+      "title": "西宁特殊钢股份有限公司关于法院准许子公司在重整期间继续营业的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119087.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119087.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119087.PDF",
+        "observed_at": "2026-11-05T14:22:03.244134+00:00",
+        "raw_sha256": "6ec6b181bd87d380c47c699a6acdd9132e64ea54f13aa81b24857a923fbcd392",
+        "bytes": 324929
+      },
+      "pages": 3,
+      "text_sha256": "26fe90441fce6e387bbff2b02a658795c4b90037327546d5b72fcfe930f27036",
+      "secondary_text_sha256": "8945748078231544003480431cd7c5fd7c97e82d3a5f6b1c052b0f332bda177e",
+      "normalized_text_digests": [
+        "b3f43ada9f43fe17effa4f751595a6a84a6e58b7de773732618c0c2750f88826",
+        "b3f43ada9f43fe17effa4f751595a6a84a6e58b7de773732618c0c2750f88826"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119088",
+      "title": "西宁特殊钢股份有限公司关于法院裁定受理公司重整暨股票被叠加实施退市风险警示的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119088.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119088.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119088.PDF",
+        "observed_at": "2026-11-05T14:22:03.608486+00:00",
+        "raw_sha256": "2bb464af3e8e72be6549fd335d596aba021fe3d6bfce06a86cacea0312bba075",
+        "bytes": 543757
+      },
+      "pages": 8,
+      "text_sha256": "bad5d74629005ae99aa573c04e311403073be46611dc8a1fe4f4fd3197b8bfa5",
+      "secondary_text_sha256": "f155f5a75969943837d64885b968c10c047fc1bb9a48594b4109833ec60c204c",
+      "normalized_text_digests": [
+        "36b0a95eadbe25664d155bf22805511f49a3dcc351edc5a1182413ae87d1f6c1",
+        "36b0a95eadbe25664d155bf22805511f49a3dcc351edc5a1182413ae87d1f6c1"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        6,
+        7
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119089",
+      "title": "西宁特殊钢股份有限公司关于法院裁定受理参股公司重整暨指定管理人的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119089.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119089.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119089.PDF",
+        "observed_at": "2026-11-05T14:22:04.376236+00:00",
+        "raw_sha256": "aa4ef629e812d004089455efde20c5b0bfe05f15ae4d1d0f2d520936737a45c1",
+        "bytes": 339416
+      },
+      "pages": 4,
+      "text_sha256": "57c6ae5e32e5c972453867a052ccb8fecc2d07a075c8a1ccb16e5ee36eb5787f",
+      "secondary_text_sha256": "90c965e902f05153b5aaa30eeb5c05b4be854a7d204cc2defac88240f08fba2f",
+      "normalized_text_digests": [
+        "dff88470627c60e8d82abbd4bc74303f820cdbc817c7b49e47200e42c9871653",
+        "dff88470627c60e8d82abbd4bc74303f820cdbc817c7b49e47200e42c9871653"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119091",
+      "title": "西宁特殊钢股份有限公司关于法院裁定受理控股股东重整暨指定管理人的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119091.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119091.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119091.PDF",
+        "observed_at": "2026-11-05T14:22:04.536348+00:00",
+        "raw_sha256": "a6e670965d0022fca99c1a1d81da46a84726f4d2e4639b5918dc6c3e6181e0a9",
+        "bytes": 354439
+      },
+      "pages": 5,
+      "text_sha256": "fca8315787e23a2ec3a007d731be3a86ed1a7f67ae6da0d52e8302affdfa1951",
+      "secondary_text_sha256": "ba351d06f9505ffa3bc43251a79d780cf5cc43958297c53120db0bd458cacf07",
+      "normalized_text_digests": [
+        "01d2bade47619595ed0138a1485208c2d3fe378b03f87e97680a600410109f1c",
+        "01d2bade47619595ed0138a1485208c2d3fe378b03f87e97680a600410109f1c"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119095",
+      "title": "西宁特殊钢股份有限公司关于法院准许参股公司在重整期间继续营业及自行管理财产和营业事务的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119095.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119095.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119095.PDF",
+        "observed_at": "2026-11-05T14:22:04.684855+00:00",
+        "raw_sha256": "de76eaddd894cf3a496f29246ea8bf597cd47753706b9b81b00d1d436dc3373d",
+        "bytes": 367864
+      },
+      "pages": 3,
+      "text_sha256": "b737fc34c85abe66c8e0a239fb006c73ffad58b3ad69c205dd423360e8e94c58",
+      "secondary_text_sha256": "d216e50f2ab915e2bb3e990face20c9b220579ef45da2c09865043d942dcdb5f",
+      "normalized_text_digests": [
+        "a81bf7c9d4b96aa10f0d909e73768fd61fda65ac635341d04668a24e98bd64b3",
+        "a81bf7c9d4b96aa10f0d909e73768fd61fda65ac635341d04668a24e98bd64b3"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217119096",
+      "title": "西宁特殊钢股份有限公司关于法院准许控股股东在重整期间继续营业及自行管理财产和营业事务的公告",
+      "sec_name": "*ST西钢",
+      "org_id": "gssh0600117",
+      "catalog_date": "2023-06-22",
+      "announcement_time_raw_ms": 1687363200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119096.PDF",
+      "existing_body_id": false,
+      "symbol": "600117",
+      "discovery_event_ids": [
+        "VEVT-16DD05F4B0099D99D538"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119096.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119096.PDF",
+        "observed_at": "2026-11-05T14:22:04.997863+00:00",
+        "raw_sha256": "a6be5ab3307ede8ec561f7ed7f4bd7dc70623d48fa7256c1b12ecb1949be23f8",
+        "bytes": 328041
+      },
+      "pages": 3,
+      "text_sha256": "06359af0bdac04e97cba49ee7a903e719e19b485a55199d1f852212bf310223d",
+      "secondary_text_sha256": "6003ae17388a3e0c5d329d0adc3c3524b014f974e4c94fa77407e076e0a1251c",
+      "normalized_text_digests": [
+        "39dc34f07de11e7247a53cb6ee8ee3a9b2fe203ec26e94d53545cbfd918b877a",
+        "39dc34f07de11e7247a53cb6ee8ee3a9b2fe203ec26e94d53545cbfd918b877a"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217347888",
+      "title": "关于法院裁定受理公司重整暨指定管理人的公告",
+      "sec_name": "*ST金一",
+      "org_id": "9900023233",
+      "catalog_date": "2023-07-21",
+      "announcement_time_raw_ms": 1689868800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217347888.PDF",
+      "existing_body_id": false,
+      "symbol": "002721",
+      "discovery_event_ids": [
+        "VEVT-73A6D768CC20E37C864D"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217347888.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217347888.PDF",
+        "observed_at": "2026-11-05T14:22:05.151834+00:00",
+        "raw_sha256": "dbf48320b87cd83f1fdccad2c547c4808b74ba2b76be9f8e91d8f91c97571481",
+        "bytes": 319089
+      },
+      "pages": 7,
+      "text_sha256": "5f676d5b4629ce9e5bf3b4e3385b73139cc943f5d5af20ba9289b8f6afef9cbb",
+      "secondary_text_sha256": "336f70d94c540d3420677e730c56252781def8773069057b2857f4097b356acf",
+      "normalized_text_digests": [
+        "a9f6b358c5c56f43cfeb42095887991bcf54c36440cefe293ff5b142236ca16c",
+        "a9f6b358c5c56f43cfeb42095887991bcf54c36440cefe293ff5b142236ca16c"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1217348496",
+      "title": "关于法院裁定受理公司重整及指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST 正邦",
+      "org_id": "9900003434",
+      "catalog_date": "2023-07-21",
+      "announcement_time_raw_ms": 1689868800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217348496.PDF",
+      "existing_body_id": false,
+      "symbol": "002157",
+      "discovery_event_ids": [
+        "VEVT-731B1E4EEFC75B0A228E"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217348496.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217348496.PDF",
+        "observed_at": "2026-11-05T14:22:05.394317+00:00",
+        "raw_sha256": "a0a2f7528d5e5fada3435324b4ccb4618dff3f083bfb1ceb9e4e35dcc8f36e64",
+        "bytes": 309644
+      },
+      "pages": 6,
+      "text_sha256": "77198522eaf2a200fed0f2d75aa5183d3bec93f838d72817b21f1c13dd90129d",
+      "secondary_text_sha256": "f1c06278800dfa22407865a1385f0e80cb849138de13f5e6384454105358d56a",
+      "normalized_text_digests": [
+        "0c60942e3a233f25a959619c84777e98fa42ba34f7126110c94c5e817ca5de62",
+        "0c60942e3a233f25a959619c84777e98fa42ba34f7126110c94c5e817ca5de62"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1218308590",
+      "title": "沈阳商业城股份有限公司关于法院裁定受理公司重整并指定管理人暨公司股票将被叠加实施退市风险警示并继续实施其他风险警示的公告",
+      "sec_name": "*ST商城",
+      "org_id": "gssh0600306",
+      "catalog_date": "2023-11-11",
+      "announcement_time_raw_ms": 1699632000000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-11-11/1218308590.PDF",
+      "existing_body_id": false,
+      "symbol": "600306",
+      "discovery_event_ids": [
+        "VEVT-4B620A2D41320CC436DB"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-11/1218308590.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-11/1218308590.PDF",
+        "observed_at": "2026-11-05T14:22:05.565547+00:00",
+        "raw_sha256": "1ca1adf16edb64e60e606d493ad7ad2a72dda0373fbdf08373004eeb2d768c22",
+        "bytes": 312560
+      },
+      "pages": 7,
+      "text_sha256": "1c27b956fd326f6a0e20df2c1e0e0b57d12998f078194fe22725a5a8e9241288",
+      "secondary_text_sha256": "f7c75a207906b84b4f1289656edc04326d82d92a97ad93e5804ae9a6f6d59433",
+      "normalized_text_digests": [
+        "b00e2486accf58e3bd940f4aa85a86667a694877a5895986c6189e55847be40f",
+        "b00e2486accf58e3bd940f4aa85a86667a694877a5895986c6189e55847be40f"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1218325952",
+      "title": "关于法院裁定受理公司重整及指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST全筑",
+      "org_id": "9900023461",
+      "catalog_date": "2023-11-14",
+      "announcement_time_raw_ms": 1699891200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-11-14/1218325952.PDF",
+      "existing_body_id": false,
+      "symbol": "603030",
+      "discovery_event_ids": [
+        "VEVT-26971E1B472366111D6B"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-14/1218325952.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-14/1218325952.PDF",
+        "observed_at": "2026-11-05T14:22:05.760794+00:00",
+        "raw_sha256": "939c9932d11cf7182711675b269236ae7b797408ed449e5ac16d04ea0df025b8",
+        "bytes": 307084
+      },
+      "pages": 7,
+      "text_sha256": "95ec89236229d020f743932113d79f2a9f2f8bf6c715c2908d494b65f239566b",
+      "secondary_text_sha256": "48de67ab4f175af8a74186feae4dc862c422cec9cf7b967db4a31d38cdef209d",
+      "normalized_text_digests": [
+        "5fcf5831302aa4b4af69d55883cca940dd4abc60f998957770cadc618a68ea83",
+        "5fcf5831302aa4b4af69d55883cca940dd4abc60f998957770cadc618a68ea83"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1218331096",
+      "title": "关于法院许可公司在重整期间继续营业及自行管理财产和营业事务的公告",
+      "sec_name": "*ST全筑",
+      "org_id": "9900023461",
+      "catalog_date": "2023-11-15",
+      "announcement_time_raw_ms": 1699977600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-11-15/1218331096.PDF",
+      "existing_body_id": false,
+      "symbol": "603030",
+      "discovery_event_ids": [
+        "VEVT-26971E1B472366111D6B"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-15/1218331096.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-15/1218331096.PDF",
+        "observed_at": "2026-11-05T14:22:05.989565+00:00",
+        "raw_sha256": "74cf01ac036b504b9540b08db2b15b3dbfad5829da422df59019c8e63ad7bc80",
+        "bytes": 270338
+      },
+      "pages": 4,
+      "text_sha256": "b0ad8bfeb426b5183cf28ebd78a003cb05787a9032bbef5719a88d443b260ca0",
+      "secondary_text_sha256": "8736caab98ebdf2a83c474f3d64a8c6381a568deefd0ec0fdc3085b3b747bf83",
+      "normalized_text_digests": [
+        "e7b9414160df7d81c17ad127871ac9e579af5299e636fccc2a2dedf03de47fdc",
+        "e7b9414160df7d81c17ad127871ac9e579af5299e636fccc2a2dedf03de47fdc"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1218352927",
+      "title": "关于法院裁定受理公司重整暨指定管理人的公告",
+      "sec_name": "*ST豆神",
+      "org_id": "9900008267",
+      "catalog_date": "2023-11-16",
+      "announcement_time_raw_ms": 1700064000000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-11-16/1218352927.PDF",
+      "existing_body_id": false,
+      "symbol": "300010",
+      "discovery_event_ids": [
+        "VEVT-E7BD45F8CD41BE50C7CB"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-16/1218352927.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-16/1218352927.PDF",
+        "observed_at": "2026-11-05T14:22:06.156038+00:00",
+        "raw_sha256": "d9029a482c9bac80c15774d8d0d5fa0c0301f0abee03087c7438e9099519efaf",
+        "bytes": 128848
+      },
+      "pages": 6,
+      "text_sha256": "3e80645f6f894b223bdca7675810f0ec3834444fefa4f1eae48879a8ba69cb96",
+      "secondary_text_sha256": "b91c375f9f12d61ef1789084363829d04087f4c931b13b665d90d6b70c38575e",
+      "normalized_text_digests": [
+        "84435b797a9d8cd16d8205f5d1d2c6a762df2ccb85ec3f3a860006f2f2b13c7d",
+        "84435b797a9d8cd16d8205f5d1d2c6a762df2ccb85ec3f3a860006f2f2b13c7d"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1218433916",
+      "title": "关于法院裁定受理公司重整、启动债权申报及召开第一次债权人会议暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST中捷",
+      "org_id": "gssz0002021",
+      "catalog_date": "2023-11-25",
+      "announcement_time_raw_ms": 1700841600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2023-11-25/1218433916.PDF",
+      "existing_body_id": false,
+      "symbol": "002021",
+      "discovery_event_ids": [
+        "VEVT-72AD9A2427F2E9A97F6E"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-25/1218433916.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-25/1218433916.PDF",
+        "observed_at": "2026-11-05T14:22:06.670972+00:00",
+        "raw_sha256": "0e7a4816c998eacff7bf5b9515ab24556eb26f4acf40a73aa89cc6442f68f888",
+        "bytes": 146733
+      },
+      "pages": 9,
+      "text_sha256": "d0a2fcd7e8905a17584640cfeb70c703b4cc04de5697e6fe7186c54ddc6a3138",
+      "secondary_text_sha256": "e384664f1ddafa06f9d9ec0f204df040b251a039276e0ba32543e1af96b0b3ce",
+      "normalized_text_digests": [
+        "c488cc16fba0126cb0f5f594f27a06d032c75013ab115b65c7654f1cc7a2906d",
+        "c488cc16fba0126cb0f5f594f27a06d032c75013ab115b65c7654f1cc7a2906d"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1221637676",
+      "title": "福建傲农生物科技集团股份有限公司关于法院裁定受理公司重整及指定管理人暨公司股票被叠加实施退市风险警示的公告",
+      "sec_name": "*ST傲农",
+      "org_id": "9900033003",
+      "catalog_date": "2024-11-06",
+      "announcement_time_raw_ms": 1730822400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2024-11-06/1221637676.PDF",
+      "existing_body_id": false,
+      "symbol": "603363",
+      "discovery_event_ids": [
+        "VEVT-9D59C1F10107486E0BA9"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2024-11-06/1221637676.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2024-11-06/1221637676.PDF",
+        "observed_at": "2026-11-05T14:22:06.938198+00:00",
+        "raw_sha256": "12ac36a046c996311bc15d526e0e2da7fcbd9c989afc94c19ccfafa9d7f5d538",
+        "bytes": 449836
+      },
+      "pages": 10,
+      "text_sha256": "f7aca2787e0ff0403a7b3b8d2e3cc30f3cdf0615fac63cef3657feaf8ee51b43",
+      "secondary_text_sha256": "77b1f8e27ba4a644023a5aefad32ec037565653c2973cf3e1d2aae9cb53f4073",
+      "normalized_text_digests": [
+        "ee4f69ae38d48edd397596b2353e87c28be6217afd4f218674fea57e151b1d99",
+        "ee4f69ae38d48edd397596b2353e87c28be6217afd4f218674fea57e151b1d99"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        9
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1221817363",
+      "title": "关于法院裁定受理公司重整及指定管理人的公告",
+      "sec_name": "*ST东园",
+      "org_id": "9900009031",
+      "catalog_date": "2024-11-23",
+      "announcement_time_raw_ms": 1732291200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2024-11-23/1221817363.PDF",
+      "existing_body_id": false,
+      "symbol": "002310",
+      "discovery_event_ids": [
+        "VEVT-3C62BC5667CBCB0BEEEF"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2024-11-23/1221817363.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2024-11-23/1221817363.PDF",
+        "observed_at": "2026-11-05T14:22:07.148687+00:00",
+        "raw_sha256": "a762c31fe3c82f4ced756d7156878b731b61d8ab141361c66865c14a9011fc09",
+        "bytes": 192898
+      },
+      "pages": 7,
+      "text_sha256": "c220c11430bd808437a0047d44cc543a910599454e164b5b0cec15c8756bafe2",
+      "secondary_text_sha256": "46bf9d8afb6807e410d89be1b139c62dda9c0ffdd4225609dbe4e6cf7940842c",
+      "normalized_text_digests": [
+        "e69dfed9cd8843d317124ee9daa14bedc73642fd91e2fec2a9b9990398152a2d",
+        "e69dfed9cd8843d317124ee9daa14bedc73642fd91e2fec2a9b9990398152a2d"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1224442594",
+      "title": "关于法院裁定受理公司重整并指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST三圣",
+      "org_id": "9900022970",
+      "catalog_date": "2025-08-09",
+      "announcement_time_raw_ms": 1754668800000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-09/1224442594.PDF",
+      "existing_body_id": false,
+      "symbol": "002742",
+      "discovery_event_ids": [
+        "VEVT-FB1FB56B1A3BE8CE8E3D"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-09/1224442594.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-08-09/1224442594.PDF",
+        "observed_at": "2026-11-05T14:22:07.728148+00:00",
+        "raw_sha256": "c6bb9ee8573e3b21670d17e64af813faa0461b80c0aaffc08cb8517843bf29a4",
+        "bytes": 345679
+      },
+      "pages": 7,
+      "text_sha256": "ec6913ff0e0f93a6b471e54208210ebeb325d76e4670f536111f15d1596d7ddd",
+      "secondary_text_sha256": "66dc0137cd6aa23f385ef2cd27535b6312f30170f741d0841d4ff5a7a1c433ef",
+      "normalized_text_digests": [
+        "21fe7ef0c729a0578f4db2d822590c37f6fd754e24490c1be1dc5d39de34509e",
+        "21fe7ef0c729a0578f4db2d822590c37f6fd754e24490c1be1dc5d39de34509e"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1224520007",
+      "title": "关于法院裁定受理公司重整暨公司股票交易将被实施退市风险警示的公告",
+      "sec_name": "ST中装",
+      "org_id": "9900027671",
+      "catalog_date": "2025-08-20",
+      "announcement_time_raw_ms": 1755619200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-20/1224520007.pdf",
+      "existing_body_id": false,
+      "symbol": "002822",
+      "discovery_event_ids": [
+        "VEVT-FFDC1D054FAEE60251D9"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-20/1224520007.pdf",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-08-20/1224520007.pdf",
+        "observed_at": "2026-11-05T14:22:07.976300+00:00",
+        "raw_sha256": "30718df42804abef528cceb0688cd1220722eb2634e5a3db3a4f94cff6faeeeb",
+        "bytes": 166074
+      },
+      "pages": 5,
+      "text_sha256": "d4d7f019386dad3eba41ffef8a739586856befe16555f177cbb3a2beb208f19f",
+      "secondary_text_sha256": "75e3c47201ad58314c15a0534a93748b0507e01107fa90b5e335431bc5956e67",
+      "normalized_text_digests": [
+        "26067637bf8c21dfd91ef86c56d15a5e77596f0be166b2cb1d1435f31dcfca93",
+        "26067637bf8c21dfd91ef86c56d15a5e77596f0be166b2cb1d1435f31dcfca93"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1224678015",
+      "title": "关于法院裁定受理公司重整并指定管理人暨公司股票交易将被实施退市风险警示的公告",
+      "sec_name": "ST炼石",
+      "org_id": "gssz0000697",
+      "catalog_date": "2025-09-24",
+      "announcement_time_raw_ms": 1758643200000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2025-09-24/1224678015.PDF",
+      "existing_body_id": false,
+      "symbol": "000697",
+      "discovery_event_ids": [
+        "VEVT-902136FA61230273BF13"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-09-24/1224678015.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-09-24/1224678015.PDF",
+        "observed_at": "2026-11-05T14:22:08.146833+00:00",
+        "raw_sha256": "6389e07da687ae0716d21bf49ffe02dfbe5cd79a8051caacb4e7a77810aa0da1",
+        "bytes": 228390
+      },
+      "pages": 6,
+      "text_sha256": "926e375f5fe300abbe9627e0a87869002130a5dd563f698b187ee1a77ed3d7f4",
+      "secondary_text_sha256": "521361220ae01c0410052cb88795eadee80ed42e6a7091d03269cc7c5eef3b8c",
+      "normalized_text_digests": [
+        "52227c3d80bc6c6a0e0c4b01184e1d61b41a8dd0df88bc3107e00b7392b71348",
+        "52227c3d80bc6c6a0e0c4b01184e1d61b41a8dd0df88bc3107e00b7392b71348"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1224690205",
+      "title": "关于法院裁定受理公司重整及公司股票停牌一天暨将被实施退市风险警示的公告",
+      "sec_name": "ST名家汇",
+      "org_id": "9900026515",
+      "catalog_date": "2025-09-30",
+      "announcement_time_raw_ms": 1759161600000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2025-09-30/1224690205.pdf",
+      "existing_body_id": false,
+      "symbol": "300506",
+      "discovery_event_ids": [
+        "VEVT-7BA17292879C69397913"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-09-30/1224690205.pdf",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-09-30/1224690205.pdf",
+        "observed_at": "2026-11-05T14:22:08.336517+00:00",
+        "raw_sha256": "98512351077692d8552765e5464f44d72286ee8783f6d965319808effe09c737",
+        "bytes": 171202
+      },
+      "pages": 4,
+      "text_sha256": "94a403563945dbcf11a4b5a89aa59e14da37702d92f17aae6e248035d9c95fa7",
+      "secondary_text_sha256": "d5ff771e09182dcc294e6d8335e0482a9ee85cc7cfabc66a1824bda8f16411c7",
+      "normalized_text_digests": [
+        "d633726f2ddc2117073370c89c661a662a8dd6d4d93c3458924da6e63d884458",
+        "d633726f2ddc2117073370c89c661a662a8dd6d4d93c3458924da6e63d884458"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1224737227",
+      "title": "关于法院裁定受理公司重整并指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST交投",
+      "org_id": "9900003907",
+      "catalog_date": "2025-10-27",
+      "announcement_time_raw_ms": 1761494400000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737227.PDF",
+      "existing_body_id": false,
+      "symbol": "002200",
+      "discovery_event_ids": [
+        "VEVT-4AE80234F79FF92EDF1D"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737227.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737227.PDF",
+        "observed_at": "2026-11-05T14:22:08.681402+00:00",
+        "raw_sha256": "e44ab3caf94410936d365ea852abe93fcd833e18d50e14b4d742010e8336e00a",
+        "bytes": 194152
+      },
+      "pages": 9,
+      "text_sha256": "07af2608e9f1eb472f0e0a052057490a06408cb6e4cdae6be49bb1c3a5106c12",
+      "secondary_text_sha256": "d834e808ad56aeeeabff3dd46d75ec1063a1228ceea61b763025cd63fc3a4051",
+      "normalized_text_digests": [
+        "ad939937f6867fba5ae28ad661fcc07df78393c1fa5ba2d5e1f00fcc360469ae",
+        "ad939937f6867fba5ae28ad661fcc07df78393c1fa5ba2d5e1f00fcc360469ae"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        8
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    },
+    {
+      "announcement_id": "1224808326",
+      "title": "关于法院裁定受理公司重整并指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "sec_name": "*ST美谷",
+      "org_id": "gssz0000615",
+      "catalog_date": "2025-11-15",
+      "announcement_time_raw_ms": 1763136000000,
+      "primary_url": "https://static.cninfo.com.cn/finalpage/2025-11-15/1224808326.PDF",
+      "existing_body_id": false,
+      "symbol": "000615",
+      "discovery_event_ids": [
+        "VEVT-D33ABE4125C8D444395E"
+      ],
+      "body_semantics_reviewed": false,
+      "status": "new_public_attachment_archived",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-11-15/1224808326.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-11-15/1224808326.PDF",
+        "observed_at": "2026-11-05T14:22:09.061860+00:00",
+        "raw_sha256": "df1fb93e0618679039dd270ed3b46a8978376b156e9892cc40964656b1d5f362",
+        "bytes": 200982
+      },
+      "pages": 8,
+      "text_sha256": "1c35eb9ba4f498c9fac3f2626184b66ab4f4dd364a26276a281cec01c9c380d8",
+      "secondary_text_sha256": "9fceb5d05d24e65d553aecccb4a718293e25091c2e8a899a3245dca69607d20f",
+      "normalized_text_digests": [
+        "ec99be4e266f9aaab44a9695ab2abeec070ce36bbf9775a97dd421b144ff28a0",
+        "ec99be4e266f9aaab44a9695ab2abeec070ce36bbf9775a97dd421b144ff28a0"
+      ],
+      "independent_engine_texts_match": true,
+      "first_page_code_matches": true,
+      "potential_clause_pages": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7
+      ],
+      "existing_local_body_id_match": false,
+      "existing_local_body_text_match": false
+    }
+  ],
+  "selection": [
+    {
+      "event_id": "VEVT-157582251D8B47EEFDCB",
+      "symbol": "000523",
+      "original_source_ref": "cninfo:1211182614",
+      "original_title": "关于法院裁定受理公司重整暨股票被继续实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1211182614",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-57F2B09B452F5FBF67DE",
+      "symbol": "000523",
+      "original_source_ref": "cninfo:1211561917",
+      "original_title": "关于法院裁定批准重整计划的公告",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1211561917",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-D33ABE4125C8D444395E",
+      "symbol": "000615",
+      "original_source_ref": "cninfo:1224808326",
+      "original_title": "关于法院裁定受理公司重整并指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1224808326",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-902136FA61230273BF13",
+      "symbol": "000697",
+      "original_source_ref": "cninfo:AN202509231749216941",
+      "original_title": "ST炼石:关于法院裁定受理公司重整并指定管理人暨公司股票交易将被实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1224678015",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-72AD9A2427F2E9A97F6E",
+      "symbol": "002021",
+      "original_source_ref": "cninfo:AN202311241612315344",
+      "original_title": "*ST中捷:关于法院裁定受理公司重整、启动债权申报及召开第一次债权人会议暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1218433916",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-A93F560400CEB200F279",
+      "symbol": "002072",
+      "original_source_ref": "cninfo:1211511488",
+      "original_title": "关于法院裁定受理公司重整暨股票被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1211511488",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-731B1E4EEFC75B0A228E",
+      "symbol": "002157",
+      "original_source_ref": "cninfo:AN202307201592511794",
+      "original_title": "*ST正邦:关于法院裁定受理公司重整及指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1217348496",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-4AE80234F79FF92EDF1D",
+      "symbol": "002200",
+      "original_source_ref": "cninfo:AN202510261769368414",
+      "original_title": "*ST交投:关于法院裁定受理公司重整并指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1224737227",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-417E0E2A4331DBC38D58",
+      "symbol": "002219",
+      "original_source_ref": "cninfo:AN202107121503384263",
+      "original_title": "*ST恒康:关于法院裁定受理公司重整的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1210466635",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-D92F339172F931C3D87C",
+      "symbol": "002219",
+      "original_source_ref": "cninfo:AN202204221560905945",
+      "original_title": "*ST恒康:管理人关于法院裁定批准重整计划的公告",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1213053331",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-3C62BC5667CBCB0BEEEF",
+      "symbol": "002310",
+      "original_source_ref": "cninfo:AN202411221641033485",
+      "original_title": "*ST东园:关于法院裁定受理公司重整及指定管理人的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1221817363",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-C3C394DFD245ABC88DF8",
+      "symbol": "002323",
+      "original_source_ref": "cninfo:1209815619",
+      "original_title": "关于法院裁定受理公司重整暨股票被继续实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1209815619",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-74D31DD33938F3C7A6A6",
+      "symbol": "002356",
+      "original_source_ref": "cninfo:AN202111291531894973",
+      "original_title": "*ST赫美:关于法院裁定受理公司重整暨被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1211724650",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-F7E8FB1458A5A9E5E362",
+      "symbol": "002356",
+      "original_source_ref": "cninfo:AN202112291537380290",
+      "original_title": "*ST赫美:关于法院裁定批准重整计划的公告",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1212056976",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-24B635D6CA989E6FFD14",
+      "symbol": "002366",
+      "original_source_ref": "cninfo:AN202208181577351338",
+      "original_title": "*ST海核:关于法院裁定受理公司重整暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1214333023",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-B8F77AB2F3DB204AEB28",
+      "symbol": "002427",
+      "original_source_ref": "cninfo:AN202210301579631795",
+      "original_title": "*ST尤夫:关于法院裁定受理公司重整暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1214969075",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-73A6D768CC20E37C864D",
+      "symbol": "002721",
+      "original_source_ref": "cninfo:AN202307201592503321",
+      "original_title": "*ST金一:关于法院裁定受理公司重整暨指定管理人的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1217347888",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-FB1FB56B1A3BE8CE8E3D",
+      "symbol": "002742",
+      "original_source_ref": "cninfo:1224442594",
+      "original_title": "关于法院裁定受理公司重整并指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1224442594",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-58ACFC2A8CBBDDF6A21C",
+      "symbol": "002766",
+      "original_source_ref": "cninfo:1212034575",
+      "original_title": "管理人关于法院裁定批准重整计划的公告",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1212034575",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-AAE3693EC85E73F51047",
+      "symbol": "002766",
+      "original_source_ref": "cninfo:1212122635",
+      "original_title": "关于申请撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示暨继续被实施退市风险警示及其他风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1212122635",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-87B2543014C6029CFABE",
+      "symbol": "002766",
+      "original_source_ref": "cninfo:1212191213",
+      "original_title": "关于撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示情形暨继续被实施退市风险警示及其他风险警示的提示性公告（已取消）",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1212191213",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-FE07D68464CF8ECFA016",
+      "symbol": "002766",
+      "original_source_ref": "cninfo:1212196494",
+      "original_title": "关于撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示情形暨继续被实施退市风险警示及其他风险警示的提示性公告（更新后）",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1212196494",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-FFDC1D054FAEE60251D9",
+      "symbol": "002822",
+      "original_source_ref": "cninfo:1224520007",
+      "original_title": "关于法院裁定受理公司重整暨公司股票交易将被实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1224520007",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-E7BD45F8CD41BE50C7CB",
+      "symbol": "300010",
+      "original_source_ref": "cninfo:1218352927",
+      "original_title": "关于法院裁定受理公司重整暨指定管理人的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1218352927",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-42A82DDD5D5EFEC60410",
+      "symbol": "300278",
+      "original_source_ref": "cninfo:1211971947",
+      "original_title": "20211220-华昌达-管理人关于法院裁定批准重整计划的公告-定149",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1211971947",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-7BA17292879C69397913",
+      "symbol": "300506",
+      "original_source_ref": "cninfo:1224690205",
+      "original_title": "关于法院裁定受理公司重整及公司股票停牌一天暨将被实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1224690205",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-16DD05F4B0099D99D538",
+      "symbol": "600117",
+      "original_source_ref": "cninfo:AN202306211591200581",
+      "original_title": "*ST西钢:西宁特殊钢股份有限公司关于法院裁定受理公司重整暨股票被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1217119088",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-4B620A2D41320CC436DB",
+      "symbol": "600306",
+      "original_source_ref": "cninfo:1218308590",
+      "original_title": "沈阳商业城股份有限公司关于法院裁定受理公司重整并指定管理人暨公司股票将被叠加实施退市风险警示并继续实施其他风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1218308590",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-4F0C1DE295498F93B219",
+      "symbol": "600518",
+      "original_source_ref": "cninfo:AN202106041495959685",
+      "original_title": "600518:康美药业关于法院裁定受理公司重整暨股票继续被实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1210169386",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-B60D3BB1E48BF2B441E5",
+      "symbol": "600518",
+      "original_source_ref": "cninfo:AN202111261531237417",
+      "original_title": "600518:康美药业关于法院裁定批准公司重整计划的公告",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1211709038",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-70269C53D29A3A1B7FF5",
+      "symbol": "600601",
+      "original_source_ref": "cninfo:1214697472",
+      "original_title": "方正科技集团股份有限公司关于法院裁定受理公司重整暨股票被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1214697472",
+      "source_binding_status": "same_announcement_id"
+    },
+    {
+      "event_id": "VEVT-26971E1B472366111D6B",
+      "symbol": "603030",
+      "original_source_ref": "cninfo:AN202311131609933741",
+      "original_title": "*ST全筑:关于法院裁定受理公司重整及指定管理人暨公司股票交易将被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1218325952",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-9D59C1F10107486E0BA9",
+      "symbol": "603363",
+      "original_source_ref": "cninfo:AN202411051640727624",
+      "original_title": "*ST傲农:福建傲农生物科技集团股份有限公司关于法院裁定受理公司重整及指定管理人暨公司股票被叠加实施退市风险警示的公告",
+      "original_event_type": "formal_restructuring_accepted",
+      "selected_public_announcement_id": "1221637676",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    },
+    {
+      "event_id": "VEVT-4D06DCA9D923E3ED5CBA",
+      "symbol": "603555",
+      "original_source_ref": "cninfo:AN202104261487938160",
+      "original_title": "603555:贵人鸟股份有限公司管理人关于法院裁定批准重整计划的公告",
+      "original_event_type": "restructuring_plan_approved",
+      "selected_public_announcement_id": "1209819891",
+      "source_binding_status": "independent_public_discovery_not_original_source_binding"
+    }
+  ],
+  "reviews": [
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "山东雅博科技股份有限公司",
+      "court": "山东省枣庄市中级人民法院",
+      "decision_date": "2021-04-25",
+      "receipt_date": "2021-04-26",
+      "court_case": "（2021）鲁04破申3号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "explicit_court_date": 2,
+        "operative_order": 3
+      },
+      "note": "裁定日、收到日与目录日三者分开；申请主体为江苏福斯特，重整债务人为上市公司。",
+      "announcement_id": "1209815619",
+      "symbol": "002323",
+      "catalog_date": "2021-04-27",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209815619.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209815619.PDF",
+        "observed_at": "2026-11-05T14:21:57.867379+00:00",
+        "raw_sha256": "3375244732ac9c7bcb86384a2066df03700e6a9e5f0bfa7128c62e833b68889f",
+        "bytes": 214198
+      },
+      "source_pages": 5,
+      "text_sha256": "92425e319a9bbd6fd0394fdce1c3f3af4181223b08dcf05d297d9b0e65074e5e",
+      "secondary_text_sha256": "ac4cc8fb9e517348e8111ee8bcee60fdd9b6bb84b163c3d4253ecc235965aeb4",
+      "reviewed_at": "2026-11-05T14:29:39.078094+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "贵人鸟股份有限公司",
+      "court": "福建省泉州市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2021-04-26",
+      "court_case": "（2020）闽05破26号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "operative_order": 2
+      },
+      "note": "2020年12月受理为历史回述；4月25日为管理人申请批准日；4月26日是收到裁定日，未推定精确裁定日。批准并终止重整程序不当作失败终止。",
+      "announcement_id": "1209819891",
+      "symbol": "603555",
+      "catalog_date": "2021-04-27",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209819891.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209819891.PDF",
+        "observed_at": "2026-11-05T14:21:58.167547+00:00",
+        "raw_sha256": "dfcc7140ada86860110beabb6e9adf5a479da08ff2557cbbe5ff163c7552eae8",
+        "bytes": 119757
+      },
+      "source_pages": 2,
+      "text_sha256": "0cb5d22cf16501f117e3d03a2e309425c1ea3a5c41bbc22fc32f1c3750a0ea28",
+      "secondary_text_sha256": "f6ea539cca5bca149841c2866329898aed4381387e0e1f80b3d9a66f7feaba6c",
+      "reviewed_at": "2026-11-05T14:29:39.078213+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "康美药业股份有限公司",
+      "court": "广东省揭阳市中级人民法院",
+      "decision_date": "2021-06-04",
+      "receipt_date": "2021-06-04",
+      "court_case": "（2021）粤52破申1号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "explicit_court_date": 2,
+        "operative_order": 3
+      },
+      "note": "债权人揭东农商行为申请人，裁定重整债务人为上市公司；风险警示条款不当作另一个重整节点。",
+      "announcement_id": "1210169386",
+      "symbol": "600518",
+      "catalog_date": "2021-06-05",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-06-05/1210169386.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-06-05/1210169386.PDF",
+        "observed_at": "2026-11-05T14:21:58.301820+00:00",
+        "raw_sha256": "1f28537eb908ad3ba4f6a7605ac1f2ccf33185aa6840a70087c3bf656c40fb38",
+        "bytes": 153651
+      },
+      "source_pages": 4,
+      "text_sha256": "2fb2f59b15b91d12b4c9c38707cdb93d4fa2e7e19cf880108c687970ae2a25e7",
+      "secondary_text_sha256": "88cbec6237468bd151ef226f582547e196a170dc8978c2bff2e431d06cd05780",
+      "reviewed_at": "2026-11-05T14:29:39.078217+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "恒康医疗集团股份有限公司",
+      "court": "甘肃省陇南市中级人民法院",
+      "decision_date": "2021-07-08",
+      "receipt_date": "2021-07-09",
+      "court_case": "（2020）甘12破申1号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "explicit_court_date": 2
+      },
+      "note": "第2页明确裁定日7月8日、收到日7月9日；公告落款7月12日、目录7月13日。管理人决定案号另带-1，不混作裁定书案号。",
+      "announcement_id": "1210466635",
+      "symbol": "002219",
+      "catalog_date": "2021-07-13",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-07-13/1210466635.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-07-13/1210466635.PDF",
+        "observed_at": "2026-11-05T14:21:58.667750+00:00",
+        "raw_sha256": "c0628fa5630ed68d6a8b88b5796a82c5a018644dfe0b328aa20cf23d824b4e3b",
+        "bytes": 151481
+      },
+      "source_pages": 6,
+      "text_sha256": "3e96d0d514b2844d204090318d1fd042340c97d2ae9eeef0303da1b8df6d06df",
+      "secondary_text_sha256": "e1a138fe2a8eddb6f96e2f1ac62a4b54f58ee0390ac896abb948bfe0946f8d6b",
+      "reviewed_at": "2026-11-05T14:36:57.958420+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "广州市浪奇实业股份有限公司",
+      "court": "广州市中级人民法院",
+      "decision_date": "2021-09-29",
+      "receipt_date": "2021-09-29",
+      "court_case": "（2021）粤01破申140号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "explicit_court_date": 2,
+        "operative_order": 3
+      },
+      "note": "6月为申请及历史材料，9月29日为裁定受理及收到日；目录9月30日，不从标题反推当日可得。",
+      "announcement_id": "1211182614",
+      "symbol": "000523",
+      "catalog_date": "2021-09-30",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-09-30/1211182614.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-09-30/1211182614.PDF",
+        "observed_at": "2026-11-05T14:21:58.786962+00:00",
+        "raw_sha256": "86a7267fb37aeab5b303bd791ad8400b5a6ca264e99b1e95475b0a40b929b245",
+        "bytes": 112050
+      },
+      "source_pages": 5,
+      "text_sha256": "43a5869e0b448661bade4cff554376cfd04f5f634eb2ce767c2433557db2dc95",
+      "secondary_text_sha256": "ecf3b3f5b12e937fb13db88e39b3f8a0ae7fe348d9a7ab880bbac634a161b1e7",
+      "reviewed_at": "2026-11-05T14:29:39.078223+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "凯瑞德控股股份有限公司",
+      "court": "湖北省荆门市中级人民法院",
+      "decision_date": "2021-11-05",
+      "receipt_date": "2021-11-05",
+      "court_case": "（2021）鄂08破申1号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "explicit_court_date": 2,
+        "operative_order": 3
+      },
+      "note": "王建伟为申请人；原有股票风险警示与本次法院重整分开。目录11月8日，不把收到日当作公开日。",
+      "announcement_id": "1211511488",
+      "symbol": "002072",
+      "catalog_date": "2021-11-08",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-08/1211511488.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-08/1211511488.PDF",
+        "observed_at": "2026-11-05T14:21:59.061409+00:00",
+        "raw_sha256": "412a1260838d41fd075d139a571133bacb4d195af9543c230570822313c5f78e",
+        "bytes": 272858
+      },
+      "source_pages": 6,
+      "text_sha256": "5e602a311c04d22a4c67cd0f3625bd4202764b5260ba6257d51ea9c76aa365e4",
+      "secondary_text_sha256": "2b4f2f344c44c14bc276c056ea5cac9e336c06c2c42b9b832c4197704122e69a",
+      "reviewed_at": "2026-11-05T14:36:57.958531+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "广州市浪奇实业股份有限公司",
+      "court": "广州市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2021-11-11",
+      "court_case": "（2021）粤01破282-1号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1,
+        "operative_order": 2
+      },
+      "note": "11月9日债权人/出资人会议不是法院批准日；原文明确11月11日收到裁定，未推定精确裁定日。批准计划、终止重整程序后进入执行期，不是失败终止。",
+      "announcement_id": "1211561917",
+      "symbol": "000523",
+      "catalog_date": "2021-11-12",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-12/1211561917.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-12/1211561917.PDF",
+        "observed_at": "2026-11-05T14:21:59.197019+00:00",
+        "raw_sha256": "7766f77591a37dcb1b0fb4f8d4622b4e939e51656f27ecf47726737a56fa7c23",
+        "bytes": 90121
+      },
+      "source_pages": 3,
+      "text_sha256": "b31223b42ab528cf39818583c1ad7392baf05ebb3ac72bdac60cd8a0e9a2e84d",
+      "secondary_text_sha256": "02e2e75cddff6918802460f25d8f5fbfd3357a72c9d457575ee0b34e44cca94d",
+      "reviewed_at": "2026-11-05T14:36:57.958534+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "康美药业股份有限公司",
+      "court": "揭阳市中级人民法院",
+      "decision_date": "2021-11-26",
+      "receipt_date": null,
+      "court_case": null,
+      "proofs": {
+        "identity": 1,
+        "explicit_court_date": 1,
+        "operative_order": 1
+      },
+      "note": "第1页明确11月26日裁定批准计划并终止重整程序；6月4日受理只是历史回述。未读取的收到日和完整案号保留未知。",
+      "announcement_id": "1211709038",
+      "symbol": "600518",
+      "catalog_date": "2021-11-27",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-27/1211709038.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-27/1211709038.PDF",
+        "observed_at": "2026-11-05T14:21:59.338076+00:00",
+        "raw_sha256": "409f8518a5fec272742ae6df39d414d836202227b1c2a484295eb8310fac4e16",
+        "bytes": 134181
+      },
+      "source_pages": 3,
+      "text_sha256": "c2ab44980eb07e18bcefa0e4d840f4773cf6784e04ed9a1281ab752169ce27f9",
+      "secondary_text_sha256": "1d59d918b5fc51a8f52a5101b0f8ddff691dad89254075e6cfa1d796f76afb2b",
+      "reviewed_at": "2026-11-05T14:36:57.958536+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": null,
+      "subject": "深圳赫美集团股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": null,
+      "receipt_date": null,
+      "court_case": null,
+      "review_outcome": "excluded_related_entities",
+      "related_subjects": [
+        "惠州浩宁达科技有限公司",
+        "深圳赫美商业有限公司"
+      ],
+      "proofs": {
+        "identity": 1,
+        "related_entity_scope": 1
+      },
+      "note": "法院受理对象为两家全资子公司，并非上市公司；此件是宽检索附带候选，不是原34条主候选的同类型附件。",
+      "announcement_id": "1211724649",
+      "symbol": "002356",
+      "catalog_date": "2021-11-30",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724649.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724649.PDF",
+        "observed_at": "2026-11-05T14:21:59.615926+00:00",
+        "raw_sha256": "407b6276b6b82e2d56e030f15d1308bcaf3c474bb305979cd41204fec4ce988c",
+        "bytes": 257573
+      },
+      "source_pages": 8,
+      "text_sha256": "2b8b53bf4f3a9eba6a7535fb9bc2955bd6ff6da9ad8416d9a7c098d4d09a6edc",
+      "secondary_text_sha256": "515e311182a3ca91df1cc09484dcfaa4810c083e11b5a64a3a2431c747d7c496",
+      "reviewed_at": "2026-11-05T14:36:57.958538+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "深圳赫美集团股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2021-11-29",
+      "court_case": "（2020）粤03破申827号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_scope": 1
+      },
+      "note": "本件明确受理上市公司赫美集团，与相近的1211724649两家子公司事项分开。收到日11月29日、目录11月30日，裁定日尚未在本轮指定条款确认。",
+      "announcement_id": "1211724650",
+      "symbol": "002356",
+      "catalog_date": "2021-11-30",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724650.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724650.PDF",
+        "observed_at": "2026-11-05T14:21:59.787486+00:00",
+        "raw_sha256": "8e67ee3554320ea7fd1e8b723d5085e84701e6a93b5ace9e7dde3359448a359f",
+        "bytes": 364857
+      },
+      "source_pages": 10,
+      "text_sha256": "411989f7d98bc65e1bc3efd8b3e79a575ee4814e955fe9f2647f82c784659018",
+      "secondary_text_sha256": "17a2de43eefe713ff3bc8cccbe1d2ed822e5813d9867bdf84eb39c4a3aeed4a1",
+      "reviewed_at": "2026-11-05T14:38:32.101585+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "华昌达智能装备集团股份有限公司",
+      "court": "湖北省十堰市中级人民法院",
+      "decision_date": "2021-12-20",
+      "receipt_date": null,
+      "court_case": "（2021）鄂03破29号",
+      "proofs": {
+        "identity": 1,
+        "explicit_court_date": 1,
+        "operative_order": 1
+      },
+      "note": "第1页明确12月20日裁定批准并终止重整程序；后续不能执行才可能破产的风险条件不当作当前失败终止。",
+      "announcement_id": "1211971947",
+      "symbol": "300278",
+      "catalog_date": "2021-12-20",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-20/1211971947.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-20/1211971947.PDF",
+        "observed_at": "2026-11-05T14:22:00.092838+00:00",
+        "raw_sha256": "81ee033528727eb60f5c85516f451da16c5a4a2b82f4b2123ba8fc5c30c9c6c5",
+        "bytes": 92633
+      },
+      "source_pages": 4,
+      "text_sha256": "39286f914645c5a3164b7e21d53032a5c54fbfae14cd4e139ecc14c3185af7c5",
+      "secondary_text_sha256": "71de491e224812c4bddc2dd7408bc45015679d4aa9b87aa15b89a72de59b8b1b",
+      "reviewed_at": "2026-11-05T14:38:32.101759+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "深圳市索菱实业股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": "2021-12-27",
+      "receipt_date": null,
+      "court_case": "（2021）粤03破599号之一",
+      "proofs": {
+        "identity": 1,
+        "explicit_court_date": 1,
+        "operative_order": 1
+      },
+      "note": "12月27日批准为本次节点；11月26日受理及指定管理人只是历史回述。",
+      "announcement_id": "1212034575",
+      "symbol": "002766",
+      "catalog_date": "2021-12-28",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-28/1212034575.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-28/1212034575.PDF",
+        "observed_at": "2026-11-05T14:22:00.283157+00:00",
+        "raw_sha256": "62774023f351cff1b6f8e3a31b7f9de304db9b1afc9f1553efe560bbbc4a8c8b",
+        "bytes": 127055
+      },
+      "source_pages": 3,
+      "text_sha256": "65b8902b4cb781709a3e51b23e9840b2e112ef0278f11b3bea812952577cddee",
+      "secondary_text_sha256": "a484bd76fc52bd2600593cc679dc8fc9aece6374f03f3029b911155dc2a21160",
+      "reviewed_at": "2026-11-05T14:38:32.101763+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "深圳赫美集团股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": "2021-12-29",
+      "receipt_date": null,
+      "court_case": null,
+      "proofs": {
+        "identity": 1,
+        "explicit_court_date": 1,
+        "operative_order": 1
+      },
+      "note": "本件批准对象为上市公司赫美集团；相近子公司批准附件另列未纳入本节点。12月20日出资人会议不是法院批准日。",
+      "announcement_id": "1212056976",
+      "symbol": "002356",
+      "catalog_date": "2021-12-29",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056976.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2021-12-29/1212056976.PDF",
+        "observed_at": "2026-11-05T14:22:00.437656+00:00",
+        "raw_sha256": "94086e291f257445c03ec8246dedbeac2180b76dbae5e46c4176445ebfeff518",
+        "bytes": 253948
+      },
+      "source_pages": 3,
+      "text_sha256": "b48fa046b5447e19a96bf9618c03e67b0872e7b9a9504194616826ac81f5527c",
+      "secondary_text_sha256": "f1b4b78f6ffc8dd5b8d0a5a3446a22eec15abfe924d17e39423ab62bdbaed800",
+      "reviewed_at": "2026-11-05T14:38:32.101765+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": null,
+      "subject": "深圳市索菱实业股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": null,
+      "receipt_date": null,
+      "court_case": null,
+      "review_outcome": "excluded_historical_restatement",
+      "proofs": {
+        "identity": 1,
+        "current_document_purpose": 1,
+        "historical_restructuring_reference": 1,
+        "past_execution_reference": 2
+      },
+      "note": "本件为申请撤销因重整受理导致的风险警示；11月26日收到法院受理裁定、12月31日收到确认执行完毕裁定均为历史回述，分别已指向更早公告。不能在2022年1月8日新增法院受理节点。",
+      "announcement_id": "1212122635",
+      "symbol": "002766",
+      "catalog_date": "2022-01-08",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-01-08/1212122635.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-01-08/1212122635.PDF",
+        "observed_at": "2026-11-05T14:22:00.798670+00:00",
+        "raw_sha256": "b89e5c7d2ccb1abd1276807a1dddb51e409234fb95aabf571701c75a7150e20b",
+        "bytes": 166295
+      },
+      "source_pages": 3,
+      "text_sha256": "b03add3c7a4521b919349b2fff8a344389fa0a0d787ec4693ed8f91137f9f925",
+      "secondary_text_sha256": "efe670fa36271a38ccc69bf8cb24fb170ab269905cb0cc034184650ef8f6b27b",
+      "reviewed_at": "2026-11-05T14:45:47.239671+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": null,
+      "subject": "深圳市索菱实业股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": null,
+      "receipt_date": null,
+      "court_case": null,
+      "review_outcome": "excluded_cancelled_metadata_and_historical_restatement",
+      "proofs": {
+        "identity": 1,
+        "current_document_purpose": 1,
+        "historical_restructuring_reference": 2
+      },
+      "note": "本次目录元数据标已取消；正文为风险警示情形变更、回述2021年11月受理及12月执行完毕，不是新增受理。取消时点未确认，不反填为历史当时已知。",
+      "announcement_id": "1212191213",
+      "symbol": "002766",
+      "catalog_date": "2022-01-15",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-01-15/1212191213.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-01-15/1212191213.PDF",
+        "observed_at": "2026-11-05T14:22:00.990947+00:00",
+        "raw_sha256": "f405785acd4c6af409a813272bee487308b21a35bcc0fa51ba500955d6a0e873",
+        "bytes": 174596
+      },
+      "source_pages": 4,
+      "text_sha256": "7c9f3e9c318276b54068c69ea8bd03e7856f8ad677bb7888987e785f5b2d1f73",
+      "secondary_text_sha256": "90c4bf8f2802b014d3dbbdd309f3151133d34d5bf9c2955d37bcfffaa5c3b8f5",
+      "reviewed_at": "2026-11-05T14:45:47.239782+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": null,
+      "subject": "深圳市索菱实业股份有限公司",
+      "court": "深圳市中级人民法院",
+      "decision_date": null,
+      "receipt_date": null,
+      "court_case": null,
+      "review_outcome": "excluded_updated_risk_warning_notice",
+      "proofs": {
+        "identity": 1,
+        "current_document_purpose": 1,
+        "historical_restructuring_reference": 2
+      },
+      "note": "更新版目录日期1月17日、落款1月15日，正文为风险警示情形变更，不能重记2021年11月受理。两版页首均为*ST索菱；取消版第1页特别提示第1项称股票简称仍为ST索菱，更新版该项为*ST索菱。保留版本差异，未推定完整生效历史。",
+      "announcement_id": "1212196494",
+      "symbol": "002766",
+      "catalog_date": "2022-01-17",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-01-17/1212196494.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-01-17/1212196494.PDF",
+        "observed_at": "2026-11-05T14:22:01.315558+00:00",
+        "raw_sha256": "ff085abb2c868e6b359849cf2667a28f259ae90fc6729d2a2830ad4c87468e68",
+        "bytes": 190079
+      },
+      "source_pages": 4,
+      "text_sha256": "725a0443c3ef92b8cd3b29a5abaa69e49993afa065e7b7131375654a556e2554",
+      "secondary_text_sha256": "8cc17c8fa094f98f8a10b14ccf8ea5db139d8412cd2353f915a01a07318d1772",
+      "reviewed_at": "2026-11-05T14:45:47.239785+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "restructuring_plan_approved",
+      "subject": "恒康医疗集团股份有限公司",
+      "court": "甘肃省陇南市中级人民法院",
+      "decision_date": "2022-04-22",
+      "receipt_date": null,
+      "court_case": null,
+      "proofs": {
+        "identity": 1,
+        "explicit_court_date": 1,
+        "operative_order": 1
+      },
+      "note": "4月22日批准计划为本次节点，2021年7月受理和8月指定管理人均为历史回述。目录4月23日，不把落款或收到日直接当披露日。",
+      "announcement_id": "1213053331",
+      "symbol": "002219",
+      "catalog_date": "2022-04-23",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-04-23/1213053331.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-04-23/1213053331.PDF",
+        "observed_at": "2026-11-05T14:22:01.670289+00:00",
+        "raw_sha256": "e4da3a01e8da3eadf3ec1e31b9aa3a5de3428d44e030efa153153153750c7fe7",
+        "bytes": 162012
+      },
+      "source_pages": 3,
+      "text_sha256": "4f715979802f863dbb0b46f020d62024f925c73db5e3dcf31e3734483ae2b721",
+      "secondary_text_sha256": "e5aae533a9a8dbc0317ca49041a9f38b0163ddf40ae553902fea4fb28fbb1d36",
+      "reviewed_at": "2026-11-05T14:45:47.239786+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "台海玛努尔核电设备股份有限公司",
+      "court": "山东省烟台市中级人民法院",
+      "decision_date": "2022-08-18",
+      "receipt_date": "2022-08-18",
+      "court_case": "（2022）鲁06破申13号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 4
+      },
+      "note": "烟台中院裁定受理并指定由莱山区法院审理；不将管辖法院替代裁定法院，也不将此前核心子公司重整归为本公司。目录8月19日。",
+      "announcement_id": "1214333023",
+      "symbol": "002366",
+      "catalog_date": "2022-08-19",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-08-19/1214333023.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-08-19/1214333023.PDF",
+        "observed_at": "2026-11-05T14:22:01.883315+00:00",
+        "raw_sha256": "9f6da09342db80a93f2759d3aed002b0f3dd45f5e6d2de3678615d5cb250a021",
+        "bytes": 269303
+      },
+      "source_pages": 7,
+      "text_sha256": "b3c717c39c11aa708c696baf54e96ff4ddc393f66fd9732a74803cb378064521",
+      "secondary_text_sha256": "30317265dad7452b46b07a3bdd84bc5a41e46a37c9a7e8aca6a7c88d60a97018",
+      "reviewed_at": "2026-11-05T14:52:30.561818+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "方正科技集团股份有限公司",
+      "court": "北京市第一中级人民法院",
+      "decision_date": "2022-09-27",
+      "receipt_date": "2022-09-27",
+      "court_case": "（2022）京01破申256号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 2
+      },
+      "note": "申请人方正数码与本次被受理的上市公司方正科技区分；目录9月28日，裁定/收到9月27日。",
+      "announcement_id": "1214697472",
+      "symbol": "600601",
+      "catalog_date": "2022-09-28",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-09-28/1214697472.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-09-28/1214697472.PDF",
+        "observed_at": "2026-11-05T14:22:02.074196+00:00",
+        "raw_sha256": "c25f600265577dcdefa578014361674eeb200267aba585df8ff4d3609f3690e2",
+        "bytes": 329170
+      },
+      "source_pages": 8,
+      "text_sha256": "29690a27c908cbccf96633e4589b12709797313f807d118a865499ee58024d14",
+      "secondary_text_sha256": "a8a472380a234373e8e551707b0ecc9d80a97365aafa9d11fbab9f74a1da214f",
+      "reviewed_at": "2026-11-05T14:53:35.705357+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "浙江尤夫高新纤维股份有限公司",
+      "court": "湖州市中级人民法院",
+      "decision_date": "2022-10-28",
+      "receipt_date": "2022-10-28",
+      "court_case": "（2022）浙05破申1号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 3,
+        "operative_order": 3
+      },
+      "note": "本次正式受理与2021年预重整及2022年1月申请区分；目录10月31日。",
+      "announcement_id": "1214969075",
+      "symbol": "002427",
+      "catalog_date": "2022-10-31",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2022-10-31/1214969075.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2022-10-31/1214969075.PDF",
+        "observed_at": "2026-11-05T14:22:02.355112+00:00",
+        "raw_sha256": "a3e582f2e33c5fae79bf92f68d970597e1572176bee0cc790354dfeea47fadad",
+        "bytes": 351951
+      },
+      "source_pages": 9,
+      "text_sha256": "773522d30eec7a89781c655ec7e316c2518f8b94359393780d99db1cb626f036",
+      "secondary_text_sha256": "30b88c2c61665847d13f1369abe480bf27b8a46f5f9c140adab9515ee1a59d64",
+      "reviewed_at": "2026-11-05T14:52:30.561930+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "西宁特殊钢股份有限公司",
+      "court": "青海省西宁市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2023-06-20",
+      "court_case": "（2023）青01破申8号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_acceptance": 1
+      },
+      "note": "正式受理主体为西宁特钢；5月申请为历史。收到日6月20日、落款6月21日、目录6月22日分别保留，未从收到日推定裁定日。",
+      "announcement_id": "1217119088",
+      "symbol": "600117",
+      "catalog_date": "2023-06-22",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119088.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-06-22/1217119088.PDF",
+        "observed_at": "2026-11-05T14:22:03.608486+00:00",
+        "raw_sha256": "2bb464af3e8e72be6549fd335d596aba021fe3d6bfce06a86cacea0312bba075",
+        "bytes": 543757
+      },
+      "source_pages": 8,
+      "text_sha256": "bad5d74629005ae99aa573c04e311403073be46611dc8a1fe4f4fd3197b8bfa5",
+      "secondary_text_sha256": "f155f5a75969943837d64885b968c10c047fc1bb9a48594b4109833ec60c204c",
+      "reviewed_at": "2026-11-05T14:53:35.705351+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "北京金一文化发展股份有限公司",
+      "court": "北京市第一中级人民法院",
+      "decision_date": "2023-07-20",
+      "receipt_date": "2023-07-20",
+      "court_case": "（2023）京01破申66号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 2
+      },
+      "note": "1月31日启动预重整为历史；7月20日正式受理，目录7月21日。",
+      "announcement_id": "1217347888",
+      "symbol": "002721",
+      "catalog_date": "2023-07-21",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217347888.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217347888.PDF",
+        "observed_at": "2026-11-05T14:22:05.151834+00:00",
+        "raw_sha256": "dbf48320b87cd83f1fdccad2c547c4808b74ba2b76be9f8e91d8f91c97571481",
+        "bytes": 319089
+      },
+      "source_pages": 7,
+      "text_sha256": "5f676d5b4629ce9e5bf3b4e3385b73139cc943f5d5af20ba9289b8f6afef9cbb",
+      "secondary_text_sha256": "336f70d94c540d3420677e730c56252781def8773069057b2857f4097b356acf",
+      "reviewed_at": "2026-11-05T14:52:30.561936+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "江西正邦科技股份有限公司",
+      "court": "江西省南昌市中级人民法院",
+      "decision_date": "2023-07-20",
+      "receipt_date": "2023-07-20",
+      "court_case": "（2022）赣01破申49号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 3,
+        "operative_order": 3
+      },
+      "note": "7月20日收到受理裁定；指定管理人决定另明确当日作出受理裁定，目录7月21日。既有财务类退市警示及本次叠加不等于新的首次ST成员。",
+      "announcement_id": "1217348496",
+      "symbol": "002157",
+      "catalog_date": "2023-07-21",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217348496.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-07-21/1217348496.PDF",
+        "observed_at": "2026-11-05T14:22:05.394317+00:00",
+        "raw_sha256": "a0a2f7528d5e5fada3435324b4ccb4618dff3f083bfb1ceb9e4e35dcc8f36e64",
+        "bytes": 309644
+      },
+      "source_pages": 6,
+      "text_sha256": "77198522eaf2a200fed0f2d75aa5183d3bec93f838d72817b21f1c13dd90129d",
+      "secondary_text_sha256": "f1c06278800dfa22407865a1385f0e80cb849138de13f5e6384454105358d56a",
+      "reviewed_at": "2026-11-05T14:51:41.947946+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "沈阳商业城股份有限公司",
+      "court": "辽宁省沈阳市中级人民法院",
+      "decision_date": "2023-11-10",
+      "receipt_date": "2023-11-10",
+      "court_case": "（2023）辽01破申2号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 3,
+        "operative_order": 3
+      },
+      "note": "目录11月11日，裁定/收到11月10日。既有退市警示及继续其他风险警示不新增ST成员。",
+      "announcement_id": "1218308590",
+      "symbol": "600306",
+      "catalog_date": "2023-11-11",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-11/1218308590.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-11/1218308590.PDF",
+        "observed_at": "2026-11-05T14:22:05.565547+00:00",
+        "raw_sha256": "1ca1adf16edb64e60e606d493ad7ad2a72dda0373fbdf08373004eeb2d768c22",
+        "bytes": 312560
+      },
+      "source_pages": 7,
+      "text_sha256": "1c27b956fd326f6a0e20df2c1e0e0b57d12998f078194fe22725a5a8e9241288",
+      "secondary_text_sha256": "f7c75a207906b84b4f1289656edc04326d82d92a97ad93e5804ae9a6f6d59433",
+      "reviewed_at": "2026-11-05T14:53:35.705355+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "上海全筑控股集团股份有限公司",
+      "court": "上海市第三中级人民法院",
+      "decision_date": "2023-11-13",
+      "receipt_date": "2023-11-13",
+      "court_case": "（2023）沪03破870号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 3
+      },
+      "note": "目录11月14日，裁定/收到11月13日；正式受理对象为上市公司。",
+      "announcement_id": "1218325952",
+      "symbol": "603030",
+      "catalog_date": "2023-11-14",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-14/1218325952.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-14/1218325952.PDF",
+        "observed_at": "2026-11-05T14:22:05.760794+00:00",
+        "raw_sha256": "939c9932d11cf7182711675b269236ae7b797408ed449e5ac16d04ea0df025b8",
+        "bytes": 307084
+      },
+      "source_pages": 7,
+      "text_sha256": "95ec89236229d020f743932113d79f2a9f2f8bf6c715c2908d494b65f239566b",
+      "secondary_text_sha256": "48de67ab4f175af8a74186feae4dc862c422cec9cf7b967db4a31d38cdef209d",
+      "reviewed_at": "2026-11-05T14:53:35.705359+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "豆神教育科技（北京）股份有限公司",
+      "court": "北京市第一中级人民法院",
+      "decision_date": "2023-11-15",
+      "receipt_date": "2023-11-15",
+      "court_case": "（2023）京01破申280号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 2,
+        "operative_order": 3
+      },
+      "note": "目录11月16日与裁定/收到/落款11月15日分开，正式受理主体为上市公司。",
+      "announcement_id": "1218352927",
+      "symbol": "300010",
+      "catalog_date": "2023-11-16",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-16/1218352927.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-16/1218352927.PDF",
+        "observed_at": "2026-11-05T14:22:06.156038+00:00",
+        "raw_sha256": "d9029a482c9bac80c15774d8d0d5fa0c0301f0abee03087c7438e9099519efaf",
+        "bytes": 128848
+      },
+      "source_pages": 6,
+      "text_sha256": "3e80645f6f894b223bdca7675810f0ec3834444fefa4f1eae48879a8ba69cb96",
+      "secondary_text_sha256": "b91c375f9f12d61ef1789084363829d04087f4c931b13b665d90d6b70c38575e",
+      "reviewed_at": "2026-11-05T14:52:30.561941+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "中捷资源投资股份有限公司",
+      "court": "浙江省台州市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2023-11-24",
+      "court_case": "（2023）浙10破申8号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_acceptance": 1
+      },
+      "note": "本次受理重整与7月预重整临时管理人有别。目录11月25日、落款11月24日；未从收到日推断裁定日期。",
+      "announcement_id": "1218433916",
+      "symbol": "002021",
+      "catalog_date": "2023-11-25",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2023-11-25/1218433916.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2023-11-25/1218433916.PDF",
+        "observed_at": "2026-11-05T14:22:06.670972+00:00",
+        "raw_sha256": "0e7a4816c998eacff7bf5b9515ab24556eb26f4acf40a73aa89cc6442f68f888",
+        "bytes": 146733
+      },
+      "source_pages": 9,
+      "text_sha256": "d0a2fcd7e8905a17584640cfeb70c703b4cc04de5697e6fe7186c54ddc6a3138",
+      "secondary_text_sha256": "e384664f1ddafa06f9d9ec0f204df040b251a039276e0ba32543e1af96b0b3ce",
+      "reviewed_at": "2026-11-05T14:51:41.948081+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "福建傲农生物科技集团股份有限公司",
+      "court": "福建省漳州市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2024-11-05",
+      "court_case": "（2024）闽06破申59号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_acceptance": 1
+      },
+      "note": "本次裁定受理联鲲公司对上市公司的重整申请；此前5月大舟集团申请为历史且申请人有别。目录11月6日、收到11月5日，裁定日期未以收到日替代。",
+      "announcement_id": "1221637676",
+      "symbol": "603363",
+      "catalog_date": "2024-11-06",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2024-11-06/1221637676.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2024-11-06/1221637676.PDF",
+        "observed_at": "2026-11-05T14:22:06.938198+00:00",
+        "raw_sha256": "12ac36a046c996311bc15d526e0e2da7fcbd9c989afc94c19ccfafa9d7f5d538",
+        "bytes": 449836
+      },
+      "source_pages": 10,
+      "text_sha256": "f7aca2787e0ff0403a7b3b8d2e3cc30f3cdf0615fac63cef3657feaf8ee51b43",
+      "secondary_text_sha256": "77b1f8e27ba4a644023a5aefad32ec037565653c2973cf3e1d2aae9cb53f4073",
+      "reviewed_at": "2026-11-05T14:53:35.705360+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "北京东方园林环境股份有限公司",
+      "court": "北京市第一中级人民法院",
+      "decision_date": "2024-11-22",
+      "receipt_date": "2024-11-22",
+      "court_case": "（2024）京01破申469号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 2,
+        "operative_order": 3
+      },
+      "note": "目录11月23日，落款及裁定/收到日期均为11月22日，分别保留。",
+      "announcement_id": "1221817363",
+      "symbol": "002310",
+      "catalog_date": "2024-11-23",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2024-11-23/1221817363.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2024-11-23/1221817363.PDF",
+        "observed_at": "2026-11-05T14:22:07.148687+00:00",
+        "raw_sha256": "a762c31fe3c82f4ced756d7156878b731b61d8ab141361c66865c14a9011fc09",
+        "bytes": 192898
+      },
+      "source_pages": 7,
+      "text_sha256": "c220c11430bd808437a0047d44cc543a910599454e164b5b0cec15c8756bafe2",
+      "secondary_text_sha256": "46bf9d8afb6807e410d89be1b139c62dda9c0ffdd4225609dbe4e6cf7940842c",
+      "reviewed_at": "2026-11-05T14:52:30.561933+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "重庆三圣实业股份有限公司",
+      "court": "重庆市第五中级人民法院",
+      "decision_date": "2025-08-08",
+      "receipt_date": "2025-08-08",
+      "court_case": "（2025）渝05破申224号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 4
+      },
+      "note": "目录8月9日，落款8月8日；指定管理人决定明确同日受理。",
+      "announcement_id": "1224442594",
+      "symbol": "002742",
+      "catalog_date": "2025-08-09",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-09/1224442594.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-08-09/1224442594.PDF",
+        "observed_at": "2026-11-05T14:22:07.728148+00:00",
+        "raw_sha256": "c6bb9ee8573e3b21670d17e64af813faa0461b80c0aaffc08cb8517843bf29a4",
+        "bytes": 345679
+      },
+      "source_pages": 7,
+      "text_sha256": "ec6913ff0e0f93a6b471e54208210ebeb325d76e4670f536111f15d1596d7ddd",
+      "secondary_text_sha256": "66dc0137cd6aa23f385ef2cd27535b6312f30170f741d0841d4ff5a7a1c433ef",
+      "reviewed_at": "2026-11-05T14:52:30.561938+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "深圳市中装建设集团股份有限公司",
+      "court": "广东省深圳市中级人民法院",
+      "decision_date": null,
+      "receipt_date": "2025-08-19",
+      "court_case": "（2024）粤03破申547号",
+      "proofs": {
+        "identity": 1,
+        "receipt_and_acceptance": 1
+      },
+      "note": "目录8月20日，落款8月19日；没有从收到日期或旧案号推定裁定日期。",
+      "announcement_id": "1224520007",
+      "symbol": "002822",
+      "catalog_date": "2025-08-20",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-20/1224520007.pdf",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-08-20/1224520007.pdf",
+        "observed_at": "2026-11-05T14:22:07.976300+00:00",
+        "raw_sha256": "30718df42804abef528cceb0688cd1220722eb2634e5a3db3a4f94cff6faeeeb",
+        "bytes": 166074
+      },
+      "source_pages": 5,
+      "text_sha256": "d4d7f019386dad3eba41ffef8a739586856befe16555f177cbb3a2beb208f19f",
+      "secondary_text_sha256": "75e3c47201ad58314c15a0534a93748b0507e01107fa90b5e335431bc5956e67",
+      "reviewed_at": "2026-11-05T14:52:30.561939+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "炼石航空科技股份有限公司",
+      "court": "四川省成都市中级人民法院",
+      "decision_date": "2025-09-23",
+      "receipt_date": "2025-09-23",
+      "court_case": "（2025）川01破申19号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 3
+      },
+      "note": "9月23日收到受理裁定，管理人决定明确同日受理；此前预重整延期和投资协议不是本次正式受理。目录9月24日不以落款替代。",
+      "announcement_id": "1224678015",
+      "symbol": "000697",
+      "catalog_date": "2025-09-24",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-09-24/1224678015.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-09-24/1224678015.PDF",
+        "observed_at": "2026-11-05T14:22:08.146833+00:00",
+        "raw_sha256": "6389e07da687ae0716d21bf49ffe02dfbe5cd79a8051caacb4e7a77810aa0da1",
+        "bytes": 228390
+      },
+      "source_pages": 6,
+      "text_sha256": "926e375f5fe300abbe9627e0a87869002130a5dd563f698b187ee1a77ed3d7f4",
+      "secondary_text_sha256": "521361220ae01c0410052cb88795eadee80ed42e6a7091d03269cc7c5eef3b8c",
+      "reviewed_at": "2026-11-05T14:51:41.948084+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "深圳市名家汇科技股份有限公司",
+      "court": "广东省高级人民法院",
+      "decision_date": null,
+      "receipt_date": null,
+      "court_case": "（2025）粤破申1号",
+      "proofs": {
+        "identity": 1,
+        "receipt_unspecified_recently": 1,
+        "operative_order": 2
+      },
+      "note": "正文仅称近日收到，裁定日和收到日均保留未知；落款9月29日不能填为这两种日期，目录9月30日。9月30日停牌和10月9日警示生效另属市场状态，不作裁定日。",
+      "announcement_id": "1224690205",
+      "symbol": "300506",
+      "catalog_date": "2025-09-30",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-09-30/1224690205.pdf",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-09-30/1224690205.pdf",
+        "observed_at": "2026-11-05T14:22:08.336517+00:00",
+        "raw_sha256": "98512351077692d8552765e5464f44d72286ee8783f6d965319808effe09c737",
+        "bytes": 171202
+      },
+      "source_pages": 4,
+      "text_sha256": "94a403563945dbcf11a4b5a89aa59e14da37702d92f17aae6e248035d9c95fa7",
+      "secondary_text_sha256": "d5ff771e09182dcc294e6d8335e0482a9ee85cc7cfabc66a1824bda8f16411c7",
+      "reviewed_at": "2026-11-05T14:53:35.705216+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "云南交投生态科技股份有限公司",
+      "court": "云南省昆明市中级人民法院",
+      "decision_date": "2025-10-24",
+      "receipt_date": "2025-10-24",
+      "court_case": "（2025）云01破申6号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 1,
+        "explicit_court_date": 3,
+        "operative_order": 4
+      },
+      "note": "本次终止预重整并转入正式重整；不把预重整终止理解为正式重整失败。目录10月27日。",
+      "announcement_id": "1224737227",
+      "symbol": "002200",
+      "catalog_date": "2025-10-27",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737227.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737227.PDF",
+        "observed_at": "2026-11-05T14:22:08.681402+00:00",
+        "raw_sha256": "e44ab3caf94410936d365ea852abe93fcd833e18d50e14b4d742010e8336e00a",
+        "bytes": 194152
+      },
+      "source_pages": 9,
+      "text_sha256": "07af2608e9f1eb472f0e0a052057490a06408cb6e4cdae6be49bb1c3a5106c12",
+      "secondary_text_sha256": "d834e808ad56aeeeabff3dd46d75ec1063a1228ceea61b763025cd63fc3a4051",
+      "reviewed_at": "2026-11-05T14:52:30.561935+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    },
+    {
+      "stage": "formal_restructuring_accepted",
+      "subject": "奥园美谷科技股份有限公司",
+      "court": "湖北省襄阳市中级人民法院",
+      "decision_date": "2025-11-14",
+      "receipt_date": "2025-11-14",
+      "court_case": "（2024）鄂06破申48号",
+      "proofs": {
+        "identity": 1,
+        "receipt": 3,
+        "operative_order": 4,
+        "explicit_court_date": 4
+      },
+      "note": "2024年申请和启动预重整均为历史；2025年11月14日正式受理并指定管理人，目录11月15日。旧年份案号不据此回填事件日期。",
+      "announcement_id": "1224808326",
+      "symbol": "000615",
+      "catalog_date": "2025-11-15",
+      "source": {
+        "url": "https://static.cninfo.com.cn/finalpage/2025-11-15/1224808326.PDF",
+        "response_url": "https://static.cninfo.com.cn/finalpage/2025-11-15/1224808326.PDF",
+        "observed_at": "2026-11-05T14:22:09.061860+00:00",
+        "raw_sha256": "df1fb93e0618679039dd270ed3b46a8978376b156e9892cc40964656b1d5f362",
+        "bytes": 200982
+      },
+      "source_pages": 8,
+      "text_sha256": "1c35eb9ba4f498c9fac3f2626184b66ab4f4dd364a26276a281cec01c9c380d8",
+      "secondary_text_sha256": "9fceb5d05d24e65d553aecccb4a718293e25091c2e8a899a3245dca69607d20f",
+      "reviewed_at": "2026-11-05T14:51:41.948086+00:00",
+      "scope": "listed_company_court_stage_and_stated_dates_only",
+      "whole_body_semantics_checked": false,
+      "study_admission": "pending_dedup_and_source_frame_validation"
+    }
+  ],
+  "counts": {
+    "selected_candidates": 34,
+    "selected_candidate_companies": 27,
+    "new_public_PDFs_archived": 44,
+    "PDF_pages_archived": 242,
+    "documents_with_scoped_review": 35,
+    "positive_scoped_stage_clauses": 31,
+    "positive_companies": 27,
+    "selected_candidates_rejected": 3,
+    "extra_related_entity_exclusion_reviews": 1,
+    "unreviewed_extra_attachments": 9,
+    "stages": {
+      "formal_restructuring_accepted": 24,
+      "restructuring_plan_approved": 7
+    },
+    "unknown_decision_dates": 8,
+    "unknown_receipt_dates": 6
+  },
+  "local_body_exclusion": {
+    "protected_id_count": 23766,
+    "protected_normalized_text_count": 23708,
+    "protected_ID_snapshot_sha256": "bb75a95224ae69c717e3489bbe33489e4c601aa78e8e2e7a1ab8b4b5584f5764",
+    "protected_text_snapshot_sha256": "9e0878bd54e086e5baf85eb9a90c127ccdbe478f2a8d1ddba3373b9189858a59",
+    "existing_ID_or_normalized_text_matches": 0,
+    "existing_cached_bodies_sent_outside_machine": false
+  },
+  "whole_body_semantics_checked": false,
+  "P8_gold_validation_completed": false,
+  "historical_PIT": false,
+  "original_source_binding_completed": false,
+  "dedup_against_prior_facts_completed": false,
+  "accepted_into_node_study": false,
+  "current_study_capacity_changed": false,
+  "prices_or_outcomes_read": false,
+  "effect_measured": false
+}

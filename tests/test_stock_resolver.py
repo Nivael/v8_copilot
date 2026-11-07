@@ -1,4 +1,4 @@
-from stock_resolver import normalize_stock_name, resolve_stock
+from stock_resolver import normalize_stock_name, resolve_stock, resolve_stocks
 
 
 def test_resolves_current_and_historical_st_names_from_v5_metadata() -> None:
@@ -24,3 +24,16 @@ def test_status_prefix_and_company_suffix_are_not_identity() -> None:
 
 def test_unresolved_name_returns_none_instead_of_guessing() -> None:
     assert resolve_stock("ST不存在为什么被ST？") is None
+
+
+def test_central_huijin_is_not_a_listed_stock_alias() -> None:
+    for question in ["中央汇金的ETF持仓", "中央 汇金投资有限责任公司的公开增持", "中央汇金资产管理有限责任公司"]:
+        assert resolve_stock(question) is None
+        assert resolve_stocks(question) == []
+
+
+def test_institution_mask_preserves_an_explicit_stock_elsewhere_or_by_code() -> None:
+    named = resolve_stock("中央汇金与汇金股份不是同一主体")
+    assert named is not None and named.symbol == "300368"
+    assert [row.symbol for row in resolve_stocks("中央汇金与汇金股份不是同一主体")] == ["300368"]
+    assert resolve_stock("中央汇金的持仓；另查300368").symbol == "300368"

@@ -1,32 +1,40 @@
-import {Activity, BarChart3, BookOpenCheck, FileClock, MessageSquareText} from 'lucide-react'
-import {Link, NavLink, Route, Routes} from 'react-router-dom'
-import {Copilot} from './Copilot'
-import {DossierPage} from './DossierPage'
-import {ExperienceCenter} from './ExperienceCenter'
-import {RunAudit} from './RunAudit'
-import {DailyIntelligencePage} from './DailyIntelligencePage'
+import {lazy,Suspense} from 'react'
+import {Link, Navigate, NavLink, Route, Routes} from 'react-router-dom'
+import {MarketOverview} from './MarketOverview'
+import {ExperienceHub} from './ExperienceHub'
+
+const Copilot=lazy(()=>import('./Copilot').then(module=>({default:module.Copilot})))
+const DossierPage=lazy(()=>import('./DossierPage').then(module=>({default:module.DossierPage})))
+const ExperienceCenter=lazy(()=>import('./ExperienceCenter').then(module=>({default:module.ExperienceCenter})))
+const RunAudit=lazy(()=>import('./RunAudit').then(module=>({default:module.RunAudit})))
+const DailyIntelligencePage=lazy(()=>import('./DailyIntelligencePage').then(module=>({default:module.DailyIntelligencePage})))
+const LearningPage=lazy(()=>import('./LearningPage').then(module=>({default:module.LearningPage})))
+const MarketRiskPage=lazy(()=>import('./MarketRiskPage').then(module=>({default:module.MarketRiskPage})))
 
 export function App() {
   return (
     <div className="shell">
       <header className="top">
-        <Link className="brand" to="/"><span>ST</span>Research Workbench</Link>
+        <Link className="brand" to="/market"><span>ST</span>研究台</Link>
         <nav>
-          <NavLink to="/" end><BookOpenCheck size={16}/>经验中心</NavLink>
-          <NavLink to="/legacy"><MessageSquareText size={16}/>研究问答（兼容）</NavLink>
-          <NavLink to="/stocks/603398"><BarChart3 size={16}/>个股证据</NavLink>
-          <NavLink to="/runs"><FileClock size={16}/>运行审计</NavLink>
-          <NavLink to="/daily"><Activity size={16}/>每日观察</NavLink>
+          <NavLink to="/market">市场判断</NavLink>
+          <NavLink to="/learning">跟踪与经验</NavLink>
         </nav>
       </header>
       <main>
-        <Routes>
-          <Route path="/" element={<ExperienceCenter/>}/>
+        <Suspense fallback={<p className="reading-page" role="status">正在打开…</p>}><Routes>
+          <Route path="/market" element={<MarketOverview/>}/>
+          <Route path="/learning" element={<ExperienceHub/>}/>
+          <Route path="/" element={<Navigate to="/market" replace/>}/>
+          <Route path="/market/evidence" element={<MarketRiskPage/>}/>
+          <Route path="/methods" element={<ExperienceCenter/>}/>
+          <Route path="/system" element={<LearningPage/>}/>
           <Route path="/legacy" element={<Copilot/>}/>
           <Route path="/stocks/:symbol" element={<DossierPage/>}/>
           <Route path="/runs" element={<RunAudit/>}/>
           <Route path="/daily" element={<DailyIntelligencePage/>}/>
-        </Routes>
+          <Route path="*" element={<div className="reading-page"><h1>这个页面已调整</h1><Link to="/market">回到市场判断 →</Link></div>}/>
+        </Routes></Suspense>
       </main>
     </div>
   )

@@ -68,17 +68,23 @@ data-debt identity.
 
 ## P2.3 real-question gate
 
-`real_question_answerability_set_v1.jsonl` adds 14 non-demo questions covering
+`real_question_answerability_set_v2.jsonl` retains the 14 original questions and adds four
+explicit-year variants, covering
 new ST announcements, announcement/price cutoff conflicts, factual agreement
 searches, readable price summaries, the Mubon platform interval, partial
 data-debt answers, directional Lens boundaries, and multi-stock fallback.
 
-This gate checks required and forbidden Narrative content as well as route,
+Yearless dates now require a date-identity gap and forbid automatically selected bodies or
+event-price windows. The explicit-year variants retain the original body and price requirements.
+The v1 input remains an unchanged historical baseline; its old year-inference expectations
+are superseded, not a current passing gate.
+
+This gate checks required and forbidden Narrative content, row prefixes and required gaps as well as route,
 symbol, AnswerCard presence, and query-row backing. It therefore detects cases
 where a response is structurally legal but answers the wrong question.
 
 ```bash
-uv run python evals/run_real_question_eval_v1.py
+uv run python evals/run_real_question_eval_v2.py
 ```
 
 The two July 2026 announcement cases require the validated local CNINFO refresh

@@ -1,0 +1,25 @@
+{
+  "version": "szse_st_price_reference_plan_v1",
+  "purpose": "Retrospective descriptive price reference for SZSE risk-warning ordinary A shares; not a tradable portfolio, causal test or prediction",
+  "start": "2026-09-04",
+  "through": "2026-11-04",
+  "anchor_on": "2026-09-03",
+  "anchor_members": 118,
+  "anchor_digest": "a0245cbec07af8b5a314b2f69fbe9f6a48fde7efc70fabb795d679106a258ac6",
+  "history_digest": "dc6a7a25015ef5a3d6aec1f50cede1b6e60d56ced8839050e7e1f741cb05e730",
+  "risk_list_digest": "a3bacca23d2a224e7cc087e3db7cf9f2484f50bdd006452e774494cceb1a36cc",
+  "membership": "Apply all reviewed effective-date changes to the dated anchor; require exact equality with each complete historical report's ST-marked A-share set and reconcile the endpoint with the separately dated exchange list",
+  "source_selection": "SZSE is selected because complete unfiltered historical reports exist; no source or threshold selected using reference returns",
+  "return_basis": "Official closing price / official previous-close reference - 1 for members with a valid trade; arithmetic mean across observed members of that day",
+  "reference_path": "Compound those daily observed-sample means; rebase the first window close to 100 when comparing with other price references",
+  "minimum_daily_coverage": 0.95,
+  "coverage_basis": "Valid trading observations / all reconstructed members, including suspended members in the denominator",
+  "missingness": "Never fill nontrading or absent observations with zero; retain missing symbols. If any day fails the fixed coverage gate, publish no shortened reference path or window return",
+  "exit_basis": "Remove a stock from the risk-warning category on its documented delisting-period or listing-end effective day; do not assign a zero payoff or infer old-shareholder wealth",
+  "limitations": [
+    "Only SZSE; not a combined SSE/SZSE ST index",
+    "Historical prices and notices were first obtained after the represented dates; no historical point-in-time availability is claimed",
+    "The daily observed-sample basket can change, so its compounded path is a descriptive price reference and not portfolio wealth or total return",
+    "The recent window is a known stress case; this does not evaluate node-versus-market effectiveness or calibrate risk weights"
+  ]
+}

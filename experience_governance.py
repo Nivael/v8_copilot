@@ -12,11 +12,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Literal, Protocol
 from uuid import uuid4
+from xml.etree import ElementTree
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from experience_contract import ExperienceRecord, ExperienceReviewRequest, ExperienceStatus
 from research_repository import ExperienceRepository
+from experience_verification import method_digest, software_digest
 from settings import (
     ACCEPTED_EXPERIENCE_REGISTRY_PATH,
     EXPERIENCE_GOVERNANCE_DB,
@@ -147,7 +149,7 @@ def export_accepted_registry(
     registry_version: str = "v1",
 ) -> AcceptedExperienceRegistry:
     records = []
-    for row in sorted(repository.list(status=ExperienceStatus.ACCEPTED, limit=1000), key=lambda item: item.experience_id):
+    for row in sorted(repository.list(status=ExperienceStatus.ACCEPTED, limit=None), key=lambda item: item.experience_id):
         records.append(AcceptedRegistryRecord(
             experience_id=row.experience_id,
             experience_version=row.experience_version,
@@ -259,20 +261,38 @@ class ExperienceGovernanceRepository:
                 last_checked_at text not null,
                 next_due_at text not null
             );
+            create table if not exists experience_regression_bindings (
+                experience_id text primary key,
+                last_run_id text not null,
+                method_digest text not null,
+                software_digest text not null
+            );
         """)
         return connection
 
-    def due(self, record: ExperienceRecord, *, now: datetime) -> bool:
+    def due(self, record: ExperienceRecord, *, now: datetime, code_digest: str | None = None) -> bool:
         if not self.path.is_file():
             return True
         with sqlite3.connect(f"file:{self.path}?mode=ro", uri=True) as connection:
-            row = connection.execute(
-                "select next_due_at from experience_regression_status where experience_id=?",
-                (record.experience_id,),
-            ).fetchone()
-        return row is None or datetime.fromisoformat(str(row[0])) <= now
+            try:
+                row = connection.execute(
+                    "select s.last_status,s.next_due_at,b.method_digest,b.software_digest,s.last_checked_at "
+                    "from experience_regression_status s left join experience_regression_bindings b "
+                    "on b.experience_id=s.experience_id and b.last_run_id=s.last_run_id "
+                    "where s.experience_id=?", (record.experience_id,),
+                ).fetchone()
+            except sqlite3.OperationalError:
+                return True  # Legacy results are readable, but not bound to current inputs.
+        if row is None or row[0] != "passed" or row[2] != method_digest(record) or row[3] != (code_digest or software_digest()):
+            return True
+        try:
+            due_at = datetime.fromisoformat(str(row[1]))
+            checked_at = datetime.fromisoformat(str(row[4]))
+            return due_at.tzinfo is None or checked_at.tzinfo is None or checked_at > now or due_at <= now
+        except ValueError:
+            return True
 
-    def record(self, report: RegressionReport) -> None:
+    def record(self, report: RegressionReport, *, bindings: dict[str, dict[str, str]] | None = None) -> None:
         next_due = (
             datetime.fromisoformat(report.completed_at) + timedelta(days=report.cadence_days)
         ).isoformat()
@@ -289,6 +309,14 @@ class ExperienceGovernanceRepository:
                     "next_due_at=excluded.next_due_at",
                     (result.experience_id, report.run_id, result.status, report.completed_at, next_due),
                 )
+                binding = (bindings or {}).get(result.experience_id)
+                if binding:
+                    connection.execute(
+                        "insert into experience_regression_bindings values (?,?,?,?) "
+                        "on conflict(experience_id) do update set last_run_id=excluded.last_run_id,"
+                        "method_digest=excluded.method_digest,software_digest=excluded.software_digest",
+                        (result.experience_id, report.run_id, binding["method_digest"], binding["software_digest"]),
+                    )
 
     def latest_report(self) -> RegressionReport | None:
         if not self.path.is_file():
@@ -308,11 +336,21 @@ class PytestRegressionExecutor:
         "regression:source_absence_scope": [
             "tests/test_real_question_recovery.py", "tests/test_evidence_gateway.py",
         ],
-        "regression:entity_scope_boundary": ["tests/test_experience_retrieval.py"],
-        "regression:same_day_evidence_bundle": ["tests/test_experience_retrieval.py"],
-        "regression:right_censoring": ["tests/test_experience_retrieval.py"],
-        "regression:discipline_taxonomy": ["tests/test_experience_retrieval.py"],
-        "regression:point_in_time_universe": ["tests/test_experience_retrieval.py"],
+        "regression:entity_scope_boundary": ["tests/test_experience_retrieval.py", "tests/test_p2_4_analysis_engine.py", "tests/test_research_judgments.py"],
+        "regression:same_day_evidence_bundle": ["tests/test_experience_retrieval.py", "tests/test_experience_semantics.py::test_same_day_bundles_keep_issuer_date_and_sources_separate"],
+        "regression:right_censoring": ["tests/test_experience_retrieval.py", "tests/test_experience_semantics.py::test_history_dedupes_cases_and_keeps_unobserved_followups", "tests/test_experience_semantics.py::test_conflicting_duplicate_case_fails_instead_of_choosing_an_outcome"],
+        "regression:point_in_time_universe": ["tests/test_experience_retrieval.py", "tests/test_universe.py"],
+        # Verifies review construction boundaries, not causal identification or
+        # empirical profitability/generalization of a lesson.
+        "regression:event_learning_chronology": ["tests/test_event_learning.py"],
+    }
+    UNVERIFIED_REASONS = {
+        "regression:discipline_taxonomy": "已加入正式来源逐条事实的匹配约束，但没有处分类型、受罚对象与时点的完整语义检查；逐字匹配和主题检索均不等于方法复验通过。",
+    }
+    PARTIAL_TARGETS = {
+        # Execute these checks during audits without certifying the wider method
+        # or making this validation_ref eligible for automatic promotion.
+        "regression:discipline_taxonomy": ["tests/test_discipline_backing.py"],
     }
     ALLOWED_TEST_FILES = {
         "tests/test_recruitment_precedent.py",
@@ -328,24 +366,52 @@ class PytestRegressionExecutor:
 
     def run(self, validation_ref: str) -> RegressionCheckResult:
         targets = self.NAMED_TARGETS.get(validation_ref)
+        partial_scope = validation_ref in self.PARTIAL_TARGETS
+        if targets is None and partial_scope:
+            targets = self.PARTIAL_TARGETS[validation_ref]
         if targets is None and validation_ref in self.ALLOWED_TEST_FILES:
             targets = [validation_ref]
         if targets is None:
             return RegressionCheckResult(
                 validation_ref=validation_ref, status="unverified",
-                detail="validation_ref 尚未绑定到允许执行的回归检查。",
+                detail=self.UNVERIFIED_REASONS.get(validation_ref, "validation_ref 尚未绑定到允许执行的回归检查。"),
             )
         environment = dict(os.environ)
         environment.setdefault("UV_CACHE_DIR", str(self.project_root / ".uv-cache"))
-        process = subprocess.run(
-            ["uv", "run", "pytest", "-q", *targets], cwd=self.project_root,
-            env=environment, capture_output=True, text=True, timeout=900, check=False,
-        )
+        try:
+            with tempfile.TemporaryDirectory(prefix="v8-experience-regression-") as temporary:
+                report_path = Path(temporary) / "pytest.xml"
+                process = subprocess.run(
+                    ["uv", "run", "--frozen", "pytest", "-q", *targets, "--junitxml", str(report_path)],
+                    cwd=self.project_root, env=environment, capture_output=True, text=True, timeout=900, check=False,
+                )
+                report = ElementTree.parse(report_path)
+                cases = list(report.iter("testcase"))
+                failures = sum(case.find("failure") is not None for case in cases)
+                errors = sum(case.find("error") is not None for case in cases)
+                skipped = sum(case.find("skipped") is not None for case in cases)
+        except (OSError, subprocess.TimeoutExpired, ElementTree.ParseError) as exc:
+            return RegressionCheckResult(validation_ref=validation_ref, status="unverified",
+                                         detail=f"回归未能完成：{type(exc).__name__}")
         output = (process.stdout + "\n" + process.stderr).strip()[-4000:]
+        status = "unverified"
+        if cases and not errors and not skipped:
+            if process.returncode == 0 and not failures:
+                status = "passed"
+            elif process.returncode == 1 and failures:
+                status = "failed"
+        scope_note = ""
+        if partial_scope:
+            if status == "passed":
+                status = "unverified"
+                scope_note = "局部事实匹配检查通过，完整方法仍未验证。"
+            else:
+                scope_note = "局部事实匹配检查未通过或未完成，不能确认完整方法。"
+            scope_note += self.UNVERIFIED_REASONS[validation_ref] + "\n"
         return RegressionCheckResult(
             validation_ref=validation_ref,
-            status="passed" if process.returncode == 0 else "failed",
-            detail=output or f"pytest exit {process.returncode}",
+            status=status,
+            detail=f"{scope_note}tests={len(cases)}, failures={failures}, errors={errors}, skipped={skipped}; pytest exit {process.returncode}\n{output}",
         )
 
 
@@ -360,15 +426,24 @@ def run_due_regressions(
 ) -> RegressionReport:
     started = _now()
     now = datetime.now(timezone.utc)
-    accepted = repository.list(status=ExperienceStatus.ACCEPTED, limit=1000)
-    selected = [row for row in accepted if not due_only or governance.due(row, now=now)]
+    verification_root = getattr(executor, "project_root", PROJECT_ROOT)
+    code = software_digest(verification_root)
+    accepted = repository.list(status=ExperienceStatus.ACCEPTED, limit=None)
+    selected = [row for row in accepted if not due_only or governance.due(row, now=now, code_digest=code)]
+    bindings = {row.experience_id: {"method_digest": method_digest(row), "software_digest": code} for row in selected}
     cache: dict[str, RegressionCheckResult] = {}
     results: list[ExperienceRegressionResult] = []
     for record in selected:
         checks = []
         for validation_ref in record.validation_refs:
             if validation_ref not in cache:
-                cache[validation_ref] = executor.run(validation_ref)
+                try:
+                    cache[validation_ref] = executor.run(validation_ref)
+                except Exception as exc:
+                    cache[validation_ref] = RegressionCheckResult(
+                        validation_ref=validation_ref, status="unverified",
+                        detail=f"回归执行异常：{type(exc).__name__}",
+                    )
             checks.append(cache[validation_ref])
         if any(check.status == "failed" for check in checks):
             result_status: Literal["passed", "failed", "unverified"] = "failed"
@@ -376,17 +451,25 @@ def run_due_regressions(
             result_status = "unverified"
         else:
             result_status = "passed"
-        auto_blocked = False
-        if result_status == "failed":
-            repository.review(record.experience_id, ExperienceReviewRequest(
+        results.append(ExperienceRegressionResult(
+            experience_id=record.experience_id, status=result_status,
+            checks=checks,
+        ))
+    code_changed = software_digest(verification_root) != code
+    for result in results:
+        current = repository.get(result.experience_id)
+        if code_changed or method_digest(current) != bindings[result.experience_id]["method_digest"]:
+            result.status = "unverified"
+            result.checks.append(RegressionCheckResult(
+                validation_ref="verification_input_binding", status="unverified",
+                detail="验证期间方法、代码或规则配置发生变化；本轮不接受或封禁方法。",
+            ))
+        if result.status == "failed":
+            repository.review(result.experience_id, ExperienceReviewRequest(
                 action="block", actor_type="system", reviewed_by="experience_regression_runner",
                 note="定期回归失败，自动 blocked；修复并由 owner 复审后方可重新接受。",
             ))
-            auto_blocked = True
-        results.append(ExperienceRegressionResult(
-            experience_id=record.experience_id, status=result_status,
-            checks=checks, auto_blocked=auto_blocked,
-        ))
+            result.auto_blocked = True
     report = RegressionReport(
         run_id=f"XRG-{uuid4().hex[:20].upper()}", started_at=started,
         completed_at=_now(), cadence_days=cadence_days, due_only=due_only,
@@ -396,7 +479,7 @@ def run_due_regressions(
         unverified=sum(row.status == "unverified" for row in results),
         results=results,
     )
-    governance.record(report)
+    governance.record(report, bindings=bindings)
     if any(row.auto_blocked for row in results):
         export_accepted_registry(repository, output=registry_output)
     return report
@@ -406,7 +489,7 @@ def governance_status(
     repository: ExperienceRepository,
     governance: ExperienceGovernanceRepository,
 ) -> dict[str, Any]:
-    records = repository.list(limit=1000)
+    records = repository.list(limit=None)
     conflicts = detect_experience_conflicts([
         row for row in records if row.status in {ExperienceStatus.CANDIDATE, ExperienceStatus.ACCEPTED}
     ])

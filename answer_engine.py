@@ -27,6 +27,7 @@ from datetime import date, timedelta
 from typing import Any, Iterable
 
 from announcement_inventory import OfficialAnnouncement, load_announcement_inventory
+from announcement_question_dates import announcement_date_scope
 from announcement_body import (
     AnnouncementBodyError,
     load_announcement_body,
@@ -409,6 +410,9 @@ def _attach_microcap_comparison(
             **{
                 "记录类型": "市值分层缺口",
                 "缺口": "市场共同交易日窗口不可用，无法绑定窗口起点市值",
+                "gap_stage": "market_window",
+                "factor_snapshot_id": "unavailable",
+                "factor_lookup_executed": False,
             },
         ))
         card.analysis_claims.append(AnalysisClaim(
@@ -589,20 +593,8 @@ def card_next_node_gap(
 
 
 def _question_claimed_date(question: str) -> str:
-    normalized = re.sub(r"\s+", "", question)
-    full = re.search(r"(20\d{2})年?(\d{1,2})月(\d{1,2})(?:日|号)?", normalized)
-    if full:
-        try:
-            return date(int(full.group(1)), int(full.group(2)), int(full.group(3))).isoformat()
-        except ValueError:
-            return ""
-    short = re.search(r"(\d{1,2})月(\d{1,2})(?:日|号)", normalized)
-    if short:
-        try:
-            return date(date.today().year, int(short.group(1)), int(short.group(2))).isoformat()
-        except ValueError:
-            return ""
-    return ""
+    scope=announcement_date_scope(question)
+    return scope.full_dates[0] if not scope.unresolved and len(scope.full_dates)==1 else ''
 
 
 def card_recruitment_limit_down_precedent(
@@ -630,31 +622,40 @@ def card_recruitment_limit_down_precedent(
         price_as_of=price_snapshot.as_of,
     )
     rows: list[dict[str, Any]] = []
+    date_scope=announcement_date_scope(question)
     claimed_date = _question_claimed_date(question)
+    price_covered=(current_price_snapshot.min_date<=claimed_date<=current_price_snapshot.as_of) if claimed_date else None
     current_deadlines = sorted(
         case.recruitment_deadline for case in cases
         if symbol and case.symbol == symbol and case.subject_scope == "listed_company"
     )
-    if claimed_date:
+    matching_windows=[case for case in cases if claimed_date and symbol==case.symbol
+                      and case.subject_scope=='listed_company'
+                      and case.announcement_date<=claimed_date<=case.recruitment_deadline]
+    if date_scope.constrained:
         rows.append(_row(
             "question_price_premise",
             **{
                 "记录类型": "题面当日价格前提",
                 "股票": symbol or "题面未绑定股票",
-                "题面日期": claimed_date,
+                "题面日期": claimed_date or None,
+                "日期确认": '完整日期' if claimed_date else '多个完整日期' if len(date_scope.full_dates)>1 else date_scope.label,
+                "题面日期原文": date_scope.display,
                 "题面陈述": "当日跌停" if "跌停" in question else "当日价格异动",
+                "本地价格起始": current_price_snapshot.min_date,
                 "本地价格截至": current_price_snapshot.as_of,
-                "本地是否覆盖": claimed_date <= current_price_snapshot.as_of,
+                "本地是否覆盖": price_covered,
                 "本地公司公告口径招募截止日": (
                     current_deadlines[-1] if current_deadlines else "未材料化"
                 ),
                 "本地是否验证处于招募截止前": (
-                    claimed_date <= current_deadlines[-1]
-                    if current_deadlines else "未验证"
+                    True if matching_windows else "未验证"
                 ),
+                "匹配招募窗口": [{'巨潮公告ID':case.announcement_id,'招募公告日':case.announcement_date,
+                                 '报名截止日':case.recruitment_deadline} for case in matching_windows],
                 "处理方式": (
                     "当前价格与招募窗口单独核对，不纳入历史样本计算"
-                    if claimed_date <= current_price_snapshot.as_of and current_deadlines
+                    if price_covered and matching_windows
                     else "当前价格或招募窗口作为未独立核验前提，不纳入历史样本计算"
                 ),
             },
@@ -715,6 +716,13 @@ def card_recruitment_limit_down_precedent(
         claim_type="fact",
         backing=BackingRef(kind="query_row", ref=summary_id),
     )]
+    if date_scope.constrained and not claimed_date:
+        date_gap=LensGap(gap_id='question_price_date_unresolved',missing_for='题面当日的完整日期',
+                        sediment_as='question_card:question_price_date_unresolved',
+                        note='题面当日的年份、有效日期或多个日期的指代尚未确认；不借用机器当前年份，历史先例单独计算。')
+        gaps.append(date_gap)
+        claims.append(AnalysisClaim(text=date_gap.note,claim_type='data_gap',
+            backing=BackingRef(kind='lens_gap',ref=date_gap.gap_id)))
     if materialization_error:
         claims.append(AnalysisClaim(
             text="公开招募截止日尚未完成本地材料化，当前不能把公告日当作截止日替代计算。",
@@ -1396,7 +1404,7 @@ def card_stock_research_overview(
     card = card_st_status_timeline(symbol)
     card.question = question
     matched_announcements: list[OfficialAnnouncement] = []
-    explicit_announcement_boundary: str | None = None
+    date_scope = announcement_date_scope(question)
 
     if requested & {"shareholder_count", "equity", "capital_structure", "control_structure"}:
         control_records = _REGISTRY.candidate_lenses(
@@ -1416,19 +1424,6 @@ def card_stock_research_overview(
             refresh_dir=ANNOUNCEMENT_REFRESH_DIR,
         )
         normalized_question = "".join(question.lower().split())
-        full_dates = {
-            f"{year}-{int(month):02d}-{int(day):02d}"
-            for year, month, day in re.findall(
-                r"(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})日?",
-                normalized_question,
-            )
-        }
-        month_days = {
-            f"-{int(month):02d}-{int(day):02d}"
-            for month, day in re.findall(r"(?<!\d)(\d{1,2})月(\d{1,2})日", normalized_question)
-        }
-        if full_dates:
-            month_days = set()
         term_groups = (
             ("投资协议", ("投资协议", "重整投资协议")),
             ("公开招募", ("公开招募", "招募", "重整投资人")),
@@ -1450,9 +1445,9 @@ def card_stock_research_overview(
 
         def matches_question(record: OfficialAnnouncement) -> bool:
             date_matches = (
-                not full_dates and not month_days
-                or record.announcement_date in full_dates
-                or any(record.announcement_date.endswith(item) for item in month_days)
+                not date_scope.constrained
+                or record.announcement_date in date_scope.full_dates
+                or any(record.announcement_date.endswith(item) for item in date_scope.month_days)
             )
             title_matches = not required_term_groups or all(
                 any(term in record.title for term in group)
@@ -1460,15 +1455,26 @@ def card_stock_research_overview(
             )
             return date_matches and title_matches
 
-        matched_announcements = [
+        date_candidates = [
             record for record in inventory.records if matches_question(record)
-        ] if full_dates or month_days or search_terms else []
-        if matched_announcements and (full_dates or month_days):
-            explicit_announcement_boundary = matched_announcements[0].announcement_date
-        selected_announcements = list(dict.fromkeys([
-            *matched_announcements,
-            *inventory.records[:8],
-        ]))[:8]
+        ] if date_scope.constrained or search_terms else []
+        matched_announcements = [] if date_scope.unresolved else date_candidates
+        resolution_note = ''
+        if date_scope.invalid_dates:
+            resolution_note = '题面日期无效，需要先核对日期；未用最近公告替代指定公告。'
+        elif date_scope.month_days:
+            resolution_note = '题面只写了月日，年份尚未确认；未把历年同月同日候选认定为本次公告。需核对原提问年份或明确公告链接。'
+        elif date_scope.constrained and len(matched_announcements)>1:
+            resolution_note = '指定日期与关键词命中多份公告，需要明确标题或公告链接，未自动选择其中一份解释。'
+        if resolution_note:
+            gap=LensGap(gap_id='announcement_date_unresolved',missing_for='本次公告的完整日期与唯一身份',
+                        sediment_as='question_card:announcement_date_unresolved',note=resolution_note)
+            card.lens_gap.append(gap)
+            card.analysis_claims.append(AnalysisClaim(text=resolution_note,claim_type='data_gap',
+                backing=BackingRef(kind='lens_gap',ref=gap.gap_id)))
+        selected_announcements = (matched_announcements[:8] if date_scope.constrained else list(dict.fromkeys([
+            *matched_announcements, *inventory.records[:8],
+        ]))[:8])
         existing_ids = {
             str(row.get("巨潮公告ID"))
             for row in card.body_rows
@@ -1499,11 +1505,12 @@ def card_stock_research_overview(
         body_focus = any(term in normalized_question for term in (
             "说了什么", "公告内容", "具体内容", "最新公告", "主要内容",
         ))
-        body_record = (
-            matched_announcements[0]
-            if matched_announcements
-            else (selected_announcements[0] if body_focus and selected_announcements else None)
-        )
+        body_record = None
+        if not resolution_note:
+            if matched_announcements:
+                body_record = matched_announcements[0]
+            elif not date_scope.constrained and body_focus and selected_announcements:
+                body_record = selected_announcements[0]
         if body_record is not None:
             try:
                 body = load_announcement_body(
@@ -1553,20 +1560,18 @@ def card_stock_research_overview(
                     claim_type="data_gap",
                     backing=BackingRef(kind="lens_gap", ref=gap.gap_id),
                 ))
-        if full_dates or month_days or search_terms:
+        if date_scope.constrained or search_terms:
             latest_match = matched_announcements[0] if matched_announcements else None
             card.body_rows.append(_row(
                 "announcement_query_summary",
                 **{
                     "记录类型": "题面公告检索",
-                    "检索日期": (
-                        ", ".join(sorted(full_dates))
-                        if full_dates
-                        else ", ".join(
-                            f"{int(value[1:3])}月{int(value[4:6])}日"
-                            for value in sorted(month_days)
-                        ) or "未限定"
-                    ),
+                    "检索日期": date_scope.display,
+                    "日期确认": date_scope.label,
+                    "待确认事项": resolution_note,
+                    "待确认候选": [{'日期':r.announcement_date,'巨潮公告ID':r.announcement_id,'标题':r.title,'原文链接':r.url}
+                                  for r in date_candidates[:8]] if resolution_note else [],
+                    "候选总数": len(date_candidates),
                     "标题关键词": ", ".join(search_terms) or "未限定",
                     "标题与日期命中数": len(matched_announcements),
                     "最近命中": (
@@ -1594,6 +1599,8 @@ def card_stock_research_overview(
             card.provenance.append(
                 f"local_data/v8_copilot/announcement_refresh/{symbol}.json"
             )
+        if date_scope.constrained:
+            card.caveats.append('指定日期仅用于定位公告；其他维度仍按各自本地快照展示，不构成原提问当时的完整可知信息回放。')
 
     if "price" in requested:
         with _db() as connection:
@@ -1674,7 +1681,7 @@ def card_stock_research_overview(
                 gap_id="stock_price_coverage",
                 missing_for=f"{symbol} 的前复权价格窗口",
                 sediment_as="question_card:stock_price_coverage",
-                note="当前只读价格快照无该股票记录。",
+                note="当前只读快照没有该股票的前复权日线。",
             )
             card.lens_gap.append(gap)
             card.analysis_claims.append(AnalysisClaim(
@@ -1812,15 +1819,8 @@ def card_stock_research_overview(
     card.sample_scope += f"；按题面加载维度：{loaded_dimensions}"
     relevant_freshness: list[str] = []
     if "announcement" in requested:
-        # A question anchored to an explicit announcement date is answered at
-        # that event boundary.  Keep the inventory freshness separately, but
-        # do not let a later refresh silently move the answer's as-of date.
-        announcement_boundary = (
-            explicit_announcement_boundary
-            or card.source_freshness["company_announcements_as_of"]
-        )
-        relevant_freshness.append(announcement_boundary)
-    if "price" in requested:
+        relevant_freshness.append(card.source_freshness["company_announcements_as_of"])
+    if "price" in requested and "price_data_as_of" in card.source_freshness:
         relevant_freshness.append(card.source_freshness["price_data_as_of"])
     if "shareholder_count" in requested:
         relevant_freshness.append(card.source_freshness["shareholder_count_as_of"])
@@ -1836,7 +1836,7 @@ def card_stock_research_overview(
         ])
     if any(term in normalized_question for term in ("已分类", "事件节点", "关键节点")):
         relevant_freshness.append(card.source_freshness["episode_index_as_of"])
-    if any(term in normalized_question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
+    if date_scope.constrained or any(term in normalized_question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
         status_rows = [
             row for row in card.body_rows if row.get("记录类型") == "状态区间"
         ]
@@ -1864,7 +1864,7 @@ def card_stock_research_overview(
                 claim_type="caveat",
                 backing=BackingRef(kind="query_row", ref="analysis_freshness_boundary"),
             ))
-    if any(term in normalized_question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
+    if date_scope.constrained or any(term in normalized_question for term in ("分析一下", "分析下", "综合分析", "整体分析")):
         analysis_dates = [
             str(value)[:10]
             for row in card.body_rows
@@ -1872,9 +1872,15 @@ def card_stock_research_overview(
             if key in {"开始日", "日期", "截至", "报告期"}
             and re.fullmatch(r"20\d{2}-\d{2}-\d{2}", str(value)[:10])
         ]
+        if date_scope.constrained:
+            # Search dates identify documents, not a historical snapshot of the
+            # other included dimensions or of the inventory used to find them.
+            analysis_dates.extend(str(value)[:10] for key,value in card.source_freshness.items()
+                                  if not key.endswith('_checked_at')
+                                  and re.fullmatch(r'20\d{2}-\d{2}-\d{2}',str(value)[:10]))
         card.as_of = max(analysis_dates) if analysis_dates else limiting_as_of(*card.source_freshness.values())
     else:
-        card.as_of = explicit_announcement_boundary or limiting_as_of(*(
+        card.as_of = limiting_as_of(*(
             relevant_freshness or list(card.source_freshness.values())
         ))
     card.data_snapshot_as_of = card.as_of
@@ -1911,6 +1917,7 @@ def _historical_next_restructuring_rows(
     next_stage_transitions: list[tuple[str, int]] = []
     triggers: list[tuple[str, str, str]] = []
     stage_observed_triggers: set[tuple[str, str, str]] = set()
+    outcomes_by_trigger: dict[tuple[str, str, str], tuple[str, str] | None] = {}
 
     subsidiary_terms = ("孙公司", "子公司")
     related_entity_terms = (*subsidiary_terms, "控股股东")
@@ -1944,8 +1951,8 @@ def _historical_next_restructuring_rows(
         # current stage so frequent progress notices do not overweight a case.
         index, event_date, _ = eligible[-1]
         trigger_key = (episode_id, symbol, event_date)
-        triggers.append(trigger_key)
         start = _pd(event_date)
+        outcome = None
         for next_date, next_title in events[index + 1:]:
             if not subject_matches(next_title):
                 continue
@@ -1955,9 +1962,17 @@ def _historical_next_restructuring_rows(
             next_stage_label = _restructuring_stage(next_title)
             if next_stage_label in {stage, "非重整节点"}:
                 continue
-            stage_observed_triggers.add(trigger_key)
-            next_stage_transitions.append((next_stage_label, (end - start).days))
+            outcome = (next_stage_label, next_date)
             break
+        if trigger_key in outcomes_by_trigger:
+            if outcomes_by_trigger[trigger_key] != outcome:
+                raise ValueError("同一历史起点存在矛盾后续；不能选择其一计算分布")
+            continue
+        outcomes_by_trigger[trigger_key] = outcome
+        triggers.append(trigger_key)
+        if outcome is not None:
+            stage_observed_triggers.add(trigger_key)
+            next_stage_transitions.append((outcome[0], (_pd(outcome[1]) - start).days))
 
     def announcement_category(title: str) -> str:
         stage_label = _restructuring_stage(title)

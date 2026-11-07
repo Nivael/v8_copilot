@@ -1,0 +1,59 @@
+{
+  "version": "sse_st_reconstructed_transitions_v1",
+  "events": [
+    {
+      "symbol": "600363",
+      "published_on": "2026-09-29",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225584110.PDF",
+      "observed_at": "2026-11-05T06:06:30.930314+00:00",
+      "raw_sha256": "0e57d98df61f9060eb3e6f29eda39ef9ce0e079b9d0c1b32703249fa4f3d3228",
+      "text_sha256": "a5184312984d581f63a3635ecb7690a73d274a86d4c7e8bba2c26eb129be1103",
+      "page_count": 4,
+      "raw_bytes": 125209,
+      "text_bytes": 8657,
+      "effective_on": "2026-09-30",
+      "kind": "warning_added",
+      "old_name": "联创光电",
+      "new_name": "ST联光",
+      "company": "江西联创光电科技股份有限公司",
+      "proof_page": 2,
+      "date_label": "实施其他风险警示的起始日"
+    },
+    {
+      "symbol": "603517",
+      "published_on": "2026-10-19",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF",
+      "observed_at": "2026-11-05T06:06:31.977645+00:00",
+      "raw_sha256": "33531fddb6a838242c0f899ca394c470c2e910fa4dc266796cff8b71b4d7cec0",
+      "text_sha256": "eb0ee27469a0d1b99141ee4527ca209a5ddc482ae2abdb815f36606f4cc7c3d1",
+      "page_count": 3,
+      "raw_bytes": 113748,
+      "text_bytes": 5238,
+      "effective_on": "2026-10-20",
+      "kind": "warning_removed",
+      "old_name": "ST绝味",
+      "new_name": "绝味食品",
+      "company": "绝味食品股份有限公司",
+      "proof_page": 1,
+      "date_label": "撤销其他风险警示的起始日"
+    },
+    {
+      "symbol": "603838",
+      "published_on": "2026-10-17",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF",
+      "observed_at": "2026-11-05T06:06:32.174599+00:00",
+      "raw_sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7",
+      "text_sha256": "2e6ba55ebf0553604b7fd84f4bb364e1345ba9ed5a9263aedbc2c5b624ffd0d5",
+      "page_count": 3,
+      "raw_bytes": 92751,
+      "text_bytes": 4243,
+      "effective_on": "2026-10-20",
+      "kind": "warning_removed",
+      "old_name": "*ST四通",
+      "new_name": "四通股份",
+      "company": "广东四通集团股份有限公司",
+      "proof_page": 1,
+      "date_label": "撤销退市风险警示的起始日"
+    }
+  ]
+}

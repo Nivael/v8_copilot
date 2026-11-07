@@ -1,6 +1,8 @@
 import {CheckCircle2, ChevronDown, Clock3, FileClock, MessageSquarePlus, Scale, ShieldAlert} from 'lucide-react'
 import {useEffect, useMemo, useState} from 'react'
-import {getEvidencePack, getResearchRuns, submitRunFeedback} from './api'
+import {getEvidencePack, getResearchCorrections, getResearchRun, getResearchRuns, submitRunFeedback} from './api'
+import {ResearchCorrectionNotice} from './ResearchCorrectionNotice'
+import type {ResearchCorrection,ResearchCorrectionNote} from './ResearchCorrectionNotice'
 import type {
   DecisionAudit, EvidenceBacking, EvidencePackAuditRecord, ResearchRun,
 } from './types'
@@ -115,16 +117,31 @@ function EvidencePackView({packId,run}:{packId:string;run:ResearchRun}) {
 
 export function RunAudit() {
   const [runs,setRuns]=useState<ResearchRun[]>([])
+  const [corrections,setCorrections]=useState<ResearchCorrection[]>([])
+  const [focusId,setFocusId]=useState('')
+  const [linkError,setLinkError]=useState('')
   const [loading,setLoading]=useState(true)
   const [error,setError]=useState('')
 
   useEffect(()=>{
     const controller=new AbortController()
-    getResearchRuns(controller.signal).then(setRuns).catch(reason=>{
-      if(!(reason instanceof DOMException&&reason.name==='AbortError'))setError('无法读取本地运行审计。')
+    Promise.all([getResearchRuns(controller.signal),getResearchCorrections(controller.signal)]).then(([records,notes])=>{setRuns(records);setCorrections(notes)}).catch(reason=>{
+      if(!(reason instanceof DOMException&&reason.name==='AbortError'))setError('暂时无法读取研究记录或更正，请稍后重试。')
     }).finally(()=>{if(!controller.signal.aborted)setLoading(false)})
     return()=>controller.abort()
   },[])
+
+  useEffect(()=>{if(focusId)document.getElementById(`research-${focusId}`)?.scrollIntoView({block:'start'})},[focusId,runs])
+
+  async function openCorrection(id:string){
+    setLinkError('')
+    const existing=document.getElementById(`research-${id}`)
+    if(existing){existing.scrollIntoView({block:'start'});return}
+    try{
+      const record=await getResearchRun(id)
+      setRuns(previous=>previous.some(run=>run.run_id===id)?previous:[record,...previous]);setFocusId(id)
+    }catch{setLinkError('关联的研究暂时无法打开，请稍后重试。')}
+  }
 
   return (
     <div className="audit-page">
@@ -132,15 +149,19 @@ export function RunAudit() {
       {loading&&<p className="experience-empty">正在读取运行记录…</p>}
       {error&&<p className="experience-error" role="alert">{error}</p>}
       {!loading&&!error&&runs.length===0&&<section className="experience-empty"><h2>还没有 Codex 研究运行</h2><p>通过项目 skill 完成并校验的研究会记录在这里。</p></section>}
+      {linkError&&<p role="alert">{linkError}</p>}
       <section className="audit-list">
-        {runs.map(run=><article key={run.run_id}>
-          <header><div><span>{run.agent_surface}</span><h2>{run.question_text}</h2></div>{run.validation_report.valid?<CheckCircle2 className="valid" aria-label="校验通过"/>:<ShieldAlert className="invalid" aria-label="校验未通过"/>}</header>
+        {runs.map(run=>{
+          const notes:ResearchCorrectionNote[]=corrections.filter(note=>note.old_run_id===run.run_id||note.replacement_run_id===run.run_id).map(note=>({...note,role:note.old_run_id===run.run_id?'corrected_study':'replacement_study'}))
+          const corrected=notes.some(note=>note.role==='corrected_study')
+          return <article key={run.run_id} id={`research-${run.run_id}`}>
+          {notes.map(note=><ResearchCorrectionNotice key={note.old_run_id+note.role} note={note} onOpen={id=>void openCorrection(id)}/>)}
+          <header><div><span>{run.agent_surface}</span><h2>{run.question_text}</h2></div>{!corrected&&(run.validation_report.valid?<CheckCircle2 className="valid" aria-label="校验通过"/>:<ShieldAlert className="invalid" aria-label="校验未通过"/>)}</header>
           <div className="audit-meta"><span><Clock3 size={13}/>{new Date(run.created_at).toLocaleString('zh-CN')}</span><span>{run.normalized_intent}</span><span>{run.evidence_pack_ids.length} 个 EvidencePack</span><span>{run.experience_candidate_ids.length} 个经验候选</span></div>
-          <details><summary>查看回答与基础审计</summary><pre>{run.final_answer}</pre><dl>{Object.entries(run.source_freshness).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><pre>{JSON.stringify(run.validation_report,null,2)}</pre></details>
-          {isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}
-          <RunFeedback run={run}/>
+          <details><summary>{corrected?'查看旧研究原文（含已更正内容）':'查看回答与基础审计'}</summary><pre>{run.final_answer}</pre><dl>{Object.entries(run.source_freshness).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><pre>{JSON.stringify(run.validation_report,null,2)}</pre></details>
+          {corrected?<details><summary>原判断说明（含已更正内容）</summary>{isDecisionAudit(run.decision_audit)&&<DecisionAuditView audit={run.decision_audit}/>}</details>:<>{isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}<RunFeedback run={run}/></>}
           <section className="pack-list" aria-label="EvidencePack 列表"><h3>EvidencePack</h3>{run.evidence_pack_ids.map(packId=><EvidencePackView key={packId} packId={packId} run={run}/>)}</section>
-        </article>)}
+        </article>})}
       </section>
     </div>
   )

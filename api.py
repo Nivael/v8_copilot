@@ -10,7 +10,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response,StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -42,6 +42,9 @@ from experience_contract import (
     ExperienceStatus,
 )
 from experience_auto_accept import auto_accept_candidate
+from learning_status import build_learning_status
+from market_risk import build_market_risk_status
+from workbench_views import get_reading_view
 from experience_distiller import distill_run_feedback
 from experience_governance import (
     ExperienceGovernanceRepository,
@@ -75,6 +78,7 @@ from settings import (
     MARKET_ACTIVITY_DB,
     MARKET_ACTIVITY_MANIFEST_PATH,
     P7_INTELLIGENCE_DB,
+    FRESHNESS_MANIFEST_PATH,
 )
 
 
@@ -308,6 +312,12 @@ def list_research_runs(limit: int = Query(default=50, ge=1, le=200)) -> list[Res
     return research_run_ledger.list(limit=limit)
 
 
+@app.get("/api/v1/research/corrections")
+def get_research_corrections() -> dict[str, object]:
+    from research_corrections import reading_view
+    return reading_view(ledger_db=research_run_ledger.path)
+
+
 @app.get("/api/v1/research/runs/{run_id}", response_model=ResearchRunRecord)
 def get_research_run(
     run_id: str = Path(pattern=r"^RUN-[A-F0-9]{24}$"),
@@ -479,6 +489,73 @@ def list_experiences(
 @app.get("/api/v1/experience-governance/status")
 def get_experience_governance_status() -> dict[str, object]:
     return governance_status(experience_repository, experience_governance_repository)
+
+
+@app.get("/api/v1/learning/status")
+def get_learning_status() -> dict[str, object]:
+    return build_learning_status(
+        experience_db=experience_repository.path, ledger_db=research_run_ledger.path,
+        governance_db=experience_governance_repository.path,
+        freshness_path=FRESHNESS_MANIFEST_PATH,
+    )
+
+
+@app.get("/api/v1/market-risk/status")
+def get_market_risk_status() -> dict[str, object]:
+    return build_market_risk_status()
+
+
+@app.get('/api/v1/workbench/market')
+def get_market_reading(refresh: bool = False) -> dict[str, object]:
+    return get_reading_view('market', force=refresh)
+
+
+@app.get('/api/v1/workbench/learning')
+def get_learning_reading(refresh: bool = False) -> dict[str, object]:
+    # A recorded Codex answer appears without repeating the deep market audit.
+    return get_reading_view('learning', force=refresh, experience_db=experience_repository.path, ledger_db=research_run_ledger.path)
+
+
+@app.get('/api/v1/workbench/swing')
+def get_swing_reading() -> dict[str, object]:
+    from trader_swing_reading import load
+    data=load()
+    return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
+            'refresh':{'in_progress':False,'last_error':None}}
+
+
+@app.get('/api/v1/workbench/history')
+def get_history_inventory() -> dict[str, object]:
+    from research_history import load
+    data=load()
+    return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
+            'refresh':{'in_progress':False,'last_error':None}}
+
+
+@app.get('/api/v1/workbench/history/{symbol}')
+def get_history_detail(symbol: str = Path(pattern=r'^(?:[036]\d{5}\.(?:SH|SZ)|\d{6}\.BJ|market)$')) -> dict[str, object]:
+    from research_history import load
+    data=load(symbol)
+    return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,
+            'refresh':{'in_progress':False,'last_error':None}}
+
+
+@app.get('/api/v1/workbench/history-assets/{identity}')
+def get_history_visual(identity: str = Path(pattern=r'^[a-f0-9]{64}$')) -> Response:
+    from research_history import load_visual
+    visual=load_visual(identity)
+    if visual is None:raise HTTPException(status_code=404,detail='附件当前不可用')
+    raw,mime=visual
+    return Response(content=raw,media_type=mime,headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
+
+
+@app.get('/api/v1/workbench/history-files/{identity}')
+def get_history_file(identity: str = Path(pattern=r'^[a-f0-9]{64}$')) -> Response:
+    from research_history import load_file
+    asset=load_file(identity)
+    if asset is None:raise HTTPException(status_code=404,detail='附件当前不可用')
+    raw,mime=asset
+    return Response(content=raw,media_type=mime,headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
 
 
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)

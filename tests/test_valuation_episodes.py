@@ -1,7 +1,12 @@
+import json
 import sqlite3
+from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+
 from valuation_episodes import (
+    _load_title_events,
     _stage_episode,
     build_verified_episodes,
     classify_official_title,
@@ -106,6 +111,52 @@ def test_exact_title_classifier_rejects_related_entity_and_progress_noise():
         classify_official_title("某某股份有限公司重整计划草案")
         == "restructuring_plan_published"
     )
+
+
+_COURT_TITLE_CASES = json.loads(
+    (Path(__file__).parents[1] / "evals/fixtures/node_title_court_scope_v1.json").read_text()
+)["cases"]
+
+
+@pytest.mark.parametrize("case", _COURT_TITLE_CASES, ids=lambda case: case["announcement_id"])
+def test_public_court_title_regressions(case):
+    assert classify_official_title(case["title"]) == case["expected_title_classification"]
+
+
+@pytest.mark.parametrize(
+    ("title", "expected"),
+    [
+        ("关于法院裁定受理公司重整暨申请撤销因内部控制缺陷而被实施的其他风险警示的公告", "formal_restructuring_accepted"),
+        ("关于因法院裁定受理公司重整而被实施退市风险警示暨撤销其他风险警示的公告", "formal_restructuring_accepted"),
+        ("关于申请撤销因法院裁定受理公司重整而被实施的退市风险警示暨重整计划执行完毕的公告", "restructuring_completed"),
+        ("关于申请撤销因法院裁定受理公司重整而被实施的退市风险警示暨法院裁定批准重整计划的公告", "restructuring_plan_approved"),
+        ("关于申请撤销由于法院裁定受理公司重整所导致的退市风险警示的公告", None),
+        ("关于法院裁定受理公司重整的公告（已撤回）", None),
+        ("关于法院裁定受理公司重整的公告(已撤销)", None),
+        ("预重整计划草案之出资人权益调整方案（已取消）", None),
+        (" 关于法院裁定受理公司重整\n的公告 （更新后） ", "formal_restructuring_accepted"),
+    ],
+)
+def test_warning_cause_removal_preserves_separate_current_events(title, expected):
+    assert classify_official_title(title) == expected
+
+
+def test_title_event_loader_omits_old_warning_causes_without_dropping_new_acceptance(tmp_path):
+    database = tmp_path / "base.db"
+    base_database(database)
+    with sqlite3.connect(database) as connection:
+        connection.executemany(
+            "insert into company_announcements values (?,?,?,?, '')",
+            [(case["announcement_id"], "000001", "2026-01-05", case["title"]) for case in _COURT_TITLE_CASES],
+        )
+    events = _load_title_events(database, as_of="2026-01-12")
+    actual = {event.source_ref: event.event_type for event in events}
+    for case in _COURT_TITLE_CASES:
+        ref = f"cninfo:{case['announcement_id']}"
+        if case["expected_title_classification"] is None:
+            assert ref not in actual
+        else:
+            assert actual[ref] == case["expected_title_classification"]
 
 
 def test_termination_resets_current_stage_without_losing_maximum():

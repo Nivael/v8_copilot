@@ -1,0 +1,9 @@
+{
+  "version": "combined_exchange_breadth_plan_v1",
+  "start": "2026-09-04",
+  "through": "2026-11-04",
+  "sse_price_archive": "15528a83565dad12f3ca04802308a06429cfa447ae2e952d34567b094684b732",
+  "sse_notice_review": "f5cab2ebb62674eaac1c4156bf0970d60fbfc4b860f0cf044c5c1d136c750421",
+  "szse_history": "dc6a7a25015ef5a3d6aec1f50cede1b6e60d56ced8839050e7e1f741cb05e730",
+  "suspension_capture": "ce8d8d95087120b729b7bd980b6d2fc167b74904cdec6119475f79816eebeb79"
+}

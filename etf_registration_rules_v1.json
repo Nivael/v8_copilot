@@ -1,0 +1,152 @@
+{
+  "version": "etf_registration_scoped_rules_v1",
+  "index": {
+    "url": "https://m.chinaclear.cn/zdjs/flfg/law.shtml",
+    "response_url": "https://m.chinaclear.cn/zdjs/flfg/law.shtml",
+    "sha256": "3591f7ab73141c538ab94594107025c3020b037749587c4ea080b48fdd157611",
+    "observed_at": "2026-11-05T12:27:15.683257+00:00"
+  },
+  "documents": [
+    {
+      "source": {
+        "label": "sh-guide",
+        "url": "https://m.chinaclear.cn/zdjs/fshscbp/202605/84689a86ad724f3f8233bf41a2d30629/files/%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E4%B8%8A%E6%B5%B7%E5%88%86%E5%85%AC%E5%8F%B8%E4%BA%A4%E6%98%93%E5%9E%8B%E5%BC%80%E6%94%BE%E5%BC%8F%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%8D%97.pdf",
+        "response_url": "https://m.chinaclear.cn/zdjs/fshscbp/202605/84689a86ad724f3f8233bf41a2d30629/files/%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E4%B8%8A%E6%B5%B7%E5%88%86%E5%85%AC%E5%8F%B8%E4%BA%A4%E6%98%93%E5%9E%8B%E5%BC%80%E6%94%BE%E5%BC%8F%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%8D%97.pdf",
+        "raw_sha256": "d6761cad2e3c674f4b0196fc913da84e72de62b39063e67f5332b4cd68ece662",
+        "text_sha256": "134a4623e458240be78d07a049bd186e3fa6fafe17254980bef819a04468d47a",
+        "bytes": 365053,
+        "pages": 36,
+        "observed_at": "2026-11-05T12:28:20.915782+00:00"
+      },
+      "listed_title": "中国结算上海分公司交易型开放式基金登记结算业务指南",
+      "cover_title": "中国证券登记结算有限责任公司上海分公司交易型开放式基金登记结算业务指南",
+      "document_number": "中国结算沪业〔2026〕37号",
+      "published_on": "2026-05-22",
+      "cover_sha256": "37ee1cb3f2eb819ea46be121aa1a7069c20a6576f884904ba25e6db4de7409fc",
+      "proofs": [
+        {
+          "role": "sh_daily",
+          "page": 17,
+          "start": "4.5.1本公司于每日上交所闭市后",
+          "end": "持有数量等字段。",
+          "sha256": "50810ab6fd8390bee955af9515468a81e0a45485c4e2ac2781ff4f73a6b7e53d"
+        },
+        {
+          "role": "sh_effective",
+          "page": 27,
+          "start": "8.1本业务指南自2026年5月25日起施行",
+          "end": "同时废止。",
+          "sha256": "3c1c05bcdf65a00b9fc60b234dfcdf165c040838502fa623f6e95fab32c1c153"
+        }
+      ]
+    },
+    {
+      "source": {
+        "label": "sz-guide",
+        "url": "https://m.chinaclear.cn/zdjs/fszscbb/202608/9589aee120124e47a4ac8831b2082f7d/files/%E3%80%8A%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E6%B7%B1%E5%9C%B3%E5%88%86%E5%85%AC%E5%8F%B8%E4%BA%A4%E6%98%93%E5%9E%8B%E5%BC%80%E6%94%BE%E5%BC%8F%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%8D%97%E3%80%8B.pdf",
+        "response_url": "https://m.chinaclear.cn/zdjs/fszscbb/202608/9589aee120124e47a4ac8831b2082f7d/files/%E3%80%8A%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E6%B7%B1%E5%9C%B3%E5%88%86%E5%85%AC%E5%8F%B8%E4%BA%A4%E6%98%93%E5%9E%8B%E5%BC%80%E6%94%BE%E5%BC%8F%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%8D%97%E3%80%8B.pdf",
+        "raw_sha256": "f353b8682ae7bb13031c41efc09c590ba03e63e5bd2a840d72e0ba95517a204e",
+        "text_sha256": "c3f43a387ff751aed1bf8a4d3914ccefb1513c48d092942119caa5b98a7981af",
+        "bytes": 555421,
+        "pages": 78,
+        "observed_at": "2026-11-05T12:28:21.754105+00:00"
+      },
+      "listed_title": "中国结算深圳分公司交易型开放式基金登记结算业务指南",
+      "cover_title": "中国证券登记结算有限责任公司深圳分公司交易型开放式基金登记结算业务指南",
+      "document_number": "中国结算深业字〔2026〕41号",
+      "published_on": "2026-08-07",
+      "cover_sha256": "7c8eecda79959d790f84d5b7f901548e6eabec70cf62108d6372b2d96238c4e5",
+      "proofs": [
+        {
+          "role": "sz_route",
+          "page": 11,
+          "start": "2.2.1特定投资者是指",
+          "end": "等特殊机构及产品投资者。",
+          "sha256": "f4fcbf7abc192f69502541101af4bc1d6fb28b22a420b74b2cdceb5cedf673b0"
+        },
+        {
+          "role": "sz_daily",
+          "page": 33,
+          "start": "4.6.1基金管理人可通过D-COM系统",
+          "end": "GLRMX.DBF)。",
+          "sha256": "3a98fb3a72ac3291fa9e6781627c5a2122ab4108f76191c0fccb57dcb735f2a9"
+        },
+        {
+          "role": "sz_exchange",
+          "page": 38,
+          "start": "《中国结算深圳分公司基金管理人登记结算数据接口规范》中约定的其余数据文件",
+          "end": "直接交换。",
+          "sha256": "d895efb07b28c07afaf91e20477617d17b7ea1ecc55e6ecfb81d00b3f254e2ef"
+        },
+        {
+          "role": "sz_effective",
+          "page": 59,
+          "start": "本指南自2026年8月10日起施行",
+          "end": "同时废止。",
+          "sha256": "1a1391dbc0cd564ae1427d34d9f098750b21ee1a77e6b175280f2781da507acf"
+        }
+      ]
+    },
+    {
+      "source": {
+        "label": "central-exchange",
+        "url": "https://m.chinaclear.cn/zdjs/sjjhywgz/202609/9ae2b7afdfae466bb0216542438c0c59/files/%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E5%85%AC%E5%8B%9F%E5%9F%BA%E9%87%91%E8%A1%8C%E4%B8%9A%E6%B3%A8%E5%86%8C%E7%99%BB%E8%AE%B0%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%A4%AE%E4%BA%A4%E6%8D%A2%E5%B9%B3%E5%8F%B0%E8%BF%90%E4%BD%9C%E6%8C%87%E5%BC%95.pdf",
+        "response_url": "https://m.chinaclear.cn/zdjs/sjjhywgz/202609/9ae2b7afdfae466bb0216542438c0c59/files/%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E5%85%AC%E5%8B%9F%E5%9F%BA%E9%87%91%E8%A1%8C%E4%B8%9A%E6%B3%A8%E5%86%8C%E7%99%BB%E8%AE%B0%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%A4%AE%E4%BA%A4%E6%8D%A2%E5%B9%B3%E5%8F%B0%E8%BF%90%E4%BD%9C%E6%8C%87%E5%BC%95.pdf",
+        "raw_sha256": "68a7312cf329d85063c4cc897e410a2ac1d1d78975febd4e542471029db8acd7",
+        "text_sha256": "62fc8b06383cca1b64566b947994bc1aeccfe679e24ebbb2cb462a8a55c5471d",
+        "bytes": 202852,
+        "pages": 20,
+        "observed_at": "2026-11-05T12:28:22.125001+00:00"
+      },
+      "listed_title": "中国证券登记结算有限责任公司公募基金行业注册登记数据中央交换平台运作指引",
+      "cover_title": "中国证券登记结算有限责任公司公募基金行业注册登记数据中央交换平台运作指引",
+      "document_number": "中国结算业〔2026〕3号",
+      "published_on": "2026-09-11",
+      "cover_sha256": "e638b1bede39b4210cd47d5d5b77472d71ab26c02596cbe6d4e8f25c531230e5",
+      "proofs": [
+        {
+          "role": "central_permission",
+          "page": 3,
+          "start": "2.1除另有规定外",
+          "end": "申请成为平台参与人。",
+          "sha256": "263c25f27bca73ebbea0d53e93bb409b8a93db5fe2882e99fa230ff3b8262530"
+        },
+        {
+          "role": "central_backup_scope",
+          "page": 8,
+          "start": "4.1本指引所称的集中备份",
+          "end": "简称为备份数据)。",
+          "sha256": "d54f68525e3a9fcbff4d4a930b3835717c21b5cb82d10f30024dc3db96f5f1ef"
+        },
+        {
+          "role": "central_incremental",
+          "page": 9,
+          "start": "过本公司认可的数据通讯传输方式及渠道",
+          "end": "经本公司同意后方可报送。",
+          "sha256": "83ead4fdbdb709e1cedb50291be16c952a3e7855a2f017dcee24d38c515bfd3e"
+        },
+        {
+          "role": "central_error",
+          "page": 9,
+          "start": "4.4平台每日对份额登记机构报送的备份数据",
+          "end": "对数据进行补正。",
+          "sha256": "03e4ca9c91ac83fbd07294cabbd91d75c81642aa231e450287a4b877e8fbe48e"
+        },
+        {
+          "role": "central_exclusion",
+          "page": 18,
+          "start": "9.3上市开放式证券投资基金",
+          "end": "相关业务开展不适用本指引。",
+          "sha256": "3ed5b64090dabcd60e4fe9da66eb710886fdcc9065b0b5cc951f81bc5ab5535d"
+        },
+        {
+          "role": "central_effective",
+          "page": 19,
+          "start": "9.10本指引自2026年9月11日起施行。",
+          "end": "9月11日起施行。",
+          "sha256": "1c482314d5635e0bddc8eb2266d5a327697f37edb074621f6ef88fd0a550018b"
+        }
+      ]
+    }
+  ]
+}

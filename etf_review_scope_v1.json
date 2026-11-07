@@ -1,0 +1,676 @@
+{
+  "version": "etf_supplemental_scoped_clause_profiles_v1",
+  "catalog_digest": "f1c18bb1875b575a838eea1a9a82140148180a20ce435e16422a03d04fb8afc3",
+  "capture_digest": "10fe525489f1ab25aa096dac6824f243b92848ff58b2a3a2b21b57c64561a6d0",
+  "window_start": "2026-08-04",
+  "window_end": "2026-11-04",
+  "cases": [
+    {
+      "document_id": "1b184205ffa51fc9e0b28a7844e574d6309b68c6f369e88481bd201030c10bcd",
+      "code": "159919.SZ",
+      "published_on": "2024-08-23",
+      "title": "关于嘉实沪深300交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20240822/202408221724317302233/关于嘉实沪深300交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实沪深300交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "77bb2c5de2a04d63ad9996df05fc7c70c120b7c7a985c405afd1f66aeb0dd024",
+      "text_sha256": "2e7820e121f61847a7456927fc6b6edb9f2a6439d846a49e25f6b22a39fd1a60",
+      "observed_at": "2026-11-04T22:11:13.921135+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2024年8月26日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止长江证券股份有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2024-08-26",
+      "provider": "长江证券股份有限公司"
+    },
+    {
+      "document_id": "36df7a3b7a4328fef971265b35bc3976b3d6c117bdd54a6b2209d386e28f68f0",
+      "code": "159919.SZ",
+      "published_on": "2023-05-15",
+      "title": "关于嘉实沪深300交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20230512/202305121683869737778/关于嘉实沪深300交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实沪深300交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "a92ee4956b179ea1e3998fc1bb205f835b882c553529ad205225b10fefe3cc58",
+      "text_sha256": "163f5aa0798be85708a65e0ca68e9061161d8480017ac673be10c9b1870c977e",
+      "observed_at": "2026-11-04T22:11:13.360535+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2023年5月16日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止国盛证券有限责任公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2023-05-16",
+      "provider": "国盛证券有限责任公司"
+    },
+    {
+      "document_id": "75b0614f64471c3920e8908fae710eab4a173aabc71aa0c0a9afd6dd3db451e4",
+      "code": "159919.SZ",
+      "published_on": "2022-01-05",
+      "title": "关于嘉实沪深300交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20220104/202201041641280414166/关于嘉实沪深300交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实沪深300交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "cfa8a9f8df5219f3babe3c6527316ebcff83f54728dc9d1e6c1adb165c3075b2",
+      "text_sha256": "b9aaec5f6e0e1678442712d82458f01f056ece31e248c4a0c1d918317797aab8",
+      "observed_at": "2026-11-04T22:11:12.946142+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2022年1月6日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止申万宏源证券有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2022-01-06",
+      "provider": "申万宏源证券有限公司"
+    },
+    {
+      "document_id": "f295b8175952e8a43c1db6a0ddc3524d509c2cfd0dd66d850cd2cd2f728d4ce8",
+      "code": "510500.SH",
+      "published_on": "2022-01-07",
+      "title": "关于中证500交易型开放式指数证券投资基金调整最小申购、赎回单位的提示性公告",
+      "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-01-07/510500_20220107_1_VKBAMZey.pdf",
+      "fund_name": "中证500交易型开放式指数证券投资基金",
+      "issuer": "南方基金管理股份有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "771d83491c8cb0c78cbc9035542a65466f9f69a771af1b1fefd66af1eeb256b3",
+      "text_sha256": "10e5f57d1d8e38a641b0660115a1e8d29b04f4438ec6ee79190f574eed289fdc",
+      "observed_at": "2026-11-04T22:12:20.865629+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "从2022年1月7日起,本基金最小申购、赎回单位自40万份调整为35万份",
+          "role": "dated_per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2022-01-07",
+      "unit_before_shares": "400000",
+      "unit_after_shares": "350000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "4dbbdc2bf60fe8cc1ccd711a3a340cd1b022c4a5fc337b4432fc02b9c1a5c182",
+      "code": "510500.SH",
+      "published_on": "2022-01-06",
+      "title": "关于中证500交易型开放式指数证券投资基金调整最小申购、赎回单位的提示性公告",
+      "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-01-06/510500_20220106_1_RPESkGPg.pdf",
+      "fund_name": "中证500交易型开放式指数证券投资基金",
+      "issuer": "南方基金管理股份有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "23b999aed71ebf04beaafa08a5913c7cea58b24279bf5ad3ad8ef91f7b4280aa",
+      "text_sha256": "7d10390cd3c78a8977e6031af8a7b0016603dee8350a7366d974f093e88ba99f",
+      "observed_at": "2026-11-04T22:12:19.391547+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "从2022年1月7日起,本基金最小申购、赎回单位自40万份调整为35万份",
+          "role": "dated_per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2022-01-07",
+      "unit_before_shares": "400000",
+      "unit_after_shares": "350000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "7386f0e4bc38967e87a35f945c08317e85e8dd05bbd86d3b2e62a371d99bd7b3",
+      "code": "510500.SH",
+      "published_on": "2022-01-05",
+      "title": "关于中证500交易型开放式指数证券投资基金调整最小申购、赎回单位的提示性公告",
+      "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-01-05/510500_20220105_1_0Dtq15RY.pdf",
+      "fund_name": "中证500交易型开放式指数证券投资基金",
+      "issuer": "南方基金管理股份有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "9eb4034f53d654ccc932fdd0767ecaf659ef215c3fe3adbe6cb15ed467854267",
+      "text_sha256": "6b3afcaf0f3d558046d013e1c4ba3610d89c6028761031688769da4cd1ca97c6",
+      "observed_at": "2026-11-04T22:12:17.654815+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "从2022年1月7日起,本基金最小申购、赎回单位自40万份调整为35万份",
+          "role": "dated_per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2022-01-07",
+      "unit_before_shares": "400000",
+      "unit_after_shares": "350000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "2f8df34e24c95ebb900f423199d5f56a690e6a1d463f5a0c55aff9fec43f94e4",
+      "code": "510500.SH",
+      "published_on": "2022-01-04",
+      "title": "关于中证500交易型开放式指数证券投资基金调整最小申购、赎回单位的公告",
+      "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-01-04/510500_20220104_1_KXFRgW4o.pdf",
+      "fund_name": "中证500交易型开放式指数证券投资基金",
+      "issuer": "南方基金管理股份有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "68f69307126faceda75df64e11f47c2f32469e88f64f661d00c3995996c5de8e",
+      "text_sha256": "40a39884b797fe8ef54d61fc70bbb0a514380ed4721ab7a8e4c55a9f96d8c26a",
+      "observed_at": "2026-11-04T22:12:15.954981+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "从2022年1月7日起,本基金最小申购、赎回单位自40万份调整为35万份",
+          "role": "dated_per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2022-01-07",
+      "unit_before_shares": "400000",
+      "unit_after_shares": "350000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "e91a163c80b1d84671e64bb0d7037705ac4b902b7f38af189a4fcec931b4d27e",
+      "code": "510500.SH",
+      "published_on": "2015-04-03",
+      "title": "中证500交易型开放式指数证券投资基金因份额折算暂停申购赎回业务的公告",
+      "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-03/510500_20150403_3.pdf",
+      "fund_name": "中证500交易型开放式指数证券投资基金",
+      "issuer": "南方基金管理有限公司",
+      "kind": "creation_redemption_pause",
+      "format": "pdf",
+      "page_count": 2,
+      "raw_sha256": "469e724f1bc3d5769a25a7b2424513da29d8f05389b4c455aa63b64c96fd5683",
+      "text_sha256": "e810a7039090ed94fe518fb24348a6c33d4659c331ba549a5838ee9a048fee2c",
+      "observed_at": "2026-11-04T22:11:19.106486+00:00",
+      "proofs": [
+        {
+          "page": 2,
+          "text": "暂停申购起始日2015年4月13日",
+          "role": "creation_pause"
+        },
+        {
+          "page": 2,
+          "text": "暂停赎回起始日2015年4月13日",
+          "role": "redemption_pause"
+        },
+        {
+          "page": 2,
+          "text": "并于2015年4月15日起恢复办理申购和赎回业务",
+          "role": "announced_resume"
+        },
+        {
+          "page": 2,
+          "text": "500ETF将以2015年4月13日为权益登记日进行基金份额折算",
+          "role": "record_date"
+        },
+        {
+          "page": 2,
+          "text": "申购赎回代码为510501",
+          "role": "business_code"
+        }
+      ],
+      "announced_effective_on": "2015-04-13",
+      "announced_resume_on": "2015-04-15",
+      "record_on": "2015-04-13",
+      "creation_redemption_code": "510501",
+      "related_event_id": "510500-conversion-20150414"
+    },
+    {
+      "document_id": "6ecc12d2f542671258166c6fed65408fb7e14e7b5b783af2e4bcd1b1cddf9f25",
+      "code": "159922.SZ",
+      "published_on": "2025-05-21",
+      "title": "关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20250520/202505201747729352225/关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实中证500交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "c691bc62402b70459348121f55630efdc565e78174e019abb1ec950e60f15c52",
+      "text_sha256": "9bba2219580882ce336ce05d70eeacd17ec3e1e4f89fee893e4d9641653f5691",
+      "observed_at": "2026-11-04T22:12:39.962103+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2025年5月22日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止中泰证券股份有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2025-05-22",
+      "provider": "中泰证券股份有限公司"
+    },
+    {
+      "document_id": "9223d19403f9a67cb73bfd4a60bf666ff472aab4a3784a987f4d6dd180868782",
+      "code": "159922.SZ",
+      "published_on": "2024-08-23",
+      "title": "关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20240822/202408221724317302233/关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实中证500交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "418adf5ac999d39da78246f49d7d6743aec5251750b1dc27c8ee0c790b25ea03",
+      "text_sha256": "26e51b370cea18b10c5b86b5e214a12767859e622ed4e34c5fc2ec7abe28a5cb",
+      "observed_at": "2026-11-04T22:12:38.363896+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2024年8月26日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止长江证券股份有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2024-08-26",
+      "provider": "长江证券股份有限公司"
+    },
+    {
+      "document_id": "f7810d371c361b97ffd3a0fdae4db4cc8537c53134b95ab8002e9f2be6174a14",
+      "code": "159922.SZ",
+      "published_on": "2024-05-29",
+      "title": "关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20240528/202405281716888540578/关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实中证500交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "7f8263046b343f846e7d6e937d42ec7ab9a49ebe98322ad2774329f67f63a96a",
+      "text_sha256": "8be527166bb08f29903ed364ece7dcff698bf640059a6b0a0801f38f83c8a76d",
+      "observed_at": "2026-11-04T22:12:37.945150+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2024年5月30日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止东海证券股份有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2024-05-30",
+      "provider": "东海证券股份有限公司"
+    },
+    {
+      "document_id": "18374652833caff6053fec75574165416bd922528bb17b9a437526bc3bd96ba2",
+      "code": "159922.SZ",
+      "published_on": "2023-05-15",
+      "title": "关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.jsfund.cn/plat_files/upload/product_ann/20230512/202305121683869737778/关于嘉实中证500交易型开放式指数证券投资基金流动性服务商终止的公告.pdf",
+      "fund_name": "嘉实中证500交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "2015ef871448a6eaac9df4a7205628354ae4bae031622dac9ec8bc3091c83e2a",
+      "text_sha256": "3d088af6add01d04c990268f9261fe274cc9ecdacd08b01bf34fa4d17b24fa6d",
+      "observed_at": "2026-11-04T22:12:37.562250+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2023年5月16日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止国盛证券有限责任公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2023-05-16",
+      "provider": "国盛证券有限责任公司"
+    },
+    {
+      "document_id": "57f0bca3121462af151ba74503ca62cf04069042f99cef7830bb65cea3d3633f",
+      "code": "159922.SZ",
+      "published_on": "2020-06-29",
+      "title": "关于嘉实中证500交易型开放式指数证券投资基金调整最小申购赎回单位的公告",
+      "url": "https://www.jsfund.cn/main/fund/noticedetails.shtml?adId=431461",
+      "fund_name": "嘉实中证500交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "e9d0a79cb2edd004b785319d1028d98e59ef588eb2f8e3419c780e579e5bed9b",
+      "text_sha256": "cc70b2bb8422015aa7e86df8c708990e792df4a6a0b017d421d9098460344ddb",
+      "observed_at": "2026-11-04T22:12:36.378306+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "从2020年7月1日起,本基金最小申购赎回单位自45万份调整为40万份",
+          "role": "dated_per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2020-07-01",
+      "unit_before_shares": "450000",
+      "unit_after_shares": "400000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "43a25223aa72adfbd2679157751946084923da175815e2aa0d4a9ad682a6946e",
+      "code": "159922.SZ",
+      "published_on": "2014-02-20",
+      "title": "嘉实基金管理有限公司关于嘉实中证500交易型开放式指数证券投资基金调整最小申购、赎回单位的公告",
+      "url": "https://www.jsfund.cn/main/fund/noticedetails.shtml?adId=99609",
+      "fund_name": "嘉实中证500交易型开放式指数证券投资基金",
+      "issuer": "嘉实基金管理有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "issuer_html",
+      "page_count": null,
+      "raw_sha256": "8710b03ee27145469aa54eb0f0cf4c2b142c3c090b077000f16551e55964358c",
+      "text_sha256": "68ccea8c69ccaba9c21c51f43b078628f6978e8f1c7562dcef159c768c432202",
+      "observed_at": "2026-11-04T22:12:35.508921+00:00",
+      "proofs": [
+        {
+          "page": null,
+          "text": "从2014年2月24日起,本基金最小申购、赎回单位自90万份调整为45万份",
+          "role": "dated_per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2014-02-24",
+      "unit_before_shares": "900000",
+      "unit_after_shares": "450000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "6d4ff7a2b21000759a1fa1df08424c24e2c8800f00aa18d8057be1ef2c1ce193",
+      "code": "159845.SZ",
+      "published_on": "2026-07-17",
+      "title": "华夏基金管理有限公司关于调整华夏中证1000交易型开放式指数证券投资基金最小申购、赎回单位的公告",
+      "url": "https://www.chinaamc.com/c/2026-07-17/980304.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "240b4d5cd2cb94a9b3b754c161f496144768e7f454fe85b70b4aefef0d1ab9c2",
+      "text_sha256": "bb067c8c3f3dc1600fd4aa9b944d14e6397fc2bbca8be3b399269dc54bb02ed2",
+      "observed_at": "2026-11-04T22:13:21.142358+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "决定自2026年7月20日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "最小申购、赎回单位调整为300万份",
+          "role": "per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2026-07-20",
+      "unit_before_shares": null,
+      "unit_after_shares": "3000000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "ff48b711dd0c36fd92995f1b9acdbbeb0168b42959eebd58344e1fa5139a8529",
+      "code": "159845.SZ",
+      "published_on": "2024-12-04",
+      "title": "华夏基金管理有限公司关于华夏中证1000交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.chinaamc.com/c/2024-12-04/718743.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "6160e121410cb892baf4b179fd421ed36ffd2773d642b70be0671db62a360815",
+      "text_sha256": "17e735ca9eca8d9b13c5853a8b2aa1dc4308cfd328917b1442f23e216b8f415d",
+      "observed_at": "2026-11-04T22:13:20.300232+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2024年12月5日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止东北证券股份有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2024-12-05",
+      "provider": "东北证券股份有限公司"
+    },
+    {
+      "document_id": "17a8405b6e92c67a305894ef85e4b41ce2152cec8c84a2d0b4f98d890d4f6d58",
+      "code": "159845.SZ",
+      "published_on": "2024-02-08",
+      "title": "华夏基金管理有限公司关于调整华夏中证1000交易型开放式指数证券投资基金最小申购、赎回单位的公告",
+      "url": "https://www.chinaamc.com/c/2024-02-08/678455.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "fa97faff3e9f239a0527b04da6443c6c90c493b9b42201bf39730683d02bf6eb",
+      "text_sha256": "544a40d24178b592d240ffb6009edf040f5d0363a0b57c46fdae98fc4157e337",
+      "observed_at": "2026-11-04T22:13:19.521915+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "决定自2024年2月8日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "最小申购、赎回单位调整为200万份",
+          "role": "per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2024-02-08",
+      "unit_before_shares": null,
+      "unit_after_shares": "2000000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "b5ac87aa0d2a6f8dc1058c9ecd662c35781c05dcd8a71a356894fbe72547f694",
+      "code": "159845.SZ",
+      "published_on": "2023-05-12",
+      "title": "华夏基金管理有限公司关于华夏中证1000交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.chinaamc.com/c/2023-05-12/678464.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "0707433714ab10fd86c47ee02209fc3369a300d2312782ee800957467bcb26a3",
+      "text_sha256": "26a781e81a017c902c0aa5bff169029e447930799484a7866fbc9e0f9b7f138a",
+      "observed_at": "2026-11-04T22:13:18.652586+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2023年5月15日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止国盛证券有限责任公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2023-05-15",
+      "provider": "国盛证券有限责任公司"
+    },
+    {
+      "document_id": "eeed59a1ba78472a33008bad3e10c777775a2eb592f245aac9ea13076620684b",
+      "code": "159845.SZ",
+      "published_on": "2023-04-17",
+      "title": "华夏基金管理有限公司关于华夏中证1000交易型开放式指数证券投资基金流动性服务商终止的公告",
+      "url": "https://www.chinaamc.com/c/2023-04-17/678466.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "liquidity_service_end",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "8b66b60db620af03b40254811f0c1a7bace8754ebc1642243d5c024e5599fb9d",
+      "text_sha256": "5ba23a58356f267087500b8b067abc6e67b6385a9fe9f646443b839c7c7e418e",
+      "observed_at": "2026-11-04T22:13:17.837149+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "自2023年4月18日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "本公司终止中信证券股份有限公司为",
+          "role": "service_provider"
+        },
+        {
+          "page": 1,
+          "text": "提供流动性服务",
+          "role": "service_role"
+        }
+      ],
+      "announced_effective_on": "2023-04-18",
+      "provider": "中信证券股份有限公司"
+    },
+    {
+      "document_id": "13e0f93eec4733c4869e3ef9f2e0c1a2ac3e122726e4d2324d2babb5c5fd58cc",
+      "code": "159845.SZ",
+      "published_on": "2023-04-07",
+      "title": "华夏基金管理有限公司关于调整华夏中证1000交易型开放式指数证券投资基金最小申购、赎回单位的公告",
+      "url": "https://www.chinaamc.com/c/2023-04-07/678467.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "ecc02b6f2e37916f2389cafd546d5b4589a739084e731953bb7f0c009a19ef20",
+      "text_sha256": "11d7e67131354e62eb5d3b408ebac9436c22cddb097acee44916f30e483f4272",
+      "observed_at": "2026-11-04T22:13:17.023929+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "决定自2023年4月10日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "最小申购、赎回单位调整为100万份",
+          "role": "per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2023-04-10",
+      "unit_before_shares": null,
+      "unit_after_shares": "1000000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    },
+    {
+      "document_id": "b84c53ac2986d98279ad39e6570de6552e5a20abfa7efa27c734c14e4d10a626",
+      "code": "159845.SZ",
+      "published_on": "2022-07-21",
+      "title": "华夏基金管理有限公司关于调整华夏中证1000交易型开放式指数证券投资基金最小申购、赎回单位的公告",
+      "url": "https://www.chinaamc.com/c/2022-07-21/569774.shtml",
+      "fund_name": "华夏中证1000交易型开放式指数证券投资基金",
+      "issuer": "华夏基金管理有限公司",
+      "kind": "creation_unit_declaration",
+      "format": "pdf",
+      "page_count": 1,
+      "raw_sha256": "377a1e68cea3936eb1405757965e9c7f5cf2af6357c4d992991d6a4cfaca85e0",
+      "text_sha256": "2c5e21e9cdca1fa0bd0cee95173d20577c29a9bd66b85c8fc157522a85b15f0e",
+      "observed_at": "2026-11-04T22:13:12.980659+00:00",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "决定自2022年7月22日起",
+          "role": "business_effective_date"
+        },
+        {
+          "page": 1,
+          "text": "最小申购、赎回单位调整为380万份",
+          "role": "per_order_unit"
+        }
+      ],
+      "announced_effective_on": "2022-07-22",
+      "unit_before_shares": null,
+      "unit_after_shares": "3800000",
+      "unit_scope": "minimum_shares_per_creation_redemption_order"
+    }
+  ]
+}

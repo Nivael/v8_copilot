@@ -460,7 +460,7 @@ export function Copilot() {
     setEvents([]); setResponse(null); setError(''); setBusy(true); setEvidenceOpen(false)
     const params = new URLSearchParams(location.search)
     params.set('question', nextQuestion)
-    navigate(`/?${params}`, {replace: true})
+    navigate(`/legacy?${params}`, {replace: true})
     try {
       await ask(nextQuestion, {...context, active_question: nextQuestion}, streamEvent => {
         if (activeRequest.current !== controller) return

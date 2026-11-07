@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import pytest
+from dataclasses import replace
+
 from api_contract import ResearchRequest
 from announcement_body import AnnouncementBody
 from api import orchestrate
@@ -10,6 +13,30 @@ from llm_adapter import orchestrate_with_provider_result
 from narrative_builder import _comparison_narrative
 from orchestrator_v1 import enrich_response_v1
 from orchestrator_v2 import enrich_response_v2
+from evals.frozen_inputs import frozen_inventory_loader
+
+
+@pytest.fixture
+def comparable_stages(monkeypatch):
+    """Pin the stage-order test input; later announcements must not silently change this gate."""
+    monkeypatch.setattr("answer_engine.load_announcement_inventory", frozen_inventory_loader(
+        "restructuring_inventory_20260714.json",
+    ))
+
+
+@pytest.fixture
+def incomparable_stages(monkeypatch):
+    load = frozen_inventory_loader("restructuring_inventory_20260714.json")
+    def agreement_stage(*, symbol, **kwargs):
+        inventory = load(symbol=symbol, **kwargs)
+        if symbol != "603398":
+            return inventory
+        # A synthetic input change tests an unsupported axis, without changing live company facts.
+        return replace(inventory, records=tuple(
+            replace(row, title="关于签订重整投资协议的公告", source="synthetic_test")
+            if row.announcement_id == "1224986293" else row for row in inventory.records
+        ))
+    monkeypatch.setattr("answer_engine.load_announcement_inventory", agreement_stage)
 
 
 def _fake_body(record, **_kwargs) -> AnnouncementBody:
@@ -50,7 +77,7 @@ def test_latest_announcement_uses_body_evidence(monkeypatch) -> None:
     assert calls and calls[0][1]["allow_network"] is False
 
 
-def test_mubang_progress_separates_case_stage_from_history(monkeypatch) -> None:
+def test_mubang_progress_separates_case_stage_from_history(monkeypatch, comparable_stages) -> None:
     monkeypatch.setattr("answer_engine.load_announcement_body", _fake_body)
     response = orchestrate(ResearchRequest(
         question="沐邦的公开招募推进到哪一步了？下一个节点最可能是什么？",
@@ -116,7 +143,7 @@ def test_recruitment_deadline_limit_down_precedent_uses_dedicated_route() -> Non
     )
 
 
-def test_two_stock_comparison_executes_instead_of_falling_back() -> None:
+def test_two_stock_comparison_executes_instead_of_falling_back(comparable_stages) -> None:
     response = orchestrate(ResearchRequest(
         question="沐邦和南都怎么比较",
         llm_mode="off",
@@ -388,7 +415,7 @@ def _non_directional_comparison_factory(response_model: type, payload: dict) -> 
     raise AssertionError(response_model)
 
 
-def test_llm_comparison_cannot_replace_directional_judgment_with_difference() -> None:
+def test_llm_comparison_cannot_replace_directional_judgment_with_difference(comparable_stages) -> None:
     request = ResearchRequest(question="沐邦和南都怎么比较？", llm_mode="auto")
     result = orchestrate_with_provider_result(
         request, FakeLLMProvider(response_factory=_non_directional_comparison_factory)
@@ -402,7 +429,7 @@ def test_llm_comparison_cannot_replace_directional_judgment_with_difference() ->
     assert "不能据此判断整体优劣" in result.narrative.direct_answer.text
 
 
-def test_llm_comparison_retries_when_direction_is_reversed() -> None:
+def test_llm_comparison_retries_when_direction_is_reversed(comparable_stages) -> None:
     narrative_calls = 0
 
     def factory(response_model: type, payload: dict) -> dict:
@@ -452,7 +479,7 @@ def test_llm_comparison_retries_when_direction_is_reversed() -> None:
     )
 
 
-def test_llm_comparison_falls_back_after_repeated_direction_reversal() -> None:
+def test_llm_comparison_falls_back_after_repeated_direction_reversal(comparable_stages) -> None:
     def factory(response_model: type, payload: dict) -> dict:
         if response_model is ParsedQuestion:
             return _non_directional_comparison_factory(response_model, payload)
@@ -489,6 +516,48 @@ def test_llm_comparison_falls_back_after_repeated_direction_reversal() -> None:
         "LLM 分析叙述不可用" in reason
         for reason in result.response.degraded_reasons
     )
+
+
+@pytest.mark.parametrize("placement", ["direct", "title", "claim"])
+def test_incomparable_stages_cannot_gain_an_llm_order(incomparable_stages, placement):
+    calls = 0
+    def factory(response_model, payload):
+        nonlocal calls
+        if response_model is ParsedQuestion:
+            return _non_directional_comparison_factory(response_model, payload)
+        calls += 1
+        assert "comparison_order_boundary" in payload
+        rows = [item for item in payload["backing_catalog"]
+                if item["kind"] == "query_row" and "股票并列比较" in item["summary"]]
+        backing = [{"kind": item["kind"], "ref": item["ref"]} for item in rows]
+        unsupported = "沐邦的公开节点比南都更深入。"
+        narrative = {"direct_answer": {"text": "两家公司处于不同公开阶段。", "backing": backing},
+                     "reasoning_steps": [], "uncertainties": [], "watch_items": []}
+        claims = []
+        if placement == "direct":
+            narrative["direct_answer"]["text"] = unsupported
+        elif placement == "title":
+            narrative["reasoning_steps"] = [{"title": unsupported, "text": "比较两个公开阶段。", "backing": backing}]
+        else:
+            claims = [{"text": unsupported, "claim_type": "fact", "backing": backing[0]}]
+        return {"claims": claims, "narrative": narrative}
+    result = orchestrate_with_provider_result(
+        ResearchRequest(question="沐邦和南都怎么比较？", llm_mode="auto"),
+        FakeLLMProvider(response_factory=factory),
+    )
+    assert calls == 2
+    assert result.narrative is None
+    assert result.response.llm_used is False
+
+
+def test_incomparable_stages_allow_an_explicit_boundary(incomparable_stages):
+    result = orchestrate_with_provider_result(
+        ResearchRequest(question="沐邦和南都怎么比较？", llm_mode="auto"),
+        FakeLLMProvider(response_factory=_non_directional_comparison_factory),
+    )
+    assert result.narrative is not None
+    assert "两家公司处于不同公开阶段" in result.narrative.direct_answer.text
+    assert "比南都更深入" not in result.narrative.direct_answer.text
 
 
 def _overbroad_absence_factory(response_model: type, payload: dict) -> dict:
@@ -587,12 +656,17 @@ def test_llm_restructuring_narrative_always_exposes_censoring_denominator() -> N
         item for item in result.narrative.uncertainties if "右删失" in item.text
     )
     assert "episode case 去重" in censoring.text
-    assert "98 个起点" in censoring.text
-    assert "64 个观察到" in censoring.text
-    assert "34 个" in censoring.text
+    stage = next(row for row in result.response.answer_card["body_rows"]
+                 if row.get("后续口径") == "下一个不同重整阶段")
+    starts, observed, pending = (str(stage[key]) for key in (
+        "起点事件总数", "可观察后续总数", "未观察到后续",
+    ))
+    assert f"{starts} 个起点" in censoring.text
+    assert f"{observed} 个观察到" in censoring.text
+    assert f"{pending} 个" in censoring.text
     assert "可观察到后续的 case 为分母" in censoring.text
     assert sum(
-        all(value in item.text for value in ("98", "64", "34"))
+        all(value in item.text for value in (starts, observed, pending))
         for item in result.narrative.uncertainties
     ) == 1
 

@@ -201,6 +201,7 @@ def normalize_activity_rows(
         high = _number(raw.get("high"))
         low = _number(raw.get("low"))
         close = _number(raw.get("close"))
+        volume = _number(raw.get("vol"))
         pre_close = _number(raw.get("pre_close"))
         amplitude = (
             (high - low) / pre_close * 100
@@ -223,7 +224,9 @@ def normalize_activity_rows(
         one_price = vendor_one_price if vendor_one_price is not None else raw_one_price
         if suspension is not None:
             suspension_status: Literal["trading", "suspended", "unknown"] = "suspended"
-        elif suspension_query_complete:
+        # A complete suspension query with no matching code is not evidence of
+        # trading when the daily quote is missing (for example after code remapping).
+        elif suspension_query_complete and close is not None and close > 0 and volume is not None and volume > 0:
             suspension_status = "trading"
         else:
             suspension_status = "unknown"
@@ -273,7 +276,7 @@ def normalize_activity_rows(
             pre_close=pre_close,
             change=_number(raw.get("change")),
             pct_chg=_number(raw.get("pct_chg")),
-            volume=_number(raw.get("vol")),
+            volume=volume,
             amount=_number(raw.get("amount")),
             amplitude_pct=round(amplitude, 8) if amplitude is not None else None,
             turnover_rate=_number(basic.get("turnover_rate")),

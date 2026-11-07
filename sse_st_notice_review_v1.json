@@ -1,0 +1,2859 @@
+{
+  "version": "sse_ST_member_status_clause_review_profile_v1",
+  "scope_start": "2026-09-01",
+  "through": "2026-11-04",
+  "catalog_profile": "sse_st_catalog_triage_v1.json",
+  "catalog_items": 62,
+  "review_scope": "security_identity_and_member_status_clauses_only",
+  "full_body_semantics_reviewed": false,
+  "full_window_membership_certificate": false,
+  "historical_PIT": false,
+  "events": [
+    {
+      "symbol": "600080",
+      "published_on": "2026-10-31",
+      "title": "金花企业（集团）股份有限公司关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600080_20261031_0F8C.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649837.PDF",
+      "announcement_id": "1225649837",
+      "org_id": "gssh0600080",
+      "cninfo_title": "金花企业（集团）股份有限公司关于公司股票被实施其他风险警示事项的进展公告",
+      "observed_at": "2026-11-05T08:33:37.620587+00:00",
+      "raw_sha256": "73e1a8839bad180fd91d06df68d143b2125025857dbe9a52276a9e10c32befe0",
+      "text_sha256": "c215cc969c0c25919f489baad8e8413827deb4083671bb4a6dd3024d7aa7f036",
+      "raw_bytes": 77361,
+      "text_bytes": 4799,
+      "page_count": 2,
+      "company": "金花企业（集团）股份有限公司",
+      "name_as_reported": "ST金花",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600187",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600187_20261031_X51V.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649550.PDF",
+      "announcement_id": "1225649550",
+      "org_id": "gssh0600187",
+      "cninfo_title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:37.589138+00:00",
+      "raw_sha256": "b4aa3db16099b9b1e2265fce210a0aea6b793df84012935fe7e39bc11c015179",
+      "text_sha256": "a4feff23e476f6621ab0ac52dd1fb4fe69f4a28df7ed9ac013d1ce9390c77698",
+      "raw_bytes": 108584,
+      "text_bytes": 3187,
+      "page_count": 2,
+      "company": "黑龙江国中水务股份有限公司",
+      "name_as_reported": "*ST国中",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600289",
+      "published_on": "2026-10-31",
+      "title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600289_20261031_SSHH.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649078.PDF",
+      "announcement_id": "1225649078",
+      "org_id": "gssh0600289",
+      "cninfo_title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:37.933609+00:00",
+      "raw_sha256": "fa0e20b6d9d2ceaca786eef469a005c19d1bfd5d9ead946e4dd02ff7b36f44d5",
+      "text_sha256": "58891d4d02a3c745182ed03689d241a83557c884e2e55ea4ecb3aa843ad499bb",
+      "raw_bytes": 146007,
+      "text_bytes": 4140,
+      "page_count": 2,
+      "company": "亿阳信通股份有限公司",
+      "name_as_reported": "ST信通",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月28日起继续被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600302",
+      "published_on": "2026-10-31",
+      "title": "标准股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600302_20261031_HE5B.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225648277.PDF",
+      "announcement_id": "1225648277",
+      "org_id": "gssh0600302",
+      "cninfo_title": "标准股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:37.966601+00:00",
+      "raw_sha256": "2034f77c7749db76ec57bf01b95fd571effd0ddd6c771d24a9996c283e2ae341",
+      "text_sha256": "89c71eb7b96de9bb04441749369def40e175a9f6b1c51be84114d1a40b094dcb",
+      "raw_bytes": 133393,
+      "text_bytes": 5603,
+      "page_count": 3,
+      "company": "西安标准工业股份有限公司",
+      "name_as_reported": "ST标准",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600363",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600363_20261031_9YMZ.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649631.PDF",
+      "announcement_id": "1225649631",
+      "org_id": "gssh0600363",
+      "cninfo_title": "关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:38.507750+00:00",
+      "raw_sha256": "64d22ef0162f01379f03188d343167334b9f276ede89d9367d34bdedf3c90854",
+      "text_sha256": "cda4407402d5d7c58d2dbc46ab6d77fabf8e483b7d77f58af593c7e6ba633697",
+      "raw_bytes": 145753,
+      "text_bytes": 9440,
+      "page_count": 4,
+      "company": "江西联创光电科技股份有限公司",
+      "name_as_reported": "ST联光",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-09-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年9月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600365",
+      "published_on": "2026-10-31",
+      "title": "通化葡萄酒股份有限公司关于股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600365_20261031_EJB1.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649377.PDF",
+      "announcement_id": "1225649377",
+      "org_id": "gssh0600365",
+      "cninfo_title": "通化葡萄酒股份有限公司关于股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:38.313747+00:00",
+      "raw_sha256": "f8798bffe197dfda72c9b0dd2a6f9ea1cfc122d3c7c60ca07f9be6b86ce8b4d6",
+      "text_sha256": "d7fbdd5249b8ebcc0ed8a19b034e29fcc6ec13ac541748d7c8244d71b331125c",
+      "raw_bytes": 95538,
+      "text_bytes": 4750,
+      "page_count": 2,
+      "company": "通化葡萄酒股份有限公司",
+      "name_as_reported": "ST通葡",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司被继续实施“其他风险警示”",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600370",
+      "published_on": "2026-10-31",
+      "title": "江苏三房巷聚材股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600370_20261031_J41I.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647864.PDF",
+      "announcement_id": "1225647864",
+      "org_id": "gssh0600370",
+      "cninfo_title": "江苏三房巷聚材股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:38.776881+00:00",
+      "raw_sha256": "61a8190e99a3c31c5f12d82a044ac826b79e8535d380438122c848b69a9a51aa",
+      "text_sha256": "6b11d5c5d065e522e1e48993f2dfc630a37b3fa896024d8e33903564b77bc416",
+      "raw_bytes": 89475,
+      "text_bytes": 3598,
+      "page_count": 2,
+      "company": "江苏三房巷聚材股份有限公司",
+      "name_as_reported": "*ST三房",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600745",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600745_20261031_IID4.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225648279.PDF",
+      "announcement_id": "1225648279",
+      "org_id": "gssh0600745",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:38.859974+00:00",
+      "raw_sha256": "1b816af5226656fdf3915b75142e9c4e68efb87439ecee621c4bcf58f2b4ae04",
+      "text_sha256": "f9dee2d252b46e309a16df461e3725793be383dba7ef122f547dc184b196d5f9",
+      "raw_bytes": 139711,
+      "text_bytes": 4499,
+      "page_count": 3,
+      "company": "闻泰科技股份有限公司",
+      "name_as_reported": "*ST闻泰",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司自2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600759",
+      "published_on": "2026-10-31",
+      "title": "公告编号：2026-080号  洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/600759_20261031_1C84.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649049.PDF",
+      "announcement_id": "1225649049",
+      "org_id": "gssh0600759",
+      "cninfo_title": "公告编号：2026-080号  洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:39.078620+00:00",
+      "raw_sha256": "bde70b61c1c6de110f3aece2dd480d72d89469b5e1c737de4882f70ca0c9b404",
+      "text_sha256": "25dd8b379482f314b7ef0c5b5f93377bbb43bc5e6500040114c76404ed54f8bd",
+      "raw_bytes": 105755,
+      "text_bytes": 6560,
+      "page_count": 3,
+      "company": "洲际油气股份有限公司",
+      "name_as_reported": "ST洲际",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-29",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月29日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "601010",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/601010_20261031_KEOK.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649229.PDF",
+      "announcement_id": "1225649229",
+      "org_id": "9900019963",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:39.875168+00:00",
+      "raw_sha256": "37724f4dce55509d001958759643f500c6544333b2ae38bdcfd44e1cf1164697",
+      "text_sha256": "f4bccf30dc0bfbacb19ab75934b39db8895eb217c36341703b2ee35ef16c9c7d",
+      "raw_bytes": 162215,
+      "text_bytes": 6332,
+      "page_count": 3,
+      "company": "文峰大世界连锁发展股份有限公司",
+      "name_as_reported": "ST文峰",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "603008",
+      "published_on": "2026-10-31",
+      "title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/603008_20261031_0776.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647128.PDF",
+      "announcement_id": "1225647128",
+      "org_id": "9900023007",
+      "cninfo_title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:39.426298+00:00",
+      "raw_sha256": "fb6562609ea94c1e40f9ab67a752fd3ecaa13a3e60b53b0c48f3ca2e610e2113",
+      "text_sha256": "4b3477a0b3ddb388a14516b61bedd6b9fbe918b44bb93469b9f39efe7b45a00d",
+      "raw_bytes": 132173,
+      "text_bytes": 11422,
+      "page_count": 5,
+      "company": "喜临门健康睡眠科技股份公司",
+      "name_as_reported": "ST喜临门",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月28日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "603729",
+      "published_on": "2026-10-31",
+      "title": "上海龙韵文创科技集团股份有限公司关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/603729_20261031_W8KJ.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225646860.PDF",
+      "announcement_id": "1225646860",
+      "org_id": "9900023473",
+      "cninfo_title": "上海龙韵文创科技集团股份有限公司关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "observed_at": "2026-11-05T08:33:39.837111+00:00",
+      "raw_sha256": "6e889c5a3f9cc284f051267723888f5bf8961fbd5cf2a1231d44fc02ca3346db",
+      "text_sha256": "b051edb5d62a771172adcaef79c3e98115bddeb91a2c58d76c07080181ad74ff",
+      "raw_bytes": 85647,
+      "text_bytes": 6251,
+      "page_count": 3,
+      "company": "上海龙韵文创科技集团股份有限公司",
+      "name_as_reported": "ST龙韵",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "605199",
+      "published_on": "2026-10-31",
+      "title": "海南葫芦娃药业集团股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/605199_20261031_4D07.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650708.PDF",
+      "announcement_id": "1225650708",
+      "org_id": "9900039731",
+      "cninfo_title": "海南葫芦娃药业集团股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:40.193610+00:00",
+      "raw_sha256": "3aea0292f54f3153c158b2588a09ce48baf6fc312af86e425f39e28760c3e148",
+      "text_sha256": "f9c9f5e295f7985c1b7e1dba5a3582d159349a58e0dc96823ec29e088fa676c9",
+      "raw_bytes": 89964,
+      "text_bytes": 4536,
+      "page_count": 2,
+      "company": "海南葫芦娃药业集团股份有限公司",
+      "name_as_reported": "ST葫芦娃",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2025-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2025年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688022",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/688022_20261031_1ZOA.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649889.PDF",
+      "announcement_id": "1225649889",
+      "org_id": "9900039049",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:40.419380+00:00",
+      "raw_sha256": "df2497a3011c7ec8118dc3e5a293efbefdd0261c81cdb2cb81a861525fd8185d",
+      "text_sha256": "174a247164d4291a24fed1d146f37f417614fd90e2f757045bd8c41aa16f2e21",
+      "raw_bytes": 117774,
+      "text_bytes": 8360,
+      "page_count": 4,
+      "company": "苏州瀚川智能科技股份有限公司",
+      "name_as_reported": "ST瀚川",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688033",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/688033_20261031_LKBQ.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647568.PDF",
+      "announcement_id": "1225647568",
+      "org_id": "9900039155",
+      "cninfo_title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:40.542895+00:00",
+      "raw_sha256": "725752d748b614baa64f217fc5283d6c13805c0af6942cf1a2e4343710845a39",
+      "text_sha256": "f2040e905024c9d1785327fc10664b91bd2bc7fe198e4fb0893a7404ff3e2188",
+      "raw_bytes": 185466,
+      "text_bytes": 9934,
+      "page_count": 4,
+      "company": "北京天宜上佳高新材料股份有限公司",
+      "name_as_reported": "*ST天宜",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688066",
+      "published_on": "2026-10-31",
+      "title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-31/688066_20261031_02NU.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649180.PDF",
+      "announcement_id": "1225649180",
+      "org_id": "fzqy1026111",
+      "cninfo_title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:40.765148+00:00",
+      "raw_sha256": "bb17fce65f9e1672fb32755e871508830ffff029dd9b81b2189b8aa4d80ce5af",
+      "text_sha256": "29d30e1fcad1fc353d1724db01bfc70b41f8c8efe3ef9ab1b0fcc921f5fb1e10",
+      "raw_bytes": 158098,
+      "text_bytes": 9981,
+      "page_count": 5,
+      "company": "航天宏图信息技术股份有限公司",
+      "name_as_reported": "*ST航图",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年5月6日起被叠加实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600238",
+      "published_on": "2026-10-30",
+      "title": "ST椰岛关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/600238_20261030_EQ4C.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225645540.PDF",
+      "announcement_id": "1225645540",
+      "org_id": "gssh0600238",
+      "cninfo_title": "ST椰岛关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:40.937524+00:00",
+      "raw_sha256": "7ed7adcc0a8e9f15e164c5e43909b398d1287d51b7c683b2bc891d9c7342a749",
+      "text_sha256": "008ecefd040900dff8f692ba956495525333bccc1ce58850c031d5ad7018e987",
+      "raw_bytes": 134508,
+      "text_bytes": 5620,
+      "page_count": 3,
+      "company": "海南椰岛（集团）股份有限公司",
+      "name_as_reported": "ST椰岛",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2025-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2025年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600678",
+      "published_on": "2026-10-30",
+      "title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/600678_20261030_JGFJ.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225641054.PDF",
+      "announcement_id": "1225641054",
+      "org_id": "gssh0600678",
+      "cninfo_title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:41.111056+00:00",
+      "raw_sha256": "f4d94bd925d7e230b64e9e6cbf98312be6ab81b8b00a101587a811fc685b575c",
+      "text_sha256": "60e3fe448daddb34eec032c2a7413d7b0d8df5bde8f2cf792e8611aecb889955",
+      "raw_bytes": 124508,
+      "text_bytes": 7292,
+      "page_count": 4,
+      "company": "四川金顶（集团）股份有限公司",
+      "name_as_reported": "ST金顶",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600818",
+      "published_on": "2026-10-30",
+      "title": "关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/600818_20261030_JJ46.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225645646.PDF",
+      "announcement_id": "1225645646",
+      "org_id": "gssh0600818",
+      "cninfo_title": "关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "observed_at": "2026-11-05T08:33:41.274617+00:00",
+      "raw_sha256": "a51b7654e73322c0f658e78e08e8bcd8eb74ba4e78d558dd5674a6c1b9e55fff",
+      "text_sha256": "213f7329921e1e40b69e150cbb4ed81ce5c77e7965d0ecdd14ab02ad65585c58",
+      "raw_bytes": 132468,
+      "text_bytes": 7242,
+      "page_count": 3,
+      "company": "中路股份有限公司",
+      "name_as_reported": "ST中路",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-29",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月29日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "603359",
+      "published_on": "2026-10-30",
+      "title": "东珠生态环保股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/603359_20261030_9G24.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225640293.PDF",
+      "announcement_id": "1225640293",
+      "org_id": "9900023958",
+      "cninfo_title": "东珠生态环保股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:41.466776+00:00",
+      "raw_sha256": "7a56ba65e7e8ec888e471bacb1cdc3a0428528addd181a51545e52ff611b3d63",
+      "text_sha256": "3419fa750ff5eebae19035ea171f709ef1ac9e2723ed9badd54d91fcc063782f",
+      "raw_bytes": 137910,
+      "text_bytes": 3645,
+      "page_count": 2,
+      "company": "东珠生态环保股份有限公司",
+      "name_as_reported": "*ST东珠",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "603922",
+      "published_on": "2026-10-30",
+      "title": "金鸿顺关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/603922_20261030_EU6V.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225642128.PDF",
+      "announcement_id": "1225642128",
+      "org_id": "9900032570",
+      "cninfo_title": "金鸿顺关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:41.620563+00:00",
+      "raw_sha256": "10a1d6c521462ceecdee15f087a98407b678bc948003927aacf1168e9c7dc700",
+      "text_sha256": "f677c9c26764f9d64acfd70ce3712f6f2c29340b1f3e0d01ab8086aa5d877dda",
+      "raw_bytes": 130678,
+      "text_bytes": 8889,
+      "page_count": 4,
+      "company": "苏州金鸿顺汽车部件股份有限公司",
+      "name_as_reported": "ST金鸿顺",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票已于2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688089",
+      "published_on": "2026-10-30",
+      "title": "嘉必优生物技术（武汉）股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-30/688089_20261030_WM2D.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225640229.PDF",
+      "announcement_id": "1225640229",
+      "org_id": "9900033197",
+      "cninfo_title": "嘉必优生物技术（武汉）股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:41.786232+00:00",
+      "raw_sha256": "df5d467f2c63514f0009ac2ef88591248659dea2fa16e90bcac3a8fc8fae2a29",
+      "text_sha256": "55ae625eb6e739594bcc9b6cfec74e8bfb9e4d63272ac900e487188ebe8a2ece",
+      "raw_bytes": 130206,
+      "text_bytes": 4452,
+      "page_count": 2,
+      "company": "嘉必优生物技术（武汉）股份有限公司",
+      "name_as_reported": "ST嘉必优",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-07-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年7月28日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600965",
+      "published_on": "2026-10-28",
+      "title": "福成股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-28/600965_20261028_0978.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225628125.PDF",
+      "announcement_id": "1225628125",
+      "org_id": "gssh0600965",
+      "cninfo_title": "福成股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:42.005390+00:00",
+      "raw_sha256": "513fadf07af66a34f21165092f94643d3095db26979b6bccc3822bdda0cb1a3e",
+      "text_sha256": "cebb0dc1f3205afa62e5f60ab2b8cae6fe72d7d83bd6bdbfbee6a2ec2a49aff5",
+      "raw_bytes": 123131,
+      "text_bytes": 8587,
+      "page_count": 4,
+      "company": "河北福成五丰食品股份有限公司",
+      "name_as_reported": "*ST福成",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688201",
+      "published_on": "2026-10-28",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-28/688201_20261028_7QHQ.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225627564.PDF",
+      "announcement_id": "1225627564",
+      "org_id": "9900041393",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:42.160772+00:00",
+      "raw_sha256": "41e2e4a39791dd116cf0605a85ba8b63c13f5ed614200f182f6e8c15fc658971",
+      "text_sha256": "fd7f239d4bab8375bf3c1f45d5fdd9aae76890cc1dfbd89037600492b5df6f63",
+      "raw_bytes": 159186,
+      "text_bytes": 4772,
+      "page_count": 3,
+      "company": "北京信安世纪科技股份有限公司",
+      "name_as_reported": "ST信安",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-29",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月29日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688184",
+      "published_on": "2026-10-27",
+      "title": "浙江帕瓦新能源股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-27/688184_20261027_H8TY.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-27/1225623824.PDF",
+      "announcement_id": "1225623824",
+      "org_id": "9900041894",
+      "cninfo_title": "浙江帕瓦新能源股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:42.344269+00:00",
+      "raw_sha256": "e931d88baf7da06ffd7d7162dba9f73a5df6112ebd538e662b003e1ab131e667",
+      "text_sha256": "079604d3ecfdd70b4693bc485dc0c756ec2c944ba5c0d683510ed0e32f5af718",
+      "raw_bytes": 108182,
+      "text_bytes": 11270,
+      "page_count": 5,
+      "company": "浙江帕瓦新能源股份有限公司",
+      "name_as_reported": "ST帕瓦",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2025-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司A股股票于2025年5月6日被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600180",
+      "published_on": "2026-10-24",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-24/600180_20261024_E0LC.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225619481.PDF",
+      "announcement_id": "1225619481",
+      "org_id": "gssh0600180",
+      "cninfo_title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:42.535925+00:00",
+      "raw_sha256": "b1d05c36c226be1abf7f03c3a5a2ec66ac3a1ecd8cec477e432e96ead152c80b",
+      "text_sha256": "ca6d9f98ddea871941b2a840197868643c8b64f9ada0ef0e2650482bbffd5a46",
+      "raw_bytes": 116628,
+      "text_bytes": 5360,
+      "page_count": 3,
+      "company": "瑞茂通供应链管理股份有限公司",
+      "name_as_reported": "*ST瑞茂",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月30日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688053",
+      "published_on": "2026-10-24",
+      "title": "成都思科瑞微电子股份有限公司关于申请撤销对公司股票实施其他风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-24/688053_20261024_4AF7.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225620096.PDF",
+      "announcement_id": "1225620096",
+      "org_id": "9900046510",
+      "cninfo_title": "成都思科瑞微电子股份有限公司关于申请撤销对公司股票实施其他风险警示的公告",
+      "observed_at": "2026-11-05T08:33:42.717745+00:00",
+      "raw_sha256": "1f0d63f8da49053d6dcc965ddf838f46b2a0afc2a53dccc447da125b1614edaf",
+      "text_sha256": "2f8953be3057dbb251bd079e86d4bf36d83e017ab7b6bbcf7c38abe5ac7de8b1",
+      "raw_bytes": 158651,
+      "text_bytes": 7361,
+      "page_count": 4,
+      "company": "成都思科瑞微电子股份有限公司",
+      "name_as_reported": "ST思科瑞",
+      "kind": "application_pending",
+      "effective_on": null,
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票撤销其他风险警示事宜存在不确定性",
+          "role": "approval_pending"
+        }
+      ]
+    },
+    {
+      "symbol": "603517",
+      "published_on": "2026-10-19",
+      "title": "关于撤销其他风险警示暨临时停牌的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-19/603517_20261019_6EOE.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF",
+      "announcement_id": "1225609996",
+      "org_id": "9900029519",
+      "cninfo_title": "关于撤销其他风险警示暨临时停牌的公告",
+      "observed_at": "2026-11-05T06:06:31.977645+00:00",
+      "raw_sha256": "33531fddb6a838242c0f899ca394c470c2e910fa4dc266796cff8b71b4d7cec0",
+      "text_sha256": "eb0ee27469a0d1b99141ee4527ca209a5ddc482ae2abdb815f36606f4cc7c3d1",
+      "raw_bytes": 113748,
+      "text_bytes": 5238,
+      "page_count": 3,
+      "company": "绝味食品股份有限公司",
+      "name_as_reported": "ST绝味",
+      "kind": "warning_removed",
+      "effective_on": "2026-10-20",
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 1,
+          "text": "撤销其他风险警示的起始日：2026年10月20日",
+          "role": "effective_date"
+        },
+        {
+          "page": 1,
+          "text": "股票简称：由“ST绝味”变更为“绝味食品”",
+          "role": "name_direction"
+        }
+      ]
+    },
+    {
+      "symbol": "603838",
+      "published_on": "2026-10-17",
+      "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-17/603838_20261017_GXKU.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF",
+      "announcement_id": "1225608268",
+      "org_id": "9900024445",
+      "cninfo_title": "四通股份关于撤销退市风险警示暨停牌的公告",
+      "observed_at": "2026-11-05T06:06:32.174599+00:00",
+      "raw_sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7",
+      "text_sha256": "2e6ba55ebf0553604b7fd84f4bb364e1345ba9ed5a9263aedbc2c5b624ffd0d5",
+      "raw_bytes": 92751,
+      "text_bytes": 4243,
+      "page_count": 3,
+      "company": "广东四通集团股份有限公司",
+      "name_as_reported": "*ST四通",
+      "kind": "warning_removed",
+      "effective_on": "2026-10-20",
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 1,
+          "text": "撤销退市风险警示的起始日：2026年10月20日",
+          "role": "effective_date"
+        },
+        {
+          "page": 1,
+          "text": "证券简称由“*ST四通”变更为“四通股份”",
+          "role": "name_direction"
+        }
+      ]
+    },
+    {
+      "symbol": "600735",
+      "published_on": "2026-10-13",
+      "title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-13/600735_20261013_GA0U.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-13/1225601805.PDF",
+      "announcement_id": "1225601805",
+      "org_id": "gssh0600735",
+      "cninfo_title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "observed_at": "2026-11-05T08:33:42.979746+00:00",
+      "raw_sha256": "cfc8e22fc689051b6db833d5fdedea0b42b4a0f0c0331888dbda5dfb254f84a3",
+      "text_sha256": "923b66881c2133b4945b8d6d88084babedba067ecc396395b23dcad9e4a30f54",
+      "raw_bytes": 121440,
+      "text_bytes": 6097,
+      "page_count": 3,
+      "company": "山东新华锦国际股份有限公司",
+      "name_as_reported": "ST新华锦",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-27",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月27日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "603517",
+      "published_on": "2026-10-13",
+      "title": "关于公司股票申请撤销其他风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-13/603517_20261013_THJW.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-13/1225601005.PDF",
+      "announcement_id": "1225601005",
+      "org_id": "9900029519",
+      "cninfo_title": "关于公司股票申请撤销其他风险警示的公告",
+      "observed_at": "2026-11-05T08:33:43.087855+00:00",
+      "raw_sha256": "d4e56fb48e3716a5a095c598c4d119d1190be748be5da3ff8647447b2c548c37",
+      "text_sha256": "f076e53c8a5b72b133c841a4ac23c7e53a26d23fa8d9c40ff4e5ac6aa1450179",
+      "raw_bytes": 88384,
+      "text_bytes": 4869,
+      "page_count": 3,
+      "company": "绝味食品股份有限公司",
+      "name_as_reported": "ST绝味",
+      "kind": "application_pending",
+      "effective_on": null,
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 2,
+          "text": "公司股票撤销其他风险警示尚需上海证券交易所审核，能否获得批准尚存在不确定性",
+          "role": "approval_pending"
+        }
+      ]
+    },
+    {
+      "symbol": "600745",
+      "published_on": "2026-10-09",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-09/600745_20261009_7AXF.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-09/1225597538.PDF",
+      "announcement_id": "1225597538",
+      "org_id": "gssh0600745",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:43.531891+00:00",
+      "raw_sha256": "0217e699b4ff6f11f1daf52c51b9ffea4ac1457fa53c50a1a625c66653269111",
+      "text_sha256": "b49fe48331ba0db617ff7b861091d4a2f2b6f47ab11ed5831e92dc94f1711612",
+      "raw_bytes": 136020,
+      "text_bytes": 3872,
+      "page_count": 2,
+      "company": "闻泰科技股份有限公司",
+      "name_as_reported": "*ST闻泰",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司自2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600187",
+      "published_on": "2026-10-08",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-08/600187_20261008_7HPW.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-08/1225595357.PDF",
+      "announcement_id": "1225595357",
+      "org_id": "gssh0600187",
+      "cninfo_title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:43.512877+00:00",
+      "raw_sha256": "724e2d8f2e7b6c2ac3f45f8f13df284969f23b4d0407b1fa2d1ae93a52d88f19",
+      "text_sha256": "3ab930353cd86989677d6d322d2721945a6e78c4bda98741ae1a80a78fc36cbe",
+      "raw_bytes": 108581,
+      "text_bytes": 3186,
+      "page_count": 2,
+      "company": "黑龙江国中水务股份有限公司",
+      "name_as_reported": "*ST国中",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600818",
+      "published_on": "2026-10-01",
+      "title": "关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-01/600818_20261001_PEFY.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-01/1225589998.PDF",
+      "announcement_id": "1225589998",
+      "org_id": "gssh0600818",
+      "cninfo_title": "关于公司股票被实施其他风险警示及可能被实施退市风险警示相关事项的进展暨风险提示公告",
+      "observed_at": "2026-11-05T08:33:43.927077+00:00",
+      "raw_sha256": "b21142384a7ca982f2a23b4722e230514238b8aa639f38427a7e6c661de62cd1",
+      "text_sha256": "a26f880d00262c203dc6104632cbf89baae0e0cf8e16ef7c455564bf347519e8",
+      "raw_bytes": 165649,
+      "text_bytes": 6870,
+      "page_count": 3,
+      "company": "中路股份有限公司",
+      "name_as_reported": "ST中路",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-29",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月29日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "605199",
+      "published_on": "2026-10-01",
+      "title": "海南葫芦娃药业集团股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-01/605199_20261001_GG0S.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-01/1225592295.PDF",
+      "announcement_id": "1225592295",
+      "org_id": "9900039731",
+      "cninfo_title": "海南葫芦娃药业集团股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:43.865784+00:00",
+      "raw_sha256": "2accf359f857d9919aecd4f4d0134c64e9fb04e317981a11990ad8cab3a50478",
+      "text_sha256": "041a6ca8f077d479e3b47332cd5f63d4b6d88695d61e41009bb41a3e72a068a6",
+      "raw_bytes": 90594,
+      "text_bytes": 4618,
+      "page_count": 2,
+      "company": "海南葫芦娃药业集团股份有限公司",
+      "name_as_reported": "ST葫芦娃",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2025-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2025年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688121",
+      "published_on": "2026-10-01",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-01/688121_20261001_ZR58.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-10-01/1225591489.PDF",
+      "announcement_id": "1225591489",
+      "org_id": "9900041733",
+      "cninfo_title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:44.218325+00:00",
+      "raw_sha256": "692899a0a5872af6f7549c4904e93b0ab2bb2a7e106acece103cbc406ee5b2e7",
+      "text_sha256": "092919af87920c1d410bbb22d96f38942c8d050309ea6869241cdc77fe7b5a91",
+      "raw_bytes": 146183,
+      "text_bytes": 11690,
+      "page_count": 5,
+      "company": "上海卓然工程技术股份有限公司",
+      "name_as_reported": "*ST卓然",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-07-07",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年7月7日复牌并被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600080",
+      "published_on": "2026-09-30",
+      "title": "金花企业（集团）股份有限公司关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600080_20260930_GHNE.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225586604.PDF",
+      "announcement_id": "1225586604",
+      "org_id": "gssh0600080",
+      "cninfo_title": "金花企业（集团）股份有限公司关于公司股票被实施其他风险警示事项的进展公告",
+      "observed_at": "2026-11-05T08:33:44.292931+00:00",
+      "raw_sha256": "b262342d240fd5fba435a473e6f50d54d609275733149ae32d6a2653380f2344",
+      "text_sha256": "12a7bac34e57d2a14b4afff423ee734bf8f674e0581e92703a81de2fcb3a071a",
+      "raw_bytes": 77127,
+      "text_bytes": 4600,
+      "page_count": 2,
+      "company": "金花企业（集团）股份有限公司",
+      "name_as_reported": "ST金花",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600238",
+      "published_on": "2026-09-30",
+      "title": "ST椰岛关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600238_20260930_W85B.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225588259.PDF",
+      "announcement_id": "1225588259",
+      "org_id": "gssh0600238",
+      "cninfo_title": "ST椰岛关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:44.621614+00:00",
+      "raw_sha256": "04d8b9713e785ba4388c36f705d8b988051c43e7bbbd798e00d1c530895808d5",
+      "text_sha256": "874e9dad06e864d4b98265a8c4db6e067b16b7dca667886cd2f0e28d22614d40",
+      "raw_bytes": 134706,
+      "text_bytes": 5726,
+      "page_count": 3,
+      "company": "海南椰岛（集团）股份有限公司",
+      "name_as_reported": "ST椰岛",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2025-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2025年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600302",
+      "published_on": "2026-09-30",
+      "title": "标准股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600302_20260930_E36M.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225586535.PDF",
+      "announcement_id": "1225586535",
+      "org_id": "gssh0600302",
+      "cninfo_title": "标准股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:44.653639+00:00",
+      "raw_sha256": "8ce9259ddc32b6d42e163cf2b28299098a71a0d1a7d61bf7ff2f4c082d64ec03",
+      "text_sha256": "2d5c7c4f46ad3c5f55da906e578648117377daa387a19079cb8d01fad1b03284",
+      "raw_bytes": 133459,
+      "text_bytes": 5599,
+      "page_count": 3,
+      "company": "西安标准工业股份有限公司",
+      "name_as_reported": "ST标准",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600370",
+      "published_on": "2026-09-30",
+      "title": "江苏三房巷聚材股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600370_20260930_HJTF.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225588245.PDF",
+      "announcement_id": "1225588245",
+      "org_id": "gssh0600370",
+      "cninfo_title": "江苏三房巷聚材股份有限公司关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:44.979384+00:00",
+      "raw_sha256": "5c1c43c38d6b5ce64b1265d3fa1715e3ed1e654c61f8474212c2c560d509c40b",
+      "text_sha256": "9968045965a9c41f6c7d114e3913394674c0db9b8059f09140fd76cd792fd7d5",
+      "raw_bytes": 89469,
+      "text_bytes": 3597,
+      "page_count": 2,
+      "company": "江苏三房巷聚材股份有限公司",
+      "name_as_reported": "*ST三房",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600678",
+      "published_on": "2026-09-30",
+      "title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600678_20260930_MJZT.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225587959.PDF",
+      "announcement_id": "1225587959",
+      "org_id": "gssh0600678",
+      "cninfo_title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:45.086587+00:00",
+      "raw_sha256": "e00d9f668dc64bcba5fd7d025bfb2c666e537245c91758a6110b673b7bef1bcc",
+      "text_sha256": "2afc0f79ce78dd0b847502219ce3d904cf59b76329b18a01a822c4dc8e574905",
+      "raw_bytes": 124420,
+      "text_bytes": 7134,
+      "page_count": 4,
+      "company": "四川金顶（集团）股份有限公司",
+      "name_as_reported": "ST金顶",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600759",
+      "published_on": "2026-09-30",
+      "title": "洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/600759_20260930_4Z8B.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225587085.PDF",
+      "announcement_id": "1225587085",
+      "org_id": "gssh0600759",
+      "cninfo_title": "洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:45.296683+00:00",
+      "raw_sha256": "9c8ce256dc1da49f083a65e3d56630b08d9a35e4bd5a768c65902ae42599861e",
+      "text_sha256": "d1026c84a8541cb47c0a507fc496084d7cf0a51a8f2e78f03a44241e4fb6d74d",
+      "raw_bytes": 105752,
+      "text_bytes": 6559,
+      "page_count": 3,
+      "company": "洲际油气股份有限公司",
+      "name_as_reported": "ST洲际",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-29",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月29日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "601010",
+      "published_on": "2026-09-30",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/601010_20260930_YNXP.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225587488.PDF",
+      "announcement_id": "1225587488",
+      "org_id": "9900019963",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:45.432022+00:00",
+      "raw_sha256": "693b9a7ca77353dd37976ff2da896154ab1f6838bdfda374424c995073142315",
+      "text_sha256": "cc6f38e36788b48af9b0fe05b9802ebcafc4165a7793453e77124f731ec754b9",
+      "raw_bytes": 159396,
+      "text_bytes": 5997,
+      "page_count": 2,
+      "company": "文峰大世界连锁发展股份有限公司",
+      "name_as_reported": "ST文峰",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "603922",
+      "published_on": "2026-09-30",
+      "title": "金鸿顺关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/603922_20260930_6B55.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225587689.PDF",
+      "announcement_id": "1225587689",
+      "org_id": "9900032570",
+      "cninfo_title": "金鸿顺关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:45.675474+00:00",
+      "raw_sha256": "2d96aac8e65001eb792ac1e93065fc5e37a99564266e4a43b8238a2888ee5a4c",
+      "text_sha256": "e9d92466d5891f65e7764f15b8c38f717175a780117d70ade015275643953c0e",
+      "raw_bytes": 130053,
+      "text_bytes": 8373,
+      "page_count": 4,
+      "company": "苏州金鸿顺汽车部件股份有限公司",
+      "name_as_reported": "ST金鸿顺",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票已于2026年4月30日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688022",
+      "published_on": "2026-09-30",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/688022_20260930_ZI4E.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225588150.PDF",
+      "announcement_id": "1225588150",
+      "org_id": "9900039049",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:45.761976+00:00",
+      "raw_sha256": "aba2e1314788ba8be153cf405da163e92f68bcd2822b065c0760534934167a68",
+      "text_sha256": "972c068f25d57f23f071e2d84d0214341579dc0432fc840095325a6c1cdcd29e",
+      "raw_bytes": 117823,
+      "text_bytes": 8374,
+      "page_count": 4,
+      "company": "苏州瀚川智能科技股份有限公司",
+      "name_as_reported": "ST瀚川",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688033",
+      "published_on": "2026-09-30",
+      "title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/688033_20260930_OM9X.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225586615.PDF",
+      "announcement_id": "1225586615",
+      "org_id": "9900039155",
+      "cninfo_title": "关于公司股票交易被实施风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:46.141742+00:00",
+      "raw_sha256": "1361b5caf9dc60d08e7f8f5b26ed17f693f812ffddf84a5352a6bc113671b83d",
+      "text_sha256": "d18549e08aa7540bbae6f2669b81dcc1dee1dc52aa7b528ec5965bbe1b436da1",
+      "raw_bytes": 184505,
+      "text_bytes": 9308,
+      "page_count": 4,
+      "company": "北京天宜上佳高新材料股份有限公司",
+      "name_as_reported": "*ST天宜",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688089",
+      "published_on": "2026-09-30",
+      "title": "嘉必优生物技术（武汉）股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-30/688089_20260930_QD2J.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225587827.PDF",
+      "announcement_id": "1225587827",
+      "org_id": "9900033197",
+      "cninfo_title": "嘉必优生物技术（武汉）股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:46.191737+00:00",
+      "raw_sha256": "b3e1ca587f14a6fa3d8d460d22fd799881caaeab4d26c3a7090825b620e39d26",
+      "text_sha256": "70647b116c57e3cb8dbd6c905185187309039c9a43ac183d4e8ac09730cea1b0",
+      "raw_bytes": 122522,
+      "text_bytes": 3883,
+      "page_count": 2,
+      "company": "嘉必优生物技术（武汉）股份有限公司",
+      "name_as_reported": "ST嘉必优",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-07-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年7月28日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600289",
+      "published_on": "2026-09-29",
+      "title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/600289_20260929_X482.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225585687.PDF",
+      "announcement_id": "1225585687",
+      "org_id": "gssh0600289",
+      "cninfo_title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:46.646260+00:00",
+      "raw_sha256": "0c1a6c6a08be6e7747b666ea3cb10ebaf505c3c094a5ea1dbf49b7cd30baab09",
+      "text_sha256": "ec33b622feb018317469aed0182015bdcbb23d6600216628f7b46ad3e847defd",
+      "raw_bytes": 146004,
+      "text_bytes": 4139,
+      "page_count": 2,
+      "company": "亿阳信通股份有限公司",
+      "name_as_reported": "ST信通",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月28日起继续被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600363",
+      "published_on": "2026-09-29",
+      "title": "关于实施其他风险警示暨停牌的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/600363_20260929_H600.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225584110.PDF",
+      "announcement_id": "1225584110",
+      "org_id": "gssh0600363",
+      "cninfo_title": "关于实施其他风险警示暨停牌的公告",
+      "observed_at": "2026-11-05T06:06:30.930314+00:00",
+      "raw_sha256": "0e57d98df61f9060eb3e6f29eda39ef9ce0e079b9d0c1b32703249fa4f3d3228",
+      "text_sha256": "a5184312984d581f63a3635ecb7690a73d274a86d4c7e8bba2c26eb129be1103",
+      "raw_bytes": 125209,
+      "text_bytes": 8657,
+      "page_count": 4,
+      "company": "江西联创光电科技股份有限公司",
+      "name_as_reported": "联创光电",
+      "kind": "warning_added",
+      "effective_on": "2026-09-30",
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 2,
+          "text": "实施其他风险警示的起始日：2026年9月30日",
+          "role": "effective_date"
+        },
+        {
+          "page": 2,
+          "text": "股票简称由“联创光电”变更为“ST联光”",
+          "role": "name_direction"
+        }
+      ]
+    },
+    {
+      "symbol": "603008",
+      "published_on": "2026-09-29",
+      "title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-29/603008_20260929_PSEO.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225584443.PDF",
+      "announcement_id": "1225584443",
+      "org_id": "9900023007",
+      "cninfo_title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:46.683731+00:00",
+      "raw_sha256": "080c81137e5ca08b9cf6f0fb9d6e53c60c480129955f5089ad47066918436cea",
+      "text_sha256": "bd26913e01ce2f7f3893aa46fd1ff399519fa1b21633a084cdf3acb5a52d8652",
+      "raw_bytes": 132029,
+      "text_bytes": 11295,
+      "page_count": 5,
+      "company": "喜临门健康睡眠科技股份公司",
+      "name_as_reported": "ST喜临门",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月28日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688201",
+      "published_on": "2026-09-28",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-28/688201_20260928_GCHL.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-28/1225583740.PDF",
+      "announcement_id": "1225583740",
+      "org_id": "9900041393",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:47.058144+00:00",
+      "raw_sha256": "62c92767d23dc25848be3c2ca542302cc2f488ceb06b1b69f056b2a03c7a5f58",
+      "text_sha256": "7ee1085fc262aa234fa3301cb99db1f50821143e1cf5f4289c912dd25ad071b2",
+      "raw_bytes": 159183,
+      "text_bytes": 4770,
+      "page_count": 3,
+      "company": "北京信安世纪科技股份有限公司",
+      "name_as_reported": "ST信安",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-29",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月29日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600365",
+      "published_on": "2026-09-25",
+      "title": "通化葡萄酒股份有限公司关于股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-25/600365_20260925_JCYP.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-25/1225581927.PDF",
+      "announcement_id": "1225581927",
+      "org_id": "gssh0600365",
+      "cninfo_title": "通化葡萄酒股份有限公司关于股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:47.031146+00:00",
+      "raw_sha256": "3fd477e2958c4f1d94ac75d2ea0086c83861b63387bd01fa9fca821827f3450a",
+      "text_sha256": "0497035bc4116cf9ff50629f53f30053161acaeafc49560c8ccdadcff72f8448",
+      "raw_bytes": 95543,
+      "text_bytes": 4748,
+      "page_count": 2,
+      "company": "通化葡萄酒股份有限公司",
+      "name_as_reported": "ST通葡",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司被继续实施“其他风险警示”",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600965",
+      "published_on": "2026-09-25",
+      "title": "福成股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-25/600965_20260925_U3AX.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-25/1225583006.PDF",
+      "announcement_id": "1225583006",
+      "org_id": "gssh0600965",
+      "cninfo_title": "福成股份关于公司股票被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:47.410757+00:00",
+      "raw_sha256": "d4f7d9c7c6e7ed0a04586a771068a481d75fcad79c357638843040b5ef94980a",
+      "text_sha256": "1572d6fe02a3a0fb5a8209ea6e6cd9d5e3eb3500618bc2852ac4a963e7cf1978",
+      "raw_bytes": 123041,
+      "text_bytes": 8587,
+      "page_count": 4,
+      "company": "河北福成五丰食品股份有限公司",
+      "name_as_reported": "*ST福成",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688184",
+      "published_on": "2026-09-25",
+      "title": "浙江帕瓦新能源股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-25/688184_20260925_G8RO.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-25/1225581914.PDF",
+      "announcement_id": "1225581914",
+      "org_id": "9900041894",
+      "cninfo_title": "浙江帕瓦新能源股份有限公司关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:47.379132+00:00",
+      "raw_sha256": "77dce925af5c1c03cfa6b4a9b9d06c28f51571ae72d7657bbe064758fc1152d3",
+      "text_sha256": "1d29bc3e8d14b2272b26b3151de2da9af026e3708b9078e989468c34eecd4678",
+      "raw_bytes": 102725,
+      "text_bytes": 10735,
+      "page_count": 5,
+      "company": "浙江帕瓦新能源股份有限公司",
+      "name_as_reported": "ST帕瓦",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2025-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司A股股票于2025年5月6日被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600180",
+      "published_on": "2026-09-24",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-24/600180_20260924_OJHX.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579034.PDF",
+      "announcement_id": "1225579034",
+      "org_id": "gssh0600180",
+      "cninfo_title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:47.835218+00:00",
+      "raw_sha256": "0f92a792b57b677bf463730b144da43dc114fe69bb8c78291ff4450f1d0d3c50",
+      "text_sha256": "5c22c70e60ad96c4d76a38ca3ee21c267785d3729306003cfa88226f220e0c67",
+      "raw_bytes": 116639,
+      "text_bytes": 5359,
+      "page_count": 3,
+      "company": "瑞茂通供应链管理股份有限公司",
+      "name_as_reported": "*ST瑞茂",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-30",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月30日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600735",
+      "published_on": "2026-09-12",
+      "title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/600735_20260912_UBET.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225561044.PDF",
+      "announcement_id": "1225561044",
+      "org_id": "gssh0600735",
+      "cninfo_title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "observed_at": "2026-11-05T08:33:47.792974+00:00",
+      "raw_sha256": "bcdc7883137d0e1caaa6133fc84ec5dad41b766b703e47df02d58143728eff6f",
+      "text_sha256": "eb21a1ca4b561798bfcb7d1390d60d8633cfb8fde140b86ddbadf3838bcdc84f",
+      "raw_bytes": 121448,
+      "text_bytes": 6096,
+      "page_count": 3,
+      "company": "山东新华锦国际股份有限公司",
+      "name_as_reported": "ST新华锦",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-27",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票自2026年4月27日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688121",
+      "published_on": "2026-09-12",
+      "title": "关于叠加实施退市风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-12/688121_20260912_88JS.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225561775.PDF",
+      "announcement_id": "1225561775",
+      "org_id": "9900041733",
+      "cninfo_title": "关于叠加实施退市风险警示的公告",
+      "observed_at": "2026-11-05T08:33:48.268223+00:00",
+      "raw_sha256": "f52cefa02a983c8df94d87fc14ca9341ef1b64ca90a9aa89099fcded2f702b6a",
+      "text_sha256": "ad40ce57c476e00127a0d5695d39528af57876f3e491414632cfe2909fd106ae",
+      "raw_bytes": 87255,
+      "text_bytes": 3888,
+      "page_count": 2,
+      "company": "上海卓然工程技术股份有限公司",
+      "name_as_reported": "*ST卓然",
+      "kind": "layered_warning_existing_member",
+      "effective_on": null,
+      "stated_since_on": "2026-07-07",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年7月7日复牌并被实施退市风险警示",
+          "role": "prior_warning"
+        },
+        {
+          "page": 2,
+          "text": "公司股票将被上海证券交易所叠加实施退市风险警示",
+          "role": "layered_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688496",
+      "published_on": "2026-09-02",
+      "title": "清越科技关于公司股票可能被实施重大违法强制退市暨继续实施退市风险警示的公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-02/688496_20260902_6S3E.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-02/1225542709.PDF",
+      "announcement_id": "1225542709",
+      "org_id": "9900051401",
+      "cninfo_title": "清越科技关于公司股票可能被实施重大违法强制退市暨继续实施退市风险警示的公告",
+      "observed_at": "2026-11-05T08:33:48.228940+00:00",
+      "raw_sha256": "2789800de573646820edffea6bd7f3ae0eb58ddb13b01133052e19dd97579de0",
+      "text_sha256": "1669e3a21143c454a987813d52c691107b66b41b92c04df3043a345f5a2d719e",
+      "raw_bytes": 99257,
+      "text_bytes": 3475,
+      "page_count": 2,
+      "company": "苏州清越光电科技股份有限公司",
+      "name_as_reported": "*ST清越",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": null,
+      "proofs": [
+        {
+          "page": 2,
+          "text": "公司股票将继续被实施退市风险警示及其他风险警示",
+          "role": "continuation_statement"
+        }
+      ]
+    },
+    {
+      "symbol": "600187",
+      "published_on": "2026-09-01",
+      "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/600187_20260901_7L06.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225538055.PDF",
+      "announcement_id": "1225538055",
+      "org_id": "gssh0600187",
+      "cninfo_title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:48.744447+00:00",
+      "raw_sha256": "10da10dfb58866db21659953aa8aaeacb06b2a611e963de1b56f6fabe22e9e8d",
+      "text_sha256": "00827b12aa176715f50ce92efa4afb1fe8ee679bdd3427a444ba338dc84a4be8",
+      "raw_bytes": 108744,
+      "text_bytes": 3189,
+      "page_count": 2,
+      "company": "黑龙江国中水务股份有限公司",
+      "name_as_reported": "*ST国中",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600289",
+      "published_on": "2026-09-01",
+      "title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/600289_20260901_VCCS.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225538164.PDF",
+      "announcement_id": "1225538164",
+      "org_id": "gssh0600289",
+      "cninfo_title": "亿阳信通关于公司股票继续被实施其他风险警示相关事项的进展公告",
+      "observed_at": "2026-11-05T08:33:48.630226+00:00",
+      "raw_sha256": "7cca37a93c0633b8d14d0ff57cb6fbae5d83983995574e6654c5b6ee67bd3650",
+      "text_sha256": "3dac9ec1b2b454adb2ad4f0778af028a3b09fcb3bb506881a11f09faea9b0a0b",
+      "raw_bytes": 146006,
+      "text_bytes": 4138,
+      "page_count": 2,
+      "company": "亿阳信通股份有限公司",
+      "name_as_reported": "ST信通",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-04-28",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年4月28日起继续被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "600745",
+      "published_on": "2026-09-01",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/600745_20260901_QXIP.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225537478.PDF",
+      "announcement_id": "1225537478",
+      "org_id": "gssh0600745",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:48.965866+00:00",
+      "raw_sha256": "f096f1e04734809ef11d0bb8d7ee91478aed8849d5bfe1b71ec261cdcb71d18a",
+      "text_sha256": "0813d9ae8e9c1ceadbbe216bd8348ed100385eed7f7cff91b949183534dbf7cd",
+      "raw_bytes": 135954,
+      "text_bytes": 3872,
+      "page_count": 2,
+      "company": "闻泰科技股份有限公司",
+      "name_as_reported": "*ST闻泰",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司自2026年5月6日起被实施退市风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    },
+    {
+      "symbol": "688022",
+      "published_on": "2026-09-01",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "catalog_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-09-01/688022_20260901_X6BL.pdf",
+      "source_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225538036.PDF",
+      "announcement_id": "1225538036",
+      "org_id": "9900039049",
+      "cninfo_title": "关于公司股票被实施其他风险警示的进展公告",
+      "observed_at": "2026-11-05T08:33:49.063222+00:00",
+      "raw_sha256": "bc62247458fa63d80dd3a0d10e5dfd5a5c930e7763931c43b72e51442e14672d",
+      "text_sha256": "dabba5fdc107aaf9dee54a8dbed22b931ba89e04bcbcad2b46e64d5615f6f35b",
+      "raw_bytes": 112092,
+      "text_bytes": 6627,
+      "page_count": 3,
+      "company": "苏州瀚川智能科技股份有限公司",
+      "name_as_reported": "ST瀚川",
+      "kind": "existing_warning_described",
+      "effective_on": null,
+      "stated_since_on": "2026-05-06",
+      "proofs": [
+        {
+          "page": 1,
+          "text": "公司股票于2026年5月6日起被实施其他风险警示",
+          "role": "prior_warning"
+        }
+      ]
+    }
+  ],
+  "metadata_refs": [
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600080",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:30.708328+00:00",
+      "sha256": "8e97ab420bfbcd5c4827a89c2830bf20546a0fed19e0d8cbde092a69c1c802b3",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600080,gssh0600080",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:31.057582+00:00",
+      "sha256": "324ea0a53ddb88991353c62a1f79cbc7877b716d980520972f4099ba00b81b19",
+      "bytes": 1780
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600180",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:30.708459+00:00",
+      "sha256": "f46a98e7f65cb33e8fd49dd50aecaf8a27fa8b8e642a769ca1072e7c2d4cccd7",
+      "bytes": 146
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600180,gssh0600180",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:31.059555+00:00",
+      "sha256": "0bc203499c87030f17262fd140aa0ed26f17d943800cc19193b508e720f65795",
+      "bytes": 1814
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600187",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:31.378818+00:00",
+      "sha256": "c91190709f786c1072c8fcc8936e30c85ac9631d9de2aab4ebeea993e2cb9853",
+      "bytes": 146
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600187,gssh0600187",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:31.772580+00:00",
+      "sha256": "821315fea772258ae815732b5c2ae0358ab039838e348f906bfe3af08b242448",
+      "bytes": 2640
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600238",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:31.390278+00:00",
+      "sha256": "4058c72d41a9aa057c1adb0945fb5171f6a035d632b7653541388119e5262dde",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600238,gssh0600238",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:31.786566+00:00",
+      "sha256": "22dcfe8c62615d5e5629353af67dff6b6ce8ef6484f5b341dbc743cbe25ed453",
+      "bytes": 1670
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600289",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:32.183617+00:00",
+      "sha256": "f24411997104e239dba5b1e6f77d73df1045654b4ad69c186a22cc68085ff98e",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600289,gssh0600289",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:32.704827+00:00",
+      "sha256": "e9a1aa34494797d145e3a30a7bf843c0cb1aa307c0292b3e9f8331cb7946354d",
+      "bytes": 2484
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600302",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:32.183711+00:00",
+      "sha256": "6cb664ffe26d3569f670c86a68fa6ae97aa9eba79f2afc3a6bcf51ef66b07e4b",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600302,gssh0600302",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:32.515995+00:00",
+      "sha256": "73c206cebd93ae7e395f5570aebe188ba97dd2577b3c35ccd2bdece58321da49",
+      "bytes": 1686
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600363",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:32.824209+00:00",
+      "sha256": "2d46b92d1de2d08b704e52db8a7b4133223d0f20502411f4c4d02f24fc9aaed1",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600363,gssh0600363",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:33.228841+00:00",
+      "sha256": "144d20dc71d3dcad64c207d73f5708d70e8fd1df33263c287529958b47261946",
+      "bytes": 1606
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600365",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:33.092287+00:00",
+      "sha256": "a3b9df078e44933a805031a73684ea42aca9ecabdaffc59a3d881b6198652a0c",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600365,gssh0600365",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:33.455004+00:00",
+      "sha256": "1f5baf8bbfdd18cd6616584b6308a7e428d4c8a9a4125ecb70001dac66adc132",
+      "bytes": 1744
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600370",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:33.589623+00:00",
+      "sha256": "52f77c5cddcf66029f9f7cd5d42cb279eb7ec6648304c8efeb1899abba731692",
+      "bytes": 146
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600370,gssh0600370",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:33.936697+00:00",
+      "sha256": "fcfc4065f98c13194932145c3ee0554cf38266f9a18836d5a99432234f18399c",
+      "bytes": 1968
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600678",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:33.888078+00:00",
+      "sha256": "326de1bbee4117fc7ce87a7cf7d098e8f831ffa8871fe3cb736c412d4aade313",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600678,gssh0600678",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:34.277277+00:00",
+      "sha256": "3d7edb716de8f6edd96ccc61b441a69f8b9acc8c2a6941f5c4c095e028f9ff98",
+      "bytes": 1806
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600735",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:34.278969+00:00",
+      "sha256": "cb83720cd9fcfac0955997b9c02cffa4987babee64b32ab804dd522cfd74006f",
+      "bytes": 149
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600735,gssh0600735",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:34.803562+00:00",
+      "sha256": "e7ecce9b02ef9d46513f7f093507e36ecad4d2c3f9f020e5bcb24b52c6919e7e",
+      "bytes": 1662
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600745",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:34.614001+00:00",
+      "sha256": "59f623b2ad59d6b3188276a5081834ba0b812aa1df1d328eb3761a578b3f0621",
+      "bytes": 146
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600745,gssh0600745",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:34.943601+00:00",
+      "sha256": "de5cf4422cc83e3b7e09eb667bd3fc0b6b0eae5a951ea282aa770a60071e8b94",
+      "bytes": 2310
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600759",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:35.124959+00:00",
+      "sha256": "264cbf816a388b7eeca439cae0ebf7723bb5fe741b86b90c157d663c1318c968",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600759,gssh0600759",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:35.449989+00:00",
+      "sha256": "3fb421463a2ffe40cfc9e80112b0761c10caf80d05f2fc6dfdca4b128287bd70",
+      "bytes": 1822
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600818",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:35.325697+00:00",
+      "sha256": "56bc0eb0da0d28431099458fa88c57c44c440b37779863c73e3e0e8bcca68e48",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600818,gssh0600818",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:35.657947+00:00",
+      "sha256": "f45ea92365ba4c040c5f3256471dc3769553e348de17a39470fefb9a03c6ff86",
+      "bytes": 1982
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600965",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:35.850146+00:00",
+      "sha256": "d09ba99b3c5accc981e370ff2b5d15fffbb7f8509506f763615c9d1fbaf38747",
+      "bytes": 146
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600965,gssh0600965",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:36.183458+00:00",
+      "sha256": "738dd8b8b45bd8bee7395837719ba6597b0d6be2ce92130ff10fb97ff65225da",
+      "bytes": 1690
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "601010",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:36.003870+00:00",
+      "sha256": "72c74e953c93394bd30091f30abc8f21c1589f3e86a71d756b32830e9c61248f",
+      "bytes": 144
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "601010,9900019963",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:36.374198+00:00",
+      "sha256": "6bd7aae1ddb567ebd62440a014fe8996673bbb0599bd69312ca119658f842e4d",
+      "bytes": 1588
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "603008",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:36.556258+00:00",
+      "sha256": "2a7110dae785d00d67f7498049bff79d38e548b14dd345f2476c0798f25dbb49",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603008,9900023007",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:36.903332+00:00",
+      "sha256": "ba18817c75b5e19d1d25b81bd40e7497e224b04ac247afb4f382cf6f8eff86ee",
+      "bytes": 1804
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "603359",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:36.703542+00:00",
+      "sha256": "f6b51522303bb84ba3e8ccd3f2e585bf19d18ee2a46c5a667e3c887b8b5b9c61",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603359,9900023958",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:37.038117+00:00",
+      "sha256": "98ed42f2615934aa0485edeefc8edbc8f602fb6d723116d49edbff9e8c6139b4",
+      "bytes": 1059
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "603517",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:37.288926+00:00",
+      "sha256": "838a7e423de856e221d966f9efaa222ba838840b81aadaccad37102509fbeee1",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603517,9900029519",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:37.727586+00:00",
+      "sha256": "dce6fcbdd9f8b13dd01065159f7300cacafebed36d6a6956a7352044bdf54a5c",
+      "bytes": 1571
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "603729",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:37.349680+00:00",
+      "sha256": "2218d969703f3aea0b5142dba2ed0cf6419f7395dce1a6b3fe330f6d0379f7b6",
+      "bytes": 144
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603729,9900023473",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:37.677165+00:00",
+      "sha256": "34e5db7825ad25338c4dc7b8a6d2cb4d2bf0263a683a4f38645cfe7927a5190b",
+      "bytes": 1166
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "603838",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:38.122632+00:00",
+      "sha256": "649f0fa8465fac0ed9512577f8c47b972173883d04738748b1f3bb99a98e3867",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603838,9900024445",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:38.484103+00:00",
+      "sha256": "fb02ed7fee2f547ee460d64ca8cd29b3f2a819bb8e3915965452cc8276ad4ec5",
+      "bytes": 870
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "603922",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:38.056266+00:00",
+      "sha256": "5f86a6feeecc3d1a0b4383b526e08f48f608fe5e2ec07339a84975dac9505c11",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "603922,9900032570",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:38.471415+00:00",
+      "sha256": "b5341c53426f1c73d28d3c38e58c3c1837582e12bd23b387d47e1d52d3cfe95a",
+      "bytes": 1684
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "605199",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:38.851589+00:00",
+      "sha256": "b2b78bf3e72ee2e1df1e9bccc41f7340eadea2850a2f8a958c177a6db4bcbd4d",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "605199,9900039731",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:39.193077+00:00",
+      "sha256": "1f8903f200532cc92dea04983fe0f8795ff44a2b8d2e1c7c182a24e83e9a2014",
+      "bytes": 1826
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688022",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:38.853658+00:00",
+      "sha256": "e2514d624672eae00df4fd5622d034859a6a043fc209aa32d2d9fe160e93e846",
+      "bytes": 144
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688022,9900039049",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:39.259925+00:00",
+      "sha256": "25c63564d42943b51c0e4462c7c5489841b532c2f8590d26af7673b9e6166f8d",
+      "bytes": 2304
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688033",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:39.541932+00:00",
+      "sha256": "f3e6c16d582c5f90e87c96e9c05e1a1724150231269ba9ea26e20cfd3013304a",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688033,9900039155",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:39.905871+00:00",
+      "sha256": "9f798bdd25d2747a75a60ca275e94d5f7e69a8035bcb2af4c49524ed243084df",
+      "bytes": 1630
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688053",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:39.707136+00:00",
+      "sha256": "6e4f5bf2198a19cfe20a482df2a9546cfde3b34937e2b770750bd4bb701e6115",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688053,9900046510",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:40.046347+00:00",
+      "sha256": "42b395c6ad81db058205dc0fa3032df183bed285d609057fca953d91bad151b2",
+      "bytes": 972
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688066",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:40.320695+00:00",
+      "sha256": "57d4eae83e657201ef5bd7aecdf4f82eede66fbf93843d94a97ef549d27bf1e4",
+      "bytes": 146
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688066,fzqy1026111",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:40.683240+00:00",
+      "sha256": "baa5ce887c68e2159b4574c316ddbb164da8058584c4152aa3f9e90cc207ab30",
+      "bytes": 897
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688089",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:40.380117+00:00",
+      "sha256": "8cf409a1c18c71f516919241ccde338d22c52789ca2b46f5452a1a4ac46a9bb7",
+      "bytes": 148
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688089,9900033197",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:40.756742+00:00",
+      "sha256": "0f3ab17856f3d11fedaaf6327bcdb804b19443caaa10ee0ba6c26cc43331f215",
+      "bytes": 1806
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688121",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:41.092956+00:00",
+      "sha256": "72b74f21c215330d7e366d4a1ad8f200c6a5638eceb8713f9626f6c3b6403e7d",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688121,9900041733",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:41.430536+00:00",
+      "sha256": "ab87e8d9717c573cc01e13cedaaf045e7b0cacca47b26603cf15154f28007b39",
+      "bytes": 1667
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688184",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:41.134989+00:00",
+      "sha256": "ab9c5c06b7708d5a6c9c1b81dbd1717897d54c4d50c3cd6f55be476891bf22a9",
+      "bytes": 144
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688184,9900041894",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:41.521743+00:00",
+      "sha256": "b5e7ef50b3b490e4da60289d72fea638c6b71413674f51270fbd44f80c829437",
+      "bytes": 1746
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688201",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:41.739566+00:00",
+      "sha256": "57d4b464d2fba88ffa074bee9ebee94b9a15d0de2883ab75b6cd3ac17667f5a8",
+      "bytes": 144
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688201,9900041393",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:42.143942+00:00",
+      "sha256": "40176a65b6ec47b6a7b329f730994e7f1b2a8c0f5ceeed0d6a8fcb7044e85fff",
+      "bytes": 1590
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "688496",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-05T08:32:41.850484+00:00",
+      "sha256": "93e6340ea0d13f4e778cae1d9618d31176ac58a9475bcb7140824ad44bf9c496",
+      "bytes": 145
+    },
+    {
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "100",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "688496,9900051401",
+        "searchkey": "风险警示",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-09-01~2026-11-04",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-05T08:32:42.248102+00:00",
+      "sha256": "8590933e102a0046e383941e2d7bc56678ea1683dbcb184eb3de8d1a6ccb596c",
+      "bytes": 973
+    }
+  ]
+}

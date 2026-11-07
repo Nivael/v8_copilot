@@ -31,7 +31,7 @@ export function HistoryEventTimeline({timeline,event,onSelect,stName}:{timeline:
       {event.price_note&&<p className="reading-caption">{event.price_note}</p>}
       <details className="reading-disclosure"><summary>用哪些 lens 看 · 下一步观察</summary>
         <p>{event.lens_ids.map(id=>lensNames[id]||id).join(' · ')}</p><p>{event.watch}</p>
-        {timeline.version==='history_event_timeline_v1'?<a href={`#method-${timeline.experience_id}`}>查看这条复盘方法 ↓</a>:<><p><strong>这次学到什么：</strong>{timeline.learning.lesson}</p><p><strong>怎样继续检验：</strong>{timeline.learning.next_check}</p></>}
+        {(timeline.version==='history_event_timeline_v1'||timeline.version==='history_event_timeline_v7')?<a href={`#method-${timeline.experience_id}`}>查看这条复盘方法 ↓</a>:<><p><strong>这次学到什么：</strong>{timeline.learning.lesson}</p><p><strong>怎样继续检验：</strong>{timeline.learning.next_check}</p></>}
       </details>
       <details className="reading-disclosure"><summary>其他窗口与比较口径</summary>
         <div className="reading-scroll"><table><thead><tr><th>窗口</th><th>截至</th><th>个股</th><th>大盘</th><th>{stName}</th></tr></thead><tbody>{windowNames.map(([key,label])=>{const w=event.context.reference_close?event.context.windows[key]:undefined;return <tr key={key}><th scope="row">{label}</th><td>{w?.through||'待完整窗口行情'}</td>{(['stock','market','st'] as const).map(k=><td key={k}>{change(w?.change_pct[k])}</td>)}</tr>})}</tbody></table></div>

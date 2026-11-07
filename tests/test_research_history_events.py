@@ -78,3 +78,11 @@ def test_scheduled_future_meeting_is_not_an_actual_occurrence():
     args,_=fixture();args['events'][0].update(state_after='scheduled',occurred_on='2026-06-09')
     value=build_timeline(**args)['events'][0]
     assert value['occurred_on'] is None and value['scheduled_for']=='2026-06-09'
+
+
+def test_financial_period_end_is_not_a_point_event_and_exact_fields_remain_separate():
+    args,_=fixture();args['annotations']['auction']['date_role']='report_period_end'
+    value=build_timeline(**args)['events'][0]
+    assert value['occurred_on'] is None and value['report_period_end']=='2026-06-05'
+    assert value['change']==args['annotations']['auction']['change']
+    assert value['evidence_detail']==args['events'][0]['fact']

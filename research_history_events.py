@@ -52,11 +52,13 @@ def build_timeline(*, question_id, question_digest, asked_on, symbol, review_win
                                     paths['calendar'], event['published_on'], counts=(1, 5, 20))
         rows.append({
             'id': event['id'], 'published_on': event['published_on'],
-            'occurred_on': event.get('occurred_on') if event['state_after'] != 'scheduled' else None,
+            'occurred_on': event.get('occurred_on') if event['state_after'] != 'scheduled' and note.get('date_role') != 'report_period_end' else None,
             'scheduled_for': event.get('occurred_on') if event['state_after'] == 'scheduled' else None,
+            'report_period_end': event.get('occurred_on') if note.get('date_role') == 'report_period_end' else None,
             'publication_precision': 'day',
             'relation': relation, 'entity_scope': event['entity_scope'],
             'change_kind': event['change_kind'], 'title': note['title'], 'change': note['change'],
+            'evidence_detail': event['fact'],
             'interpretation': note['interpretation'], 'watch': note['watch'],
             'lens_ids': list(note['lens_ids']), 'highlight': note.get('highlight') is True,
             'source': {'announcement_id': source['announcement_id'], 'title': source['title'],

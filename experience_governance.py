@@ -340,6 +340,9 @@ class PytestRegressionExecutor:
         "regression:same_day_evidence_bundle": ["tests/test_experience_retrieval.py", "tests/test_experience_semantics.py::test_same_day_bundles_keep_issuer_date_and_sources_separate"],
         "regression:right_censoring": ["tests/test_experience_retrieval.py", "tests/test_experience_semantics.py::test_history_dedupes_cases_and_keeps_unobserved_followups", "tests/test_experience_semantics.py::test_conflicting_duplicate_case_fails_instead_of_choosing_an_outcome"],
         "regression:point_in_time_universe": ["tests/test_experience_retrieval.py", "tests/test_universe.py"],
+        # Verifies review construction boundaries, not causal identification or
+        # empirical profitability/generalization of a lesson.
+        "regression:event_learning_chronology": ["tests/test_event_learning.py"],
     }
     UNVERIFIED_REASONS = {
         "regression:discipline_taxonomy": "已加入正式来源逐条事实的匹配约束，但没有处分类型、受罚对象与时点的完整语义检查；逐字匹配和主题检索均不等于方法复验通过。",

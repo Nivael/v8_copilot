@@ -715,6 +715,24 @@ describe('group argument timeline projection',()=>{
 })
 
 describe('unanswered question event followthrough',()=>{
+  it.each(['history_event_timeline_v6','history_event_timeline_v7'] as const)('shows %s full journey separately and preserves the original curve reference',async version=>{
+    const fullPoints=[{date:'2024-04-29',value:100,level:100},...detail.chart_sources.stock!]
+    const period={title:'查看完整研究旅程',summary:'先核变化和履约',source_note:'独立双源核对',source_refs:[],gap_notes:[],paths:{calendar:fullPoints.map(p=>p.date),stocks:{[detail.symbol]:{name:detail.name,points:fullPoints}},market:fullPoints,st:fullPoints,st_name:detail.st_name}}
+    const common={...eventTimeline,question_id:question.id,question_period:period}
+    const t=version==='history_event_timeline_v7'?{...common,version,experience_id:'EXP-'+'A'.repeat(20)}:{...common,version,assessment_basis:'question_followthrough' as const,learning:{lesson:'核审批与可用资金',next_check:'继续补反例'}}
+    const q:HistoryQuestion={...question,review_status:version==='history_event_timeline_v6'?'question_followthrough':'current',answers:version==='history_event_timeline_v6'?[]:question.answers,review:{...question.review!,...(version==='history_event_timeline_v6'?{assessment_basis:'question_followthrough' as const,then_quote:''}:{}),event_timeline:t}}
+    const before=JSON.stringify(q)
+    serve({...detail,questions:[q]});render(<ResearchHistorySection/>);
+    expect(await screen.findByText(period.title)).toBeVisible()
+    expect(screen.queryByRole('img',{name:/完整研究旅程走势/})).not.toBeInTheDocument()
+    const disclosure=screen.getByText(period.title).closest('details')!
+    disclosure.open=true;fireEvent(disclosure,new Event('toggle'))
+    expect(screen.getByRole('img',{name:/完整研究旅程走势/})).toBeVisible()
+    expect(screen.getByText(/整段走势从2024-04-29收盘比较/)).toBeVisible()
+    expect(screen.getAllByText(/2026-06-02/).length).toBeGreaterThan(0)
+    expect(JSON.stringify(q)).toBe(before)
+    expect(q.anchor_date).toBe('2026-06-02')
+  })
   it.each(['plan_only','research_stopped'] as const)('does not describe a verified %s original as a lost complete report',async status=>{
     const q:HistoryQuestion={...question,answers:[],original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'},review_status:'question_followthrough',review:{...question.review!,then_quote:'',assessment_basis:'question_followthrough'}}
     serve({...detail,questions:[q]});render(<ResearchHistorySection/>);

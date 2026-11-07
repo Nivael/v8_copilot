@@ -17,6 +17,8 @@ ARGUMENT_VERSION = 'history_event_timeline_v2'
 CASE_VERSION = 'history_event_timeline_v3'
 QUESTION_VERSION = 'history_event_timeline_v4'
 FOLLOWTHROUGH_VERSION = 'history_event_timeline_v5'
+FOLLOWTHROUGH_QUESTION_VERSION = 'history_event_timeline_v6'
+PRICE_QUESTION_VERSION = 'history_event_timeline_v7'
 
 
 def _day(value):
@@ -88,19 +90,26 @@ def _event_paths(paths, case_paths, day):
 
 def build_timeline(*, question_id, question_digest, asked_on, symbol, review_window_digest, experience_id,
                    paths, source_run_id, source_pack_id, events, annotations, sources,
-                   initial_event_id):
+                   initial_event_id, question_period=None):
     """Only explicitly annotated, audited events can enter the reading model."""
     if not source_run_id or not source_pack_id or not re.fullmatch(r'EXP-[0-9A-F]{20}', experience_id):
         raise ValueError('event timeline needs its research binding')
-    rows = _event_rows(asked_on=asked_on, symbol=symbol, paths=paths, events=events, annotations=annotations, sources=sources)
+    selected_paths = paths
+    if question_period is not None:
+        from research_history_question_period import question_period_paths
+        selected_paths = question_period_paths(question_period, symbol=symbol, asked_on=asked_on)
+    rows = _event_rows(asked_on=asked_on, symbol=symbol, paths=selected_paths, events=events, annotations=annotations, sources=sources)
     if initial_event_id not in annotations:
         raise ValueError('initial event must belong to this timeline')
-    payload = {'version': VERSION, 'question_id': question_id, 'question_digest': question_digest,
+    payload = {'version': PRICE_QUESTION_VERSION if question_period is not None else VERSION, 'question_id': question_id, 'question_digest': question_digest,
                'asked_on': asked_on, 'symbol': symbol, 'review_window_digest': review_window_digest,
                'price_data_digest': digest(paths), 'source_run_id': source_run_id,
                'source_pack_id': source_pack_id, 'source_events_digest': digest(events),
                'initial_event_id': initial_event_id, 'experience_id': experience_id, 'events': rows,
                'causal_effect_identified': False}
+    if question_period is not None:
+        payload.update(question_period=question_period, question_period_digest=question_period['content_digest'],
+                       reading_digest=_reading_digest(rows))
     return {**payload, 'content_digest': digest(payload)}
 
 
@@ -108,7 +117,7 @@ def project_timeline(value, *, record, review, paths, symbol):
     """Hide a stale or foreign timeline without altering the original review."""
     try:
         from research_history import question_day
-        if (value['version'] != VERSION
+        if (value['version'] not in {VERSION, PRICE_QUESTION_VERSION}
                 or digest({k: v for k, v in value.items() if k != 'content_digest'}) != value['content_digest']
                 or value['question_id'] != record['id']
                 or value['asked_on'] != question_day(record)
@@ -121,12 +130,26 @@ def project_timeline(value, *, record, review, paths, symbol):
                 or value['experience_id'] != review['learning_trace']['experience_candidate_id']
                 or value['causal_effect_identified'] is not False):
             return None
+        selected_paths = paths
+        if value['version'] == PRICE_QUESTION_VERSION:
+            from research_history_question_period import question_period_paths
+            period = value['question_period']
+            trace = review['learning_trace']
+            if (period['content_digest'] != value['question_period_digest']
+                    or trace['question_period_digest'] != period['content_digest']
+                    or value['reading_digest'] != trace['question_period_reading_digest']
+                    or value['reading_digest'] != _reading_digest(value['events'])
+                    or value['source_events_digest'] != trace['question_period_events_digest']):
+                return None
+            selected_paths = question_period_paths(period, symbol=symbol, asked_on=value['asked_on'])
+        elif 'question_period' in value or 'question_period_digest' in value:
+            return None
         ids = [e['id'] for e in value['events']]
         if not ids or len(ids) != len(set(ids)) or value['initial_event_id'] not in ids:
             return None
         for event in value['events']:
-            expected = following_windows(paths['stocks'][symbol]['points'], paths['market'], paths['st'],
-                                         paths['calendar'], event['published_on'], counts=(1, 5, 20))
+            expected = following_windows(selected_paths['stocks'][symbol]['points'], selected_paths['market'], selected_paths['st'],
+                                         selected_paths['calendar'], event['published_on'], counts=(1, 5, 20))
             relation = ('before_question' if event['published_on'] < value['asked_on'] else
                         'same_day' if event['published_on'] == value['asked_on'] else 'after_question')
             if (event['context'] != expected or event['publication_precision'] != 'day'
@@ -169,8 +192,8 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
     case_periods = deepcopy(case_periods or {})
     question_periods = deepcopy(question_periods or {})
     followthrough = review['assessment_basis'] == FOLLOWTHROUGH_BASIS
-    if followthrough and (case_periods or question_periods):
-        raise ValueError('question followthrough uses the existing question price context only')
+    if followthrough and case_periods:
+        raise ValueError('question followthrough cannot borrow a separate past-case period')
     if set(question_periods) & set(case_periods) or not set(question_periods) <= set(symbols):
         raise ValueError('question and past-case periods must remain separate')
     if not set(case_periods) <= set(symbols):
@@ -212,7 +235,7 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
     for symbol, rows in rows_by_symbol.items():
         period = case_periods.get(symbol)
         question_period = question_periods.get(symbol)
-        payload = {'version': FOLLOWTHROUGH_VERSION if followthrough else QUESTION_VERSION if question_period is not None else CASE_VERSION if period is not None else ARGUMENT_VERSION, 'assessment_basis': review['assessment_basis'],
+        payload = {'version': FOLLOWTHROUGH_QUESTION_VERSION if followthrough and question_period is not None else FOLLOWTHROUGH_VERSION if followthrough else QUESTION_VERSION if question_period is not None else CASE_VERSION if period is not None else ARGUMENT_VERSION, 'assessment_basis': review['assessment_basis'],
                    'question_id': record['id'], 'question_digest': question_digest(record),
                    'asked_on': asked_on, 'symbol': symbol, 'review_basis_digest': _argument_basis(result),
                    'price_data_digest': digest(paths), 'source_run_id': source_run_id,
@@ -236,8 +259,8 @@ def project_argument_timeline(value, *, record, review, paths, symbol):
         trace = review['event_trace']
         subject = trace['subjects'][symbol]
         if (not context_binding_matches(review, record) or symbol not in record['symbols']
-                or value['version'] not in {ARGUMENT_VERSION, CASE_VERSION, QUESTION_VERSION, FOLLOWTHROUGH_VERSION}
-                or (value['version'] == FOLLOWTHROUGH_VERSION) != (review['assessment_basis'] == FOLLOWTHROUGH_BASIS)
+                or value['version'] not in {ARGUMENT_VERSION, CASE_VERSION, QUESTION_VERSION, FOLLOWTHROUGH_VERSION, FOLLOWTHROUGH_QUESTION_VERSION}
+                or (value['version'] in {FOLLOWTHROUGH_VERSION, FOLLOWTHROUGH_QUESTION_VERSION}) != (review['assessment_basis'] == FOLLOWTHROUGH_BASIS)
                 or value['assessment_basis'] != review['assessment_basis']
                 or digest({k: v for k, v in value.items() if k != 'content_digest'}) != value['content_digest']
                 or value['review_basis_digest'] != _argument_basis(review)
@@ -263,7 +286,7 @@ def project_argument_timeline(value, *, record, review, paths, symbol):
                 return None
             case_paths = None
         question_paths = paths
-        if value['version'] == QUESTION_VERSION:
+        if value['version'] in {QUESTION_VERSION, FOLLOWTHROUGH_QUESTION_VERSION}:
             from research_history_question_period import question_period_paths
             period = value['question_period']
             if period['content_digest'] != subject['question_period_digest']:

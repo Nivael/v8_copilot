@@ -353,7 +353,7 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
                 from research_history_events import project_review_events
                 item['review']=project_review_events(item['review'],record=record,paths=paths,symbol=symbol)
                 timeline=item['review'].get('event_timeline')
-                if timeline and timeline['version']=='history_event_timeline_v4':
+                if timeline and timeline['version'] in {'history_event_timeline_v4','history_event_timeline_v6','history_event_timeline_v7'}:
                     period=timeline['question_period'];own_paths=period['paths']
                     item.update(comparison_basis(record,own_paths['stocks'][symbol]['points']))
                     anchor=item['anchor_date']

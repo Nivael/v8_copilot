@@ -165,6 +165,12 @@ def read_activity(*, database, symbol, start, through, corrections=None):
     path = Path(corrections) if corrections is not None else registry_path(database)
     if corrections is not None and not path.is_file(): raise FileNotFoundError("requested activity corrections are unavailable")
     registry = validate_registry(json.loads(path.read_text()), path.parent) if path.is_file() else None
+    identity = None
+    if registry and symbol == "839680":
+        sources = registry["sources"]
+        identity = verified_code_identity(old_codes=[symbol],
+            mapping_html=_asset(path.parent, sources["mapping"]), mapping_ref=sources["mapping"],
+            switch_html=_asset(path.parent, sources["switch"]), switch_ref=sources["switch"])[symbol]
     entries = {(e["symbol"], e["trade_date"]): e for e in registry["entries"]} if registry else {}
     rows, refs, applied = [], [], set()
     for snapshot in snapshots:
@@ -201,6 +207,7 @@ def read_activity(*, database, symbol, start, through, corrections=None):
             "correction_recorded_at": registry["created_at"] if registry else None,
             "correction_sources": registry["sources"] if registry else {},
             "basis_study": registry["basis_study"] if registry else None,
+            "verified_member_identity": identity,
             "reader_digest": sha256(Path(__file__).read_bytes()).hexdigest(),
             "availability": "available" if rows else "unavailable",
             "boundaries": {"original_snapshots_rewritten": False, "legacy_jobs_recomputed": False,
@@ -220,7 +227,11 @@ def augment_activity_reading(pack, reading):
         return pack
     scope = pack.question_scope.get("object", {})
     if scope.get("kind") == "stock" and scope.get("ref") != reading["symbol"]:
-        raise ValueError("activity reading differs from the research subject")
+        identity = reading.get("verified_member_identity") or {}
+        if not (reading.get("correction_registry_digest") and identity.get("old_code") == reading["symbol"]
+                and identity.get("provider_code") == scope.get("ref")
+                and identity.get("listing_date", "9999") <= reading["start"] <= reading["through"] < identity.get("exchange_code_effective_on", "")):
+            raise ValueError("activity reading differs from the research subject")
     row = {"row_id": "activity_reading_" + reading["content_digest"][:20],
            "activity_reading": reading, "not_mechanism_lens": True}
     if any(r.get("row_id") == row["row_id"] for r in pack.rows):
@@ -228,10 +239,13 @@ def augment_activity_reading(pack, reading):
         return pack
     payload = pack.model_dump(mode="json", exclude={"pack_id", "pack_digest"})
     payload["rows"].append(row)
+    payload["question_scope"]["activity_reading_scope"] = {"historical_member_code": reading["symbol"],
+        "start": reading["start"], "through": reading["through"], "verified_member_identity": reading.get("verified_member_identity")}
     payload["validation_catalog"]["query_row:" + row["row_id"]] = canonical_json({k: v for k, v in row.items() if k != "row_id"})
     payload["provenance"].append("corrected_activity_reading:" + reading["content_digest"])
     payload["source_freshness"]["activity_correction_recorded_at"] = reading["correction_recorded_at"] or "no_registry"
     payload["definitions"].append("活动状态读取同时保留原快照与独立更正；更正记录时间不冒充当时信息可得时间。")
+    payload["definitions"].append("已核官方新旧代码可关联同一公司；显式历史窗口不修改原交易代码或已有概览的截止日。")
     payload["forbidden_inferences"].append("活动状态更正不回填价格、不推断零收益、不替旧回测重算，也不认证预测或因果效果。")
     code = digest(payload)
     return EvidencePack.model_validate({**payload, "pack_id": "EP-" + code[:20].upper(), "pack_digest": code})

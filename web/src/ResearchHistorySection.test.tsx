@@ -448,17 +448,20 @@ describe('original question retrospective',()=>{
     expect(screen.queryByText(/复盘窗口截至/)).not.toBeInTheDocument()
     expect(screen.queryByText(/有更长走势可继续复盘/)).not.toBeInTheDocument()
   })
-  it('shows market background rather than basket returns for an argument-only screening question',async()=>{
-    const original={...question,id:'screening',question:'高盛持股与金杜管理人能筛出哪些ST？',review:{...question.review!,assessment_basis:'original_argument_only' as const},review_status:'argument_only' as const}
+  it.each(['argument-only','price-reviewed','unreviewed'] as const)('keeps index context distinct from individual returns for a %s market question',async mode=>{
+    const original:HistoryQuestion={...question,id:'screening',question:'比较美芝、帅电和三六五',review:mode==='unreviewed'?null:{...question.review!,price_through:detail.as_of,...(mode==='argument-only'?{assessment_basis:'original_argument_only' as const}:{})},review_status:mode==='argument-only'?'argument_only':mode==='unreviewed'?'not_reviewed':'current'}
+    const archived=JSON.stringify(original)
     const market={...detail,symbol:'market',name:'大盘、ST与待定位问题',questions:[original],chart_sources:{market:detail.chart_sources.market,st:detail.chart_sources.st}}
     vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify({availability:'available',data:String(input).endsWith('/history')?{
       availability:'available',as_of:detail.as_of,stocks:[{symbol:'002514.SZ',name:'*ST宝馨',original_questions:1},{symbol:'market',name:market.name,original_questions:1}],coverage:{original_questions:2,saved_research:0,reviewed_questions:1,stocks:1,source_note:'原问已归档'}
     }:String(input).includes('/history/market')?market:detail,refresh:{in_progress:false,last_error:null}})))
     const view=render(<ResearchHistorySection/>)
     await screen.findByText('错误：卖压被解释成洗盘')
+    expect(view.container.querySelector('.history-outcomes')!.children).toHaveLength(5)
+    expect(screen.getByRole('heading',{name:'后来怎样了'})).toBeVisible()
     fireEvent.change(screen.getByRole('combobox',{name:'历史复盘标的'}),{target:{value:'market'}})
     expect(await screen.findByRole('heading',{name:'同期市场背景'})).toBeVisible()
-    expect(screen.getByText('这里只对照大盘和ST，未计算所筛个股或组合的回报。')).toBeVisible()
+    expect(screen.getByText('这里只对照大盘和ST，不代表原问所提个股或组合的回报。')).toBeVisible()
     expect(screen.getByRole('img',{name:/背景走势/})).toBeVisible()
     expect(view.container.querySelector('.history-outcomes')).not.toBeInTheDocument()
     expect(screen.queryByText('后来怎样了')).not.toBeInTheDocument()
@@ -467,8 +470,11 @@ describe('original question retrospective',()=>{
     expect(within(table).getAllByRole('columnheader').map(cell=>cell.textContent)).toEqual(['窗口','中证全指',detail.st_name])
     expect(within(table).getByText('-1.79%')).toBeVisible()
     expect(within(table).getByText('-5.69%')).toBeVisible()
-    expect(original.outcomes).toEqual(question.outcomes)
-    expect(original.review.assessment_basis).toBe('original_argument_only')
+    expect(JSON.stringify(original)).toBe(archived)
+    fireEvent.change(screen.getByRole('combobox',{name:'历史复盘标的'}),{target:{value:'002514.SZ'}})
+    await screen.findByRole('heading',{name:'后来怎样了'})
+    expect(view.container.querySelector('.history-outcomes')!.children).toHaveLength(5)
+    expect(view.container.querySelector('.history-outcomes')).toHaveTextContent('-20.43%')
   })
   it('shows an uncertain question interval over contextual prices without choosing a return anchor',async()=>{
     serve({...detail,questions:[{...question,asked_at:null,asked_on:null,time_precision:'range',asked_from:'2026-06-02',asked_through:'2026-06-04',range_context:{kind:'pre_range_common_close',reference_date:'2026-06-01'},anchor_date:null,outcomes:{},review:{...question.review!,assessment_basis:'original_argument_only'},review_status:'argument_only'}]})

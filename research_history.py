@@ -323,6 +323,8 @@ def original_response_state(record):
 
 def assemble(records,paths,*,reviews=None,correction_notes=None):
     calendar=paths['calendar'];stocks=[];details={};reviews=reviews or {}
+    from research_history_market_context import contexts_and_links
+    market_contexts,related_cards=contexts_and_links(records,reviews,paths)
     scopes={**paths['stocks'],'market':{'name':'大盘、ST与待定位问题','points':paths['market']}}
     for symbol,stock in scopes.items():
         history=[r for r in records if (symbol in r['symbols'] if symbol!='market' else not r['symbols'] or r.get('market_scope') is True)]
@@ -357,8 +359,17 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
                     item['question_price_source_note']=period['source_note']
                     item['question_price_source_refs']=period['source_refs']
 
+            if record['id'] in market_contexts and symbol=='market':
+                period=market_contexts[record['id']]['period'];own_paths=period['paths']
+                item.update(comparison_basis(record,own_paths['market']));anchor=item['anchor_date']
+                item['outcomes']={key:outcome(own_paths[key],anchor,own_paths['calendar']) for key in ['market','st']} if anchor else {}
+                item['question_chart_sources']={key:own_paths[key] for key in ['market','st']}
+                item['question_price_source_note']=period['source_note'];item['question_price_source_refs']=period['source_refs']
+            if record['id'] in related_cards:item['related_questions']=related_cards[record['id']]
+            if item.get('review') and 'market_context' in item['review']:
+                item['review']={k:v for k,v in item['review'].items() if k not in {'market_context','market_context_trace'}}
             if item.get('previous_review'):
-                item['previous_review']={k:v for k,v in item['previous_review'].items() if k not in {'event_timeline','event_timelines'}}
+                item['previous_review']={k:v for k,v in item['previous_review'].items() if k not in {'event_timeline','event_timelines','market_context','market_context_trace'}}
             if review:
                 focus=review.get('focused_symbol')
                 item['review_focused_name']=paths['stocks'].get(focus,{}).get('name','大盘与ST' if focus=='market' else None)
@@ -409,7 +420,7 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_events.py','research_history_case_period.py','research_history_question_period.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_events.py','research_history_case_period.py','research_history_question_period.py','research_history_market_context.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):

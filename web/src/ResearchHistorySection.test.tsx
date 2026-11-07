@@ -18,6 +18,30 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 afterEach(()=>{cleanup();vi.restoreAllMocks()})
 describe('original question retrospective',()=>{
+  it('opens the exact related company question and can return to the original',async()=>{
+    const original={...question,related_questions:[{question_id:'mu',symbol:'603398.SH',name:'*ST沐邦',question:'融资还缺什么条件？'}]}
+    const company={...detail,symbol:'603398.SH',name:'*ST沐邦',questions:[{...question,id:'other',question:'默认旧问'},{...question,id:'mu',question:'融资还缺什么条件？',related_questions:[{question_id:'q1',symbol:'002514.SZ',name:'*ST宝馨',question:question.question}]}]}
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
+      const url=String(input),data=url.endsWith('/history')?{availability:'available',as_of:detail.as_of,stocks:[{symbol:'002514.SZ',name:'*ST宝馨',original_questions:1},{symbol:'603398.SH',name:'*ST沐邦',original_questions:2}],coverage:{original_questions:3,saved_research:0,reviewed_questions:3,stocks:2,source_note:'原问题'}}:url.endsWith('603398.SH')?company:{...detail,questions:[original]}
+      return new Response(JSON.stringify({availability:'available',data,refresh:{in_progress:false,last_error:null}}))
+    })
+    render(<ResearchHistorySection/>);await screen.findByRole('region',{name:'同一轮的相关复盘'})
+    fireEvent.click(screen.getByRole('button',{name:'*ST沐邦 · 融资还缺什么条件？ →'}))
+    expect(await screen.findByRole('heading',{name:'融资还缺什么条件？'})).toBeVisible()
+    expect(screen.queryByRole('heading',{name:'默认旧问'})).not.toBeInTheDocument()
+    expect(screen.getByRole('combobox',{name:'历史复盘标的'})).toHaveValue('603398.SH')
+    fireEvent.click(screen.getByRole('button',{name:'*ST宝馨 · 尾盘偷袭是什么意思？ →'}))
+    expect(await screen.findByRole('heading',{name:question.question})).toBeVisible()
+    expect(screen.getByRole('combobox',{name:'历史复盘标的'})).toHaveValue('002514.SZ')
+  })
+  it('can switch to an exact related question in the same company',async()=>{
+    const first={...question,related_questions:[{question_id:'q2',symbol:'002514.SZ',name:'*ST宝馨',question:'黑历史有哪些？'}]}
+    serve({...detail,questions:[first,detail.questions[1]]});render(<ResearchHistorySection/>)
+    await screen.findByRole('region',{name:'同一轮的相关复盘'})
+    fireEvent.click(screen.getByRole('button',{name:'*ST宝馨 · 黑历史有哪些？ →'}))
+    expect(await screen.findByRole('heading',{name:'黑历史有哪些？'})).toBeVisible()
+    expect(screen.queryByRole('heading',{name:question.question})).not.toBeInTheDocument()
+  })
   it('uses the independently bound original period for its chart and source links',async()=>{
     const points=[{date:'2025-09-22',value:10,level:100},{date:'2025-09-23',value:11,level:110}]
     const event={...eventTimeline.events[0],published_on:'2025-09-23',relation:'after_question' as const}

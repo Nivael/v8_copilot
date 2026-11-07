@@ -6,6 +6,8 @@ from canonical_json import digest
 VERSION='history_review_window_v1'
 ARGUMENT_VERSION='history_review_argument_v1'
 ARGUMENT_BASIS='original_argument_only'
+FOLLOWTHROUGH_VERSION='history_review_question_followthrough_v1'
+FOLLOWTHROUGH_BASIS='question_followthrough'
 PRICE_FIELDS={'price_digest','price_through','anchor_date','price_window_digest'}
 
 
@@ -56,6 +58,39 @@ def validate_quote(review,record):
         raise ValueError('review quote is not in original answer')
 
 
+def followthrough_claimed(review):
+    return review.get('review_binding_version')==FOLLOWTHROUGH_VERSION or review.get('assessment_basis')==FOLLOWTHROUGH_BASIS
+
+
+def followthrough_binding_matches(review,record):
+    """A later study of an unanswered question must never become its old answer."""
+    return (review.get('review_binding_version')==FOLLOWTHROUGH_VERSION
+            and review.get('assessment_basis')==FOLLOWTHROUGH_BASIS
+            and record['kind']=='original_question' and record.get('answers')==[]
+            and review.get('then_quote')=='' and review.get('original_record_id')==record['id']
+            and review.get('scope_symbols')==sorted(set(record['symbols']))
+            and review.get('focused_symbol') in focus_options(record)
+            and not PRICE_FIELDS.intersection(review))
+
+
+def context_binding_matches(review,record):
+    return followthrough_binding_matches(review,record) if followthrough_claimed(review) else argument_binding_matches(review,record)
+
+
+def freeze_question_followthrough(review,record):
+    from research_history import question_digest
+    if (record['kind']!='original_question' or record.get('answers')!=[]
+            or review.get('then_quote')!='' or PRICE_FIELDS.intersection(review)
+            or review.get('question_digest')!=question_digest(record)):
+        raise ValueError('question followthrough needs the exact unanswered original, no quote or trade assessment')
+    focus=review.get('focused_symbol') or default_focus(record)
+    fields={'review_binding_version':FOLLOWTHROUGH_VERSION,'assessment_basis':FOLLOWTHROUGH_BASIS,
+            'original_record_id':record['id'],'scope_symbols':sorted(set(record['symbols'])),'focused_symbol':focus}
+    if focus not in focus_options(record) or any(k in review and review[k]!=v for k,v in fields.items()):
+        raise ValueError('question followthrough cannot relabel or rebind an existing review')
+    return {**review,**fields}
+
+
 def window_digest(paths,scope,anchor,through):
     calendar=paths['calendar']
     if not anchor or anchor not in calendar or through not in calendar or anchor>through:
@@ -75,7 +110,7 @@ def window_digest(paths,scope,anchor,through):
 
 def freeze_review(review,record,paths,anchor,*,through=None):
     """Call only after checking the old binding or writing a new substantive review."""
-    if argument_review_claimed(review):raise ValueError('argument-only review needs its separate binding')
+    if argument_review_claimed(review) or followthrough_claimed(review):raise ValueError('context review needs its separate binding')
     validate_quote(review,record)
     scope=sorted(set(record['symbols']))
     focus=review.get('focused_symbol') or default_focus(record)
@@ -89,6 +124,9 @@ def resolve_review(review,record,paths,question_digest,anchor):
     if not review:return {'review':None,'review_status':'not_reviewed'}
     if review.get('question_digest')!=question_digest:
         return {'review':None,'previous_review':review,'review_status':'original_changed'}
+    if followthrough_claimed(review):
+        if followthrough_binding_matches(review,record):return {'review':review,'review_status':'question_followthrough'}
+        return {'review':None,'previous_review':review,'review_status':'review_basis_changed'}
     # A changed price must never conceal a fabricated quote in an unchanged answer.
     validate_quote(review,record)
     if argument_review_claimed(review):

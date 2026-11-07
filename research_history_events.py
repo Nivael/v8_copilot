@@ -16,6 +16,7 @@ LENSES = {'RL-C-001', 'RL-C-002', 'RL-C-003', 'RL-C-004'}
 ARGUMENT_VERSION = 'history_event_timeline_v2'
 CASE_VERSION = 'history_event_timeline_v3'
 QUESTION_VERSION = 'history_event_timeline_v4'
+FOLLOWTHROUGH_VERSION = 'history_event_timeline_v5'
 
 
 def _day(value):
@@ -153,8 +154,8 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
     No experience is created or promoted by this read-model operation.
     """
     from research_history import question_day, question_digest
-    from research_history_reviews import argument_binding_matches
-    if (not argument_binding_matches(review, record) or review['question_digest'] != question_digest(record)
+    from research_history_reviews import context_binding_matches, FOLLOWTHROUGH_BASIS
+    if (not context_binding_matches(review, record) or review['question_digest'] != question_digest(record)
             or not re.fullmatch(r'RUN-[A-F0-9]{24}', source_run_id)
             or not source_pack_id or not applied_lens_ids or not set(applied_lens_ids) <= LENSES):
         raise ValueError('argument event context needs an exact original and actual study')
@@ -167,6 +168,9 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
     symbols = sorted({e['symbol'] for e in events})
     case_periods = deepcopy(case_periods or {})
     question_periods = deepcopy(question_periods or {})
+    followthrough = review['assessment_basis'] == FOLLOWTHROUGH_BASIS
+    if followthrough and (case_periods or question_periods):
+        raise ValueError('question followthrough uses the existing question price context only')
     if set(question_periods) & set(case_periods) or not set(question_periods) <= set(symbols):
         raise ValueError('question and past-case periods must remain separate')
     if not set(case_periods) <= set(symbols):
@@ -208,7 +212,7 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
     for symbol, rows in rows_by_symbol.items():
         period = case_periods.get(symbol)
         question_period = question_periods.get(symbol)
-        payload = {'version': QUESTION_VERSION if question_period is not None else CASE_VERSION if period is not None else ARGUMENT_VERSION, 'assessment_basis': 'original_argument_only',
+        payload = {'version': FOLLOWTHROUGH_VERSION if followthrough else QUESTION_VERSION if question_period is not None else CASE_VERSION if period is not None else ARGUMENT_VERSION, 'assessment_basis': review['assessment_basis'],
                    'question_id': record['id'], 'question_digest': question_digest(record),
                    'asked_on': asked_on, 'symbol': symbol, 'review_basis_digest': _argument_basis(result),
                    'price_data_digest': digest(paths), 'source_run_id': source_run_id,
@@ -227,13 +231,14 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
 def project_argument_timeline(value, *, record, review, paths, symbol):
     """Validate original, scope, study, authored reading and prices independently."""
     from research_history import question_day, question_digest
-    from research_history_reviews import argument_binding_matches
+    from research_history_reviews import context_binding_matches, FOLLOWTHROUGH_BASIS
     try:
         trace = review['event_trace']
         subject = trace['subjects'][symbol]
-        if (not argument_binding_matches(review, record) or symbol not in record['symbols']
-                or value['version'] not in {ARGUMENT_VERSION, CASE_VERSION, QUESTION_VERSION}
-                or value['assessment_basis'] != 'original_argument_only'
+        if (not context_binding_matches(review, record) or symbol not in record['symbols']
+                or value['version'] not in {ARGUMENT_VERSION, CASE_VERSION, QUESTION_VERSION, FOLLOWTHROUGH_VERSION}
+                or (value['version'] == FOLLOWTHROUGH_VERSION) != (review['assessment_basis'] == FOLLOWTHROUGH_BASIS)
+                or value['assessment_basis'] != review['assessment_basis']
                 or digest({k: v for k, v in value.items() if k != 'content_digest'}) != value['content_digest']
                 or value['review_basis_digest'] != _argument_basis(review)
                 or value['question_id'] != record['id'] or value['symbol'] != symbol

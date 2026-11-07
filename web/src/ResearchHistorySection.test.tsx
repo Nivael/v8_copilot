@@ -714,6 +714,30 @@ describe('group argument timeline projection',()=>{
   })
 })
 
+describe('unanswered question event followthrough',()=>{
+  it.each([true,false])('shows a later study without inventing an old answer; matching basis %s',async matching=>{
+    const {question_id,symbol,initial_event_id,events,content_digest}=eventTimeline
+    const t={question_id:question.id||question_id,symbol,initial_event_id,events,content_digest,version:'history_event_timeline_v5' as const,assessment_basis:'question_followthrough' as const,learning:{lesson:'先核定价与履约',next_check:'跟踪失败和未完成分支'}}
+    const q:HistoryQuestion={...question,answers:[],review_status:'question_followthrough',review:{...question.review!,then_quote:'',headline:'不能由跌幅证实压价',assessment:'公开流程推进，动机仍缺证据。',event_timeline:t,assessment_basis:matching?'question_followthrough':'original_argument_only'}}
+    const original=JSON.stringify(q)
+    serve({...detail,questions:[q]});render(<ResearchHistorySection/>);
+    await screen.findAllByText('不能由跌幅证实压价')
+    if(matching){
+      expect(screen.getByText('本次补做事件复盘 · 未评价缺失的原答')).toBeVisible()
+      expect(screen.getByText('已补事件复盘 · 原答待恢复')).toBeVisible()
+      expect(screen.getByText('未找到原回答')).toBeVisible()
+      expect(screen.getByRole('combobox',{name:'查看历史公告'})).toBeVisible()
+      expect(screen.queryByText('原问后1日')).not.toBeInTheDocument()
+      expect(screen.queryByText('更像洗盘。')).not.toBeInTheDocument()
+      fireEvent.click(screen.getByText('为什么这样判断 · 公告与学习'))
+      expect(screen.getByText('公司风险需要公告确认。')).toBeVisible()
+      fireEvent.click(screen.getByText('用哪些 lens 看 · 下一步观察'))
+      expect(screen.getByText(/先核定价与履约/)).toBeVisible()
+    }else expect(screen.queryByRole('combobox',{name:'查看历史公告'})).not.toBeInTheDocument()
+    expect(JSON.stringify(q)).toBe(original)
+  })
+})
+
 describe('original attachment preview quality',()=>{
   it('keeps a low resolution connector preview distinct from an original readable download',async()=>{
     const file={media_kind:'image' as const,source_mode:'connector_preview' as const,label:'美芝原附件预览（低清长图，小字未核清）',file_name:'original.jpeg',sha256:'a'.repeat(64),mime_type:'image/jpeg',size_bytes:72908,width:130,height:1536,captured_at:'2026-11-07T08:00:00Z',source_url:'https://chatgpt.com/c/source',url:'/api/v1/workbench/history-files/preview'}

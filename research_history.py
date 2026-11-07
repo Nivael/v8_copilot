@@ -408,6 +408,7 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
               'stocks':len(result['stocks'])-sum(s['symbol']=='market' for s in result['stocks']),'source_note':'已找回的ChatGPT、Codex原问题及保存研究；部分长聊天的更早消息仍待补齐，保存研究的日期不冒充原提问时间。'}
     coverage['date_range_questions']=sum(r.get('time_precision')=='range' for r in result['unique'].values())
     coverage['argument_only_reviews']=len({r['id'] for d in result['details'].values() for r in d['questions'] if r['review_status']=='argument_only'})
+    coverage['question_followthrough_reviews']=len({r['id'] for d in result['details'].values() for r in d['questions'] if r['review_status']=='question_followthrough'})
     if coverage['date_range_questions']:coverage['source_note']+=f"其中{coverage['date_range_questions']}条只确认日期范围，保留原文，暂不选定某一天计算收益。"
     source_manifest={'version':'research_history_import_v1','sources':imported['sources'],'records':records};source_manifest['content_digest']=digest(source_manifest)
     atomic_write_json(root/'imports'/(source_manifest['content_digest']+'.json'),source_manifest)

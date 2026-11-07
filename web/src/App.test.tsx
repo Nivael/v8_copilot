@@ -21,7 +21,13 @@ describe('App',()=>{
     const answer='当前快照没有该股票的可复算价格窗口。'
     const response={
       contract_version:'v8_copilot_api_contract_v2',route:{route:'answer_query'},interpretation:{},
-      answer_card:null,claims:[],gaps:[],sedimentation_candidates:[],degraded:false,
+      answer_card:{
+        question:'最近股价和换手率怎样？',object_ref:'stock:000033',view:'query',as_of:'2026-06-01',
+        sample_scope:'合成行情覆盖测试',evidence_grade:'descriptive_query',lens_invocations:[],
+        lens_gap:[{gap_id:'stock_price_coverage',missing_for:'前复权价格窗口',note:answer}],
+        source_freshness:{status:'2026-06-01'},body_rows:[{row_id:'status',状态:'历史状态记录'}],
+        analysis_claims:[],data_debt:[],data_debt_refs:[],caveats:[],provenance:['synthetic:status'],
+      },claims:[],gaps:[],sedimentation_candidates:[],degraded:false,
       degraded_reasons:[],llm_used:false,query_template_id:null,question_cards:[],
       data_debt_candidates:[],navigation_refs:[],
       narrative:{direct_answer:{text:answer,backing:[]},reasoning_steps:[],

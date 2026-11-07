@@ -9,7 +9,7 @@ function change(value:string|null|undefined){return value==null?'暂无可比价
 export function HistoryEventTimeline({timeline,event,onSelect,stName}:{timeline:Timeline;event:HistoryEvent;onSelect:(id:string)=>void;stName:string}){
   const after=timeline.events.filter(e=>e.relation!=='before_question'),before=timeline.events.filter(e=>e.relation==='before_question')
   const groups:[string,HistoryEvent[]][]=[['原问后的变化',after],['提问前已公开的背景',before]]
-  const five=event.context.windows['5']
+  const five=event.context.reference_close?event.context.windows['5']:undefined
   return <section className="history-events" aria-label="公告与后续变化">
     <header><h4>{after.length?'这之后发生了什么':'提问时已经知道什么'}</h4><span>{after.length?`已核${after.length}条后续或同日记录`:`已核${before.length}条提问前背景`}</span></header>
     <label>查看公告<select aria-label="查看历史公告" value={event.id} onChange={e=>onSelect(e.target.value)}>
@@ -34,7 +34,7 @@ export function HistoryEventTimeline({timeline,event,onSelect,stName}:{timeline:
         {timeline.version==='history_event_timeline_v1'?<a href={`#method-${timeline.experience_id}`}>查看这条复盘方法 ↓</a>:<><p><strong>这次学到什么：</strong>{timeline.learning.lesson}</p><p><strong>怎样继续检验：</strong>{timeline.learning.next_check}</p></>}
       </details>
       <details className="reading-disclosure"><summary>其他窗口与比较口径</summary>
-        <div className="reading-scroll"><table><thead><tr><th>窗口</th><th>截至</th><th>个股</th><th>大盘</th><th>{stName}</th></tr></thead><tbody>{windowNames.map(([key,label])=>{const w=event.context.windows[key];return <tr key={key}><th scope="row">{label}</th><td>{w?.through||'待完整窗口行情'}</td>{(['stock','market','st'] as const).map(k=><td key={k}>{change(w?.change_pct[k])}</td>)}</tr>})}</tbody></table></div>
+        <div className="reading-scroll"><table><thead><tr><th>窗口</th><th>截至</th><th>个股</th><th>大盘</th><th>{stName}</th></tr></thead><tbody>{windowNames.map(([key,label])=>{const w=event.context.reference_close?event.context.windows[key]:undefined;return <tr key={key}><th scope="row">{label}</th><td>{w?.through||'待完整窗口行情'}</td>{(['stock','market','st'] as const).map(k=><td key={k}>{change(w?.change_pct[k])}</td>)}</tr>})}</tbody></table></div>
         <p>按公开日期之后的完整交易日比较；交易日以当天收盘为参照，休市日以前一市场收盘为参照。它不包含最早反应，也不代表已经识别某一事件的因果贡献。缺价格保留空缺。</p>
         {event.evidence_detail&&<details className="reading-disclosure"><summary>核对字段与原件说明</summary><p>{event.evidence_detail}</p></details>}
       </details>

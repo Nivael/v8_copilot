@@ -18,6 +18,22 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 afterEach(()=>{cleanup();vi.restoreAllMocks()})
 describe('original question retrospective',()=>{
+  it('uses the independently bound original period for its chart and source links',async()=>{
+    const points=[{date:'2025-09-22',value:10,level:100},{date:'2025-09-23',value:11,level:110}]
+    const event={...eventTimeline.events[0],published_on:'2025-09-23',relation:'after_question' as const}
+    const timeline={version:'history_event_timeline_v4' as const,assessment_basis:'original_argument_only' as const,question_id:question.id,symbol:detail.symbol,initial_event_id:event.id,events:[event],content_digest:'bound',learning:{lesson:'先核利润传导',next_check:'继续补同业'},question_period:{title:'原问时段',summary:'分别核事实',source_note:'独立前复权窗口；尚缺第二报价来源。',source_refs:[],gap_notes:[],paths:{calendar:points.map(p=>p.date),stocks:{[detail.symbol]:{name:detail.name,points}},market:points,st:points,st_name:detail.st_name}}}
+    const q={...question,asked_at:'2025-09-22T10:00:00Z',asked_on:'2025-09-22',anchor_date:'2025-09-22',question_chart_sources:{stock:points,market:points,st:points},question_price_source_note:timeline.question_period.source_note,question_price_source_refs:[{key:'tencent_qfq',title:'腾讯原问行情',url:'https://example.com/original-prices'}],review:{...question.review!,assessment_basis:'original_argument_only' as const,event_timeline:timeline}}
+    serve({...detail,stock_history_note:'其他行情的拼接说明',questions:[q]});render(<ResearchHistorySection/>)
+    expect(await screen.findByRole('img',{name:/从2025-09-22起的背景走势/})).toBeVisible()
+    expect(screen.getByText('涨跌从2025-09-22收盘算起')).toBeVisible()
+    expect(screen.getByRole('combobox',{name:'查看历史公告'})).toBeVisible()
+    expect(screen.queryByText('当年案例走势')).not.toBeInTheDocument()
+    expect(screen.queryByText('其他行情的拼接说明')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('价格口径与来源'))
+    expect(screen.getByText(timeline.question_period.source_note)).toBeVisible()
+    expect(screen.getByRole('link',{name:'腾讯原问行情 ↗'})).toHaveAttribute('href','https://example.com/original-prices')
+    expect(screen.queryByText(/早期价格使用保存的前复权日线，后期按交易所收盘/)).not.toBeInTheDocument()
+  })
   it('keeps an older case and its announcements accessible when post-question prices have no anchor',async()=>{
     const oldEvent={...eventTimeline.events[0],published_on:'2021-05-18',occurred_on:null,relation:'before_question' as const,context_period:'case_period' as const}
     const points=[{date:'2021-05-17',value:100,level:100},{date:'2021-05-19',value:106,level:106}]

@@ -9,6 +9,16 @@ const second=timeline.events[1]
 afterEach(cleanup)
 
 describe('source-bound event reading',()=>{
+  it('does not label later available rows as complete disclosure windows when the reference is outside coverage',()=>{
+    const event={...first,context:{...first.context,reference_close:null,windows:{'1':{through:'2025-08-01',change_pct:{stock:'1',market:'2',st:'3'}},'5':{through:'2025-08-07',change_pct:{stock:'4',market:'5',st:'6'}}}}}
+    render(<HistoryEventTimeline timeline={timeline} event={event} onSelect={()=>{}} stName="ST参考"/>)
+    expect(screen.getByText(/披露日前收盘未覆盖/)).toBeVisible()
+    fireEvent.click(screen.getByText('其他窗口与比较口径'))
+    expect(screen.queryByText('2025-08-01')).not.toBeInTheDocument()
+    expect(screen.queryByText('2025-08-07')).not.toBeInTheDocument()
+    expect(screen.queryByText('4.00%')).not.toBeInTheDocument()
+    expect(screen.getAllByText('待完整窗口行情')).toHaveLength(3)
+  })
   it('keeps missing windows distinct from measured zero and gives the source and next condition',()=>{
     const select=vi.fn();render(<HistoryEventTimeline timeline={timeline} event={first} onSelect={select} stName="ST参考"/> )
     expect(screen.getByText('已核2条后续或同日记录')).toBeVisible()

@@ -332,8 +332,8 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
         stocks.append({'symbol':symbol,'name':stock['name'],**stats,'first_asked_on':rows[0]['asked_on'],'last_asked_on':rows[-1]['asked_on']})
         details[symbol]={'availability':'available','symbol':symbol,'name':stock['name'],'as_of':paths['calendar'][-1],'questions':rows,
                          'chart_sources':{**({'stock':stock['points']} if symbol!='market' else {}),'market':paths['market'],'st':paths['st']},'st_name':paths['st_name'],
-                         'st_note':paths['st_note'],'stock_history_note':stock.get('history_note'),
-                         'source_urls':{'stock':'https://www.sse.com.cn/' if symbol.endswith('.SH') else 'https://www.szse.cn/market/stock/','market':'https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985','st':paths['st_source_url'],**({'stock_history':stock['history_source_url']} if stock.get('history_source_url') else {})},
+                         'st_note':paths['st_note'],'stock_history_note':' '.join(filter(None,[stock.get('earlier_history_note'),stock.get('history_note')])) or None,
+                         'source_urls':{'stock':'https://www.sse.com.cn/' if symbol.endswith('.SH') else 'https://www.szse.cn/market/stock/','market':'https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985','st':paths['st_source_url'],**({'stock_history':stock['history_source_url']} if stock.get('history_source_url') else {}),**({'stock_earlier_history':stock['earlier_history_source_url']} if stock.get('earlier_history_source_url') else {})},
                          'stats':stats}
     stocks.sort(key=lambda r:(r['symbol']!='002514.SZ',-r['original_questions'],r['symbol']))
     unique={r['id']:r for r in records};return {'stocks':stocks,'details':details,'unique':unique}
@@ -341,12 +341,12 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
 
 def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
     from research_history_prices import bound
-    from research_history_subjects import validate_extension
+    from research_history_prefix import validate_price_packet
     from research_corrections import annotations,verified_packet
     from settings import RESEARCH_RUN_LEDGER_DB
     paths=bound(root/'price_paths/current.json');records=prepare_history_records(imported,root=root)
     if paths.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed; rebuild paths before publishing')
-    validate_extension(paths,root=root)
+    validate_price_packet(paths,root=root)
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
     corrections,runs=verified_packet(ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,
                                     path=corrections_path or root.parent/'research_corrections/current.json')
@@ -371,16 +371,16 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):
     """Guarded metadata migration; never re-dates or extends an existing assessment."""
     from research_history_prices import bound
-    from research_history_subjects import validate_extension
+    from research_history_prefix import validate_price_packet
     packet=bound(root/'price_paths/current.json')
     if packet.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed')
-    validate_extension(packet,root=root)
+    validate_price_packet(packet,root=root)
     paths=packet['data'];records={r['id']:r for r in prepare_history_records(imported,root=root)}
     reviews=json.loads((root/'reviews.json').read_text());frozen={}
     for identity,review in reviews.items():

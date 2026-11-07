@@ -8,7 +8,7 @@ import type {ReadingSeries} from './readingTypes'
 import './researchHistory.css'
 
 const windows=[['one_day','下一个收盘'],['five_day','5个交易日'],['twenty_day','20个交易日'],['sixty_day','60个交易日'],['latest','至今']] as const
-const sourceLabels:Record<string,string>={stock:'个股行情',market:'中证全指',st:'ST板块行情',stock_history:'补充历史行情（腾讯）'}
+const sourceLabels:Record<string,string>={stock:'个股行情',market:'中证全指',st:'ST板块行情',stock_history:'补充历史行情（腾讯）',stock_earlier_history:'较早行情交叉核对（腾讯）'}
 function readable(text:string){return text.replace(/:chatgpt-content-reference\{[^}]*\}/g,'〔原引用见聊天〕').replace(/\[User attached[^\]]*\]/g,marker=>/files?; file contents were not included\]$/.test(marker)?'〔附件文件未随文字档案保存〕':'〔原图未随文字档案保存〕').replace(/<image[\s\S]*?<\/image>/g,'〔原图未随文字档案保存〕').replace(/\*\*/g,'')}
 function preview(text:string){return readable(text).replace(/〔(?:原图|附件文件)未随文字档案保存〕/g,'').trim()||(/files?; file contents were not included\]/.test(text)?'附件问题（文字档案未包含文件）':'原图问题（文字档案未包含图片）')}
 const excerptSegments=new Intl.Segmenter('zh-CN',{granularity:'grapheme'})

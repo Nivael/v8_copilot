@@ -1681,7 +1681,7 @@ def card_stock_research_overview(
                 gap_id="stock_price_coverage",
                 missing_for=f"{symbol} 的前复权价格窗口",
                 sediment_as="question_card:stock_price_coverage",
-                note="当前只读价格快照无该股票记录。",
+                note="当前只读快照没有该股票的前复权日线。",
             )
             card.lens_gap.append(gap)
             card.analysis_claims.append(AnalysisClaim(
@@ -1820,7 +1820,7 @@ def card_stock_research_overview(
     relevant_freshness: list[str] = []
     if "announcement" in requested:
         relevant_freshness.append(card.source_freshness["company_announcements_as_of"])
-    if "price" in requested:
+    if "price" in requested and "price_data_as_of" in card.source_freshness:
         relevant_freshness.append(card.source_freshness["price_data_as_of"])
     if "shareholder_count" in requested:
         relevant_freshness.append(card.source_freshness["shareholder_count_as_of"])

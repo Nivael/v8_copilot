@@ -17,6 +17,24 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
 })}
 describe('original question retrospective',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  it('shows the BSE vendor basis without claiming a later exchange splice or a Tencent history',async()=>{
+    const note='本股整段使用东方财富前复权日线，未拼接交易所逐日表。'
+    const bse:HistoryDetail={...detail,symbol:'920023.BJ',name:'*ST田野',stock_price_basis_note:note,source_urls:{stock_bse_history:'https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.920023'}}
+    vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
+      const url=String(input),data=url.endsWith('/history')?{availability:'available',as_of:detail.as_of,stocks:[{symbol:'002514.SZ',name:'*ST宝馨',original_questions:2},{symbol:'920023.BJ',name:'*ST田野',original_questions:1}],coverage:{original_questions:3,saved_research:0,reviewed_questions:1,stocks:2,source_note:'原问题'}}:url.endsWith('920023.BJ')?bse:detail
+      return new Response(JSON.stringify({availability:'available',data,refresh:{in_progress:false,last_error:null}}))
+    })
+    render(<ResearchHistorySection/>);await screen.findByText('错误：卖压被解释成洗盘')
+    fireEvent.click(screen.getByText('价格口径与来源'))
+    expect(screen.getByText(/早期价格使用保存的前复权日线，后期按交易所收盘/)).toBeVisible()
+    fireEvent.change(screen.getByRole('combobox',{name:'历史复盘标的'}),{target:{value:'920023.BJ'}})
+    await screen.findByRole('article',{name:'*ST田野历史复盘详情'})
+    fireEvent.click(screen.getByText('价格口径与来源'))
+    expect(screen.getByText(note)).toBeVisible()
+    expect(screen.queryByText(/早期价格使用保存的前复权日线，后期按交易所收盘/)).not.toBeInTheDocument()
+    expect(screen.getByRole('link',{name:'北交所补充历史行情（东方财富） ↗'})).toHaveAttribute('href',bse.source_urls.stock_bse_history)
+    expect(screen.queryByRole('link',{name:'补充历史行情（腾讯） ↗'})).not.toBeInTheDocument()
+  })
   it('does not label a pending post-question price comparison as completed',async()=>{
     const archived:HistoryQuestion={...question,asked_at:'2026-06-10T08:50:00Z',asked_on:'2026-06-10',anchor_date:'2026-06-09',review:null,outcomes:{stock:{latest:{date:'2026-06-09',change_pct:null}}}}
     const original=JSON.stringify(archived)

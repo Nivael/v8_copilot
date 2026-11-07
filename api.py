@@ -533,7 +533,7 @@ def get_history_inventory() -> dict[str, object]:
 
 
 @app.get('/api/v1/workbench/history/{symbol}')
-def get_history_detail(symbol: str = Path(pattern=r'^(?:[036]\d{5}\.(?:SH|SZ)|market)$')) -> dict[str, object]:
+def get_history_detail(symbol: str = Path(pattern=r'^(?:[036]\d{5}\.(?:SH|SZ)|\d{6}\.BJ|market)$')) -> dict[str, object]:
     from research_history import load
     data=load(symbol)
     return {'availability':data['availability'],'as_of':data.get('as_of'),'data':data,

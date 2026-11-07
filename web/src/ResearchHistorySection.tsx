@@ -8,7 +8,7 @@ import type {ReadingSeries} from './readingTypes'
 import './researchHistory.css'
 
 const windows=[['one_day','下一个收盘'],['five_day','5个交易日'],['twenty_day','20个交易日'],['sixty_day','60个交易日'],['latest','至今']] as const
-const sourceLabels:Record<string,string>={stock:'个股行情',market:'中证全指',st:'ST板块行情',stock_history:'补充历史行情（腾讯）',stock_earlier_history:'较早行情交叉核对（腾讯）'}
+const sourceLabels:Record<string,string>={stock:'个股行情',market:'中证全指',st:'ST板块行情',stock_history:'补充历史行情（腾讯）',stock_bse_history:'北交所补充历史行情（东方财富）',stock_earlier_history:'较早行情交叉核对（腾讯）',stock_event:'停牌与上市状态公告'}
 function readable(text:string){return text.replace(/:chatgpt-content-reference\{[^}]*\}/g,'〔原引用见聊天〕').replace(/\[User attached[^\]]*\]/g,marker=>/files?; file contents were not included\]$/.test(marker)?'〔附件文件未随文字档案保存〕':'〔原图未随文字档案保存〕').replace(/<image[\s\S]*?<\/image>/g,'〔原图未随文字档案保存〕').replace(/\*\*/g,'')}
 function preview(text:string){return readable(text).replace(/〔(?:原图|附件文件)未随文字档案保存〕/g,'').trim()||(/files?; file contents were not included\]/.test(text)?'附件问题（文字档案未包含文件）':'原图问题（文字档案未包含图片）')}
 const excerptSegments=new Intl.Segmenter('zh-CN',{granularity:'grapheme'})
@@ -159,7 +159,7 @@ function HistoryBody({symbol}:{symbol:string}){
         <details className="reading-disclosure"><summary>{marketBackgroundOnly?'同期大盘与ST数值':argumentOnly?'同期个股、大盘与ST数值':'同一窗口，大盘和ST分别走了多少？'}</summary><div className="reading-scroll"><table><thead><tr><th>窗口</th>{!marketBackgroundOnly&&<th>{data.name}</th>}<th>中证全指</th><th>{data.st_name}</th>{!marketBackgroundOnly&&<th>相对ST</th>}</tr></thead><tbody>{windows.map(([key,label])=>{const own=outcomes?.[key]?.change_pct,st=question.outcomes.st?.[key]?.change_pct;return <tr key={key}><th scope="row">{label}</th>{!marketBackgroundOnly&&<td>{outcomeText(outcomes?.[key])}</td>}<td>{outcomeText(question.outcomes.market?.[key])}</td><td>{outcomeText(question.outcomes.st?.[key])}</td>{!marketBackgroundOnly&&<td>{own==null||st==null?'—':`${(own-st).toFixed(2)}个百分点`}</td>}</tr>})}</tbody></table></div></details>
         </>}
         {review&&<details className="reading-disclosure history-logic"><summary>{argumentOnly?'为什么这样判断 · 原答与依据':'为什么这样判断 · 大盘 / ST / 个股'}</summary>{review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}<small>复盘于 {timestamp(review.reviewed_at)}。{argumentOnly?'本条只核对原答的依据与推理，未用价格涨跌验收。':'同期涨跌是对照，不是因果贡献比例。'}</small></details>}
-        {(question.time_precision!=='range'||rangeContext)&&<details className="reading-disclosure reading-secondary"><summary>价格口径与来源</summary><p>{question.basis_note}</p><p>早期价格使用保存的前复权日线，后期按交易所收盘与前收盘的比值衔接；这是价格路径，不是你的实际交易盈亏。原图未归档的盘口问题不据此认定做T成交或收益。</p>{data.stock_history_note&&<p>{data.stock_history_note}</p>}<p>{data.st_note}</p>{Object.entries(data.source_urls).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{sourceLabels[key]||'行情来源'} ↗</a>)}</details>}
+        {(question.time_precision!=='range'||rangeContext)&&<details className="reading-disclosure reading-secondary"><summary>价格口径与来源</summary><p>{question.basis_note}</p><p>{data.stock_price_basis_note||'早期价格使用保存的前复权日线，后期按交易所收盘与前收盘的比值衔接；这是价格路径，不是你的实际交易盈亏。原图未归档的盘口问题不据此认定做T成交或收益。'}</p>{data.stock_history_note&&<p>{data.stock_history_note}</p>}<p>{data.st_note}</p>{Object.entries(data.source_urls).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{sourceLabels[key]||'行情来源'} ↗</a>)}</details>}
       </article></div>
   </>
 }

@@ -153,8 +153,8 @@ def clean_question(value):
 
 def mentioned(text,known):
     result={symbol for alias,symbol in ALIASES.items() if alias in text and symbol in known}
-    for code in re.findall(r'(?<!\d)[036]\d{5}(?!\d)',text):
-        result.update(symbol for symbol in (code+'.SH',code+'.SZ') if symbol in known)
+    for code in re.findall(r'(?<!\d)\d{6}(?!\d)',text):
+        result.update(symbol for symbol in (code+'.SH',code+'.SZ',code+'.BJ') if symbol in known)
     if isinstance(known,dict):
         for symbol,name in known.items():
             bare=re.sub(r'^\*?ST\s*','',name,flags=re.I)
@@ -336,7 +336,8 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
         details[symbol]={'availability':'available','symbol':symbol,'name':stock['name'],'as_of':paths['calendar'][-1],'questions':rows,
                          'chart_sources':{**({'stock':stock['points']} if symbol!='market' else {}),'market':paths['market'],'st':paths['st']},'st_name':paths['st_name'],
                          'st_note':paths['st_note'],'stock_history_note':' '.join(filter(None,[stock.get('earlier_history_note'),stock.get('history_note')])) or None,
-                         'source_urls':{'stock':'https://www.sse.com.cn/' if symbol.endswith('.SH') else 'https://www.szse.cn/market/stock/','market':'https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985','st':paths['st_source_url'],**({'stock_history':stock['history_source_url']} if stock.get('history_source_url') else {}),**({'stock_earlier_history':stock['earlier_history_source_url']} if stock.get('earlier_history_source_url') else {})},
+                         **({'stock_price_basis_note':stock['price_basis_note']} if stock.get('price_basis_note') else {}),
+                         'source_urls':{'stock':'https://www.bse.cn/' if symbol.endswith('.BJ') else 'https://www.sse.com.cn/' if symbol.endswith('.SH') else 'https://www.szse.cn/market/stock/','market':'https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985','st':paths['st_source_url'],**({('stock_bse_history' if stock.get('history_source_kind')=='eastmoney_bse_qfq_v1' else 'stock_history'):stock['history_source_url']} if stock.get('history_source_url') else {}),**({'stock_earlier_history':stock['earlier_history_source_url']} if stock.get('earlier_history_source_url') else {}),**({'stock_event':stock['event_source_url']} if stock.get('event_source_url') else {})},
                          'stats':stats}
     stocks.sort(key=lambda r:(r['symbol']!='002514.SZ',-r['original_questions'],r['symbol']))
     unique={r['id']:r for r in records};return {'stocks':stocks,'details':details,'unique':unique}
@@ -344,7 +345,7 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
 
 def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
     from research_history_prices import bound
-    from research_history_prefix import validate_price_packet
+    from research_history_price_chain import validate_price_packet
     from research_corrections import annotations,verified_packet
     from settings import RESEARCH_RUN_LEDGER_DB
     paths=bound(root/'price_paths/current.json');records=prepare_history_records(imported,root=root)
@@ -375,13 +376,13 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):
     """Guarded metadata migration; never re-dates or extends an existing assessment."""
     from research_history_prices import bound
-    from research_history_prefix import validate_price_packet
+    from research_history_price_chain import validate_price_packet
     packet=bound(root/'price_paths/current.json')
     if packet.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed')
     validate_price_packet(packet,root=root)

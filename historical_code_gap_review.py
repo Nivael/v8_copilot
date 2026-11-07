@@ -58,20 +58,8 @@ def _archive_after_switch(value):
         raise ValueError("archive observation date outside retrospective profile")
 
 
-def review_code_gaps(base, *, old_codes, mapping_html, mapping_ref, switch_html,
-                     switch_ref, quotes, suspension_days):
-    """Apply exact official mappings to a fixed prior audit, returning patches only.
-
-    Listing date, exchange code-effective date, historic trade date and later
-    provider observation date remain separate. This is retrospective archive
-    interpretation, not certification of point-in-time availability or returns.
-    """
-    if (base.get("version") != "historical_price_gap_review_v1" or
-            digest({k: v for k, v in base.items() if k != "content_digest"}) != base.get("content_digest") or
-            Counter(r["classification"] for r in base["rows"]) != base["counts"]):
-        raise ValueError("base gap audit changed")
-    keys = {(r["symbol"], r["trade_date"]) for r in base["rows"]}
-    if len(keys) != len(base["rows"]): raise ValueError("duplicate base member day")
+def verified_code_identity(*, old_codes, mapping_html, mapping_ref, switch_html, switch_ref):
+    """Verify official identities independently of a particular price-gap audit."""
     if not old_codes or len(set(old_codes)) != len(old_codes): raise ValueError("invalid mapping scope")
     if not set(old_codes) <= PROFILE_OLD_CODES:
         raise ValueError("issuer code-effective history not verified in this profile")
@@ -93,6 +81,26 @@ def review_code_gaps(base, *, old_codes, mapping_html, mapping_ref, switch_html,
                         "official_table_row": row}
     if len({r["provider_code"] for r in mapping.values()}) != len(mapping):
         raise ValueError("many-to-one code identity")
+    return mapping
+
+
+def review_code_gaps(base, *, old_codes, mapping_html, mapping_ref, switch_html,
+                     switch_ref, quotes, suspension_days):
+    """Apply exact official mappings to a fixed prior audit, returning patches only.
+
+    Listing date, exchange code-effective date, historic trade date and later
+    provider observation date remain separate. This is retrospective archive
+    interpretation, not certification of point-in-time availability or returns.
+    """
+    if (base.get("version") != "historical_price_gap_review_v1" or
+            digest({k: v for k, v in base.items() if k != "content_digest"}) != base.get("content_digest") or
+            Counter(r["classification"] for r in base["rows"]) != base["counts"]):
+        raise ValueError("base gap audit changed")
+    keys = {(r["symbol"], r["trade_date"]) for r in base["rows"]}
+    if len(keys) != len(base["rows"]): raise ValueError("duplicate base member day")
+    mapping = verified_code_identity(old_codes=old_codes, mapping_html=mapping_html,
+                                     mapping_ref=mapping_ref, switch_html=switch_html,
+                                     switch_ref=switch_ref)
     selected = [r for r in base["rows"] if r["symbol"] in mapping]
     normalized = []
     for row in selected:

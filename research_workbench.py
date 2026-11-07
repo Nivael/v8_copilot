@@ -28,6 +28,7 @@ from settings import (
     ACCEPTED_EXPERIENCE_REGISTRY_PATH,
     EXPERIENCE_REPOSITORY_DB,
     RESEARCH_RUN_LEDGER_DB,
+    MARKET_ACTIVITY_DB,
 )
 
 
@@ -89,6 +90,11 @@ def main() -> int:
     evidence.add_argument("--object-ref")
     evidence.add_argument("--request-id")
     evidence.add_argument("--output", type=Path)
+    evidence.add_argument("--activity-symbol")
+    evidence.add_argument("--activity-start")
+    evidence.add_argument("--activity-through")
+    evidence.add_argument("--activity-database", type=Path, default=MARKET_ACTIVITY_DB)
+    evidence.add_argument("--activity-corrections", type=Path)
 
     validate = sub.add_parser("validate")
     validate.add_argument("--pack", type=Path, required=True)
@@ -149,6 +155,17 @@ def main() -> int:
             ),
             experience_repository=experience_repo,
         )
+        activity_args = [args.activity_symbol, args.activity_start, args.activity_through]
+        if any(activity_args) or args.activity_corrections is not None:
+            if not all(activity_args):
+                parser.error("activity reading requires --activity-symbol, --activity-start and --activity-through together")
+            from activity_reading_corrections import read_activity, augment_activity_reading
+            try:
+                reading = read_activity(database=args.activity_database, symbol=args.activity_symbol,
+                    start=args.activity_start, through=args.activity_through, corrections=args.activity_corrections)
+                pack = augment_activity_reading(pack, reading)
+            except (ValueError, OSError, KeyError) as error:
+                parser.error("activity reading unavailable: " + str(error))
         _write_or_print(pack.model_dump(mode="json"), args.output)
         return 0
 

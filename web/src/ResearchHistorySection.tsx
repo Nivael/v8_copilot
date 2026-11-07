@@ -127,14 +127,14 @@ function HistoryBody({symbol}:{symbol:string}){
   if(!question)return <>{filters}<p role="status">{!includeSaved&&data.questions.length>0&&data.questions.every(q=>q.kind==='saved_research')?<>这组暂时只有保存的研究题。<button onClick={()=>{resetFilters();setIncludeSaved(true)}}>显示保存研究</button></>:<>没有符合当前条件的记录。<button onClick={resetFilters}>重置筛选</button></>}</p></>
   const rangeContext=question.time_precision==='range'&&question.asked_from&&question.asked_through&&question.range_context?.kind==='pre_range_common_close'&&question.range_context.reference_date<question.asked_from?question.range_context:undefined
   const chartStart=rangeContext?.reference_date||question.anchor_date
-  const series:ReadingSeries[]=Object.entries(data.chart_sources).map(([key,points])=>{
+  const series:ReadingSeries[]=Object.entries(question.question_chart_sources||data.chart_sources).map(([key,points])=>{
     const anchor=points.find(p=>p.date===chartStart)?.level
     const rebased=anchor?points.filter(p=>p.date>=chartStart!).map(p=>({...p,level:p.level==null?null:p.level/anchor*100})):[]
     return {key,name:key==='stock'?data.name:key==='market'?'中证全指':data.st_name,points:rebased,change_pct:rebased.at(-1)?.level==null?null:rebased.at(-1)!.level!-100}
   })
   const markers=[...new Map(questions.filter(q=>q.anchor_date&&q.anchor_date>=question.anchor_date!).map(q=>[q.anchor_date!,{date:q.anchor_date!,id:q.id,label:`${q.asked_on} 的提问：${readable(q.question).slice(0,60)}`}])).values()].slice(0,16)
   const outcomes=question.outcomes[symbol==='market'?'market':'stock']
-  const comparedPoints=data.chart_sources[symbol==='market'?'market':'stock']||[]
+  const comparedPoints=(question.question_chart_sources||data.chart_sources)[symbol==='market'?'market':'stock']||[]
   const referenceNote=comparisonReference(question,new Set(comparedPoints.filter(p=>p.level!=null).map(p=>p.date)))
   const questionAttachmentNote=attachmentNote(question)
   const questionTitle=questionExcerpt(question.question)
@@ -142,7 +142,7 @@ function HistoryBody({symbol}:{symbol:string}){
   const review=question.review
   const argumentOnly=review?.assessment_basis==='original_argument_only'
   const eventVersion=review?.event_timeline?.version
-  const timeline=review?.event_timeline&&(eventVersion==='history_event_timeline_v1'||(eventVersion==='history_event_timeline_v2'||eventVersion==='history_event_timeline_v3')&&argumentOnly)&&review.event_timeline.question_id===question.id&&review.event_timeline.symbol===symbol?review.event_timeline:undefined
+  const timeline=review?.event_timeline&&(eventVersion==='history_event_timeline_v1'||(eventVersion==='history_event_timeline_v2'||eventVersion==='history_event_timeline_v3'||eventVersion==='history_event_timeline_v4')&&argumentOnly)&&review.event_timeline.question_id===question.id&&review.event_timeline.symbol===symbol?review.event_timeline:undefined
   const activeEvent=timeline?.events.find(e=>e.id===(selectedEvent?.questionId===question.id?selectedEvent.eventId:timeline.initial_event_id))||timeline?.events[0]
   const chooseEvent=(eventId:string)=>setSelectedEvent({questionId:question.id,eventId})
   const correctedStudy=question.research_corrections?.some(note=>note.role==='corrected_study')
@@ -179,7 +179,7 @@ function HistoryBody({symbol}:{symbol:string}){
         <details className="reading-disclosure"><summary>{marketBackgroundOnly?'同期大盘与ST数值':argumentOnly?'同期个股、大盘与ST数值':'同一窗口，大盘和ST分别走了多少？'}</summary><div className="reading-scroll"><table><thead><tr><th>窗口</th>{!marketBackgroundOnly&&<th>{data.name}</th>}<th>中证全指</th><th>{data.st_name}</th>{!marketBackgroundOnly&&<th>相对ST</th>}</tr></thead><tbody>{windows.map(([key,label])=>{const own=outcomes?.[key]?.change_pct,st=question.outcomes.st?.[key]?.change_pct;return <tr key={key}><th scope="row">{label}</th>{!marketBackgroundOnly&&<td>{outcomeText(outcomes?.[key])}</td>}<td>{outcomeText(question.outcomes.market?.[key])}</td><td>{outcomeText(question.outcomes.st?.[key])}</td>{!marketBackgroundOnly&&<td>{own==null||st==null?'—':`${(own-st).toFixed(2)}个百分点`}</td>}</tr>})}</tbody></table></div></details>
         </>}
         {review&&<details className="reading-disclosure history-logic"><summary>{argumentOnly?'为什么这样判断 · 原答与依据':'为什么这样判断 · 大盘 / ST / 个股'}</summary>{review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}<small>复盘于 {timestamp(review.reviewed_at)}。{argumentOnly?'本条只核对原答的依据与推理，未用价格涨跌验收。':'同期涨跌是对照，不是因果贡献比例。'}</small></details>}
-        {(question.time_precision!=='range'||rangeContext)&&<details className="reading-disclosure reading-secondary"><summary>价格口径与来源</summary><p>{question.basis_note}</p><p>{data.stock_price_basis_note||'早期价格使用保存的前复权日线，后期按交易所收盘与前收盘的比值衔接；这是价格路径，不是你的实际交易盈亏。原图未归档的盘口问题不据此认定做T成交或收益。'}</p>{data.stock_history_note&&<p>{data.stock_history_note}</p>}<p>{data.st_note}</p>{Object.entries(data.source_urls).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{sourceLabels[key]||'行情来源'} ↗</a>)}</details>}
+        {(question.time_precision!=='range'||rangeContext)&&<details className="reading-disclosure reading-secondary"><summary>价格口径与来源</summary><p>{question.basis_note}</p><p>{question.question_price_source_note||data.stock_price_basis_note||'早期价格使用保存的前复权日线，后期按交易所收盘与前收盘的比值衔接；这是价格路径，不是你的实际交易盈亏。原图未归档的盘口问题不据此认定做T成交或收益。'}</p>{!question.question_chart_sources&&data.stock_history_note&&<p>{data.stock_history_note}</p>}<p>{data.st_note}</p>{question.question_price_source_refs?.map(source=><a key={source.key} href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>)}{!question.question_price_source_refs&&Object.entries(data.source_urls).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{sourceLabels[key]||'行情来源'} ↗</a>)}</details>}
       </article></div>
   </>
 }

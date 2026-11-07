@@ -347,6 +347,16 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
             if item.get('review'):
                 from research_history_events import project_review_events
                 item['review']=project_review_events(item['review'],record=record,paths=paths,symbol=symbol)
+                timeline=item['review'].get('event_timeline')
+                if timeline and timeline['version']=='history_event_timeline_v4':
+                    period=timeline['question_period'];own_paths=period['paths']
+                    item.update(comparison_basis(record,own_paths['stocks'][symbol]['points']))
+                    anchor=item['anchor_date']
+                    item['outcomes']={key:outcome(points,anchor,own_paths['calendar']) for key,points in [('stock',own_paths['stocks'][symbol]['points']),('market',own_paths['market']),('st',own_paths['st'])]} if anchor else {}
+                    item['question_chart_sources']={'stock':own_paths['stocks'][symbol]['points'],'market':own_paths['market'],'st':own_paths['st']}
+                    item['question_price_source_note']=period['source_note']
+                    item['question_price_source_refs']=period['source_refs']
+
             if item.get('previous_review'):
                 item['previous_review']={k:v for k,v in item['previous_review'].items() if k not in {'event_timeline','event_timelines'}}
             if review:
@@ -399,7 +409,7 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_events.py','research_history_case_period.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_price_chain.py','research_history_bse.py','research_history_captures.py','research_history_reviews.py','research_history_events.py','research_history_case_period.py','research_history_question_period.py','event_learning.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):

@@ -15,6 +15,7 @@ VERSION = 'history_event_timeline_v1'
 LENSES = {'RL-C-001', 'RL-C-002', 'RL-C-003', 'RL-C-004'}
 ARGUMENT_VERSION = 'history_event_timeline_v2'
 CASE_VERSION = 'history_event_timeline_v3'
+QUESTION_VERSION = 'history_event_timeline_v4'
 
 
 def _day(value):
@@ -145,7 +146,7 @@ def _argument_basis(review):
 
 
 def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pack_id,
-                              events, annotations, sources, applied_lens_ids, learning, case_periods=None):
+                              events, annotations, sources, applied_lens_ids, learning, case_periods=None, question_periods=None):
     """Bind company event context without turning an argument into a trade review.
 
     The caller supplies a validated historical study and its actual applied lenses.
@@ -165,6 +166,9 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
         raise ValueError('selected event annotations differ')
     symbols = sorted({e['symbol'] for e in events})
     case_periods = deepcopy(case_periods or {})
+    question_periods = deepcopy(question_periods or {})
+    if set(question_periods) & set(case_periods) or not set(question_periods) <= set(symbols):
+        raise ValueError('question and past-case periods must remain separate')
     if not set(case_periods) <= set(symbols):
         raise ValueError('case period belongs to another event subject')
     if not set(symbols) <= set(record['symbols']):
@@ -179,8 +183,14 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
             case_paths = case_period_paths(period, symbol=symbol, asked_on=asked_on, current_start=paths['calendar'][0])
         else:
             case_paths = None
+        question_period = question_periods.get(symbol)
+        if question_period is not None:
+            from research_history_question_period import question_period_paths
+            selected_paths = question_period_paths(question_period, symbol=symbol, asked_on=asked_on)
+        else:
+            selected_paths = paths
         selected = [e for e in events if e['symbol'] == symbol]
-        rows = _event_rows(asked_on=asked_on, symbol=symbol, paths=paths, events=selected,
+        rows = _event_rows(asked_on=asked_on, symbol=symbol, paths=selected_paths, events=selected,
                            annotations={e['id']: annotations[e['id']] for e in selected}, sources=sources, case_paths=case_paths)
         if not {lens for row in rows for lens in row['lens_ids']} <= set(applied_lens_ids):
             raise ValueError('event reading cites a lens absent from the actual study')
@@ -188,6 +198,8 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
         traces[symbol] = {'source_events_digest': digest(selected), 'reading_digest': _reading_digest(rows)}
         if period is not None:
             traces[symbol]['case_period_digest'] = period['content_digest']
+        if question_period is not None:
+            traces[symbol]['question_period_digest'] = question_period['content_digest']
     trace = {'source_run_id': source_run_id, 'source_pack_id': source_pack_id,
              'source_events_digest': digest(events), 'applied_lens_ids': list(applied_lens_ids),
              'subjects': traces, 'learning': dict(learning)}
@@ -195,7 +207,8 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
     timelines = {}
     for symbol, rows in rows_by_symbol.items():
         period = case_periods.get(symbol)
-        payload = {'version': CASE_VERSION if period is not None else ARGUMENT_VERSION, 'assessment_basis': 'original_argument_only',
+        question_period = question_periods.get(symbol)
+        payload = {'version': QUESTION_VERSION if question_period is not None else CASE_VERSION if period is not None else ARGUMENT_VERSION, 'assessment_basis': 'original_argument_only',
                    'question_id': record['id'], 'question_digest': question_digest(record),
                    'asked_on': asked_on, 'symbol': symbol, 'review_basis_digest': _argument_basis(result),
                    'price_data_digest': digest(paths), 'source_run_id': source_run_id,
@@ -205,6 +218,8 @@ def freeze_argument_timelines(review, *, record, paths, source_run_id, source_pa
                    'events': rows, 'causal_effect_identified': False}
         if period is not None:
             payload['case_period'] = period
+        if question_period is not None:
+            payload['question_period'] = question_period
         timelines[symbol] = {**payload, 'content_digest': digest(payload)}
     return {**result, 'event_timelines': timelines}
 
@@ -217,7 +232,7 @@ def project_argument_timeline(value, *, record, review, paths, symbol):
         trace = review['event_trace']
         subject = trace['subjects'][symbol]
         if (not argument_binding_matches(review, record) or symbol not in record['symbols']
-                or value['version'] not in {ARGUMENT_VERSION, CASE_VERSION}
+                or value['version'] not in {ARGUMENT_VERSION, CASE_VERSION, QUESTION_VERSION}
                 or value['assessment_basis'] != 'original_argument_only'
                 or digest({k: v for k, v in value.items() if k != 'content_digest'}) != value['content_digest']
                 or value['review_basis_digest'] != _argument_basis(review)
@@ -242,11 +257,20 @@ def project_argument_timeline(value, *, record, review, paths, symbol):
             if 'case_period' in value or 'case_period_digest' in subject:
                 return None
             case_paths = None
+        question_paths = paths
+        if value['version'] == QUESTION_VERSION:
+            from research_history_question_period import question_period_paths
+            period = value['question_period']
+            if period['content_digest'] != subject['question_period_digest']:
+                return None
+            question_paths = question_period_paths(period, symbol=symbol, asked_on=value['asked_on'])
+        elif 'question_period' in value or 'question_period_digest' in subject:
+            return None
         ids = [e['id'] for e in value['events']]
         if not ids or len(ids) != len(set(ids)) or value['initial_event_id'] not in ids:
             return None
         for event in value['events']:
-            selected_paths = _event_paths(paths, case_paths, event['published_on'])
+            selected_paths = _event_paths(question_paths, case_paths, event['published_on'])
             relation = ('before_question' if event['published_on'] < value['asked_on'] else
                         'same_day' if event['published_on'] == value['asked_on'] else 'after_question')
             if (not set(event['lens_ids']) <= set(trace['applied_lens_ids'])

@@ -1,9 +1,9 @@
 {
   "contract_version": "v8_accepted_experience_registry_v1",
   "registry_version": "v1",
-  "registry_digest": "1c88fec6845124afbaafa59b81875b7d87b130bb96ce9cba78240464e3796498",
-  "exported_at": "2026-08-12T03:00:30.637054+00:00",
-  "accepted_count": 9,
+  "registry_digest": "bc4dec5d9f52cb11a7596a0bcf97b61cbff572405730006e08f1d0bf1624467d",
+  "exported_at": "2026-11-07T17:29:38.692402+00:00",
+  "accepted_count": 10,
   "records": [
     {
       "experience_id": "EXP-0C78ABF99736BAB325B2",
@@ -269,6 +269,65 @@
       ],
       "validation_refs": [
         "tests/test_recruitment_precedent.py"
+      ],
+      "supersedes": [],
+      "not_evidence": true
+    },
+    {
+      "experience_id": "EXP-9700CBEDEC49302CAE87",
+      "experience_version": 2,
+      "experience_type": "coverage_boundary",
+      "title": "同期间报表数字冲突时，先核口径再做精确估值",
+      "value_summary": "把同主体、同指标、同单位和同期间的原报数值及来源并列，核对比较栏与同比算术；差异未解释时暂停精确估值。检查只定位所供数字的冲突，不选择最终真值，也不倒填历史已知。",
+      "trigger_conditions": [
+        "同一期间的报表、摘要或后续比较栏出现不同数字",
+        "需要用净资产、利润或现金流支撑精确估值或经营改善结论"
+      ],
+      "topic_tags": [
+        "公告证据包",
+        "覆盖边界"
+      ],
+      "scope": [
+        "报告版本及财务口径比较",
+        "财务事实进入估值或事件判断前的证据检查"
+      ],
+      "required_inputs": [
+        "证券及合并/母子公司主体",
+        "指标原标签、单位、流量起止或余额日期",
+        "金额十进制字符串",
+        "公开来源URL、文件摘要、物理页与公开日期",
+        "需要核验的同比原值及正基数金额"
+      ],
+      "query_plan": [
+        "按主体、指标、期间精确分组，单位不同只标不可比",
+        "并列原值、比较栏及来源，不按文件新旧选择真值",
+        "对正基数同比独立计算并保留原同比与计算差异",
+        "记录待解释冲突及所缺更正、鉴证和最初版本来源"
+      ],
+      "definitions": [
+        "同一期间是指标对应期间，不是文件公布日期相同",
+        "多份报告数字相同仅证明所供字段一致，不能认证独立财务真实性"
+      ],
+      "answer_rubric": [
+        "先说明哪些判断被财务口径冲突限制",
+        "再展开来源页、版本、原值及算术差异",
+        "后续得到更正及鉴证后重新比较并说明变化"
+      ],
+      "anti_patterns": [
+        "把最新版本自动当真值或回填旧问",
+        "把合并总权益替代归母权益",
+        "把万元和元或单季和累计混算",
+        "把负利润基数强套正基数同比",
+        "由数字冲突直接断言财务造假或预测股价"
+      ],
+      "coverage_boundaries": [
+        "仅检查人工来源页绑定的所供字段，不自动完成PDF提取",
+        "不认证会计真实、最早公开版本、估值有效性或盈利能力",
+        "缺最终更正与鉴证时保留多个值，不补造修正值",
+        "软件回归通过不等于跨公司实证验证"
+      ],
+      "validation_refs": [
+        "regression:reported_financial_comparison"
       ],
       "supersedes": [],
       "not_evidence": true

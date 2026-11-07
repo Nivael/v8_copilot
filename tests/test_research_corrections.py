@@ -201,3 +201,44 @@ def test_readonly_correction_endpoint_keeps_the_recorded_run_contract_unchanged(
         assert recorded['final_answer']==records[1]['answers'][0]['text']
         assert 'corrections' not in recorded
     assert ledger.path.read_bytes()==before
+
+
+def legacy_subject_sample(tmp_path, *, new_question='债务多吗？', old_question='债务多吗？', mutation=None):
+    ledger, records, entry=sample(tmp_path)
+    # Build immutable evidence packs as they would be saved by validated studies.
+    with sqlite3.connect(ledger.path) as db:
+        for prefix,question in [('old',old_question),('replacement',new_question)]:
+            run_id=entry[prefix+'_run_id'];row={'row_id':prefix,'question_id':entry['original_question']['id'],'question':question}
+            if mutation=='foreign_question_id' and prefix=='old':row['question_id']='foreign'
+            pack={'rows':[row],'validation_catalog':{'query_row:'+prefix:json.dumps({k:v for k,v in row.items() if k!='row_id'},ensure_ascii=False,sort_keys=True)}}
+            key=digest(pack);pack_id='EP-'+key[:20].upper();pack.update(pack_id=pack_id,pack_digest=key)
+            if mutation=='uncatalogued' and prefix=='old':pack['validation_catalog']={}
+            db.execute('insert into evidence_packs values (?,?,?,?)',(pack_id,key,json.dumps(pack),'2026-06-01T00:00:00Z'))
+            validation={'valid':True,'pack_id':pack_id,'pack_digest':key}
+            if mutation=='unvalidated_pack' and prefix=='old':validation['pack_digest']='b'*64
+            db.execute('update research_runs set object_refs_json=?,evidence_pack_ids_json=?,validation_report_json=? where run_id=?',
+                (json.dumps(['unknown' if prefix=='old' else 'comparison:002856,603272']),json.dumps([pack_id]),json.dumps(validation),run_id))
+        db.commit();db.row_factory=sqlite3.Row
+        for prefix in ('old','replacement'):
+            record=dict(db.execute('select '+','.join(c.FIELDS)+' from research_runs where run_id=?',(entry[prefix+'_run_id'],)).fetchone())
+            entry[prefix+'_run_digest']=digest(record)
+    return ledger,records,entry
+
+
+def test_legacy_unknown_correction_requires_both_validated_original_rows(tmp_path):
+    ledger,records,entry=legacy_subject_sample(tmp_path)
+    before=ledger.path.read_bytes();packet=c.publish([entry],ledger_db=ledger.path,records=records)
+    actual,runs=c.verified_packet(ledger_db=ledger.path)
+    assert actual==packet and c.annotations(records,actual,runs,ledger_db=ledger.path)[records[0]['id']]
+    assert ledger.path.read_bytes()==before
+
+
+@pytest.mark.parametrize('mutation', ['foreign_question_id','uncatalogued','unvalidated_pack','different_original','both_wrong_original','no_original_binding'])
+def test_unrelated_legacy_studies_cannot_be_linked_by_manual_display_scope(tmp_path,mutation):
+    kwargs={}
+    if mutation=='different_original':kwargs['new_question']='另一问题'
+    if mutation=='both_wrong_original':kwargs.update(old_question='另一问题',new_question='另一问题')
+    ledger,records,entry=legacy_subject_sample(tmp_path,mutation=mutation,**kwargs)
+    if mutation=='no_original_binding':entry['original_question']=None
+    with pytest.raises(ValueError):c.publish([entry],ledger_db=ledger.path,records=records)
+    assert not c.correction_path(ledger.path).exists()

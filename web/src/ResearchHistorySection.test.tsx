@@ -16,8 +16,8 @@ function serve(custom=detail){return vi.spyOn(globalThis,'fetch').mockImplementa
   else data=custom
   return new Response(JSON.stringify({availability:'available',data,refresh:{in_progress:false,last_error:null}}))
 })}
+afterEach(()=>{cleanup();vi.restoreAllMocks()})
 describe('original question retrospective',()=>{
-  afterEach(()=>{cleanup();vi.restoreAllMocks()})
   it.each([['plan_only','当时只形成了研究计划，没有完成报告。'],['research_stopped','当时的研究已停止，没有形成完整报告。']] as const)('explains an unfinished %s without inventing an answer',async(status,note)=>{
     const q:HistoryQuestion={...question,answers:[],review:null,original_response_state:{version:'history_original_response_state_v1',status,source_url:'https://chatgpt.com/c/source',observed_label:status==='plan_only'?'Plan edited...':'Research stopped'}}
     serve({...detail,questions:[q]});render(<ResearchHistorySection/>)
@@ -639,5 +639,21 @@ describe('event timeline inside the original question',()=>{
     fireEvent.click(screen.getByRole('button',{name:/2026-06-03 黑历史有哪些/}))
     expect(screen.queryByRole('combobox',{name:'查看历史公告'})).not.toBeInTheDocument()
     expect(screen.getByText('涨跌从2026-06-03收盘算起')).toBeVisible()
+  })
+})
+
+
+describe('group argument timeline projection',()=>{
+  it.each([true,false])('accepts v2 only on an argument-only review: %s',async argumentOnly=>{
+    const base={question_id:eventTimeline.question_id,symbol:eventTimeline.symbol,initial_event_id:eventTimeline.initial_event_id,events:eventTimeline.events,content_digest:eventTimeline.content_digest}
+    const t={...base,version:'history_event_timeline_v2' as const,assessment_basis:'original_argument_only' as const,question_id:question.id,learning:{lesson:'阶段比标签重要',next_check:'继续追交割'}}
+    serve({...detail,questions:[{...question,review:{...question.review!,event_timeline:t,...(argumentOnly?{assessment_basis:'original_argument_only' as const}:{})}}]})
+    render(<ResearchHistorySection/>);await screen.findAllByText('错误：卖压被解释成洗盘')
+    if(argumentOnly){
+      expect(screen.getByRole('combobox',{name:'查看历史公告'})).toBeVisible()
+      expect(screen.queryByText('原问后1日')).not.toBeInTheDocument()
+      fireEvent.click(screen.getByText('用哪些 lens 看 · 下一步观察'))
+      expect(screen.getByText(/阶段比标签重要/)).toBeVisible()
+    }else expect(screen.queryByRole('combobox',{name:'查看历史公告'})).not.toBeInTheDocument()
   })
 })

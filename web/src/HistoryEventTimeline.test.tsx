@@ -63,3 +63,25 @@ describe('source-bound event reading',()=>{
     expect(screen.getByText('净利润-40870305.02元')).toBeVisible()
   })
 })
+
+
+describe('argument-only event context',()=>{
+  it('shows learning without inventing an experience link and labels a pre-question scheduled warning',()=>{
+    const event={...first,relation:'before_question' as const,occurred_on:null,scheduled_for:'2026-06-09',scheduled_role:'warning_effective_date' as const}
+    const argument={version:'history_event_timeline_v2' as const,assessment_basis:'original_argument_only' as const,question_id:timeline.question_id,symbol:timeline.symbol,initial_event_id:event.id,events:[event],content_digest:'binding',learning:{lesson:'按真实阶段更新',next_check:'补失败与未完成对照'}}
+    render(<HistoryEventTimeline timeline={argument} event={event} onSelect={()=>{}} stName="ST参考"/>)
+    expect(screen.getByRole('heading',{name:'提问时已经知道什么'})).toBeVisible()
+    expect(screen.getByText('已核1条提问前背景')).toBeVisible()
+    expect(screen.getByText(/公告安排于2026-06-09实施/)).toBeVisible()
+    fireEvent.click(screen.getByText('用哪些 lens 看 · 下一步观察'))
+    expect(screen.getByText(/按真实阶段更新/)).toBeVisible()
+    expect(screen.getByText(/补失败与未完成对照/)).toBeVisible()
+    expect(screen.queryByRole('link',{name:'查看这条复盘方法 ↓'})).not.toBeInTheDocument()
+  })
+  it('keeps a foreign local occurrence date and explains missing delisted stock prices',()=>{
+    const event={...first,occurred_on:'2026-05-27',occurred_date_qualifier:'local_time' as const,price_note:'摘牌后无日线不等于所有账户损失100%。'}
+    render(<HistoryEventTimeline timeline={timeline} event={event} onSelect={()=>{}} stName="ST参考"/>)
+    expect(screen.getByText(/2026-05-27（当地时间）/)).toBeVisible()
+    expect(screen.getByText(event.price_note)).toBeVisible()
+  })
+})

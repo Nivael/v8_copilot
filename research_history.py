@@ -344,12 +344,11 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
                 item['research_corrections']=correction_notes[record['id']]
             review=reviews.get(record['id'])
             item.update(resolve_review(review,record,paths,item['question_digest'],review_anchor(record,review,paths) if review else None))
-            if item.get('review') and 'event_timeline' in item['review']:
-                from research_history_events import project_timeline
-                projected=project_timeline(item['review']['event_timeline'],record=record,review=item['review'],paths=paths,symbol=symbol)
-                item['review']={k:v for k,v in item['review'].items() if k!='event_timeline'}
-                if projected:item['review']['event_timeline']=projected
-                else:item['review']['event_timeline_status']='needs_refresh'
+            if item.get('review'):
+                from research_history_events import project_review_events
+                item['review']=project_review_events(item['review'],record=record,paths=paths,symbol=symbol)
+            if item.get('previous_review'):
+                item['previous_review']={k:v for k,v in item['previous_review'].items() if k not in {'event_timeline','event_timelines'}}
             if review:
                 focus=review.get('focused_symbol')
                 item['review_focused_name']=paths['stocks'].get(focus,{}).get('name','大盘与ST' if focus=='market' else None)
@@ -378,7 +377,7 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
     corrections,runs=verified_packet(ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,
                                     path=corrections_path or root.parent/'research_corrections/current.json')
-    result=assemble(records,paths['data'],reviews=reviews,correction_notes=annotations(records,corrections,runs))
+    result=assemble(records,paths['data'],reviews=reviews,correction_notes=annotations(records,corrections,runs,ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB))
     coverage={'original_questions':sum(r['kind']=='original_question' for r in result['unique'].values()),
               'saved_research':sum(r['kind']=='saved_research' for r in result['unique'].values()),
               'reviewed_questions':len({r['id'] for d in result['details'].values() for r in d['questions'] if r['review']}),
@@ -438,7 +437,7 @@ def load(symbol=None,*,root=ROOT,ledger_db=None,corrections_path=None):
         all_questions=[q for d in value['details'].values() for q in d['questions']]
         if corrections['entries'] or any(q.get('research_corrections') for q in all_questions):
             records=list({q['id']:q for q in all_questions}.values())
-            expected=annotations(records,corrections,runs)
+            expected=annotations(records,corrections,runs,ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB)
             if any(q.get('research_corrections',[])!=expected.get(q['id'],[]) for q in all_questions):return {'availability':'updating'}
         return value['details'].get(symbol,{'availability':'not_found'}) if symbol else value['inventory']
     except (OSError,KeyError,ValueError,TypeError,sqlite3.Error):return {'availability':'updating'}

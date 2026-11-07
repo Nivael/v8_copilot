@@ -138,14 +138,15 @@ function HistoryBody({symbol}:{symbol:string}){
   const questionTitle=questionExcerpt(question.question)
   const contextTitle=question.question_context?questionExcerpt(question.question_context.question):null
   const review=question.review
-  const timeline=review?.event_timeline?.version==='history_event_timeline_v1'&&review.event_timeline.question_id===question.id&&review.event_timeline.symbol===symbol?review.event_timeline:undefined
+  const argumentOnly=review?.assessment_basis==='original_argument_only'
+  const eventVersion=review?.event_timeline?.version
+  const timeline=review?.event_timeline&&(eventVersion==='history_event_timeline_v1'||eventVersion==='history_event_timeline_v2'&&argumentOnly)&&review.event_timeline.question_id===question.id&&review.event_timeline.symbol===symbol?review.event_timeline:undefined
   const activeEvent=timeline?.events.find(e=>e.id===(selectedEvent?.questionId===question.id?selectedEvent.eventId:timeline.initial_event_id))||timeline?.events[0]
   const chooseEvent=(eventId:string)=>setSelectedEvent({questionId:question.id,eventId})
   const correctedStudy=question.research_corrections?.some(note=>note.role==='corrected_study')
   const replacementStudy=question.research_corrections?.some(note=>note.role==='replacement_study')
   const awaitingSavedPrices=question.kind==='saved_research'&&!Object.values(outcomes||{}).some(value=>value.change_pct!=null)
   const openCorrection=(id:string)=>{setQuery('');setCategory('全部');if(data.questions.find(q=>q.id===id)?.kind==='saved_research')setIncludeSaved(true);setSelected(id)}
-  const argumentOnly=review?.assessment_basis==='original_argument_only'
   const marketBackgroundOnly=symbol==='market'
   const answeredIds=new Set(data.questions.filter(q=>q.answers.length).map(q=>q.id))
   const hasFollowup=(q:HistoryQuestion)=>!q.answers.length&&!!q.unanswered_followup&&answeredIds.has(q.unanswered_followup.question_id)

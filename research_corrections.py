@@ -69,6 +69,42 @@ def load_packet(path):
     return validate_packet(json.loads(path.read_text()))
 
 
+def _shared_original_question(db, entry, *, question=None):
+    """Recover a legacy unknown subject only from both immutable validated packs.
+
+    A display association or a newly supplied correction label is insufficient.
+    Both recorded studies must contain the same original question as a catalogued
+    evidence row; publication also checks that text against the actual original.
+    """
+    original = entry['original_question']
+    if not original:
+        return False
+    questions = []
+    for prefix in ('old', 'replacement'):
+        row = db.execute('select evidence_pack_ids_json,validation_report_json from research_runs where run_id=?',
+                         (entry[prefix + '_run_id'],)).fetchone()
+        report = json.loads(row['validation_report_json'])
+        pack_id = report.get('pack_id')
+        if report.get('valid') is not True or pack_id not in json.loads(row['evidence_pack_ids_json']):
+            return False
+        saved = db.execute('select pack_digest,payload_json from evidence_packs where pack_id=?', (pack_id,)).fetchone()
+        if saved is None:
+            return False
+        pack = json.loads(saved['payload_json'])
+        if (digest({k: v for k, v in pack.items() if k not in {'pack_id', 'pack_digest'}}) != saved['pack_digest']
+                or pack.get('pack_id') != pack_id or pack.get('pack_digest') != saved['pack_digest']
+                or report.get('pack_digest') != saved['pack_digest']):
+            return False
+        rows = [r for r in pack['rows'] if r.get('question_id') == original['id']]
+        if len(rows) != 1 or not text(rows[0].get('question'), 100000):
+            return False
+        catalogued = json.loads(pack['validation_catalog'].get('query_row:' + rows[0]['row_id'], '{}'))
+        if catalogued != {k: v for k, v in rows[0].items() if k != 'row_id'}:
+            return False
+        questions.append(rows[0]['question'])
+    return questions[0] == questions[1] and (question is None or questions[0] == question)
+
+
 def verified_packet(*, ledger_db=RESEARCH_RUN_LEDGER_DB, path=None):
     value = load_packet(path or correction_path(ledger_db))
     ids = {entry[prefix + '_run_id'] for entry in value['entries'] for prefix in ('old', 'replacement')}
@@ -90,7 +126,10 @@ def verified_packet(*, ledger_db=RESEARCH_RUN_LEDGER_DB, path=None):
             raise ValueError('replacement must be a later validated research run')
         before, after = (set(json.loads(row['object_refs_json'])) for row in (old, new))
         if (before or after) and not before.intersection(after):
-            raise ValueError('correction research subjects do not overlap')
+            with closing(sqlite3.connect(ledger_db.resolve().as_uri() + '?mode=ro', uri=True)) as db:
+                db.row_factory = sqlite3.Row
+                if before != {'unknown'} or not after or not _shared_original_question(db, entry):
+                    raise ValueError('correction research subjects do not overlap')
     return value, records
 
 
@@ -99,7 +138,7 @@ def public_note(entry):
             'original_question_id': entry['original_question']['id'] if entry['original_question'] else None}
 
 
-def annotations(records, packet, runs):
+def annotations(records, packet, runs, *, ledger_db=RESEARCH_RUN_LEDGER_DB):
     """Bind display-only notes to both exact saved studies and the quoted original."""
     from research_history import question_digest
     by_id = {row['id']: row for row in records}
@@ -121,6 +160,13 @@ def annotations(records, packet, runs):
             if (row is None or row['kind'] != 'original_question' or question_digest(row) != original['digest']
                     or not any(original['answer_quote'] in answer['text'] for answer in row['answers'])):
                 raise ValueError('correction original question or answer changed')
+            before, after = (set(json.loads(runs[entry[prefix + '_run_id']]['object_refs_json']))
+                             for prefix in ('old', 'replacement'))
+            if not before.intersection(after):
+                with closing(sqlite3.connect(ledger_db.resolve().as_uri() + '?mode=ro', uri=True)) as db:
+                    db.row_factory = sqlite3.Row
+                    if not _shared_original_question(db, entry, question=row['question']):
+                        raise ValueError('legacy correction evidence differs from the actual original')
             result.setdefault(original['id'], []).append({**public_note(entry), 'role': 'original_review'})
     return result
 
@@ -162,7 +208,7 @@ def publish(entries, *, ledger_db=RESEARCH_RUN_LEDGER_DB, directory=None, record
         candidate = Path(temporary) / 'candidate.json'
         atomic_write_json(candidate, body)
         packet, runs = verified_packet(ledger_db=ledger_db, path=candidate)
-        annotations(records, packet, runs)
+        annotations(records, packet, runs, ledger_db=ledger_db)
     atomic_write_json(directory / 'history' / (body['content_digest'] + '.json'), body)
     atomic_write_json(directory / 'current.json', body)
     return body

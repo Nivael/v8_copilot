@@ -74,6 +74,8 @@ def question_digest(record):
         basis['question_visuals']=[{**{k:v[k] for k in ('kind','sha256','source_message_id','source_thread_id')},
                                    **{k:v[k] for k in ('attachment_id','attachment_index','attachment_count') if k in v}}
                                   for v in record['question_visuals']]
+    if record.get('question_files'):
+        basis['question_files']=[{k:v[k] for k in ('media_kind','sha256','label','file_name','source_message_id','source_thread_id','capture_digest')} for v in record['question_files']]
     return digest(basis)
 
 
@@ -122,8 +124,9 @@ def prepare_history_records(imported,*,root=ROOT):
     from research_history_captures import import_capture_files
     from research_history_followups import add_unanswered_followups
     from research_history_visuals import add_visuals
+    from research_history_files import add_files
     captured,_=import_capture_files(root/'captures/cua_v1',imported.get('stock_names',{}))
-    return add_unanswered_followups(mark_answer_bindings(add_visuals(add_question_contexts(imported['records'],captured),root=root)),root=root)
+    return add_unanswered_followups(mark_answer_bindings(add_files(add_visuals(add_question_contexts(imported['records'],captured),root=root),root=root)),root=root)
 
 
 def mark_answer_bindings(records):
@@ -365,13 +368,14 @@ def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
           'corrections_digest':corrections['content_digest'],
           'inventory':{'availability':'available','as_of':paths['data']['calendar'][-1],'stocks':result['stocks'],'coverage':coverage,'categories':list(TOPICS)},
           'visual_assets':{v['sha256']:v['asset'] for r in records for v in r.get('question_visuals',[])},
+          'file_assets':{v['sha256']:v['asset'] for r in records for v in r.get('question_files',[])},
           'details':result['details'],'general_questions':[r for r in records if not r['symbols']]}
     body['content_digest']=digest(body);atomic_write_json(root/'snapshots'/(body['content_digest']+'.json'),body);atomic_write_json(root/'current.json',body)
     return body
 
 
 def processor_digest():
-    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_followups.py','research_corrections.py']})
+    return digest({name:sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ['research_history.py','research_history_prices.py','research_history_subjects.py','research_history_prefix.py','research_history_captures.py','research_history_reviews.py','research_history_visuals.py','research_history_files.py','research_history_followups.py','research_corrections.py']})
 
 
 def freeze_reviews(imported,*,root=ROOT):
@@ -426,6 +430,20 @@ def load_visual(identity,*,root=ROOT):
         if not asset or asset['sha256']!=identity:return None
         return asset_bytes(asset,root=root),asset['mime_type']
     except (OSError,KeyError,ValueError,TypeError):return None
+
+
+def load_file(identity,*,root=ROOT):
+    from research_history_prices import bound
+    from research_history_files import file_bytes
+    from research_history_visuals import SHA
+    if not SHA.fullmatch(identity):return None
+    try:
+        packet=bound(root/'current.json')
+        if packet['version']!='research_history_reading_v1' or packet['processor_digest']!=processor_digest():return None
+        asset=packet.get('file_assets',{}).get(identity)
+        if not asset or asset['sha256']!=identity:return None
+        return file_bytes(asset,root=root),asset['mime_type']
+    except (OSError,KeyError,ValueError,TypeError,UnicodeError):return None
 
 
 def main():

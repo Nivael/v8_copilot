@@ -421,6 +421,38 @@ describe('original question retrospective',()=>{
     expect(await screen.findByRole('heading',{name:'财投以后必须涨吗？'})).toBeVisible()
     expect(screen.getByRole('searchbox')).toHaveValue('')
   })
+  it('lazily reads a recovered document and full-size image without replacing the original answer',async()=>{
+    const file={media_kind:'document' as const,label:'策略参考',file_name:'playbook.md',sha256:'a'.repeat(64),mime_type:'text/plain',size_bytes:100,captured_at:'2026-11-07T00:00:00Z',source_url:'https://chatgpt.com/c/source',url:'/api/v1/workbench/history-files/'+'a'.repeat(64)}
+    const image={...file,media_kind:'image' as const,label:'原候选表',file_name:null,sha256:'b'.repeat(64),mime_type:'image/png',width:1440,height:4206,url:'/api/v1/workbench/history-files/'+'b'.repeat(64)}
+    const row={...question,question:'看图与文件\n[User attached 1 file; file contents were not included]\n[User attached 1 image; image contents were not included]',unavailable_attachments:1,question_files:[file,image]},archived=JSON.stringify(row)
+    const request=serve({...detail,questions:[row]}),base=request.getMockImplementation()!
+    request.mockImplementation((input,options)=>String(input)===file.url?Promise.resolve(new Response('# 原参考\n<script>只是文字</script>')):base(input,options))
+    const view=render(<ResearchHistorySection/>);await screen.findByText('已补回当时的附件，可在下方展开。')
+    const fileCalls=()=>request.mock.calls.filter(([url])=>String(url)===file.url).length
+    expect(screen.queryByAltText(image.label)).not.toBeInTheDocument();expect(fileCalls()).toBe(0)
+    fireEvent.click(screen.getByText('当时的附件与参考文件'))
+    expect(await screen.findByAltText(image.label)).toHaveAttribute('height','4206');expect(screen.getByAltText(image.label)).toHaveAttribute('src',image.url);expect(fileCalls()).toBe(0)
+    fireEvent.click(screen.getByText('展开playbook.md全文'))
+    expect(await screen.findByRole('region',{name:'原参考文档全文'})).toHaveTextContent('<script>只是文字</script>')
+    expect(view.container.querySelector('script')).not.toBeInTheDocument();expect(fileCalls()).toBe(1)
+    expect(screen.getByText('当时的附件与参考文件').closest('details')!.open).toBe(true)
+    fireEvent.click(screen.getByText('当时的附件与参考文件'))
+    await waitFor(()=>expect(screen.queryByRole('region',{name:'原参考文档全文'})).not.toBeInTheDocument())
+    fireEvent.click(screen.getByText('当时的附件与参考文件'));await screen.findByText('展开playbook.md全文')
+    expect(screen.getByText('展开playbook.md全文').closest('details')!.open).toBe(false);expect(fileCalls()).toBe(1)
+    fireEvent.click(screen.getByText('展开原回答与聊天来源'));expect(screen.getByText('原回答：更像洗盘。')).toBeVisible();expect(JSON.stringify(row)).toBe(archived)
+  })
+  it('lets a failed document read retry and retains the notice for an unrecovered image',async()=>{
+    const file={media_kind:'document' as const,label:'策略参考',file_name:'reference.md',sha256:'a'.repeat(64),mime_type:'text/plain',size_bytes:10,captured_at:'2026-11-07T00:00:00Z',source_url:'https://chatgpt.com/c/source',url:'/api/v1/workbench/history-files/'+'a'.repeat(64)}
+    const request=serve({...detail,questions:[{...question,question:'看图与文件\n[User attached 1 file; file contents were not included]\n[User attached 1 image; image contents were not included]',unavailable_attachments:1,question_files:[file]}]}),base=request.getMockImplementation()!
+    let attempts=0
+    request.mockImplementation((input,options)=>String(input)===file.url?Promise.resolve(++attempts===1?new Response('',{status:404}):new Response('原文已读取')):base(input,options))
+    render(<ResearchHistorySection/>);await screen.findByText('这条原问的附件画面待补齐。')
+    fireEvent.click(screen.getByText('当时的附件与参考文件'));await screen.findByText('展开reference.md全文')
+    fireEvent.click(screen.getByText('展开reference.md全文'));await screen.findByText('文件暂时未能读取，收起后可重新展开。')
+    fireEvent.click(screen.getByText('展开reference.md全文'));await waitFor(()=>expect(screen.queryByRole('status')).not.toBeInTheDocument())
+    fireEvent.click(screen.getByText('展开reference.md全文'));expect(await screen.findByRole('region',{name:'原参考文档全文'})).toHaveTextContent('原文已读取');expect(attempts).toBe(2)
+  })
   it('shows a date-range argument review without claiming an assessed return window',async()=>{
     const review={...question.review!,assessment_basis:'original_argument_only' as const,headline:'不能由盘口确认资金意图',assessment:'原答的推断缺少证据。'}
     serve({...detail,questions:[{...question,asked_at:null,asked_on:null,time_precision:'range',asked_from:'2026-06-01',asked_through:'2026-06-04',anchor_date:null,outcomes:{},review,review_status:'argument_only'}]})

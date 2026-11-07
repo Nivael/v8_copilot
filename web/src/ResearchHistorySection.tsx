@@ -3,7 +3,7 @@ import {ReadingChart} from './ReadingChart'
 import {ResearchCorrectionNotice} from './ResearchCorrectionNotice'
 import {percent} from './readingFormat'
 import {useReadingView} from './useReadingView'
-import type {HistoryDetail,HistoryInventory,HistoryOutcome,HistoryQuestion,HistoryVisual} from './researchHistoryTypes'
+import type {HistoryDetail,HistoryInventory,HistoryOutcome,HistoryQuestion,HistoryVisual,HistoryFile} from './researchHistoryTypes'
 import type {ReadingSeries} from './readingTypes'
 import './researchHistory.css'
 
@@ -41,6 +41,9 @@ function attachmentNote(question:HistoryQuestion){
       else files=true
     }
   }
+  if(question.question_files?.some(file=>file.media_kind==='image'))images=false
+  if(question.question_files?.some(file=>file.media_kind==='document'))files=false
+  if(question.question_files?.length&&!images&&!files)return '已补回当时的附件，可在下方展开。'
   if(question.question_visuals?.length)return files?'可在下方展开图片展示截图；原文件内容仍待补齐。':question.question_context?'已补回附件展示截图，可在下方展开。':'可在下方展开附件展示截图。'
   const subject=question.question_context?'这条追问':'这条原问'
   if(images&&files)return `${subject}的图片和文件内容待补齐。`
@@ -72,6 +75,21 @@ function matchesSearch(question:HistoryQuestion,terms:string[]){
   const review=question.review
   const text=normalized([questionDate(question),readable(question.question),question.question_context?.question,...(question.research_corrections||[]).flatMap(note=>[note.headline,note.summary]),review?.headline,review?.assessment,...(review?.lessons||[])].filter(Boolean).join(' '))
   return terms.every(term=>text.includes(term))
+}
+
+function HistoryTextFile({file}:{file:HistoryFile}){
+  const [text,setText]=useState<string|null>(null),[failed,setFailed]=useState(false)
+  useEffect(()=>{
+    const controller=new AbortController()
+    fetch(file.url,{signal:controller.signal}).then(response=>{if(!response.ok)throw new Error('unavailable');return response.text()}).then(value=>{if(!controller.signal.aborted)setText(value)}).catch(()=>{if(!controller.signal.aborted)setFailed(true)})
+    return ()=>controller.abort()
+  },[file.url])
+  return text!==null?<div className="reading-prewrap history-reference-text" role="region" aria-label="原参考文档全文" tabIndex={0}>{readable(text)}</div>:<p role="status">{failed?'文件暂时未能读取，收起后可重新展开。':'正在读取当时的参考文档…'}</p>
+}
+
+function HistoryFiles({files}:{files:HistoryFile[]}){
+  const [open,setOpen]=useState(false),[documentOpen,setDocumentOpen]=useState<string|null>(null)
+  return <details className="reading-disclosure history-files" onToggle={event=>{setOpen(event.currentTarget.open);if(!event.currentTarget.open)setDocumentOpen(null)}}><summary>当时的附件与参考文件</summary><p>保留原聊天中下载的副本，供还原当时的信息。文件里的判断和规则仍需核对。</p>{open&&files.map(file=><section key={file.sha256}><h4>{file.label}</h4>{file.media_kind==='image'?<a href={file.url} target="_blank" rel="noreferrer"><img src={file.url} width={file.width} height={file.height} alt={file.label} loading="lazy" style={{maxWidth:'100%',height:'auto'}}/></a>:<details className="reading-disclosure" onToggle={event=>{event.stopPropagation();setDocumentOpen(event.currentTarget.open?file.sha256:null)}}><summary>展开{file.file_name||'参考文档'}全文</summary>{documentOpen===file.sha256&&<HistoryTextFile file={file}/>}</details>}<small>归档于 {timestamp(file.captured_at)} · <a href={file.source_url} target="_blank" rel="noreferrer">打开原聊天 ↗</a></small></section>)}</details>
 }
 
 function HistoryVisuals({visuals}:{visuals:HistoryVisual[]}){
@@ -130,6 +148,7 @@ function HistoryBody({symbol}:{symbol:string}){
         {question.previous_review&&<details className="reading-disclosure history-previous"><summary>此前复盘（依据已变）</summary><p>{question.previous_review.assessment_basis==='original_argument_only'?'该版仅复核判断依据，未评估交易回报；':question.previous_review.price_through&&`评估价格截至${question.previous_review.price_through}；`}写于 {timestamp(question.previous_review.reviewed_at)}，保留作历史记录。</p><strong>{question.previous_review.headline}</strong><p>{question.previous_review.assessment}</p><ul>{question.previous_review.lessons.map(text=><li key={text}>{text}</li>)}</ul>{question.previous_review.explanation.map(item=><section key={item.lens}><h4>{item.lens}</h4><p>{item.text}</p>{item.sources?.map(source=><p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></p>)}</section>)}</details>}
         <div className="history-original"><p className="reading-kicker">{question.answers[0]?.binding==='shared_turn_answer'?'该轮最终回答（多条提问共同归档）':'当时怎么回答'}</p>{!correctedStudy&&<blockquote>{readable(review?.then_quote||question.answers[0]?.summary||(followup?'这条当时未单独作答':'未找到原回答'))}</blockquote>}{followup&&<p><button className="history-clear" onClick={openFollowup}>查看补充后的提问与原答</button></p>}<details className="reading-disclosure"><summary>{correctedStudy?'展开旧研究原文（含已更正内容）':'展开原回答与聊天来源'}</summary>{question.answer_completed_at&&<p>原回答完成于 {timestamp(question.answer_completed_at)}（北京时间）。</p>}{question.answers.map((answer,index)=><div key={index}><p className="reading-prewrap">{readable(answer.text)}</p>{answer.binding==='shared_turn_answer'&&<p>来源只记录了这{answer.source_question_ids?.length||'多'}条问题所在轮次的最终答复，不能证明逐条回应。</p>}{answer.truncated&&<p>这一份文字截取未包含回答的末尾，请打开原聊天查看。</p>}{answer.links?.filter(link=>/^https?:\/\//.test(link.url)).map((link,i)=><p key={i}><a href={link.url} target="_blank" rel="noreferrer">{link.label||'原回答引用'} ↗</a></p>)}</div>)}{question.sources.filter(s=>s.url).map((source,index)=><p key={index}><a href={source.url} target="_blank" rel="noreferrer">{source.title||'打开原聊天'} ↗</a></p>)}</details></div>
         {!!question.question_visuals?.length&&<HistoryVisuals visuals={question.question_visuals}/>}
+        {!!question.question_files?.length&&<HistoryFiles files={question.question_files}/>}
         {awaitingSavedPrices?<p className="reading-caption">行情尚未覆盖这份研究保存后的交易日。{(correctedStudy||replacementStudy)&&'可回到当时的原问题查看价格过程。'}</p>:question.time_precision==='range'?<section className="history-range-context" aria-label="提问日期待确认"><h4>提问区间与后来走势</h4><p className="reading-caption">提问发生在 {question.asked_from} 至 {question.asked_through} 之间。{rangeContext&&'阴影标出这段可能的提问时间。'}</p>{rangeContext?<><p className="reading-caption">观察参照：{rangeContext.reference_date}收盘＝100。只比较价格过程，未选定某个提问日计算回报。</p><ReadingChart key={question.id} series={series} label={`${data.name}提问区间与价格观察`} valueMode="index" dateRange={{from:question.asked_from!,through:question.asked_through!}}/></>:<p className="history-pending">尚缺区间之前共同有效的收盘参照，价格观察待补齐；原问题和原回答已保留，不选定某一天计算收益。</p>}</section>:!question.anchor_date?<p className="history-pending">现有行情尚未覆盖可用的比较起点，暂不显示后续收益。原问题和原回答已保留。</p>:<>
         <h4>{marketBackgroundOnly?'同期市场背景':argumentOnly?'同期价格背景':'后来怎样了'}</h4>
         {(argumentOnly||marketBackgroundOnly)&&<p className="reading-caption">{marketBackgroundOnly?'这里只对照大盘和ST，不代表原问所提个股或组合的回报。':'这里只展示该股的同期价格，未用这些涨跌验证本条判断的回报。'}</p>}

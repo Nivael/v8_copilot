@@ -549,6 +549,15 @@ def get_history_visual(identity: str = Path(pattern=r'^[a-f0-9]{64}$')) -> Respo
     return Response(content=raw,media_type=mime,headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
 
 
+@app.get('/api/v1/workbench/history-files/{identity}')
+def get_history_file(identity: str = Path(pattern=r'^[a-f0-9]{64}$')) -> Response:
+    from research_history import load_file
+    asset=load_file(identity)
+    if asset is None:raise HTTPException(status_code=404,detail='附件当前不可用')
+    raw,mime=asset
+    return Response(content=raw,media_type=mime,headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
+
+
 @app.get("/api/v1/experiences/{experience_id}", response_model=ExperienceRecord)
 def get_experience(
     experience_id: str = Path(pattern=r"^EXP-[A-F0-9]{20}$"),

@@ -1,0 +1,107 @@
+{
+  "version": "node_title_court_scope_v1",
+  "scope": "current_catalog_title_classification_regression_only",
+  "historical_cancellation_time_verified": false,
+  "full_body_or_node_study_admission": false,
+  "cases": [
+    {
+      "announcement_id": "1212122635",
+      "symbol": "002766",
+      "catalog_date": "2022-01-08",
+      "title": "关于申请撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示暨继续被实施退市风险警示及其他风险警示的公告",
+      "expected_title_classification": null,
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2022-01-08/1212122635.PDF",
+      "raw_sha256": "b89e5c7d2ccb1abd1276807a1dddb51e409234fb95aabf571701c75a7150e20b",
+      "proof_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "announcement_id": "1212191213",
+      "symbol": "002766",
+      "catalog_date": "2022-01-15",
+      "title": "关于撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示情形暨继续被实施退市风险警示及其他风险警示的提示性公告（已取消）",
+      "expected_title_classification": null,
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2022-01-15/1212191213.PDF",
+      "raw_sha256": "f405785acd4c6af409a813272bee487308b21a35bcc0fa51ba500955d6a0e873",
+      "proof_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "announcement_id": "1212196494",
+      "symbol": "002766",
+      "catalog_date": "2022-01-17",
+      "title": "关于撤销公司股票因法院裁定受理公司重整而被实施的退市风险警示情形暨继续被实施退市风险警示及其他风险警示的提示性公告（更新后）",
+      "expected_title_classification": null,
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2022-01-17/1212196494.PDF",
+      "raw_sha256": "ff085abb2c868e6b359849cf2667a28f259ae90fc6729d2a2830ad4c87468e68",
+      "proof_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "announcement_id": "1209815619",
+      "symbol": "002323",
+      "catalog_date": "2021-04-27",
+      "title": "关于法院裁定受理公司重整暨股票被继续实施退市风险警示的公告",
+      "expected_title_classification": "formal_restructuring_accepted",
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2021-04-27/1209815619.PDF",
+      "raw_sha256": "3375244732ac9c7bcb86384a2066df03700e6a9e5f0bfa7128c62e833b68889f",
+      "proof_pages": [
+        1
+      ]
+    },
+    {
+      "announcement_id": "1211724649",
+      "symbol": "002356",
+      "catalog_date": "2021-11-30",
+      "title": "关于法院裁定受理公司全资子公司重整的公告",
+      "expected_title_classification": null,
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724649.PDF",
+      "raw_sha256": "407b6276b6b82e2d56e030f15d1308bcaf3c474bb305979cd41204fec4ce988c",
+      "proof_pages": [
+        1
+      ]
+    },
+    {
+      "announcement_id": "1211724650",
+      "symbol": "002356",
+      "catalog_date": "2021-11-30",
+      "title": "关于法院裁定受理公司重整暨被叠加实施退市风险警示的公告",
+      "expected_title_classification": "formal_restructuring_accepted",
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2021-11-30/1211724650.PDF",
+      "raw_sha256": "8e67ee3554320ea7fd1e8b723d5085e84701e6a93b5ace9e7dde3359448a359f",
+      "proof_pages": [
+        1
+      ]
+    },
+    {
+      "announcement_id": "1212034575",
+      "symbol": "002766",
+      "catalog_date": "2021-12-28",
+      "title": "管理人关于法院裁定批准重整计划的公告",
+      "expected_title_classification": "restructuring_plan_approved",
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2021-12-28/1212034575.PDF",
+      "raw_sha256": "62774023f351cff1b6f8e3a31b7f9de304db9b1afc9f1553efe560bbbc4a8c8b",
+      "proof_pages": [
+        1
+      ]
+    },
+    {
+      "announcement_id": "1213053331",
+      "symbol": "002219",
+      "catalog_date": "2022-04-23",
+      "title": "管理人关于法院裁定批准重整计划的公告",
+      "expected_title_classification": "restructuring_plan_approved",
+      "public_pdf_url": "https://static.cninfo.com.cn/finalpage/2022-04-23/1213053331.PDF",
+      "raw_sha256": "e4da3a01e8da3eadf3ec1e31b9aa3a5de3428d44e030efa153153153750c7fe7",
+      "proof_pages": [
+        1
+      ]
+    }
+  ]
+}

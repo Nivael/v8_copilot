@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sqlite3
+import unicodedata
 from collections import Counter, defaultdict
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -20,7 +22,7 @@ from sqlite_access import connect_ro as _connect_ro
 
 
 CONTRACT_VERSION = "valuation_episode_v1"
-MATERIALIZER_VERSION = "v1.0.3"
+MATERIALIZER_VERSION = "v1.0.4"
 STAGES = (
     "st_distress_only",
     "restructuring_application_disclosed",
@@ -37,6 +39,14 @@ STAGE_EVENT = {
     "restructuring_plan_published": "plan_key_terms_disclosed",
 }
 RELATED_ENTITY_TERMS = ("子公司", "孙公司", "控股股东", "参股公司")
+# A warning-removal title may quote an old court event as its cause. Remove
+# only that cause, stopping before a separate current-event clause.
+_WARNING_CAUSE = re.compile(
+    r"(?P<removal>撤销[^。；;，,暨]{0,100}?)(?:因|由于)[^。；;，,暨]{0,180}?"
+    r"(?:而(?:被)?(?:叠加|继续)?实施的?|被(?:叠加|继续)?实施的?|所(?:导致|引发)的?)"
+    r"(?:退市|其他)?风险警示"
+)
+_CANCELLED_TITLE = re.compile(r"\((?:已取消|已撤回|已撤销)\)$")
 
 
 class StrictModel(BaseModel):
@@ -149,8 +159,14 @@ def _id(prefix: str, *parts: object) -> str:
 
 
 def classify_official_title(title: str) -> str | None:
+    title = "".join(unicodedata.normalize("NFKC", title).split())
+    if _CANCELLED_TITLE.search(title):
+        # This is the currently observed catalog status, not its historical time.
+        return None
     if any(term in title for term in RELATED_ENTITY_TERMS):
         return None
+    if "撤销" in title and "风险警示" in title:
+        title = _WARNING_CAUSE.sub(r"\g<removal>", title)
     if any(term in title for term in ("重整计划执行完毕", "执行完毕重整计划", "重整程序终结")):
         return "restructuring_completed"
     if any(term in title for term in ("终止预重整", "终止重整", "终结预重整", "宣告破产")):

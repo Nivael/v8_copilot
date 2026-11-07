@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import sys
+from contextlib import nullcontext
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,28 +13,31 @@ if str(ROOT) not in sys.path:
 
 from api import orchestrate_deterministic
 from api_contract import ResearchRequest
+from evals.frozen_inputs import frozen_announcement_inputs
 
 
 SET_PATH = Path(__file__).with_name("real_question_answerability_set_v1.jsonl")
 
 
-def load_cases() -> list[dict]:
+def load_cases(set_path: Path = SET_PATH) -> list[dict]:
     return [
         json.loads(line)
-        for line in SET_PATH.read_text(encoding="utf-8").splitlines()
+        for line in set_path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
 
 
-def evaluate() -> tuple[int, int]:
+def evaluate(*, set_path: Path = SET_PATH) -> tuple[int, int]:
     failures: list[str] = []
-    cases = load_cases()
+    cases = load_cases(set_path)
     for case in cases:
-        response = orchestrate_deterministic(ResearchRequest(
-            request_id=f"eval-{case['id'].lower()}",
-            question=case["question"],
-            llm_mode="off",
-        ))
+        fixture = case.get("announcement_fixture")
+        with frozen_announcement_inputs(fixture) if fixture else nullcontext():
+            response = orchestrate_deterministic(ResearchRequest(
+                request_id=f"eval-{case['id'].lower()}",
+                question=case["question"],
+                llm_mode="off",
+            ))
         if response.route.route != case["expected_route"]:
             failures.append(
                 f"{case['id']}: route={response.route.route}, expected={case['expected_route']}"
@@ -52,6 +56,13 @@ def evaluate() -> tuple[int, int]:
         for prefix in case["required_rows"]:
             if not any(row_id.startswith(prefix) for row_id in row_ids):
                 failures.append(f"{case['id']}: missing row {prefix}")
+        for prefix in case.get('forbidden_rows', []):
+            if any(row_id.startswith(prefix) for row_id in row_ids):
+                failures.append(f"{case['id']}: forbidden row {prefix}")
+        gap_ids={gap.get('gap_id') for gap in (card or {}).get('lens_gap', [])}
+        for gap_id in case.get('required_gaps', []):
+            if gap_id not in gap_ids:
+                failures.append(f"{case['id']}: missing gap {gap_id}")
         narrative_text = ""
         if response.narrative:
             narrative_text = "\n".join([

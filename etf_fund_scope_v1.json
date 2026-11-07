@@ -1,0 +1,112 @@
+{
+  "version": "etf_510310_scoped_business_roles_v1",
+  "document": {
+    "code": "510310.SH",
+    "published_on": "2026-07-31",
+    "title": "易方达沪深300交易型开放式指数发起式证券投资基金更新的招募说明书",
+    "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-31/510310_20260731_RPQ5.pdf",
+    "document_id": "9058beff6a2716cea66034bb4b39169594bafa2e47cf17af8e63962ea198d8a3",
+    "catalog_digest": "f1c18bb1875b575a838eea1a9a82140148180a20ce435e16422a03d04fb8afc3",
+    "response_url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-31/510310_20260731_RPQ5.pdf",
+    "observed_at": "2026-11-05T10:57:45.526318+00:00",
+    "raw_sha256": "22450cd3f30209930bbd0861b51134baac00a0e914f6f3537581aadb75faa9e8",
+    "text_sha256": "20c7dc86e63d2b3b3c0222e15c0616ef1cbfdf47e18482f6fd137627deca1ef6",
+    "bytes": 1247830,
+    "page_count": 127
+  },
+  "fund_name": "易方达沪深300交易型开放式指数发起式证券投资基金",
+  "issuer": "易方达基金管理有限公司",
+  "proofs": [
+    {
+      "role": "version_dates",
+      "page": 4,
+      "start": "本基金有关财务数据截止日为",
+      "end": "(本报告中财务数据未经审计)",
+      "sha256": "2d5ac841b1f034da07aa6a42feaf85693204be0450c1c66a36e721a1d5b2fcb9"
+    },
+    {
+      "role": "registrars",
+      "page": 9,
+      "start": "32、登记结算机构:",
+      "end": "由易方达基金管理有限公司负责办理",
+      "sha256": "35e040f6af54bd0b0d8399c14ab8d550f1ad342ff4b2b82614aa627dee36635d"
+    },
+    {
+      "role": "listed_identity",
+      "page": 32,
+      "start": "根据有关规定,本基金合同生效后,",
+      "end": "交易代码:510310)",
+      "sha256": "fd0f9e1bc3de38e9e41cd771dde0e76163c332738ee1cdeb8d3e62fde6fc45e9"
+    },
+    {
+      "role": "listed_transfer",
+      "page": 32,
+      "start": "基金上市后,本基金场内份额",
+      "end": "后,方可上市交易。",
+      "sha256": "8402241f092383fcf450af561b6dbffde63c3ce726b846c7a4f48adcd51d7843"
+    },
+    {
+      "role": "iopv_rounding",
+      "page": 32,
+      "start": "2、基金份额参考净值的计算",
+      "end": "保留小数点后4位。",
+      "sha256": "27ad3a088e3297bfc5daacef5dfec1e231d3c8859a9cca54ebe951c1670ec987"
+    },
+    {
+      "role": "share_classes",
+      "page": 34,
+      "start": "本基金的基金份额分为",
+      "end": "分别适用不同的申购赎回办法。",
+      "sha256": "cce2e89b76a1f9b9edacc5a633e6e87d7f21bb3c9eefcfe42142902184cd6721"
+    },
+    {
+      "role": "order_and_consideration",
+      "page": 35,
+      "start": "1、本基金的场内份额采用",
+      "end": "本基金场外份额的申购对价、赎回对价为现金。",
+      "sha256": "c56197edf0f31fcf4414fd8cef4960dfe53044b472e5f5b7864a6b9edfb1a928"
+    },
+    {
+      "role": "off_subscription_rounding",
+      "page": 38,
+      "start": "1、申购份额的计算及余额的处理方式:",
+      "end": "由此产生的收益或损失由基金财",
+      "sha256": "d2a539ed8fc43ae331dbf6518b97b08a661625320a656ad014f22a671f60af8c"
+    },
+    {
+      "role": "off_redemption_rounding",
+      "page": 39,
+      "start": "2、赎回金额的计算及处理方式:",
+      "end": "由此产生的收益或损失由基金财产承担。",
+      "sha256": "8f4750bf1aa53c014de6350261528b1e902e5615a4886277c833dfa9fbee6f14"
+    },
+    {
+      "role": "registration_and_transfer",
+      "page": 48,
+      "start": "1、基金份额的登记",
+      "end": "场内份额不可跨系统转托管为场外份额。",
+      "sha256": "6e1006d568981e0a49c2df9ce74f142f5645828042d81e627850d43032a70715"
+    },
+    {
+      "role": "nav_rounding",
+      "page": 70,
+      "start": "1、基金份额净值是按照",
+      "end": "国家另有规定的,从其规定。",
+      "sha256": "f0b6dc4f15ebe1a89218a0b9993d91efc9e3f99a0a1f4229f1e7b95aa1cff260"
+    },
+    {
+      "role": "distribution_mode",
+      "page": 74,
+      "start": "2、本基金场内及场外份额",
+      "end": "均采用现金分红;",
+      "sha256": "24e034da63703d9b8bff1fdaefe28ff76700d2a1bb42da95f9f302f2e9ba48a3"
+    },
+    {
+      "role": "distribution_rounding",
+      "page": 75,
+      "start": "每基金份额的应分配收益为",
+      "end": "第4位舍去。",
+      "sha256": "0debb6c2c38956c7923dbbb096ea276965a5c6adbcfd4064ba5a2fab6fa239ac"
+    }
+  ]
+}

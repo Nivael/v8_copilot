@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sqlite3
 from datetime import date, timedelta
+import pytest
 
 from market_activity import (
     MarketActivityFact,
@@ -38,6 +39,27 @@ def _member(symbol: str):
         "symbol": symbol, "ts_code": f"{symbol}.SZ", "name": "*ST样本",
         "risk_type": "ST", "risk_type_name": "风险警示板",
     }
+
+
+@pytest.mark.parametrize("close,volume", [(None, 1000), (0, 1000), (10, None), (10, 0), (10, -1)])
+def test_complete_suspension_query_without_valid_trading_data_is_unknown(close, volume):
+    day = "2025-09-15"
+    raw = {**_raw("000001", day), "close": close, "vol": volume}
+    row = normalize_activity_rows(trade_date=day, memberships=[_member("000001")],
+                                  daily_rows=[raw], daily_basic_rows=[_basic("000001", day)],
+                                  suspend_rows=[], limit_rows=[], suspension_query_complete=True)[0]
+    assert row.suspension_status == "unknown" and not row.eligible_for_anomaly
+    assert "suspension_status_unknown" in row.exclusion_reasons
+
+
+def test_missing_daily_row_does_not_become_trading_or_override_explicit_suspension():
+    day = "2025-09-15"
+    inputs = dict(trade_date=day, memberships=[_member("000001")], daily_rows=[],
+                  daily_basic_rows=[], limit_rows=[], suspension_query_complete=True)
+    missing = normalize_activity_rows(**inputs, suspend_rows=[])[0]
+    assert missing.suspension_status == "unknown" and "daily_missing" in missing.exclusion_reasons
+    suspended = normalize_activity_rows(**inputs, suspend_rows=[{"ts_code": "000001.SZ", "trade_date": "20250915", "suspend_type": "S", "suspend_timing": None}])[0]
+    assert suspended.suspension_status == "suspended" and not suspended.eligible_for_anomaly
 
 
 def test_activity_normalization_uses_raw_limit_fallback_and_suspension_negative_evidence(tmp_path):

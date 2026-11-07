@@ -174,7 +174,7 @@ def classify_hard_event(title: str) -> tuple[str, str, str]:
 
 def _topic_key(title: str) -> str:
     text = re.sub(r"^(关于|公司关于)", "", title)
-    text = re.sub(r"(的公告|公告|提示性公告|进展公告|补充公告|更正公告)$", "", text)
+    text = re.sub(r"的?(?:提示性|进展|补充|更正)?公告$", "", text)
     text = re.sub(r"第[一二三四五六七八九十\d]+次", "", text)
     text = re.sub(r"[：:（）()\s]", "", text)
     return text[:36] or "other"

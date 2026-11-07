@@ -494,15 +494,17 @@ class ExperienceRepository:
         self,
         *,
         status: ExperienceStatus | None = None,
-        limit: int = 100,
+        limit: int | None = 100,
     ) -> list[ExperienceRecord]:
         query = "select * from experiences"
         params: list[Any] = []
         if status is not None:
             query += " where status=?"
             params.append(status.value)
-        query += " order by created_at desc limit ?"
-        params.append(limit)
+        query += " order by created_at desc"
+        if limit is not None:
+            query += " limit ?"
+            params.append(limit)
         connection = self._connect_readonly()
         if connection is None:
             return []

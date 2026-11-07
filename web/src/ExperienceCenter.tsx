@@ -1,5 +1,6 @@
 import {BookOpenCheck, Filter, RefreshCw, Sparkles} from 'lucide-react'
 import {useCallback, useEffect, useState} from 'react'
+import {useLocation} from 'react-router-dom'
 import {getExperienceGovernanceStatus, getExperienceReviewQueue, getExperiences, reviewExperience} from './api'
 import {ExperienceCard} from './ExperienceCard'
 import {ExperienceReviewPanel} from './ExperienceReviewPanel'
@@ -14,7 +15,9 @@ const FILTERS: Array<{value:ExperienceStatus;label:string}> = [
 ]
 
 export function ExperienceCenter() {
-  const [status,setStatus]=useState<ExperienceStatus>('accepted')
+  const {search,hash}=useLocation()
+  const requested=new URLSearchParams(search).get('status')
+  const [status,setStatus]=useState<ExperienceStatus>(()=>requested==='candidate'?'candidate':'accepted')
   const [experiences,setExperiences]=useState<Experience[]>([])
   const [governance,setGovernance]=useState<ExperienceGovernanceStatus|null>(null)
   const [reviewQueue,setReviewQueue]=useState<ExperienceReviewQueue|null>(null)
@@ -43,13 +46,14 @@ export function ExperienceCenter() {
     void load(controller.signal)
     return()=>controller.abort()
   },[load])
+  useEffect(()=>{if(!loading&&hash)document.getElementById(hash.slice(1))?.scrollIntoView?.({block:'start'})},[loading,hash])
 
   async function onReview(experience:Experience,action:'accept'|'ignore'|'block'|'close'){
     setBusyId(experience.experience_id)
     setError('')
     try{
       await reviewExperience(experience.experience_id,action)
-      setExperiences(current=>current.filter(row=>row.experience_id!==experience.experience_id))
+      await load()
     }catch{setError('审阅操作未完成，请保留候选并重试。')}
     finally{setBusyId('')}
   }
@@ -60,7 +64,8 @@ export function ExperienceCenter() {
         <div>
           <p className="eyebrow"><Sparkles size={14}/>Reusable research methods</p>
           <h1>经验中心</h1>
-          <p>这里只沉淀可复用的方法、边界和反模式。方法经两个真实运行复现、白名单回归和冲突检查后自动写入；原始回答永远不是证据。</p>
+          <p>这里只沉淀可复用的方法、边界和反模式。已接受表示有入库决定；当前是否通过复验，请查看更新与复盘。</p>
+          <a className="learning-entry" href="/system">查看更新时点与逐条复验 →</a>
         </div>
         <div className="experience-principle"><BookOpenCheck size={20}/><strong>经验不是证据</strong><span>每次使用都会重新查询最新本地材料</span></div>
       </section>
@@ -85,7 +90,7 @@ export function ExperienceCenter() {
       {!loading&&!error&&((status==='candidate'&&reviewQueue?.cards.length===0)||(status!=='candidate'&&experiences.length===0))&&(
         <section className="experience-empty"><h2>当前没有{FILTERS.find(item=>item.value===status)?.label}</h2><p>普通成功回答不会制造候选；只有新的通用方法或失败模式才会进入这里。</p></section>
       )}
-      {status!=='candidate'&&<section className="experience-grid" aria-live="polite">
+      {status!=='candidate'&&<section id="methods" className="experience-grid" aria-live="polite">
         {experiences.map(experience=><ExperienceCard key={experience.experience_id} experience={experience} busy={busyId===experience.experience_id} onReview={onReview}/>)}
       </section>}
     </div>

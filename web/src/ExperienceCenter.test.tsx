@@ -1,3 +1,4 @@
+import {MemoryRouter} from 'react-router-dom'
 import {fireEvent,render,screen,waitFor} from '@testing-library/react'
 import {afterEach,describe,expect,it,vi} from 'vitest'
 import {ExperienceCenter} from './ExperienceCenter'
@@ -39,7 +40,7 @@ describe('ExperienceCenter',()=>{
       return new Response(JSON.stringify([]),{status:200})
     })
 
-    render(<ExperienceCenter/>)
+    render(<MemoryRouter><ExperienceCenter/></MemoryRouter>)
     expect(await screen.findByRole('heading',{name:'当前没有已接受'})).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button',{name:'自动待验证'}))
     expect(await screen.findByRole('heading',{name:'事件窗口连接逐日路径'})).toBeInTheDocument()

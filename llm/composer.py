@@ -22,6 +22,7 @@ from llm.schemas import (
     NarrativeClaim,
     NarrativeDraft,
 )
+from discipline_backing import unsupported_discipline_clauses
 from research_judgments import (
     comparison_density_focus,
     comparison_direction_contradiction,
@@ -36,11 +37,13 @@ COMPOSER_SYSTEM_PROMPT = """你是 ST Research Copilot 的证据分析师。
 每个 statement 和每条 claim 都必须引用 backing_catalog 中真实存在的 query_row、lens_invocation、provenance_ref、data_debt 或 lens_gap。
 比较题必须先指出最有解释力的实质差异，再补充口径和边界；允许作有 backing 的单一维度判断，例如哪一方公开程序节点更深入，但不得升级成整体优劣、成功率或投资价值排序。公告条数和价格变化通常只作背景，不得替代对用户真正问题的回答。
 如果 payload 含 required_research_judgment，它是查询证据机械确定的方向性结论；主回答和所有解释都必须与它方向一致，不得说反。
+如果 payload 含 comparison_order_boundary，两者阶段没有受支持的共同排序；只能说明阶段差异，不能补造哪一方更深入或领先。
 如果 payload 含 narrative_correction，上一版主回答没有通过 backing 校验；必须删除无法由 backing 原样支持的数字、日期或扩大的缺失结论，重新生成完整 narrative。
 阶段题必须把当前公开里程碑与历史后续分布分开。研究判断不等于预测：可以说明当前阶段差异及其含义，但不能断言未来结果。
 阶段题必须区分当前里程碑日期与公告清单截至日期，不得把清单截至日冒充里程碑日期。
 重整阶段历史比例必须说明 episode case 去重口径、起点总数、可观察后续数和右删失数；阶段类别百分比以可观察后续为分母。
 公告题必须根据公告正文证据片段总结，不得只复述标题。
+纪律相关陈述当前只接受本次引用的正式来源逐条事实；保留完整对象、类型、否定和时点，不可拼接来源中的关键词。缺少可引用事实时明确保留核验缺口。
 巨潮公告ID是披露平台文档标识，不是上市公司正文中的公告编号；只有“公告编号”字段才可称为公告编号。
 某一来源未找到记录，只能表述为该来源口径未找到或未披露；不得扩大成现实中尚未发生。若 backing 标出未覆盖渠道，必须单独说明该覆盖缺口。
 不得补造数字、日期、事件、因果或证据等级，不得输出买卖、持有、仓位、目标价或排序建议。
@@ -86,20 +89,21 @@ def _comparison_contradiction(card: AnswerCard, draft: NarrativeDraft) -> str:
     insight = comparison_phase_insight(card.body_rows)
     if (
         insight is None
-        or not insight.directional_judgment
         or comparison_density_focus(card.question)
-        or draft.narrative is None
     ):
         return ""
-    statements = [
-        draft.narrative.direct_answer,
-        *draft.narrative.reasoning_steps,
-        *draft.narrative.uncertainties,
-        *draft.narrative.watch_items,
-    ]
+    statements = list(draft.claims)
+    if draft.narrative is not None:
+        statements += [
+            draft.narrative.direct_answer,
+            *draft.narrative.reasoning_steps,
+            *draft.narrative.uncertainties,
+            *draft.narrative.watch_items,
+        ]
     for statement in statements:
-        if comparison_direction_contradiction(statement.text, insight):
-            return statement.text
+        candidate = f"{getattr(statement, 'title', '')}，{statement.text}"
+        if comparison_direction_contradiction(candidate, insight):
+            return candidate
     return ""
 
 
@@ -294,6 +298,14 @@ def _validated_statement(
               "ctx": {"error": ValueError(f"命中禁用交易措辞: {hit}")}}],
         )
     combined = " ".join(backing_summaries[key] for key in keys)
+    summaries = [backing_summaries[key] for key in keys]
+    for candidate, is_title in ((text, False), (title or "", True)):
+        if unsupported_discipline_clauses(candidate, summaries, title=is_title):
+            raise ValidationError.from_exception_data(
+                "StructuredNarrativeDraft",
+                [{"type": "value_error", "loc": ("title" if is_title else "text",), "input": candidate,
+                  "ctx": {"error": ValueError("纪律相关陈述未逐条匹配本次引用的正式来源事实，不能拼接对象、类型或先后关系")}}],
+            )
     unsupported_absence = _unsupported_source_absence(text, combined)
     if unsupported_absence:
         raise ValidationError.from_exception_data(
@@ -527,6 +539,10 @@ class NarrativeComposer:
             and not comparison_density_focus(card.question)
         ):
             payload["required_research_judgment"] = insight.directional_judgment
+        elif insight is not None and not comparison_density_focus(card.question):
+            payload["comparison_order_boundary"] = (
+                "两个阶段没有受支持的共同排序；只能说明阶段差异，不能补造先后。"
+            )
         backing_summaries = {(entry.kind, entry.ref): entry.summary for entry in catalog}
         draft: NarrativeDraft | None = None
         research_narrative: ResearchNarrative | None = None
@@ -542,11 +558,11 @@ class NarrativeComposer:
             if contradiction:
                 if attempt == 0:
                     payload["direction_correction"] = (
-                        f"上一版把比较方向说反：{contradiction}。"
-                        f"必须改为与 {insight.directional_judgment if insight else ''} 一致。"
+                        f"上一版比较方向缺乏支持或与查询证据矛盾：{contradiction}。"
+                        f"必须遵守：{insight.directional_judgment if insight and insight.directional_judgment else '阶段没有共同排序，只能说明差异，不能判断先后'}。"
                     )
                     continue
-                raise LLMProviderError("LLM 比较方向连续两次与查询证据矛盾")
+                raise LLMProviderError("LLM 比较方向连续两次未通过证据校验")
             research_narrative, rejected_statements = _validated_narrative(
                 card, draft.narrative, backing_summaries
             )
@@ -576,6 +592,9 @@ class NarrativeComposer:
                 continue
             if hit:
                 rejected.append(RejectedClaim(claim, f"命中禁用交易措辞: {hit}"))
+                continue
+            if unsupported_discipline_clauses(claim.text, [backing_summaries[backing_key]]):
+                rejected.append(RejectedClaim(claim, "纪律相关陈述未逐条匹配本次引用的正式来源事实"))
                 continue
             unsupported_numbers = _unsupported_numbers(
                 claim.text, backing_summaries[backing_key]

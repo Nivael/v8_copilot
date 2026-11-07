@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Any
 
 
@@ -14,6 +15,8 @@ class ComparisonPhaseInsight:
     later_label: str | None
     earlier_label: str | None
     directional_judgment: str | None
+    left_ref: str = ""
+    right_ref: str = ""
 
 
 def comparison_density_focus(question: str) -> bool:
@@ -78,6 +81,8 @@ def comparison_phase_insight(
         later_label=later_label,
         earlier_label=earlier_label,
         directional_judgment=directional,
+        left_ref=str(left.get("股票") or ""),
+        right_ref=str(right.get("股票") or ""),
     )
 
 
@@ -85,35 +90,39 @@ def comparison_direction_contradiction(
     text: str,
     insight: ComparisonPhaseInsight,
 ) -> bool:
-    """Detect a directional statement that reverses an evidence-derived order."""
+    """Reject reversed orders and orders that the observed stages cannot support."""
     later, earlier = insight.later_label, insight.earlier_label
-    if not later or not earlier:
-        return False
-    compact = "".join(str(text or "").split())
-    if f"{later}落后于{earlier}" in compact or f"{later}不如{earlier}" in compact:
-        return True
-    markers = ("更深入", "更进一步", "更靠后", "领先")
-    for marker in markers:
-        offset = 0
-        while True:
-            marker_at = compact.find(marker, offset)
-            if marker_at < 0:
-                break
-            before = compact[:marker_at]
-            later_at, earlier_at = before.rfind(later), before.rfind(earlier)
-            nearest_at = max(later_at, earlier_at)
-            if nearest_at >= 0:
-                nearest = later if later_at > earlier_at else earlier
-                prefix = before[:nearest_at]
-                other_at = earlier_at if nearest == later else later_at
-                is_comparison_object = any(
-                    prefix.endswith(comparator)
-                    for comparator in ("比", "较", "相较于", "相比于")
-                ) and other_at >= 0
-                subject = (
-                    earlier if nearest == later else later
-                ) if is_comparison_object else nearest
-                if subject == earlier:
-                    return True
-            offset = marker_at + len(marker)
+    aliases = {
+        insight.left_label: insight.left_label, insight.right_label: insight.right_label,
+        "前者": insight.left_label, "后者": insight.right_label,
+        "第一家": insight.left_label, "第二家": insight.right_label,
+        "第一只": insight.left_label, "第二只": insight.right_label,
+    }
+    for ref, label in ((insight.left_ref, insight.left_label), (insight.right_ref, insight.right_label)):
+        if ref:
+            aliases[ref] = label
+    # An uncertainty in a later clause must not erase an unsupported assertion before it.
+    for clause in re.split(r"[。！？!?；;，,\n]", str(text or "")):
+        compact = "".join(clause.split())
+        if re.search(r"(?:不能|无法|不足以|不宜|不应|难以|不支持).*(?:判断|认定|证明|推断|断言|比较)", compact):
+            continue
+        if re.search(r"不比|未比|没有比|(?:不|未|没有|并非)(?:明显|显著)?(?:更深入|更进一步|更靠后|领先)", compact):
+            continue
+        for marker in re.finditer(r"更深入|更进一步|更靠后|领先|落后于|不如", compact):
+            before = compact[:marker.start()]
+            locations = [(before.rfind(alias), len(alias), label) for alias, label in aliases.items() if alias]
+            locations = [item for item in locations if item[0] >= 0]
+            if not locations:
+                continue
+            position, _, subject = max(locations)
+            # In "甲比乙更深入", the nearest name is the object, not the subject.
+            if before[:position].endswith(("比", "较", "相较于", "相比于")):
+                other = [item for item in locations if item[2] != subject]
+                if other:
+                    subject = max(other)[2]
+            if not later or not earlier:
+                return True
+            expected = earlier if marker.group() in {"落后于", "不如"} else later
+            if subject != expected:
+                return True
     return False

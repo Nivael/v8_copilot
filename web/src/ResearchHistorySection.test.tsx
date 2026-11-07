@@ -614,6 +614,8 @@ describe('original question retrospective',()=>{
     expect(screen.getByRole('combobox',{name:'历史问题分类'})).toHaveValue('全部')
     fireEvent.click(screen.getByRole('button',{name:'查看旧研究原文'}))
     expect(screen.getByText('这份旧研究有更正')).toBeVisible()
+    expect(screen.getByText(/内容曾作更正/)).toBeVisible()
+    expect(screen.queryByText(/旧研究题目含已撤回前提/)).not.toBeInTheDocument()
     expect(screen.getByText('这是已撤回的旧研究断言。')).not.toBeVisible()
     expect(screen.queryByText('后续走势已对照；这条原回答的事实与推理仍待逐项复核。')).not.toBeInTheDocument()
     const oldText=screen.getByText('展开旧研究原文（含已更正内容）').closest('details')!

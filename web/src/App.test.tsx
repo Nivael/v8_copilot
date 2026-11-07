@@ -41,7 +41,7 @@ describe('App',()=>{
     render(<MemoryRouter initialEntries={['/legacy?symbol=000033']}><App/></MemoryRouter>)
     const composer=await screen.findByRole('textbox',{name:'研究问题'})
     fireEvent.change(composer,{target:{value:'最近股价和换手率怎样？'}})
-    fireEvent.click(screen.getByRole('button',{name:'提交',exact:true}))
+    fireEvent.click(screen.getByRole('button',{name:'提交'}))
 
     expect(await screen.findByText(answer)).toBeInTheDocument()
     expect(screen.getByRole('textbox',{name:'研究问题'})).toHaveValue('最近股价和换手率怎样？')

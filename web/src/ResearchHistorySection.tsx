@@ -26,6 +26,7 @@ function responseNote(question:HistoryQuestion){
   if(question.answers.length)return null
   if(question.original_response_state?.status==='plan_only')return '当时只形成了研究计划，没有完成报告。'
   if(question.original_response_state?.status==='research_stopped')return '当时的研究已停止，没有形成完整报告。'
+  if(question.original_response_state?.status==='response_stopped')return '当时已停止，没有留下独立回答。'
   return null
 }
 

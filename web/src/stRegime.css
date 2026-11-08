@@ -25,3 +25,4 @@
 .regime-label-changes{margin:28px 0;padding:24px 0;border-block:1px solid #d8ddd7;scroll-margin-top:84px}.regime-label-changes>p{max-width:850px}.regime-label-changes .regime-table small{white-space:normal;max-width:220px}.regime-label-changes summary{cursor:pointer;color:#3e665b}.regime-dividend-basis{margin:20px 0;padding:12px 0;border-block:1px solid #d8ddd7}
 
 .regime-membership-audit{border-top:1px solid var(--reading-line,#d9dfda);margin-top:2rem;padding-top:1.5rem;scroll-margin-top:84px}.regime-membership-audit>details{padding:.8rem 0;border-bottom:1px solid var(--reading-line,#d9dfda)}.regime-membership-audit small{display:block;overflow-wrap:anywhere}
+.regime-endpoint-audit{border-top:1px solid var(--reading-line,#d9dfda);margin-top:2rem;padding-top:1.5rem;scroll-margin-top:84px}

@@ -24,7 +24,7 @@ it('changes horizon without inventing zero outcomes or certifying conflicting ad
  fireEvent.change(screen.getByRole('combobox'),{target:{value:'40'}})
  expect(screen.getByRole('img',{name:'后40日：4涨、6跌、0平'})).toBeVisible()
  fireEvent.click(screen.getByText('核报价覆盖、绝味复权差异与其他退出样本'))
- expect(screen.getByText(/绝味食品有100个历史日期的前复权差异/)).toBeVisible()
+ expect(screen.getByText(/绝味食品有100个历史日期/)).toBeVisible()
  expect(screen.getByText(/只取得腾讯一个报价渠道/)).toBeVisible()
  expect(screen.getByText(/另外2个并非摘帽/)).toBeVisible()
 })

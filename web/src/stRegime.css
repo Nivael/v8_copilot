@@ -21,3 +21,5 @@
 .regime-stock-price-check{margin:28px 0;padding:24px 0;border-block:1px solid #d8ddd7}.regime-stock-price-check>p{max-width:850px}.regime-stock-price-check details>summary{cursor:pointer;color:#3e665b}.regime-stock-price-check label{display:flex;gap:12px;align-items:center;margin:20px 0}.regime-price-window{margin:22px 0}.regime-price-window h5{font-size:15px;margin:12px 0}.regime-stock-price-check .regime-table small{white-space:normal;max-width:230px}
 
 .regime-halt-explanation{margin:20px 0;padding:16px 0;border-block:1px solid #d8ddd7}.regime-halt-explanation h5{font-size:16px;margin:8px 0}.regime-halt-explanation details>div{margin:18px 0}
+
+.regime-label-changes{margin:28px 0;padding:24px 0;border-block:1px solid #d8ddd7;scroll-margin-top:84px}.regime-label-changes>p{max-width:850px}.regime-label-changes .regime-table small{white-space:normal;max-width:220px}.regime-label-changes summary{cursor:pointer;color:#3e665b}.regime-dividend-basis{margin:20px 0;padding:12px 0;border-block:1px solid #d8ddd7}

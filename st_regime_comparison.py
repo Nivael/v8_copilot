@@ -381,6 +381,7 @@ def publish(inputs, *, root=ROOT):
                'themes_processor_sha256': sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest(),
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
+               'halt_price_processor_sha256': sha256(Path(__file__).with_name('st_halt_price_crosscheck.py').read_bytes()).hexdigest(),
                'halt_stages_processor_sha256': sha256(Path(__file__).with_name('st_halt_stages.py').read_bytes()).hexdigest(),
                'membership_audit_processor_sha256': sha256(Path(__file__).with_name('st_membership_audit.py').read_bytes()).hexdigest(),
                'label_processor_sha256': sha256(Path(__file__).with_name('st_label_changes.py').read_bytes()).hexdigest(),
@@ -402,6 +403,7 @@ def load(root=ROOT):
                 or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
+                or value.get('halt_price_processor_sha256')!=sha256(Path(__file__).with_name('st_halt_price_crosscheck.py').read_bytes()).hexdigest()
                 or value.get('halt_stages_processor_sha256')!=sha256(Path(__file__).with_name('st_halt_stages.py').read_bytes()).hexdigest()
                 or value.get('membership_audit_processor_sha256')!=sha256(Path(__file__).with_name('st_membership_audit.py').read_bytes()).hexdigest()
                 or value.get('label_processor_sha256')!=sha256(Path(__file__).with_name('st_label_changes.py').read_bytes()).hexdigest()

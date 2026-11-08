@@ -30,7 +30,7 @@ describe('trader capital and rebound views',()=>{
     const cases=[['603398.SH','*ST沐邦'],['600363.SH','ST联光'],['002667.SZ','*ST威领'],['688053.SH','ST思科瑞']].map(([symbol,name])=>({...learningReading.cases[0],symbol,name,last_close:6.34,latest_quote:{as_of:'2026-11-05',close:6.34,day_change_pct:4.1,five_day_change_pct:3.59,twenty_day_change_pct:-18.5,stage:'early_repair'},current_observation:note}))
     vi.spyOn(globalThis,'fetch').mockImplementation(async input=>new Response(JSON.stringify(String(input).includes('/swing')?{availability:'warming',refresh:{in_progress:false,last_error:null}}:{availability:'available',as_of:'2026-11-05',data:{...learningReading,cases},refresh:{in_progress:false,last_error:null}})))
     render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
-    expect(await screen.findByText('价格截至 2026-11-05')).toBeVisible()
+    expect(await screen.findByText('个股跟踪价格截至 2026-11-05')).toBeVisible()
     const watch=screen.getByRole('group',{name:'持续跟踪个股'})
     expect(within(watch).getAllByRole('button')).toHaveLength(4)
     fireEvent.click(within(watch).getByRole('button',{name:/ST思科瑞/}))

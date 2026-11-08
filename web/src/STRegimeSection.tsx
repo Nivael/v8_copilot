@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react'
 import {ReadingChart} from './ReadingChart'
+import {STRegimeArticle} from './STRegimeArticle'
 import type {ReadingSeries} from './readingTypes'
 import type {RegimeComparison,RegimeFixed,RegimePeriod,STRegimeData} from './stRegimeTypes'
 import './stRegime.css'
@@ -50,6 +51,7 @@ export function STRegimeSection(){
   const [view,setView]=useState('规则前后')
   const [chartScope,setChartScope]=useState('after')
   const [ruleSelected,setRuleSelected]=useState(false)
+  const [evidenceOpen,setEvidenceOpen]=useState(false)
   useEffect(()=>{
     const controller=new AbortController()
     async function read(){
@@ -78,10 +80,12 @@ export function STRegimeSection(){
     series=([['st','主板ST等权参考'],['market','中证全指'],['small','中证2000']] as const).map(([key,name])=>({key,name,points:path.map(row=>({date:row.date,value:row[key],level:row[key]/path[0][key]*100})),change_pct:(path.at(-1)![key]/path[0][key]-1)*100}))
   }
   return <section id="st-cross-section" className="regime-section" aria-label="ST横向制度复盘">
-    <header className="regime-head"><div><p className="reading-kicker">横向看整批 · 规则变化 × 大盘环境 × 个股分化</p><h2>5%改10%以后，ST变了什么？</h2></div><button type="button" disabled={busy} onClick={()=>setRequest(n=>n+1)}>{busy?'读取中…':'重读已核快照'}</button></header>
+    <header className="regime-head"><div><p className="reading-kicker">研究报道</p><h2>横向看ST</h2></div><button type="button" disabled={busy} onClick={()=>setRequest(n=>n+1)}>{busy?'读取中…':'重读已核快照'}</button></header>
     {error&&<p role="alert">{error}。已有个股复盘仍可在下方查看。</p>}
     {!data&&!error&&<p role="status">正在读取整批ST的同窗比较…</p>}
     {data&&comparison&&after&&before&&fixed&&<>
+      <STRegimeArticle data={data} comparison={comparison} onEvidence={nextView=>{setView(nextView);setEvidenceOpen(true)}} chart={<figure className="regime-story-figure"><figcaption><strong>这段行情，放回市场里看</strong><span>{comparison.after.start} — {comparison.after.through}，从前一交易日收盘起算</span></figcaption><ReadingChart key={`story-${windowKey}`} series={(['st','market','small'] as const).map((key,index)=>{const start=data.daily.find(row=>row.date===comparison.after.start)?.anchor;const path=data.path.filter(row=>start!=null&&row.date>=start&&row.date<=comparison.after.through);return {key,name:['主板ST等权参考','中证全指','中证2000'][index],points:path.map(row=>({date:row.date,value:row[key],level:row[key]/path[0][key]*100})),change_pct:(path.at(-1)![key]/path[0][key]-1)*100}})} label="报道中的ST与市场同期走势"/><p className="reading-caption">三线从同一天归零，比较路径；ST线是每日在场股票的等权参考，不是固定持仓回报。</p></figure>}/>
+      <details id="st-evidence" className="regime-evidence" open={evidenceOpen} onToggle={event=>setEvidenceOpen(event.currentTarget.open)}><summary><span>数据、图表与全部样本</span><small>切换观察窗口，核对计算与原始来源</small></summary>
       <p className="regime-boundary"><strong>完整横截面截至 {data.through}</strong> · 7月6日生效；主板A股ST/*ST；创业板、科创板及北交所不混入。9月之后尚待补齐。</p>
       <div className="regime-controls"><div className="regime-tabs" role="group" aria-label="横向复盘视角">{['规则前后','大盘联动','整批个股'].map(label=><button key={label} aria-pressed={view===label} onClick={()=>setView(label)}>{label}</button>)}</div><label>比较窗口<select aria-label="ST前后比较窗口" value={windowKey} onChange={e=>setWindowKey(e.target.value)}>{windows.map(key=>{const option=data.comparisons.find(c=>c.key===key);return option?<option key={key} value={key}>{option.label}</option>:null})}</select></label></div>
       <div className="regime-verdict"><h3>{(after.reference_change_pct??0)<-2?'整体参考下跌，放宽限制没有带来普涨':Math.abs(after.reference_change_pct??0)<=2?'整体接近持平，个股涨跌仍明显分化':'整体参考上涨，仍需核对上涨覆盖面'}</h3><p>规则后 {after.days} 个交易日，ST等权参考 {pct(after.reference_change_pct)}，中证全指 {pct(after.market_change_pct)}。7月3日固定名单中，有端点的 {fixed.covered}/{fixed.total} 只，收益中位数 {pct(fixed.median_pct)}；{number(fixed.positive_pct,1)}% 上涨。</p>{windowKey==='all'&&<p>本项前窗40日、后窗{after.days}日，时长不同；精确前后比较请切换20日或40日。</p>}</div>
@@ -101,8 +105,9 @@ export function STRegimeSection(){
         <div className="regime-distribution-layout"><div><h3>固定7月3日的{fixed.total}只，看看谁被平均数遮住</h3><p>规则后端点分布：P10 {pct(fixed.p10_pct)}，中位数 {pct(fixed.median_pct)}，P90 {pct(fixed.p90_pct)}。{fixed.missing} 只待核，仍保留在表中。</p><p>两边均有完整端点的同一批 {comparison.paired.count} 只：前窗中位数 {pct(comparison.paired.before_median_pct)}，后窗 {pct(comparison.paired.after_median_pct)}。这是覆盖子样本的核对，不能代表全部幸存与退出者。</p></div><Distribution data={fixed}/></div>
         <p className="reading-caption">{fixed.note}</p><StockTable comparison={comparison}/>
       </>}
-      <section className="regime-lessons" aria-label="横向复盘得到的条件经验"><h3>这次能带走的经验</h3><ol><li><strong>看“涨多少”和“多少家在涨”。</strong> 本窗等权参考 {pct(after.reference_change_pct)}，固定名单的上涨比例 {number(fixed.positive_pct,1)}%；风格参考走强并不保证多数个股上涨。固定名单缺价 {fixed.missing} 只时，还不能下全样本结论。</li><li><strong>新规则下重新衡量一次大跌。</strong> 旧5%价格边界被跌破的比例由 {number(before.beyond_old_down_pct)}% 变为 {number(after.beyond_old_down_pct)}%。用精确价格边界和实际幅度比较，避免把两个时代的“一个跌停”当成同样的风险。</li><li><strong>把市场环境和公司事件放在同一张图。</strong> 本窗同日联动有变化，但因果尚未识别。下一次复盘需同时看大盘、小盘风格、公司新公告及上涨/下跌家数；出现反向样本时保留。</li></ol><p className="reading-caption">以上是有条件的研究提示，尚不是经过多次制度事件验证的预测方法。20/40日重叠窗口不当成独立验证。</p></section>
+
       <details className="regime-audit"><summary>名单、分母、来源和更新限制</summary><p>7月3日主板名单 {data.universe.anchor_members} 只，期末 {data.universe.endpoint_members} 只，整个覆盖期曾入选 {data.universe.distinct_main_board_members} 只。期末相较7月3日新增 {data.universe.entrants.length} 只、移出 {data.universe.exits.length} 只；移出原因尚未逐一核验。</p><p>前窗 {before.trading_observations}/{before.member_observations} 个成员日有成交，停牌 {before.suspended_observations}；后窗 {after.trading_observations}/{after.member_observations} 个成员日有成交，停牌 {after.suspended_observations}。未解析缺失：前 {before.missing_observations}、后 {after.missing_observations}；不是把停牌当平盘。</p><ul>{data.limitations.map(note=><li key={note}>{note}</li>)}</ul><div className="regime-source-links">{data.sources.map(source=><a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}</div><p className="reading-caption">生成于 {new Date(data.generated_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}；数据标识 {data.content_digest.slice(0,12)}。重读快照不会采集新行情；新数据需核验、重算后发布。</p></details>
+      </details>
     </>}
   </section>
 }

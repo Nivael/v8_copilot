@@ -68,3 +68,11 @@ def test_frozen_fact_binding_deduplicates_questions_and_preserves_date_conflict(
     assert len(events)==1 and events[0]['alternate_published_on']=='2026-07-06'
     catalog['through']='2026-09-03';catalog['content_digest']=digest({k:v for k,v in catalog.items() if k!='content_digest'})
     with pytest.raises(ValueError,match='window'):bind({'through':'2026-11-06'},{'002514':catalog},history)
+
+
+def test_event_windows_do_not_turn_zero_volume_reference_snapshots_into_flat_returns():
+    inputs={'calendar':['2026-09-03','2026-09-04'],'fixed_prices':[{'symbol':'000016','trade_date':'2026-09-03','close':2.46,'has_trade':True},{'symbol':'000016','trade_date':'2026-09-04','close':2.46,'has_trade':False}]}
+    daily=[{'date':'2026-09-04','return_pct':1.,'market_pct':2.}]
+    value=event_context({'published_on':'2026-09-03'},'000016',inputs,daily)['windows']['1']
+    assert value['stock_pct'] is None and '停牌日参考值' in value['gap']
+    assert value['market_pct']==pytest.approx(2.)

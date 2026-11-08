@@ -1,0 +1,6 @@
+import type {RegimeSampleIntegrity} from './stRegimeTypes'
+const price=(value:number|null)=>value==null?'没有交易收盘价':`${value.toFixed(2)}元`
+export function STSampleIntegrity({data,total,covered}:{data:RegimeSampleIntegrity|null|undefined;total:number;covered:number}){
+ if(!data)return null
+ return <section id="st-sample-integrity" className="regime-sample-integrity" aria-label="固定样本缺口原因"><h3>为什么这些股票不能同窗计算？</h3><p>缺口原因已核，不等于价格可以补齐。这些公司继续留在{total}只名单里，统计仍是{covered}只有可用端点。</p>{data.cases.map(c=><section key={c.symbol} className="regime-sample-case"><h4>{c.title}</h4><p>{c.explanation}</p><dl><div><dt>7月3日起点</dt><dd>{price(c.anchor.close)}</dd></div><div><dt>{c.endpoint.date}期末</dt><dd>{price(c.endpoint.close)}</dd></div><div><dt>最后实际交易报价</dt><dd>{c.last_trade.date} · {price(c.last_trade.close)}</dd></div></dl><p className="reading-caption">{c.boundary}</p><details><summary>沿公告核对状态与原件</summary><ol>{c.facts.map((f,index)=><li key={`${f.source.sha256}-${index}`}><strong>{f.published_on}披露</strong><p>{f.text}</p><a href={f.source.url} target="_blank" rel="noreferrer">{f.source.title} · 第{f.source.page}页 ↗</a></li>)}</ol><p className="reading-caption">本轮腾讯与东方财富有报价的{c.matched_trade_dates}个日期，收盘互相一致，且与提供方前复权报价重合日一致。提供方另有停牌日参考值，不能据此认定当日发生交易。</p></details></section>)}<p className="reading-caption">{data.boundary}</p></section>
+}

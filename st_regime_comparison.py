@@ -18,6 +18,7 @@ from pathlib import Path
 import sqlite3
 from statistics import mean, median, pstdev
 
+from st_sample_integrity import load_integrity, fixed_gap_note
 from canonical_json import digest
 from data_refresh import atomic_write_json
 from market_calendar import sessions_2026
@@ -228,6 +229,7 @@ def fixed_observation(inputs, days):
     activities = indexed(inputs['activities'], ('trade_date','symbol'))
     current = {r['symbol'] for r in inputs['members'] if r['trade_date'] == end}
     result = []
+    integrity = load_integrity(inputs)
     for symbol, member in sorted(fixed.items()):
         first, last = prices.get((anchor,symbol)), prices.get((end,symbol))
         missing_days = [r['date'] for r in days if (r['date'],symbol) not in prices]
@@ -242,7 +244,7 @@ def fixed_observation(inputs, days):
         value = None
         reason = None
         if not first or not last:
-            reason = '起止收盘缺价；未填零或沿用最后报价'
+            reason = ('起点与期末均缺参考收盘价' if not first and not last else '起点缺参考收盘价，期末有价' if not first else '起点有价，期末缺参考收盘价') + '；未填零或改用其他日期'
         elif mismatches:
             reason = '前复权价格与逐日涨跌幅不一致，待核复权或公司行动'
         elif not all(finite(p['close']) and p['close']>0 for p in (first,last)):
@@ -254,14 +256,16 @@ def fixed_observation(inputs, days):
                        'still_st_at_end': symbol in current, 'return_pct': value,
                        'market_excess_pp': value-compounded([r['market_pct'] for r in days]) if value is not None else None,
                        'missing_quote_days': len(missing_days), 'consistency_days': checked,
-                       'consistency_mismatches': mismatches, 'gap': reason})
+                       'consistency_mismatches': mismatches, 'gap': reason,
+                       'endpoint_availability': {'anchor_present': first is not None, 'endpoint_present': last is not None},
+                       'sample_note': fixed_gap_note(integrity,symbol,anchor,end)})
     valid = [r['return_pct'] for r in result if r['return_pct'] is not None]
     return {'anchor': anchor, 'through': end, 'total': len(result), 'covered': len(valid),
             'missing': len(result)-len(valid), 'median_pct': median(valid) if valid else None,
             'p10_pct': quantile(valid,.1), 'p90_pct': quantile(valid,.9),
             'positive_pct': sum(x>0 for x in valid)/len(valid)*100 if valid else None,
             'rows': result,
-            'note': '固定7月3日主板ST名单。摘帽者仍保留；缺价者列出，不按零收益。完整端点子样本有选择偏差。规则前窗口用未来7月3日名单，仅作组成敏感性核对。端点前复权价格变化不是实际成交或含分红总收益。'}
+            'note': '固定7月3日主板ST名单。摘帽者仍保留；缺价者列出，不按零收益。完整端点子样本有选择偏差。规则前窗口用未来7月3日名单，仅作组成敏感性核对。端点为提供方前复权参考收盘，停牌日参考值不表示当天有成交；价格变化不是实际成交或含分红总收益。'}
 
 
 def build(inputs):
@@ -350,6 +354,7 @@ def publish(inputs, *, root=ROOT):
     payload = {**data, 'generated_at': datetime.now(timezone.utc).isoformat(), 'source_asset': source,
                'processor_sha256': sha256(Path(__file__).read_bytes()).hexdigest(),
                'themes_processor_sha256': sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest(),
+               'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'source_tables': inputs['source_tables']}
     payload['content_digest'] = digest(payload)
     atomic_write_json(root/'snapshots'/(payload['content_digest']+'.json'),payload)
@@ -362,7 +367,8 @@ def load(root=ROOT):
         value = json.loads((root/'current.json').read_text())
         if (value['version']!=VERSION or digest({k:v for k,v in value.items() if k!='content_digest'})!=value['content_digest']
                 or value['processor_sha256']!=sha256(Path(__file__).read_bytes()).hexdigest()
-                or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()):
+                or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()
+                or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()):
             raise ValueError('snapshot or processor binding changed')
         source = value['source_asset']
         if not source.startswith('inputs-') or not source.endswith('.json.gz') or Path(source).name != source:

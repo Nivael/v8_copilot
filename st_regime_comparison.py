@@ -382,6 +382,7 @@ def publish(inputs, *, root=ROOT):
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
+               'case_price_processor_sha256':sha256(Path(__file__).with_name('st_case_price_crosscheck.py').read_bytes()).hexdigest(),
                'halt_price_processor_sha256': sha256(Path(__file__).with_name('st_halt_price_crosscheck.py').read_bytes()).hexdigest(),
                'halt_stages_processor_sha256': sha256(Path(__file__).with_name('st_halt_stages.py').read_bytes()).hexdigest(),
                'membership_audit_processor_sha256': sha256(Path(__file__).with_name('st_membership_audit.py').read_bytes()).hexdigest(),
@@ -405,6 +406,7 @@ def load(root=ROOT):
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()
+                or value.get('case_price_processor_sha256')!=sha256(Path(__file__).with_name('st_case_price_crosscheck.py').read_bytes()).hexdigest()
                 or value.get('halt_price_processor_sha256')!=sha256(Path(__file__).with_name('st_halt_price_crosscheck.py').read_bytes()).hexdigest()
                 or value.get('halt_stages_processor_sha256')!=sha256(Path(__file__).with_name('st_halt_stages.py').read_bytes()).hexdigest()
                 or value.get('membership_audit_processor_sha256')!=sha256(Path(__file__).with_name('st_membership_audit.py').read_bytes()).hexdigest()

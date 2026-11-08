@@ -40,4 +40,4 @@ def member_transition_view(inputs):
     counts=Counter(r['status'] for r in output)
     return {'anchor':anchor,'through':end,'rows':output,'counts':dict(counts),'total':len(output),
             'matching_boundaries':sum(r['effective_matches_membership'] for r in output),
-            'boundary':'只核固定7月3日名单至期末的14个移出边界。撤销风险警示不等于全部经营、诉讼或监管风险消失；并未认证全部逐日成员及新增公司的原因。'}
+            'boundary':'只核固定7月3日名单至期末的14个移出边界。撤销风险警示不等于全部经营、诉讼或监管风险消失；全部逐日成员仍需扩大独立核对。'+('新增边界另见新增公司明细。' if inputs.get('member_entries') else '新增公司的原因尚未在本表认证。')}

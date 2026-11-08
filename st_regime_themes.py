@@ -5,6 +5,7 @@ from statistics import mean
 from canonical_json import digest
 from st_sample_integrity import load_integrity
 from st_member_transitions import member_transition_view
+from st_member_entries import member_entry_view
 
 
 def compound(rows, field):
@@ -47,7 +48,7 @@ def build_themes(inputs, daily):
                        'positive_breadth_pct':mean(r['positive_pct'] for r in rows)})
     extreme = sorted(sorted(after,key=lambda r:abs(r['market_pct']),reverse=True)[:8],key=lambda r:r['date'])
     integrity=load_integrity(inputs)
-    result = {'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
+    result = {'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
     packet = inputs.get('announcement_study')
     if not packet:
         return result

@@ -356,6 +356,7 @@ def publish(inputs, *, root=ROOT):
                'themes_processor_sha256': sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest(),
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
+               'entry_processor_sha256': sha256(Path(__file__).with_name('st_member_entries.py').read_bytes()).hexdigest(),
                'source_tables': inputs['source_tables']}
     payload['content_digest'] = digest(payload)
     atomic_write_json(root/'snapshots'/(payload['content_digest']+'.json'),payload)
@@ -370,7 +371,8 @@ def load(root=ROOT):
                 or value['processor_sha256']!=sha256(Path(__file__).read_bytes()).hexdigest()
                 or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
-                or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()):
+                or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
+                or value.get('entry_processor_sha256')!=sha256(Path(__file__).with_name('st_member_entries.py').read_bytes()).hexdigest()):
             raise ValueError('snapshot or processor binding changed')
         source = value['source_asset']
         if not source.startswith('inputs-') or not source.endswith('.json.gz') or Path(source).name != source:

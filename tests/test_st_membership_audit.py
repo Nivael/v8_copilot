@@ -41,3 +41,17 @@ def test_conflicting_code_or_name_is_exposed_not_certified():
  i=fixture();i['official_membership_audit']['list_sources'][1]=sz(2,[('002001','ST乙')]);reseal(i);x=membership_audit_view(i);assert x['venues'][0]['status']=='dated_conflict';assert x['venues'][0]['name_differences']==[{'symbol':'002001','official':'ST乙','provider':'*ST乙'}];assert x['targets'][1]['directly_verified_count']==0
 
 def test_optional_for_old_callers():assert membership_audit_view({}) is None
+
+def anchor_fixture():
+ i=fixture();i['calendar']=['2026-07-03'];i['fixed_prices']=[]
+ c={'symbol':'600001','name':'ST丙','anchor':'2026-07-03','status_disclosed_on':'2026-07-03','scope_digest':digest({k:i[k] for k in ('calendar','through','fixed_prices','members')}),'released_accounts':[{'amount_yuan':'1.01'},{'amount_yuan':'2.02'}],'released_total_yuan':'3.03','facts':[{'published_on':'2026-07-03','document_dated_on':'2026-07-02','source':{'sha256':'source','url':'https://example.test','page':1,'title':'issuer'}}]};i['official_membership_audit']['issuer_checks']=[c];reseal(i);return i
+
+def test_issuer_anchor_evidence_does_not_certify_full_list_or_mutate_source():
+ i=anchor_fixture();x=membership_audit_view(i);assert x['issuer_checks'][0]['name']=='ST丙';assert x['targets'][0]['directly_verified_count']==0;x['issuer_checks'][0]['events']=[];assert 'events' not in i['official_membership_audit']['issuer_checks'][0]
+
+def test_issuer_anchor_rejects_amount_name_date_and_scope_conflicts():
+ for field,value,match in [('released_total_yuan','3.04','total'),('name','*ST丙','name'),('status_disclosed_on','2026-07-04','anchor'),('scope_digest','changed','scope')]:
+  i=anchor_fixture();i['official_membership_audit']['issuer_checks'][0][field]=value;reseal(i)
+  with pytest.raises(ValueError,match=match):membership_audit_view(i)
+ i=anchor_fixture();i['official_membership_audit']['issuer_checks'][0]['facts'][0]['published_on']='2026-07-04';reseal(i)
+ with pytest.raises(ValueError,match='timely'):membership_audit_view(i)

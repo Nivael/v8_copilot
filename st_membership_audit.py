@@ -50,4 +50,17 @@ def membership_audit_view(inputs):
         members=[r for r in inputs['members'] if r['trade_date']==date and is_main(r['symbol'])]
         verified=sum(r['main_board_count'] for r in output if r['as_of']==date and r['status']=='dated_match')
         dates.append({'date':date,'provider_count':len(members),'directly_verified_count':verified,'not_directly_verified_count':len(members)-verified})
-    return {'through':inputs['through'],'targets':dates,'venues':output,'official_scope_sources':p['official_scope_sources'],'answer':'；'.join(('深市' if r['venue']=='SZ' else '沪市')+('期末官方名单有明确日期，代码与简称一致' if r['status']=='dated_match' else '有日期的官方名单存在差异，需先复核' if r['status']=='dated_conflict' else '当前列表'+('代码与简称相符' if r['same_codes_and_names'] else '存在差异')+'，但没有目标日的明确适用日期') for r in output)+'。期初名单仍缺直接官方名录。','boundary':'只认证明确日期、完整翻页且范围一致的名录。无日期当前列表不倒填历史；已核进出或改名边界不等于初始全名单与全部每日成员获独立认证。风险警示板还包括退市整理；本研究按主板A股ST/*ST范围比较，B股、创业板、科创板和北交所不混入。'}
+    return {'issuer_checks':issuer_checks(inputs,p),'through':inputs['through'],'targets':dates,'venues':output,'official_scope_sources':p['official_scope_sources'],'answer':'；'.join(('深市' if r['venue']=='SZ' else '沪市')+('期末官方名单有明确日期，代码与简称一致' if r['status']=='dated_match' else '有日期的官方名单存在差异，需先复核' if r['status']=='dated_conflict' else '当前列表'+('代码与简称相符' if r['same_codes_and_names'] else '存在差异')+'，但没有目标日的明确适用日期') for r in output)+'。期初名单仍缺直接官方名录。','boundary':'只认证明确日期、完整翻页且范围一致的名录。无日期当前列表不倒填历史；已核进出或改名边界不等于初始全名单与全部每日成员获独立认证。风险警示板还包括退市整理；本研究按主板A股ST/*ST范围比较，B股、创业板、科创板和北交所不混入。'}
+
+def issuer_checks(inputs, packet):
+    from decimal import Decimal
+    checks=packet.get('issuer_checks',[])
+    for c in checks:
+        if c['scope_digest']!=digest({k:inputs[k] for k in ('calendar','through','fixed_prices','members')}):raise ValueError('issuer anchor price/member scope changed')
+        members=[r for r in inputs['members'] if r['trade_date']==c['anchor'] and r['symbol']==c['symbol']]
+        if len(members)!=1 or re.sub(r'\s+','',members[0]['name'])!=re.sub(r'\s+','',c['name']):raise ValueError('issuer anchor name conflicts with provider')
+        if c['anchor']!=packet['target_dates'][0] or c['status_disclosed_on']!=c['anchor']:raise ValueError('issuer status not disclosed at anchor')
+        if sum(Decimal(x['amount_yuan']) for x in c['released_accounts'])!=Decimal(c['released_total_yuan']):raise ValueError('released account total conflicts')
+        for f in c['facts']:
+            if f['published_on']>c['anchor'] or f['document_dated_on']>f['published_on'] or not all(f['source'].get(k) for k in ('sha256','url','title','page')):raise ValueError('issuer anchor source is not timely')
+    return [dict(c) for c in checks]

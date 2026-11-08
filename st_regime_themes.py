@@ -92,7 +92,7 @@ def build_themes(inputs, daily):
         'companies':len(catalogs),'catalog_rows':sum(len(c['rows']) for c in catalogs.values()),
         'catalog_pages':sum(len(c['source_refs']) for c in catalogs.values()),
         'verified_events':events,'raw_fact_records':len(packet['verified_events']),'deduplicated_event_count':len(events),'coalesced_records':len(packet['verified_events'])-len(events),'event_grouping_basis':'same_symbol_event_id_source_dates_entity_and_kind','verified_companies':len({e['symbol'] for e in events}),
-        'verified_documents':len({(e['symbol'],e['source']['sha256']) for e in events}),
+        'verified_documents':len({(e['symbol'],s['sha256']) for e in events for s in [e['source'],*e.get('supporting_sources',[])]}),
         'catalog_by_month':dict(sorted(Counter(r['announcement_date'][:7] for c in catalogs.values() for r in c['rows']).items())),
         'history_digest':packet['history_digest'],'source_packet_digest':packet['content_digest'],
         'body_reads_this_refresh':packet.get('body_reads_this_refresh',0),

@@ -153,7 +153,7 @@ def assemble(cache,calendar,baseline):
    if factor is None or not finite(factor.get('adj_factor')) or factor['adj_factor']<=0:
     quote_gaps.append({'symbol':code,'date':day,'gap':'raw price without adjustment factor'});continue
    if not finite(raw.get('close')) or raw['close']<=0:continue
-   prices.append({'symbol':code[:6],'trade_date':day,'close':raw['close']*factor['adj_factor']/latest,'source':'tushare:daily+adj_factor:qfq','fetched_at':next(r['fetched_at'] for r in refs if r['query']['api_name']=='daily' and r['query']['params']['trade_date']==day.replace('-',''))})
+   prices.append({'symbol':code[:6],'trade_date':day,'close':raw['close']*factor['adj_factor']/latest,'has_trade':finite(raw.get('vol')) and raw['vol']>0,'raw_volume':raw.get('vol'),'source':'tushare:daily+adj_factor:qfq','fetched_at':next(r['fetched_at'] for r in refs if r['query']['api_name']=='daily' and r['query']['params']['trade_date']==day.replace('-',''))})
  benchmarks=[]
  for key,code in [('csi_all_share','000985.CSI'),('csi_2000','932000.CSI')]:
   rows,ref=cache.query('index_daily',{'ts_code':code,'start_date':calendar[0].replace('-',''),'end_date':calendar[-1].replace('-','')});refs.append(ref)
@@ -165,7 +165,7 @@ def assemble(cache,calendar,baseline):
   if prior and any(prior.get(k)!=r.get(k) for k in ('pct_chg','suspension_status','terminal_phase_status')):
    differences.append({'date':r['trade_date'],'symbol':r['symbol'],'before':{k:prior.get(k) for k in ('pct_chg','suspension_status','terminal_phase_status')},'after':{k:r.get(k) for k in ('pct_chg','suspension_status','terminal_phase_status')},'traded_despite_event':r['traded_despite_suspension_event']})
  normalized={'version':VERSION,'through':calendar[-1],'calendar':calendar,'members':members,'activities':activities,'benchmarks':benchmarks,'fixed_prices':prices,'activity_snapshots':[],
-  'source_tables':baseline['source_tables'],'refresh_provenance':{'version':ACQUISITION_VERSION,'through':calendar[-1],'provider_url':cache.url,'fetched_on':datetime.now(timezone.utc).isoformat(),
+  'source_tables':[{'kind':'frozen_provider_responses','version':ACQUISITION_VERSION,'responses':len(refs),'provenance_field':'refresh_provenance.original_source_refs'}],'refresh_provenance':{'version':ACQUISITION_VERSION,'through':calendar[-1],'provider_url':cache.url,'fetched_on':datetime.now(timezone.utc).isoformat(),
    'original_source_refs':refs,'day_coverage':day_proof,'fixed_quote_gaps':quote_gaps,'price_universe':'fixed_July3_plus_all_post_rule_members','price_symbols':price_symbols,'acquisition_code_sha256':sha256(Path(__file__).read_bytes()).hexdigest(),'prior_input_digest':digest(baseline),'prior_activity_differences':differences,
    'normalization_note':'Positive-volume daily quotes establish trading even on resume/intraday suspension-event dates; missing quotes require explicit full-day S evidence. Daily turnover was not acquired and is null.'}}
  return normalized

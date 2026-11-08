@@ -11,7 +11,7 @@ def _scoped_price_check_view(i,daily,*,packet_key,subjects,boundary,allow_partia
  if p is None:return None
  if p['content_digest']!=digest({k:v for k,v in p.items() if k!='content_digest'}) or p['scope_digest']!=scope_digest(i):raise ValueError('halt quote source/scope changed')
  original=p['original_prices'];cal=i['calendar'];end=i['through']
- if original['calendar']!=cal or original['through']!=end or {r['symbol'] for r in original['companies']}!=set(subjects) or len(original['companies'])!=2:raise ValueError('halt quote subjects/calendar changed')
+ if original['calendar']!=cal or original['through']!=end or {r['symbol'] for r in original['companies']}!=set(subjects) or len(original['companies'])!=len(subjects):raise ValueError('halt quote subjects/calendar changed')
  output=[]
  for c in original['companies']:
   s=c['symbol'];base={r['date']:r for r in c['rows']}

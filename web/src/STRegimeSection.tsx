@@ -3,6 +3,7 @@ import {ReadingChart} from './ReadingChart'
 import {STRegimeThemes} from './STRegimeThemes'
 import {STSampleIntegrity} from './STSampleIntegrity'
 import {STMemberTransitions} from './STMemberTransitions'
+import {STIndexCrosscheck} from './STIndexCrosscheck'
 import {STMemberEntries} from './STMemberEntries'
 import type {ReadingSeries} from './readingTypes'
 import type {RegimeComparison,RegimeFixed,RegimePeriod,STRegimeData} from './stRegimeTypes'
@@ -101,6 +102,7 @@ export function STRegimeSection(){
         <p className="reading-caption">“日波动”是ST等权参考日收益的总体标准差。“上涨占比”先逐日计算、再按日平均；突破旧边界以证券—交易日为分母，按前收盘价与分币舍入逐条判断，不是涨跌停统计。每日P90−P10衡量横向分化，与整批路径波动不同。</p>
       </>}
       {view==='大盘联动'&&<>
+        <STIndexCrosscheck data={data.themes?.index_crosscheck}/>
         <div className="regime-market-layout"><div><h3>{Math.abs(after.relation.correlation??0)>Math.abs(before.relation.correlation??0)?'规则后，本窗ST与大盘同日联动更强':'本窗前后联动不同，保留反向与弱联动日'}</h3><p>本窗口相关系数由 {number(before.relation.correlation)} 变为 {number(after.relation.correlation)}。这是同日联动描述；不能据此把跌幅分摊给大盘，或把变化归因于规则。</p><p>大盘下跌日，规则后ST平均 {pct(after.conditions.find(c=>c.key==='down')?.st_mean_pct)}；其中跌超1%的日子只有 {after.conditions.find(c=>c.key==='stress')?.days} 天，样本有限。</p><p className="reading-caption">中证2000同时保留在主图，帮助识别小盘风格。上市公司事件、成员变化和市场环境仍可能共同作用。</p></div><Scatter data={data} comparison={comparison}/></div>
         <div className="regime-scroll" role="region" aria-label="不同大盘环境下的ST表现" tabIndex={0}><table className="regime-table"><thead><tr><th scope="col">市场环境</th><th scope="col">时期</th><th scope="col">天数</th><th scope="col">大盘日均</th><th scope="col">ST日均</th><th scope="col">每日上涨占比均值</th></tr></thead><tbody>{before.conditions.flatMap((condition,index)=>[before,after].map((period,phase)=>{const c=period.conditions[index];return <tr key={`${condition.key}-${phase}`}><th scope="row">{condition.label}</th><td>{phase===0?'规则前':'规则后'}</td><td>{c.days}</td><td>{pct(c.market_mean_pct)}</td><td>{pct(c.st_mean_pct)}</td><td>{pct(c.positive_breadth_pct)}</td></tr>}))}</tbody></table></div>
       </>}

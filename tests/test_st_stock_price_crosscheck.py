@@ -99,3 +99,34 @@ def test_learning_api_keeps_original_quote_and_adds_only_bound_display_note(monk
     monkeypatch.setattr(api_module,'get_reading_view',lambda *a,**kw:{'availability':'warming'})
     monkeypatch.setattr(st_regime_comparison,'load',lambda:pytest.fail('must not load while warming'))
     assert api_module.get_learning_reading()=={'availability':'warming'}
+
+
+def halt_fixture():
+    i,d=fixture();r=next(c for c in i['stock_price_crosscheck']['original_prices']['companies'] if c['symbol']=='002667');base={r['date']:r for r in r['rows']}
+    row={'symbol':'002667','cause_key':'offer_result_confirmation','start':'2026-09-30','resume':'2026-10-12','halt_disclosed_on':'2026-09-30','resume_disclosed_on':'2026-10-12','facts':[{'published_on':'2026-09-30','source':{'title':'停牌原件','url':'https://example.com/halt.pdf','sha256':'a'*64,'page':1}}]}
+    return i,d,row,base
+
+
+def test_three_market_days_are_one_continuous_halt_with_matching_actual_resumption():
+    from st_stock_price_crosscheck import halt_explanation
+    i,d,row,base=halt_fixture();v=halt_explanation({'halt_explanations':[row]},'002667',i['calendar'],base,i['through'])
+    assert v['market_halt_dates']==['2026-09-30','2026-10-08','2026-10-09'] and v['continuous_episode_count']==1
+    assert v['previous_actual_close_date']=='2026-09-29' and v['first_actual_resume_date']=='2026-10-12' and v['schedule_matches_quotes']
+
+
+def test_halt_quote_conflict_is_visible_without_overwriting_either_schedule_or_quotes():
+    from st_stock_price_crosscheck import halt_explanation
+    i,d,row,base=halt_fixture();base['2026-10-09']['has_trade']=True
+    v=halt_explanation({'halt_explanations':[row]},'002667',i['calendar'],base,i['through'])
+    assert not v['schedule_matches_quotes'] and v['resume']=='2026-10-12' and v['first_actual_resume_date']=='2026-10-09'
+
+
+@pytest.mark.parametrize('change',['future','empty','late_disclosure','unknown_cause'])
+def test_halt_source_and_timing_gates_reject_unsupported_explanations(change):
+    from st_stock_price_crosscheck import halt_explanation
+    i,d,row,base=halt_fixture()
+    if change=='future':row['facts'][0]['published_on']='2026-11-09'
+    elif change=='empty':row['facts']=[]
+    elif change=='late_disclosure':row['halt_disclosed_on']='2026-10-12'
+    else:row['cause_key']='everything_resolved'
+    with pytest.raises(ValueError):halt_explanation({'halt_explanations':[row]},'002667',i['calendar'],base,i['through'])

@@ -76,3 +76,29 @@ def test_event_windows_do_not_turn_zero_volume_reference_snapshots_into_flat_ret
     value=event_context({'published_on':'2026-09-03'},'000016',inputs,daily)['windows']['1']
     assert value['stock_pct'] is None and '停牌日参考值' in value['gap']
     assert value['market_pct']==pytest.approx(2.)
+
+
+def test_same_announcement_episode_has_one_observation_with_two_preserved_views():
+    from copy import deepcopy
+    from st_regime_themes import coalesce_event_records
+    base={'symbol':'002856','id':'investment','published_on':'2026-09-23','occurred_on':'2026-09-22','entity_scope':'issuer','change_kind':'progress','title':'签约','change':'已签约且保证金已缴','interpretation':'后续余款有条件','source':{'sha256':'same-source','page':38,'url':'https://example.com/a.pdf#page=38'}}
+    pricing={**base,'title':'定价','change':'价格受协议约束','interpretation':'不等于二级市场保底','source':{**base['source'],'page':39,'url':'https://example.com/a.pdf#page=39'}}
+    records=[base,pricing];frozen=deepcopy(records);result=coalesce_event_records(records)
+    assert len(result)==1 and result[0]['source_record_count']==2 and len(result[0]['source_records'])==2
+    assert '已签约且保证金已缴' in result[0]['change'] and '价格受协议约束' in result[0]['change']
+    assert {r['source']['page'] for r in result[0]['source_records']}=={38,39} and records==frozen
+    assert coalesce_event_records(list(reversed(records)))==result
+
+
+@pytest.mark.parametrize('field,value',[('symbol','600363'),('published_on','2026-10-12'),('occurred_on','2026-09-23'),('entity_scope','subsidiary'),('change_kind','payment'),('report_period_end','2026-06-30'),('scheduled_for','2026-10-12'),('source','new-source')])
+def test_different_subject_source_stage_or_time_is_not_coalesced(field,value):
+    from st_regime_themes import coalesce_event_records
+    base={'symbol':'002856','id':'investment','published_on':'2026-09-23','occurred_on':'2026-09-22','entity_scope':'issuer','change_kind':'progress','title':'签约','source':{'sha256':'old-source'}}
+    other={**base,field:{'sha256':value} if field=='source' else value}
+    result=coalesce_event_records([base,other]);assert len(result)==2 and len({r['event_key'] for r in result})==2
+
+
+def test_exact_repeated_records_do_not_create_extra_views_or_observations():
+    from st_regime_themes import coalesce_event_records
+    r={'symbol':'002856','id':'investment','published_on':'2026-09-23','title':'签约','change':'已签约','source':{'sha256':'file'}}
+    result=coalesce_event_records([r,r]);assert len(result)==1 and result[0]['source_record_count']==2 and len(result[0]['source_records'])==1

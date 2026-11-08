@@ -34,12 +34,35 @@ def quotes_from_source(source):
     return quotes
 
 
+def halt_explanation(packet,symbol,calendar,base,through):
+    rows=[r for r in packet.get('halt_explanations',[]) if r['symbol']==symbol]
+    if not rows:return None
+    if len(rows)!=1:raise ValueError('duplicate halt explanation')
+    row=rows[0]
+    if not row.get('facts'):raise ValueError('halt explanation lacks primary facts')
+    if row['cause_key'] not in ('offer_result_confirmation','warning_implementation'):raise ValueError('unknown halt cause')
+    start,resume=row['start'],row['resume']
+    if start not in calendar or resume not in calendar or not(start<resume<=through):raise ValueError('halt dates outside verified calendar')
+    if not(row['halt_disclosed_on']<=start and row['resume_disclosed_on']<=resume):raise ValueError('halt/resume disclosure timing invalid')
+    facts=[*row['facts'],*([row['later_verified_event']] if row.get('later_verified_event') else [])]
+    for fact in facts:
+        source=fact['source']
+        if fact['published_on']>through or not all(source.get(k) for k in ('title','url','sha256','page')):raise ValueError('halt fact lacks timely primary source')
+    covered=[d for d in calendar if start<=d<resume]
+    actual_resume=next((d for d in calendar if d>=start and base[d]['has_trade']),None)
+    prior=next((d for d in reversed(calendar) if d<start and base[d]['has_trade']),None)
+    matches=all(not base[d]['has_trade'] for d in covered) and actual_resume==resume
+    return {**row,'market_halt_dates':covered,'market_halt_days':len(covered),'previous_actual_close_date':prior,'first_actual_resume_date':actual_resume,'schedule_matches_quotes':matches,'continuous_episode_count':1}
+
+
 def price_check_view(inputs,daily):
     packet=inputs.get('stock_price_crosscheck')
     if packet is None:return None
     if packet['content_digest']!=digest({k:v for k,v in packet.items() if k!='content_digest'}):raise ValueError('stock price packet changed')
     if packet['price_scope_digest']!=price_scope_digest(inputs):raise ValueError('stock price scope changed')
     calendar=inputs['calendar'];end=inputs['through'];companies=packet['original_prices']['companies']
+    halts=packet.get('halt_explanations',[])
+    if len({r['symbol'] for r in halts})!=len(halts) or not {r['symbol'] for r in halts}<=set(SUBJECTS):raise ValueError('halt research scope changed')
     if packet['original_prices']['calendar']!=calendar or packet['original_prices']['through']!=end:raise ValueError('original quote scope changed')
     if len(companies)!=5 or {c['symbol'] for c in companies}!=set(SUBJECTS):raise ValueError('five research subjects changed')
     result=[];point_count=0
@@ -76,5 +99,5 @@ def price_check_view(inputs,daily):
             windows[label]={'anchor':anchor,'through':end,'market_days':len(selected),'stock_pct':stock,'reference_price_change_pct':(b['qfq_close']/a['qfq_close']-1)*100 if a['qfq_close'] and b['qfq_close'] else None,'market_pct':market,'st_pct':st,'market_excess_pp':stock-market if stock is not None else None,'st_excess_pp':stock-st if stock is not None else None,'checked_returns':verified,'gap':None if actual else '共同日期起点没有实际成交；参考价变化另列，不充当成交端点','alternative_actual_anchor':alternative}
         frozen=[r for r in inputs['fixed_prices'] if r['symbol']==symbol];frozen_conflicts=[r['trade_date'] for r in frozen if (r.get('has_trade') is not base[r['trade_date']]['has_trade']) or r.get('has_trade') is True and (r['trade_date'] not in traded or Decimal(str(r['close'])).quantize(Decimal('.01'),rounding=ROUND_HALF_UP)!=Decimal(str(base[r['trade_date']]['qfq_close'])).quantize(Decimal('.01'),rounding=ROUND_HALF_UP))]
         initial=any(r['symbol']==symbol and r['trade_date']=='2026-07-03' for r in inputs['members']);scope='longitudinal_star' if symbol.startswith('688') else 'fixed_main_board' if initial else 'entrant_main_board'
-        result.append({'symbol':symbol,'name':SUBJECTS[symbol],'scope':scope,'traded_days':len(traded),'calendar_days':len(calendar),'factor_change_dates':[r['date'] for n,r in enumerate(rows) if n and r['adj_factor']!=rows[n-1]['adj_factor']],'raw_qfq_differ_days':sum(r['has_trade'] and r['raw_close']!=r['qfq_close'] for r in rows),'gaps':gaps,'channels':channels,'frozen_price_points':len(frozen),'frozen_price_conflicts':frozen_conflicts,'windows':windows,'all_available_prices_agree':not frozen_conflicts and all(not c['price_differences'] and not c['missing_trade_dates'] and not c['extra_nontrade_dates'] for c in channels)})
+        result.append({'halt_evidence':halt_explanation(packet,symbol,calendar,base,end),'symbol':symbol,'name':SUBJECTS[symbol],'scope':scope,'traded_days':len(traded),'calendar_days':len(calendar),'factor_change_dates':[r['date'] for n,r in enumerate(rows) if n and r['adj_factor']!=rows[n-1]['adj_factor']],'raw_qfq_differ_days':sum(r['has_trade'] and r['raw_close']!=r['qfq_close'] for r in rows),'gaps':gaps,'channels':channels,'frozen_price_points':len(frozen),'frozen_price_conflicts':frozen_conflicts,'windows':windows,'all_available_prices_agree':not frozen_conflicts and all(not c['price_differences'] and not c['missing_trade_dates'] and not c['extra_nontrade_dates'] for c in channels)})
     return {'start':calendar[0],'through':end,'rows':result,'subjects':len(result),'unique_trade_dates':sum(r['traded_days'] for r in result),'quote_points':point_count,'valid_responses':len(packet['sources']),'failed_requests':packet['failed_requests'],'all_available_prices_agree':all(r['all_available_prices_agree'] for r in result),'recent_five_up':sum(r['windows']['5']['stock_pct'] is not None and r['windows']['5']['stock_pct']>0 for r in result),'recent_twenty_down':sum(r['windows']['20']['stock_pct'] is not None and r['windows']['20']['stock_pct']<0 for r in result),'recent_twenty_unavailable':sum(r['windows']['20']['stock_pct'] is None for r in result),'boundary':'本轮仅核5个明确对象，不代表156家公司全量认证。跨报价渠道不证明底层独立；复权因子按11月6日归一，仅作截至本轮的回看口径，不冒充历史当时已知。无成交端点不补零，参考价与另起日期的观察分别标明。价格核对不证明公司程序、财务改善或公告因果。'}

@@ -1,9 +1,10 @@
+import {STCasePriceCheck} from './STCasePriceCheck'
 import {STSubsidiaryCivil} from './STSubsidiaryCivil'
 import {useState} from 'react'
-import type {RegimeCompanyRiskCases} from './stRegimeTypes'
+import type {RegimeCompanyRiskCases,RegimeCasePriceCheck} from './stRegimeTypes'
 const pct=(n:number|null)=>n==null?'端点待核':`${n>0?'+':''}${n.toFixed(2)}%`
 const wan=(n:string)=>(Number(n)/10000).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})
-export function STCompanyRiskCases({data:d}:{data:RegimeCompanyRiskCases|null|undefined}){
+export function STCompanyRiskCases({data:d,priceCheck}:{data:RegimeCompanyRiskCases|null|undefined;priceCheck?:RegimeCasePriceCheck|null}){
  const [period,setPeriod]=useState('5')
  if(!d)return null
  return <section className="regime-company-risk-cases" aria-label="高科与华鹏独立案例对照">
@@ -11,6 +12,7 @@ export function STCompanyRiskCases({data:d}:{data:RegimeCompanyRiskCases|null|un
   <p>两份三季报均为2026年1—9月累计、9月末存量，均未经审计；公开日不同，以下资料均截至{d.through}已披露。财务金额单位万元。</p>
   <div className="regime-scroll"><table className="regime-table"><thead><tr><th>公司</th><th>收入同比</th><th>归母利润 · 累计</th><th>经营现金净额 · 累计</th><th>归母净资产 · 期末</th><th>7月3日至截止股价</th></tr></thead><tbody>{d.comparison.map(c=><tr key={c.symbol}><th>{c.name}</th><td>{Number(c.financial.revenue_yoy_pct)>0?'+':''}{c.financial.revenue_yoy_pct}%</td><td>{wan(c.financial.parent_profit)}</td><td>{wan(c.financial.operating_cash)}</td><td>{wan(c.financial.parent_equity)}</td><td>{pct(c.price_window.stock_pct)}</td></tr>)}</tbody></table></div>
   <p>股价比较为同一{d.comparison[0].price_window.market_days}个市场交易日；同窗大盘{pct(d.comparison[0].price_window.market_pct)}、ST参考{pct(d.comparison[0].price_window.st_pct)}。相近跌幅不证明相同原因，也不能由财报单项或收购并表后的收入增速判断风险解除。</p>
+  <STCasePriceCheck data={priceCheck}/>
   {d.subsidiary_civil&&<STSubsidiaryCivil data={d.subsidiary_civil}/>}<details><summary>核高科的风险链、原件与日期差异</summary>
    <p>{d.what_changed}</p><p>高科原警示：{d.comparison[0].warning_cause}。华鹏原警示：{d.comparison[1].warning_cause}。不从期末净资产的正负反推全部ST成因。</p>
    {d.facts.map((f,n)=><div key={`${f.source.announcement_id}-${n}`}><p>{f.published_on}公开：{f.text}</p><a href={f.source.url} target="_blank" rel="noreferrer">{f.source.title} · 第{f.source.page}页 ↗</a></div>)}

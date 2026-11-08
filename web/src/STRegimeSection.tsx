@@ -2,6 +2,7 @@ import {useEffect,useState} from 'react'
 import {ReadingChart} from './ReadingChart'
 import {STRegimeThemes} from './STRegimeThemes'
 import {STSampleIntegrity} from './STSampleIntegrity'
+import {STMemberTransitions} from './STMemberTransitions'
 import type {ReadingSeries} from './readingTypes'
 import type {RegimeComparison,RegimeFixed,RegimePeriod,STRegimeData} from './stRegimeTypes'
 import './stRegime.css'
@@ -104,10 +105,11 @@ export function STRegimeSection(){
       </>}
       {view==='整批个股'&&<>
         <div className="regime-distribution-layout"><div><h3>固定7月3日的{fixed.total}只，看看谁被平均数遮住</h3><p>规则后端点分布：P10 {pct(fixed.p10_pct)}，中位数 {pct(fixed.median_pct)}，P90 {pct(fixed.p90_pct)}。{fixed.missing} 只未纳入端点分布，仍保留在表中。</p><p>两边均有完整端点的同一批 {comparison.paired.count} 只：前窗中位数 {pct(comparison.paired.before_median_pct)}，后窗 {pct(comparison.paired.after_median_pct)}。这是覆盖子样本的核对，不能代表全部幸存与退出者。</p></div><Distribution data={fixed}/></div>
-        <p className="reading-caption">{fixed.note}</p>{windowKey==='all'&&<STSampleIntegrity data={data.themes?.sample_integrity} total={fixed.total} covered={fixed.covered}/>}<StockTable comparison={comparison}/>
+        <p className="reading-caption">{fixed.note}</p>{windowKey==='all'&&<STMemberTransitions data={data.themes?.member_transitions}/>}
+        {windowKey==='all'&&<STSampleIntegrity data={data.themes?.sample_integrity} total={fixed.total} covered={fixed.covered}/>}<StockTable comparison={comparison}/>
       </>}
 
-      <details className="regime-audit"><summary>名单、分母、来源和更新限制</summary><p>7月3日主板名单 {data.universe.anchor_members} 只，期末 {data.universe.endpoint_members} 只，整个覆盖期曾入选 {data.universe.distinct_main_board_members} 只。期末相较7月3日新增 {data.universe.entrants.length} 只、移出 {data.universe.exits.length} 只；移出原因尚未逐一核验。</p><p>前窗 {before.trading_observations}/{before.member_observations} 个成员日有成交，停牌 {before.suspended_observations}；后窗 {after.trading_observations}/{after.member_observations} 个成员日有成交，停牌 {after.suspended_observations}。未解析缺失：前 {before.missing_observations}、后 {after.missing_observations}；不是把停牌当平盘。</p><ul>{data.limitations.map(note=><li key={note}>{note}</li>)}</ul><div className="regime-source-links">{data.sources.map(source=><a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}</div><p className="reading-caption">生成于 {new Date(data.generated_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}；数据标识 {data.content_digest.slice(0,12)}。重读快照不会采集新行情；新数据需核验、重算后发布。</p></details>
+      <details className="regime-audit"><summary>名单、分母、来源和更新限制</summary><p>7月3日主板名单 {data.universe.anchor_members} 只，期末 {data.universe.endpoint_members} 只，整个覆盖期曾入选 {data.universe.distinct_main_board_members} 只。期末相较7月3日新增 {data.universe.entrants.length} 只、移出 {data.universe.exits.length} 只；{data.themes?.member_transitions?'移出原因和边界见上方原件核对，新增原因仍待逐一核实。':'移出原因尚未逐一核验。'}</p><p>前窗 {before.trading_observations}/{before.member_observations} 个成员日有成交，停牌 {before.suspended_observations}；后窗 {after.trading_observations}/{after.member_observations} 个成员日有成交，停牌 {after.suspended_observations}。未解析缺失：前 {before.missing_observations}、后 {after.missing_observations}；不是把停牌当平盘。</p><ul>{data.limitations.map(note=><li key={note}>{note}</li>)}</ul><div className="regime-source-links">{data.sources.map(source=><a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}</div><p className="reading-caption">生成于 {new Date(data.generated_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}；数据标识 {data.content_digest.slice(0,12)}。重读快照不会采集新行情；新数据需核验、重算后发布。</p></details>
       </details>
     </>}
   </section>

@@ -27,3 +27,20 @@ def test_comparison_period_units_source_and_missing_endpoint_are_explicit():
  i,d=fixture();i['fixed_prices'][1]['has_trade']=False;i['gaoke_risk_case']['scope_digest']=scope_digest(i);seal(i);x=company_risk_case_view(i,d);assert x['comparison'][0]['price_window']['stock_pct'] is None and x['comparison'][1]['price_window']['stock_pct']==-50
 
 def test_optional_old_snapshots():assert company_risk_case_view({},[]) is None
+
+def subsidiary_fixture():
+ i,d=fixture();p=i['gaoke_risk_case'];p['name']='*ST高科';p['open_catalog_items']=[]
+ p['civil']['source']={'url':'https://example.test/parent','title':'parent','page':1,'sha256':'parent'}
+ p['subsidiary_civil']={'entity':'广西英腾教育科技股份有限公司','short_name':'英腾教育','court':'柳州市鱼峰区人民法院','case_id':'subsidiary','released_case_id':'subsidiary','first_published_on':'2026-07-22','original_received_on':None,'release_received_on':'2026-07-23','release_published_on':'2026-07-25','restraint_duration_days':None,'final_merits_judgment':None,'release_scope':'all_behaviour_measures_in_this_case','reconsideration_at_first_disclosure':'planned_not_proven_submitted','requests':[{'key':k} for k in ('execute_resolution','hold_shareholder_meeting','registration','appointments_rewards')],'order_items':[{'key':k} for k in ('execute_resolution','registration','appointments_rewards')],'facts':[{'published_on':'2026-07-25','source':{'url':'https://example.test/subsidiary','title':'release','page':1,'sha256':'sub'}}]};seal(i);return i,d
+
+def test_distinct_civil_cases_and_request_order_stages_do_not_collapse():
+ i,d=subsidiary_fixture();s=company_risk_case_view(i,d)['subsidiary_civil'];assert [r['case_id'] for r in s['procedure_rows']]==['case','subsidiary'];assert s['release_received_on']=='2026-07-23' and s['release_published_on']=='2026-07-25';assert len(s['requests'])==4 and len(s['order_items'])==3;assert s['restraint_duration_days'] is None and s['final_merits_judgment'] is None
+
+def test_subsidiary_case_dates_and_unproven_submission_or_finality_fail_closed():
+ for field,value in [('case_id','case'),('release_received_on','2026-07-26'),('restraint_duration_days',3),('final_merits_judgment','won'),('reconsideration_at_first_disclosure','submitted')]:
+  i,d=subsidiary_fixture();i['gaoke_risk_case']['subsidiary_civil'][field]=value;seal(i)
+  with pytest.raises(ValueError):company_risk_case_view(i,d)
+ i,d=subsidiary_fixture();i['gaoke_risk_case']['open_catalog_items']=[{'title':'already verified'}];seal(i)
+ with pytest.raises(ValueError,match='still marked unread'):company_risk_case_view(i,d)
+ i,d=subsidiary_fixture();s=i['gaoke_risk_case']['subsidiary_civil'];s['order_items'][-1]['key']='hold_shareholder_meeting';seal(i)
+ with pytest.raises(ValueError,match='requests mistaken'):company_risk_case_view(i,d)

@@ -91,7 +91,7 @@ def build_themes(inputs, daily):
         events.append({**event,'name':names[symbol],'observation':context,'alternate_observation':alternative})
     if result['membership_audit']:
         for check in result['membership_audit'].get('issuer_checks',[]):
-            check['events']=[e for e in events if e['id'] in check['event_ids']]
+            check['events']=[e for e in events if e['id'] in [*check['event_ids'],*(check.get('followup') or {}).get('event_ids',[])]]
             prices={r['trade_date']:r for r in inputs['fixed_prices'] if r['symbol']==check['symbol']}
             first=prices.get(check['anchor']);last=prices.get(inputs['through']);usable=bool(first and last and first.get('has_trade') is True and last.get('has_trade') is True)
             window=[r for r in daily if check['anchor']<r['date']<=inputs['through']]

@@ -63,4 +63,28 @@ def issuer_checks(inputs, packet):
         if sum(Decimal(x['amount_yuan']) for x in c['released_accounts'])!=Decimal(c['released_total_yuan']):raise ValueError('released account total conflicts')
         for f in c['facts']:
             if f['published_on']>c['anchor'] or f['document_dated_on']>f['published_on'] or not all(f['source'].get(k) for k in ('sha256','url','title','page')):raise ValueError('issuer anchor source is not timely')
-    return [dict(c) for c in checks]
+    return [{**c,'followup':issuer_followup_view(c,inputs)} for c in checks]
+
+def issuer_followup_view(c, inputs):
+    from decimal import Decimal
+    followup=c.get('followup')
+    if followup is None:return None
+    if followup['as_of']!=inputs['through']:raise ValueError('issuer followup cutoff changed')
+    reports=followup['reports']
+    if len(reports)!=2 or [r['period_end'] for r in reports]!=['2026-06-30','2026-09-30']:raise ValueError('issuer financial periods changed')
+    for r in reports:
+        if not(c['anchor']<r['published_on']<=inputs['through']) or r['period_end']>r['published_on'] or r['currency']!='CNY' or r['unit']!='yuan' or r['audited'] is not False or r['period_start']!='2026-01-01':raise ValueError('issuer report period/unit/audit conflict')
+        for field in ('revenue','parent_profit','operating_cash','parent_equity'):
+            Decimal(r[field])
+        if not all(r['source'].get(k) for k in ('sha256','url','title','page')):raise ValueError('issuer report lacks source')
+    h,q=reports
+    for field in ('revenue','parent_profit'):
+        if Decimal(q[field])-Decimal(h[field])!=Decimal(followup['reported_single_quarter'][field]):raise ValueError('reported quarter conflicts with cumulative difference')
+    cash=followup['cash_rollforward']
+    if Decimal(cash['opening_yuan'])+Decimal(cash['net_change_yuan'])!=Decimal(cash['closing_yuan']):raise ValueError('cash equivalent rollforward conflict')
+    freeze=followup['new_freeze']
+    if not(c['anchor']<freeze['published_on']<=inputs['through']):raise ValueError('new freeze cutoff changed')
+    if freeze['entity']==followup['prior_unfreeze_entity'] or freeze['account_count']!=len(freeze['accounts']) or sum(Decimal(a['amount_yuan']) for a in freeze['accounts'])!=Decimal(freeze['frozen_yuan']):raise ValueError('freeze entity/count/amount conflict')
+    for f in followup['facts']:
+        if not(c['anchor']<f['published_on']<=inputs['through']) or f['document_dated_on']>f['published_on'] or not all(f['source'].get(k) for k in ('sha256','url','title','page')):raise ValueError('issuer followup fact not timely/source-bound')
+    return {**followup,'quarter_revenue_yuan':str(Decimal(q['revenue'])-Decimal(h['revenue'])),'quarter_parent_profit_yuan':str(Decimal(q['parent_profit'])-Decimal(h['parent_profit'])),'quarter_difference_basis':'同口径前三季累计减去半年累计，并与三季报单季列核对；不是半年对前三季同比。'}

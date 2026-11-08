@@ -1,3 +1,4 @@
+import {STEndpointAudit} from './STEndpointAudit'
 import {STMembershipAudit} from './STMembershipAudit'
 import {STLabelChanges} from './STLabelChanges'
 import {useEffect,useState} from 'react'
@@ -8,10 +9,12 @@ import {STMemberTransitions} from './STMemberTransitions'
 import {STIndexCrosscheck} from './STIndexCrosscheck'
 import {STMemberEntries} from './STMemberEntries'
 import type {ReadingSeries} from './readingTypes'
-import type {RegimeComparison,RegimeFixed,RegimePeriod,STRegimeData} from './stRegimeTypes'
+import type {RegimeComparison,RegimeFixed,RegimePeriod,RegimeStock,STRegimeData} from './stRegimeTypes'
 import './stRegime.css'
 
 const pct=(value:number|null|undefined)=>value==null?'待核':`${value>0?'+':''}${value.toFixed(2)}%`
+const noTrade=(row:RegimeStock|undefined)=>row?.return_pct==null&&row?.endpoint_trade_states!=null&&Object.values(row.endpoint_trade_states).some(x=>x.status==='not_traded')
+const fixedPct=(row:RegimeStock|undefined)=>noTrade(row)?'无成交端点':pct(row?.return_pct)
 const number=(value:number|null|undefined,digits=2)=>value==null?'待核':value.toFixed(digits)
 const windows=['40','20','all']
 
@@ -33,7 +36,7 @@ function Distribution({data}:{data:RegimeFixed}){
   const max=Math.max(1,...counts)
   return <div className="regime-distribution" role="img" aria-label={`固定名单收益分布：${data.covered}只有端点，${data.missing}只未计算`}>
     {bins.map((bin,index)=><div className="regime-bin" key={bin.label}><span>{bin.label}</span><div><i style={{width:`${counts[index]/max*100}%`}}/></div><b>{counts[index]}只</b></div>)}
-    <p className="reading-caption">另外 {data.missing} 只没有可比端点或仍需核价，保留在明细中。分布只描述有完整起止端点的 {data.covered} 只。</p>
+    <p className="reading-caption">另外 {data.missing} 只没有可比端点或仍需核价，保留在明细中。分布只描述两端有成交证据的 {data.covered} 只。</p>
   </div>
 }
 
@@ -44,7 +47,7 @@ function StockTable({comparison}:{comparison:RegimeComparison}){
   const rows=comparison.fixed_after.rows.filter(row=>(!query||`${row.name} ${row.symbol}`.toLowerCase().includes(query.toLowerCase()))&&(scope==='all'||scope==='missing'&&row.return_pct==null||scope==='left'&&!row.still_st_at_end||scope===row.venue))
   return <>
     <div className="regime-stock-controls"><label>查找公司<input type="search" aria-label="横向复盘查找公司" value={query} onChange={e=>setQuery(e.target.value)} placeholder="名称或代码"/></label><label>名单范围<select aria-label="横向复盘名单范围" value={scope} onChange={e=>setScope(e.target.value)}><option value="all">全部{comparison.fixed_after.total}只，按代码排列</option><option value="上海">上海主板</option><option value="深圳">深圳主板</option><option value="missing">端点或复权待核</option><option value="left">期末不再在ST名单中</option></select></label><span>{rows.length}只</span></div>
-    <div className="regime-scroll" role="region" aria-label="固定名单全部个股表现" tabIndex={0}><table className="regime-table regime-stock-table"><thead><tr><th scope="col">7月3日名单</th><th scope="col">规则前端点变化</th><th scope="col">规则后端点变化</th><th scope="col">规则后较大盘</th><th scope="col">完整性与名单变化</th></tr></thead><tbody>{rows.map(row=><tr key={row.symbol}><th scope="row">{row.name}<small>{row.symbol} · {row.venue}</small></th><td>{pct(before.get(row.symbol)?.return_pct)}</td><td>{pct(row.return_pct)}</td><td>{row.market_excess_pp==null?'待核':`${number(row.market_excess_pp)}个百分点`}</td><td><details><summary>{row.sample_note?'缺口原因已核':row.gap?'端点待核':row.missing_quote_days?'端点齐，路径有缺口':'端点与路径齐'}{!row.still_st_at_end?' · 已离开ST名单':''}</summary><p>{row.sample_note?row.sample_note.explanation:row.gap||'前复权起止价格变化，不能认证实际成交收益。'}窗口内缺报价 {row.missing_quote_days} 日；与日涨跌幅可比 {row.consistency_days} 日，不一致 {row.consistency_mismatches} 日。</p>{before.get(row.symbol)?.gap&&<p>规则前：{before.get(row.symbol)?.gap}</p>}<p>{row.sample_note?row.sample_note.boundary:'名单移出可能涉及摘帽、退市或其他状态变化，本表不猜原因。'}</p></details></td></tr>)}</tbody></table>{rows.length===0&&<p>没有符合筛选的公司。</p>}</div>
+    <div className="regime-scroll" role="region" aria-label="固定名单全部个股表现" tabIndex={0}><table className="regime-table regime-stock-table"><thead><tr><th scope="col">7月3日名单</th><th scope="col">规则前端点变化</th><th scope="col">规则后端点变化</th><th scope="col">规则后较大盘</th><th scope="col">完整性与名单变化</th></tr></thead><tbody>{rows.map(row=><tr key={row.symbol}><th scope="row">{row.name}<small>{row.symbol} · {row.venue}</small></th><td>{fixedPct(before.get(row.symbol))}</td><td>{fixedPct(row)}</td><td>{row.market_excess_pp==null?'待核':`${number(row.market_excess_pp)}个百分点`}</td><td><details><summary>{row.sample_note?'缺口原因已核':noTrade(row)?'无成交端点':row.gap?'端点待核':row.missing_quote_days?'端点齐，路径有缺口':'端点与路径齐'}{!row.still_st_at_end?' · 已离开ST名单':''}</summary><p>{row.sample_note?row.sample_note.explanation:row.gap||'前复权起止价格变化，不能认证实际成交收益。'}窗口内缺报价 {row.missing_quote_days} 日；与日涨跌幅可比 {row.consistency_days} 日，不一致 {row.consistency_mismatches} 日。</p>{before.get(row.symbol)?.gap&&<p>规则前：{before.get(row.symbol)?.gap}</p>}{row.reference_return_pct!=null&&row.return_pct==null&&<p>提供方参考价变化{pct(row.reference_return_pct)}，只作参考，不替代所选日期的实际成交端点。</p>}<p>{row.sample_note?row.sample_note.boundary:'名单移出可能涉及摘帽、退市或其他状态变化，本表不猜原因。'}</p></details></td></tr>)}</tbody></table>{rows.length===0&&<p>没有符合筛选的公司。</p>}</div>
   </>
 }
 
@@ -109,8 +112,8 @@ export function STRegimeSection(){
         <div className="regime-scroll" role="region" aria-label="不同大盘环境下的ST表现" tabIndex={0}><table className="regime-table"><thead><tr><th scope="col">市场环境</th><th scope="col">时期</th><th scope="col">天数</th><th scope="col">大盘日均</th><th scope="col">ST日均</th><th scope="col">每日上涨占比均值</th></tr></thead><tbody>{before.conditions.flatMap((condition,index)=>[before,after].map((period,phase)=>{const c=period.conditions[index];return <tr key={`${condition.key}-${phase}`}><th scope="row">{condition.label}</th><td>{phase===0?'规则前':'规则后'}</td><td>{c.days}</td><td>{pct(c.market_mean_pct)}</td><td>{pct(c.st_mean_pct)}</td><td>{pct(c.positive_breadth_pct)}</td></tr>}))}</tbody></table></div>
       </>}
       {view==='整批个股'&&<>
-        <div className="regime-distribution-layout"><div><h3>固定7月3日的{fixed.total}只，看看谁被平均数遮住</h3><p>规则后端点分布：P10 {pct(fixed.p10_pct)}，中位数 {pct(fixed.median_pct)}，P90 {pct(fixed.p90_pct)}。{fixed.missing} 只未纳入端点分布，仍保留在表中。</p><p>两边均有完整端点的同一批 {comparison.paired.count} 只：前窗中位数 {pct(comparison.paired.before_median_pct)}，后窗 {pct(comparison.paired.after_median_pct)}。这是覆盖子样本的核对，不能代表全部幸存与退出者。</p></div><Distribution data={fixed}/></div>
-        <p className="reading-caption">{fixed.note}</p>{windowKey==='all'&&<><STMembershipAudit data={data.themes?.membership_audit}/><STLabelChanges data={data.themes?.label_changes}/></>}{windowKey==='all'&&<STMemberEntries data={data.themes?.member_entries}/>}
+        <div className="regime-distribution-layout"><div><h3>固定7月3日的{fixed.total}只，看看谁被平均数遮住</h3><p>规则后成交端点分布：P10 {pct(fixed.p10_pct)}，中位数 {pct(fixed.median_pct)}，P90 {pct(fixed.p90_pct)}。{fixed.missing} 只未纳入端点分布，仍保留在表中。</p><p>前后窗各自两端均有成交证据的同一批 {comparison.paired.count} 只：前窗中位数 {pct(comparison.paired.before_median_pct)}，后窗 {pct(comparison.paired.after_median_pct)}。这是覆盖子样本的核对，不能代表全部幸存与退出者。</p></div><Distribution data={fixed}/></div>
+        <p className="reading-caption">{fixed.note}</p><STEndpointAudit comparison={comparison}/>{windowKey==='all'&&<><STMembershipAudit data={data.themes?.membership_audit}/><STLabelChanges data={data.themes?.label_changes}/></>}{windowKey==='all'&&<STMemberEntries data={data.themes?.member_entries}/>}
         {windowKey==='all'&&<STMemberTransitions data={data.themes?.member_transitions}/>}
         {windowKey==='all'&&<STSampleIntegrity data={data.themes?.sample_integrity} total={fixed.total} covered={fixed.covered}/>}<StockTable comparison={comparison}/>
       </>}

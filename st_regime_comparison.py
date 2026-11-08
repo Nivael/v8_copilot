@@ -220,6 +220,23 @@ def period_metrics(rows):
             'relation': relation(valid), 'conditions': conditions}
 
 
+def endpoint_trade_state(price, activity):
+    """Require evidence of a trade; a carried reference close is not a trade."""
+    if price is None:return {'status':'missing_price','reason':'缺参考收盘价'}
+    flag=price.get('has_trade');raw_volume=price.get('raw_volume')
+    no_trade=flag is False or (finite(raw_volume) and raw_volume<=0)
+    positive=flag is True and finite(raw_volume) and raw_volume>0
+    if activity:
+        suspended=activity.get('suspension_status')=='suspended'
+        active=activity.get('suspension_status')=='trading' and finite(activity.get('volume')) and activity['volume']>0
+        if (positive and suspended) or (no_trade and active):return {'status':'conflict','reason':'成交标记、成交量与停牌状态有冲突'}
+        no_trade=no_trade or suspended
+        positive=positive or active
+    if no_trade:return {'status':'not_traded','reason':'有参考价但无实际成交'}
+    if positive:return {'status':'traded','reason':'当日有成交证据'}
+    return {'status':'unknown','reason':'缺少当日成交证据'}
+
+
 def fixed_observation(inputs, days):
     """Keep every pre-rule member visible; incomplete endpoints stay null."""
     anchor = days[0]['anchor']
@@ -251,7 +268,12 @@ def fixed_observation(inputs, days):
             reason = '起止价格无效'
         else:
             value = (last['close']/first['close']-1)*100
-        result.append({'symbol': symbol, 'name': member['name'], 'venue': '上海' if symbol.startswith('6') else '深圳',
+        reference_value=value
+        trade_states={'anchor':endpoint_trade_state(first,activities.get((anchor,symbol))),'endpoint':endpoint_trade_state(last,activities.get((end,symbol)))}
+        if value is not None and any(r['status']!='traded' for r in trade_states.values()):
+            value=None
+            reason='；'.join(('起点' if key=='anchor' else '期末')+'：'+r['reason'] for key,r in trade_states.items() if r['status']!='traded')+'；不改用其他日期或填零'
+        result.append({'reference_return_pct':reference_value,'endpoint_trade_states':trade_states,'symbol': symbol, 'name': member['name'], 'venue': '上海' if symbol.startswith('6') else '深圳',
                        'risk_label_at_anchor': '*ST' if '*ST' in member['name'].upper() else 'ST',
                        'still_st_at_end': symbol in current, 'return_pct': value,
                        'market_excess_pp': value-compounded([r['market_pct'] for r in days]) if value is not None else None,
@@ -260,12 +282,13 @@ def fixed_observation(inputs, days):
                        'endpoint_availability': {'anchor_present': first is not None, 'endpoint_present': last is not None},
                        'sample_note': fixed_gap_note(integrity,symbol,anchor,end)})
     valid = [r['return_pct'] for r in result if r['return_pct'] is not None]
-    return {'anchor': anchor, 'through': end, 'total': len(result), 'covered': len(valid),
+    reference = [r['reference_return_pct'] for r in result if r['reference_return_pct'] is not None]
+    return {'reference_summary':{'covered':len(reference),'missing':len(result)-len(reference),'median_pct':median(reference) if reference else None,'p10_pct':quantile(reference,.1),'p90_pct':quantile(reference,.9),'positive_pct':sum(x>0 for x in reference)/len(reference)*100 if reference else None},'nontraded_reference_count':sum(r['reference_return_pct'] is not None and r['return_pct'] is None for r in result),** {'anchor': anchor, 'through': end, 'total': len(result), 'covered': len(valid),
             'missing': len(result)-len(valid), 'median_pct': median(valid) if valid else None,
             'p10_pct': quantile(valid,.1), 'p90_pct': quantile(valid,.9),
             'positive_pct': sum(x>0 for x in valid)/len(valid)*100 if valid else None,
             'rows': result,
-            'note': '固定7月3日主板ST名单。摘帽者仍保留；缺价者列出，不按零收益。完整端点子样本有选择偏差。规则前窗口用未来7月3日名单，仅作组成敏感性核对。端点为提供方前复权参考收盘，停牌日参考值不表示当天有成交；价格变化不是实际成交或含分红总收益。'}
+            'note': '固定7月3日主板ST名单，主分布仅用两端均有成交证据的前复权收盘变化。缺价、无成交、状态不明或冲突都留空，股票仍保留，不填零或改日期。旧参考价分布另列，不当作实际成交端点；完整端点子样本仍有选择偏差。前窗使用未来7月3日名单只作组成核对，价格变化不是个人含息交易收益。'}}
 
 
 def build(inputs):
@@ -310,6 +333,8 @@ def build(inputs):
         pre = {r['symbol']: r for r in comparison['fixed_before']['rows']}
         post = {r['symbol']: r for r in comparison['fixed_after']['rows']}
         matched = sorted(s for s in pre if pre[s]['return_pct'] is not None and post[s]['return_pct'] is not None)
+        reference_matched=sorted(s for s in pre if pre[s]['reference_return_pct'] is not None and post[s]['reference_return_pct'] is not None)
+        comparison['reference_paired']={'count':len(reference_matched),'symbols':reference_matched,'before_median_pct':median(pre[s]['reference_return_pct'] for s in reference_matched) if reference_matched else None,'after_median_pct':median(post[s]['reference_return_pct'] for s in reference_matched) if reference_matched else None}
         comparison['paired'] = {'count': len(matched), 'symbols': matched,
                                 'before_median_pct': median(pre[s]['return_pct'] for s in matched) if matched else None,
                                 'after_median_pct': median(post[s]['return_pct'] for s in matched) if matched else None}

@@ -7,6 +7,7 @@ from st_sample_integrity import load_integrity
 from st_member_transitions import member_transition_view
 from st_member_entries import member_entry_view
 from st_index_crosscheck import crosscheck_view
+from st_stock_price_crosscheck import price_check_view
 
 
 def compound(rows, field):
@@ -49,7 +50,7 @@ def build_themes(inputs, daily):
                        'positive_breadth_pct':mean(r['positive_pct'] for r in rows)})
     extreme = sorted(sorted(after,key=lambda r:abs(r['market_pct']),reverse=True)[:8],key=lambda r:r['date'])
     integrity=load_integrity(inputs)
-    result = {'index_crosscheck':crosscheck_view(inputs,daily), 'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
+    result = {'stock_price_crosscheck':price_check_view(inputs,daily), 'index_crosscheck':crosscheck_view(inputs,daily), 'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
     packet = inputs.get('announcement_study')
     if not packet:
         return result

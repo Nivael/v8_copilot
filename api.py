@@ -513,7 +513,12 @@ def get_market_reading(refresh: bool = False) -> dict[str, object]:
 @app.get('/api/v1/workbench/learning')
 def get_learning_reading(refresh: bool = False) -> dict[str, object]:
     # A recorded Codex answer appears without repeating the deep market audit.
-    return get_reading_view('learning', force=refresh, experience_db=experience_repository.path, ledger_db=research_run_ledger.path)
+    result = get_reading_view('learning', force=refresh, experience_db=experience_repository.path, ledger_db=research_run_ledger.path)
+    if result.get('availability') == 'available':
+        from watch_price_window_notes import attach_price_window_notes
+        from st_regime_comparison import load as load_regime
+        attach_price_window_notes(result['data'], load_regime())
+    return result
 
 
 @app.get('/api/v1/workbench/swing')

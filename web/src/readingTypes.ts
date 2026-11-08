@@ -16,6 +16,7 @@ export type MarketReading={
 export type MethodReading={id:string;title:string;summary:string;category:string;status:string;when_to_use:string[];source_run_refs:string[]}
 export type CaseReview={assessment:string;takeaways:string[];reviewed_at:string;sources?:{label:string;url:string}[]}
 export type CaseReading={
+  price_window_note?:{text:string;source_snapshot:string}
   symbol:string;name?:string;as_of?:string;availability:string;last_close?:number|null;headline?:string
   day_change_pct?:number|null;period_change_pct?:number|null;relative_to_st_pp?:number|null;since_research_change_pct?:number|null
   period_path?:ReadingPoint[];last_research_anchor?:{date:string;close:number|null}|null

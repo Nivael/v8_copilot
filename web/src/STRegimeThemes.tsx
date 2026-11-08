@@ -1,3 +1,4 @@
+import {STStockPriceCrosscheck} from './STStockPriceCrosscheck'
 import {useState} from 'react'
 import type {ReactNode} from 'react'
 import type {RegimeComparison,STRegimeData} from './stRegimeTypes'
@@ -26,7 +27,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    <p>完整后窗ST等权参考 {pct(after.reference_change_pct)}，中证全指 {pct(after.market_change_pct)}。固定7月3日的{fixed.total}只股票中，{fixed.covered}只有完整端点，{fixed.positive_pct==null?'上涨覆盖面待核':`其中约${fixed.positive_pct.toFixed(0)}%上涨`}，中位数 {pct(fixed.median_pct)}；另{fixed.missing}只缺口保留。“相对强”与“多数赚钱”是两件事。</p>
    {themes?.sample_integrity&&<p>两处缺口已有不同解释：康佳A缺退出后的期末交易价，萃华缺停牌中的比较起点；没有把它们填零或移出名单。<button className="regime-text-link" onClick={()=>onEvidence('整批个股','st-sample-integrity')}>查看两处缺口的公告依据 →</button></p>}
    {chart}
-   <h4>过程拆开看，结论才不容易被起止点带偏</h4>
+   <STStockPriceCrosscheck data={themes?.stock_price_crosscheck} onCompany={s=>{setSymbol(s);setTopic('events');requestAnimationFrame(()=>document.getElementById('st-cross-section')?.scrollIntoView({behavior:'smooth',block:'start'}))}}/><h4>过程拆开看，结论才不容易被起止点带偏</h4>
    {themes?.months?<div className="regime-scroll" role="region" aria-label="分月行情过程" tabIndex={0}><table className="regime-table"><thead><tr><th>阶段</th><th>ST参考</th><th>大盘</th><th>小盘风格</th><th>怎样理解</th><th>覆盖</th></tr></thead><tbody>{themes.months.map(m=><tr key={m.month}><th>{m.month}<small>{m.start} — {m.through}</small></th><td>{pct(m.st_pct)}</td><td>{pct(m.market_pct)}</td><td>{pct(m.small_pct)}</td><td>{phaseReading(m.st_pct,m.market_pct)}</td><td>{m.days}日</td></tr>)}</tbody></table></div>:<p>本版没有独立分月资料，请展开核对已有窗口。</p>}
    <p className="reading-caption">各月按实际覆盖交易日连乘，7月从6日开始，末月只到{data.through}。各月涨跌幅不能相加；小盘风格使用中证2000。</p>
    {themes?.member_entries&&<><h4>新进来的公司，为什么被ST？</h4><p>6家新增的直接原因分成几类：正式重整受理、主要银行账户冻结、控股股东资金占用、财报监管事项。相同的ST标签，不替代对主体、程序和整改条件的判断。</p><button className="regime-text-link" onClick={()=>onEvidence('整批个股','st-member-entries')}>查看新增原因与共同日期的行情对照 →</button></>}

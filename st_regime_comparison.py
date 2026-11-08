@@ -356,6 +356,7 @@ def publish(inputs, *, root=ROOT):
                'themes_processor_sha256': sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest(),
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
+               'stock_price_check_processor_sha256': sha256(Path(__file__).with_name('st_stock_price_crosscheck.py').read_bytes()).hexdigest(),
                'index_crosscheck_processor_sha256': sha256(Path(__file__).with_name('st_index_crosscheck.py').read_bytes()).hexdigest(),
                'entry_processor_sha256': sha256(Path(__file__).with_name('st_member_entries.py').read_bytes()).hexdigest(),
                'source_tables': inputs['source_tables']}
@@ -373,6 +374,7 @@ def load(root=ROOT):
                 or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
+                or value.get('stock_price_check_processor_sha256')!=sha256(Path(__file__).with_name('st_stock_price_crosscheck.py').read_bytes()).hexdigest()
                 or value.get('index_crosscheck_processor_sha256')!=sha256(Path(__file__).with_name('st_index_crosscheck.py').read_bytes()).hexdigest()
                 or value.get('entry_processor_sha256')!=sha256(Path(__file__).with_name('st_member_entries.py').read_bytes()).hexdigest()):
             raise ValueError('snapshot or processor binding changed')

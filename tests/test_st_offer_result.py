@@ -16,3 +16,19 @@ def test_completion_requires_receipt_and_bad_quantities_are_rejected():
  with pytest.raises(ValueError,match='timeline'):view(r)
 
 def test_optional_old_data():assert offer_result_view(None,{}, {},{}) is None
+
+def completed():
+ r=result();source={'sha256':'receipt','url':'https://example.test/completed','page':1,'title':'completion'};r['facts'].append({'published_on':'2026-09-02','source':source});r['settlement_status']='confirmed_complete';r['completion_receipt']={'published_on':'2026-09-02','completed_by':'2026-09-02','exact_completion_on':None,'final_shares':418699,'reported_pct':'0.0274','settlement_complete':True,'control_changed':False,'source':source};return r
+
+def test_completion_is_disclosure_bound_not_exact_transfer_day():
+ x=view(completed());assert x['completion_receipt']['completed_by']=='2026-09-02' and x['completion_receipt']['exact_completion_on'] is None;assert x['result_on']=='2026-08-28' and x['facts'][0]['published_on']=='2026-08-28'
+
+def test_completion_rejects_unbound_future_or_conflicting_receipts():
+ r=completed();r['completion_receipt']['published_on']='2026-11-07'
+ with pytest.raises(ValueError,match='publication'):view(r)
+ r=completed();r['completion_receipt']['final_shares']=91786000
+ with pytest.raises(ValueError,match='quantity'):view(r)
+ r=completed();r['completion_receipt']['source']['sha256']='changed';r['facts'][-1]['source']={**r['facts'][-1]['source'],'sha256':'receipt'}
+ with pytest.raises(ValueError,match='bound to facts'):view(r)
+ r=completed();r['completion_receipt']['exact_completion_on']='2026-09-02'
+ with pytest.raises(ValueError,match='publication'):view(r)

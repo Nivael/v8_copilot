@@ -24,3 +24,13 @@ def test_source_and_scope_drift_fail_closed():
  with pytest.raises(ValueError,match='scope changed'):halt_stage_view(i)
 
 def test_optional_old_snapshots():assert halt_stage_view({}) is None
+
+def test_directory_review_requires_complete_bounded_nonduplicate_title_result():
+ i=fixture();p=i['halt_stages'];review={'start':'2026-10-09','through':'2026-10-14','record_count':1,'reported_total':1,'terminal_has_more':False,'source_sha256':'catalog','query_url':'https://example.test/catalog','rows':[{'id':'a','published_on':'2026-10-14','title':'关于收到终止上市事先告知书的公告'}],'matched_final_titles':[]};p['directory_reviews']={'002717':review}
+ def seal():p['content_digest']=digest({k:v for k,v in p.items() if k!='content_digest'})
+ seal();assert halt_stage_view(i)['rows'][0]['directory_review']['record_count']==1
+ review['terminal_has_more']=True;seal()
+ with pytest.raises(ValueError,match='incomplete directory'):halt_stage_view(i)
+ review['terminal_has_more']=False;review['rows'][0]['title']='关于收到终止上市决定的公告';seal()
+ with pytest.raises(ValueError,match='title result conflict'):halt_stage_view(i)
+ review['matched_final_titles']=[review['rows'][0]['title']];seal();assert halt_stage_view(i)['rows'][0]['directory_review']['matched_final_titles']

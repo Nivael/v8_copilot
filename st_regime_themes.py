@@ -39,6 +39,27 @@ def event_context(event, symbol, inputs, daily):
     return {'anchor':anchor,'date_precision':'day','not_earliest_reaction':True,'windows':windows}
 
 
+def coalesce_event_records(records):
+    """One source-bound episode may have several recorded views; never count views as replications."""
+    groups={}
+    for row in records:
+        identity={k:row.get(k) for k in ('symbol','id','published_on','occurred_on','entity_scope','change_kind','report_period_end','scheduled_for','alternate_published_on','date_uncertainty')}
+        identity['source_sha256']=row['source']['sha256']
+        key=digest(identity);groups.setdefault(key,[]).append(row)
+    result=[]
+    for key,group in groups.items():
+        unique=list({digest(row):row for row in group}.values())
+        unique.sort(key=lambda r:(r.get('title',''),r['source'].get('page',0),digest(r)))
+        primary={**unique[0],'event_key':'EVENT-'+key[:24],'source_record_count':len(group)}
+        if len(group)>1:
+            primary['source_records']=[dict(r) for r in unique]
+            for field in ('change','interpretation','watch','evidence_detail'):
+                if any(field in r for r in unique):primary[field]='；'.join(dict.fromkeys(r[field] for r in unique if r.get(field)))
+            if any('lens_ids' in r for r in unique):primary['lens_ids']=sorted({lens for r in unique for lens in r.get('lens_ids',[])})
+        result.append(primary)
+    return sorted(result,key=lambda r:(r['published_on'],r['symbol'],r.get('title',''),r['event_key']))
+
+
 def build_themes(inputs, daily):
     after = [r for r in daily if r['date'] >= '2026-07-06']
     months = []
@@ -59,7 +80,7 @@ def build_themes(inputs, daily):
     catalogs = packet['catalogs']
     events = []
     names = {s:c['name'] for s,c in catalogs.items()}
-    for event in packet['verified_events']:
+    for event in coalesce_event_records(packet['verified_events']):
         symbol = event['symbol']
         context=event_context(event,symbol,inputs,daily)
         alternative=event_context({**event,'published_on':event['alternate_published_on']},symbol,inputs,daily) if event.get('alternate_published_on') else None
@@ -67,12 +88,12 @@ def build_themes(inputs, daily):
     result['announcements'] = {'from':packet['start'],'through':packet['through'],
         'companies':len(catalogs),'catalog_rows':sum(len(c['rows']) for c in catalogs.values()),
         'catalog_pages':sum(len(c['source_refs']) for c in catalogs.values()),
-        'verified_events':events,'verified_companies':len({e['symbol'] for e in events}),
+        'verified_events':events,'raw_fact_records':len(packet['verified_events']),'deduplicated_event_count':len(events),'coalesced_records':len(packet['verified_events'])-len(events),'event_grouping_basis':'same_symbol_event_id_source_dates_entity_and_kind','verified_companies':len({e['symbol'] for e in events}),
         'verified_documents':len({(e['symbol'],e['source']['sha256']) for e in events}),
         'catalog_by_month':dict(sorted(Counter(r['announcement_date'][:7] for c in catalogs.values() for r in c['rows']).items())),
         'history_digest':packet['history_digest'],'source_packet_digest':packet['content_digest'],
         'body_reads_this_refresh':packet.get('body_reads_this_refresh',0),
-        'boundary':'目录覆盖156家指定公司与7月1日至11月6日窗口；正文事实来自已核原件与历史资料的选样，不能代表全体公告。日期仅精确到日，行情从披露日或之前最近收盘后起算，不认证最早反应或公告因果。'}
+        'boundary':'目录覆盖156家指定公司与7月1日至11月6日窗口；正文事实来自已核原件与历史资料的选样，不能代表全体公告。同一事项的重复视角合并展示，原事实记录保留；阅读事项数不代表独立案例或验证次数，跨公告重复事项仍需另核。日期仅精确到日，行情从披露日或之前最近收盘后起算，不认证最早反应或公告因果。'}
     changes = inputs.get('refresh_provenance',{}).get('prior_activity_differences',[])
     result['refresh'] = {'through':inputs['through'],'prior_input_digest':inputs.get('refresh_provenance',{}).get('prior_input_digest'),
                           'activity_differences':len(changes)}

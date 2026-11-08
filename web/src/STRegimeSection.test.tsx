@@ -169,3 +169,16 @@ describe('按问题阅读与公告覆盖边界',()=>{
   expect(screen.queryByText(/约0%上涨/)).not.toBeInTheDocument()
  })
 })
+
+it('同一事项多个视角只展示一次行情窗口，保留各页来源与记录计数',async()=>{
+ const data=fixture(),source={url:'https://example.com/agreement.pdf#page=39',title:'投资协议',page:39,sha256:'samefile'}
+ const e={id:'investment',event_key:'unique-event-key',source_record_count:2,symbol:'002856',name:'ST测试公司',title:'投资协议的签约与定价',published_on:'2026-09-23',change:'已签约，定价有约束。',interpretation:'余款有条件，不是市场保底。',watch:'继续核履约。',evidence_detail:'两处页码分别保留。',entity_scope:'issuer',source,source_records:[{title:'签约',change:'保证金已缴',source:{...source,page:38,url:'https://example.com/agreement.pdf#page=38'}},{title:'定价',change:'价格受协议约束',source}],observation:{anchor:'2026-09-23',not_earliest_reaction:true,windows:{'5':{through:'2026-09-30',stock_pct:1,market_pct:-1,st_pct:0,gap:null}}}}
+ data.themes={months:[],market_days:[],announcements:{from:'2026-07-01',through:'2026-11-06',companies:156,catalog_rows:5632,catalog_pages:210,verified_events:[e],raw_fact_records:2,deduplicated_event_count:1,coalesced_records:1,verified_companies:1,verified_documents:1,body_reads_this_refresh:0,boundary:'记录数不是独立验证次数。'}}
+ success(data);render(<STRegimeSection/>);await screen.findByRole('navigation',{name:'复盘问题'});fireEvent.click(screen.getByRole('button',{name:/公告到底改变了什么/}))
+ expect(screen.getByText(/1个去重事项（2条事实记录）/)).toBeVisible()
+ expect(screen.getAllByRole('heading',{name:'投资协议的签约与定价'})).toHaveLength(1)
+ expect(screen.getByText(/同一事项保留2个视角、2条原记录，行情窗口只观察一次/)).toBeVisible()
+ fireEvent.click(screen.getByText('查看依据与下一步核对'))
+ expect(screen.getByRole('link',{name:'投资协议 · 第38页 ↗'})).toHaveAttribute('href','https://example.com/agreement.pdf#page=38')
+ expect(screen.getByRole('link',{name:'投资协议 · 第39页 ↗'})).toHaveAttribute('href',source.url)
+})

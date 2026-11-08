@@ -27,3 +27,15 @@ it('价格冲突时改变阅读结论，缺数据不伪造已核实',()=>{
  expect(screen.getByRole('heading',{name:'行情渠道存在差异，先核对再解释'})).toBeVisible()
  rerender(<STStockPriceCrosscheck data={null}/>);expect(screen.queryByRole('region',{name:'五股行情与窗口核对'})).not.toBeInTheDocument()
 })
+it('停复牌原件按已知时点展开，后来控制权事件不倒填',()=>{
+ const source={title:'结果暨复牌原件',url:'https://example.com/resume.pdf#page=3',page:3,sha256:'a'.repeat(64)}
+ const halt={symbol:'002667',cause:'要约期限届满，结果需进一步确认',cause_key:'offer_result_confirmation',start:'2026-09-30',resume:'2026-10-12',halt_disclosed_on:'2026-09-30',resume_disclosed_on:'2026-10-12',new_primary_documents:2,answer:'先待结果，后来达到最低生效条件并复牌，当时控制权未变。',boundary:'不把三日当三个案例。',market_halt_dates:['2026-09-30','2026-10-08','2026-10-09'],market_halt_days:3,previous_actual_close_date:'2026-09-29',first_actual_resume_date:'2026-10-12',schedule_matches_quotes:true,continuous_episode_count:1,facts:[{published_on:'2026-10-12',signed_on:'2026-10-12',text:'6.12%达到5.00%最低条件，原定30.00%不等于已得比例。',source}],later_verified_event:{id:'later',published_on:'2026-11-06',text:'后来出现新的控制权文件。',source,reused_existing_event:true}}
+ const revised={...data,rows:data.rows.map(r=>r.symbol==='002667'?{...r,halt_evidence:halt}:r)}
+ render(<STStockPriceCrosscheck data={revised}/>);fireEvent.click(screen.getByRole('button',{name:'威领 · 002667'}))
+ expect(screen.getByText('先待结果，后来达到最低生效条件并复牌，当时控制权未变。')).toBeVisible()
+ expect(screen.getByText('6.12%达到5.00%最低条件，原定30.00%不等于已得比例。')).not.toBeVisible()
+ fireEvent.click(screen.getByText('展开正式停复牌安排与当时已知'))
+ expect(screen.getByRole('link',{name:'结果暨复牌原件 · 第3页 ↗'})).toHaveAttribute('href',source.url)
+ expect(screen.getByText(/2026-11-06的既有已核事件/)).toBeVisible()
+ expect(screen.getByText(/本轮此公司新核2份原件，其余沿用既有证据/)).toBeVisible()
+})

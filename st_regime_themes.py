@@ -92,6 +92,14 @@ def build_themes(inputs, daily):
         events.append({**event,'name':names[symbol],'observation':context,'alternate_observation':alternative})
     if result['company_risk_cases']:
         result['company_risk_cases']['events']=[e for e in events if e['id'] in result['company_risk_cases']['event_ids']]
+        subsidiary=result['company_risk_cases'].get('subsidiary_civil')
+        if subsidiary:
+            selected=[e for e in events if e['id'] in subsidiary['event_ids']]
+            observations=[{'published_on':e['published_on'],'anchor':e['observation']['anchor'],**e['observation']['windows']['20']} for e in selected]
+            if len(observations)==2 and all(x['anchor'] and x['through'] for x in observations):
+                dates=[{d for d in inputs['calendar'] if x['anchor']<d<=x['through']} for x in observations]
+                subsidiary['price_comparison']={'window_days':20,'observations':observations,'overlap_market_days':len(dates[0]&dates[1]),'full_window':result['company_risk_cases']['comparison'][0]['price_window']}
+            else:subsidiary['price_comparison']=None
     if result['membership_audit']:
         for check in result['membership_audit'].get('issuer_checks',[]):
             check['events']=[e for e in events if e['id'] in [*check['event_ids'],*(check.get('followup') or {}).get('event_ids',[])]]

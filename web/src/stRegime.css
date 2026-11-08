@@ -17,3 +17,5 @@
 #st-member-entries{scroll-margin-top:84px}.regime-composition{font-size:19px;line-height:1.9;margin:20px 0;letter-spacing:.01em}
 
 .regime-index-crosscheck{margin:32px 0;padding:24px 0;border-block:1px solid var(--line,#d8ddd7);scroll-margin-top:84px}.regime-index-crosscheck>p{max-width:850px;line-height:1.9}.regime-index-crosscheck details>summary{cursor:pointer;color:#3e665b}.regime-quote-channel{margin:24px 0}.regime-index-crosscheck .reading-caption{overflow-wrap:anywhere}
+
+.regime-stock-price-check{margin:28px 0;padding:24px 0;border-block:1px solid #d8ddd7}.regime-stock-price-check>p{max-width:850px}.regime-stock-price-check details>summary{cursor:pointer;color:#3e665b}.regime-stock-price-check label{display:flex;gap:12px;align-items:center;margin:20px 0}.regime-price-window{margin:22px 0}.regime-price-window h5{font-size:15px;margin:12px 0}.regime-stock-price-check .regime-table small{white-space:normal;max-width:230px}

@@ -1,0 +1,9 @@
+.regime-removal-cohort { margin: 2rem 0; }
+.regime-removal-cohort > label { display: flex; align-items: center; gap: .7rem; margin: .8rem 0; font-size: .9rem; }
+.cohort-distribution { display: grid; grid-template-columns: 4.6rem minmax(0,1fr); align-items: start; gap: .8rem; max-width: 620px; margin: .8rem 0; }
+.cohort-distribution-track { height: 9px; display: flex; overflow: hidden; background: #e8e5de; }
+.cohort-distribution-track .cohort-up { background: #a44b40; }
+.cohort-distribution-track .cohort-down { background: #477760; }
+.cohort-distribution-track .cohort-flat { background: #aaa397; }
+.cohort-distribution small { display: block; margin-top: .35rem; line-height: 1.6; }
+.regime-removal-cohort details { margin: .6rem 0; }

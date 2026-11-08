@@ -89,6 +89,13 @@ def build_themes(inputs, daily):
         context=event_context(event,symbol,inputs,daily)
         alternative=event_context({**event,'published_on':event['alternate_published_on']},symbol,inputs,daily) if event.get('alternate_published_on') else None
         events.append({**event,'name':names[symbol],'observation':context,'alternate_observation':alternative})
+    if result['membership_audit']:
+        for check in result['membership_audit'].get('issuer_checks',[]):
+            check['events']=[e for e in events if e['id'] in check['event_ids']]
+            prices={r['trade_date']:r for r in inputs['fixed_prices'] if r['symbol']==check['symbol']}
+            first=prices.get(check['anchor']);last=prices.get(inputs['through']);usable=bool(first and last and first.get('has_trade') is True and last.get('has_trade') is True)
+            window=[r for r in daily if check['anchor']<r['date']<=inputs['through']]
+            check['full_window']={'anchor':check['anchor'],'through':inputs['through'],'market_days':len(window),'stock_pct':(last['close']/first['close']-1)*100 if usable else None,'market_pct':compound(window,'market_pct'),'st_pct':compound(window,'return_pct')}
     result['announcements'] = {'from':packet['start'],'through':packet['through'],
         'companies':len(catalogs),'catalog_rows':sum(len(c['rows']) for c in catalogs.values()),
         'catalog_pages':sum(len(c['source_refs']) for c in catalogs.values()),

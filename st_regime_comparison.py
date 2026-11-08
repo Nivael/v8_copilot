@@ -13,6 +13,7 @@ import gzip
 from hashlib import sha256
 import json
 import math
+import os
 from pathlib import Path
 import sqlite3
 from statistics import mean, median, pstdev
@@ -25,7 +26,8 @@ from settings import BASE_DB, DATA_ROOT, MARKET_ACTIVITY_DB, MARKET_CONTEXT_DB
 VERSION = 'st_main_board_regime_comparison_v1'
 RULE_DAY = '2026-07-06'
 ANCHOR = '2026-07-03'
-ROOT = DATA_ROOT / 'local_data/v8_copilot/market_risk/st_regime_comparison'
+ROOT = Path(os.environ.get('V8_ST_REGIME_DIR', str(DATA_ROOT / 'local_data/v8_copilot/market_risk/st_regime_comparison')))
+from st_regime_themes import build_themes
 MAIN_PREFIXES = ('000', '001', '002', '003', '600', '601', '603', '605')
 RULE_SOURCES = [
     {'label': '上交所：5%改10%及7月6日生效说明',
@@ -317,6 +319,7 @@ def build(inputs):
     endpoint = {r['symbol'] for r in inputs['members'] if r['trade_date']==inputs['through'] and main_board(r['symbol'])}
     return {'version': VERSION, 'availability': 'available', 'rule_day': RULE_DAY, 'announcement_day': '2026-04-24',
             'start': calendar[0], 'through': inputs['through'], 'daily': daily, 'path': paths, 'comparisons': comparisons,
+            'themes': build_themes(inputs, daily),
             'universe': {'anchor_members': len(baseline), 'endpoint_members': len(endpoint),
                          'entrants': sorted(endpoint-baseline), 'exits': sorted(baseline-endpoint),
                          'distinct_main_board_members': len({r['symbol'] for r in inputs['members'] if main_board(r['symbol'])}),
@@ -326,7 +329,8 @@ def build(inputs):
                 {'label': 'Tushare日线口径（不复权）', 'url': 'https://tushare.pro/document/2?doc_id=27'},
                 {'label': 'Tushare指数日线口径', 'url': 'https://tushare.pro/document/2?doc_id=95'}],
             'limitations': [
-                '完整逐日成员及成交资料截至2026-09-03，不能代表9月之后或截至今天的全部ST。补采接口2026-11-08返回授权过期，未宣称自动更新成功。',
+                f"完整逐日成员及成交资料截至{inputs['through']}；截止日后行情不纳入，重读快照不会触发补采。",
+                *(['本轮行情来自用户指定的Tushare兼容服务，非官方直连；已核返回身份、日期、算术和原字节摘要，尚未逐笔双源独立核对全部行情。旧活动标签与正成交报价冲突时采用实际报价，不回填旧库。'] if inputs.get('refresh_provenance') else []),
                 '主图每日按当日Tushare主板ST名单，对有成交成员的提供方日涨跌幅取等权均值并连乘。停牌从当天收益分母排除，未填零；这是风格参考，不能交易复制。',
                 '成员变动会改变每天分母；当日名单含当天已生效事项，不能作为前一晚可执行信号。Tushare历史名单尚未逐日对照沪深交易所全部原公告。',
                 '大盘用中证全指，小盘风格用中证2000。涨跌相关、回归斜率和同日超额都不是大盘造成的贡献，也不是规则净因果；季报、摘帽、退市与风格变化仍会混杂。',
@@ -345,6 +349,7 @@ def publish(inputs, *, root=ROOT):
         (root/source).write_bytes(gzip.compress(encoded, mtime=0))
     payload = {**data, 'generated_at': datetime.now(timezone.utc).isoformat(), 'source_asset': source,
                'processor_sha256': sha256(Path(__file__).read_bytes()).hexdigest(),
+               'themes_processor_sha256': sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest(),
                'source_tables': inputs['source_tables']}
     payload['content_digest'] = digest(payload)
     atomic_write_json(root/'snapshots'/(payload['content_digest']+'.json'),payload)
@@ -356,7 +361,8 @@ def load(root=ROOT):
     try:
         value = json.loads((root/'current.json').read_text())
         if (value['version']!=VERSION or digest({k:v for k,v in value.items() if k!='content_digest'})!=value['content_digest']
-                or value['processor_sha256']!=sha256(Path(__file__).read_bytes()).hexdigest()):
+                or value['processor_sha256']!=sha256(Path(__file__).read_bytes()).hexdigest()
+                or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()):
             raise ValueError('snapshot or processor binding changed')
         source = value['source_asset']
         if not source.startswith('inputs-') or not source.endswith('.json.gz') or Path(source).name != source:

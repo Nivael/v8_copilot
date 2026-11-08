@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react'
 import {ReadingChart} from './ReadingChart'
-import {STRegimeArticle} from './STRegimeArticle'
+import {STRegimeThemes} from './STRegimeThemes'
 import type {ReadingSeries} from './readingTypes'
 import type {RegimeComparison,RegimeFixed,RegimePeriod,STRegimeData} from './stRegimeTypes'
 import './stRegime.css'
@@ -47,7 +47,7 @@ export function STRegimeSection(){
   const [error,setError]=useState('')
   const [request,setRequest]=useState(0)
   const [busy,setBusy]=useState(true)
-  const [windowKey,setWindowKey]=useState('40')
+  const [windowKey,setWindowKey]=useState('all')
   const [view,setView]=useState('规则前后')
   const [chartScope,setChartScope]=useState('after')
   const [ruleSelected,setRuleSelected]=useState(false)
@@ -80,15 +80,15 @@ export function STRegimeSection(){
     series=([['st','主板ST等权参考'],['market','中证全指'],['small','中证2000']] as const).map(([key,name])=>({key,name,points:path.map(row=>({date:row.date,value:row[key],level:row[key]/path[0][key]*100})),change_pct:(path.at(-1)![key]/path[0][key]-1)*100}))
   }
   return <section id="st-cross-section" className="regime-section" aria-label="ST横向制度复盘">
-    <header className="regime-head"><div><p className="reading-kicker">研究报道</p><h2>横向看ST</h2></div><button type="button" disabled={busy} onClick={()=>setRequest(n=>n+1)}>{busy?'读取中…':'重读已核快照'}</button></header>
+    <header className="regime-head"><div><p className="reading-kicker">按问题看复盘</p><h2>横向看ST</h2></div><button type="button" disabled={busy} onClick={()=>setRequest(n=>n+1)}>{busy?'读取中…':'重读已核快照'}</button></header>
     {error&&<p role="alert">{error}。已有个股复盘仍可在下方查看。</p>}
     {!data&&!error&&<p role="status">正在读取整批ST的同窗比较…</p>}
     {data&&comparison&&after&&before&&fixed&&<>
-      <STRegimeArticle data={data} comparison={comparison} onEvidence={nextView=>{setView(nextView);setEvidenceOpen(true)}} chart={<figure className="regime-story-figure"><figcaption><strong>这段行情，放回市场里看</strong><span>{comparison.after.start} — {comparison.after.through}，从前一交易日收盘起算</span></figcaption><ReadingChart key={`story-${windowKey}`} series={(['st','market','small'] as const).map((key,index)=>{const start=data.daily.find(row=>row.date===comparison.after.start)?.anchor;const path=data.path.filter(row=>start!=null&&row.date>=start&&row.date<=comparison.after.through);return {key,name:['主板ST等权参考','中证全指','中证2000'][index],points:path.map(row=>({date:row.date,value:row[key],level:row[key]/path[0][key]*100})),change_pct:(path.at(-1)![key]/path[0][key]-1)*100}})} label="报道中的ST与市场同期走势"/><p className="reading-caption">三线从同一天归零，比较路径；ST线是每日在场股票的等权参考，不是固定持仓回报。</p></figure>}/>
+      <STRegimeThemes data={data} comparison={comparison} onEvidence={nextView=>{setView(nextView);setEvidenceOpen(true)}} chart={<figure className="regime-story-figure"><figcaption><strong>这段行情，放回市场里看</strong><span>{comparison.after.start} — {comparison.after.through}，从前一交易日收盘起算</span></figcaption><ReadingChart key={`story-${windowKey}`} series={(['st','market','small'] as const).map((key,index)=>{const start=data.daily.find(row=>row.date===comparison.after.start)?.anchor;const path=data.path.filter(row=>start!=null&&row.date>=start&&row.date<=comparison.after.through);return {key,name:['主板ST等权参考','中证全指','中证2000'][index],points:path.map(row=>({date:row.date,value:row[key],level:row[key]/path[0][key]*100})),change_pct:(path.at(-1)![key]/path[0][key]-1)*100}})} label="ST与市场同期走势"/><p className="reading-caption">三线从同一天归零，比较路径；ST线是每日在场股票的等权参考，不是固定持仓回报。</p></figure>}/>
       <details id="st-evidence" className="regime-evidence" open={evidenceOpen} onToggle={event=>setEvidenceOpen(event.currentTarget.open)}><summary><span>数据、图表与全部样本</span><small>切换观察窗口，核对计算与原始来源</small></summary>
-      <p className="regime-boundary"><strong>完整横截面截至 {data.through}</strong> · 7月6日生效；主板A股ST/*ST；创业板、科创板及北交所不混入。9月之后尚待补齐。</p>
+      <p className="regime-boundary"><strong>完整横截面截至 {data.through}</strong> · 7月6日生效；主板A股ST/*ST；创业板、科创板及北交所不混入。</p>
       <div className="regime-controls"><div className="regime-tabs" role="group" aria-label="横向复盘视角">{['规则前后','大盘联动','整批个股'].map(label=><button key={label} aria-pressed={view===label} onClick={()=>setView(label)}>{label}</button>)}</div><label>比较窗口<select aria-label="ST前后比较窗口" value={windowKey} onChange={e=>setWindowKey(e.target.value)}>{windows.map(key=>{const option=data.comparisons.find(c=>c.key===key);return option?<option key={key} value={key}>{option.label}</option>:null})}</select></label></div>
-      <div className="regime-verdict"><h3>{(after.reference_change_pct??0)<-2?'整体参考下跌，放宽限制没有带来普涨':Math.abs(after.reference_change_pct??0)<=2?'整体接近持平，个股涨跌仍明显分化':'整体参考上涨，仍需核对上涨覆盖面'}</h3><p>规则后 {after.days} 个交易日，ST等权参考 {pct(after.reference_change_pct)}，中证全指 {pct(after.market_change_pct)}。7月3日固定名单中，有端点的 {fixed.covered}/{fixed.total} 只，收益中位数 {pct(fixed.median_pct)}；{number(fixed.positive_pct,1)}% 上涨。</p>{windowKey==='all'&&<p>本项前窗40日、后窗{after.days}日，时长不同；精确前后比较请切换20日或40日。</p>}</div>
+      <div className="regime-verdict"><h3>{(after.reference_change_pct??0)<-2?'整体参考下跌，本窗没有出现普涨':Math.abs(after.reference_change_pct??0)<=2?'整体接近持平，个股涨跌仍明显分化':'整体参考上涨，仍需核对上涨覆盖面'}</h3><p>规则后 {after.days} 个交易日，ST等权参考 {pct(after.reference_change_pct)}，中证全指 {pct(after.market_change_pct)}。7月3日固定名单中，有端点的 {fixed.covered}/{fixed.total} 只，收益中位数 {pct(fixed.median_pct)}；{number(fixed.positive_pct,1)}% 上涨。</p>{windowKey==='all'&&<p>本项前窗40日、后窗{after.days}日，时长不同；精确前后比较请切换20日或40日。</p>}</div>
       {view==='规则前后'&&<>
         <div className="regime-chart-head"><h3>把ST放回市场里看</h3><label>曲线范围<select aria-label="ST横向曲线范围" value={chartScope} onChange={e=>setChartScope(e.target.value)}><option value="all">完整覆盖 · 标出规则生效</option><option value="before">仅规则前窗口 · 从0%起</option><option value="after">仅规则后窗口 · 从0%起</option></select></label></div>
         <p className="reading-caption">曲线从 {series[0]?.points[0]?.date} 收盘起算，至 {series[0]?.points.at(-1)?.date}；三线同起点归零。{chartScope==='all'?'完整覆盖期与上方所选前后窗口分别读数。':'与上方所选窗口对应。'}</p>

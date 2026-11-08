@@ -28,3 +28,4 @@
 .regime-endpoint-audit{border-top:1px solid var(--reading-line,#d9dfda);margin-top:2rem;padding-top:1.5rem;scroll-margin-top:84px}
 .regime-halt-stages{border-top:1px solid var(--reading-line,#d9dfda);padding-top:1.5rem;margin-top:1.5rem}.regime-halt-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem}.regime-halt-cases h5{font-size:1.05rem;margin:1rem 0}.regime-halt-cases details{margin:1rem 0}.regime-halt-cases a{overflow-wrap:anywhere}@media(max-width:700px){.regime-halt-cases{grid-template-columns:1fr;gap:1rem}}
 .regime-offer-result{border-left:2px solid var(--reading-line,#d9dfda);padding-left:1rem;margin:1.25rem 0}.regime-offer-result h6{font-size:1rem;margin:.75rem 0}
+.regime-halt-price{border-top:1px solid var(--reading-line,#d9dfda);margin-top:1rem;padding-top:.5rem}.regime-halt-price ul{padding-left:1.15rem}.regime-halt-price li{margin:.75rem 0}

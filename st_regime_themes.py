@@ -17,6 +17,7 @@ from st_company_risk_cases import company_risk_case_view
 from st_removal_followup import removal_followup_view
 from st_removal_cohort import removal_cohort_view
 from st_strong_removal_cases import strong_removal_cases_view
+from st_shenwu_execution import shenwu_execution_view
 
 
 def compound(rows, field):
@@ -81,7 +82,7 @@ def build_themes(inputs, daily):
     extreme = sorted(sorted(after,key=lambda r:abs(r['market_pct']),reverse=True)[:8],key=lambda r:r['date'])
     integrity=load_integrity(inputs)
     cohort=removal_cohort_view(inputs,daily)
-    result = {'strong_removal_cases':strong_removal_cases_view(inputs,cohort,daily), 'removal_cohort':cohort, 'removal_followup':removal_followup_view(inputs,daily), 'case_price_crosscheck':case_price_check_view(inputs,daily), 'company_risk_cases':company_risk_case_view(inputs,daily), 'halt_price_crosscheck':halt_price_check_view(inputs,daily), 'halt_stages':halt_stage_view(inputs), 'membership_audit':membership_audit_view(inputs), 'label_changes':label_change_view(inputs,daily), 'stock_price_crosscheck':price_check_view(inputs,daily), 'index_crosscheck':crosscheck_view(inputs,daily), 'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
+    result = {'shenwu_execution':shenwu_execution_view(inputs), 'strong_removal_cases':strong_removal_cases_view(inputs,cohort,daily), 'removal_cohort':cohort, 'removal_followup':removal_followup_view(inputs,daily), 'case_price_crosscheck':case_price_check_view(inputs,daily), 'company_risk_cases':company_risk_case_view(inputs,daily), 'halt_price_crosscheck':halt_price_check_view(inputs,daily), 'halt_stages':halt_stage_view(inputs), 'membership_audit':membership_audit_view(inputs), 'label_changes':label_change_view(inputs,daily), 'stock_price_crosscheck':price_check_view(inputs,daily), 'index_crosscheck':crosscheck_view(inputs,daily), 'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
     packet = inputs.get('announcement_study')
     if not packet:
         return result
@@ -95,6 +96,8 @@ def build_themes(inputs, daily):
         context=event_context(event,symbol,inputs,daily)
         alternative=event_context({**event,'published_on':event['alternate_published_on']},symbol,inputs,daily) if event.get('alternate_published_on') else None
         events.append({**event,'name':names[symbol],'observation':context,'alternate_observation':alternative})
+    if result['shenwu_execution']:
+        result['shenwu_execution']['observations']=[e for e in events if e['id'] in result['shenwu_execution']['event_ids']]
     if result['company_risk_cases']:
         result['company_risk_cases']['events']=[e for e in events if e['id'] in result['company_risk_cases']['event_ids']]
         subsidiary=result['company_risk_cases'].get('subsidiary_civil')

@@ -382,6 +382,7 @@ def publish(inputs, *, root=ROOT):
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
+               'strong_removal_cases_processor_sha256':sha256(Path(__file__).with_name('st_strong_removal_cases.py').read_bytes()).hexdigest(),
                'juewei_adjustment_processor_sha256':sha256(Path(__file__).with_name('st_juewei_adjustment.py').read_bytes()).hexdigest(),
                'removal_cohort_processor_sha256':sha256(Path(__file__).with_name('st_removal_cohort.py').read_bytes()).hexdigest(),
                'removal_followup_processor_sha256':sha256(Path(__file__).with_name('st_removal_followup.py').read_bytes()).hexdigest(),
@@ -409,6 +410,7 @@ def load(root=ROOT):
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()
+                or value.get('strong_removal_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_strong_removal_cases.py').read_bytes()).hexdigest()
                 or value.get('juewei_adjustment_processor_sha256')!=sha256(Path(__file__).with_name('st_juewei_adjustment.py').read_bytes()).hexdigest()
                 or value.get('removal_cohort_processor_sha256')!=sha256(Path(__file__).with_name('st_removal_cohort.py').read_bytes()).hexdigest()
                 or value.get('removal_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_removal_followup.py').read_bytes()).hexdigest()

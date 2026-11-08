@@ -524,6 +524,14 @@ def get_swing_reading() -> dict[str, object]:
             'refresh':{'in_progress':False,'last_error':None}}
 
 
+@app.get('/api/v1/workbench/st-regime')
+def get_st_regime_comparison() -> dict[str, object]:
+    from st_regime_comparison import load
+    data = load()
+    return {'availability': data['availability'], 'as_of': data.get('through'), 'data': data,
+            'refresh': {'in_progress': False, 'last_error': None}}
+
+
 @app.get('/api/v1/workbench/history')
 def get_history_inventory() -> dict[str, object]:
     from research_history import load

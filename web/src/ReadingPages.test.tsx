@@ -29,7 +29,7 @@ describe('trader reading pages',()=>{
     serve(learningReading)
     render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
     expect(await screen.findByRole('heading',{name:'*ST沐邦'})).toBeVisible()
-    expect(screen.getByRole('heading',{name:'保留原提醒，补充市场与同类对照'})).toBeVisible()
+    expect(screen.getByText('保留原提醒，补充市场与同类对照')).toBeVisible()
     expect(screen.getByText('签约不等于正式受理。')).toBeVisible()
     expect(screen.getByText(/此后至2026-11-04，收盘价变化-38.05%/)).toBeVisible()
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
@@ -76,8 +76,8 @@ describe('trader reading pages',()=>{
     serve({...learningReading,market_context:{...marketReading,latest_price:latestPrice}})
     render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
     expect(await screen.findByText(`${latestPrice.headline} · 2026-11-05`)).toBeVisible()
-    expect(screen.getByRole('heading',{name:'保留原提醒，补充市场与同类对照'})).toBeVisible()
-    expect(screen.getByText('价格截至 2026-11-04')).toBeVisible()
+    expect(screen.getByText('保留原提醒，补充市场与同类对照')).toBeVisible()
+    expect(screen.getByText('个股跟踪价格截至 2026-11-04')).toBeVisible()
   })
   it('shows a new-price review as pending while retaining the previous review inside an expansion',async()=>{
     const stock=learningReading.cases[0]
@@ -92,11 +92,22 @@ describe('trader reading pages',()=>{
     const stock=learningReading.cases[0]
     serve({...learningReading,cases:[{...stock,review:{...stock.review!,sources:[{label:'控制权变更公告 · 第2页',url:'https://static.cninfo.com.cn/example.pdf#page=2'}]}}]})
     render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
-    expect(await screen.findByRole('heading',{name:stock.review!.assessment})).toBeVisible()
+    await waitFor(()=>expect(screen.getByText(stock.review!.assessment)).toBeVisible())
     const disclosure=screen.getByText('这次复盘的依据').closest('details')!
     expect(disclosure.open).toBe(false)
     fireEvent.click(screen.getByText('这次复盘的依据'))
     expect(screen.getByRole('link',{name:'控制权变更公告 · 第2页 ↗'})).toHaveAttribute('href','https://static.cninfo.com.cn/example.pdf#page=2')
+  })
+  it('keeps the original-question archive closed until the reader opens it',async()=>{
+    const request=serve(learningReading)
+    render(<MemoryRouter><ExperienceHub/></MemoryRouter>)
+    await waitFor(()=>expect(screen.getByRole('button',{name:'同步记录'})).not.toBeDisabled())
+    const archive=screen.getByText('原问与历史复盘').closest('details')!
+    expect(archive.open).toBe(false)
+    expect(request.mock.calls.some(([url])=>String(url).includes('/workbench/history'))).toBe(false)
+    fireEvent.click(screen.getByText('原问与历史复盘'))
+    await waitFor(()=>expect(archive.open).toBe(true))
+    await waitFor(()=>expect(request.mock.calls.some(([url])=>String(url).includes('/workbench/history'))).toBe(true))
   })
   it('keeps classification verification in the source expansion',async()=>{
     serve({...marketReading,source_notes:[{title:'ST收盘分类已交叉核对',text:'名单实际读取于次日。',source_label:'独立名单',source_url:'https://www.szse.cn/source'}]})
@@ -147,6 +158,6 @@ describe('trader reading pages',()=>{
     const visibleJudgment=await screen.findAllByText('新记录：继续分别核查受理和资金履约。')
     expect(visibleJudgment[0]).toBeVisible()
     expect(screen.getByRole('heading',{name:'需要结合新资料再复盘'})).toBeVisible()
-    expect(request.mock.calls.every(([url,options])=>/\/workbench\/(learning|swing|history)/.test(String(url))&&!options?.body)).toBe(true)
+    expect(request.mock.calls.every(([url,options])=>/\/workbench\/(learning|swing|history|st-regime)/.test(String(url))&&!options?.body)).toBe(true)
   })
 })

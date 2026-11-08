@@ -6,6 +6,7 @@ import type {CaseReading,CaseReview,LearningReading,MarketReading,MethodReading}
 import {useReadingView} from './useReadingView'
 import {methodTitle} from './methodPresentation'
 import './reading.css'
+const STRegimeSection=lazy(()=>import('./STRegimeSection').then(module=>({default:module.STRegimeSection})))
 const SwingWatchSection=lazy(()=>import('./SwingWatchSection').then(module=>({default:module.SwingWatchSection})))
 const ResearchHistorySection=lazy(()=>import('./ResearchHistorySection').then(module=>({default:module.ResearchHistorySection})))
 
@@ -33,10 +34,11 @@ export function ExperienceHub(){
   const [category,setCategory]=useState('全部')
   const [selected,setSelected]=useState<string|null>(null)
   const data=packet?.data
-  return <div className="reading-page"><header className="reading-page-head"><div><p className="reading-kicker">原判断 → 后续变化 → 新经验</p><h1>跟踪与经验</h1></div><div className="reading-updated"><span>{packet?.as_of?`价格截至 ${packet.as_of}`:'正在读取跟踪记录'}</span><button onClick={reload} disabled={busy}>{busy?'读取中…':'同步记录'}</button></div></header>
+  return <div className="reading-page"><header className="reading-page-head"><div><p className="reading-kicker">横向看整批 · 纵向看个股 · 沉淀新经验</p><h1>跟踪与经验</h1></div><div className="reading-updated"><span>{packet?.as_of?`价格截至 ${packet.as_of}`:'正在读取跟踪记录'}</span><button onClick={reload} disabled={busy}>{busy?'读取中…':'同步记录'}</button></div></header>
     {error&&<p role="alert" className="reading-error">{error}。{data?'当前保留已加载的记录。':'请稍后重试。'}</p>}
-    <p className="reading-intro">以后直接在Codex里问。研究结论、个股跟踪和复盘统一收在这里。</p>
-    {data&&<nav className="reading-section-links" aria-label="本页内容"><a href="#research-history">历史复盘 ↓</a><a href="#tracked-stocks">持续跟踪 ↓</a><a href="#swing-watch">反弹观察 ↓</a><a href="#experience-library">经验库 ↓</a></nav>}
+    <p className="reading-intro">以后直接在Codex里问。整批ST比较、个股跟踪和历史复盘统一收在这里。</p>
+    {data&&<nav className="reading-section-links" aria-label="本页内容"><a href="#st-cross-section">ST横向比较 ↓</a><a href="#research-history">历史复盘 ↓</a><a href="#tracked-stocks">持续跟踪 ↓</a><a href="#swing-watch">反弹观察 ↓</a><a href="#experience-library">经验库 ↓</a></nav>}
+    <Suspense fallback={<p className="reading-muted">正在读取ST横向复盘…</p>}><STRegimeSection/></Suspense>
     {!data?<div className="reading-placeholder" role="status"><h2>正在读取跟踪与经验</h2><p>已有记录准备好后会直接显示。</p></div>:<>
       <Suspense fallback={<p className="reading-muted">正在读取历史复盘…</p>}><ResearchHistorySection/></Suspense>
       {data.cases.length>1&&<div id="tracked-stocks" className="reading-watchlist" role="group" aria-label="持续跟踪个股">{data.cases.map((stock,index)=><button key={stock.symbol} aria-pressed={selected?selected===stock.symbol:index===0} onClick={()=>setSelected(stock.symbol)}><strong>{stock.name||stock.symbol}</strong><span>{stock.last_close==null?'价格待更新':`${stock.last_close.toFixed(2)}元`}<small>{stock.latest_quote?`近5日 ${percent(stock.latest_quote.five_day_change_pct)}`:`同期 ${percent(stock.period_change_pct)}`}</small></span></button>)}</div>}

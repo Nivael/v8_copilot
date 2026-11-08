@@ -147,6 +147,6 @@ describe('trader reading pages',()=>{
     const visibleJudgment=await screen.findAllByText('新记录：继续分别核查受理和资金履约。')
     expect(visibleJudgment[0]).toBeVisible()
     expect(screen.getByRole('heading',{name:'需要结合新资料再复盘'})).toBeVisible()
-    expect(request.mock.calls.every(([url,options])=>/\/workbench\/(learning|swing|history)/.test(String(url))&&!options?.body)).toBe(true)
+    expect(request.mock.calls.every(([url,options])=>/\/workbench\/(learning|swing|history|st-regime)/.test(String(url))&&!options?.body)).toBe(true)
   })
 })

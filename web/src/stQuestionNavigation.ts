@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'dividends',anchor:'st-dividend-basis',title:'章鼓、八菱：同一天的涨幅，为什么有三种读数？',field:'dividend_basis'},
   {key:'quoteaudit',anchor:'st-fixed-quote-audit',title:'固定150只：行情核到哪一步，口径差异会改变结论吗？',field:'fixed_quote_audit'},
   {key:'prices',anchor:'st-stock-price-check',title:'沐邦、宝馨等五股：短线都涨，这几个月有什么不同？',field:'stock_price_crosscheck'},
   {key:'earnings',anchor:'st-earnings-warning',title:'天际等五家公司：盈利、现金和摘帽条件怎样分开看？',field:'earnings_warning'},

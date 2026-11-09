@@ -40,3 +40,5 @@
 @media(max-width:700px){.regime-question-directory{grid-template-columns:minmax(0,1fr)}.regime-question-directory p,.regime-question-directory button{grid-column:1}.regime-question-directory select{font-size:.85rem}}
 
 #st-fixed-quote-audit{scroll-margin-top:84px}
+
+#st-dividend-basis{scroll-margin-top:84px}

@@ -6,6 +6,7 @@ import {STPriceBandAudit} from './STPriceBandAudit'
 import type {OfficialPDFAudit} from './STOfficialPDFAudit'
 import type {RegimePreRuleMembership,RegimeRemovalEraComparison} from './stRegimeTypes'
 import type {PriceBandAudit} from './STPriceBandAudit'
+import hukeFixture from './__fixtures__/huke-date-proof.json'
 import auditFixture from './__fixtures__/official-pdf-audit.json'
 import preFixture from './__fixtures__/pre-rule-membership.json'
 import eraFixture from './__fixtures__/removal-era-comparison.json'
@@ -21,3 +22,5 @@ it('旧官方来源子集明确为历史口径，不再声称当前镜像未核'
 it('价格边界的天择分派原件同步显示官方副本',()=>{
  render(<STPriceBandAudit data={bandFixture as PriceBandAudit} audit={audit}/>);fireEvent.click(screen.getByText('用具体案例理解：取整、除权参考价与摘帽'));fireEvent.change(screen.getByLabelText('价格边界案例类型'),{target:{value:'reference'}});expect(screen.getByRole('link',{name:'巨潮正式副本已核，与原镜像字节相同 ↗'})).toHaveAttribute('href',audit.rows.find(r=>r.official_id==='1225312843')!.official_url);expect(screen.queryByText('发行人PDF镜像；官方原字节待补')).not.toBeInTheDocument()
 })
+
+it('沪科旧边界里的5月目录明确是前置安排，并链接新正式首日提示',()=>{render(<STPreRuleMembership data={preFixture as RegimePreRuleMembership} audit={audit} hukeProof={hukeFixture}/>);fireEvent.change(screen.getByLabelText('制度前边界公司'),{target:{value:'600608'}});fireEvent.click(screen.getByText('看所引原页、日期差异与认证限制'));expect(screen.getByRole('link',{name:'5月30日前置安排目录（不是本份首日提示） ↗'})).toBeVisible();expect(screen.getByRole('link',{name:'本轮正式目录6月8日的首日提示 ↗'})).toHaveAttribute('href',hukeFixture.sources.find(s=>s.announcement_id==='1225356346')!.url);expect(screen.getByText(/新正式目录日与落款均6月8日/)).toBeVisible()})

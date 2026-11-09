@@ -29,19 +29,20 @@ export function useQuestionNavigation(data:STRegimeData){
   const questions=availableQuestions(data)
   const baoxin=hash==='st-baoxin-auction-links'&&Boolean(data.themes?.baoxin_auction_links)
   const official=hash==='st-official-pdf-audit'&&Boolean(data.themes?.official_pdf_audit)
-  const selected=baoxin||official?'events':questions.find(q=>q.anchor===hash)?.key??Object.keys(mainAnchors).find(k=>mainAnchors[k]===hash)??'journey'
-  const known=baoxin||official||questions.some(q=>q.anchor===hash)||Object.values(mainAnchors).includes(hash)
+  const huke=hash==='st-huke-date-proof'&&Boolean(data.themes?.huke_date_proof)
+  const selected=baoxin||official||huke?'events':questions.find(q=>q.anchor===hash)?.key??Object.keys(mainAnchors).find(k=>mainAnchors[k]===hash)??'journey'
+  const known=baoxin||official||huke||questions.some(q=>q.anchor===hash)||Object.values(mainAnchors).includes(hash)
   useEffect(()=>{
     if(!known)return
     const frame=requestAnimationFrame(()=>document.getElementById(hash)?.scrollIntoView?.({block:'start'}))
     return()=>cancelAnimationFrame(frame)
   },[hash,known])
   function select(key:string){
-    const anchor=key==='baoxin'&&data.themes?.baoxin_auction_links?'st-baoxin-auction-links':questions.find(q=>q.key===key)?.anchor??mainAnchors[key]
+    const anchor=key==='huke'&&data.themes?.huke_date_proof?'st-huke-date-proof':key==='baoxin'&&data.themes?.baoxin_auction_links?'st-baoxin-auction-links':questions.find(q=>q.key===key)?.anchor??mainAnchors[key]
     if(!anchor)return
     if(window.location.hash==='#'+anchor){document.getElementById(anchor)?.scrollIntoView?.({block:'start'});return}
     window.history.pushState(window.history.state,'','#'+anchor)
     window.dispatchEvent(new HashChangeEvent('hashchange'))
   }
-  return {topic:selected,select,questions,companyOverride:baoxin?'002514':null}
+  return {topic:selected,select,questions,companyOverride:baoxin?'002514':huke?'600608':null}
 }

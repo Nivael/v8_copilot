@@ -4,6 +4,7 @@ from math import prod
 from statistics import mean
 from canonical_json import digest
 from st_sample_integrity import load_integrity
+from st_fixed_quote_audit import fixed_quote_audit_view
 from st_member_transitions import member_transition_view
 from st_member_entries import member_entry_view
 from st_index_crosscheck import crosscheck_view
@@ -83,7 +84,7 @@ def build_themes(inputs, daily):
     extreme = sorted(sorted(after,key=lambda r:abs(r['market_pct']),reverse=True)[:8],key=lambda r:r['date'])
     integrity=load_integrity(inputs)
     cohort=removal_cohort_view(inputs,daily)
-    result = {'earnings_warning':tianji_conditions_view(inputs,daily), 'shenwu_execution':shenwu_execution_view(inputs), 'strong_removal_cases':strong_removal_cases_view(inputs,cohort,daily), 'removal_cohort':cohort, 'removal_followup':removal_followup_view(inputs,daily), 'case_price_crosscheck':case_price_check_view(inputs,daily), 'company_risk_cases':company_risk_case_view(inputs,daily), 'halt_price_crosscheck':halt_price_check_view(inputs,daily), 'halt_stages':halt_stage_view(inputs), 'membership_audit':membership_audit_view(inputs), 'label_changes':label_change_view(inputs,daily), 'stock_price_crosscheck':price_check_view(inputs,daily), 'index_crosscheck':crosscheck_view(inputs,daily), 'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
+    result = {'fixed_quote_audit':fixed_quote_audit_view(inputs,daily), 'earnings_warning':tianji_conditions_view(inputs,daily), 'shenwu_execution':shenwu_execution_view(inputs), 'strong_removal_cases':strong_removal_cases_view(inputs,cohort,daily), 'removal_cohort':cohort, 'removal_followup':removal_followup_view(inputs,daily), 'case_price_crosscheck':case_price_check_view(inputs,daily), 'company_risk_cases':company_risk_case_view(inputs,daily), 'halt_price_crosscheck':halt_price_check_view(inputs,daily), 'halt_stages':halt_stage_view(inputs), 'membership_audit':membership_audit_view(inputs), 'label_changes':label_change_view(inputs,daily), 'stock_price_crosscheck':price_check_view(inputs,daily), 'index_crosscheck':crosscheck_view(inputs,daily), 'member_entries':member_entry_view(inputs,daily), 'member_transitions':member_transition_view(inputs), 'sample_integrity': {'through':integrity['through'],'cases':integrity['cases'],'boundary':integrity['price_verification']['boundary']} if integrity else None, 'months':months,'market_days':[{k:r[k] for k in ('date','market_pct','return_pct','positive_pct')} for r in extreme]}
     packet = inputs.get('announcement_study')
     if not packet:
         return result

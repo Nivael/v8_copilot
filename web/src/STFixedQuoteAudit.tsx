@@ -1,0 +1,24 @@
+import {useState} from 'react'
+import type {RegimeFixedQuoteAudit} from './stRegimeTypes'
+const pct=(n:number|null)=>(n==null?'无共同成交端点':(n>0?'+':'')+n.toFixed(2)+'%')
+export function STFixedQuoteAudit({data:d}:{data:RegimeFixedQuoteAudit|null|undefined}){
+ const [period,setPeriod]=useState('all'),[scope,setScope]=useState('different'),[query,setQuery]=useState('')
+ if(!d)return null
+ const summary=d.summaries[period]
+ const rows=d.rows.filter(r=>(scope==='all'||scope==='different'&&Boolean(r.qfq_difference_days)||scope==='prior'&&Boolean(r.prior_exit_receipt))&&(!query||`${r.name} ${r.symbol}`.includes(query.trim())))
+ return <section id="st-fixed-quote-audit" className="regime-removal-cohort" aria-label="固定150只行情核验">
+ <h4>固定150只的行情，核对到了哪一步？</h4><p>{d.answer}</p>
+ <p>完整区间从{d.anchor}收盘至{d.through}。本轮补核{d.new_responses}份响应，复用{d.reused_responses}份，共{d.quote_points.toLocaleString()}个口径报价点，对应{d.traded_security_days_replayed.toLocaleString()}个实际成交股票日期。原始价已逐日一致的{d.raw_agree_companies}只中，{d.qfq_agree_companies}只直接前复权也一致，另{d.qfq_difference_companies}只差异保留。</p>
+ <label>比较共同日期 <select aria-label="固定样本核价窗口" value={period} onChange={e=>setPeriod(e.target.value)}><option value="all">完整7月3日至截止日</option><option value="before20">规则前20个市场日</option><option value="after20">规则后20个市场日</option><option value="before40">规则前40个市场日</option><option value="after40">规则后40个市场日</option><option value="20">截至{d.through}前20个市场日</option><option value="5">截至{d.through}前5个市场日</option></select></label>
+ <p>当前比较：{summary.anchor??'起点待核'}收盘 → {summary.through??'终点待核'}收盘，{summary.market_days??'待核'}个市场交易日。</p>
+ <table className="regime-table"><caption>同一批{summary.paired}只、同一日期；腾讯直接前复权只作平行口径，原数保留</caption><thead><tr><th>统计</th><th>面板原口径</th><th>腾讯直接前复权</th></tr></thead><tbody><tr><th>上涨家数</th><td>{summary.primary_positive}/{summary.paired}</td><td>{summary.checked_positive}/{summary.paired}</td></tr><tr><th>收益中位数</th><td>{pct(summary.primary_median_pct)}</td><td>{pct(summary.checked_median_pct)}</td></tr></tbody></table>
+ {summary.paired_other_window&&<p>规则前后统计只纳入两段均可算的同一批{summary.paired}只；切换前后窗口不更换公司。下表仍保留未入配对者，不填零。</p>}
+ <p>同窗大盘{pct(summary.market_pct)}、ST参考{pct(summary.st_pct)}。{summary.sign_changes}只发生涨/非涨分类变化；单股两口径收益最大相差{summary.max_return_difference_pp?.toFixed(4)??'待核'}个百分点。并排可算{summary.paired}/150只，其余{summary.unpaired}只留空；不拿停牌参考价或其他日期补成收益。</p>
+ <p>所核七种窗口均未出现涨/非涨分类变化，但不是每项统计都相同。例如规则后20日，同一批{d.summaries.after20.paired}只的中位数由面板口径{pct(d.summaries.after20.primary_median_pct)}变为腾讯口径{pct(d.summaries.after20.checked_median_pct)}，小差异仍保留。</p>
+ <p>康佳与萃华沿用此前退出案例记录，本轮没有重新重放原报价字节。原始价一致、复权构造一致和具备成交端点是三个条件，不互相替代。绝味的构造差异此前已重建，直接读数仍保留；其余差异须逐项核公司行动与精度，不能先认定为原价错误。</p>
+ <div className="regime-stock-controls"><label>查看范围<select aria-label="固定样本核价范围" value={scope} onChange={e=>setScope(e.target.value)}><option value="different">前复权有差异的{d.qfq_difference_companies}只</option><option value="prior">沿用退出记录的2只</option><option value="all">全部150只</option></select></label><label>查找公司<input aria-label="核价查找公司" value={query} onChange={e=>setQuery(e.target.value)} placeholder="名称或代码"/></label><span>{rows.length}只</span></div>
+ <div className="regime-scroll"><table className="regime-table"><thead><tr><th>固定样本</th><th>收盘与口径状态</th><th>面板同窗</th><th>腾讯同窗</th><th>来源与差异</th></tr></thead><tbody>{rows.map(r=><tr key={r.symbol}><th>{r.name}<small>{r.symbol}{!summary.paired_symbols.includes(r.symbol)&&' · 本组未入统计'}</small></th><td>{r.raw_agree?'原始收盘一致':'沿用退出记录'}<small>{r.qfq_difference_days?`前复权${r.qfq_difference_days}日直接读数差异${r.basis_reconciled?'，构造已解释':''}`:r.qfq_agree?'直接前复权一致':'本轮未重放'}</small></td><td>{pct(r.windows[period].primary_pct)}</td><td>{r.prior_exit_receipt&&r.windows[period].checked_pct==null?'本轮未重放':pct(r.windows[period].checked_pct)}</td><td><details><summary>核来源与日期</summary><p>{r.windows[period].anchor} → {r.windows[period].through}；{r.windows[period].market_days}个市场日。{r.windows[period].gap}</p>{r.channels.map(c=><div key={c.key}><p>{c.key==='tencent_raw'?'原始收盘':'直接前复权'}：{c.points}点，缺成交日{c.missing_trade_dates.length}，额外无成交日{c.extra_nontrade_dates.length}，直接差异{c.differences.length}日。</p><a href={c.source.url} target="_blank" rel="noreferrer">冻结报价对应请求 ↗</a><small>取得于{c.source.observed_at} · 摘要{c.source.sha256.slice(0,12)}；链接可能更新，以上使用冻结响应。</small>{c.differences.length>0&&<details><summary>逐日差异原数</summary><ul>{c.differences.map(x=><li key={x.date}>{x.date}：原口径{x.primary}，腾讯{x.checked}</li>)}</ul></details>}</div>)}</details></td></tr>)}</tbody></table>{rows.length===0&&<p>没有符合筛选的公司。</p>}</div>
+ <p><strong>判断怎样更新：</strong>原始价格核验覆盖已扩大，完整区间少数上涨、固定样本中位数跌幅小于同窗大盘的描述仍获平行口径支持；{d.qfq_difference_companies}只复权差异尚不能一概认证。同窗结果接近不代替构造解释，也不认证制度或公告净贡献。</p>
+ <p><strong>什么会改变判断：</strong>若公司行动原件、第二报价渠道或成交状态出现冲突，重算受影响股票、分母和分布；保留现在与旧版本，分别更新解释。</p><details><summary>核验边界与剩余缺口</summary><p>{d.boundary}</p><p>原提供方{d.cached_provider_responses}份缓存重放，没有新提供方查询。仍未逐一认证动态成员全体及逐日ST线；{d.qfq_difference_companies}只差异中已解释的绝味与其他待核项目分开。</p></details>
+ </section>
+}

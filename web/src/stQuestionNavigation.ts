@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'quoteaudit',anchor:'st-fixed-quote-audit',title:'固定150只：行情核到哪一步，口径差异会改变结论吗？',field:'fixed_quote_audit'},
   {key:'prices',anchor:'st-stock-price-check',title:'沐邦、宝馨等五股：短线都涨，这几个月有什么不同？',field:'stock_price_crosscheck'},
   {key:'earnings',anchor:'st-earnings-warning',title:'天际等五家公司：盈利、现金和摘帽条件怎样分开看？',field:'earnings_warning'},
   {key:'cohort',anchor:'st-removal-cohort',title:'12只摘帽股：摘帽后是否普遍继续上涨？',field:'removal_cohort'},

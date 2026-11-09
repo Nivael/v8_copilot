@@ -9,6 +9,7 @@ from st_dividend_basis import dividend_basis_view,update_quote_audit
 from st_baoxin_auction_links import auction_links_view
 from st_baoxin_holding_bridge import holding_bridge_view
 from st_announcement_reading import announcement_reading
+from st_official_pdf_audit import official_pdf_audit
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -158,4 +159,5 @@ def build_themes(inputs, daily):
     result['disclosure_chains']=disclosure_chain_view(inputs,result['announcements'])
     result['experience_case_audit']=experience_case_audit(inputs,result['removal_era_comparison'],result.get('announcements'))
     result['announcement_reading']=announcement_reading(inputs,result['announcements'],lambda e:event_context(e,e['symbol'],inputs,daily))
+    result['official_pdf_audit']=official_pdf_audit(inputs,result['announcements'])
     return result

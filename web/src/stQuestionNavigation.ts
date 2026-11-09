@@ -28,8 +28,9 @@ export function useQuestionNavigation(data:STRegimeData){
   const hash=useSyncExternalStore(subscribe,snapshot,()=> '')
   const questions=availableQuestions(data)
   const baoxin=hash==='st-baoxin-auction-links'&&Boolean(data.themes?.baoxin_auction_links)
-  const selected=baoxin?'events':questions.find(q=>q.anchor===hash)?.key??Object.keys(mainAnchors).find(k=>mainAnchors[k]===hash)??'journey'
-  const known=baoxin||questions.some(q=>q.anchor===hash)||Object.values(mainAnchors).includes(hash)
+  const official=hash==='st-official-pdf-audit'&&Boolean(data.themes?.official_pdf_audit)
+  const selected=baoxin||official?'events':questions.find(q=>q.anchor===hash)?.key??Object.keys(mainAnchors).find(k=>mainAnchors[k]===hash)??'journey'
+  const known=baoxin||official||questions.some(q=>q.anchor===hash)||Object.values(mainAnchors).includes(hash)
   useEffect(()=>{
     if(!known)return
     const frame=requestAnimationFrame(()=>document.getElementById(hash)?.scrollIntoView?.({block:'start'}))

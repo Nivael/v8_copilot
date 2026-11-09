@@ -2,10 +2,10 @@ import type {RegimeDividendBasis} from './stRegimeTypes'
 const pct=(n:number)=>(n>0?'+':'')+n.toFixed(2)+'%'
 const money=(n:string)=>Number(n).toLocaleString('zh-CN',{maximumFractionDigits:2})
 function Source({source:s}:{source:RegimeDividendBasis['rows'][number]['actions'][number]['cash_source']}){return <a href={s.url.split('#')[0]+'#page='+s.page} target="_blank" rel="noreferrer">{s.title} · 第{s.page}页 ↗</a>}
-export function STDividendBasis({data:d}:{data:RegimeDividendBasis|null|undefined}){
+export function STDividendBasis({data:d,anchorId='st-dividend-basis'}:{data:RegimeDividendBasis|null|undefined;anchorId?:string}){
  if(!d)return null
  const may=d.rows.find(r=>r.symbol==='002592')!.actions.find(a=>a.ex_on==='2026-05-19')!
- return <section id="st-dividend-basis" className="regime-removal-cohort" aria-label="章鼓八菱分红与复权解释">
+ return <section id={anchorId} className="regime-removal-cohort" aria-label="章鼓八菱分红与复权解释">
  <h4>同一天的涨幅，为什么有三种读数？</h4><p>{d.answer}</p>
  <p><strong>最容易误读的一天：</strong>八菱5月19日，原价变化{pct(may.raw_day_pct)}，按当天除息参考价为{pct(may.reference_day_pct)}，今天的直接前复权回看为{pct(may.direct_qfq_day_pct)}。后一个数已包含9月后来分红对历史价格的调整，不是当时的日涨跌幅。</p>
  <p>当日参考价{may.reference}元，旧5%上边界按分币取整为{may.old_up_boundary}元，实际收盘也是{may.ex_raw}元；没有突破这条价格边界。不能把前复权回看的约5.05%，当作新规前已经越过旧5%边界的证据。整批复盘原本使用日行情参考价和分币边界，相关旧统计不需回填。</p>

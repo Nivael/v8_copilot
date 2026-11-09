@@ -1,3 +1,4 @@
+import {STRemainingBasis} from './STRemainingBasis'
 import {STDividendBasis} from './STDividendBasis'
 import {STFixedQuoteAudit} from './STFixedQuoteAudit'
 import {useQuestionNavigation} from './stQuestionNavigation'
@@ -39,7 +40,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
     {questions.map(q=><option key={q.key} value={q.key}>{q.title}</option>)}
    </select>
    <p>每次只展开所选问题。切换总览或案例时，资料截止与证据保持不变。</p>
-   {themes?.dividend_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：同一天的涨幅，为什么有三种读数？ →</button>:themes?.fixed_quote_audit?<button className="regime-text-link" onClick={()=>setTopic('quoteaudit')}>本轮新核：固定150只的行情，核对到了哪一步？ →</button>:themes?.earnings_warning&&<button className="regime-text-link" onClick={()=>setTopic('earnings')}>本轮新核：盈利和现金都转好，为什么还在ST？ →</button>}
+   {themes?.remaining_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：剩余8只差异，分别是什么原因？ →</button>:themes?.dividend_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：同一天的涨幅，为什么有三种读数？ →</button>:themes?.fixed_quote_audit?<button className="regime-text-link" onClick={()=>setTopic('quoteaudit')}>本轮新核：固定150只的行情，核对到了哪一步？ →</button>:themes?.earnings_warning&&<button className="regime-text-link" onClick={()=>setTopic('earnings')}>本轮新核：盈利和现金都转好，为什么还在ST？ →</button>}
   </div>}
   <p className="regime-topic-date">观察期 {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">
@@ -68,7 +69,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {themes?.sample_integrity&&<section><h4>③ 缺价先查位置，再查状态</h4><p>缺起点、缺终点、停牌与摘牌会产生不同问题。萃华在期末仍有交易，不能因缺起点就写成已经退市；康佳A有现金选择权安排，也不能由摘牌直接推断所有人损失100%。</p><p><strong>何时暂停计算：</strong>没有同窗端点，或未核清具体持有人的权利和交收时，保留缺口，不借用更早价格拼接收益。</p><button className="regime-text-link" onClick={()=>onEvidence('整批个股','st-sample-integrity')}>核对两种缺口 →</button></section>}<section><h4>④ 市场与公司证据一起看</h4><p>同样的公告，处于普跌和普涨环境时，个股绝对涨跌容易给出不同印象。固定同一窗口比较个股、ST与大盘，保留“事实变好但价格下跌”与“风险仍在但价格上涨”的反例。</p><p><strong>仍不能回答：</strong>没有可比对照与精确时点，不能估计公告或规则各造成多少涨跌，也不能据此预测下次收益。</p></section>
   </div><p className="reading-caption">这些是本轮复盘的核对原则。一次制度变化、重叠窗口和同一公司多条公告不算独立实证，未自动晋级为经验证的交易方法。</p></div>}
   <div className="regime-selected-case">
-   {topic==='dividends'&&<STDividendBasis data={themes?.dividend_basis}/>}
+   {topic==='dividends'&&(themes?.remaining_basis?<div id="st-dividend-basis"><STRemainingBasis data={themes.remaining_basis} explained={themes.fixed_quote_audit?.qfq_basis_explained_companies}/><details><summary>回看章鼓、八菱：三个涨幅的具体例子</summary><STDividendBasis data={themes.dividend_basis} anchorId="st-dividend-basis-original"/></details></div>:<STDividendBasis data={themes?.dividend_basis}/>)}
    {topic==='quoteaudit'&&<STFixedQuoteAudit data={themes?.fixed_quote_audit}/>}
    {topic==='prices'&&<div id="st-stock-price-check"><STStockPriceCrosscheck data={themes?.stock_price_crosscheck} onCompany={s=>{setSymbol(s);setShowAll(false);setTopic('events')}}/></div>}
    {topic==='earnings'&&<STEarningsWarning data={themes?.earnings_warning}/>}

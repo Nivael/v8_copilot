@@ -14,6 +14,7 @@ from st_huke_date_proof import apply_huke_date_proof
 from st_initial_status_coverage import initial_status_coverage
 from st_warning_basis_followup import warning_basis_followup
 from st_ruihe_process import ruihe_process
+from st_initial_three_followup import initial_three_followup
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -168,4 +169,5 @@ def build_themes(inputs, daily):
     result['initial_status_coverage'],result['announcement_reading']=initial_status_coverage(inputs,result['announcement_reading'],lambda e:event_context(e,e['symbol'],inputs,daily),daily)
     result['warning_basis_followup'],result['announcement_reading']=warning_basis_followup(inputs,result['announcement_reading'],result['initial_status_coverage'],result['membership_audit'],lambda e:event_context(e,e['symbol'],inputs,daily))
     result['ruihe_process'],result['announcement_reading']=ruihe_process(inputs,result['announcement_reading'],result['initial_status_coverage'],lambda e:event_context(e,e['symbol'],inputs,daily))
+    result['initial_three_followup'],result['announcement_reading']=initial_three_followup(inputs,result['announcement_reading'],result['initial_status_coverage'],lambda e:event_context(e,e['symbol'],inputs,daily))
     return result

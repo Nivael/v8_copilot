@@ -17,6 +17,7 @@ from st_ruihe_process import ruihe_process
 from st_initial_three_followup import initial_three_followup
 from st_initial_three_quoteproof import three_quoteproof
 from st_zhongyan_debt_followup import zhongyan_debt_followup
+from st_initial_day_corroboration import initial_day_corroboration
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -174,4 +175,5 @@ def build_themes(inputs, daily):
     result['initial_three_followup'],result['announcement_reading']=initial_three_followup(inputs,result['announcement_reading'],result['initial_status_coverage'],lambda e:event_context(e,e['symbol'],inputs,daily))
     result['initial_three_quoteproof']=three_quoteproof(inputs,result['initial_three_followup'])
     result['zhongyan_debt_followup'],result['announcement_reading']=zhongyan_debt_followup(inputs,result['announcement_reading'],result['initial_three_followup'],lambda e:event_context(e,e['symbol'],inputs,daily))
+    result['initial_day_corroboration'],result['announcement_reading']=initial_day_corroboration(inputs,result['announcement_reading'],lambda e:event_context(e,e['symbol'],inputs,daily),daily)
     return result

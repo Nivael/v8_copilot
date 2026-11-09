@@ -382,6 +382,7 @@ def publish(inputs, *, root=ROOT):
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
+               'fixed_quote_audit_processor_sha256':sha256(Path(__file__).with_name('st_fixed_quote_audit.py').read_bytes()).hexdigest(),
                'tianji_conditions_processor_sha256':sha256(Path(__file__).with_name('st_tianji_conditions.py').read_bytes()).hexdigest(),
                'shenwu_execution_processor_sha256':sha256(Path(__file__).with_name('st_shenwu_execution.py').read_bytes()).hexdigest(),
                'strong_removal_cases_processor_sha256':sha256(Path(__file__).with_name('st_strong_removal_cases.py').read_bytes()).hexdigest(),
@@ -412,6 +413,7 @@ def load(root=ROOT):
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()
+                or value.get('fixed_quote_audit_processor_sha256')!=sha256(Path(__file__).with_name('st_fixed_quote_audit.py').read_bytes()).hexdigest()
                 or value.get('tianji_conditions_processor_sha256')!=sha256(Path(__file__).with_name('st_tianji_conditions.py').read_bytes()).hexdigest()
                 or value.get('shenwu_execution_processor_sha256')!=sha256(Path(__file__).with_name('st_shenwu_execution.py').read_bytes()).hexdigest()
                 or value.get('strong_removal_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_strong_removal_cases.py').read_bytes()).hexdigest()

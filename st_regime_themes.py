@@ -6,6 +6,7 @@ from canonical_json import digest
 from st_sample_integrity import load_integrity
 from st_fixed_quote_audit import fixed_quote_audit_view
 from st_dividend_basis import dividend_basis_view,update_quote_audit
+from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
 from st_removal_era_comparison import removal_era_comparison
@@ -147,5 +148,6 @@ def build_themes(inputs, daily):
     changes = inputs.get('refresh_provenance',{}).get('prior_activity_differences',[])
     result['refresh'] = {'through':inputs['through'],'prior_input_digest':inputs.get('refresh_provenance',{}).get('prior_input_digest'),
                           'activity_differences':len(changes)}
+    result['disclosure_chains']=disclosure_chain_view(inputs,result['announcements'])
     result['experience_case_audit']=experience_case_audit(inputs,result['removal_era_comparison'],result.get('announcements'))
     return result

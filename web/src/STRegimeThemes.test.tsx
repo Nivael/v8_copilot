@@ -1,3 +1,7 @@
+import initialOrigin from './__fixtures__/initial-warning-origin.json'
+import initialDay from './__fixtures__/initial-day-corroboration.json'
+import initialCoverage from './__fixtures__/initial-status-coverage.json'
+import initialRuihe from './__fixtures__/ruihe-process.json'
 import {act,cleanup,fireEvent,render,screen,within} from '@testing-library/react'
 import {afterEach,beforeEach,describe,expect,it,vi} from 'vitest'
 import {STRegimeThemes} from './STRegimeThemes'
@@ -66,4 +70,10 @@ describe('按问题查阅已核研究',()=>{
   expect(within(screen.getByRole('combobox',{name:'按具体问题查阅'})).getAllByRole('option')).toHaveLength(6)
   expect(availableQuestions(fixture()).map(q=>q.key)).toEqual(['earnings','cohort','strong','execution','followup'])
  })
+})
+
+it('固定入口接通警示依据包，实际专题不能只停留旧原件覆盖',()=>{
+ window.history.replaceState(null,'','/learning#st-initial-status-coverage')
+ const data=fixture();data.themes={...data.themes,initial_status_coverage:initialCoverage,ruihe_process:initialRuihe,initial_day_corroboration:initialDay,initial_warning_origin:initialOrigin} as unknown as STRegimeData['themes']
+ mount(data);expect(screen.getByRole('region',{name:'期初警示依据补全'})).toBeVisible();expect(screen.getByText('六家警示依据已补；同样异动，背后的约束不同')).toBeVisible()
 })

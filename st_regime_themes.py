@@ -11,6 +11,7 @@ from st_baoxin_holding_bridge import holding_bridge_view
 from st_announcement_reading import announcement_reading
 from st_official_pdf_audit import official_pdf_audit
 from st_huke_date_proof import apply_huke_date_proof
+from st_initial_status_coverage import initial_status_coverage
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -162,4 +163,5 @@ def build_themes(inputs, daily):
     result['announcement_reading']=announcement_reading(inputs,result['announcements'],lambda e:event_context(e,e['symbol'],inputs,daily))
     result['official_pdf_audit']=official_pdf_audit(inputs,result['announcements'])
     result['huke_date_proof'],result['announcement_reading']=apply_huke_date_proof(inputs,result['announcement_reading'],lambda e:event_context(e,'600608',boundary_inputs,daily))
+    result['initial_status_coverage'],result['announcement_reading']=initial_status_coverage(inputs,result['announcement_reading'],lambda e:event_context(e,e['symbol'],inputs,daily),daily)
     return result

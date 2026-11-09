@@ -382,6 +382,7 @@ def publish(inputs, *, root=ROOT):
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
+               'initial_status_processor_sha256':sha256(Path(__file__).with_name('st_initial_status_coverage.py').read_bytes()).hexdigest(),
                'huke_date_proof_processor_sha256':sha256(Path(__file__).with_name('st_huke_date_proof.py').read_bytes()).hexdigest(),
                'official_pdf_audit_processor_sha256':sha256(Path(__file__).with_name('st_official_pdf_audit.py').read_bytes()).hexdigest(),
                'announcement_reading_processor_sha256':sha256(Path(__file__).with_name('st_announcement_reading.py').read_bytes()).hexdigest(),
@@ -428,6 +429,7 @@ def load(root=ROOT):
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()
+                or value.get('initial_status_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_status_coverage.py').read_bytes()).hexdigest()
                 or value.get('huke_date_proof_processor_sha256')!=sha256(Path(__file__).with_name('st_huke_date_proof.py').read_bytes()).hexdigest()
                 or value.get('official_pdf_audit_processor_sha256')!=sha256(Path(__file__).with_name('st_official_pdf_audit.py').read_bytes()).hexdigest()
                 or value.get('announcement_reading_processor_sha256')!=sha256(Path(__file__).with_name('st_announcement_reading.py').read_bytes()).hexdigest()

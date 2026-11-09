@@ -1,3 +1,4 @@
+import {STInitialStatusCoverage} from './STInitialStatusCoverage'
 import {STHukeDateProof} from './STHukeDateProof'
 import {originalSourceTitle} from './officialSourceTitle'
 import {STOfficialPDFAudit,OfficialCopyLink} from './STOfficialPDFAudit'
@@ -69,6 +70,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {themes?.months?<div className="regime-scroll" role="region" aria-label="分月行情过程" tabIndex={0}><table className="regime-table"><thead><tr><th>阶段</th><th>ST参考</th><th>大盘</th><th>小盘风格</th><th>怎样理解</th><th>覆盖</th></tr></thead><tbody>{themes.months.map(m=><tr key={m.month}><th>{m.month}<small>{m.start} — {m.through}</small></th><td>{pct(m.st_pct)}</td><td>{pct(m.market_pct)}</td><td>{pct(m.small_pct)}</td><td>{phaseReading(m.st_pct,m.market_pct)}</td><td>{m.days}日</td></tr>)}</tbody></table></div>:<p>本版没有独立分月资料，请展开核对已有窗口。</p>}
    <p className="reading-caption">各月按实际覆盖交易日连乘，7月从6日开始，末月只到{data.through}。各月涨跌幅不能相加；小盘风格使用中证2000。</p>
    {themes?.member_entries&&<><h4>新进来的公司，为什么被ST？</h4><p>6家新增的直接原因分成几类：正式重整受理、主要银行账户冻结、控股股东资金占用、财报监管事项。相同的ST标签，不替代对主体、程序和整改条件的判断。</p><button className="regime-text-link" onClick={()=>onEvidence('整批个股','st-member-entries')}>查看新增原因与共同日期的行情对照 →</button></>}
+   {themes?.initial_status_coverage&&<><h4>同样是上涨异动，后面的风险和走势一样吗？</h4><p>六份7月3日原件把签约、摘帽申请、财务约束和股东变卖分开；同窗价格随后明显分化。</p><button className="regime-text-link" onClick={()=>setTopic('initialstatus')}>看期初风险状态与六家后续走势 →</button></>}
    {themes?.member_transitions&&<><h4>名单变小了，里面发生了什么？</h4><p>7月3日有{data.universe.anchor_members}只，期末有{data.universe.endpoint_members}只；期间{data.universe.exits.length}只移出、{data.universe.entrants.length}只新增。已核的移出路径包括撤销风险警示、主动摘牌和退市整理，不能把人数净减少当作同一种结果。</p><button className="regime-text-link" onClick={()=>onEvidence('整批个股','st-member-transitions')}>查看每家为什么离开ST名单 →</button></>}
    {themes?.label_changes&&<>{data.themes?.membership_audit&&<><h4>名单本身，已经独立核实了吗？</h4><p>{data.themes.membership_audit.answer}</p><button className="regime-inline-action" onClick={()=>onEvidence('整批个股','st-membership-audit')}>查看名单核验范围与缺口 →</button></>}<h4>简称变了，风险一定变了吗？</h4><p>三处星号变化各有具体警示含义，另外两家是XD除息标记；变化当天都没有因此离开ST池。除息还会使原始收盘变化与参考价涨跌不同，先核日期和口径。</p><button className="regime-text-link" onClick={()=>onEvidence('整批个股','st-label-changes')}>查看星号、XD与除息价格口径 →</button></>}<h4>再问：与规则改变之前有什么区别？</h4><p>前后各40日：ST参考从 {pct(comparison.key==='40'?comparison.before.reference_change_pct:data.comparisons.find(c=>c.key==='40')?.before.reference_change_pct)} 到 {pct(data.comparisons.find(c=>c.key==='40')?.after.reference_change_pct)}。完整后窗更长，回答的是后来走了多远；等长窗口才用于前后描述比较。只有一次规则事件，仍无法隔离市场、公告和预期交易的影响。</p>
    <button className="regime-text-link" onClick={()=>onEvidence('规则前后')}>核对等长20/40日、波动与旧5%边界 →</button>
@@ -96,6 +98,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {topic==='risk'&&<div id="st-company-risk-cases"><STCompanyRiskCases data={themes?.company_risk_cases} priceCheck={themes?.case_price_crosscheck}/></div>}
    {topic==='followup'&&<div id="st-removal-followup"><STRemovalFollowup data={themes?.removal_followup} comparison={themes?.company_risk_cases?.comparison}/></div>}
    {topic==='halts'&&<div id="st-halt-stages"><STHaltStages data={themes?.halt_stages} priceCheck={themes?.halt_price_crosscheck} onCompany={s=>{setSymbol(s);setShowAll(false);setTopic('events')}}/></div>}
+   {topic==='initialstatus'&&<STInitialStatusCoverage data={themes?.initial_status_coverage}/> }
    {topic==='issuer'&&<div id="st-issuer-checks">{themes?.membership_audit?.issuer_checks?.map(c=><STIssuerCheck key={c.symbol} check={c}/>)}</div>}
   </div>
   {questions.some(q=>q.key===topic)&&<p className="regime-question-return"><button className="regime-text-link" onClick={()=>setTopic('journey')}>返回整批行情总览 →</button><a href={'#'+questions.find(q=>q.key===topic)!.anchor}>此问题的固定链接</a></p>}

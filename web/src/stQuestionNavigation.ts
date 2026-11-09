@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'initialstatus',anchor:'st-initial-status-coverage',title:'期初六家公司：都曾上涨异动，后来怎样了？',field:'initial_status_coverage'},
   {key:'dividends',anchor:'st-dividend-basis',title:'分红、重整与复权：同一天涨幅为何不同？',field:'dividend_basis'},
   {key:'quoteaudit',anchor:'st-fixed-quote-audit',title:'固定150只：行情核到哪一步，口径差异会改变结论吗？',field:'fixed_quote_audit'},
   {key:'prices',anchor:'st-stock-price-check',title:'沐邦、宝馨等五股：短线都涨，这几个月有什么不同？',field:'stock_price_crosscheck'},

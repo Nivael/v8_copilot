@@ -7,6 +7,7 @@ from st_sample_integrity import load_integrity
 from st_fixed_quote_audit import fixed_quote_audit_view
 from st_dividend_basis import dividend_basis_view,update_quote_audit
 from st_baoxin_auction_links import auction_links_view
+from st_baoxin_holding_bridge import holding_bridge_view
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -149,6 +150,9 @@ def build_themes(inputs, daily):
     changes = inputs.get('refresh_provenance',{}).get('prior_activity_differences',[])
     result['refresh'] = {'through':inputs['through'],'prior_input_digest':inputs.get('refresh_provenance',{}).get('prior_input_digest'),
                           'activity_differences':len(changes)}
+    result['baoxin_holding_bridge']=holding_bridge_view(inputs)
+    if result['baoxin_holding_bridge']:
+        result['baoxin_holding_bridge']['observations']=[{**r,'observation':event_context(r,'002514',inputs,daily)} for r in result['baoxin_holding_bridge']['rows']]
     result['baoxin_auction_links']=auction_links_view(inputs,result['announcements'])
     result['disclosure_chains']=disclosure_chain_view(inputs,result['announcements'])
     result['experience_case_audit']=experience_case_audit(inputs,result['removal_era_comparison'],result.get('announcements'))

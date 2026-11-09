@@ -42,3 +42,6 @@
 #st-fixed-quote-audit{scroll-margin-top:84px}
 
 #st-dividend-basis{scroll-margin-top:84px}
+
+/* Leave the question heading below the fixed navigation after direct links. */
+#st-price-band-audit { scroll-margin-top: 5rem; }

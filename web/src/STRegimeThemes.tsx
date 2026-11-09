@@ -46,6 +46,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    <p>每次只展开所选问题。切换总览或案例时，资料截止与证据保持不变。</p>
    {themes?.pre_rule_membership?<button className="regime-text-link" onClick={()=>setTopic('market')}>本轮新核：制度前移出的48只，究竟去了哪里？ →</button>:themes?.dynamic_reference_audit?<button className="regime-text-link" onClick={()=>setTopic('market')}>本轮新核：动态ST参考线，按哪些股票核过？ →</button>:themes?.exit_quote_replay?<button className="regime-text-link" onClick={()=>setTopic('quoteaudit')}>本轮新核：退出样本已重放，哪些比较发生变化？ →</button>:themes?.remaining_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：剩余8只差异，分别是什么原因？ →</button>:themes?.dividend_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：同一天的涨幅，为什么有三种读数？ →</button>:themes?.fixed_quote_audit?<button className="regime-text-link" onClick={()=>setTopic('quoteaudit')}>本轮新核：固定150只的行情，核对到了哪一步？ →</button>:themes?.earnings_warning&&<button className="regime-text-link" onClick={()=>setTopic('earnings')}>本轮新核：盈利和现金都转好，为什么还在ST？ →</button>}
   </div>}
+  {themes?.price_band_audit&&<button className="regime-text-link" onClick={()=>onEvidence('规则前后','st-price-band-audit')}>涨过5%，就突破旧涨停了吗？看具体例子 →</button>}
   {themes?.removal_era_comparison&&<button className="regime-text-link" onClick={()=>setTopic('cohort')}>本轮比较：摘帽以后，7月前后有什么不同？ →</button>}
   <p className="regime-topic-date">观察期 {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">

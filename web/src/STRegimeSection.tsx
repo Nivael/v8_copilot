@@ -1,3 +1,4 @@
+import {STPriceBandAudit} from './STPriceBandAudit'
 import {STEndpointAudit} from './STEndpointAudit'
 import {STMembershipAudit} from './STMembershipAudit'
 import {STLabelChanges} from './STLabelChanges'
@@ -99,6 +100,7 @@ export function STRegimeSection(){
       <div className="regime-controls"><div className="regime-tabs" role="group" aria-label="横向复盘视角">{['规则前后','大盘联动','整批个股'].map(label=><button key={label} aria-pressed={view===label} onClick={()=>setView(label)}>{label}</button>)}</div><label>比较窗口<select aria-label="ST前后比较窗口" value={windowKey} onChange={e=>setWindowKey(e.target.value)}>{windows.map(key=>{const option=data.comparisons.find(c=>c.key===key);return option?<option key={key} value={key}>{option.label}</option>:null})}</select></label></div>
       <div className="regime-verdict"><h3>{(after.reference_change_pct??0)<-2?'整体参考下跌，本窗没有出现普涨':Math.abs(after.reference_change_pct??0)<=2?'整体接近持平，个股涨跌仍明显分化':'整体参考上涨，仍需核对上涨覆盖面'}</h3><p>规则后 {after.days} 个交易日，ST等权参考 {pct(after.reference_change_pct)}，中证全指 {pct(after.market_change_pct)}。7月3日固定名单中，有端点的 {fixed.covered}/{fixed.total} 只，收益中位数 {pct(fixed.median_pct)}；{number(fixed.positive_pct,1)}% 上涨。</p>{windowKey==='all'&&<p>本项前窗40日、后窗{after.days}日，时长不同；精确前后比较请切换20日或40日。</p>}</div>
       {view==='规则前后'&&<>
+        <STPriceBandAudit data={data.themes?.price_band_audit}/>
         <div className="regime-chart-head"><h3>把ST放回市场里看</h3><label>曲线范围<select aria-label="ST横向曲线范围" value={chartScope} onChange={e=>setChartScope(e.target.value)}><option value="all">完整覆盖 · 标出规则生效</option><option value="before">仅规则前窗口 · 从0%起</option><option value="after">仅规则后窗口 · 从0%起</option></select></label></div>
         <p className="reading-caption">曲线从 {series[0]?.points[0]?.date} 收盘起算，至 {series[0]?.points.at(-1)?.date}；三线同起点归零。{chartScope==='all'?'完整覆盖期与上方所选前后窗口分别读数。':'与上方所选窗口对应。'}</p>
         <ReadingChart key={`${windowKey}-${chartScope}`} series={series} label="主板ST、全市场与小盘风格同期路径" eventMarkers={chartScope==='all'?[{date:data.rule_day,id:'rule',label:'2026年7月6日：主板ST涨跌幅5%改10%正式生效',selected:ruleSelected,count:1}]:[]} onEventMarker={()=>setRuleSelected(v=>!v)}/>

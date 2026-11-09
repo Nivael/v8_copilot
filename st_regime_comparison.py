@@ -382,6 +382,7 @@ def publish(inputs, *, root=ROOT):
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
+               'exit_quote_replay_processor_sha256':sha256(Path(__file__).with_name('st_exit_quote_replay.py').read_bytes()).hexdigest(),
                'remaining_basis_processor_sha256':sha256(Path(__file__).with_name('st_remaining_basis.py').read_bytes()).hexdigest(),
                'dividend_basis_processor_sha256':sha256(Path(__file__).with_name('st_dividend_basis.py').read_bytes()).hexdigest(),
                'fixed_quote_audit_processor_sha256':sha256(Path(__file__).with_name('st_fixed_quote_audit.py').read_bytes()).hexdigest(),
@@ -415,6 +416,7 @@ def load(root=ROOT):
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()
+                or value.get('exit_quote_replay_processor_sha256')!=sha256(Path(__file__).with_name('st_exit_quote_replay.py').read_bytes()).hexdigest()
                 or value.get('remaining_basis_processor_sha256')!=sha256(Path(__file__).with_name('st_remaining_basis.py').read_bytes()).hexdigest()
                 or value.get('dividend_basis_processor_sha256')!=sha256(Path(__file__).with_name('st_dividend_basis.py').read_bytes()).hexdigest()
                 or value.get('fixed_quote_audit_processor_sha256')!=sha256(Path(__file__).with_name('st_fixed_quote_audit.py').read_bytes()).hexdigest()

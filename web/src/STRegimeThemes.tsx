@@ -1,3 +1,4 @@
+import {STRemovalEraComparison} from './STRemovalEraComparison'
 import {STPreRuleMembership} from './STPreRuleMembership'
 import {STDynamicReferenceAudit} from './STDynamicReferenceAudit'
 import {STExitQuoteReplay} from './STExitQuoteReplay'
@@ -45,6 +46,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    <p>每次只展开所选问题。切换总览或案例时，资料截止与证据保持不变。</p>
    {themes?.pre_rule_membership?<button className="regime-text-link" onClick={()=>setTopic('market')}>本轮新核：制度前移出的48只，究竟去了哪里？ →</button>:themes?.dynamic_reference_audit?<button className="regime-text-link" onClick={()=>setTopic('market')}>本轮新核：动态ST参考线，按哪些股票核过？ →</button>:themes?.exit_quote_replay?<button className="regime-text-link" onClick={()=>setTopic('quoteaudit')}>本轮新核：退出样本已重放，哪些比较发生变化？ →</button>:themes?.remaining_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：剩余8只差异，分别是什么原因？ →</button>:themes?.dividend_basis?<button className="regime-text-link" onClick={()=>setTopic('dividends')}>本轮新核：同一天的涨幅，为什么有三种读数？ →</button>:themes?.fixed_quote_audit?<button className="regime-text-link" onClick={()=>setTopic('quoteaudit')}>本轮新核：固定150只的行情，核对到了哪一步？ →</button>:themes?.earnings_warning&&<button className="regime-text-link" onClick={()=>setTopic('earnings')}>本轮新核：盈利和现金都转好，为什么还在ST？ →</button>}
   </div>}
+  {themes?.removal_era_comparison&&<button className="regime-text-link" onClick={()=>setTopic('cohort')}>本轮比较：摘帽以后，7月前后有什么不同？ →</button>}
   <p className="regime-topic-date">观察期 {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">
    <p className="reading-kicker">先看答案</p><h3>{(after.reference_change_pct??0)<0?(after.reference_change_pct??0)>(after.market_change_pct??0)?'整体跌得比大盘少，个股还要分别看':'整体仍在下跌，个股还要分别看':'整体参考回升，个股还要分别看'}</h3>
@@ -76,7 +78,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {topic==='quoteaudit'&&<div id="st-fixed-quote-audit"><STExitQuoteReplay data={themes?.exit_quote_replay}/><STFixedQuoteAudit data={themes?.fixed_quote_audit} anchorId="st-fixed-quote-audit-detail" dynamicPriceChecked={Boolean(themes?.dynamic_reference_audit)}/></div>}
    {topic==='prices'&&<div id="st-stock-price-check"><STStockPriceCrosscheck data={themes?.stock_price_crosscheck} onCompany={s=>{setSymbol(s);setShowAll(false);setTopic('events')}}/></div>}
    {topic==='earnings'&&<STEarningsWarning data={themes?.earnings_warning}/>}
-   {topic==='cohort'&&<div id="st-removal-cohort"><STRemovalCohort data={themes?.removal_cohort}/></div>}
+   {topic==='cohort'&&<div id="st-removal-cohort"><STRemovalEraComparison data={themes?.removal_era_comparison}/>{themes?.removal_era_comparison?<details><summary>回看原12只摘帽股的停牌前起算比较</summary><STRemovalCohort data={themes?.removal_cohort}/></details>:<STRemovalCohort data={themes?.removal_cohort}/>}</div>}
    {topic==='strong'&&<STStrongRemovalCases data={themes?.strong_removal_cases}/>}
    {topic==='execution'&&<STShenwuExecution data={themes?.shenwu_execution}/>}
    {topic==='risk'&&<div id="st-company-risk-cases"><STCompanyRiskCases data={themes?.company_risk_cases} priceCheck={themes?.case_price_crosscheck}/></div>}

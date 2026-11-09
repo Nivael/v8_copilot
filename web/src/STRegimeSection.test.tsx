@@ -154,7 +154,7 @@ describe('按问题阅读与公告覆盖边界',()=>{
   data.themes={months:[],market_days:[],announcements:{from:'2026-07-01',through:'2026-11-06',companies:156,catalog_rows:5632,catalog_pages:210,verified_events:[e],verified_companies:1,verified_documents:1,body_reads_this_refresh:0,boundary:'正文选样不能代表全体公告。'}}
   success(data);render(<STRegimeSection/>);await screen.findByRole('navigation',{name:'复盘问题'})
   fireEvent.click(screen.getByRole('button',{name:/公告到底改变了什么/}))
-  expect(screen.getByText(/正文来自此前已核材料/)).toBeVisible()
+  expect(await screen.findByText(/正文来自此前已核材料/)).toBeVisible()
   expect(screen.getByText(/后续交易日不足，未填零/)).toBeVisible()
   fireEvent.change(screen.getByLabelText('公告后观察窗口'),{target:{value:'1'}})
   expect(screen.getByText('+2.00%')).toBeVisible()

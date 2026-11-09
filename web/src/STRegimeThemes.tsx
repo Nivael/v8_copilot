@@ -98,7 +98,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {topic==='risk'&&<div id="st-company-risk-cases"><STCompanyRiskCases data={themes?.company_risk_cases} priceCheck={themes?.case_price_crosscheck}/></div>}
    {topic==='followup'&&<div id="st-removal-followup"><STRemovalFollowup data={themes?.removal_followup} comparison={themes?.company_risk_cases?.comparison}/></div>}
    {topic==='halts'&&<div id="st-halt-stages"><STHaltStages data={themes?.halt_stages} priceCheck={themes?.halt_price_crosscheck} onCompany={s=>{setSymbol(s);setShowAll(false);setTopic('events')}}/></div>}
-   {topic==='initialstatus'&&<STInitialStatusCoverage data={themes?.initial_status_coverage} update={themes?.warning_basis_followup}/> }
+   {topic==='initialstatus'&&<STInitialStatusCoverage data={themes?.initial_status_coverage} update={themes?.warning_basis_followup} ruihe={themes?.ruihe_process}/> }
    {topic==='issuer'&&<div id="st-issuer-checks">{themes?.membership_audit?.issuer_checks?.map(c=><STIssuerCheck key={c.symbol} check={c}/>)}</div>}
   </div>
   {questions.some(q=>q.key===topic)&&<p className="regime-question-return"><button className="regime-text-link" onClick={()=>setTopic('journey')}>返回整批行情总览 →</button><a href={'#'+questions.find(q=>q.key===topic)!.anchor}>此问题的固定链接</a></p>}

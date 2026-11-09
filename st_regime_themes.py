@@ -6,6 +6,7 @@ from canonical_json import digest
 from st_sample_integrity import load_integrity
 from st_fixed_quote_audit import fixed_quote_audit_view
 from st_dividend_basis import dividend_basis_view,update_quote_audit
+from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
 from st_removal_era_comparison import removal_era_comparison
 from st_pre_rule_membership import pre_rule_membership_view,boundary_price_inputs
@@ -99,6 +100,7 @@ def build_themes(inputs, daily):
     if replay:result['fixed_quote_audit']=replay['audit']
     packet = inputs.get('announcement_study')
     if not packet:
+        result['experience_case_audit']=experience_case_audit(inputs,result['removal_era_comparison'],None)
         return result
     if packet['content_digest'] != digest({k:v for k,v in packet.items() if k!='content_digest'}):
         raise ValueError('announcement source packet changed')
@@ -145,4 +147,5 @@ def build_themes(inputs, daily):
     changes = inputs.get('refresh_provenance',{}).get('prior_activity_differences',[])
     result['refresh'] = {'through':inputs['through'],'prior_input_digest':inputs.get('refresh_provenance',{}).get('prior_input_digest'),
                           'activity_differences':len(changes)}
+    result['experience_case_audit']=experience_case_audit(inputs,result['removal_era_comparison'],result.get('announcements'))
     return result

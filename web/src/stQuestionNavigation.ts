@@ -27,19 +27,20 @@ export function availableQuestions(data:STRegimeData){
 export function useQuestionNavigation(data:STRegimeData){
   const hash=useSyncExternalStore(subscribe,snapshot,()=> '')
   const questions=availableQuestions(data)
-  const selected=questions.find(q=>q.anchor===hash)?.key??Object.keys(mainAnchors).find(k=>mainAnchors[k]===hash)??'journey'
-  const known=questions.some(q=>q.anchor===hash)||Object.values(mainAnchors).includes(hash)
+  const baoxin=hash==='st-baoxin-auction-links'&&Boolean(data.themes?.baoxin_auction_links)
+  const selected=baoxin?'events':questions.find(q=>q.anchor===hash)?.key??Object.keys(mainAnchors).find(k=>mainAnchors[k]===hash)??'journey'
+  const known=baoxin||questions.some(q=>q.anchor===hash)||Object.values(mainAnchors).includes(hash)
   useEffect(()=>{
     if(!known)return
     const frame=requestAnimationFrame(()=>document.getElementById(hash)?.scrollIntoView?.({block:'start'}))
     return()=>cancelAnimationFrame(frame)
   },[hash,known])
   function select(key:string){
-    const anchor=questions.find(q=>q.key===key)?.anchor??mainAnchors[key]
+    const anchor=key==='baoxin'&&data.themes?.baoxin_auction_links?'st-baoxin-auction-links':questions.find(q=>q.key===key)?.anchor??mainAnchors[key]
     if(!anchor)return
     if(window.location.hash==='#'+anchor){document.getElementById(anchor)?.scrollIntoView?.({block:'start'});return}
     window.history.pushState(window.history.state,'','#'+anchor)
     window.dispatchEvent(new HashChangeEvent('hashchange'))
   }
-  return {topic:selected,select,questions}
+  return {topic:selected,select,questions,companyOverride:baoxin?'002514':null}
 }

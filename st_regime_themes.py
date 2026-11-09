@@ -108,8 +108,8 @@ def build_themes(inputs, daily):
     boundary_inputs=boundary_price_inputs(inputs)
     for event in coalesce_event_records(packet['verified_events']):
         symbol = event['symbol']
-        context=event_context(event,symbol,boundary_inputs if event['id'].startswith('pre_rule_boundary_')else inputs,daily)
-        alternative=event_context({**event,'published_on':event['alternate_published_on']},symbol,boundary_inputs if event['id'].startswith('pre_rule_boundary_')else inputs,daily) if event.get('alternate_published_on') else None
+        context=event_context(event,symbol,boundary_inputs if event['id'].startswith(('pre_rule_boundary_','removal_action_basis_'))else inputs,daily)
+        alternative=event_context({**event,'published_on':event['alternate_published_on']},symbol,boundary_inputs if event['id'].startswith(('pre_rule_boundary_','removal_action_basis_'))else inputs,daily) if event.get('alternate_published_on') else None
         events.append({**event,'name':names[symbol],'observation':context,'alternate_observation':alternative})
     if result['earnings_warning']:
         result['earnings_warning']['events']=[e for e in events if e['id'] in result['earnings_warning']['event_ids']]

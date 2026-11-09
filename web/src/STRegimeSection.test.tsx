@@ -15,7 +15,7 @@ async function openEvidence(){
  fireEvent.click(screen.getByText('数据、图表与全部样本'))
 }
 const success=(data=fixture())=>vi.stubGlobal('fetch',vi.fn().mockResolvedValue({ok:true,json:async()=>({availability:'available',data})}))
-afterEach(()=>{cleanup();vi.unstubAllGlobals()})
+afterEach(()=>{cleanup();vi.unstubAllGlobals();window.history.replaceState(null,'',window.location.pathname)})
 
 describe('ST横向复盘',()=>{
  it('按问题进入，默认完整后窗，证据保持可展开',async()=>{

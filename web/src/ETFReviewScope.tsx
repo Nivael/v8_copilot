@@ -22,7 +22,7 @@ export function ETFReviewScope({data}:{data:Review}){
       <p>这是 {data.selected_document_items} 个基金文档项的核对范围汇总；同一原件若涉及不同基金，会分别计项。全文语义、全窗份额事件、日份额范围与精度、最新修订仍未验收，净申赎金额继续未发布。</p>
       <p>{Object.entries(data.scope_counts||{}).map(([key,count])=>`${labels[key]||key} ${count} 项`).join('；')}。</p>
       <details className="market-source-notes"><summary>查看全部文档与核对页（{data.selected_document_items}项）</summary>
-        <p>{data.pdf_items} 个PDF文档项对应 {data.distinct_pdf_originals} 份不同原PDF，另有 {data.issuer_html_items} 个发行人HTML正文项。PDF页数按基金文档项合计 {data.pdf_pages_by_item} 页，原件去重后 {data.distinct_pdf_pages} 页；页数只说明材料体量，不代表这些页全部完成语义核对。</p>
+        <p>{data.pdf_items} 个PDF文档项对应 {data.distinct_pdf_originals} 份不同原PDF，另有 {data.issuer_html_items} 个发行人HTML正文项。PDF页数按基金文档项合计 {data.pdf_pages_by_item} 页，原件去重后 {data.distinct_pdf_pages} 页。已核范围见下表。</p>
         <div className="learning-filters">
           <label>ETF <select aria-label="文档范围ETF筛选" value={code} onChange={e=>setCode(e.target.value)}><option value="all">全部ETF</option>{codes.map(value=><option key={value} value={value}>{value}</option>)}{code!=='all'&&!codes.includes(code)&&<option value={code} disabled>{code}（当前未取得）</option>}</select></label>
           <label>核对范围 <select aria-label="文档核对范围筛选" value={scope} onChange={e=>setScope(e.target.value)}><option value="all">全部范围</option>{Object.entries(labels).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>

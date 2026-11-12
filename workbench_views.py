@@ -144,9 +144,9 @@ def market_view(data):
                           'cash_estimate_ready': window.get('flow_estimate_ready') is True})
     up, down = sum(f['share_change_pct'] > 0 for f in funds), sum(f['share_change_pct'] < 0 for f in funds)
     if funds and up == len(funds):
-        etf_headline = f'这{len(funds)}只ETF份额都在增加，未出现份额普遍撤出的迹象'
+        etf_headline = f'这{len(funds)}只ETF份额都在增加'
     elif funds and down == len(funds):
-        etf_headline = f'这{len(funds)}只ETF份额都在减少，值得继续跟踪'
+        etf_headline = f'这{len(funds)}只ETF份额都在减少'
     elif funds and up == down == 0:
         etf_headline = f'这{len(funds)}只ETF公布份额没有变化'
     elif funds:
@@ -163,9 +163,9 @@ def market_view(data):
             'watch_next': ['反弹能否延续到5日、20日走势改善', 'ST能否不再落后大盘'],
             'etf': {'headline': etf_headline, 'funds': funds, 'increasing': up, 'decreasing': down,
                     'cash_estimate_yuan': sum(f['cash_estimate_yuan'] for f in funds) if cash_ready else None,
-                    'interpretation': '价格下跌与ETF份额增加可以同时发生。这组样本的份额变化，不支持把本轮下跌简单说成ETF普遍撤出。' if funds and up == len(funds) else '把ETF份额的方向与价格方向放在一起看；两者相互印证或背离，含义不同。',
-                    'how_to_read': '份额是基金发行的份数。净申购金额还需要核对折算、登记范围和修订；这里不会把份额增减直接换名为现金流入流出。'},
-            'reading_note': '风险判断是根据已发生的短中期走势作出的定性解读，不是风险概率或经过校准的预警分数。图中同一起点比较，ST参考为自建样本价格参考，编制和原始来源可展开查看。'
+                    'interpretation': '这组样本份额增加，显示基金规模按份数扩张；结合同期价格观察承接情况。' if funds and up == len(funds) else '对照ETF份额与价格，观察规模扩张、收缩和价格修复。',
+                    'how_to_read': '份额是基金发行的份数。净申购金额待折算、登记范围和修订核实后计算。'},
+            'reading_note': '判断依据短中期走势。图表起点统一为100；ST参考按自建样本编制，算法和原始来源可展开查看。'
                             + (('最新交易日以两所完整收盘和独立名单交叉核对后续接，名单实际读取于' + membership_confirmation['observed_on'] + '，停牌不补零收益。')
                                if membership_confirmation is not None else
                                ('最新交易日以两所完整收盘和当日名单核对后续接，停牌不补零收益。' if data.get('reading_update') else '')),

@@ -13,11 +13,11 @@ export function ETFFundScopeRules({data}:{data:Rules}){
   const source=(page:number)=>`${doc?.response_url}#page=${page}`
   return <div aria-label="ETF全基金范围与业务角色核对">
     <h3>为什么只核对折算还不够</h3>
-    <p>净申赎估算同时需要全窗份额事件、全基金日份额范围、源端精度和最终修订的核实。单项通过不能替代其余条件；所有条件齐全后的份额名义估算也不是银行现金流。</p>
+    <p>净申赎估算同时需要全窗份额事件、全基金日份额范围、源端精度和最终修订的核实。各项核实完成后计算份额名义估算。</p>
     {!ready?<p>510310的原文业务条款当前不可用，不展示上次的具体解释或舍入规则。</p>:<>
       <p>510310这一说明书版本分别规定场内、场外登记，并允许在制定和发布相关规则等条件满足时，将场外份额转为场内份额。据此，单一登记范围的份额可能改变，基金总份额并不随这类转托管增加。本窗实际办理量仍未知，不据此校正任何一天的数据。 <a href={source(48)} target="_blank" rel="noreferrer">登记与条件 · 原PDF第48页 ↗</a></p>
       <details className="market-source-notes"><summary>查看510310的登记、对价和舍入对象</summary>
-        <p>仅核对 {doc?.published_on} 发布的这一份说明书，{data.reviewed_passages} 个指定段落、原PDF {doc?.page_count} 页；材料页数不代表全文语义已审完，也不代表该版本全部业务在观察窗内实际开放。</p>
+        <p>仅核对 {doc?.published_on} 发布的这一份说明书，{data.reviewed_passages} 个指定段落、原PDF {doc?.page_count} 页。业务开放状态按观察窗继续核对。</p>
         <p>场内相关登记由 {data.registrars?.exchange} 办理，场外申购赎回登记由 {data.registrars?.off_exchange} 办理。 <a href={source(9)} target="_blank" rel="noreferrer">原PDF第9页 ↗</a></p>
         <p>场内申购、赎回均按份额申请，对价包含证券、现金替代、现金差额及其他对价；场外按金额申购、份额赎回，对价为现金。 <a href={source(35)} target="_blank" rel="noreferrer">业务对象 · 原PDF第35页 ↗</a></p>
         <p>场外转场内附带条件；反方向须另行公告。本项未确认当前业务可办理，也未确认日表完整涵盖哪个登记范围。 <a href={source(32)} target="_blank" rel="noreferrer">上市前转托管 · 原PDF第32页 ↗</a></p>

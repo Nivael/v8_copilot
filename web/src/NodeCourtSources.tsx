@@ -10,7 +10,7 @@ export function NodeCourtSources({data}:{data?:NodeCourtSourcePool|null}){
   return <details className="market-source-notes" aria-label="新增公开法院条款来源"><summary>查看新增公开法院条款与原件</summary>
     {!ready?<p>新公开法院条款当前未通过来源核对，不沿用旧条款或旧覆盖计数。</p>:<>
       <p>{data.primary_bound_clauses} 份公告、{data.companies} 家公司的法院阶段条款已绑定独立原件。它们与原P6事实链分别计数，没有把原标题记录改成正文事实，也不声称新原件就是原AN标识的同一附件。</p>
-      <p>固定框架选定 {data.selected_candidates} 条候选，{data.selected_rejections} 条旧事项回述排除；另核 {data.extra_related_entity_exclusions} 份子公司排除案例。归档共 {data.archived_PDFs} 份PDF、{data.archived_pages} 页，{data.unreviewed_extra_attachments} 份额外相近附件未核本项条款。条款核对不等于全文语义或金标验收。</p>
+      <p>固定框架选定 {data.selected_candidates} 条候选，{data.selected_rejections} 条旧事项回述排除；另核 {data.extra_related_entity_exclusions} 份子公司排除案例。归档共 {data.archived_PDFs} 份PDF、{data.archived_pages} 页，{data.unreviewed_extra_attachments} 份额外相近附件未核本项条款。已核范围为指定条款。</p>
       <p>裁定日 {data.unknown_decision_dates} 份待核、收到日 {data.unknown_receipt_dates} 份待核，均不以落款或目录日代填。以下披露日只按官方目录北京时间日期使用，不恢复日内发布时间或历史当时可见。来源绑定之后，还需分别核对去重、窗口和数值。</p>
       <p>表格可在自身范围双向滚动；聚焦后可用方向键和翻页键查看。</p>
       <div className="learning-table-wrap market-notice-clauses" role="region" aria-label="可滚动的新增法院条款表" tabIndex={0} onKeyDown={scrollTable}>

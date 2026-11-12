@@ -12,7 +12,7 @@ describe('calendar reference is not a provider deadline or a validity label',()=
     render(<MarketCloseReference data={reference} distance={distance}/>);
     expect(screen.getByText(/最近计划收盘日为 2026-11-05，15:00/)).toBeVisible()
     expect(screen.getByText('当前快照目标距参照 1 个收盘日')).toBeVisible()
-    expect(screen.getByText(/不判断源端披露超时、期间数据完整、最终修订或自动更新是否运行/)).toBeVisible()
+    expect(screen.getByText(/日差按交易日历计算/)).toBeVisible()
     fireEvent.click(screen.getByText('日历参照依据'))
     expect(screen.getByRole('link',{name:'交易所2026休市安排 ↗'})).toHaveAttribute('href',reference.calendar_source)
     expect(screen.getByText(/盘中不把当天算作已收盘/)).toBeVisible()
@@ -20,7 +20,7 @@ describe('calendar reference is not a provider deadline or a validity label',()=
   it('zero date distance never claims completeness, final revision or automation',()=>{
     render(<MarketCloseReference data={reference} distance={{...distance,minimum_sessions:0,maximum_sessions:0}}/>);
     expect(screen.getByText('当前快照目标距参照 0 个收盘日')).toBeVisible()
-    expect(screen.getByText(/相距0个收盘日也不代表这些检查已通过/)).toBeVisible()
+    expect(screen.getByText(/数据截止日和修订状态见各来源/)).toBeVisible()
   })
   it('keeps different series endpoints as a range',()=>{
     render(<CloseDistanceLabel data={{...distance,maximum_sessions:2}}/>);

@@ -43,7 +43,7 @@ describe('ETFProspectusRules',()=>{
     render(<ETFProspectusRules data={fixture}/>);open()
     expect(screen.getByText('申购 / 赎回：900,000 份')).toBeVisible()
     expect(screen.getByText('深市股票实物、沪市股票现金替代申赎：1,000,000 份')).toBeVisible()
-    expect(screen.getAllByText('每笔单位，不是基金总份额的折算倍数')).toHaveLength(2)
+    expect(screen.getAllByText('每笔申赎的单位份数')).toHaveLength(2)
     expect(screen.getAllByText('当前市场目标日是否仍有效：尚未核对')).toHaveLength(2)
     expect(screen.getByRole('link',{name:'业务单位条款 · 第64页 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/rules.pdf#page=64')
   })

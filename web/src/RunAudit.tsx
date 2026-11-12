@@ -47,7 +47,7 @@ function DecisionAuditView({audit}:{audit:DecisionAudit}) {
       </article>)}
     </div>
     {audit.alternatives.length>0&&<details><summary>查看备选解释如何处理</summary><ul>{audit.alternatives.map((item,index)=><li key={`${item.label}-${index}`}><strong>{dispositionLabels[item.disposition]}：{item.label}</strong><span>{item.reason}</span></li>)}</ul></details>}
-    <p className="audit-boundary">这是回答者提交并经 backing 校验的结构化判断说明，不是模型隐藏思维过程，也不使用伪精确概率。</p>
+    <p className="audit-boundary">以下为回答者提交的判断说明，依据已完成校验。</p>
   </section>
 }
 
@@ -105,7 +105,7 @@ function EvidencePackView({packId,run}:{packId:string;run:ResearchRun}) {
       {record&&<>
         <div className="pack-summary"><span>查询计划：{record.payload.query_plan_id}</span><span>Digest：{record.pack_digest.slice(0,16)}…</span><span>Manifest：{String(record.payload.freshness_manifest.manifest_id||record.payload.freshness_manifest.status||'未记录')}</span><span>{record.payload.rows.length} 行数据库证据</span><span>{record.payload.lens_invocations.length} 条 Lens</span><span>{record.payload.external_evidence?.length||0} 项联网事实</span></div>
         <section><h4>数据库行</h4>{record.payload.rows.length?<div className="audit-json-list">{record.payload.rows.map((row,index)=><details key={String(row.row_id||index)}><summary>{String(row.row_id||`row-${index+1}`)}</summary><pre>{JSON.stringify(row,null,2)}</pre></details>)}</div>:<p>本 EvidencePack 没有数据库行。</p>}</section>
-        <section><h4>Lens 调用</h4>{record.payload.lens_invocations.length?<div className="audit-json-list">{record.payload.lens_invocations.map((lens,index)=><details key={String(lens.release_id||index)}><summary>{String(lens.release_id||`lens-${index+1}`)} · {String(lens.contributed_section||'未标注贡献段')}</summary><pre>{JSON.stringify(lens,null,2)}</pre></details>)}</div>:<p>本题未调用适用 Lens；这不等于没有数据库事实证据。</p>}</section>
+        <section><h4>Lens 调用</h4>{record.payload.lens_invocations.length?<div className="audit-json-list">{record.payload.lens_invocations.map((lens,index)=><details key={String(lens.release_id||index)}><summary>{String(lens.release_id||`lens-${index+1}`)} · {String(lens.contributed_section||'未标注贡献段')}</summary><pre>{JSON.stringify(lens,null,2)}</pre></details>)}</div>:<p>本题未调用适用 Lens，事实依据见下方证据记录。</p>}</section>
         <section><h4>联网事实</h4>{record.payload.external_evidence?.length?<div className="audit-json-list">{record.payload.external_evidence.map((item,index)=><details key={String(item.evidence_id||index)}><summary>{String(item.evidence_id||`external-${index+1}`)} · {String(item.title||'未命名来源')}</summary><pre>{JSON.stringify(item,null,2)}</pre></details>)}</div>:<p>本 EvidencePack 没有联网补充事实；所有 backing 均来自本地确定性证据。</p>}</section>
         <section><h4>回答 backing</h4>{backings.length?<ul className="backing-list">{backings.map((item,index)=><li key={`${item.label}-${index}`}><strong>{item.label}</strong><span>{item.text}</span><code>{item.backing.map(ref=>`${ref.kind}:${ref.ref}`).join(' · ')}</code></li>)}</ul>:<p>该运行没有保存结构化研究稿；旧记录只能查看最终文本。</p>}</section>
         <section><h4>Coverage gap</h4>{record.payload.coverage_gaps.length?<div className="audit-json-list">{record.payload.coverage_gaps.map((gap,index)=><pre key={index}>{JSON.stringify(gap,null,2)}</pre>)}</div>:<p>EvidencePack 没有声明 coverage gap。</p>}</section>

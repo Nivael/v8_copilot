@@ -33,7 +33,7 @@ describe('dated broad-fund source observations',()=>{
     fireEvent.click(screen.getByText('比较日期与各基金原始净值'))
     expect(screen.getByRole('link',{name:'易方达沪深300ETF · 易方达 ↗'})).toHaveAttribute('href',data.unit_nav.rows![0].source_url)
     expect(screen.getByText(/5日从2026-10-30、20日从2026-10-09比较至2026-11-06/)).toBeVisible()
-    expect(screen.getByText(/未换算为资金净流入流出/)).toBeVisible()
+    expect(screen.getByText(/下表比较单位净值与份额的同窗变化/)).toBeVisible()
   })
   it('keeps an independently valid source visible and does not substitute a zero for an unavailable one',()=>{
     const {rerender}=render(<BroadFundEvidenceSection data={{...data,unit_nav:{availability:'unavailable'}}}/>)

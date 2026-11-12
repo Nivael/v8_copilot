@@ -67,7 +67,7 @@ export function ExperienceCenter() {
           <p>这里只沉淀可复用的方法、边界和反模式。已接受表示有入库决定；当前是否通过复验，请查看更新与复盘。</p>
           <a className="learning-entry" href="/system">查看更新时点与逐条复验 →</a>
         </div>
-        <div className="experience-principle"><BookOpenCheck size={20}/><strong>经验不是证据</strong><span>每次使用都会重新查询最新本地材料</span></div>
+        <div className="experience-principle"><BookOpenCheck size={20}/><strong>研究方法</strong><span>每次研究查询最新材料</span></div>
       </section>
 
       {governance&&<section className="governance-strip" aria-label="经验治理状态">

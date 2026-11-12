@@ -37,7 +37,7 @@ describe('MarketComparisonChart',()=>{
     expect(screen.getByRole('generic',{name:'相对收益百分点差'})).toBeInTheDocument()
     expect(screen.getByText('-16.39个百分点')).toBeInTheDocument()
     expect(screen.getByText('ST − 中证2000')).toBeInTheDocument()
-    expect(screen.getByText(/不代表资金净流入/)).toBeInTheDocument()
+    expect(screen.getByText(/相对差按收益百分点计算/)).toBeInTheDocument()
   })
 
   it('does not render when the strict comparison is unavailable',()=>{

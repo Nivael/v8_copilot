@@ -12,7 +12,7 @@ export function SSEGapReview({data,reconciled=false}:{data:Review;reconciled?:bo
     {!available?<p>公告依据或其绑定的行情原件尚未通过核对，暂不沿用旧的已解释数量；整体历史覆盖继续待补。</p>:<>
       <p>{data.start} 至 {data.through}，已核对 {num(data.distinct_companies)} 家公司的 {num(data.reviewed_episodes)} 组缺日、{num(data.original_pdfs)} 份公告原件。其中 {num(data.closed_episodes)} 组有完整区间依据，解释 {num(data.confirmed_missing_days)} 个缺失股票日；另有 {num(data.unresolved_missing_days)} 日{reconciled?'不能单凭公告闭合':'仍待补证'}。</p>
       {pending.length>0&&<p>{reconciled?'单凭公告未闭合的区间：':'区间待补证：'}{pending.map(row=>`${row.symbol}（${row.unresolved_missing_days}日）`).join('、')}。{reconciled?'这些日期现已由上方独立的停复牌登记全部核对；本项保留仅公告证据的原结论。':'已核实停牌起点和期末无成交状态，这两项不能独立证明中间每个交易日的状态。'}</p>}
-      <p>{data.note} {reconciled?'沪深合并历史分布依据另见上方，本公告核对本身不代表整体ST或风险效果完成。':data.historical_breadth_ready?'缺日区间已闭合，完整历史分布仍须单独生成及校验。':'沪市完整历史涨跌分布继续待补，沪深整体覆盖不因此提升。'}</p>
+      <p>{data.note} {reconciled?'沪深合并历史分布依据见上方。':data.historical_breadth_ready?'缺日区间已闭合，完整历史分布仍须单独生成及校验。':'沪市完整历史涨跌分布待补。'}</p>
       <p className="learning-footnote market-recheck-scroll-hint">左右滑动可查看停复牌日期、区间结论及公告页码。</p>
       <div className="learning-table-wrap" role="region" aria-label="可滚动的沪市停复牌依据表" tabIndex={0}>
         <table className="learning-table"><thead><tr><th scope="col">证券 / 公司</th><th scope="col">日期与区间结论</th><th scope="col">本窗口缺日</th><th scope="col">公告依据</th></tr></thead><tbody>

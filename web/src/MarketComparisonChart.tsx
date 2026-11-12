@@ -71,7 +71,7 @@ export function MarketComparisonChart({rows}:{rows:Row[]}) {
         {SERIES.filter(item=>hasStock||item.key!=='stock').map(item=><span key={item.key}><i style={{background:item.color}}/>{item.label}</span>)}
       </div>
       <div className="market-chart" ref={containerRef}/>
-      <p>起点归一为 100；相对差是收益百分点差，不代表资金净流入。</p>
+      <p>起点归一为100；相对差按收益百分点计算。</p>
     </section>
   )
 }

@@ -17,7 +17,7 @@ describe('ETFAssetIdentity',()=>{
   it('labels an arithmetic equality as one point with unknown independence and off-exchange shares',()=>{
     render(<ETFAssetIdentity data={base}/>);
     expect(screen.getByText(/2026-11-04.*算术上相等.*尚未核实来源独立性/)).toBeVisible()
-    expect(screen.getByText(/不能由相等推定场外份额为零或全基金日份额已验收/)).toBeVisible()
+    expect(screen.getByText(/全基金日份额与场外份额需补登记记录核对/)).toBeVisible()
     expect(screen.getByText('查看这一个披露时点的数值与来源').closest('details')).not.toHaveAttribute('open')
   })
   it('preserves exact source numbers, units and dates with all three source links',()=>{
@@ -30,7 +30,7 @@ describe('ETFAssetIdentity',()=>{
     expect(screen.getByRole('link',{name:'交易所原响应 ↗'})).toHaveAttribute('href',base.share_source!.source_url)
     expect(screen.getByRole('link',{name:'单位净值原响应 ↗'})).toHaveAttribute('href',point.source_url)
     expect(screen.getByText(/105,063,783,479.60000 元（算术乘积）/)).toBeVisible()
-    expect(screen.getByText(/0.00000 元。这是公布值差，不是资金流/)).toBeVisible()
+    expect(screen.getByText(/0.00000 元。差额按两项公布值计算/)).toBeVisible()
     fireEvent.click(screen.getByText('查看三个原件的对应标识'));expect(screen.getByText('asset-proof')).toBeVisible()
   })
   it.each([undefined,{...base,availability:'invalid'},{...base,availability:'asset_only'}, {...base,NAV_source:{...point,date:'2026-11-05'}}])('withholds all stale computed numbers if the same-day comparison is unavailable',data=>{
@@ -42,7 +42,7 @@ describe('ETFAssetIdentity',()=>{
     render(<ETFAssetIdentity data={{...base,matches_market_target:false,relation:'different_as_published',difference_yuan:'-0.01000'}}/>);open()
     expect(screen.getByText(/算术上不同/)).toBeVisible()
     expect(screen.getByText(/不作为目标日覆盖/)).toBeVisible()
-    expect(screen.getByText(/-0.01000 元。这是公布值差，不是资金流/)).toBeVisible()
+    expect(screen.getByText(/-0.01000 元。差额按两项公布值计算/)).toBeVisible()
     expect(screen.getByText(/季报中的场外份额仍保留其原报告日期/)).toBeVisible()
   })
 })

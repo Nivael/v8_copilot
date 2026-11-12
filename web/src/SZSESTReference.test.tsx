@@ -23,8 +23,8 @@ describe('SZSESTReference',()=>{
     expect(screen.getByText('中证全指 · 同窗')).toBeVisible()
     expect(screen.getByText('-5.00%')).toBeVisible()
     expect(screen.getByText('-10.00%')).toBeVisible()
-    expect(screen.getByText(/不是组合财富或全收益/)).toBeVisible()
-    expect(screen.getByText(/不能证明市场因素优于节点/)).toBeVisible()
+    expect(screen.getByText(/按该范围形成价格参考/)).toBeVisible()
+    expect(screen.getByText(/本窗用于回看压力期间的价格变化/)).toBeVisible()
   })
   it('lets keyboard or pointer selection inspect each day and its nontrading members',()=>{
     render(<SZSESTReference data={data} indices={[baseline]}/> )

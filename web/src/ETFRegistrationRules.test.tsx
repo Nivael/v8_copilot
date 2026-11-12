@@ -17,16 +17,16 @@ describe('ETFRegistrationRules',()=>{
   it('starts collapsed and separates three institutional documents and scoped clauses from acquired daily data',()=>{
     render(<ETFRegistrationRules data={base}/>);
     expect(screen.getByText('登记机构的规则说明了哪些数据').closest('details')).not.toHaveAttribute('open')
-    open();expect(screen.getByText(/3份2026版文件、12处指定条款.*134.*没有取得这些通道的实际日登记数据/)).toBeVisible()
-    expect(screen.getByText(/不能倒用到更早日期/)).toBeVisible()
+    open();expect(screen.getByText(/3份2026版文件、12处指定条款.*134.*实际日登记数据待取得/)).toBeVisible()
+    expect(screen.getByText(/此前版本待核对/)).toBeVisible()
     expect(screen.getByText(/净申赎金额继续未发布/)).toBeVisible()
   })
   it('keeps exchange-only holders, direct subscription route and incremental backups distinct',()=>{
     render(<ETFRegistrationRules data={base}/>);open()
     expect(screen.getByText(/全体场内持有人名册/)).toBeVisible()
-    expect(screen.getByText(/不是场外份额类别或实际投资者身份的证明/)).toBeVisible()
+    expect(screen.getByText(/场外组合证券申赎指特定直销申报通道/)).toBeVisible()
     expect(screen.getByText(/不适用于ETF等产品的交易所场内份额业务.*每日备份是增量/)).toBeVisible()
-    expect(screen.getByText(/T\+1日21:00.*不是交易所ETF日份额最终修订确认/)).toBeVisible()
+    expect(screen.getByText(/备份及格式错误补正时点为T\+1日21:00/)).toBeVisible()
   })
   it('links actual physical pages and keeps listed publication separate from effective date',()=>{
     render(<ETFRegistrationRules data={base}/>);open()

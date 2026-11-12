@@ -124,10 +124,10 @@ def summarize(paths,indices,calendar,start):
     falling='、'.join(g['name'] for g in groups if g['five_day_price_change_pct']<0)
     return {'availability':'available','as_of':calendar[-1],'start':start,'groups':groups,'sample_funds':len(paths),
             'headline':f'{increasing}组宽基样本的份额同步增加' if increasing else '宽基样本的份额方向出现分化',
-            'interpretation':(('暂未看到这组宽基样本普遍缩份额。' if increasing==6 else '宽基样本份额方向有分化。')
+            'interpretation':(('六组宽基样本份额同步增加。' if increasing==6 else '宽基样本份额方向有分化。')
                               +(f'{rising}近5日回升。' if rising else '')+(f'{falling}近5日仍下跌。' if falling else '')
                               +'接下来观察反弹能否扩散。'),
-            'institution_reading':'国家队、险资的公开动作与持仓披露另行核对；本表不把ETF总份额变化直接归给某一类资金。',
+            'institution_reading':'机构判断依据实名持仓与公开动作，ETF总份额用于观察全部投资者的份数变化。',
             'source_url':ETF_SHARE_SOURCE,'estimated_cash_flow_yuan':None}
 
 

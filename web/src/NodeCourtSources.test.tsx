@@ -21,7 +21,7 @@ describe('NodeCourtSources',()=>{
     expect(screen.getByText(/不声称新原件就是原AN标识的同一附件/)).toBeVisible()
     expect(screen.getByText(/选定 3 条候选，1 条旧事项回述排除/)).toBeVisible()
     expect(screen.getByText(/1 份额外相近附件未核本项条款/)).toBeVisible()
-    expect(screen.getByText(/条款核对不等于全文语义或金标验收/)).toBeVisible()
+    expect(screen.getByText(/已核范围为指定条款/)).toBeVisible()
     expect(screen.getByText(/不恢复日内发布时间或历史当时可见/)).toBeVisible()
   })
   it('keeps disclosure, decision and receipt roles distinct and links physical proof pages',()=>{

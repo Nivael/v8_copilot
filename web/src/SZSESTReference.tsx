@@ -41,8 +41,8 @@ export function SZSESTReference({data,indices}:{data:Reference;indices:MarketRis
       {!matched&&<p>中证全指缺少完整一致的日期序列，当前不叠加市场对照线。</p>}
       <label className="market-st-slider">逐日查看 <input type="range" min="0" max={points.length-1} value={index} aria-label="ST参考观察日期" aria-valuetext={selected.date} onChange={event=>setPosition(Number(event.target.value))}/></label>
       <div className="market-st-readout" aria-live="polite"><strong>{selected.date}</strong><span>ST参考 {st[index].toFixed(2)}{matched&&` · 中证全指 ${broad[index].toFixed(2)}`}</span><span>成员 {selected.member_count} · 有成交 {selected.observed_members} · 覆盖 {coverage(selected.coverage_ratio)}</span><span>停牌或缺失：{selected.missing_symbols.join('、')||'无'}</span></div>
-      <p className="learning-footnote">每日按当日有成交成员的收盘价/前收参考价计算均值并连接；停牌与缺失不填零。每日成员及有成交样本会变化，这是描述性的价格参考，不是组合财富或全收益。进入退市整理期或摘牌后退出该类别，不将原股东损益记作零。</p>
-      <p className="learning-footnote">仅深市，尚非沪深整体ST走势。历史日表与公告均在所示日期之后取得；这段已知压力窗口不能证明市场因素优于节点，也不用于校准风险权重。</p>
+      <p className="learning-footnote">每日按当日有成交成员的收盘价/前收参考价计算均值并连接；停牌与缺失不填零。每日成员及有成交样本会变化，按该范围形成价格参考。进入退市整理期或摘牌后退出该类别，不将原股东损益记作零。</p>
+      <p className="learning-footnote">覆盖范围为深市。历史日表与公告在所示日期之后取得，本窗用于回看压力期间的价格变化。</p>
       <details className="market-source-notes"><summary>查看成员生效依据与每日覆盖</summary>
         <p>起始成员来自 {data.anchor_on} 的独立历史名单；逐日ST名称组用于核对变化，{data.reviewed_transitions}处变化另有原公告生效依据。期末代码与读取于 {data.endpoint_list_observed_on} 的深市交易所名单一致；该次读取日期不回填为历史名单日期。</p>
         <div className="learning-table-wrap" role="region" aria-label="可滚动的ST成员生效依据表" tabIndex={0}><table className="learning-table"><thead><tr><th scope="col">证券与名称变化</th><th scope="col">生效日期 / 事项</th><th scope="col">原公告依据</th></tr></thead><tbody>{data.events?.map(event=><tr key={event.symbol+event.effective_on}><th scope="row">{event.symbol}<small>{event.old_name} → {event.new_name??'终止上市'}</small></th><td>{event.effective_on}<small>{kinds[event.kind]??event.kind}</small></td><td><a href={`${event.source_url}#page=${event.proof_page}`} target="_blank" rel="noreferrer">原PDF第{event.proof_page}页 ↗</a><small>取得 {time(event.observed_at)}</small></td></tr>)}</tbody></table></div>

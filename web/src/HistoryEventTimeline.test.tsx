@@ -37,7 +37,7 @@ describe('source-bound event reading',()=>{
     const {rerender}=render(<HistoryEventTimeline timeline={timeline} event={{...first,relation:'same_day'}} onSelect={()=>{}} stName="ST参考"/> )
     expect(screen.getByText(/首发分钟未核/)).toBeVisible()
     rerender(<HistoryEventTimeline timeline={timeline} event={{...first,relation:'before_question'}} onSelect={()=>{}} stName="ST参考"/> )
-    expect(screen.getByText(/提问前的背景/)).toBeVisible()
+    expect(screen.getByText(/提问前已公开的背景/)).toBeVisible()
   })
   it('groups every same-day record and preserves selection within a group',()=>{
     const markers=eventMarkers(timeline,second)

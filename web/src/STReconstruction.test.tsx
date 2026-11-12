@@ -67,7 +67,7 @@ describe('STReconstruction',()=>{
     render(<STReconstruction data={data} indices={[]}/>)
     fireEvent.click(screen.getByText('沪市成员生效依据、目录筛查与每日分母'))
     expect(screen.getByRole('link',{name:'原PDF第2页 ↗'})).toHaveAttribute('href','https://static.cninfo.com.cn/synthetic.PDF#page=2')
-    expect(screen.getByText(/未声称目录正文已全部核验/)).toBeVisible()
+    expect(screen.getByText(/正文条款及逐日法定名单待核/)).toBeVisible()
     expect(screen.getByRole('region',{name:'可滚动的ST重建逐日分母表'})).toHaveAttribute('tabindex','0')
     fireEvent.click(screen.getByText('查看目录的1条标题筛查'))
     expect(screen.getByText('申请标题，未作生效')).toBeVisible()

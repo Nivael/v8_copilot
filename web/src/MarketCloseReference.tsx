@@ -14,7 +14,7 @@ export function MarketCloseReference({data,distance}:{data?:Reference;distance?:
   return <div className="market-close-reference" role="group" aria-label="快照日期与收盘日历参照">
     <p>{ready?`按已核交易日历，最近计划收盘日为 ${data.latest_scheduled_close}，${data.reference_time}（北京时间）。`:'交易日历参照暂不可用，不能判断快照日期距最近收盘日有多远。'}</p>
     {ready&&distance&&<CloseDistanceLabel data={distance} prefix="当前快照目标"/>}
-    <p>仅比较日期，不判断源端披露超时、期间数据完整、最终修订或自动更新是否运行。相距0个收盘日也不代表这些检查已通过。</p>
-    <details><summary>日历参照依据</summary><p>按观察时刻和15:00参照线计算；盘中不把当天算作已收盘，周末及所列休市日跳过。只适用已核2026日历及2026-07-06起的交易时段版本，不据此证明临时休市或实际行情发布。</p><p><a href={data.calendar_source} target="_blank" rel="noreferrer">交易所2026休市安排 ↗</a> · <a href={data.hours_source} target="_blank" rel="noreferrer">交易时段版本 ↗</a></p><p>日历 {data.calendar_version}；计算观察 {new Date(data.observed_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}（北京时间）。</p><code>{data.calendar_rule_digest||'无可用参照摘要'}</code></details>
+    <p>日差按交易日历计算，数据截止日和修订状态见各来源。</p>
+    <details><summary>日历参照依据</summary><p>按观察时刻和15:00参照线计算；盘中不把当天算作已收盘，周末及所列休市日跳过。采用2026休市日历及2026-07-06起的交易时段版本。</p><p><a href={data.calendar_source} target="_blank" rel="noreferrer">交易所2026休市安排 ↗</a> · <a href={data.hours_source} target="_blank" rel="noreferrer">交易时段版本 ↗</a></p><p>日历 {data.calendar_version}；计算观察 {new Date(data.observed_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}（北京时间）。</p><code>{data.calendar_rule_digest||'无可用参照摘要'}</code></details>
   </div>
 }

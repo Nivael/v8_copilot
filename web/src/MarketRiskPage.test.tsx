@@ -99,7 +99,7 @@ describe('MarketRiskPage',()=>{
     expect(await screen.findByText('目录 8/8')).toBeInTheDocument()
     expect(screen.getByText(/已取得目录 2,468 条；选中文档项 105 项/)).toBeInTheDocument()
     expect(screen.getByText(/已提取文本 105 \/ 105 份；缺失或不可读 0 份/)).toBeInTheDocument()
-    expect(screen.getByText(/文本提取不代表逐页完整或份额事件核验通过/)).toBeInTheDocument()
+    expect(screen.getByText(/选中文档项、文本提取和事件核验进度分别列示/)).toBeInTheDocument()
     expect(screen.getByText('指定范围另列；全窗事件尚未验收')).toBeInTheDocument()
     expect(screen.getByRole('link',{name:'取消基金份额拆分的公告 ↗'})).toHaveAttribute('href','https://www.sse.com.cn/cancel.pdf')
     expect(screen.getByText('历史份额相关标题',{exact:false})).toBeInTheDocument()

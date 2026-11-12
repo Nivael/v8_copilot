@@ -105,8 +105,8 @@ def holders(directory=OUTPUT, *, announcement_root=ROOT/'etf_announcements', now
         return {'availability':'available', 'period_start':start, 'period_end':end, 'rows':rows,
                 'reviewed_at':review['reviewed_at'], 'source_digest':review['content_digest'],
                 'headline':f'三季报中，{count}只样本披露联接基金持有份额增加',
-                'interpretation':'这些是联接基金的已披露持有变化，不能全部归给国家队或险资。季度变化与近期每日份额分别看。',
-                'scope_note':'表格只披露报告期内达到20%阈值的单一投资者。未达到阈值不等于没有持仓；增加和减少还可能包括买卖、转换等，并非ETF一级市场净申赎。'}
+                'interpretation':'持有变化依据联接基金季度披露，近期份额按交易日观察。',
+                'scope_note':'表格覆盖报告期内达到20%披露阈值的单一投资者，持有变化可包含买卖、转换等。'}
     except (OSError, KeyError, ValueError, TypeError, IndexError):
         return {'availability':'unavailable'}
 
@@ -155,13 +155,13 @@ def navs(broad, *, directory=OUTPUT/'issuer_nav', now=None):
             headline=f'近5日：{share_up}只份额增加、{share_down}只减少，{nav_up}只净值回升'
             interpretation='份额与价格的方向仍有分化，需逐组看强弱。'
         if longer_down:
-            interpretation+=f'但{longer_down}只近20日净值仍下跌，'+('短反弹还不能当作趋势反转。' if nav_up else '较长窗口也仍承压。')
+            interpretation+=f'{longer_down}只近20日净值仍下跌，'+('短线修复与近月弱势并存。' if nav_up else '较长窗口也仍承压。')
         else:
             interpretation+='近20日净值均未下跌，'+('继续观察修复能否延续。' if nav_up else '仍需观察近期是否转弱。')
         return {'availability':'available', 'as_of':meta['through'], 'fetched_at':meta['fetched_at'],
                 'sample_funds':len(funds), 'observed_funds':len(rows), 'sessions':len(meta['calendar']),
                 'source_digest':meta['content_digest'], 'rows':rows,'headline':headline,'interpretation':interpretation,
-                'basis_note':'净值是每份基金资产的价格，份额是发行份数。这里比较同一窗口的份额方向与单位净值；单位净值变化并非含分红再投资的总回报，也不能据此认定买方身份。'}
+                'basis_note':'单位净值反映每份基金资产的价格，份额反映发行份数。表中比较同窗变化，单位净值按公布值计算。'}
     except (KeyError, ValueError, TypeError, IndexError, InvalidOperation):
         return {'availability':'unavailable'}
 

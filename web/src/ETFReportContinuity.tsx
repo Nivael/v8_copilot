@@ -14,7 +14,7 @@ function ReportSource({report,label}:{report:ETFQuarterlyReport;label:string}){
 function MidyearDetails({report}:{report:ETFQuarterlyReport}){
   return <details><summary>上半年份额明细</summary>
     <p>期初 {shares(report.opening_shares)} 份；申购 {shares(report.subscription_shares)} 份；赎回 {shares(report.redemption_shares)} 份。申购－赎回 {shares(report.net_subscription_shares)} 份，仅属于上半年。</p>
-    <p>拆分栏原值 {report.split_entry}；表内平衡差 {shares(report.accounting_residual_shares)} 份。横线不代表没有份额事件。</p>
+    <p>拆分栏原值 {report.split_entry}；表内平衡差 {shares(report.accounting_residual_shares)} 份。拆分栏横线按原文保留，事件依据见公告核对。</p>
     <p>{report.audit_status==='report_states_unaudited'?'中报财务资料未经审计。':'中报审计状态尚未确认。'}本次取得于 {report.document_observed_at?new Date(report.document_observed_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}):'未取得'}（北京时间）。</p>
   </details>
 }

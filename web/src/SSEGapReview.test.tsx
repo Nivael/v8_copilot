@@ -22,7 +22,7 @@ describe('SSEGapReview',()=>{
     render(<SSEGapReview data={data}/>);open()
     expect(screen.getByText(/1 组有完整区间依据，解释 2 个缺失股票日；另有 3 日仍待补证/)).toBeVisible()
     expect(screen.getByText(/688001（3日）/)).toBeVisible()
-    expect(screen.getByText(/沪深整体覆盖不因此提升/)).toBeVisible()
+    expect(screen.getByText(/沪市完整历史涨跌分布待补/)).toBeVisible()
     expect(screen.getByText('待补证 3 日')).toBeVisible()
   })
   it('keeps termination separate from resumption and links the original physical pages',()=>{

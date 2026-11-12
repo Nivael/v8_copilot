@@ -115,7 +115,7 @@ def test_complete_broad_samples_get_directional_conclusion_without_named_buyer(s
     broad,_,_=nav_fixture(monkeypatch,definitions=b.BROAD_NAV_DEFINITIONS,share_change=shares,direction=direction)
     result=b.navs(broad)
     assert result['observed_funds']==result['sample_funds']==12 and result['headline']==headline
-    assert '不能据此认定买方身份' in result['basis_note']
+    assert '单位净值按公布值计算' in result['basis_note']
     if direction<0:assert '12只近20日净值仍下跌' in result['interpretation'] and '短反弹' not in result['interpretation']
     assert not any(key in result for key in ('national_team','insurance','estimated_net_subscription_yuan'))
 

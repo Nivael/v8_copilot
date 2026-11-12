@@ -23,7 +23,7 @@ describe('ETFSZSERecheck',()=>{
     expect(screen.getByText(/净值仅返回 30 条/)).toBeVisible()
     expect(screen.getByText('1,405,911.66 万份')).toBeVisible()
     expect(screen.getByText('10 条，截至 2026-11-03')).toBeVisible()
-    expect(screen.getByText('无变化也不等于最终修订已认证')).toBeVisible()
+    expect(screen.getByText('最终修订状态待核')).toBeVisible()
     expect(screen.getByText('最终修订版仍待确认')).toBeVisible()
     expect(screen.getByText('与基金公司重叠 10 条，不一致 0 条')).toBeVisible()
   })

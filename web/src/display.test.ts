@@ -92,7 +92,7 @@ describe('display labels',()=>{
     expect(text).toContain('12/1/4 日历风险窗口')
     expect(text).toContain('锚点')
     expect(text).toContain('多重检验')
-    expect(text).toContain('日历窗口输出只是带删失约束的历史路径描述')
+    expect(text).toContain('日历窗口描述历史价格路径，并保留删失条件')
     expect(text).toContain('M6 事件段索引 v0 行只作为个案记录上下文')
     expect(text).toContain('v7.4 冻结 Lens 库 v1')
     expect(text).toContain('v7 验证报告：股票日历窗口')

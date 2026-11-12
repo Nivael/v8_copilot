@@ -13,7 +13,7 @@ it('connects the previous conclusion to an explicitly dated later observation wi
   fireEvent.click(screen.getByText('上次的判断，还成立吗？'))
   expect(screen.getByText('此前的原判断')).toBeVisible()
   expect(screen.getByText('-3.49%')).toBeVisible()
-  expect(screen.getByText(/不足以检验完整的1–4周结果/)).toBeVisible()
+  expect(screen.getByText(/持续跟踪1–4周表现/)).toBeVisible()
   expect(screen.getByText('价格仍符合筛选，财务条件分别检验。')).toBeVisible()
 })
 

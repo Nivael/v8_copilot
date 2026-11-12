@@ -22,7 +22,7 @@ describe('NodeMarketAudit',()=>{
     render(<NodeMarketAudit data={fixture}/>)
     expect(screen.getByText(/仅 9 条、5 家公司/)).toBeVisible()
     expect(screen.getByText(/预定最低 100 条、40 家/)).toBeVisible()
-    expect(screen.getByText(/尚未读取价格值、计算结果或拟合模型/)).toBeVisible()
+    expect(screen.getByText(/下一步核对价格值，再计算结果与检验效果/)).toBeVisible()
     expect(screen.getByText('效果尚未测量')).toBeVisible()
   })
   it('explains when repairing the entire current source pool still cannot reach the original sample gate',()=>{
@@ -35,7 +35,7 @@ describe('NodeMarketAudit',()=>{
     expect(screen.getByText(/本轮P6运行绑定 553 条节点，其中原事实链 91 条、精确标题来源 462 条/)).toBeVisible()
     expect(screen.getByText(/另有 238 条未绑定本轮/)).toBeVisible()
     expect(screen.getByText(/标签共 400 条：22 条连到本轮既有事实链、314 条连到标题来源、64 条未对齐/)).toBeVisible()
-    expect(screen.getByText(/这个标签不等于正文已核证/)).toBeVisible()
+    expect(screen.getByText(/正文核证进度按上述来源记录核对/)).toBeVisible()
     expect(screen.getByText(/不相加作剔除总数/)).toBeVisible()
   })
   it('keeps training-inclusive nominations apart from the actual test-year source ceiling',()=>{

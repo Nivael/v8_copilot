@@ -17,7 +17,7 @@ export function HistoryEventTimeline({timeline,event,onSelect,stName}:{timeline:
     </select></label>
     <article aria-label="选中公告的判断变化" aria-live="polite">
       <p className="history-event-date"><time>{event.published_on}</time>披露 · {scopeNames[event.entity_scope]}{event.occurred_on&&event.occurred_on!==event.published_on&&<> · 实际发生于{event.occurred_on}{event.occurred_date_qualifier==='local_time'?'（当地时间）':''}</>}{event.scheduled_for&&<> · {event.scheduled_role==='warning_effective_date'?'公告安排于':'拟安排于'}{event.scheduled_for}{event.scheduled_role==='warning_effective_date'?'实施':''}</>}{event.report_period_end&&<> · 报告期截至{event.report_period_end}</>}</p>
-      {event.relation==='before_question'&&<p className="reading-caption">这条属于提问前的背景，不能当作问后新增信息。</p>}
+      {event.relation==='before_question'&&<p className="reading-caption">提问前已公开的背景。</p>}
       {event.relation==='same_day'&&<p className="reading-caption">与原问同日，首发分钟未核，暂不判定提问时是否已经公开。</p>}
       <h5>{event.title}</h5><p>{event.change}</p>
       <p className="history-event-impact"><strong>怎样更新判断：</strong>{event.interpretation}</p>
@@ -35,7 +35,7 @@ export function HistoryEventTimeline({timeline,event,onSelect,stName}:{timeline:
       </details>
       <details className="reading-disclosure"><summary>其他窗口与比较口径</summary>
         <div className="reading-scroll"><table><thead><tr><th>窗口</th><th>截至</th><th>个股</th><th>大盘</th><th>{stName}</th></tr></thead><tbody>{windowNames.map(([key,label])=>{const w=event.context.reference_close?event.context.windows[key]:undefined;return <tr key={key}><th scope="row">{label}</th><td>{w?.through||'待完整窗口行情'}</td>{(['stock','market','st'] as const).map(k=><td key={k}>{change(w?.change_pct[k])}</td>)}</tr>})}</tbody></table></div>
-        <p>按公开日期之后的完整交易日比较；交易日以当天收盘为参照，休市日以前一市场收盘为参照。它不包含最早反应，也不代表已经识别某一事件的因果贡献。缺价格保留空缺。</p>
+        <p>按公开日期之后的完整交易日比较；交易日以当天收盘为参照，休市日以前一市场收盘为参照。缺价格保留空缺。</p>
         {event.evidence_detail&&<details className="reading-disclosure"><summary>核对字段与原件说明</summary><p>{event.evidence_detail}</p></details>}
       </details>
     </article>

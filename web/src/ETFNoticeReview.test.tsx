@@ -40,7 +40,7 @@ describe('ETFNoticeReview',()=>{
   it('preserves positive allotment values beside a two-decimal zero weight and the earlier denominator date',()=>{
     render(<ETFNoticeReview data={fixture}/>);open()
     expect(screen.getByText('披露占比 0.00%（两位小数）')).toBeVisible()
-    expect(screen.getByText('显示0.00%不代表零持仓')).toBeVisible()
+    expect(screen.getByText('披露值按两位小数显示')).toBeVisible()
     expect(screen.getByText('公告挂牌日 2026-09-11')).toBeInTheDocument()
     expect(screen.getByText('占比分母净值日期 2026-09-10')).toBeInTheDocument()
     fireEvent.click(screen.getByText('IOPV与净值差异原文'))

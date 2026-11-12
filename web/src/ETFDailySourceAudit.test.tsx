@@ -25,7 +25,7 @@ describe('ETFDailySourceAudit',()=>{
     render(<ETFDailySourceAudit sse={base} target="2026-11-04"/>);fireEvent.click(screen.getByText('查看原始小数文本与逐日换算'))
     expect(screen.getByText('1198774.4')).toBeVisible()
     expect(screen.getByText('11,987,744,000.0')).toBeVisible()
-    expect(screen.getByText(/1位小数 61 条.*不等于已确认的字段精度或误差上界/)).toBeVisible()
+    expect(screen.getByText(/1位小数 61 条.*字段精度及舍入规则待核/)).toBeVisible()
     expect(screen.getByRole('link',{name:'交易所原响应 ↗'})).toHaveAttribute('href',point.source_url)
     expect(screen.getByRole('region',{name:'可滚动的ETF原始日份额表'})).toHaveAttribute('tabindex','0')
     fireEvent.click(screen.getByText('原响应摘要'));expect(screen.getByText('sha-proof')).toBeVisible()

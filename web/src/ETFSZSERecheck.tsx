@@ -15,7 +15,7 @@ export function ETFSZSERecheck({data}:{data:SZSERevisionRecheck}){
         <p className="learning-footnote market-recheck-scroll-hint">左右滑动表格可查看份额与净值比较。</p>
         <div className="learning-table-wrap" role="region" aria-label="可滚动的深市ETF复核表" tabIndex={0}><table className="learning-table market-recheck-table"><thead><tr><th scope="col">ETF / 目标日份额</th><th scope="col">份额与原快照比较</th><th scope="col">实际净值范围 / 比较</th></tr></thead><tbody>{data.funds.map(fund=><tr key={fund.code}>
           <th scope="row"><ETFName code={fund.code}/><small>{exact(fund.latest_shares_ten_thousand)} 万份</small><small>目标日 {data.through}</small></th>
-          <td>{fund.share_observations} 条重读，变化 {fund.share_comparison.changed_observations} 条{fund.share_comparison.changes.map(change=><small key={change.date}>{change.date}：{exact(change.before)} → {exact(change.after)} 万份</small>)}<small>无变化也不等于最终修订已认证</small></td>
+          <td>{fund.share_observations} 条重读，变化 {fund.share_comparison.changed_observations} 条{fund.share_comparison.changes.map(change=><small key={change.date}>{change.date}：{exact(change.before)} → {exact(change.after)} 万份</small>)}<small>最终修订状态待核</small></td>
           <td>{fund.nav_observations} 条，截至 {fund.nav_through}<small>与原快照重叠 {fund.nav_comparison.overlap_observations} 条，变化 {fund.nav_comparison.changed_observations} 条</small>
             <small>本次新增日期 {fund.nav_comparison.new_dates.length} 个，原有日期未返回 {fund.nav_comparison.missing_previous_dates.length} 个</small>
             <small>{fund.issuer_nav_comparison.overlap_observations>0?`与基金公司重叠 ${fund.issuer_nav_comparison.overlap_observations} 条，不一致 ${fund.issuer_nav_comparison.changed_observations} 条`:'基金公司净值未取得匹配日期，尚未交叉核对'}</small>

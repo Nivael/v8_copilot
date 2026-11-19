@@ -23,6 +23,7 @@ it('shares the verified update with tracked cases and clears it when the snapsho
  success({...fixture(),themes:{months:[],market_days:[],current_extension:currentUpdate}})
  render(<STRegimeSection onCurrentUpdate={onCurrentUpdate}/>)
  await waitFor(()=>expect(onCurrentUpdate).toHaveBeenLastCalledWith(currentUpdate))
+ expect(screen.getByText(/原制度复盘窗口/)).toBeVisible()
  expect(fetch).toHaveBeenCalledTimes(1)
  vi.mocked(fetch).mockResolvedValueOnce({ok:true,json:async()=>({availability:'unavailable'})} as Response)
  fireEvent.click(screen.getByRole('button',{name:'重读已核快照'}))

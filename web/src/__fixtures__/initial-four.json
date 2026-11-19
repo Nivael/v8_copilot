@@ -1,0 +1,1849 @@
+{
+  "anchor": "2026-07-03",
+  "through": "2026-11-19",
+  "rows": [
+    {
+      "symbol": "000056",
+      "name": "*ST皇庭",
+      "risk_group": "负净资产与审计无法表示",
+      "known_at_anchor": "2025年末净资产负值、财务报告无法表示意见；另有三年亏损与持续经营重大不确定性的其他风险警示。4月27日实施，不能只按名称把多项约束合成一种。",
+      "watch": "核后续年度净资产、审计意见与持续经营事项，计划化债或培育业务不当已消除。",
+      "source": {
+        "symbol": "000056",
+        "announcement_id": "1225173882",
+        "title": "关于公司股票交易被实施退市风险警示及其他风险警示暨停牌的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225173882.PDF",
+        "sha256": "bc2801188d2cefb50dccc48f915ff42e0303fb813377f58c048a6fabdd88eff2",
+        "pages": 4,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-19T16:24:34.144626+00:00",
+        "published_on": "2026-04-24",
+        "document_dated_on": "2026-04-24"
+      },
+      "pages": [
+        1,
+        2,
+        4
+      ],
+      "supporting": [],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -14.732142857142883,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": -31.25,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    },
+    {
+      "symbol": "000488",
+      "name": "ST晨鸣",
+      "risk_group": "原多项警示，已有修复披露",
+      "known_at_anchor": "2025年原件列停机满三个月、连续亏损与持续经营不确定性、内控否定等警示。2026年3月已有整改和修复专项，5月公司称五基地生产正常；旧原因与已披露修复要同时保留，尚未以本批材料认证正式撤销ST。",
+      "watch": "分别核原各项警示的消除与正式申请/撤销，不把单项内控整改、复工或B股异动替代A股解除状态。",
+      "source": {
+        "symbol": "000488",
+        "announcement_id": "1222975603",
+        "title": "关于公司股票被叠加实施其他风险警示的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-01/1222975603.PDF",
+        "sha256": "c3af578caf75d4f30118ba1fecd776f9b7f587b9e86cb3125a12bb4d436499e2",
+        "pages": 4,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-19T16:24:34.214050+00:00",
+        "published_on": "2025-04-01",
+        "document_dated_on": "2025-03-31"
+      },
+      "pages": [
+        1,
+        2,
+        4
+      ],
+      "supporting": [
+        {
+          "source": {
+            "symbol": "000488",
+            "announcement_id": "1225058546",
+            "title": "关于山东晨鸣纸业集团股份有限公司2025年度上期内部控制审计报告否定意见涉及事项影响在本期消除的专项说明",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225058546.PDF",
+            "sha256": "791889ab31532aae5590b11c6bc5d92c9832902999f5a11a4f0f2ae71413370d",
+            "pages": 7,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-19T16:24:34.258508+00:00",
+            "published_on": "2026-03-31",
+            "document_dated_on": "2026-03-30"
+          },
+          "pages": [
+            2,
+            7
+          ],
+          "note": "内控专项明确原缺陷整改、2025年末内控为标准无保留；不是正式摘帽决定。"
+        },
+        {
+          "source": {
+            "symbol": "000488",
+            "announcement_id": "1225058547",
+            "title": "关于山东晨鸣纸业集团股份有限公司2025年度上期非标事项在本期消除的专项说明",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225058547.PDF",
+            "sha256": "d97cb94746068985d73dff073e2e3b5abd8399a6d2b60a2803b85aaf2c791519",
+            "pages": 4,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-19T16:24:34.575872+00:00",
+            "published_on": "2026-03-31",
+            "document_dated_on": "2026-03-30"
+          },
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "note": "财报为带强调事项段无保留，专项披露复工、债务安排等措施；报表列示段落含2024年度文字，保留原文，不用该段重建2025财务数字。"
+        },
+        {
+          "source": {
+            "symbol": "000488",
+            "announcement_id": "1225282465",
+            "title": "关于公司股价异动的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-05-08/1225282465.PDF",
+            "sha256": "2b01bd016f5b180ac4e3da6397946addba2f9a26a6ed53292cdba9d38447fb89",
+            "pages": 2,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-19T16:24:34.188367+00:00",
+            "published_on": "2026-05-08",
+            "document_dated_on": "2026-05-07"
+          },
+          "pages": [
+            1,
+            2
+          ],
+          "note": "异动对象是B股200488；仅取发行人一般经营披露，不作为A股异动、警示原因或反应日。"
+        }
+      ],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -3.864734299516903,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": -20.772946859903385,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    },
+    {
+      "symbol": "000609",
+      "name": "*ST中迪",
+      "risk_group": "亏损与收入门槛、负净资产",
+      "known_at_anchor": "2025年亏损且扣除后营收约2.07亿元，另有净资产负值；继续保留三年亏损及持续经营不确定性警示。带持续经营段的无保留意见，不能误写成财报无法表示意见。",
+      "watch": "核扣除后营业收入、净资产及持续经营条件；地产去化、债务安排和业务转型计划分别看实际进度。",
+      "source": {
+        "symbol": "000609",
+        "announcement_id": "1225140244",
+        "title": "中迪投资关于公司股票交易被实施退市风险警示、继续实施其他风险警示暨股票停复牌安排的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-22/1225140244.PDF",
+        "sha256": "a3cd058ab84f9df803e1b699e42663b53379081800696e61dd2d6c74b56fa016",
+        "pages": 6,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-19T16:24:34.184384+00:00",
+        "published_on": "2026-04-22",
+        "document_dated_on": "2026-04-21"
+      },
+      "pages": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "supporting": [],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -29.25696594427244,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": -31.03715170278638,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    },
+    {
+      "symbol": "000610",
+      "name": "*ST西旅",
+      "risk_group": "负净资产",
+      "known_at_anchor": "2025年末归母净资产约负5454万元。标题含“可能”，正文已列4月27日实施；原件当时的拟定增与股东财务支持承诺不等于已经募集或到账。",
+      "watch": "核后续募集和实际财务支持、年度净资产及正式风险状态；上涨不能替代整改证据。",
+      "source": {
+        "symbol": "000610",
+        "announcement_id": "1225173668",
+        "title": "关于公司股票交易可能被实施退市风险警示暨停牌的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225173668.PDF",
+        "sha256": "4dd0700d4a1bd4cf7b15f13bcda06c975268607484145a3952fcf91dd20cf22d",
+        "pages": 5,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-19T16:24:34.141815+00:00",
+        "published_on": "2026-04-24",
+        "document_dated_on": "2026-04-22"
+      },
+      "pages": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "supporting": [],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -6.930693069306926,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": 20.95709570957096,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    }
+  ],
+  "inventory": [
+    {
+      "symbol": "000010",
+      "name": "*ST美丽",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225405830"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000016",
+      "name": "*ST康佳A",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225405760"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000056",
+      "name": "*ST皇庭",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_four_1225173882"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "000078",
+      "name": "ST海王",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407049"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000488",
+      "name": "ST晨鸣",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-08",
+      "fact_ids": [
+        "initial_four_1225282465",
+        "initial_four_1222975603",
+        "initial_four_1225058546",
+        "initial_four_1225058547"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "000609",
+      "name": "*ST中迪",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-22",
+      "fact_ids": [
+        "initial_four_1225140244"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "000610",
+      "name": "*ST西旅",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_four_1225173668"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "000615",
+      "name": "*ST美谷",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000632",
+      "name": "ST三木",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406627"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000639",
+      "name": "ST西王",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "warning_followup_1225247389",
+        "initial_status_1225405413"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000669",
+      "name": "ST金鸿",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000677",
+      "name": "ST海龙",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406691"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000698",
+      "name": "ST沈化",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406992"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000711",
+      "name": "ST京蓝",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406741"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000752",
+      "name": "*ST西发",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000793",
+      "name": "*ST华闻",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-22",
+      "fact_ids": [
+        "remaining_reorg_1225365705",
+        "remaining_reorg_1225376732",
+        "remaining_reorg_1225380075"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000820",
+      "name": "*ST节能",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407087"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000821",
+      "name": "ST京机",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "remaining_basis_1225390702"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000826",
+      "name": "*ST启环",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000838",
+      "name": "*ST发展",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000903",
+      "name": "ST云动",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000909",
+      "name": "*ST数源",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_status_1225405831"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000911",
+      "name": "*ST广糖",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002005",
+      "name": "ST德豪",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406065"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002024",
+      "name": "ST易购",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002055",
+      "name": "ST得润",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002082",
+      "name": "ST万邦",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406415"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002102",
+      "name": "ST能特",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406422"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002109",
+      "name": "ST兴化",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406416"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002122",
+      "name": "ST汇洲",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002168",
+      "name": "ST惠程",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002175",
+      "name": "*ST东智",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406743"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002193",
+      "name": "ST如意",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002198",
+      "name": "ST嘉应",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406315"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002199",
+      "name": "*ST东晶",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002207",
+      "name": "*ST准油",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002211",
+      "name": "ST宏达",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002214",
+      "name": "*ST大立",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002217",
+      "name": "ST合力泰",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002227",
+      "name": "*ST特迅",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002305",
+      "name": "*ST南置",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "warning_followup_1223381687",
+        "warning_followup_1225215035",
+        "warning_followup_1225328398",
+        "initial_status_1225407050"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002306",
+      "name": "ST云网",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002323",
+      "name": "*ST雅博",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002360",
+      "name": "ST同德",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406622"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002424",
+      "name": "ST百灵",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002431",
+      "name": "ST棕榈",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002485",
+      "name": "ST雪发",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002501",
+      "name": "*ST利源",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002512",
+      "name": "ST达华",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406020"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002514",
+      "name": "*ST宝馨",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "board_july1"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002528",
+      "name": "*ST英飞",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002538",
+      "name": "ST司特",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-18",
+      "fact_ids": [
+        "remaining_basis_1225376580"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002542",
+      "name": "*ST中岩",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_status_1225406067"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002547",
+      "name": "*ST春兴",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_status_1225405415"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002569",
+      "name": "*ST步森",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407475"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002581",
+      "name": "*ST未名",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002586",
+      "name": "ST围海",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225405756"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002592",
+      "name": "ST八菱",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-12",
+      "fact_ids": [
+        "dividend_basis_1225291803"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002598",
+      "name": "ST章鼓",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "dividend_basis_1225405748"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002620",
+      "name": "*ST瑞和",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "ruihe_process_1225307829",
+        "initial_status_1225405535"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002630",
+      "name": "*ST华西",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002634",
+      "name": "*ST棒杰",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002650",
+      "name": "ST加加",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002656",
+      "name": "*ST摩登",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407358"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002667",
+      "name": "*ST威领",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406064"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002689",
+      "name": "ST远智",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-22",
+      "fact_ids": [
+        "remaining_basis_1225323739"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002691",
+      "name": "*ST冀凯",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406309"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002694",
+      "name": "*ST顾地",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002713",
+      "name": "*ST东易",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002717",
+      "name": "*ST岭南",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "halt_stage_1225251761"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002719",
+      "name": "ST麦趣",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002726",
+      "name": "ST龙大",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002731",
+      "name": "ST萃华",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002789",
+      "name": "*ST建艺",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002816",
+      "name": "*ST和科",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002822",
+      "name": "ST中装",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002856",
+      "name": "*ST美芝",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002872",
+      "name": "ST天圣",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002883",
+      "name": "*ST中设",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002932",
+      "name": "*ST明德",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002977",
+      "name": "*ST天箭",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407197"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600053",
+      "name": "*ST九鼎",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600079",
+      "name": "ST人福",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600080",
+      "name": "ST金花",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600082",
+      "name": "ST海泰",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600084",
+      "name": "*ST尼雅",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600107",
+      "name": "*ST尔雅",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600119",
+      "name": "*ST长投",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600136",
+      "name": "ST明诚",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600165",
+      "name": "ST宁科",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600169",
+      "name": "ST太重",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600180",
+      "name": "*ST瑞茂",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600187",
+      "name": "*ST国中",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600238",
+      "name": "*ST椰岛",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600239",
+      "name": "ST云城",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600243",
+      "name": "*ST海华",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600265",
+      "name": "*ST景谷",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600289",
+      "name": "ST信通",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600302",
+      "name": "ST标准",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600337",
+      "name": "ST美克",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600340",
+      "name": "*ST华幸",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600365",
+      "name": "ST通葡",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600370",
+      "name": "*ST三房",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600381",
+      "name": "*ST春天",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600423",
+      "name": "*ST柳化",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600476",
+      "name": "*ST湘邮",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600491",
+      "name": "ST龙元",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "halt_stage_1225407586"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600525",
+      "name": "ST长园",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600537",
+      "name": "*ST亿晶",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600543",
+      "name": "*ST莫高",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600568",
+      "name": "ST中珠",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600581",
+      "name": "*ST八钢",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600624",
+      "name": "ST复华",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600678",
+      "name": "ST金顶",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600730",
+      "name": "*ST高科",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-25",
+      "fact_ids": [
+        "gaoke_1225182732"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600734",
+      "name": "*ST实达",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600735",
+      "name": "ST新华锦",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600745",
+      "name": "*ST闻泰",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600753",
+      "name": "ST海钦",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600759",
+      "name": "ST洲际",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600818",
+      "name": "ST中路",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600889",
+      "name": "*ST京化",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600965",
+      "name": "*ST福成",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "601010",
+      "name": "ST文峰",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "601718",
+      "name": "ST际华",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603008",
+      "name": "ST喜临门",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603021",
+      "name": "*ST华鹏",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "huapeng_anchor_1225403155",
+        "huapeng_anchor_1225406887"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603189",
+      "name": "*ST网达",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-16",
+      "fact_ids": [
+        "remaining_basis_1225370971"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603272",
+      "name": "*ST联翔",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603359",
+      "name": "*ST东珠",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603377",
+      "name": "ST东时",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603378",
+      "name": "*ST亚士",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603398",
+      "name": "*ST沐邦",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "grandchild_claims",
+        "grandchild_court"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603429",
+      "name": "*ST集友",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603517",
+      "name": "ST绝味",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603557",
+      "name": "*ST起步",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603595",
+      "name": "ST东尼",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603718",
+      "name": "*ST海利",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603729",
+      "name": "ST龙韵",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603789",
+      "name": "ST星农",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603822",
+      "name": "ST嘉澳",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-04",
+      "fact_ids": [
+        "remaining_basis_1225348788"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603825",
+      "name": "ST华扬",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603828",
+      "name": "*ST利达",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603838",
+      "name": "*ST四通",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603843",
+      "name": "*ST正平",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603869",
+      "name": "ST智知",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603922",
+      "name": "ST金鸿顺",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603959",
+      "name": "ST百利",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "605199",
+      "name": "ST葫芦娃",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "605336",
+      "name": "*ST帅电",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    }
+  ],
+  "counts": {
+    "before": 42,
+    "after": 46,
+    "remaining": 104,
+    "members": 150,
+    "new_companies": 4,
+    "new_files": 7,
+    "new_pages": 32
+  },
+  "quote_audit": {
+    "stock_endpoint_points": 12,
+    "stock_return_windows": 8,
+    "stock_max_float_tail": "3E-16",
+    "stock_absolute_tolerance": "0.000000001",
+    "index_endpoint_points_at_official_precision": 6,
+    "unrounded_index_differences": [
+      {
+        "index": "000985",
+        "date": "2026-07-03",
+        "provider": "6404.3967",
+        "official": "6404.4"
+      },
+      {
+        "index": "000985",
+        "date": "2026-07-31",
+        "provider": "5681.2411",
+        "official": "5681.24"
+      },
+      {
+        "index": "000985",
+        "date": "2026-11-19",
+        "provider": "4877.3573",
+        "official": "4877.36"
+      },
+      {
+        "index": "932000",
+        "date": "2026-07-03",
+        "provider": "3487.715",
+        "official": "3487.72"
+      },
+      {
+        "index": "932000",
+        "date": "2026-07-31",
+        "provider": "2809.2143",
+        "official": "2809.21"
+      },
+      {
+        "index": "932000",
+        "date": "2026-11-19",
+        "provider": "2485.1072",
+        "official": "2485.11"
+      }
+    ],
+    "crossquote_returns": [
+      {
+        "symbol": "000056",
+        "anchor": "2026-07-03",
+        "through": "2026-07-31",
+        "crossquote_pct": -14.732142857142858
+      },
+      {
+        "symbol": "000056",
+        "anchor": "2026-07-03",
+        "through": "2026-11-19",
+        "crossquote_pct": -31.25
+      },
+      {
+        "symbol": "000488",
+        "anchor": "2026-07-03",
+        "through": "2026-07-31",
+        "crossquote_pct": -3.864734299516908
+      },
+      {
+        "symbol": "000488",
+        "anchor": "2026-07-03",
+        "through": "2026-11-19",
+        "crossquote_pct": -20.77294685990338
+      },
+      {
+        "symbol": "000609",
+        "anchor": "2026-07-03",
+        "through": "2026-07-31",
+        "crossquote_pct": -29.256965944272444
+      },
+      {
+        "symbol": "000609",
+        "anchor": "2026-07-03",
+        "through": "2026-11-19",
+        "crossquote_pct": -31.037151702786378
+      },
+      {
+        "symbol": "000610",
+        "anchor": "2026-07-03",
+        "through": "2026-07-31",
+        "crossquote_pct": -6.930693069306931
+      },
+      {
+        "symbol": "000610",
+        "anchor": "2026-07-03",
+        "through": "2026-11-19",
+        "crossquote_pct": 20.957095709570957
+      }
+    ],
+    "source_refs": [
+      {
+        "key": "sz000056",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz000056,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "45a0f373bd8a7a33cb7ab5a4bf5af147689ba6d4f57088327f2315d9798a7e50",
+        "observed_at": "2026-11-19T16:39:37.135728+00:00"
+      },
+      {
+        "key": "sz000488",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz000488,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "a7505c597e5ae5a308dde263723a11ab97bac6fea890b0483bbb296e9a197c57",
+        "observed_at": "2026-11-19T16:39:37.299479+00:00"
+      },
+      {
+        "key": "sz000609",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz000609,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "0daea24feeb10b6bf9ab126a2e216a82e944423d546fb8a701806a3b4c902019",
+        "observed_at": "2026-11-19T16:39:37.458014+00:00"
+      },
+      {
+        "key": "sz000610",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz000610,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "16735930fb46eba841fdffcf40b7a2a0efffd54603b2a7fd6109e63143130b7d",
+        "observed_at": "2026-11-19T16:39:37.631544+00:00"
+      },
+      {
+        "key": "000985",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260703&endDate=20261119",
+        "sha256": "279327a7846b9dbb97e3cb5b1cbdf1099dfc66e5cae163c04419d06f073a20e5",
+        "observed_at": "2026-11-19T16:39:37.921602+00:00"
+      },
+      {
+        "key": "932000",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=932000&startDate=20260703&endDate=20261119",
+        "sha256": "3172505cf5cc24a4989a28c8844a5e391ae270922abcb536bcaae133b5577010",
+        "observed_at": "2026-11-19T16:39:38.155105+00:00"
+      }
+    ]
+  },
+  "selection_note": "按旧150只缺口名单的代码顺序取前四，不按涨跌挑样；仅补齐原先缺少的期初可知事实。四例不是完整风险分类、随机样本或独立因果验证。",
+  "boundary": "新增正文的正式披露均不晚于7月3日，落款和披露日期分别保留；覆盖46/150指已有期初可知正文事实，不表示46家公司全部警示条件或完整官方名单均已认证。旧42家阅读层及原事实不改写，新比较统一以7月3日收盘起算，涨跌不证明整改或制度净影响。",
+  "method_promotions": 0,
+  "full_membership_certification_added": false
+}

@@ -45,7 +45,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
  const events=(ann?.verified_events??[]).filter(e=>e.symbol===selected)
  const condition=after.conditions.find(c=>c.key==='down')
  return <div className="regime-topics">
-  <STCurrentExtension data={themes?.current_extension}/>
+  <STCurrentExtension data={themes?.current_extension} followup={themes?.weiling_stage_check}/>
   <p className="regime-topic-intro">想弄清哪件事？选一个问题，先看答案，再核对过程和证据。</p>
   <nav className="regime-topic-nav" aria-label="复盘问题">{topics.map(([key,title,sub],i)=><button type="button" key={key} aria-pressed={topic===key} onClick={()=>setTopic(key)}><small>0{i+1} · {sub}</small><span>{title}</span></button>)}</nav>
   {questions.length>0&&<div className="regime-question-directory">

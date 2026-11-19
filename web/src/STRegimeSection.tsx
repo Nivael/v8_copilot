@@ -81,7 +81,7 @@ export function STRegimeSection({onCurrentUpdate}:{onCurrentUpdate?:(value:Curre
     window.addEventListener('focus',focus)
     return()=>{controller.abort();window.removeEventListener('focus',focus)}
   },[request])
-  useEffect(()=>{onCurrentUpdate?.(data?.themes?.current_extension??null)},[data,onCurrentUpdate])
+  useEffect(()=>{const current=data?.themes?.current_extension;const followup=data?.themes?.weiling_stage_check;onCurrentUpdate?.(current&&followup?{...current,stage_followup:followup}:current??null)},[data,onCurrentUpdate])
   const comparison=data?.comparisons.find(row=>row.key===windowKey)??data?.comparisons[0]
   const after=comparison?.after,before=comparison?.before,fixed=comparison?.fixed_after
   let series:ReadingSeries[]=[]

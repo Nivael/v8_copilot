@@ -385,6 +385,7 @@ def publish(inputs, *, root=ROOT):
                'xilv_liability_processor_sha256':sha256(Path(__file__).with_name('st_xilv_liability.py').read_bytes()).hexdigest(),
                'xilv_timeline_processor_sha256':sha256(Path(__file__).with_name('st_xilv_timeline.py').read_bytes()).hexdigest(),
                'endpoint_reasons_processor_sha256':sha256(Path(__file__).with_name('st_endpoint_reasons.py').read_bytes()).hexdigest(),
+               'initial_third_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_third_four.py').read_bytes()).hexdigest(),
                'initial_next_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_next_four.py').read_bytes()).hexdigest(),
                'initial_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_four.py').read_bytes()).hexdigest(),
                'weiling_stage_processor_sha256':sha256(Path(__file__).with_name('st_weiling_stage_check.py').read_bytes()).hexdigest(),
@@ -447,6 +448,7 @@ def load(root=ROOT):
                 or value.get('xilv_liability_processor_sha256')!=sha256(Path(__file__).with_name('st_xilv_liability.py').read_bytes()).hexdigest()
                 or value.get('xilv_timeline_processor_sha256')!=sha256(Path(__file__).with_name('st_xilv_timeline.py').read_bytes()).hexdigest()
                 or value.get('endpoint_reasons_processor_sha256')!=sha256(Path(__file__).with_name('st_endpoint_reasons.py').read_bytes()).hexdigest()
+                or value.get('initial_third_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_third_four.py').read_bytes()).hexdigest()
                 or value.get('initial_next_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_next_four.py').read_bytes()).hexdigest()
                 or value.get('initial_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_four.py').read_bytes()).hexdigest()
                 or value.get('weiling_stage_processor_sha256')!=sha256(Path(__file__).with_name('st_weiling_stage_check.py').read_bytes()).hexdigest()

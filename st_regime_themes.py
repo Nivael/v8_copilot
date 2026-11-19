@@ -32,6 +32,7 @@ from st_initial_seventh_four import initial_seventh_four
 from st_initial_eighth_four import initial_eighth_four
 from st_initial_ninth_four import initial_ninth_four
 from st_initial_tenth_four import initial_tenth_four
+from st_tenth_period_followup import followup_view as tenth_period_followup
 from st_eighth_period_followup import followup_view as eighth_period_followup
 from st_ninth_period_followup import followup_view as ninth_period_followup
 from st_seventh_period_followup import followup_view as seventh_period_followup
@@ -213,6 +214,7 @@ def build_themes(inputs, daily):
     result['initial_eighth_four']=initial_eighth_four(inputs,result['initial_seventh_four'],result['current_extension'])
     result['initial_ninth_four']=initial_ninth_four(inputs,result['initial_eighth_four'],result['current_extension'])
     result['initial_tenth_four']=initial_tenth_four(inputs,result['initial_ninth_four'],result['current_extension'])
+    result['tenth_period_followup']=tenth_period_followup(inputs,result['initial_tenth_four'])
     result['ninth_period_followup']=ninth_period_followup(inputs,result['initial_ninth_four'])
     result['eighth_period_followup']=eighth_period_followup(inputs,result['initial_eighth_four'])
     result['seventh_period_followup']=seventh_period_followup(inputs,result['initial_seventh_four'])

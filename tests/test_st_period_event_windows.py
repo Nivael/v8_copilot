@@ -39,3 +39,17 @@ def test_opt_in_never_substitutes_reference_price_for_halted_baseline():
     m,d,s=data();m['fixed_prices'][0]['has_trade']=False
     r=event_windows(m,d,s,through='2026-07-07',allow_nontraded=True)[0]['windows']
     assert all(w['stock_pct']is None and '2026-07-03' in w['stock_gap']for w in r)
+
+@pytest.mark.parametrize('day', ['2026-07-03', '2026-07-06', '2026-07-07'])
+def test_explicit_missing_record_opt_in_keeps_dates_and_benchmarks(day):
+    m,d,s=data()
+    m['fixed_prices']=[r for r in m['fixed_prices'] if r['trade_date']!=day]
+    with pytest.raises(KeyError):
+        event_windows(m,d,s,through='2026-07-07',allow_nontraded=True)
+    windows=event_windows(m,d,s,through='2026-07-07',allow_missing=True)[0]['windows']
+    for w in windows:
+        if day in (w['anchor'],w['through']):
+            assert w['stock_pct'] is None and day in w['stock_gap']
+        assert w['market_pct'] is not None and w['st_pct'] is not None
+    assert windows[0]['anchor']=='2026-07-03'
+    assert windows[0]['through']=='2026-07-06'

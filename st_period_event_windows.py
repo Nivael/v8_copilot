@@ -1,7 +1,7 @@
 """Descriptive post-disclosure windows with an explicit ordered trading calendar."""
 from decimal import Decimal as D
 
-def event_windows(market, daily, sources, anchor='2026-07-03', through='2026-11-19', *, allow_nontraded=False):
+def event_windows(market, daily, sources, anchor='2026-07-03', through='2026-11-19', *, allow_nontraded=False, allow_missing=False):
     dates=[r['date'] for r in daily if anchor < r['date'] <= through]
     if len(dates)!=len(set(dates)):
         raise ValueError('duplicate daily reference date')
@@ -24,17 +24,25 @@ def event_windows(market, daily, sources, anchor='2026-07-03', through='2026-11-
         windows=[]
         for requested in (1,5,20):
             observed=after[:requested];end=observed[-1]
-            start_price,end_price=(prices[(symbol,d)] for d in (baseline,end))
-            nontraded=[day for day,row in [(baseline,start_price),(end,end_price)] if not row['has_trade']]
+            if allow_missing:
+                start_price,end_price=(prices.get((symbol,d)) for d in (baseline,end))
+            else:
+                start_price,end_price=(prices[(symbol,d)] for d in (baseline,end))
+            endpoints=[(baseline,start_price),(end,end_price)]
+            missing=[day for day,row in endpoints if row is None]
+            nontraded=[day for day,row in endpoints if row is not None and not row['has_trade']]
             if nontraded and not allow_nontraded:
                 raise ValueError('nontraded event endpoint')
-            if D(str(start_price['close']))<=0 or D(str(end_price['close']))<=0:
+            if any(D(str(row['close']))<=0 for _,row in endpoints if row is not None):
                 raise ValueError('nonpositive event price')
-            stock=None if nontraded else (D(str(end_price['close']))/D(str(start_price['close']))-1)*100
+            stock=None if nontraded or missing else (D(str(end_price['close']))/D(str(start_price['close']))-1)*100
             broad=(benchmarks[('csi_all_share',end)]/benchmarks[('csi_all_share',baseline)]-1)*100
             compound=D(1)
             for day in observed:compound*=1+D(str(reference[day]['return_pct']))/100
             windows.append(dict(requested_days=requested,observed_days=len(observed),anchor=baseline,through=end,status='complete' if len(observed)==requested else 'unfinished',stock_pct=None if stock is None else str(stock),market_pct=str(broad),st_pct=str((compound-1)*100)))
             if nontraded:windows[-1]['stock_gap']='、'.join(nontraded)+'无实际成交收盘，保留空值，不用停牌参考价计算个股收益。'
+            if missing:
+                note='、'.join(missing)+'缺收盘记录，保留空值，不借其他日期或填零。'
+                windows[-1]['stock_gap']=windows[-1].get('stock_gap','')+note
         result.append(dict(aid=aid,symbol=symbol,published_on=published,windows=windows))
     return result

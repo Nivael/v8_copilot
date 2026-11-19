@@ -1,7 +1,7 @@
 """Descriptive post-disclosure windows with an explicit ordered trading calendar."""
 from decimal import Decimal as D
 
-def event_windows(market, daily, sources, anchor='2026-07-03', through='2026-11-19'):
+def event_windows(market, daily, sources, anchor='2026-07-03', through='2026-11-19', *, allow_nontraded=False):
     dates=[r['date'] for r in daily if anchor < r['date'] <= through]
     if len(dates)!=len(set(dates)):
         raise ValueError('duplicate daily reference date')
@@ -25,14 +25,16 @@ def event_windows(market, daily, sources, anchor='2026-07-03', through='2026-11-
         for requested in (1,5,20):
             observed=after[:requested];end=observed[-1]
             start_price,end_price=(prices[(symbol,d)] for d in (baseline,end))
-            if not start_price['has_trade'] or not end_price['has_trade']:
+            nontraded=[day for day,row in [(baseline,start_price),(end,end_price)] if not row['has_trade']]
+            if nontraded and not allow_nontraded:
                 raise ValueError('nontraded event endpoint')
             if D(str(start_price['close']))<=0 or D(str(end_price['close']))<=0:
                 raise ValueError('nonpositive event price')
-            stock=(D(str(end_price['close']))/D(str(start_price['close']))-1)*100
+            stock=None if nontraded else (D(str(end_price['close']))/D(str(start_price['close']))-1)*100
             broad=(benchmarks[('csi_all_share',end)]/benchmarks[('csi_all_share',baseline)]-1)*100
             compound=D(1)
             for day in observed:compound*=1+D(str(reference[day]['return_pct']))/100
-            windows.append(dict(requested_days=requested,observed_days=len(observed),anchor=baseline,through=end,status='complete' if len(observed)==requested else 'unfinished',stock_pct=str(stock),market_pct=str(broad),st_pct=str((compound-1)*100)))
+            windows.append(dict(requested_days=requested,observed_days=len(observed),anchor=baseline,through=end,status='complete' if len(observed)==requested else 'unfinished',stock_pct=None if stock is None else str(stock),market_pct=str(broad),st_pct=str((compound-1)*100)))
+            if nontraded:windows[-1]['stock_gap']='、'.join(nontraded)+'无实际成交收盘，保留空值，不用停牌参考价计算个股收益。'
         result.append(dict(aid=aid,symbol=symbol,published_on=published,windows=windows))
     return result

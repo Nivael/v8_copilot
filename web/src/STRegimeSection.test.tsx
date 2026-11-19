@@ -3,6 +3,7 @@ import {afterEach,describe,expect,it,vi} from 'vitest'
 import {STRegimeSection} from './STRegimeSection'
 import {buildRegimeStory} from './stRegimeStory'
 import type {RegimeFixed,RegimePeriod,STRegimeData} from './stRegimeTypes'
+import currentUpdate from './__fixtures__/current-extension.json'
 
 function fixture():STRegimeData{
   const period:RegimePeriod={start:'2026-05-08',through:'2026-07-03',days:40,complete:true,reference_change_pct:-10,market_change_pct:-2,small_cap_change_pct:-4,daily_volatility_pct:1.5,mean_absolute_move_pct:1,max_drawdown_pct:-11,mean_positive_breadth_pct:43,mean_dispersion_pp:7.8,beyond_old_down_pct:0,beyond_old_up_pct:0,minimum_coverage_pct:98,member_observations:100,trading_observations:98,suspended_observations:2,missing_observations:0,terminal_exclusions:0,relation:{days:40,correlation:.05,beta:.05,r_squared:.0025},conditions:[{key:'up',label:'大盘上涨日',days:20,market_mean_pct:1,st_mean_pct:.5,mean_excess_pp:-.5,positive_breadth_pct:60},{key:'down',label:'大盘下跌日',days:20,market_mean_pct:-1,st_mean_pct:-.8,mean_excess_pp:.2,positive_breadth_pct:35},{key:'stress',label:'大盘跌超1%日',days:10,market_mean_pct:-2,st_mean_pct:-1,mean_excess_pp:1,positive_breadth_pct:33}]}
@@ -16,6 +17,17 @@ async function openEvidence(){
 }
 const success=(data=fixture())=>vi.stubGlobal('fetch',vi.fn().mockResolvedValue({ok:true,json:async()=>({availability:'available',data})}))
 afterEach(()=>{cleanup();vi.unstubAllGlobals();window.history.replaceState(null,'',window.location.pathname)})
+
+it('shares the verified update with tracked cases and clears it when the snapshot becomes unavailable',async()=>{
+ const onCurrentUpdate=vi.fn()
+ success({...fixture(),themes:{months:[],market_days:[],current_extension:currentUpdate}})
+ render(<STRegimeSection onCurrentUpdate={onCurrentUpdate}/>)
+ await waitFor(()=>expect(onCurrentUpdate).toHaveBeenLastCalledWith(currentUpdate))
+ expect(fetch).toHaveBeenCalledTimes(1)
+ vi.mocked(fetch).mockResolvedValueOnce({ok:true,json:async()=>({availability:'unavailable'})} as Response)
+ fireEvent.click(screen.getByRole('button',{name:'重读已核快照'}))
+ await waitFor(()=>expect(onCurrentUpdate).toHaveBeenLastCalledWith(null))
+})
 
 describe('ST横向复盘',()=>{
  it('按问题进入，默认完整后窗，证据保持可展开',async()=>{

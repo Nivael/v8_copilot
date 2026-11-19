@@ -24,6 +24,7 @@ from st_current_extension import current_extension
 from st_weiling_stage_check import weiling_stage_check
 from st_initial_four import initial_four
 from st_initial_next_four import initial_next_four
+from st_endpoint_reasons import endpoint_reasons
 from st_xilv_timeline import xilv_timeline
 from st_xilv_liability import xilv_liability
 from st_disclosure_chains import disclosure_chain_view
@@ -192,4 +193,5 @@ def build_themes(inputs, daily):
     result['initial_next_four']=initial_next_four(inputs,result['initial_four'],result['current_extension'])
     result['xilv_timeline']=xilv_timeline(inputs,result['current_extension'])
     result['xilv_liability']=xilv_liability(inputs,result['xilv_timeline'])
+    result['endpoint_reasons']=endpoint_reasons(inputs,result['current_extension'],result['sample_integrity'],result['halt_stages'])
     return result

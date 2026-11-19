@@ -20,6 +20,7 @@ from st_zhongyan_debt_followup import zhongyan_debt_followup
 from st_initial_day_corroboration import initial_day_corroboration
 from st_initial_warning_origin import initial_warning_origin
 from st_penalty_clock import penalty_clock
+from st_current_extension import current_extension
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -180,4 +181,5 @@ def build_themes(inputs, daily):
     result['initial_day_corroboration'],result['announcement_reading']=initial_day_corroboration(inputs,result['announcement_reading'],lambda e:event_context(e,e['symbol'],inputs,daily),daily)
     result['initial_warning_origin'],result['announcement_reading']=initial_warning_origin(inputs,result['announcement_reading'],result['initial_day_corroboration'],lambda e:event_context(e,e['symbol'],inputs,daily))
     result['penalty_clock'],result['announcement_reading']=penalty_clock(inputs,result['announcement_reading'],result['initial_warning_origin'],result['initial_day_corroboration'],lambda e:event_context(e,e['symbol'],inputs,daily))
+    result['current_extension']=current_extension(inputs,daily)
     return result

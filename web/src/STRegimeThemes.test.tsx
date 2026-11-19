@@ -1,3 +1,4 @@
+import penaltyClock from './__fixtures__/penalty-clock.json'
 import initialOrigin from './__fixtures__/initial-warning-origin.json'
 import initialDay from './__fixtures__/initial-day-corroboration.json'
 import initialCoverage from './__fixtures__/initial-status-coverage.json'
@@ -76,4 +77,10 @@ it('固定入口接通警示依据包，实际专题不能只停留旧原件覆�
  window.history.replaceState(null,'','/learning#st-initial-status-coverage')
  const data=fixture();data.themes={...data.themes,initial_status_coverage:initialCoverage,ruihe_process:initialRuihe,initial_day_corroboration:initialDay,initial_warning_origin:initialOrigin} as unknown as STRegimeData['themes']
  mount(data);expect(screen.getByRole('region',{name:'期初警示依据补全'})).toBeVisible();expect(screen.getByText('六家警示依据已补；同样异动，背后的约束不同')).toBeVisible()
+})
+
+it('最新处罚时钟沿正式专题完整接线，旧警示依据不盖过新判断',()=>{
+ window.history.replaceState(null,'','/learning#st-initial-status-coverage')
+ const data=fixture();data.themes={...data.themes,initial_status_coverage:initialCoverage,ruihe_process:initialRuihe,initial_day_corroboration:initialDay,initial_warning_origin:initialOrigin,penalty_clock:penaltyClock} as unknown as STRegimeData['themes']
+ mount(data);expect(screen.getByRole('region',{name:'处罚时钟与实际摘帽'})).toBeVisible();expect(screen.getByRole('table',{name:'七家公司期初警示条件比较',hidden:true})).not.toBeVisible()
 })

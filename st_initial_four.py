@@ -76,12 +76,12 @@ def initial_four(inputs,prior,current):
 
 def quote_audit(sources,fresh,codes=None):
     cross={s['key']:s for s in sources};codes=CODES if codes is None else codes;anchors=['2026-07-03','2026-07-31','2026-11-19']
-    if set(cross)!={*['sz'+c for c in codes],'000985','932000'}or len(sources)!=6:raise ValueError('initial four crossquote scope changed')
+    if set(cross)!={*[('sh'if c.startswith('6')else'sz')+c for c in codes],'000985','932000'}or len(sources)!=len(codes)+2:raise ValueError('initial four crossquote scope changed')
     for s in sources:
         if sha256(s['text'].encode()).hexdigest()!=s['sha256']:raise ValueError('initial four crossquote bytes changed')
     prices={(r['symbol'],r['trade_date']):r for r in fresh['fixed_prices']};stock_points=0;float_tail=Decimal(0);returns=[]
     for c in codes:
-        key='sz'+c;s=cross[key];block=json.loads(s['text'])['data'][key]
+        key=('sh'if c.startswith('6')else'sz')+c;s=cross[key];block=json.loads(s['text'])['data'][key]
         if block['qt'][key][2]!=c or s['url']!=f'https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={key},day,2026-07-03,2026-11-19,320,qfq':raise ValueError('initial four crossquote identity changed')
         rows=block.get('qfqday')or block.get('day');q={r[0]:r for r in rows}
         if len(q)!=len(rows)or any(r[0]>'2026-11-19'for r in rows):raise ValueError('initial four future quote rows')

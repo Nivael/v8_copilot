@@ -123,7 +123,7 @@ describe('报道与证据绑定',()=>{
  it('读者点正文证据链接后，打开相应的明细视角',async()=>{
   success();render(<STRegimeSection/>);await screen.findByRole('navigation',{name:'复盘问题'})
   fireEvent.click(screen.getByRole('button',{name:/下次怎样看得更准/}))
-  fireEvent.click(screen.getByRole('button',{name:'查看150只完整名单 →'}))
+  fireEvent.click(await screen.findByRole('button',{name:'查看150只完整名单 →'}))
   expect(screen.getByRole('region',{name:'固定名单全部个股表现'})).toBeVisible()
   expect(screen.getByRole('button',{name:'整批个股'})).toHaveAttribute('aria-pressed','true')
  })
@@ -156,10 +156,10 @@ describe('按问题阅读与公告覆盖边界',()=>{
  it('分主题呈现，切换不要求先展开全文，缺正文不猜事实',async()=>{
   success();render(<STRegimeSection/>);await screen.findByRole('navigation',{name:'复盘问题'})
   fireEvent.click(screen.getByRole('button',{name:/公告到底改变了什么/}))
-  expect(screen.getByText('本版尚未绑定公告正文选样；不以标题代替事实。')).toBeVisible()
+  expect(await screen.findByText('本版尚未绑定公告正文选样；不以标题代替事实。')).toBeVisible()
   expect(screen.getByText('数据、图表与全部样本').closest('details')).not.toHaveAttribute('open')
   fireEvent.click(screen.getByRole('button',{name:/大盘影响有多明显/}))
-  expect(screen.getByRole('region',{name:'大盘波动较大交易日'})).toBeVisible()
+  expect(await screen.findByRole('region',{name:'大盘波动较大交易日'})).toBeVisible()
  })
  it('公告切公司与窗口，原件可展开，窗口不足保留待核',async()=>{
   const data=fixture()

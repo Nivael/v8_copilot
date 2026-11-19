@@ -64,7 +64,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
   {themes?.price_band_audit&&<button className="regime-text-link" onClick={()=>onEvidence('规则前后','st-price-band-audit')}>涨过5%，就突破旧涨停了吗？看具体例子 →</button>}
   {themes?.removal_era_comparison&&<button className="regime-text-link" onClick={()=>setTopic('cohort')}>本轮比较：摘帽以后，7月前后有什么不同？ →</button>}
   <p className="regime-topic-date">{themes?.current_extension?'原制度复盘窗口':'观察期'} {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
-  {topic==='xilv'&&<STXilvTimeline data={themes?.xilv_timeline}/>}
+  {topic==='xilv'&&<STXilvTimeline data={themes?.xilv_timeline} followup={themes?.xilv_liability}/>}
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">
    {themes?.xilv_timeline&&<p><button className="regime-text-link" onClick={()=>setTopic('xilv')}>西旅先跌后涨：分五段看市场、预重整与资金进展 →</button></p>}
    <p className="reading-kicker">先看答案</p><h3>{(after.reference_change_pct??0)<0?(after.reference_change_pct??0)>(after.market_change_pct??0)?'整体跌得比大盘少，个股还要分别看':'整体仍在下跌，个股还要分别看':'整体参考回升，个股还要分别看'}</h3>

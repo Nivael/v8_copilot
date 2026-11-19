@@ -382,6 +382,7 @@ def publish(inputs, *, root=ROOT):
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
+               'xilv_liability_processor_sha256':sha256(Path(__file__).with_name('st_xilv_liability.py').read_bytes()).hexdigest(),
                'xilv_timeline_processor_sha256':sha256(Path(__file__).with_name('st_xilv_timeline.py').read_bytes()).hexdigest(),
                'initial_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_four.py').read_bytes()).hexdigest(),
                'weiling_stage_processor_sha256':sha256(Path(__file__).with_name('st_weiling_stage_check.py').read_bytes()).hexdigest(),
@@ -441,6 +442,7 @@ def load(root=ROOT):
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()
+                or value.get('xilv_liability_processor_sha256')!=sha256(Path(__file__).with_name('st_xilv_liability.py').read_bytes()).hexdigest()
                 or value.get('xilv_timeline_processor_sha256')!=sha256(Path(__file__).with_name('st_xilv_timeline.py').read_bytes()).hexdigest()
                 or value.get('initial_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_four.py').read_bytes()).hexdigest()
                 or value.get('weiling_stage_processor_sha256')!=sha256(Path(__file__).with_name('st_weiling_stage_check.py').read_bytes()).hexdigest()

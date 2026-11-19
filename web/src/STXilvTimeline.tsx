@@ -1,10 +1,12 @@
+import {STXilvLiability} from './STXilvLiability'
+import type {XilvLiability} from './STXilvLiability'
 import {useState} from 'react'
 type Window={anchor:string;through:string|null;days:number|null;stock_pct:number|null;st_pct:number|null;market_pct:number|null;small_pct:number|null}
 type Source={announcement_id:string;url:string;title:string;published_on:string;document_dated_on:string;pages_to_read:number[];sha256:string}
 export type XilvTimeline={anchor:string;through:string;monthly:(Window&{title:string;reading:string})[];full:Window;path:{date:string;stock_close:number;stock_pct:number;st_pct:number;market_pct:number;small_pct:number}[];events:{key:string;published_on:string;title:string;reading:string;sources:Source[];windows:(Window&{requested_days:number;available_days:number;complete:boolean})[]}[];first_recovery_after_july:{date:string;stock_close:number};hindsight_extrema:{highest_close:{date:string;stock_close:number};lowest_close:{date:string;stock_close:number}};counts:{pdf_files:number;pdf_pages:number;catalog_rows:number;event_groups:number;complete_windows:number;incomplete_windows:number};crosscheck:{stock_daily_points:number;official_index_daily_points:number;unrounded_index_differences:{index:string;date:string;provider:string;official:string}[];sources:{key:string;url:string}[]};boundaries:string[];method_promotions:number;tracked_list_changed:boolean}
 const pct=(n:number|null)=>n==null?'未满窗口':`${n>0?'+':''}${n.toFixed(2)}%`
 const short=(s:string)=>s.slice(5).replace('-','/')
-export function STXilvTimeline({data:d}:{data?:XilvTimeline|null}){
+export function STXilvTimeline({data:d,followup}:{data?:XilvTimeline|null;followup?:XilvLiability|null}){
  const [phase,setPhase]=useState(0)
  const [event,setEvent]=useState('pre')
  if(!d)return null
@@ -37,11 +39,12 @@ export function STXilvTimeline({data:d}:{data?:XilvTimeline|null}){
   <div className="regime-scroll"><table className="regime-table"><caption>以披露前一交易日 {selected.windows[0].anchor} 收盘为锚 · 披露日 {selected.published_on}</caption><thead><tr><th>观察窗口</th><th>到哪天</th><th>西旅</th><th>ST参考</th><th>中证全指</th></tr></thead><tbody>{selected.windows.map(w=><tr key={w.requested_days}><td>后{w.requested_days}个交易日</td><td>{w.complete?w.through:`截至${d.through}仅${w.available_days}日`}</td><td>{pct(w.stock_pct)}</td><td>{pct(w.st_pct)}</td><td>{pct(w.market_pct)}</td></tr>)}</tbody></table></div>
   <p>未核准确发布时刻；这些是披露日附近的价格观察，不能当看到公告后可执行的收益。窗口可能重叠。</p>
   <details><summary>展开本事项原件、披露日与署期</summary>{selected.sources.map(s=><p key={s.announcement_id}><a href={s.url} target="_blank" rel="noreferrer">{s.title}</a> · 披露{s.published_on} · 原件署期{s.document_dated_on} · 重点第{s.pages_to_read.join('、')}页</p>)}</details>
+  <STXilvLiability data={followup}/>
   <h4>两个时间反例：后来的进展解释不了全部上涨</h4>
   <p>{d.first_recovery_after_july.date}收盘{d.first_recovery_after_july.stock_close.toFixed(2)}元，已回到7月3日6.06元之上，早于9月预重整披露。区间最高收盘{d.hindsight_extrema.highest_close.date}为{d.hindsight_extrema.highest_close.stock_close.toFixed(2)}元，早于9月18日签约；9月22日披露当日反而下跌约9.98%。</p>
   <p>最高收盘和首次恢复日期来自事后完整路径，只用于复盘，不能倒填为当时可预测的拐点。</p>
   <h4>原判断怎样更新，下一步看什么？</h4>
   <ul><li><strong>保留：</strong>期初负净资产、支持计划与实际执行分别核；上涨不能代替整改证据。</li><li><strong>修正：</strong>不能只沿用4月拟定增的静态描述。9月原定增终止并出现预重整与投资人；10月底首期经营借款已收到。</li><li><strong>尚不能确定：</strong>各公告的净价格贡献、期间全部催化，以及重整最终结果。单一案例不晋级为通用经验。</li><li><strong>等待新证据：</strong>正式受理、法院批准、投资款支付、股份登记、重整执行和后续审计净资产；每个阶段分别确认。</li></ul>
-  <details><summary>核验范围与剩余缺口</summary><p>{d.counts.catalog_rows}条目录中选读{d.counts.pdf_files}份原件共{d.counts.pdf_pages}页；{d.counts.event_groups}组事项，{d.counts.complete_windows}个完整窗口、{d.counts.incomplete_windows}个未满窗口。</p><p>含起点的{d.crosscheck.stock_daily_points}个西旅前复权收盘、两指数{d.crosscheck.official_index_daily_points}个官方精度收盘跨渠道一致；指数未取整差异{d.crosscheck.unrounded_index_differences.length}处保留。</p>{d.boundaries.map(t=><p key={t}>{t}</p>)}{d.crosscheck.sources.map(s=><p key={s.key}><a href={s.url} target="_blank" rel="noreferrer">{s.key} 原始行情来源</a></p>)}</details>
+  <details><summary>{followup?'原过程核验范围（补核前）':'核验范围与剩余缺口'}</summary>{followup&&<p>以下保留上一轮9份过程资料的范围；本轮新增10份资金与诉讼原件见上节，两轮共19/32份、124页，仍不认证全部事项。</p>}<p>{d.counts.catalog_rows}条目录中选读{d.counts.pdf_files}份原件共{d.counts.pdf_pages}页；{d.counts.event_groups}组事项，{d.counts.complete_windows}个完整窗口、{d.counts.incomplete_windows}个未满窗口。</p><p>含起点的{d.crosscheck.stock_daily_points}个西旅前复权收盘、两指数{d.crosscheck.official_index_daily_points}个官方精度收盘跨渠道一致；指数未取整差异{d.crosscheck.unrounded_index_differences.length}处保留。</p>{d.boundaries.map(t=><p key={t}>{t}</p>)}{d.crosscheck.sources.map(s=><p key={s.key}><a href={s.url} target="_blank" rel="noreferrer">{s.key} 原始行情来源</a></p>)}</details>
  </section>
 }

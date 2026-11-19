@@ -389,6 +389,7 @@ def publish(inputs, *, root=ROOT):
                'initial_fourth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_fourth_four.py').read_bytes()).hexdigest(),
                'initial_fifth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_fifth_four.py').read_bytes()).hexdigest(),
                'initial_sixth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_sixth_four.py').read_bytes()).hexdigest(),
+               'initial_seventh_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_seventh_four.py').read_bytes()).hexdigest(),
                'helitai_yunwang_followup_processor_sha256':sha256(Path(__file__).with_name('st_helitai_yunwang_followup.py').read_bytes()).hexdigest(),
                'dongjing_dali_followup_processor_sha256':sha256(Path(__file__).with_name('st_dongjing_dali_followup.py').read_bytes()).hexdigest(),
                'initial_third_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_third_four.py').read_bytes()).hexdigest(),
@@ -458,6 +459,7 @@ def load(root=ROOT):
                 or value.get('initial_fourth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_fourth_four.py').read_bytes()).hexdigest()
                 or value.get('initial_fifth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_fifth_four.py').read_bytes()).hexdigest()
                 or value.get('initial_sixth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_sixth_four.py').read_bytes()).hexdigest()
+                or value.get('initial_seventh_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_seventh_four.py').read_bytes()).hexdigest()
                 or value.get('helitai_yunwang_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_helitai_yunwang_followup.py').read_bytes()).hexdigest()
                 or value.get('dongjing_dali_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_dongjing_dali_followup.py').read_bytes()).hexdigest()
                 or value.get('initial_third_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_third_four.py').read_bytes()).hexdigest()

@@ -1,0 +1,24 @@
+import {useState} from 'react'
+type Source={announcement_id:string;symbol:string;title:string;url:string;published_on:string;document_dated_on:string|null}
+type Change={source:string;published_on:string;page:number;stage:string}
+type Chain={chain:string;source:string;pages:number[];subject:string;changed?:string;closed?:string;open:string;continuity?:Change[];boundary?:string}
+type Window={requested_days:number;observed_days:number;anchor:string;through:string;status:string;stock_pct:string;market_pct:string;st_pct:string}
+export type SeventhPeriodFollowup={through:string;title:string;answer:string;chains:Chain[];sources:Source[];event_windows:{aid:string;symbol:string;published_on:string;windows:Window[]}[];counts:{files:number;pages:number;viewed_pages:number;initial_coverage:number;complete_windows:number;unfinished_windows:number};boundary:string}
+const readable=(text:string)=>text.replace(/(-?\d{5,}(?:\.\d+)?)元/g,(_,raw:string)=>Math.abs(Number(raw))>=1e8?`约${(Number(raw)/1e8).toFixed(2)}亿元`:`约${(Number(raw)/1e4).toFixed(2)}万元`)
+const companies=[['002431','棕榈'],['002501','利源'],['002424','百灵'],['002485','雪发']]
+const pct=(s:string)=>`${Number(s)>0?'+':''}${Number(s).toFixed(2)}%`
+export function STSeventhPeriodFollowup({data:d}:{data?:SeventhPeriodFollowup|null}){
+ const [company,setCompany]=useState('002431');const [chosen,setChosen]=useState('');const [days,setDays]=useState('5');const [event,setEvent]=useState('')
+ if(!d)return null
+ const source=(aid:string)=>d.sources.find(s=>s.announcement_id===aid)!
+ const chains=d.chains.filter(c=>source(c.source).symbol===company);const chain=chains.find(c=>c.chain===chosen)??chains[0]
+ const observations=d.event_windows.filter(e=>e.symbol===company);const selectedEvent=observations.find(e=>e.aid===event)??observations.find(e=>e.aid===chain.source)??observations[0];const w=selectedEvent?.windows.find(w=>w.requested_days===Number(days))
+ return <section className="regime-reading-section" aria-label="四家公司期间判断更新"><p className="reading-kicker">把期初问题接回后来证据 · 截至{d.through}</p><h4>{d.title}</h4><p>{d.answer}</p>
+ <label>先看哪家公司？<select aria-label="选择期间复盘公司" value={company} onChange={e=>{setCompany(e.target.value);setChosen('');setEvent('')}}>{companies.map(([code,name])=><option key={code} value={code}>{name}</option>)}</select></label>
+ <label>想弄清哪件事？<select aria-label="选择期间复盘事项" value={chain.chain} onChange={e=>{setChosen(e.target.value);setEvent('')}}>{chains.map(c=><option key={c.chain} value={c.chain}>{c.chain.split('-').slice(1).join(' · ')}</option>)}</select></label>
+ <h4>{chain.chain.split('-').slice(1).join(' · ')}：判断怎样更新？</h4><p className="reading-caption">对象与口径：{chain.subject}</p><p>{readable(chain.changed??chain.closed??'')}</p><h5>还不能关闭什么？</h5><p>{readable(chain.open)}</p>{chain.boundary&&<p>{chain.boundary}</p>}
+ <details><summary>查看事项过程、原件与日期</summary><p>精确表述：{chain.changed??chain.closed}；{chain.open}</p>{chain.continuity?.map(c=><article key={c.source}><p>{c.published_on} · {c.stage}</p><a href={source(c.source).url+'#page='+c.page} target="_blank" rel="noreferrer">本次原文第{c.page}页 ↗</a></article>)}<p>本项依据披露{source(chain.source).published_on}，文件落款{source(chain.source).document_dated_on??'未确认，采用正式披露日'}。</p>{chain.pages.map(n=><p key={n}><a href={source(chain.source).url+'#page='+n} target="_blank" rel="noreferrer">{source(chain.source).title} · 第{n}页 ↗</a></p>)}</details>
+ {w&&selectedEvent&&<details><summary>公告前后，个股、ST与大盘怎样一起变化？</summary><label>哪份公告？<select aria-label="选择期间公告窗口" value={selectedEvent.aid} onChange={e=>setEvent(e.target.value)}>{observations.map(e=><option key={e.aid} value={e.aid}>{e.published_on} · {source(e.aid).title}</option>)}</select></label><label>观察多长？<select aria-label="期间公告观察天数" value={days} onChange={e=>setDays(e.target.value)}>{[1,5,20].map(n=><option key={n} value={n}>{n}个交易日</option>)}</select></label><p>{w.anchor}收盘 → {w.through} · {w.status==='complete'?`完整${w.observed_days}日`:`未满${w.requested_days}日，目前${w.observed_days}日`}</p><table className="regime-table" aria-label="期间公告同窗比较"><thead><tr><th>个股</th><th>同期ST</th><th>中证全指</th></tr></thead><tbody><tr><td>{pct(w.stock_pct)}</td><td>{pct(w.st_pct)}</td><td>{pct(w.market_pct)}</td></tr></tbody></table><p>以披露日前一个市场日收盘为基准。同期涨跌只描述背景，不证明公告贡献；同一公告里的多个案件共用一次价格观察，月度重复披露不增加独立经验验证。</p></details>}
+ <h5>什么新证据会改变判断？</h5><p>{company==='002431'?'对应账户的正式解冻、和解款实际收付及履约完成，才能逐项关闭待办。':company==='002501'?'正式收购协议、审批与交割才改变交易阶段；基金案终审和具体付款凭证分别更新诉讼判断。':company==='002424'?'区分个人处罚最终决定与上市公司原事项；新年度审计证据及持续经营数据另行核对。':'新期间盈利与现金、对应冻结账户的正式解除文件，分别核实；单个同比改善不代表转正。'}</p>
+ <details><summary>本轮核到哪里，哪些仍缺？</summary><p>{d.counts.files}份{d.counts.pages}页原件中视觉核对{d.counts.viewed_pages}关键页；{d.counts.complete_windows}个完整窗口、{d.counts.unfinished_windows}个未满窗口。期初覆盖保持{d.counts.initial_coverage}/150。</p><p>{d.boundary}</p></details></section>
+}

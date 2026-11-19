@@ -7,7 +7,7 @@ import json
 def review_stock_endpoints(sources, prices, codes, dates):
     if len(set(codes)) != len(codes) or len(set(dates)) != len(dates):
         raise ValueError('duplicate review scope')
-    expected = {'sz' + c for c in codes}
+    expected = {('sh' if c.startswith('6') else 'sz') + c for c in codes}
     if len(sources) != len(expected) or {s['key'] for s in sources} != expected:
         raise ValueError('quote source scope changed')
     lookup = {}

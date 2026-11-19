@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'xilv',anchor:'st-xilv-timeline',title:'西旅：先跌后涨，公告和大盘分别说明了什么？',field:'xilv_timeline'},
   {key:'initialstatus',anchor:'st-initial-status-coverage',title:'期初样本：警示原因和后来走势怎样对应？',field:'initial_status_coverage'},
   {key:'dividends',anchor:'st-dividend-basis',title:'分红、重整与复权：同一天涨幅为何不同？',field:'dividend_basis'},
   {key:'quoteaudit',anchor:'st-fixed-quote-audit',title:'固定150只：行情核到哪一步，口径差异会改变结论吗？',field:'fixed_quote_audit'},

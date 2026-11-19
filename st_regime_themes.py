@@ -23,6 +23,7 @@ from st_penalty_clock import penalty_clock
 from st_current_extension import current_extension
 from st_weiling_stage_check import weiling_stage_check
 from st_initial_four import initial_four
+from st_xilv_timeline import xilv_timeline
 from st_disclosure_chains import disclosure_chain_view
 from st_experience_case_audit import experience_case_audit
 from st_price_band_audit import price_band_view
@@ -186,4 +187,5 @@ def build_themes(inputs, daily):
     result['current_extension']=current_extension(inputs,daily)
     result['weiling_stage_check']=weiling_stage_check(inputs,result['current_extension'])
     result['initial_four']=initial_four(inputs,result['initial_day_corroboration'],result['current_extension'])
+    result['xilv_timeline']=xilv_timeline(inputs,result['current_extension'])
     return result

@@ -1,3 +1,4 @@
+import type {CurrentExtension} from './STCurrentExtension'
 import {STPriceBandAudit} from './STPriceBandAudit'
 import {STEndpointAudit} from './STEndpointAudit'
 import {STMembershipAudit} from './STMembershipAudit'
@@ -52,7 +53,7 @@ function StockTable({comparison}:{comparison:RegimeComparison}){
   </>
 }
 
-export function STRegimeSection(){
+export function STRegimeSection({onCurrentUpdate}:{onCurrentUpdate?:(value:CurrentExtension|null)=>void}={}){
   const [data,setData]=useState<STRegimeData|null>(null)
   const [error,setError]=useState('')
   const [request,setRequest]=useState(0)
@@ -80,6 +81,7 @@ export function STRegimeSection(){
     window.addEventListener('focus',focus)
     return()=>{controller.abort();window.removeEventListener('focus',focus)}
   },[request])
+  useEffect(()=>{onCurrentUpdate?.(data?.themes?.current_extension??null)},[data,onCurrentUpdate])
   const comparison=data?.comparisons.find(row=>row.key===windowKey)??data?.comparisons[0]
   const after=comparison?.after,before=comparison?.before,fixed=comparison?.fixed_after
   let series:ReadingSeries[]=[]

@@ -1,3 +1,4 @@
+import {STYigouSettlement} from './STYigouSettlement'
 import {STEndpointReasons} from './STEndpointReasons'
 import {STXilvTimeline} from './STXilvTimeline'
 import STCurrentExtension from './STCurrentExtension'
@@ -106,6 +107,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {topic==='risk'&&<div id="st-company-risk-cases"><STCompanyRiskCases data={themes?.company_risk_cases} priceCheck={themes?.case_price_crosscheck}/></div>}
    {topic==='followup'&&<div id="st-removal-followup"><STRemovalFollowup data={themes?.removal_followup} comparison={themes?.company_risk_cases?.comparison}/></div>}
    {topic==='halts'&&<div id="st-halt-stages"><STHaltStages data={themes?.halt_stages} priceCheck={themes?.halt_price_crosscheck} onCompany={s=>{setSymbol(s);setShowAll(false);setTopic('events')}}/></div>}
+   {topic==='yigou'&&<STYigouSettlement data={themes?.yigou_settlement}/>}
    {topic==='initialstatus'&&<STInitialStatusCoverage data={themes?.initial_status_coverage} update={themes?.warning_basis_followup} ruihe={themes?.ruihe_process} three={themes?.initial_three_followup} quoteproof={themes?.initial_three_quoteproof} debt={themes?.zhongyan_debt_followup} day={themes?.initial_day_corroboration} origin={themes?.initial_warning_origin} clock={themes?.penalty_clock} four={themes?.initial_four} nextFour={themes?.initial_next_four} thirdFour={themes?.initial_third_four}/> }
    {topic==='issuer'&&<div id="st-issuer-checks">{themes?.membership_audit?.issuer_checks?.map(c=><STIssuerCheck key={c.symbol} check={c}/>)}</div>}
   </div>

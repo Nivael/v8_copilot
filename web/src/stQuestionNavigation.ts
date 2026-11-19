@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'yigou',anchor:'st-yigou-settlement',title:'易购：利润为正，和解与现金兑现了吗？',field:'yigou_settlement'},
   {key:'endpoints',anchor:'st-endpoint-reasons',title:'固定150只：缺价、停牌和退出怎样分别看？',field:'endpoint_reasons'},
   {key:'xilv',anchor:'st-xilv-timeline',title:'西旅：先跌后涨，公告和大盘分别说明了什么？',field:'xilv_timeline'},
   {key:'initialstatus',anchor:'st-initial-status-coverage',title:'期初样本：警示原因和后来走势怎样对应？',field:'initial_status_coverage'},

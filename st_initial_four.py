@@ -74,8 +74,8 @@ def initial_four(inputs,prior,current):
     return {'anchor':'2026-07-03','through':current['through'],'rows':rows,'inventory':inventory,'counts':{'before':before,'after':after,'remaining':150-after,'members':150,'new_companies':4,'new_files':7,'new_pages':sum(s['pages']for s in sources.values())},'quote_audit':audit,'selection_note':'按旧150只缺口名单的代码顺序取前四，不按涨跌挑样；仅补齐原先缺少的期初可知事实。四例不是完整风险分类、随机样本或独立因果验证。','boundary':'新增正文的正式披露均不晚于7月3日，落款和披露日期分别保留；覆盖46/150指已有期初可知正文事实，不表示46家公司全部警示条件或完整官方名单均已认证。旧42家阅读层及原事实不改写，新比较统一以7月3日收盘起算，涨跌不证明整改或制度净影响。','method_promotions':0,'full_membership_certification_added':False}
 
 
-def quote_audit(sources,fresh):
-    cross={s['key']:s for s in sources};codes=['000056','000488','000609','000610'];anchors=['2026-07-03','2026-07-31','2026-11-19']
+def quote_audit(sources,fresh,codes=None):
+    cross={s['key']:s for s in sources};codes=CODES if codes is None else codes;anchors=['2026-07-03','2026-07-31','2026-11-19']
     if set(cross)!={*['sz'+c for c in codes],'000985','932000'}or len(sources)!=6:raise ValueError('initial four crossquote scope changed')
     for s in sources:
         if sha256(s['text'].encode()).hexdigest()!=s['sha256']:raise ValueError('initial four crossquote bytes changed')

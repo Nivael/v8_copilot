@@ -390,6 +390,7 @@ def publish(inputs, *, root=ROOT):
                'initial_fifth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_fifth_four.py').read_bytes()).hexdigest(),
                'initial_sixth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_sixth_four.py').read_bytes()).hexdigest(),
                'initial_seventh_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_seventh_four.py').read_bytes()).hexdigest(),
+               'initial_eighth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_eighth_four.py').read_bytes()).hexdigest(),
                'seventh_period_followup_processor_sha256':sha256(Path(__file__).with_name('st_seventh_period_followup.py').read_bytes()).hexdigest(),
                'period_event_windows_processor_sha256':sha256(Path(__file__).with_name('st_period_event_windows.py').read_bytes()).hexdigest(),
                'helitai_yunwang_followup_processor_sha256':sha256(Path(__file__).with_name('st_helitai_yunwang_followup.py').read_bytes()).hexdigest(),
@@ -462,6 +463,7 @@ def load(root=ROOT):
                 or value.get('initial_fifth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_fifth_four.py').read_bytes()).hexdigest()
                 or value.get('initial_sixth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_sixth_four.py').read_bytes()).hexdigest()
                 or value.get('initial_seventh_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_seventh_four.py').read_bytes()).hexdigest()
+                or value.get('initial_eighth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_eighth_four.py').read_bytes()).hexdigest()
                 or value.get('seventh_period_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_seventh_period_followup.py').read_bytes()).hexdigest()
                 or value.get('period_event_windows_processor_sha256')!=sha256(Path(__file__).with_name('st_period_event_windows.py').read_bytes()).hexdigest()
                 or value.get('helitai_yunwang_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_helitai_yunwang_followup.py').read_bytes()).hexdigest()

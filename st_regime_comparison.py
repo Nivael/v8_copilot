@@ -393,6 +393,7 @@ def publish(inputs, *, root=ROOT):
                'initial_eighth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_eighth_four.py').read_bytes()).hexdigest(),
                'initial_ninth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_ninth_four.py').read_bytes()).hexdigest(),
                'initial_tenth_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_tenth_four.py').read_bytes()).hexdigest(),
+               'initial_eleventh_four_processor_sha256':sha256(Path(__file__).with_name('st_initial_eleventh_four.py').read_bytes()).hexdigest(),
                'quote_endpoint_review_processor_sha256':sha256(Path(__file__).with_name('st_quote_endpoint_review.py').read_bytes()).hexdigest(),
                'seventh_period_followup_processor_sha256':sha256(Path(__file__).with_name('st_seventh_period_followup.py').read_bytes()).hexdigest(),
                'eighth_period_followup_processor_sha256':sha256(Path(__file__).with_name('st_eighth_period_followup.py').read_bytes()).hexdigest(),
@@ -472,6 +473,7 @@ def load(root=ROOT):
                 or value.get('initial_eighth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_eighth_four.py').read_bytes()).hexdigest()
                 or value.get('initial_ninth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_ninth_four.py').read_bytes()).hexdigest()
                 or value.get('initial_tenth_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_tenth_four.py').read_bytes()).hexdigest()
+                or value.get('initial_eleventh_four_processor_sha256')!=sha256(Path(__file__).with_name('st_initial_eleventh_four.py').read_bytes()).hexdigest()
                 or value.get('quote_endpoint_review_processor_sha256')!=sha256(Path(__file__).with_name('st_quote_endpoint_review.py').read_bytes()).hexdigest()
                 or value.get('seventh_period_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_seventh_period_followup.py').read_bytes()).hexdigest()
                 or value.get('eighth_period_followup_processor_sha256')!=sha256(Path(__file__).with_name('st_eighth_period_followup.py').read_bytes()).hexdigest()

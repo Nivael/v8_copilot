@@ -28,6 +28,7 @@ from st_initial_third_four import initial_third_four
 from st_initial_fourth_four import initial_fourth_four
 from st_initial_fifth_four import initial_fifth_four
 from st_initial_sixth_four import initial_sixth_four
+from st_helitai_yunwang_followup import followup_view as helitai_yunwang_view
 from st_dongjing_dali_followup import followup_view
 from st_yigou_settlement import yigou_settlement
 from st_endpoint_reasons import endpoint_reasons
@@ -201,6 +202,7 @@ def build_themes(inputs, daily):
     result['initial_fourth_four']=initial_fourth_four(inputs,result['initial_third_four'],result['current_extension'])
     result['initial_fifth_four']=initial_fifth_four(inputs,result['initial_fourth_four'],result['current_extension'])
     result['initial_sixth_four']=initial_sixth_four(inputs,result['initial_fifth_four'],result['current_extension'])
+    result['helitai_yunwang_followup']=helitai_yunwang_view(inputs,result['initial_sixth_four'],result['current_extension'])
     result['dongjing_dali_followup']=followup_view(inputs,result['initial_fifth_four'],result['current_extension'])
     result['xilv_timeline']=xilv_timeline(inputs,result['current_extension'])
     result['xilv_liability']=xilv_liability(inputs,result['xilv_timeline'])

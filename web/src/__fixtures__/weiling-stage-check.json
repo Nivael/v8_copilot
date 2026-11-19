@@ -1,0 +1,266 @@
+{
+  "through": "2026-11-19",
+  "symbol": "002667.SZ",
+  "rows": [
+    {
+      "id": "weiling_1225599834",
+      "symbol": "002667",
+      "published_on": "2026-10-12",
+      "document_dated_on": "2026-10-12",
+      "title": "要约已结算过户，当时控制权未变",
+      "change": "公司披露1593.639万股要约股份、约2.87亿元收购价款已完成结算及过户，持股6.12%；当时明确控制权未变。这笔股东间收购价款不能当上市公司收到捐赠。",
+      "pages": [
+        1,
+        2
+      ],
+      "effective_or_scheduled_on": null,
+      "source": {
+        "announcement_id": "1225599834",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-12/8a316ff9-6570-4027-9c9b-809fc580a472.PDF",
+        "title": "*ST威领：关于西藏山南锑金资源有限公司要约收购要约收购公司股份完成过户的公告",
+        "sha256": "f77a737b25a61c56e57d7be29fb3e5ae6f71896e028e0e112f28e173688d2581",
+        "pages": 2,
+        "observed_at": "2026-11-19T16:07:13.376514+00:00",
+        "protected_gate_passed": true,
+        "published_on": "2026-10-12"
+      },
+      "observation": {
+        "anchor": "2026-10-12",
+        "date_precision": "day",
+        "not_earliest_reaction": true,
+        "windows": {
+          "1": {
+            "through": "2026-10-13",
+            "stock_pct": 9.995903318312148,
+            "market_pct": 0.00303766391842597,
+            "st_pct": -0.05234295774647624,
+            "gap": null
+          },
+          "5": {
+            "through": "2026-10-19",
+            "stock_pct": -5.120852109791086,
+            "market_pct": -3.621416237227848,
+            "st_pct": -4.743326149539406,
+            "gap": null
+          },
+          "20": {
+            "through": "2026-11-09",
+            "stock_pct": -6.80049160180255,
+            "market_pct": -6.765620572065334,
+            "st_pct": -7.365914953917674,
+            "gap": null
+          }
+        }
+      }
+    },
+    {
+      "id": "weiling_1225626812",
+      "symbol": "002667",
+      "published_on": "2026-10-27",
+      "document_dated_on": "2026-10-26",
+      "title": "第一大股东与控制权，仍隔着后续程序",
+      "change": "已登记3189.739万股、12.24%；285万股登记仍在办理。3474.739万股、13.33%为全部登记后的口径；控制权仍以股东会选举和董事会改组为条件。",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "effective_or_scheduled_on": null,
+      "source": {
+        "announcement_id": "1225626812",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-27/9bbe5dba-30c2-4de6-9e5a-2d439739b8c0.PDF",
+        "title": "*ST威领：关于公司股东权益变动暨第一大股东发生变更的提示性公告",
+        "sha256": "f9614c9b4be4d01ba087c6b26cdfc7f1634fd849d12c5b2b4c320c539f7587e5",
+        "pages": 4,
+        "observed_at": "2026-11-19T16:07:13.156435+00:00",
+        "protected_gate_passed": true,
+        "published_on": "2026-10-27"
+      },
+      "observation": {
+        "anchor": "2026-10-27",
+        "date_precision": "day",
+        "not_earliest_reaction": true,
+        "windows": {
+          "1": {
+            "through": "2026-10-28",
+            "stock_pct": -1.1280039234919048,
+            "market_pct": 1.5513098006996628,
+            "st_pct": 0.21325000000000927,
+            "gap": null
+          },
+          "5": {
+            "through": "2026-11-03",
+            "stock_pct": 17.214320745463453,
+            "market_pct": -2.2213270866407675,
+            "st_pct": -2.3355102469350797,
+            "gap": null
+          },
+          "20": {
+            "through": null,
+            "stock_pct": null,
+            "market_pct": null,
+            "st_pct": null,
+            "gap": "起止缺价或后续交易日不足，未填零"
+          }
+        }
+      }
+    },
+    {
+      "id": "weiling_1225660313",
+      "symbol": "002667",
+      "published_on": "2026-11-06",
+      "document_dated_on": "2026-11-05",
+      "title": "后续披露已自11月4日起变更控制权",
+      "change": "公司披露截至10月29日相关股份已登记，山南锑金持股13.33%；11月4日董事补选后可决定过半数董事选任，公告引述法律意见认定控股股东和实际控制人自该日起变更。不能倒填成10月要约过户时已取得控制权。",
+      "pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "effective_or_scheduled_on": "2026-11-04",
+      "source": {
+        "announcement_id": "1225660313",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-11-06/7ea51135-430e-4336-93ae-5d58e1afe579.PDF",
+        "title": "*ST威领：关于公司控股股东及实际控制人变更的公告",
+        "sha256": "8b783efc81d9e6ff9ae64ce075adf909b13ebd60cfa12fd642e4facf8d95e23e",
+        "pages": 5,
+        "observed_at": "2026-11-19T16:07:13.013552+00:00",
+        "protected_gate_passed": true,
+        "published_on": "2026-11-06"
+      },
+      "observation": {
+        "anchor": "2026-11-06",
+        "date_precision": "day",
+        "not_earliest_reaction": true,
+        "windows": {
+          "1": {
+            "through": "2026-11-09",
+            "stock_pct": -10.007911392405067,
+            "market_pct": 0.08193548614117141,
+            "st_pct": 0.31503971631205996,
+            "gap": null
+          },
+          "5": {
+            "through": "2026-11-13",
+            "stock_pct": -9.889240506329111,
+            "market_pct": -1.1161097759182614,
+            "st_pct": -1.6467753801031604,
+            "gap": null
+          },
+          "20": {
+            "through": null,
+            "stock_pct": null,
+            "market_pct": null,
+            "st_pct": null,
+            "gap": "起止缺价或后续交易日不足，未填零"
+          }
+        }
+      }
+    },
+    {
+      "id": "weiling_1225662349",
+      "symbol": "002667",
+      "published_on": "2026-11-07",
+      "document_dated_on": "2026-11-06",
+      "title": "赠款与担保：11月23日拟审议，尚无本批结果",
+      "change": "原通知及11月18日提示均安排11月23日14时审议赠款和关联担保，议案3、4关联股东回避。提示性公告不是表决通过，更不是赠款到账、贷款放款或经营利润。",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "effective_or_scheduled_on": "2026-11-23",
+      "source": {
+        "announcement_id": "1225662349",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-07/1225662349.PDF",
+        "title": "关于召开2026年第五次临时股东会的通知",
+        "sha256": "2f6458ebc9e6171cef6f83e48d5ed59ff012a709ffa1acccdba26f8e393f3a02",
+        "pages": 8,
+        "observed_at": "2026-11-19T16:06:15.157066+00:00",
+        "protected_gate_passed": true,
+        "published_on": "2026-11-07"
+      },
+      "observation": {
+        "anchor": "2026-11-06",
+        "date_precision": "day",
+        "not_earliest_reaction": true,
+        "windows": {
+          "1": {
+            "through": "2026-11-09",
+            "stock_pct": -10.007911392405067,
+            "market_pct": 0.08193548614117141,
+            "st_pct": 0.31503971631205996,
+            "gap": null
+          },
+          "5": {
+            "through": "2026-11-13",
+            "stock_pct": -9.889240506329111,
+            "market_pct": -1.1161097759182614,
+            "st_pct": -1.6467753801031604,
+            "gap": null
+          },
+          "20": {
+            "through": null,
+            "stock_pct": null,
+            "market_pct": null,
+            "st_pct": null,
+            "gap": "起止缺价或后续交易日不足，未填零"
+          }
+        }
+      }
+    }
+  ],
+  "meeting": {
+    "scheduled_on": "2026-11-23",
+    "time": "14:00",
+    "state_at_cutoff": "scheduled_not_passed",
+    "reminder": {
+      "announcement_id": "1225675068",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-18/1225675068.PDF",
+      "title": "关于召开2026年第五次临时股东会的提示性公告",
+      "sha256": "0504e68cf67ec8738c549084f0e1bcc77e710d672bf9026958b7b6f33e2318bf",
+      "pages": 8,
+      "observed_at": "2026-11-19T16:06:14.694086+00:00",
+      "protected_gate_passed": true,
+      "published_on": "2026-11-18"
+    },
+    "reminder_pages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reminder_printed_on": "2026-11-17",
+    "original_published_on": "2026-11-07"
+  },
+  "adviser": {
+    "source": {
+      "announcement_id": "1225666404",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-12/1225666404.PDF",
+      "title": "华福证券股份有限公司关于西藏山南锑金资源有限公司要约收购威领新能源股份有限公司之2026年第三季度持续督导意见",
+      "sha256": "b68d142557b972cfbe3ce93fc04850e1ba24923b29051da8e53ec44613dffe44",
+      "pages": 14,
+      "observed_at": "2026-11-19T16:06:14.989057+00:00",
+      "protected_gate_passed": true,
+      "published_on": "2026-11-12"
+    },
+    "pages": [
+      5,
+      13,
+      14
+    ],
+    "report_start": "2026-08-28",
+    "report_end": "2026-09-30",
+    "document_dated_on": null,
+    "scope": "三季持续督导另在其他事项转述后续控制权变化；不把9月覆盖冒充11月全部业务核查，签署页未填写确切年月日。"
+  },
+  "counts": {
+    "pdf_files": 6,
+    "pdf_pages": 41,
+    "timeline_stages": 4,
+    "meeting_matters": 1
+  },
+  "boundary": "六份文件不等于六次独立验证。股东间收购价款、现金捐赠、融资额度、控制权与经营改善分别核对；通知与提醒归同一待审议事项。原通知正文回指11月6日登载而正式目录为11月7日，保留差异，不认证最早分钟。旧行情和原事实不改写，事件行情从披露日收盘起算，不代表最早反应或公告净影响。"
+}

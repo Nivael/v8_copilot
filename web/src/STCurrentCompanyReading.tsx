@@ -1,3 +1,4 @@
+import {STWeilingStageCheck} from './STWeilingStageCheck'
 import type {CurrentExtension} from './STCurrentExtension'
 
 const pct=(value:number|null)=>value==null?'暂缺可比价格':`${value>0?'+':''}${value.toFixed(2)}%`
@@ -9,6 +10,7 @@ export function STCurrentCompanyReading({data,symbol,historicalThrough}:{data?:C
   <h3>{stock.name}：新进展推进到哪一步？</h3>
   <p>{data.through}收盘{stock.close.toFixed(2)}元；从{stock.anchor}收盘起，个股{pct(stock.change_pct)}，同期主板ST参考{pct(data.latest.reference_change_pct)}，中证全指{pct(data.latest.market_change_pct)}。</p>
   {!stock.in_main_board_reference&&<p>这只股票不计入主板ST参考。{!stock.still_st?'已经离开ST名单，仍继续保留跟踪。':'所属板块与主板不同。'}</p>}
+  {stock.symbol==='002667.SZ'&&<STWeilingStageCheck data={data.stage_followup}/>}
   {stock.events.map(event=><article key={event.id}>
    <h4>{event.title}</h4><p className="reading-caption">{event.published_on}披露</p><p>{event.change}</p>
    <p className="reading-next">接下来核对：{event.watch}</p>

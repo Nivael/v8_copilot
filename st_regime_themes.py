@@ -30,6 +30,7 @@ from st_initial_fifth_four import initial_fifth_four
 from st_initial_sixth_four import initial_sixth_four
 from st_initial_seventh_four import initial_seventh_four
 from st_initial_eighth_four import initial_eighth_four
+from st_initial_ninth_four import initial_ninth_four
 from st_eighth_period_followup import followup_view as eighth_period_followup
 from st_seventh_period_followup import followup_view as seventh_period_followup
 from st_helitai_yunwang_followup import followup_view as helitai_yunwang_view
@@ -208,6 +209,7 @@ def build_themes(inputs, daily):
     result['initial_sixth_four']=initial_sixth_four(inputs,result['initial_fifth_four'],result['current_extension'])
     result['initial_seventh_four']=initial_seventh_four(inputs,result['initial_sixth_four'],result['current_extension'])
     result['initial_eighth_four']=initial_eighth_four(inputs,result['initial_seventh_four'],result['current_extension'])
+    result['initial_ninth_four']=initial_ninth_four(inputs,result['initial_eighth_four'],result['current_extension'])
     result['eighth_period_followup']=eighth_period_followup(inputs,result['initial_eighth_four'])
     result['seventh_period_followup']=seventh_period_followup(inputs,result['initial_seventh_four'])
     result['helitai_yunwang_followup']=helitai_yunwang_view(inputs,result['initial_sixth_four'],result['current_extension'])

@@ -124,3 +124,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 第二组身份核对：16条旧研究分别绑定原快照截止11月6日，累计31条更正；原268条及方法登记保持，京蓝原版/更正版分开。见 [结果](ST_RESEARCH_IDENTITY_FOLLOWUP_RESULT_2026_11_20.md)。
 
 历史导入已接身份隔离：使用`import_ledger_with_audit`留存隔离说明；默认缺登记停止，损坏停止，发布再次核对，旧worktree不作新导入执行器。原历史阅读内容保持，见 [结果](ST_HISTORY_IDENTITY_IMPORT_RESULT_2026_11_20.md)。
+
+市场研究身份续核：三条11月5日研究不再沿用000996/2024年截止，累计34条更正；原402条用户问题完整，保存研究阅读131→130。见 [结果与限制](ST_MARKET_STUDY_IDENTITY_RESULT_2026_11_20.md)。

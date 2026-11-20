@@ -1,0 +1,3986 @@
+{
+  "version": "historical_breadth_sequence_evidence_v1",
+  "analysis": {
+    "rule": "advancing_below_half_for_three_closes_first_hit_v1",
+    "start": "2026-09-04",
+    "through": "2026-11-04",
+    "observed_days": 38,
+    "weak_days": 23,
+    "days": [
+      {
+        "date": "2026-09-04",
+        "trading": 5207,
+        "advancing": 2249,
+        "declining": 2773,
+        "flat": 185,
+        "advancing_pct": 43.19185711542155,
+        "declining_5pct_or_more": 203,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-07",
+        "trading": 5207,
+        "advancing": 3040,
+        "declining": 1987,
+        "flat": 180,
+        "advancing_pct": 58.38294603418475,
+        "declining_5pct_or_more": 35,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-08",
+        "trading": 5207,
+        "advancing": 3257,
+        "declining": 1859,
+        "flat": 91,
+        "advancing_pct": 62.55041290570386,
+        "declining_5pct_or_more": 49,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-09",
+        "trading": 5207,
+        "advancing": 1729,
+        "declining": 3369,
+        "flat": 109,
+        "advancing_pct": 33.20530055694258,
+        "declining_5pct_or_more": 96,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-10",
+        "trading": 5206,
+        "advancing": 932,
+        "declining": 4192,
+        "flat": 82,
+        "advancing_pct": 17.90242028428736,
+        "declining_5pct_or_more": 175,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-11",
+        "trading": 5207,
+        "advancing": 605,
+        "declining": 4567,
+        "flat": 35,
+        "advancing_pct": 11.61897445746111,
+        "declining_5pct_or_more": 292,
+        "streak": 3,
+        "first_hit": true
+      },
+      {
+        "date": "2026-09-14",
+        "trading": 5207,
+        "advancing": 2939,
+        "declining": 2083,
+        "flat": 185,
+        "advancing_pct": 56.443249471864796,
+        "declining_5pct_or_more": 79,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-15",
+        "trading": 5205,
+        "advancing": 1054,
+        "declining": 4103,
+        "flat": 48,
+        "advancing_pct": 20.249759846301632,
+        "declining_5pct_or_more": 219,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-16",
+        "trading": 5206,
+        "advancing": 3888,
+        "declining": 1134,
+        "flat": 184,
+        "advancing_pct": 74.68305800998849,
+        "declining_5pct_or_more": 29,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-17",
+        "trading": 5209,
+        "advancing": 2504,
+        "declining": 2558,
+        "flat": 147,
+        "advancing_pct": 48.07064695718948,
+        "declining_5pct_or_more": 63,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-18",
+        "trading": 5209,
+        "advancing": 3937,
+        "declining": 1109,
+        "flat": 163,
+        "advancing_pct": 75.5807256671146,
+        "declining_5pct_or_more": 10,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-21",
+        "trading": 5209,
+        "advancing": 4216,
+        "declining": 914,
+        "flat": 79,
+        "advancing_pct": 80.93684008446918,
+        "declining_5pct_or_more": 26,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-22",
+        "trading": 5209,
+        "advancing": 2284,
+        "declining": 2783,
+        "flat": 142,
+        "advancing_pct": 43.84718755999232,
+        "declining_5pct_or_more": 43,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-23",
+        "trading": 5210,
+        "advancing": 1757,
+        "declining": 3366,
+        "flat": 87,
+        "advancing_pct": 33.7236084452975,
+        "declining_5pct_or_more": 133,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-24",
+        "trading": 5210,
+        "advancing": 1084,
+        "declining": 4001,
+        "flat": 125,
+        "advancing_pct": 20.806142034548945,
+        "declining_5pct_or_more": 240,
+        "streak": 3,
+        "first_hit": true
+      },
+      {
+        "date": "2026-09-28",
+        "trading": 5210,
+        "advancing": 862,
+        "declining": 4245,
+        "flat": 103,
+        "advancing_pct": 16.54510556621881,
+        "declining_5pct_or_more": 824,
+        "streak": 4,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-29",
+        "trading": 5211,
+        "advancing": 3261,
+        "declining": 1810,
+        "flat": 140,
+        "advancing_pct": 62.57915947035117,
+        "declining_5pct_or_more": 53,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-09-30",
+        "trading": 5213,
+        "advancing": 2346,
+        "declining": 2713,
+        "flat": 154,
+        "advancing_pct": 45.00287742183004,
+        "declining_5pct_or_more": 124,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-08",
+        "trading": 5209,
+        "advancing": 1634,
+        "declining": 3466,
+        "flat": 109,
+        "advancing_pct": 31.36878479554617,
+        "declining_5pct_or_more": 429,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-09",
+        "trading": 5210,
+        "advancing": 2989,
+        "declining": 2108,
+        "flat": 113,
+        "advancing_pct": 57.370441458733204,
+        "declining_5pct_or_more": 164,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-12",
+        "trading": 5212,
+        "advancing": 1111,
+        "declining": 4036,
+        "flat": 65,
+        "advancing_pct": 21.316193399846508,
+        "declining_5pct_or_more": 445,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-13",
+        "trading": 5212,
+        "advancing": 2791,
+        "declining": 2267,
+        "flat": 154,
+        "advancing_pct": 53.54950115118956,
+        "declining_5pct_or_more": 73,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-14",
+        "trading": 5214,
+        "advancing": 918,
+        "declining": 4213,
+        "flat": 83,
+        "advancing_pct": 17.60644418872267,
+        "declining_5pct_or_more": 312,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-15",
+        "trading": 5215,
+        "advancing": 400,
+        "declining": 4790,
+        "flat": 25,
+        "advancing_pct": 7.6701821668264625,
+        "declining_5pct_or_more": 789,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-16",
+        "trading": 5216,
+        "advancing": 3061,
+        "declining": 2023,
+        "flat": 132,
+        "advancing_pct": 58.684815950920246,
+        "declining_5pct_or_more": 140,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-19",
+        "trading": 5213,
+        "advancing": 2202,
+        "declining": 2861,
+        "flat": 150,
+        "advancing_pct": 42.24055246499137,
+        "declining_5pct_or_more": 175,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-20",
+        "trading": 5217,
+        "advancing": 3433,
+        "declining": 1662,
+        "flat": 122,
+        "advancing_pct": 65.80410197431475,
+        "declining_5pct_or_more": 67,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-21",
+        "trading": 5216,
+        "advancing": 1941,
+        "declining": 3055,
+        "flat": 220,
+        "advancing_pct": 37.21242331288344,
+        "declining_5pct_or_more": 84,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-22",
+        "trading": 5218,
+        "advancing": 448,
+        "declining": 4739,
+        "flat": 31,
+        "advancing_pct": 8.585665005749329,
+        "declining_5pct_or_more": 832,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-23",
+        "trading": 5219,
+        "advancing": 4197,
+        "declining": 887,
+        "flat": 135,
+        "advancing_pct": 80.41770454109984,
+        "declining_5pct_or_more": 92,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-26",
+        "trading": 5217,
+        "advancing": 2082,
+        "declining": 2991,
+        "flat": 144,
+        "advancing_pct": 39.90799309948246,
+        "declining_5pct_or_more": 387,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-27",
+        "trading": 5217,
+        "advancing": 576,
+        "declining": 4601,
+        "flat": 40,
+        "advancing_pct": 11.040828062104657,
+        "declining_5pct_or_more": 925,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-28",
+        "trading": 5217,
+        "advancing": 3872,
+        "declining": 1176,
+        "flat": 169,
+        "advancing_pct": 74.21889975081464,
+        "declining_5pct_or_more": 52,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-29",
+        "trading": 5216,
+        "advancing": 756,
+        "declining": 4400,
+        "flat": 60,
+        "advancing_pct": 14.493865030674847,
+        "declining_5pct_or_more": 903,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-10-30",
+        "trading": 5217,
+        "advancing": 854,
+        "declining": 4290,
+        "flat": 73,
+        "advancing_pct": 16.369561050412116,
+        "declining_5pct_or_more": 1404,
+        "streak": 2,
+        "first_hit": false
+      },
+      {
+        "date": "2026-11-02",
+        "trading": 5217,
+        "advancing": 4382,
+        "declining": 767,
+        "flat": 68,
+        "advancing_pct": 83.99463293080315,
+        "declining_5pct_or_more": 60,
+        "streak": 0,
+        "first_hit": false
+      },
+      {
+        "date": "2026-11-03",
+        "trading": 5216,
+        "advancing": 2023,
+        "declining": 3045,
+        "flat": 148,
+        "advancing_pct": 38.78450920245399,
+        "declining_5pct_or_more": 613,
+        "streak": 1,
+        "first_hit": false
+      },
+      {
+        "date": "2026-11-04",
+        "trading": 5218,
+        "advancing": 4331,
+        "declining": 764,
+        "flat": 123,
+        "advancing_pct": 83.00114986584899,
+        "declining_5pct_or_more": 45,
+        "streak": 0,
+        "first_hit": false
+      }
+    ],
+    "signals": [
+      {
+        "date": "2026-09-11",
+        "three_closes": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ],
+        "advancing_pcts": [
+          33.20530055694258,
+          17.90242028428736,
+          11.61897445746111
+        ],
+        "left_boundary_unknown": false,
+        "after_five_on": "2026-09-18",
+        "after_five_market_pct": 1.6122322335509325
+      },
+      {
+        "date": "2026-09-24",
+        "three_closes": [
+          "2026-09-22",
+          "2026-09-23",
+          "2026-09-24"
+        ],
+        "advancing_pcts": [
+          43.84718755999232,
+          33.7236084452975,
+          20.806142034548945
+        ],
+        "left_boundary_unknown": false,
+        "after_five_on": "2026-10-09",
+        "after_five_market_pct": -3.763212361829534
+      }
+    ],
+    "breadth_source_digest": "048d06701f3a96ea4f4588de1d2ce06f8bc89b5fd2320b8005c1e7f151177fff",
+    "index_source_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba",
+    "benchmark_through": "2026-11-20",
+    "historical_PIT": false,
+    "method_promotions": 0,
+    "boundary": "上涨不足半数包含平盘，不能一概称多数下跌。连续计数只用已覆盖的当日及以前资料；仅在每段第三日记一次，后续弱日不重复计为案例。后5日是事后收盘对照，不假定提示日收盘成交，不是账户、策略收益或预警效果验证。",
+    "title": "连续转弱是否等于随后一定继续跌？",
+    "answer": "这段历史中两次出现“上涨股票连续3日不足一半”，随后5日中证全指一次上涨、一次下跌。它能描述参与面转弱，不能直接当作必跌或减仓有效的证明。",
+    "source_refs": [
+      {
+        "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_tradeTip_2021.js",
+        "observed_at": "2026-11-05T06:50:55.505487+00:00",
+        "sha256": "32fc98ea41e599f457609247ba68defb82e6d855aa2551da6923dbf7e44153a7",
+        "bytes": 39627,
+        "kind": "trade_tip"
+      },
+      {
+        "url": "https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/",
+        "observed_at": "2026-11-05T06:50:55.780220+00:00",
+        "sha256": "88db3e9308f8143d2cb5b8021f4a44eb38f8759fa998158c52dd14806861580b",
+        "bytes": 25991,
+        "kind": "stock_page"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "pageHelp.pageNo": 1,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260904",
+          "endStopDate": "20261104"
+        },
+        "observed_at": "2026-11-05T06:45:09.224739+00:00",
+        "sha256": "8888aaf10cc4c62dabf8803e208775e378c0e44a9237f7a27ef118a108be63c9",
+        "bytes": 36110,
+        "kind": "all"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "pageHelp.pageNo": 1,
+          "productCode": "688121",
+          "keyWords": "",
+          "startStopDate": "20260904",
+          "endStopDate": "20261104"
+        },
+        "observed_at": "2026-11-05T06:45:07.250814+00:00",
+        "sha256": "ef791d91cf1c8c94a8f7eaa10ada9d7db923fa6bafa70c90c2d1a3c6be2dc22f",
+        "bytes": 859,
+        "kind": "688121"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "pageHelp.pageNo": 1,
+          "productCode": "688496",
+          "keyWords": "",
+          "startStopDate": "20260904",
+          "endStopDate": "20261104"
+        },
+        "observed_at": "2026-11-05T06:45:08.435399+00:00",
+        "sha256": "cd6597a8a8fc3d0c9d0b636625eed0f91b075fe7aeaae53a24e94714a40b6228",
+        "bytes": 859,
+        "kind": "688496"
+      }
+    ],
+    "index_source": {
+      "code": "000985.CSI",
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120",
+      "response_sha256": "f97dd51230a853c794a64593fc581806091e7ac523d3f1ce93177eb7a6e1af9b",
+      "observed_at": "2026-11-20T16:23:33.633263+00:00",
+      "reported_amount_unit": "CNY100M",
+      "normalized_amount_unit": "CNY"
+    },
+    "reviewed_at": "2026-11-20T16:46:29.377593+00:00",
+    "source_limits": [
+      "只检查9月4日至11月4日38个交易日；未跨越11月5日至19日的完整同口径缺口，与11月20日单点不连成连续历史。",
+      "这是本轮选择的示例条件，未做阈值优化，也没有证明它在历史当时已被使用。",
+      "两个提示属于同一市场阶段，不是两个独立制度试验；同批股票和连续弱日不能扩大验证次数。",
+      "当日收盘后才可观察完整广度。后5日从提示日收盘起算只是行情描述，实际交易须另检验次日执行、T+1和无法卖出。"
+    ]
+  },
+  "history_summary": {
+    "version": "combined_exchange_breadth_history_v1",
+    "availability": "observed",
+    "complete_market_history": true,
+    "historical_ST_ready": false,
+    "historical_PIT": false,
+    "effect_measured": false,
+    "covered_venues": [
+      "SSE",
+      "SZSE"
+    ],
+    "missing_venues": [],
+    "scope": "SSE_SZSE_ordinary_A_shares",
+    "start": "2026-09-04",
+    "through": "2026-11-04",
+    "observed_days": 38,
+    "expected_days": 38,
+    "observation_count": 198440,
+    "traded_observation_count": 198055,
+    "sse_suspensions": {
+      "source_rows": 82,
+      "ordinary_A_records": 28,
+      "excluded": {
+        "other_securities_or_business": 54
+      },
+      "notice_confirmed_days": 148,
+      "additional_continuous_days": 38,
+      "records": [
+        {
+          "symbol": "688121",
+          "name_as_reported": "*ST卓然",
+          "start_on": "2026-10-29",
+          "last_suspended_on": null,
+          "kind": "continuous",
+          "open_when_observed": true,
+          "reason": "重要公告",
+          "end_reason": "",
+          "window_days": [
+            "2026-10-29",
+            "2026-10-30",
+            "2026-11-02",
+            "2026-11-03",
+            "2026-11-04"
+          ]
+        },
+        {
+          "symbol": "600621",
+          "name_as_reported": "华鑫股份",
+          "start_on": "2026-10-27",
+          "last_suspended_on": "2026-10-27",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-10-27"
+          ]
+        },
+        {
+          "symbol": "600621",
+          "name_as_reported": "华鑫股份",
+          "start_on": "2026-10-26",
+          "last_suspended_on": "2026-10-26",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-10-26"
+          ]
+        },
+        {
+          "symbol": "605258",
+          "name_as_reported": "协和电子",
+          "start_on": "2026-10-26",
+          "last_suspended_on": "2026-10-30",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要事项未公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-10-26",
+            "2026-10-27",
+            "2026-10-28",
+            "2026-10-29",
+            "2026-10-30"
+          ]
+        },
+        {
+          "symbol": "601326",
+          "name_as_reported": "秦港股份",
+          "start_on": "2026-10-21",
+          "last_suspended_on": "2026-11-03",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-10-21",
+            "2026-10-22",
+            "2026-10-23",
+            "2026-10-26",
+            "2026-10-27",
+            "2026-10-28",
+            "2026-10-29",
+            "2026-10-30",
+            "2026-11-02",
+            "2026-11-03"
+          ]
+        },
+        {
+          "symbol": "603517",
+          "name_as_reported": "ST绝味",
+          "start_on": "2026-10-19",
+          "last_suspended_on": "2026-10-19",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-10-19"
+          ]
+        },
+        {
+          "symbol": "603759",
+          "name_as_reported": "海天股份",
+          "start_on": "2026-10-19",
+          "last_suspended_on": "2026-10-19",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要事项未公告",
+          "end_reason": "重要事项未公告",
+          "window_days": [
+            "2026-10-19"
+          ]
+        },
+        {
+          "symbol": "603838",
+          "name_as_reported": "*ST四通",
+          "start_on": "2026-10-19",
+          "last_suspended_on": "2026-10-19",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-10-19"
+          ]
+        },
+        {
+          "symbol": "600825",
+          "name_as_reported": "新华传媒",
+          "start_on": "2026-10-13",
+          "last_suspended_on": "2026-10-15",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "公司申请停牌对相关事项进行核查",
+          "end_reason": "公司申请停牌对相关事项进行核查",
+          "window_days": [
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15"
+          ]
+        },
+        {
+          "symbol": "603183",
+          "name_as_reported": "建研院",
+          "start_on": "2026-09-30",
+          "last_suspended_on": "2026-10-08",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要事项未公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-09-30",
+            "2026-10-08"
+          ]
+        },
+        {
+          "symbol": "600293",
+          "name_as_reported": "三峡新材",
+          "start_on": "2026-09-29",
+          "last_suspended_on": "2026-10-19",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-29",
+            "2026-09-30",
+            "2026-10-08",
+            "2026-10-09",
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16",
+            "2026-10-19"
+          ]
+        },
+        {
+          "symbol": "600363",
+          "name_as_reported": "联创光电",
+          "start_on": "2026-09-29",
+          "last_suspended_on": "2026-09-29",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-09-29"
+          ]
+        },
+        {
+          "symbol": "601059",
+          "name_as_reported": "信达证券",
+          "start_on": "2026-09-15",
+          "last_suspended_on": "2026-10-16",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "终止上市",
+          "window_days": [
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24",
+            "2026-09-28",
+            "2026-09-29",
+            "2026-09-30",
+            "2026-10-08",
+            "2026-10-09",
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16"
+          ]
+        },
+        {
+          "symbol": "601198",
+          "name_as_reported": "东兴证券",
+          "start_on": "2026-09-15",
+          "last_suspended_on": "2026-10-16",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "终止上市",
+          "window_days": [
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24",
+            "2026-09-28",
+            "2026-09-29",
+            "2026-09-30",
+            "2026-10-08",
+            "2026-10-09",
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16"
+          ]
+        },
+        {
+          "symbol": "601238",
+          "name_as_reported": "广汽集团",
+          "start_on": "2026-09-15",
+          "last_suspended_on": "2026-09-28",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24",
+            "2026-09-28"
+          ]
+        },
+        {
+          "symbol": "601995",
+          "name_as_reported": "中金公司",
+          "start_on": "2026-09-15",
+          "last_suspended_on": "2026-09-22",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22"
+          ]
+        },
+        {
+          "symbol": "603400",
+          "name_as_reported": "华之杰",
+          "start_on": "2026-09-15",
+          "last_suspended_on": "2026-09-29",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24",
+            "2026-09-28",
+            "2026-09-29"
+          ]
+        },
+        {
+          "symbol": "600301",
+          "name_as_reported": "华锡有色",
+          "start_on": "2026-09-14",
+          "last_suspended_on": "2026-09-18",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-09-14",
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18"
+          ]
+        },
+        {
+          "symbol": "601238",
+          "name_as_reported": "广汽集团",
+          "start_on": "2026-09-14",
+          "last_suspended_on": "2026-09-14",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "重要事项未公告",
+          "end_reason": "重要事项未公告",
+          "window_days": [
+            "2026-09-14"
+          ]
+        },
+        {
+          "symbol": "605303",
+          "name_as_reported": "园林股份",
+          "start_on": "2026-09-14",
+          "last_suspended_on": "2026-09-28",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-14",
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24",
+            "2026-09-28"
+          ]
+        },
+        {
+          "symbol": "688496",
+          "name_as_reported": "*ST清越",
+          "start_on": "2026-09-11",
+          "last_suspended_on": null,
+          "kind": "continuous",
+          "open_when_observed": true,
+          "reason": "重要公告",
+          "end_reason": "",
+          "window_days": [
+            "2026-09-11",
+            "2026-09-14",
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18",
+            "2026-09-21",
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24",
+            "2026-09-28",
+            "2026-09-29",
+            "2026-09-30",
+            "2026-10-08",
+            "2026-10-09",
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16",
+            "2026-10-19",
+            "2026-10-20",
+            "2026-10-21",
+            "2026-10-22",
+            "2026-10-23",
+            "2026-10-26",
+            "2026-10-27",
+            "2026-10-28",
+            "2026-10-29",
+            "2026-10-30",
+            "2026-11-02",
+            "2026-11-03",
+            "2026-11-04"
+          ]
+        },
+        {
+          "symbol": "603159",
+          "name_as_reported": "上海亚虹",
+          "start_on": "2026-09-10",
+          "last_suspended_on": "2026-09-16",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-09-10",
+            "2026-09-11",
+            "2026-09-14",
+            "2026-09-15",
+            "2026-09-16"
+          ]
+        },
+        {
+          "symbol": "605577",
+          "name_as_reported": "龙版传媒",
+          "start_on": "2026-09-09",
+          "last_suspended_on": "2026-09-11",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "公司申请停牌对相关事项进行核查",
+          "end_reason": "公司申请停牌对相关事项进行核查",
+          "window_days": [
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11"
+          ]
+        },
+        {
+          "symbol": "600825",
+          "name_as_reported": "新华传媒",
+          "start_on": "2026-09-08",
+          "last_suspended_on": "2026-09-18",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-08",
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11",
+            "2026-09-14",
+            "2026-09-15",
+            "2026-09-16",
+            "2026-09-17",
+            "2026-09-18"
+          ]
+        },
+        {
+          "symbol": "688291",
+          "name_as_reported": "金橙子",
+          "start_on": "2026-09-08",
+          "last_suspended_on": "2026-09-14",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "重要公告",
+          "end_reason": "重要公告",
+          "window_days": [
+            "2026-09-08",
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11",
+            "2026-09-14"
+          ]
+        },
+        {
+          "symbol": "600825",
+          "name_as_reported": "新华传媒",
+          "start_on": "2026-09-07",
+          "last_suspended_on": "2026-09-07",
+          "kind": "full_day",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-07"
+          ]
+        },
+        {
+          "symbol": "600929",
+          "name_as_reported": "雪天盐业",
+          "start_on": "2026-08-31",
+          "last_suspended_on": "2026-09-11",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-04",
+            "2026-09-07",
+            "2026-09-08",
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11"
+          ]
+        },
+        {
+          "symbol": "688432",
+          "name_as_reported": "有研硅",
+          "start_on": "2026-08-31",
+          "last_suspended_on": "2026-09-11",
+          "kind": "continuous",
+          "open_when_observed": false,
+          "reason": "拟筹划重大资产重组",
+          "end_reason": "拟筹划重大资产重组",
+          "window_days": [
+            "2026-09-04",
+            "2026-09-07",
+            "2026-09-08",
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11"
+          ]
+        }
+      ]
+    },
+    "fetched_at": "2026-11-05T06:50:55.780220+00:00",
+    "first_suspension_observed_at": "2026-11-05T06:45:07.250814+00:00",
+    "sse_price_fetched_at": "2026-11-05T05:32:11.948876+00:00",
+    "szse_fetched_at": "2026-11-04T23:32:19.213385+00:00",
+    "source_refs": [
+      {
+        "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_tradeTip_2021.js",
+        "observed_at": "2026-11-05T06:50:55.505487+00:00",
+        "sha256": "32fc98ea41e599f457609247ba68defb82e6d855aa2551da6923dbf7e44153a7",
+        "bytes": 39627,
+        "kind": "trade_tip"
+      },
+      {
+        "url": "https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/",
+        "observed_at": "2026-11-05T06:50:55.780220+00:00",
+        "sha256": "88db3e9308f8143d2cb5b8021f4a44eb38f8759fa998158c52dd14806861580b",
+        "bytes": 25991,
+        "kind": "stock_page"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "pageHelp.pageNo": 1,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260904",
+          "endStopDate": "20261104"
+        },
+        "observed_at": "2026-11-05T06:45:09.224739+00:00",
+        "sha256": "8888aaf10cc4c62dabf8803e208775e378c0e44a9237f7a27ef118a108be63c9",
+        "bytes": 36110,
+        "kind": "all"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "pageHelp.pageNo": 1,
+          "productCode": "688121",
+          "keyWords": "",
+          "startStopDate": "20260904",
+          "endStopDate": "20261104"
+        },
+        "observed_at": "2026-11-05T06:45:07.250814+00:00",
+        "sha256": "ef791d91cf1c8c94a8f7eaa10ada9d7db923fa6bafa70c90c2d1a3c6be2dc22f",
+        "bytes": 859,
+        "kind": "688121"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "pageHelp.pageNo": 1,
+          "productCode": "688496",
+          "keyWords": "",
+          "startStopDate": "20260904",
+          "endStopDate": "20261104"
+        },
+        "observed_at": "2026-11-05T06:45:08.435399+00:00",
+        "sha256": "cd6597a8a8fc3d0c9d0b636625eed0f91b075fe7aeaae53a24e94714a40b6228",
+        "bytes": 859,
+        "kind": "688496"
+      }
+    ],
+    "source_url": "https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/",
+    "note": "沪深两所普通A股的逐日挂牌范围，保留期内上市和后来退出者；北交所、B股及优先股不在范围内。按收盘/官方前收参考价计算，停牌或无成交不算平盘，不填零收益。合并比例按有成交股票家数计算，不平均两所百分比。本次简称不回填历史ST成员，整体ST走势及风险效果仍需独立核验；资料本次取得不代表历史当时可见。",
+    "content_digest": "048d06701f3a96ea4f4588de1d2ce06f8bc89b5fd2320b8005c1e7f151177fff",
+    "materialized_at": "2026-11-05T07:13:51.948401+00:00"
+  },
+  "history_points": [
+    {
+      "date": "2026-09-04",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5215,
+        "nontrading_stocks": 8,
+        "advancing": 2249,
+        "declining": 2773,
+        "flat": 185,
+        "declining_5pct_or_more": 203,
+        "median_return_pct": -0.204638,
+        "mean_return_pct": -0.335597,
+        "declining_share_pct": 53.255233,
+        "amount_yuan": 2032054191461.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2316,
+        "nontrading_stocks": 2,
+        "advancing": 1020,
+        "declining": 1214,
+        "flat": 80,
+        "declining_5pct_or_more": 99,
+        "median_return_pct": -0.152478,
+        "mean_return_pct": -0.376083,
+        "declining_share_pct": 52.463267,
+        "amount_yuan": 938096244561.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2893,
+        "listed_source_stocks": 2899,
+        "nontrading_stocks": 6,
+        "advancing": 1229,
+        "declining": 1559,
+        "flat": 105,
+        "declining_5pct_or_more": 104,
+        "median_return_pct": -0.237248,
+        "mean_return_pct": -0.303214,
+        "declining_share_pct": 53.888697,
+        "amount_yuan": 1093957946900.0
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5216,
+        "nontrading_stocks": 9,
+        "advancing": 3040,
+        "declining": 1987,
+        "flat": 180,
+        "declining_5pct_or_more": 35,
+        "median_return_pct": 0.394425,
+        "mean_return_pct": 0.999901,
+        "declining_share_pct": 38.160169,
+        "amount_yuan": 1947379217216.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2317,
+        "nontrading_stocks": 3,
+        "advancing": 1267,
+        "declining": 967,
+        "flat": 80,
+        "declining_5pct_or_more": 13,
+        "median_return_pct": 0.283603,
+        "mean_return_pct": 0.89974,
+        "declining_share_pct": 41.78911,
+        "amount_yuan": 897750321716.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2893,
+        "listed_source_stocks": 2899,
+        "nontrading_stocks": 6,
+        "advancing": 1773,
+        "declining": 1020,
+        "flat": 100,
+        "declining_5pct_or_more": 22,
+        "median_return_pct": 0.466563,
+        "mean_return_pct": 1.080016,
+        "declining_share_pct": 35.257518,
+        "amount_yuan": 1049628895500.0
+      }
+    },
+    {
+      "date": "2026-09-08",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5216,
+        "nontrading_stocks": 9,
+        "advancing": 3257,
+        "declining": 1859,
+        "flat": 91,
+        "declining_5pct_or_more": 49,
+        "median_return_pct": 0.581734,
+        "mean_return_pct": 0.698305,
+        "declining_share_pct": 35.70194,
+        "amount_yuan": 1961057377733.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2317,
+        "nontrading_stocks": 4,
+        "advancing": 1462,
+        "declining": 809,
+        "flat": 42,
+        "declining_5pct_or_more": 16,
+        "median_return_pct": 0.615006,
+        "mean_return_pct": 0.735756,
+        "declining_share_pct": 34.976221,
+        "amount_yuan": 915432331133.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2894,
+        "listed_source_stocks": 2899,
+        "nontrading_stocks": 5,
+        "advancing": 1795,
+        "declining": 1050,
+        "flat": 49,
+        "declining_5pct_or_more": 33,
+        "median_return_pct": 0.560224,
+        "mean_return_pct": 0.668373,
+        "declining_share_pct": 36.281963,
+        "amount_yuan": 1045625046600.0
+      }
+    },
+    {
+      "date": "2026-09-09",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5217,
+        "nontrading_stocks": 10,
+        "advancing": 1729,
+        "declining": 3369,
+        "flat": 109,
+        "declining_5pct_or_more": 96,
+        "median_return_pct": -0.626959,
+        "mean_return_pct": -0.389671,
+        "declining_share_pct": 64.701364,
+        "amount_yuan": 1856295393731.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2312,
+        "listed_source_stocks": 2317,
+        "nontrading_stocks": 5,
+        "advancing": 862,
+        "declining": 1398,
+        "flat": 52,
+        "declining_5pct_or_more": 43,
+        "median_return_pct": -0.456621,
+        "mean_return_pct": -0.246155,
+        "declining_share_pct": 60.467128,
+        "amount_yuan": 873622612631.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2900,
+        "nontrading_stocks": 5,
+        "advancing": 867,
+        "declining": 1971,
+        "flat": 57,
+        "declining_5pct_or_more": 53,
+        "median_return_pct": -0.769231,
+        "mean_return_pct": -0.504285,
+        "declining_share_pct": 68.082902,
+        "amount_yuan": 982672781100.0
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "all": {
+        "observed_trading_stocks": 5206,
+        "listed_source_stocks": 5218,
+        "nontrading_stocks": 12,
+        "advancing": 932,
+        "declining": 4192,
+        "flat": 82,
+        "declining_5pct_or_more": 175,
+        "median_return_pct": -1.408451,
+        "mean_return_pct": -1.216864,
+        "declining_share_pct": 80.522474,
+        "amount_yuan": 1648064804050.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2317,
+        "nontrading_stocks": 6,
+        "advancing": 451,
+        "declining": 1815,
+        "flat": 45,
+        "declining_5pct_or_more": 83,
+        "median_return_pct": -1.315789,
+        "mean_return_pct": -1.218053,
+        "declining_share_pct": 78.53743,
+        "amount_yuan": 779544490750.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 6,
+        "advancing": 481,
+        "declining": 2377,
+        "flat": 37,
+        "declining_5pct_or_more": 92,
+        "median_return_pct": -1.469559,
+        "mean_return_pct": -1.215914,
+        "declining_share_pct": 82.107081,
+        "amount_yuan": 868520313300.0
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5219,
+        "nontrading_stocks": 12,
+        "advancing": 605,
+        "declining": 4567,
+        "flat": 35,
+        "declining_5pct_or_more": 292,
+        "median_return_pct": -2.182045,
+        "mean_return_pct": -1.945482,
+        "declining_share_pct": 87.708853,
+        "amount_yuan": 1972528815785.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 7,
+        "advancing": 269,
+        "declining": 2027,
+        "flat": 15,
+        "declining_5pct_or_more": 138,
+        "median_return_pct": -2.157327,
+        "mean_return_pct": -1.876724,
+        "declining_share_pct": 87.710948,
+        "amount_yuan": 957993679185.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 5,
+        "advancing": 336,
+        "declining": 2540,
+        "flat": 20,
+        "declining_5pct_or_more": 154,
+        "median_return_pct": -2.196705,
+        "mean_return_pct": -2.000351,
+        "declining_share_pct": 87.707182,
+        "amount_yuan": 1014535136600.0
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5219,
+        "nontrading_stocks": 12,
+        "advancing": 2939,
+        "declining": 2083,
+        "flat": 185,
+        "declining_5pct_or_more": 79,
+        "median_return_pct": 0.290416,
+        "mean_return_pct": 0.556504,
+        "declining_share_pct": 40.003841,
+        "amount_yuan": 1630107127141.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 7,
+        "advancing": 1312,
+        "declining": 914,
+        "flat": 85,
+        "declining_5pct_or_more": 30,
+        "median_return_pct": 0.289184,
+        "mean_return_pct": 0.563146,
+        "declining_share_pct": 39.549978,
+        "amount_yuan": 779168583141.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 5,
+        "advancing": 1627,
+        "declining": 1169,
+        "flat": 100,
+        "declining_5pct_or_more": 49,
+        "median_return_pct": 0.29288,
+        "mean_return_pct": 0.551203,
+        "declining_share_pct": 40.366022,
+        "amount_yuan": 850938544000.0
+      }
+    },
+    {
+      "date": "2026-09-15",
+      "all": {
+        "observed_trading_stocks": 5205,
+        "listed_source_stocks": 5219,
+        "nontrading_stocks": 14,
+        "advancing": 1054,
+        "declining": 4103,
+        "flat": 48,
+        "declining_5pct_or_more": 219,
+        "median_return_pct": -1.499758,
+        "mean_return_pct": -1.367595,
+        "declining_share_pct": 78.82805,
+        "amount_yuan": 1613328670250.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 10,
+        "advancing": 537,
+        "declining": 1751,
+        "flat": 20,
+        "declining_5pct_or_more": 89,
+        "median_return_pct": -1.261134,
+        "mean_return_pct": -1.146384,
+        "declining_share_pct": 75.866551,
+        "amount_yuan": 763902229450.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2897,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 4,
+        "advancing": 517,
+        "declining": 2352,
+        "flat": 28,
+        "declining_5pct_or_more": 130,
+        "median_return_pct": -1.717172,
+        "mean_return_pct": -1.543832,
+        "declining_share_pct": 81.187435,
+        "amount_yuan": 849426440800.0
+      }
+    },
+    {
+      "date": "2026-09-16",
+      "all": {
+        "observed_trading_stocks": 5206,
+        "listed_source_stocks": 5220,
+        "nontrading_stocks": 14,
+        "advancing": 3888,
+        "declining": 1134,
+        "flat": 184,
+        "declining_5pct_or_more": 29,
+        "median_return_pct": 0.977258,
+        "mean_return_pct": 1.444484,
+        "declining_share_pct": 21.782559,
+        "amount_yuan": 1839908106454.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2309,
+        "listed_source_stocks": 2319,
+        "nontrading_stocks": 10,
+        "advancing": 1626,
+        "declining": 595,
+        "flat": 88,
+        "declining_5pct_or_more": 15,
+        "median_return_pct": 0.831111,
+        "mean_return_pct": 1.325974,
+        "declining_share_pct": 25.768731,
+        "amount_yuan": 871062963554.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2897,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 4,
+        "advancing": 2262,
+        "declining": 539,
+        "flat": 96,
+        "declining_5pct_or_more": 14,
+        "median_return_pct": 1.069519,
+        "mean_return_pct": 1.538941,
+        "declining_share_pct": 18.605454,
+        "amount_yuan": 968845142900.0
+      }
+    },
+    {
+      "date": "2026-09-17",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5221,
+        "nontrading_stocks": 12,
+        "advancing": 2504,
+        "declining": 2558,
+        "flat": 147,
+        "declining_5pct_or_more": 63,
+        "median_return_pct": 0.0,
+        "mean_return_pct": 0.245662,
+        "declining_share_pct": 49.107314,
+        "amount_yuan": 1823912425610.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 9,
+        "advancing": 1046,
+        "declining": 1190,
+        "flat": 75,
+        "declining_5pct_or_more": 27,
+        "median_return_pct": -0.09434,
+        "mean_return_pct": 0.244185,
+        "declining_share_pct": 51.49286,
+        "amount_yuan": 868710829710.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2898,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 3,
+        "advancing": 1458,
+        "declining": 1368,
+        "flat": 72,
+        "declining_5pct_or_more": 36,
+        "median_return_pct": 0.046195,
+        "mean_return_pct": 0.24684,
+        "declining_share_pct": 47.204969,
+        "amount_yuan": 955201595900.0
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5221,
+        "nontrading_stocks": 12,
+        "advancing": 3937,
+        "declining": 1109,
+        "flat": 163,
+        "declining_5pct_or_more": 10,
+        "median_return_pct": 1.038961,
+        "mean_return_pct": 1.541357,
+        "declining_share_pct": 21.290075,
+        "amount_yuan": 2077960071976.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 9,
+        "advancing": 1736,
+        "declining": 506,
+        "flat": 69,
+        "declining_5pct_or_more": 2,
+        "median_return_pct": 1.058761,
+        "mean_return_pct": 1.65352,
+        "declining_share_pct": 21.895283,
+        "amount_yuan": 993995499176.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2898,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 3,
+        "advancing": 2201,
+        "declining": 603,
+        "flat": 94,
+        "declining_5pct_or_more": 8,
+        "median_return_pct": 1.010271,
+        "mean_return_pct": 1.451914,
+        "declining_share_pct": 20.807453,
+        "amount_yuan": 1083964572800.0
+      }
+    },
+    {
+      "date": "2026-09-21",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5221,
+        "nontrading_stocks": 12,
+        "advancing": 4216,
+        "declining": 914,
+        "flat": 79,
+        "declining_5pct_or_more": 26,
+        "median_return_pct": 1.507538,
+        "mean_return_pct": 1.896958,
+        "declining_share_pct": 17.546554,
+        "amount_yuan": 2032754813860.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 7,
+        "advancing": 1812,
+        "declining": 466,
+        "flat": 35,
+        "declining_5pct_or_more": 12,
+        "median_return_pct": 1.34443,
+        "mean_return_pct": 1.756505,
+        "declining_share_pct": 20.146995,
+        "amount_yuan": 946710793160.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2901,
+        "nontrading_stocks": 5,
+        "advancing": 2404,
+        "declining": 448,
+        "flat": 44,
+        "declining_5pct_or_more": 14,
+        "median_return_pct": 1.667851,
+        "mean_return_pct": 2.009135,
+        "declining_share_pct": 15.469613,
+        "amount_yuan": 1086044020700.0
+      }
+    },
+    {
+      "date": "2026-09-22",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5222,
+        "nontrading_stocks": 13,
+        "advancing": 2284,
+        "declining": 2783,
+        "flat": 142,
+        "declining_5pct_or_more": 43,
+        "median_return_pct": -0.171821,
+        "mean_return_pct": 0.319712,
+        "declining_share_pct": 53.426761,
+        "amount_yuan": 2137745667680.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 7,
+        "advancing": 1010,
+        "declining": 1234,
+        "flat": 69,
+        "declining_5pct_or_more": 20,
+        "median_return_pct": -0.145198,
+        "mean_return_pct": 0.234015,
+        "declining_share_pct": 53.350627,
+        "amount_yuan": 1007847817780.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2902,
+        "nontrading_stocks": 6,
+        "advancing": 1274,
+        "declining": 1549,
+        "flat": 73,
+        "declining_5pct_or_more": 23,
+        "median_return_pct": -0.195825,
+        "mean_return_pct": 0.388156,
+        "declining_share_pct": 53.487569,
+        "amount_yuan": 1129897849900.0
+      }
+    },
+    {
+      "date": "2026-09-23",
+      "all": {
+        "observed_trading_stocks": 5210,
+        "listed_source_stocks": 5222,
+        "nontrading_stocks": 12,
+        "advancing": 1757,
+        "declining": 3366,
+        "flat": 87,
+        "declining_5pct_or_more": 133,
+        "median_return_pct": -0.632411,
+        "mean_return_pct": -0.376824,
+        "declining_share_pct": 64.606526,
+        "amount_yuan": 1765911990573.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 6,
+        "advancing": 851,
+        "declining": 1412,
+        "flat": 51,
+        "declining_5pct_or_more": 59,
+        "median_return_pct": -0.465658,
+        "mean_return_pct": -0.150157,
+        "declining_share_pct": 61.019879,
+        "amount_yuan": 833966257073.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2902,
+        "nontrading_stocks": 6,
+        "advancing": 906,
+        "declining": 1954,
+        "flat": 36,
+        "declining_5pct_or_more": 74,
+        "median_return_pct": -0.767345,
+        "mean_return_pct": -0.557938,
+        "declining_share_pct": 67.472376,
+        "amount_yuan": 931945733500.0
+      }
+    },
+    {
+      "date": "2026-09-24",
+      "all": {
+        "observed_trading_stocks": 5210,
+        "listed_source_stocks": 5222,
+        "nontrading_stocks": 12,
+        "advancing": 1084,
+        "declining": 4001,
+        "flat": 125,
+        "declining_5pct_or_more": 240,
+        "median_return_pct": -1.256413,
+        "mean_return_pct": -1.224702,
+        "declining_share_pct": 76.794626,
+        "amount_yuan": 1654273491696.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 6,
+        "advancing": 490,
+        "declining": 1769,
+        "flat": 55,
+        "declining_5pct_or_more": 121,
+        "median_return_pct": -1.299986,
+        "mean_return_pct": -1.290219,
+        "declining_share_pct": 76.44771,
+        "amount_yuan": 783432599196.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2902,
+        "nontrading_stocks": 6,
+        "advancing": 594,
+        "declining": 2232,
+        "flat": 70,
+        "declining_5pct_or_more": 119,
+        "median_return_pct": -1.233807,
+        "mean_return_pct": -1.172351,
+        "declining_share_pct": 77.071823,
+        "amount_yuan": 870840892500.0
+      }
+    },
+    {
+      "date": "2026-09-28",
+      "all": {
+        "observed_trading_stocks": 5210,
+        "listed_source_stocks": 5222,
+        "nontrading_stocks": 12,
+        "advancing": 862,
+        "declining": 4245,
+        "flat": 103,
+        "declining_5pct_or_more": 824,
+        "median_return_pct": -1.82941,
+        "mean_return_pct": -2.229239,
+        "declining_share_pct": 81.477927,
+        "amount_yuan": 1703686648944.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 6,
+        "advancing": 425,
+        "declining": 1842,
+        "flat": 47,
+        "declining_5pct_or_more": 359,
+        "median_return_pct": -1.595994,
+        "mean_return_pct": -2.124305,
+        "declining_share_pct": 79.60242,
+        "amount_yuan": 804451857144.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2902,
+        "nontrading_stocks": 6,
+        "advancing": 437,
+        "declining": 2403,
+        "flat": 56,
+        "declining_5pct_or_more": 465,
+        "median_return_pct": -2.00087,
+        "mean_return_pct": -2.313085,
+        "declining_share_pct": 82.976519,
+        "amount_yuan": 899234791800.0
+      }
+    },
+    {
+      "date": "2026-09-29",
+      "all": {
+        "observed_trading_stocks": 5211,
+        "listed_source_stocks": 5223,
+        "nontrading_stocks": 12,
+        "advancing": 3261,
+        "declining": 1810,
+        "flat": 140,
+        "declining_5pct_or_more": 53,
+        "median_return_pct": 0.492611,
+        "mean_return_pct": 0.846016,
+        "declining_share_pct": 34.734216,
+        "amount_yuan": 1410084111417.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 6,
+        "advancing": 1401,
+        "declining": 852,
+        "flat": 61,
+        "declining_5pct_or_more": 28,
+        "median_return_pct": 0.39548,
+        "mean_return_pct": 0.606068,
+        "declining_share_pct": 36.81936,
+        "amount_yuan": 661611328017.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2897,
+        "listed_source_stocks": 2903,
+        "nontrading_stocks": 6,
+        "advancing": 1860,
+        "declining": 958,
+        "flat": 79,
+        "declining_5pct_or_more": 25,
+        "median_return_pct": 0.606586,
+        "mean_return_pct": 1.037676,
+        "declining_share_pct": 33.068692,
+        "amount_yuan": 748472783400.0
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "all": {
+        "observed_trading_stocks": 5213,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 11,
+        "advancing": 2346,
+        "declining": 2713,
+        "flat": 154,
+        "declining_5pct_or_more": 124,
+        "median_return_pct": -0.151745,
+        "mean_return_pct": -0.110883,
+        "declining_share_pct": 52.042969,
+        "amount_yuan": 1438550510751.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 5,
+        "advancing": 1199,
+        "declining": 1053,
+        "flat": 63,
+        "declining_5pct_or_more": 56,
+        "median_return_pct": 0.145682,
+        "mean_return_pct": 0.046535,
+        "declining_share_pct": 45.485961,
+        "amount_yuan": 679264990351.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2898,
+        "listed_source_stocks": 2904,
+        "nontrading_stocks": 6,
+        "advancing": 1147,
+        "declining": 1660,
+        "flat": 91,
+        "declining_5pct_or_more": 68,
+        "median_return_pct": -0.383618,
+        "mean_return_pct": -0.236633,
+        "declining_share_pct": 57.280883,
+        "amount_yuan": 759285520400.0
+      }
+    },
+    {
+      "date": "2026-10-08",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 15,
+        "advancing": 1634,
+        "declining": 3466,
+        "flat": 109,
+        "declining_5pct_or_more": 429,
+        "median_return_pct": -0.978793,
+        "mean_return_pct": -1.046732,
+        "declining_share_pct": 66.538683,
+        "amount_yuan": 1682592286731.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 5,
+        "advancing": 750,
+        "declining": 1518,
+        "flat": 47,
+        "declining_5pct_or_more": 247,
+        "median_return_pct": -0.987224,
+        "mean_return_pct": -1.130972,
+        "declining_share_pct": 65.572354,
+        "amount_yuan": 811041127531.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2894,
+        "listed_source_stocks": 2904,
+        "nontrading_stocks": 10,
+        "advancing": 884,
+        "declining": 1948,
+        "flat": 62,
+        "declining_5pct_or_more": 182,
+        "median_return_pct": -0.977358,
+        "mean_return_pct": -0.979345,
+        "declining_share_pct": 67.311679,
+        "amount_yuan": 871551159200.0
+      }
+    },
+    {
+      "date": "2026-10-09",
+      "all": {
+        "observed_trading_stocks": 5210,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 14,
+        "advancing": 2989,
+        "declining": 2108,
+        "flat": 113,
+        "declining_5pct_or_more": 164,
+        "median_return_pct": 0.481354,
+        "mean_return_pct": 0.499931,
+        "declining_share_pct": 40.460653,
+        "amount_yuan": 1901038482797.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 4,
+        "advancing": 1316,
+        "declining": 947,
+        "flat": 53,
+        "declining_5pct_or_more": 67,
+        "median_return_pct": 0.413651,
+        "mean_return_pct": 0.454115,
+        "declining_share_pct": 40.889465,
+        "amount_yuan": 888431105297.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2894,
+        "listed_source_stocks": 2904,
+        "nontrading_stocks": 10,
+        "advancing": 1673,
+        "declining": 1161,
+        "flat": 60,
+        "declining_5pct_or_more": 97,
+        "median_return_pct": 0.553361,
+        "mean_return_pct": 0.536596,
+        "declining_share_pct": 40.117484,
+        "amount_yuan": 1012607377500.0
+      }
+    },
+    {
+      "date": "2026-10-12",
+      "all": {
+        "observed_trading_stocks": 5212,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 12,
+        "advancing": 1111,
+        "declining": 4036,
+        "flat": 65,
+        "declining_5pct_or_more": 445,
+        "median_return_pct": -1.694839,
+        "mean_return_pct": -1.604167,
+        "declining_share_pct": 77.436685,
+        "amount_yuan": 1538321869014.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 4,
+        "advancing": 539,
+        "declining": 1743,
+        "flat": 34,
+        "declining_5pct_or_more": 208,
+        "median_return_pct": -1.617825,
+        "mean_return_pct": -1.592741,
+        "declining_share_pct": 75.259067,
+        "amount_yuan": 714732222014.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2896,
+        "listed_source_stocks": 2904,
+        "nontrading_stocks": 8,
+        "advancing": 572,
+        "declining": 2293,
+        "flat": 31,
+        "declining_5pct_or_more": 237,
+        "median_return_pct": -1.73539,
+        "mean_return_pct": -1.613304,
+        "declining_share_pct": 79.178177,
+        "amount_yuan": 823589647000.0
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "all": {
+        "observed_trading_stocks": 5212,
+        "listed_source_stocks": 5225,
+        "nontrading_stocks": 13,
+        "advancing": 2791,
+        "declining": 2267,
+        "flat": 154,
+        "declining_5pct_or_more": 73,
+        "median_return_pct": 0.208768,
+        "mean_return_pct": 0.461974,
+        "declining_share_pct": 43.495779,
+        "amount_yuan": 1676709526176.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 5,
+        "advancing": 1149,
+        "declining": 1099,
+        "flat": 67,
+        "declining_5pct_or_more": 32,
+        "median_return_pct": 0.0,
+        "mean_return_pct": 0.251679,
+        "declining_share_pct": 47.473002,
+        "amount_yuan": 779134052476.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2897,
+        "listed_source_stocks": 2905,
+        "nontrading_stocks": 8,
+        "advancing": 1642,
+        "declining": 1168,
+        "flat": 87,
+        "declining_5pct_or_more": 41,
+        "median_return_pct": 0.341297,
+        "mean_return_pct": 0.630022,
+        "declining_share_pct": 40.31757,
+        "amount_yuan": 897575473700.0
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "all": {
+        "observed_trading_stocks": 5214,
+        "listed_source_stocks": 5225,
+        "nontrading_stocks": 11,
+        "advancing": 918,
+        "declining": 4213,
+        "flat": 83,
+        "declining_5pct_or_more": 312,
+        "median_return_pct": -2.0,
+        "mean_return_pct": -1.776163,
+        "declining_share_pct": 80.801688,
+        "amount_yuan": 1415027602888.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 5,
+        "advancing": 487,
+        "declining": 1773,
+        "flat": 55,
+        "declining_5pct_or_more": 142,
+        "median_return_pct": -1.782531,
+        "mean_return_pct": -1.608589,
+        "declining_share_pct": 76.587473,
+        "amount_yuan": 662345417388.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2899,
+        "listed_source_stocks": 2905,
+        "nontrading_stocks": 6,
+        "advancing": 431,
+        "declining": 2440,
+        "flat": 28,
+        "declining_5pct_or_more": 170,
+        "median_return_pct": -2.10728,
+        "mean_return_pct": -1.90998,
+        "declining_share_pct": 84.166954,
+        "amount_yuan": 752682185500.0
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "all": {
+        "observed_trading_stocks": 5215,
+        "listed_source_stocks": 5226,
+        "nontrading_stocks": 11,
+        "advancing": 400,
+        "declining": 4790,
+        "flat": 25,
+        "declining_5pct_or_more": 789,
+        "median_return_pct": -3.000698,
+        "mean_return_pct": -2.841665,
+        "declining_share_pct": 91.850431,
+        "amount_yuan": 1633451678148.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 5,
+        "advancing": 189,
+        "declining": 2110,
+        "flat": 16,
+        "declining_5pct_or_more": 377,
+        "median_return_pct": -3.014417,
+        "mean_return_pct": -2.906041,
+        "declining_share_pct": 91.144708,
+        "amount_yuan": 774120203048.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2900,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 6,
+        "advancing": 211,
+        "declining": 2680,
+        "flat": 9,
+        "declining_5pct_or_more": 412,
+        "median_return_pct": -2.997442,
+        "mean_return_pct": -2.790275,
+        "declining_share_pct": 92.413793,
+        "amount_yuan": 859331475100.0
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "all": {
+        "observed_trading_stocks": 5216,
+        "listed_source_stocks": 5226,
+        "nontrading_stocks": 10,
+        "advancing": 3061,
+        "declining": 2023,
+        "flat": 132,
+        "declining_5pct_or_more": 140,
+        "median_return_pct": 0.454545,
+        "mean_return_pct": 0.466577,
+        "declining_share_pct": 38.784509,
+        "amount_yuan": 1556076754484.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2320,
+        "nontrading_stocks": 4,
+        "advancing": 1375,
+        "declining": 889,
+        "flat": 52,
+        "declining_5pct_or_more": 56,
+        "median_return_pct": 0.450294,
+        "mean_return_pct": 0.501228,
+        "declining_share_pct": 38.385147,
+        "amount_yuan": 732349446484.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2900,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 6,
+        "advancing": 1686,
+        "declining": 1134,
+        "flat": 80,
+        "declining_5pct_or_more": 84,
+        "median_return_pct": 0.455137,
+        "mean_return_pct": 0.438904,
+        "declining_share_pct": 39.103448,
+        "amount_yuan": 823727308000.0
+      }
+    },
+    {
+      "date": "2026-10-19",
+      "all": {
+        "observed_trading_stocks": 5213,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 11,
+        "advancing": 2202,
+        "declining": 2861,
+        "flat": 150,
+        "declining_5pct_or_more": 175,
+        "median_return_pct": -0.318246,
+        "mean_return_pct": -0.212504,
+        "declining_share_pct": 54.882026,
+        "amount_yuan": 1437946560572.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 5,
+        "advancing": 1032,
+        "declining": 1213,
+        "flat": 68,
+        "declining_5pct_or_more": 84,
+        "median_return_pct": -0.192493,
+        "mean_return_pct": -0.16543,
+        "declining_share_pct": 52.442715,
+        "amount_yuan": 686878427672.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2900,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 6,
+        "advancing": 1170,
+        "declining": 1648,
+        "flat": 82,
+        "declining_5pct_or_more": 91,
+        "median_return_pct": -0.41582,
+        "mean_return_pct": -0.25005,
+        "declining_share_pct": 56.827586,
+        "amount_yuan": 751068132900.0
+      }
+    },
+    {
+      "date": "2026-10-20",
+      "all": {
+        "observed_trading_stocks": 5217,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 7,
+        "advancing": 3433,
+        "declining": 1662,
+        "flat": 122,
+        "declining_5pct_or_more": 67,
+        "median_return_pct": 0.830502,
+        "mean_return_pct": 1.081812,
+        "declining_share_pct": 31.857389,
+        "amount_yuan": 1457220860974.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2317,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 1,
+        "advancing": 1420,
+        "declining": 839,
+        "flat": 58,
+        "declining_5pct_or_more": 32,
+        "median_return_pct": 0.649351,
+        "mean_return_pct": 0.990746,
+        "declining_share_pct": 36.210617,
+        "amount_yuan": 699884714474.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2900,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 6,
+        "advancing": 2013,
+        "declining": 823,
+        "flat": 64,
+        "declining_5pct_or_more": 35,
+        "median_return_pct": 0.956256,
+        "mean_return_pct": 1.154571,
+        "declining_share_pct": 28.37931,
+        "amount_yuan": 757336146500.0
+      }
+    },
+    {
+      "date": "2026-10-21",
+      "all": {
+        "observed_trading_stocks": 5216,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 8,
+        "advancing": 1941,
+        "declining": 3055,
+        "flat": 220,
+        "declining_5pct_or_more": 84,
+        "median_return_pct": -0.37843,
+        "mean_return_pct": -0.170561,
+        "declining_share_pct": 58.569785,
+        "amount_yuan": 1429891217649.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 2,
+        "advancing": 828,
+        "declining": 1382,
+        "flat": 106,
+        "declining_5pct_or_more": 41,
+        "median_return_pct": -0.403769,
+        "mean_return_pct": -0.234893,
+        "declining_share_pct": 59.671848,
+        "amount_yuan": 642615410049.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2900,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 6,
+        "advancing": 1113,
+        "declining": 1673,
+        "flat": 114,
+        "declining_5pct_or_more": 43,
+        "median_return_pct": -0.353748,
+        "mean_return_pct": -0.119184,
+        "declining_share_pct": 57.689655,
+        "amount_yuan": 787275807600.0
+      }
+    },
+    {
+      "date": "2026-10-22",
+      "all": {
+        "observed_trading_stocks": 5218,
+        "listed_source_stocks": 5225,
+        "nontrading_stocks": 7,
+        "advancing": 448,
+        "declining": 4739,
+        "flat": 31,
+        "declining_5pct_or_more": 832,
+        "median_return_pct": -2.620142,
+        "mean_return_pct": -2.738901,
+        "declining_share_pct": 90.820238,
+        "amount_yuan": 1529364254729.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 2,
+        "advancing": 218,
+        "declining": 2081,
+        "flat": 17,
+        "declining_5pct_or_more": 348,
+        "median_return_pct": -2.349387,
+        "mean_return_pct": -2.601951,
+        "declining_share_pct": 89.853195,
+        "amount_yuan": 705779733929.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2902,
+        "listed_source_stocks": 2907,
+        "nontrading_stocks": 5,
+        "advancing": 230,
+        "declining": 2658,
+        "flat": 14,
+        "declining_5pct_or_more": 484,
+        "median_return_pct": -2.824719,
+        "mean_return_pct": -2.848197,
+        "declining_share_pct": 91.592006,
+        "amount_yuan": 823584520800.0
+      }
+    },
+    {
+      "date": "2026-10-23",
+      "all": {
+        "observed_trading_stocks": 5219,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 5,
+        "advancing": 4197,
+        "declining": 887,
+        "flat": 135,
+        "declining_5pct_or_more": 92,
+        "median_return_pct": 1.537386,
+        "mean_return_pct": 1.84643,
+        "declining_share_pct": 16.995593,
+        "amount_yuan": 1957489788126.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 2,
+        "advancing": 1832,
+        "declining": 420,
+        "flat": 64,
+        "declining_5pct_or_more": 33,
+        "median_return_pct": 1.38847,
+        "mean_return_pct": 1.745079,
+        "declining_share_pct": 18.134715,
+        "amount_yuan": 898410351326.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2903,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 3,
+        "advancing": 2365,
+        "declining": 467,
+        "flat": 71,
+        "declining_5pct_or_more": 59,
+        "median_return_pct": 1.655629,
+        "mean_return_pct": 1.927287,
+        "declining_share_pct": 16.086807,
+        "amount_yuan": 1059079436800.0
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "all": {
+        "observed_trading_stocks": 5217,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 7,
+        "advancing": 2082,
+        "declining": 2991,
+        "flat": 144,
+        "declining_5pct_or_more": 387,
+        "median_return_pct": -0.4947,
+        "mean_return_pct": -0.622187,
+        "declining_share_pct": 57.3318,
+        "amount_yuan": 1609394851999.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 4,
+        "advancing": 1054,
+        "declining": 1206,
+        "flat": 54,
+        "declining_5pct_or_more": 163,
+        "median_return_pct": -0.211268,
+        "mean_return_pct": -0.41002,
+        "declining_share_pct": 52.117545,
+        "amount_yuan": 746428673899.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2903,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 3,
+        "advancing": 1028,
+        "declining": 1785,
+        "flat": 90,
+        "declining_5pct_or_more": 224,
+        "median_return_pct": -0.706436,
+        "mean_return_pct": -0.791307,
+        "declining_share_pct": 61.488116,
+        "amount_yuan": 862966178100.0
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "all": {
+        "observed_trading_stocks": 5217,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 7,
+        "advancing": 576,
+        "declining": 4601,
+        "flat": 40,
+        "declining_5pct_or_more": 925,
+        "median_return_pct": -3.018268,
+        "mean_return_pct": -2.818997,
+        "declining_share_pct": 88.192448,
+        "amount_yuan": 1461985040857.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 4,
+        "advancing": 281,
+        "declining": 2008,
+        "flat": 25,
+        "declining_5pct_or_more": 403,
+        "median_return_pct": -2.72355,
+        "mean_return_pct": -2.68389,
+        "declining_share_pct": 86.776145,
+        "amount_yuan": 672309117557.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2903,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 3,
+        "advancing": 295,
+        "declining": 2593,
+        "flat": 15,
+        "declining_5pct_or_more": 522,
+        "median_return_pct": -3.186275,
+        "mean_return_pct": -2.926691,
+        "declining_share_pct": 89.321392,
+        "amount_yuan": 789675923300.0
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "all": {
+        "observed_trading_stocks": 5217,
+        "listed_source_stocks": 5223,
+        "nontrading_stocks": 6,
+        "advancing": 3872,
+        "declining": 1176,
+        "flat": 169,
+        "declining_5pct_or_more": 52,
+        "median_return_pct": 1.352875,
+        "mean_return_pct": 1.893707,
+        "declining_share_pct": 22.541691,
+        "amount_yuan": 1629372819929.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 3,
+        "advancing": 1653,
+        "declining": 584,
+        "flat": 78,
+        "declining_5pct_or_more": 28,
+        "median_return_pct": 1.242236,
+        "mean_return_pct": 1.789054,
+        "declining_share_pct": 25.226782,
+        "amount_yuan": 750813121129.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2902,
+        "listed_source_stocks": 2905,
+        "nontrading_stocks": 3,
+        "advancing": 2219,
+        "declining": 592,
+        "flat": 91,
+        "declining_5pct_or_more": 24,
+        "median_return_pct": 1.430032,
+        "mean_return_pct": 1.977191,
+        "declining_share_pct": 20.399724,
+        "amount_yuan": 878559698800.0
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "all": {
+        "observed_trading_stocks": 5216,
+        "listed_source_stocks": 5223,
+        "nontrading_stocks": 7,
+        "advancing": 756,
+        "declining": 4400,
+        "flat": 60,
+        "declining_5pct_or_more": 903,
+        "median_return_pct": -2.524975,
+        "mean_return_pct": -2.594237,
+        "declining_share_pct": 84.355828,
+        "amount_yuan": 1556974385628.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 4,
+        "advancing": 402,
+        "declining": 1874,
+        "flat": 38,
+        "declining_5pct_or_more": 397,
+        "median_return_pct": -2.281229,
+        "mean_return_pct": -2.397167,
+        "declining_share_pct": 80.985307,
+        "amount_yuan": 715359773828.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2902,
+        "listed_source_stocks": 2905,
+        "nontrading_stocks": 3,
+        "advancing": 354,
+        "declining": 2526,
+        "flat": 22,
+        "declining_5pct_or_more": 506,
+        "median_return_pct": -2.715615,
+        "mean_return_pct": -2.751376,
+        "declining_share_pct": 87.043418,
+        "amount_yuan": 841614611800.0
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "all": {
+        "observed_trading_stocks": 5217,
+        "listed_source_stocks": 5223,
+        "nontrading_stocks": 6,
+        "advancing": 854,
+        "declining": 4290,
+        "flat": 73,
+        "declining_5pct_or_more": 1404,
+        "median_return_pct": -3.115265,
+        "mean_return_pct": -3.030942,
+        "declining_share_pct": 82.231167,
+        "amount_yuan": 1674872273406.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 4,
+        "advancing": 441,
+        "declining": 1834,
+        "flat": 39,
+        "declining_5pct_or_more": 601,
+        "median_return_pct": -2.85819,
+        "mean_return_pct": -2.87705,
+        "declining_share_pct": 79.256698,
+        "amount_yuan": 764042851706.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2903,
+        "listed_source_stocks": 2905,
+        "nontrading_stocks": 2,
+        "advancing": 413,
+        "declining": 2456,
+        "flat": 34,
+        "declining_5pct_or_more": 803,
+        "median_return_pct": -3.278689,
+        "mean_return_pct": -3.153611,
+        "declining_share_pct": 84.602136,
+        "amount_yuan": 910829421700.0
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "all": {
+        "observed_trading_stocks": 5217,
+        "listed_source_stocks": 5223,
+        "nontrading_stocks": 6,
+        "advancing": 4382,
+        "declining": 767,
+        "flat": 68,
+        "declining_5pct_or_more": 60,
+        "median_return_pct": 2.04499,
+        "mean_return_pct": 2.443428,
+        "declining_share_pct": 14.701936,
+        "amount_yuan": 1783927609294.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 3,
+        "advancing": 1846,
+        "declining": 432,
+        "flat": 37,
+        "declining_5pct_or_more": 36,
+        "median_return_pct": 1.925255,
+        "mean_return_pct": 2.21127,
+        "declining_share_pct": 18.660907,
+        "amount_yuan": 847159614194.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2902,
+        "listed_source_stocks": 2905,
+        "nontrading_stocks": 3,
+        "advancing": 2536,
+        "declining": 335,
+        "flat": 31,
+        "declining_5pct_or_more": 24,
+        "median_return_pct": 2.143741,
+        "mean_return_pct": 2.628626,
+        "declining_share_pct": 11.543763,
+        "amount_yuan": 936767995100.0
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "all": {
+        "observed_trading_stocks": 5216,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 8,
+        "advancing": 2023,
+        "declining": 3045,
+        "flat": 148,
+        "declining_5pct_or_more": 613,
+        "median_return_pct": -0.602448,
+        "mean_return_pct": -0.99007,
+        "declining_share_pct": 58.378067,
+        "amount_yuan": 1703740471426.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 3,
+        "advancing": 957,
+        "declining": 1300,
+        "flat": 58,
+        "declining_5pct_or_more": 309,
+        "median_return_pct": -0.497719,
+        "mean_return_pct": -1.100231,
+        "declining_share_pct": 56.155508,
+        "amount_yuan": 810376398626.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2901,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 5,
+        "advancing": 1066,
+        "declining": 1745,
+        "flat": 90,
+        "declining_5pct_or_more": 304,
+        "median_return_pct": -0.669216,
+        "mean_return_pct": -0.902162,
+        "declining_share_pct": 60.151672,
+        "amount_yuan": 893364072800.0
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "all": {
+        "observed_trading_stocks": 5218,
+        "listed_source_stocks": 5224,
+        "nontrading_stocks": 6,
+        "advancing": 4331,
+        "declining": 764,
+        "flat": 123,
+        "declining_5pct_or_more": 45,
+        "median_return_pct": 1.849586,
+        "mean_return_pct": 2.827699,
+        "declining_share_pct": 14.641625,
+        "amount_yuan": 2038502256285.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2316,
+        "listed_source_stocks": 2318,
+        "nontrading_stocks": 2,
+        "advancing": 1810,
+        "declining": 439,
+        "flat": 67,
+        "declining_5pct_or_more": 23,
+        "median_return_pct": 1.633386,
+        "mean_return_pct": 2.87233,
+        "declining_share_pct": 18.955095,
+        "amount_yuan": 953041875885.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2902,
+        "listed_source_stocks": 2906,
+        "nontrading_stocks": 4,
+        "advancing": 2521,
+        "declining": 325,
+        "flat": 56,
+        "declining_5pct_or_more": 22,
+        "median_return_pct": 1.972671,
+        "mean_return_pct": 2.79208,
+        "declining_share_pct": 11.199173,
+        "amount_yuan": 1085460380400.0
+      }
+    }
+  ],
+  "benchmark": {
+    "version": "independent_index_close_v1",
+    "through": "2026-11-20",
+    "calendar": [
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-24",
+      "2026-08-25",
+      "2026-08-26",
+      "2026-08-27",
+      "2026-08-28",
+      "2026-08-31",
+      "2026-09-01",
+      "2026-09-02",
+      "2026-09-03",
+      "2026-09-04",
+      "2026-09-07",
+      "2026-09-08",
+      "2026-09-09",
+      "2026-09-10",
+      "2026-09-11",
+      "2026-09-14",
+      "2026-09-15",
+      "2026-09-16",
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-23",
+      "2026-09-24",
+      "2026-09-28",
+      "2026-09-29",
+      "2026-09-30",
+      "2026-10-08",
+      "2026-10-09",
+      "2026-10-12",
+      "2026-10-13",
+      "2026-10-14",
+      "2026-10-15",
+      "2026-10-16",
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-26",
+      "2026-10-27",
+      "2026-10-28",
+      "2026-10-29",
+      "2026-10-30",
+      "2026-11-02",
+      "2026-11-03",
+      "2026-11-04",
+      "2026-11-05",
+      "2026-11-06",
+      "2026-11-09",
+      "2026-11-10",
+      "2026-11-11",
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20"
+    ],
+    "calendar_version": "sse_announced_sessions_2026_v1",
+    "calendar_source": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml",
+    "availability_basis": "official_daily_close_first_observed_after_close",
+    "scope": "three_price_indices_only",
+    "indices": {
+      "000985.CSI": [
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-20",
+          "close": 5882.46,
+          "amount": 2009416000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-21",
+          "close": 5902.11,
+          "amount": 1818334999999.9998
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-24",
+          "close": 5818.51,
+          "amount": 1945441000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-25",
+          "close": 5832.92,
+          "amount": 1773716999999.9998
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-26",
+          "close": 5867.44,
+          "amount": 1750798000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-27",
+          "close": 5958.93,
+          "amount": 2059474000000.0002
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-28",
+          "close": 5935.03,
+          "amount": 2036946000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-08-31",
+          "close": 5969.33,
+          "amount": 2064025000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-01",
+          "close": 5939.14,
+          "amount": 1980796000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-02",
+          "close": 5860.85,
+          "amount": 1748912000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-03",
+          "close": 5867.18,
+          "amount": 1714590000000.0002
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-04",
+          "close": 5830.14,
+          "amount": 1982986000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-07",
+          "close": 5893.09,
+          "amount": 1884204000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-08",
+          "close": 5894.74,
+          "amount": 1905934000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-09",
+          "close": 5899.03,
+          "amount": 1804591000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-10",
+          "close": 5851.83,
+          "amount": 1598297000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-11",
+          "close": 5769.02,
+          "amount": 1908358000000.0002
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-14",
+          "close": 5761.88,
+          "amount": 1574570000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-15",
+          "close": 5723.69,
+          "amount": 1556380000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-16",
+          "close": 5797.55,
+          "amount": 1778008000000.0002
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-17",
+          "close": 5778.35,
+          "amount": 1755224000000.0002
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-18",
+          "close": 5862.03,
+          "amount": 1988311000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-21",
+          "close": 5921.92,
+          "amount": 1950080000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-22",
+          "close": 5923.5,
+          "amount": 2055062000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-23",
+          "close": 5897.66,
+          "amount": 1701400999999.9998
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-24",
+          "close": 5788.14,
+          "amount": 1595766000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-28",
+          "close": 5630.2,
+          "amount": 1642461000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-29",
+          "close": 5650.25,
+          "amount": 1355645000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-09-30",
+          "close": 5648.25,
+          "amount": 1381583000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-08",
+          "close": 5560.01,
+          "amount": 1614501000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-09",
+          "close": 5570.32,
+          "amount": 1837300999999.9998
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-12",
+          "close": 5491.06,
+          "amount": 1487464000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-13",
+          "close": 5491.23,
+          "amount": 1612630000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-14",
+          "close": 5404.82,
+          "amount": 1367027000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-15",
+          "close": 5282.71,
+          "amount": 1578134000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-16",
+          "close": 5289.37,
+          "amount": 1497697000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-19",
+          "close": 5292.21,
+          "amount": 1375907000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-20",
+          "close": 5306.57,
+          "amount": 1399136000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-21",
+          "close": 5283.5,
+          "amount": 1380130000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-22",
+          "close": 5154.03,
+          "amount": 1470701000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-23",
+          "close": 5253.73,
+          "amount": 1876825000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-26",
+          "close": 5213.98,
+          "amount": 1543560000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-27",
+          "close": 5098.42,
+          "amount": 1404335000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-28",
+          "close": 5177.51,
+          "amount": 1561962000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-29",
+          "close": 5070.47,
+          "amount": 1498916000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-10-30",
+          "close": 4952.5,
+          "amount": 1618311000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-02",
+          "close": 5034.54,
+          "amount": 1727979000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-03",
+          "close": 4985.17,
+          "amount": 1643505000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-04",
+          "close": 5146.73,
+          "amount": 1955927000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-05",
+          "close": 5211.79,
+          "amount": 2036687000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-06",
+          "close": 5115.37,
+          "amount": 1597482000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-09",
+          "close": 5119.56,
+          "amount": 1424326000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-10",
+          "close": 5161.13,
+          "amount": 1444045000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-11",
+          "close": 5207.16,
+          "amount": 1609430000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-12",
+          "close": 5140.57,
+          "amount": 1846361000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-13",
+          "close": 5058.27,
+          "amount": 1587538000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-16",
+          "close": 4959.1,
+          "amount": 1424294000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-17",
+          "close": 4929.86,
+          "amount": 1394559000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-18",
+          "close": 4920.89,
+          "amount": 1315387000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-19",
+          "close": 4877.36,
+          "amount": 1252494000000.0
+        },
+        {
+          "ts_code": "000985.CSI",
+          "trade_date": "2026-11-20",
+          "close": 4745.31,
+          "amount": 1367262000000.0
+        }
+      ],
+      "000300.SH": [
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-20",
+          "close": 4592.75,
+          "amount": 554021000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-21",
+          "close": 4618.9,
+          "amount": 505501000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-24",
+          "close": 4563.13,
+          "amount": 590426000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-25",
+          "close": 4552.03,
+          "amount": 480422000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-26",
+          "close": 4590.79,
+          "amount": 489057000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-27",
+          "close": 4630.28,
+          "amount": 587120000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-28",
+          "close": 4609.18,
+          "amount": 549813000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-08-31",
+          "close": 4625.09,
+          "amount": 583434000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-01",
+          "close": 4611.44,
+          "amount": 535708000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-02",
+          "close": 4547.96,
+          "amount": 474680000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-03",
+          "close": 4552.58,
+          "amount": 439941000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-04",
+          "close": 4548.05,
+          "amount": 517509000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-07",
+          "close": 4575.02,
+          "amount": 535812000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-08",
+          "close": 4558.74,
+          "amount": 492087000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-09",
+          "close": 4572.6,
+          "amount": 440047999999.99994
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-10",
+          "close": 4548.39,
+          "amount": 390616000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-11",
+          "close": 4510.16,
+          "amount": 522207000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-14",
+          "close": 4480.08,
+          "amount": 398685000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-15",
+          "close": 4450.04,
+          "amount": 394776000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-16",
+          "close": 4480.27,
+          "amount": 476452000000.00006
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-17",
+          "close": 4460.16,
+          "amount": 448339000000.00006
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-18",
+          "close": 4507.39,
+          "amount": 537699000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-21",
+          "close": 4539.57,
+          "amount": 495435999999.99994
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-22",
+          "close": 4544.59,
+          "amount": 523617000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-23",
+          "close": 4517.28,
+          "amount": 378289000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-24",
+          "close": 4439.14,
+          "amount": 375462000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-28",
+          "close": 4340.76,
+          "amount": 428620000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-29",
+          "close": 4345.21,
+          "amount": 334951000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-09-30",
+          "close": 4357.62,
+          "amount": 356492000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-08",
+          "close": 4310.28,
+          "amount": 446208000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-09",
+          "close": 4317.25,
+          "amount": 496179000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-12",
+          "close": 4287.98,
+          "amount": 405574000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-13",
+          "close": 4275.68,
+          "amount": 442038000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-14",
+          "close": 4217.68,
+          "amount": 368451000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-15",
+          "close": 4166.01,
+          "amount": 483520000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-16",
+          "close": 4170.61,
+          "amount": 413749000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-19",
+          "close": 4174.53,
+          "amount": 363448000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-20",
+          "close": 4152.11,
+          "amount": 396229000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-21",
+          "close": 4111.93,
+          "amount": 387930000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-22",
+          "close": 4036.3,
+          "amount": 435084000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-23",
+          "close": 4105.33,
+          "amount": 558205000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-26",
+          "close": 4103.54,
+          "amount": 456247000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-27",
+          "close": 4049.55,
+          "amount": 383126000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-28",
+          "close": 4083.87,
+          "amount": 419279000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-29",
+          "close": 4041.84,
+          "amount": 411893000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-10-30",
+          "close": 3985.5,
+          "amount": 456856000000.00006
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-02",
+          "close": 4016.92,
+          "amount": 528847000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-03",
+          "close": 4008.87,
+          "amount": 553054000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-04",
+          "close": 4101.34,
+          "amount": 597260000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-05",
+          "close": 4113.41,
+          "amount": 622089000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-06",
+          "close": 4054.28,
+          "amount": 478839999999.99994
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-09",
+          "close": 4056.11,
+          "amount": 395205000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-10",
+          "close": 4059.11,
+          "amount": 380090000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-11",
+          "close": 4075.71,
+          "amount": 442128000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-12",
+          "close": 4043.93,
+          "amount": 508195000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-13",
+          "close": 4016.29,
+          "amount": 460246000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-16",
+          "close": 3979.8,
+          "amount": 430554000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-17",
+          "close": 3976.46,
+          "amount": 409477000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-18",
+          "close": 3983.77,
+          "amount": 389914000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-19",
+          "close": 3984.84,
+          "amount": 395441000000.0
+        },
+        {
+          "ts_code": "000300.SH",
+          "trade_date": "2026-11-20",
+          "close": 3954.57,
+          "amount": 441108000000.0
+        }
+      ],
+      "932000.CSI": [
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-20",
+          "close": 3084.59,
+          "amount": 389553000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-21",
+          "close": 3091.37,
+          "amount": 356203000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-24",
+          "close": 3045.14,
+          "amount": 366852000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-25",
+          "close": 3094.29,
+          "amount": 379613000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-26",
+          "close": 3091.34,
+          "amount": 371740000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-27",
+          "close": 3152.45,
+          "amount": 416100000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-28",
+          "close": 3149.18,
+          "amount": 434774000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-08-31",
+          "close": 3180.13,
+          "amount": 423985999999.99994
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-01",
+          "close": 3174.62,
+          "amount": 421101000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-02",
+          "close": 3154.39,
+          "amount": 396994000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-03",
+          "close": 3153.78,
+          "amount": 406302000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-04",
+          "close": 3120.61,
+          "amount": 441089999999.99994
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-07",
+          "close": 3172.35,
+          "amount": 394946000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-08",
+          "close": 3189.76,
+          "amount": 425410000000.00006
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-09",
+          "close": 3181.87,
+          "amount": 426437000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-10",
+          "close": 3130.96,
+          "amount": 383162000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-11",
+          "close": 3073.67,
+          "amount": 413878000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-14",
+          "close": 3104.57,
+          "amount": 375318000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-15",
+          "close": 3068.61,
+          "amount": 372496000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-16",
+          "close": 3132.97,
+          "amount": 394112000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-17",
+          "close": 3136.58,
+          "amount": 407222000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-18",
+          "close": 3192.21,
+          "amount": 442709000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-21",
+          "close": 3256.53,
+          "amount": 453941000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-22",
+          "close": 3258.67,
+          "amount": 476789000000.00006
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-23",
+          "close": 3259.79,
+          "amount": 443610000000.00006
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-24",
+          "close": 3209.63,
+          "amount": 413080000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-28",
+          "close": 3104.84,
+          "amount": 388298000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-29",
+          "close": 3128.95,
+          "amount": 329045000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-09-30",
+          "close": 3107.26,
+          "amount": 337238000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-08",
+          "close": 3064.0,
+          "amount": 370899000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-09",
+          "close": 3065.3,
+          "amount": 418138000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-12",
+          "close": 3000.95,
+          "amount": 340846000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-13",
+          "close": 3024.95,
+          "amount": 369314000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-14",
+          "close": 2960.19,
+          "amount": 323402000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-15",
+          "close": 2862.58,
+          "amount": 336974000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-16",
+          "close": 2868.98,
+          "amount": 345327000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-19",
+          "close": 2855.66,
+          "amount": 324659000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-20",
+          "close": 2902.7,
+          "amount": 317741000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-21",
+          "close": 2902.23,
+          "amount": 316304000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-22",
+          "close": 2804.46,
+          "amount": 326171000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-23",
+          "close": 2856.27,
+          "amount": 408649000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-26",
+          "close": 2818.98,
+          "amount": 332006000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-27",
+          "close": 2729.5,
+          "amount": 328427000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-28",
+          "close": 2800.7,
+          "amount": 360296000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-29",
+          "close": 2709.19,
+          "amount": 331710000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-10-30",
+          "close": 2616.74,
+          "amount": 362051000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-02",
+          "close": 2681.29,
+          "amount": 354624000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-03",
+          "close": 2623.84,
+          "amount": 328349000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-04",
+          "close": 2713.36,
+          "amount": 391909000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-05",
+          "close": 2785.55,
+          "amount": 397301000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-06",
+          "close": 2718.86,
+          "amount": 324744000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-09",
+          "close": 2737.41,
+          "amount": 314136000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-10",
+          "close": 2804.55,
+          "amount": 332585000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-11",
+          "close": 2853.22,
+          "amount": 372119000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-12",
+          "close": 2801.02,
+          "amount": 407143000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-13",
+          "close": 2724.74,
+          "amount": 342201000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-16",
+          "close": 2636.87,
+          "amount": 297527000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-17",
+          "close": 2589.94,
+          "amount": 290905000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-18",
+          "close": 2562.74,
+          "amount": 277901000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-19",
+          "close": 2485.11,
+          "amount": 260811000000.0
+        },
+        {
+          "ts_code": "932000.CSI",
+          "trade_date": "2026-11-20",
+          "close": 2351.93,
+          "amount": 288323000000.0
+        }
+      ]
+    },
+    "responses": [
+      {
+        "code": "000985.CSI",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120",
+        "response_sha256": "f97dd51230a853c794a64593fc581806091e7ac523d3f1ce93177eb7a6e1af9b",
+        "observed_at": "2026-11-20T16:23:33.633263+00:00",
+        "reported_amount_unit": "CNY100M",
+        "normalized_amount_unit": "CNY"
+      },
+      {
+        "code": "000300.SH",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000300&startDate=20260820&endDate=20261120",
+        "response_sha256": "386761d8eb2098e729e98a27f3b2e839e4328bbcf35ed0783b8926188903982e",
+        "observed_at": "2026-11-20T16:23:33.839946+00:00",
+        "reported_amount_unit": "CNY100M",
+        "normalized_amount_unit": "CNY"
+      },
+      {
+        "code": "932000.CSI",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=932000&startDate=20260820&endDate=20261120",
+        "response_sha256": "fcc86d330ec420467d10e7ac2ce9e3201c4d045ffc24e6594f64c4f8dc5067a6",
+        "observed_at": "2026-11-20T16:23:33.984387+00:00",
+        "reported_amount_unit": "CNY100M",
+        "normalized_amount_unit": "CNY"
+      }
+    ],
+    "checked_at": "2026-11-20T16:23:33.984404+00:00",
+    "content_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba"
+  },
+  "processor_sha256": "250130ea80da40121ab7ef8d99585689be9ba7ed67fc4f704d53886827015cea"
+}

@@ -1,0 +1,553 @@
+{
+  "rule": "advancing_below_half_for_three_closes_first_hit_v1",
+  "start": "2026-09-04",
+  "through": "2026-11-04",
+  "observed_days": 38,
+  "weak_days": 23,
+  "days": [
+    {
+      "date": "2026-09-04",
+      "trading": 5207,
+      "advancing": 2249,
+      "declining": 2773,
+      "flat": 185,
+      "advancing_pct": 43.19185711542155,
+      "declining_5pct_or_more": 203,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-07",
+      "trading": 5207,
+      "advancing": 3040,
+      "declining": 1987,
+      "flat": 180,
+      "advancing_pct": 58.38294603418475,
+      "declining_5pct_or_more": 35,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-08",
+      "trading": 5207,
+      "advancing": 3257,
+      "declining": 1859,
+      "flat": 91,
+      "advancing_pct": 62.55041290570386,
+      "declining_5pct_or_more": 49,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-09",
+      "trading": 5207,
+      "advancing": 1729,
+      "declining": 3369,
+      "flat": 109,
+      "advancing_pct": 33.20530055694258,
+      "declining_5pct_or_more": 96,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-10",
+      "trading": 5206,
+      "advancing": 932,
+      "declining": 4192,
+      "flat": 82,
+      "advancing_pct": 17.90242028428736,
+      "declining_5pct_or_more": 175,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-11",
+      "trading": 5207,
+      "advancing": 605,
+      "declining": 4567,
+      "flat": 35,
+      "advancing_pct": 11.61897445746111,
+      "declining_5pct_or_more": 292,
+      "streak": 3,
+      "first_hit": true
+    },
+    {
+      "date": "2026-09-14",
+      "trading": 5207,
+      "advancing": 2939,
+      "declining": 2083,
+      "flat": 185,
+      "advancing_pct": 56.443249471864796,
+      "declining_5pct_or_more": 79,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-15",
+      "trading": 5205,
+      "advancing": 1054,
+      "declining": 4103,
+      "flat": 48,
+      "advancing_pct": 20.249759846301632,
+      "declining_5pct_or_more": 219,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-16",
+      "trading": 5206,
+      "advancing": 3888,
+      "declining": 1134,
+      "flat": 184,
+      "advancing_pct": 74.68305800998849,
+      "declining_5pct_or_more": 29,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-17",
+      "trading": 5209,
+      "advancing": 2504,
+      "declining": 2558,
+      "flat": 147,
+      "advancing_pct": 48.07064695718948,
+      "declining_5pct_or_more": 63,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-18",
+      "trading": 5209,
+      "advancing": 3937,
+      "declining": 1109,
+      "flat": 163,
+      "advancing_pct": 75.5807256671146,
+      "declining_5pct_or_more": 10,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-21",
+      "trading": 5209,
+      "advancing": 4216,
+      "declining": 914,
+      "flat": 79,
+      "advancing_pct": 80.93684008446918,
+      "declining_5pct_or_more": 26,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-22",
+      "trading": 5209,
+      "advancing": 2284,
+      "declining": 2783,
+      "flat": 142,
+      "advancing_pct": 43.84718755999232,
+      "declining_5pct_or_more": 43,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-23",
+      "trading": 5210,
+      "advancing": 1757,
+      "declining": 3366,
+      "flat": 87,
+      "advancing_pct": 33.7236084452975,
+      "declining_5pct_or_more": 133,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-24",
+      "trading": 5210,
+      "advancing": 1084,
+      "declining": 4001,
+      "flat": 125,
+      "advancing_pct": 20.806142034548945,
+      "declining_5pct_or_more": 240,
+      "streak": 3,
+      "first_hit": true
+    },
+    {
+      "date": "2026-09-28",
+      "trading": 5210,
+      "advancing": 862,
+      "declining": 4245,
+      "flat": 103,
+      "advancing_pct": 16.54510556621881,
+      "declining_5pct_or_more": 824,
+      "streak": 4,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-29",
+      "trading": 5211,
+      "advancing": 3261,
+      "declining": 1810,
+      "flat": 140,
+      "advancing_pct": 62.57915947035117,
+      "declining_5pct_or_more": 53,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-09-30",
+      "trading": 5213,
+      "advancing": 2346,
+      "declining": 2713,
+      "flat": 154,
+      "advancing_pct": 45.00287742183004,
+      "declining_5pct_or_more": 124,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-08",
+      "trading": 5209,
+      "advancing": 1634,
+      "declining": 3466,
+      "flat": 109,
+      "advancing_pct": 31.36878479554617,
+      "declining_5pct_or_more": 429,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-09",
+      "trading": 5210,
+      "advancing": 2989,
+      "declining": 2108,
+      "flat": 113,
+      "advancing_pct": 57.370441458733204,
+      "declining_5pct_or_more": 164,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-12",
+      "trading": 5212,
+      "advancing": 1111,
+      "declining": 4036,
+      "flat": 65,
+      "advancing_pct": 21.316193399846508,
+      "declining_5pct_or_more": 445,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-13",
+      "trading": 5212,
+      "advancing": 2791,
+      "declining": 2267,
+      "flat": 154,
+      "advancing_pct": 53.54950115118956,
+      "declining_5pct_or_more": 73,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-14",
+      "trading": 5214,
+      "advancing": 918,
+      "declining": 4213,
+      "flat": 83,
+      "advancing_pct": 17.60644418872267,
+      "declining_5pct_or_more": 312,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-15",
+      "trading": 5215,
+      "advancing": 400,
+      "declining": 4790,
+      "flat": 25,
+      "advancing_pct": 7.6701821668264625,
+      "declining_5pct_or_more": 789,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-16",
+      "trading": 5216,
+      "advancing": 3061,
+      "declining": 2023,
+      "flat": 132,
+      "advancing_pct": 58.684815950920246,
+      "declining_5pct_or_more": 140,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-19",
+      "trading": 5213,
+      "advancing": 2202,
+      "declining": 2861,
+      "flat": 150,
+      "advancing_pct": 42.24055246499137,
+      "declining_5pct_or_more": 175,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-20",
+      "trading": 5217,
+      "advancing": 3433,
+      "declining": 1662,
+      "flat": 122,
+      "advancing_pct": 65.80410197431475,
+      "declining_5pct_or_more": 67,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-21",
+      "trading": 5216,
+      "advancing": 1941,
+      "declining": 3055,
+      "flat": 220,
+      "advancing_pct": 37.21242331288344,
+      "declining_5pct_or_more": 84,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-22",
+      "trading": 5218,
+      "advancing": 448,
+      "declining": 4739,
+      "flat": 31,
+      "advancing_pct": 8.585665005749329,
+      "declining_5pct_or_more": 832,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-23",
+      "trading": 5219,
+      "advancing": 4197,
+      "declining": 887,
+      "flat": 135,
+      "advancing_pct": 80.41770454109984,
+      "declining_5pct_or_more": 92,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-26",
+      "trading": 5217,
+      "advancing": 2082,
+      "declining": 2991,
+      "flat": 144,
+      "advancing_pct": 39.90799309948246,
+      "declining_5pct_or_more": 387,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-27",
+      "trading": 5217,
+      "advancing": 576,
+      "declining": 4601,
+      "flat": 40,
+      "advancing_pct": 11.040828062104657,
+      "declining_5pct_or_more": 925,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-28",
+      "trading": 5217,
+      "advancing": 3872,
+      "declining": 1176,
+      "flat": 169,
+      "advancing_pct": 74.21889975081464,
+      "declining_5pct_or_more": 52,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-29",
+      "trading": 5216,
+      "advancing": 756,
+      "declining": 4400,
+      "flat": 60,
+      "advancing_pct": 14.493865030674847,
+      "declining_5pct_or_more": 903,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-10-30",
+      "trading": 5217,
+      "advancing": 854,
+      "declining": 4290,
+      "flat": 73,
+      "advancing_pct": 16.369561050412116,
+      "declining_5pct_or_more": 1404,
+      "streak": 2,
+      "first_hit": false
+    },
+    {
+      "date": "2026-11-02",
+      "trading": 5217,
+      "advancing": 4382,
+      "declining": 767,
+      "flat": 68,
+      "advancing_pct": 83.99463293080315,
+      "declining_5pct_or_more": 60,
+      "streak": 0,
+      "first_hit": false
+    },
+    {
+      "date": "2026-11-03",
+      "trading": 5216,
+      "advancing": 2023,
+      "declining": 3045,
+      "flat": 148,
+      "advancing_pct": 38.78450920245399,
+      "declining_5pct_or_more": 613,
+      "streak": 1,
+      "first_hit": false
+    },
+    {
+      "date": "2026-11-04",
+      "trading": 5218,
+      "advancing": 4331,
+      "declining": 764,
+      "flat": 123,
+      "advancing_pct": 83.00114986584899,
+      "declining_5pct_or_more": 45,
+      "streak": 0,
+      "first_hit": false
+    }
+  ],
+  "signals": [
+    {
+      "date": "2026-09-11",
+      "three_closes": [
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11"
+      ],
+      "advancing_pcts": [
+        33.20530055694258,
+        17.90242028428736,
+        11.61897445746111
+      ],
+      "left_boundary_unknown": false,
+      "after_five_on": "2026-09-18",
+      "after_five_market_pct": 1.6122322335509325
+    },
+    {
+      "date": "2026-09-24",
+      "three_closes": [
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24"
+      ],
+      "advancing_pcts": [
+        43.84718755999232,
+        33.7236084452975,
+        20.806142034548945
+      ],
+      "left_boundary_unknown": false,
+      "after_five_on": "2026-10-09",
+      "after_five_market_pct": -3.763212361829534
+    }
+  ],
+  "breadth_source_digest": "048d06701f3a96ea4f4588de1d2ce06f8bc89b5fd2320b8005c1e7f151177fff",
+  "index_source_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba",
+  "benchmark_through": "2026-11-20",
+  "historical_PIT": false,
+  "method_promotions": 0,
+  "boundary": "上涨不足半数包含平盘，不能一概称多数下跌。连续计数只用已覆盖的当日及以前资料；仅在每段第三日记一次，后续弱日不重复计为案例。后5日是事后收盘对照，不假定提示日收盘成交，不是账户、策略收益或预警效果验证。",
+  "title": "连续转弱是否等于随后一定继续跌？",
+  "answer": "这段历史中两次出现“上涨股票连续3日不足一半”，随后5日中证全指一次上涨、一次下跌。它能描述参与面转弱，不能直接当作必跌或减仓有效的证明。",
+  "source_refs": [
+    {
+      "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_tradeTip_2021.js",
+      "observed_at": "2026-11-05T06:50:55.505487+00:00",
+      "sha256": "32fc98ea41e599f457609247ba68defb82e6d855aa2551da6923dbf7e44153a7",
+      "bytes": 39627,
+      "kind": "trade_tip"
+    },
+    {
+      "url": "https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/",
+      "observed_at": "2026-11-05T06:50:55.780220+00:00",
+      "sha256": "88db3e9308f8143d2cb5b8021f4a44eb38f8759fa998158c52dd14806861580b",
+      "bytes": 25991,
+      "kind": "stock_page"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "pageHelp.pageNo": 1,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260904",
+        "endStopDate": "20261104"
+      },
+      "observed_at": "2026-11-05T06:45:09.224739+00:00",
+      "sha256": "8888aaf10cc4c62dabf8803e208775e378c0e44a9237f7a27ef118a108be63c9",
+      "bytes": 36110,
+      "kind": "all"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "pageHelp.pageNo": 1,
+        "productCode": "688121",
+        "keyWords": "",
+        "startStopDate": "20260904",
+        "endStopDate": "20261104"
+      },
+      "observed_at": "2026-11-05T06:45:07.250814+00:00",
+      "sha256": "ef791d91cf1c8c94a8f7eaa10ada9d7db923fa6bafa70c90c2d1a3c6be2dc22f",
+      "bytes": 859,
+      "kind": "688121"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "pageHelp.pageNo": 1,
+        "productCode": "688496",
+        "keyWords": "",
+        "startStopDate": "20260904",
+        "endStopDate": "20261104"
+      },
+      "observed_at": "2026-11-05T06:45:08.435399+00:00",
+      "sha256": "cd6597a8a8fc3d0c9d0b636625eed0f91b075fe7aeaae53a24e94714a40b6228",
+      "bytes": 859,
+      "kind": "688496"
+    }
+  ],
+  "index_source": {
+    "code": "000985.CSI",
+    "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120",
+    "response_sha256": "f97dd51230a853c794a64593fc581806091e7ac523d3f1ce93177eb7a6e1af9b",
+    "observed_at": "2026-11-20T16:23:33.633263+00:00",
+    "reported_amount_unit": "CNY100M",
+    "normalized_amount_unit": "CNY"
+  },
+  "reviewed_at": "2026-11-20T16:46:29.377593+00:00",
+  "source_limits": [
+    "只检查9月4日至11月4日38个交易日；未跨越11月5日至19日的完整同口径缺口，与11月20日单点不连成连续历史。",
+    "这是本轮选择的示例条件，未做阈值优化，也没有证明它在历史当时已被使用。",
+    "两个提示属于同一市场阶段，不是两个独立制度试验；同批股票和连续弱日不能扩大验证次数。",
+    "当日收盘后才可观察完整广度。后5日从提示日收盘起算只是行情描述，实际交易须另检验次日执行、T+1和无法卖出。"
+  ],
+  "evidence_sha256": "90088d55a4e2130dfb9a4c1810ec4132d45ce984b4f7587e418a074ae646b087",
+  "research_run_id": "RUN-1CA90AA9B21142D0BB45E035"
+}

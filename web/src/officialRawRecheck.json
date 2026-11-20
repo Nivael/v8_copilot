@@ -1,0 +1,150 @@
+{
+  "version": "st_official_raw_recheck_v1",
+  "input_asset": "inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "start": "2026-07-03",
+  "through": "2026-11-19",
+  "results": [
+    {
+      "symbol": "600079",
+      "name": "ST人福",
+      "official_source": {
+        "code": "600079",
+        "status": "captured",
+        "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/600079",
+        "params": {
+          "select": "date,close,prevClose,chg_rate,volume,amount",
+          "begin": -126,
+          "end": -1,
+          "period": "day"
+        },
+        "sha256": "5a62166b5a195b8c2427f5d16b2b6aa3d305fd1f6eccbfd410ebd6bf14214af9",
+        "bytes": 6427,
+        "observed_at": "2026-11-20T17:05:14.231461+00:00"
+      },
+      "raw_historical_matched_days": 85,
+      "later_paired_close_matched_days": 9,
+      "official_trade_days": 94,
+      "official_absent_dates": [],
+      "absent_dates_match_primary_nontrading": true,
+      "primary_float_precision_differences": [],
+      "first": {
+        "date": "2026-07-03",
+        "raw_close": "17.7700"
+      },
+      "last": {
+        "date": "2026-11-19",
+        "raw_close": "20.0000"
+      },
+      "mismatches": [],
+      "boundary": "前段核主源原价与腾讯原价；后段比较官方原价与既有主源/腾讯配对收盘数值，不新增因子或认定复权全窗一致。"
+    },
+    {
+      "symbol": "603517",
+      "name": "ST绝味",
+      "official_source": {
+        "code": "603517",
+        "status": "captured",
+        "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/603517",
+        "params": {
+          "select": "date,close,prevClose,chg_rate,volume,amount",
+          "begin": -126,
+          "end": -1,
+          "period": "day"
+        },
+        "sha256": "5129593824a54672bc78651235d74ac8936080fb082039cead573aba2ec7d1b3",
+        "bytes": 6299,
+        "observed_at": "2026-11-20T17:13:44.277441+00:00"
+      },
+      "raw_historical_matched_days": 84,
+      "later_paired_close_matched_days": 9,
+      "official_trade_days": 93,
+      "official_absent_dates": [
+        "2026-10-19"
+      ],
+      "absent_dates_match_primary_nontrading": true,
+      "primary_float_precision_differences": [
+        {
+          "date": "2026-11-17",
+          "official": "10.4600",
+          "primary": "10.460000000000003",
+          "difference": "3E-15"
+        }
+      ],
+      "first": {
+        "date": "2026-07-03",
+        "raw_close": "10.5900"
+      },
+      "last": {
+        "date": "2026-11-19",
+        "raw_close": "9.8900"
+      },
+      "mismatches": [],
+      "boundary": "前段核主源原价与腾讯原价；后段比较官方原价与既有主源/腾讯配对收盘数值，不新增因子或认定复权全窗一致。"
+    },
+    {
+      "symbol": "603869",
+      "name": "ST智知",
+      "official_source": {
+        "code": "603869",
+        "status": "captured",
+        "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/603869",
+        "params": {
+          "select": "date,close,prevClose,chg_rate,volume,amount",
+          "begin": -126,
+          "end": -1,
+          "period": "day"
+        },
+        "sha256": "dead1198ba3e6b6ad734c68dd5d0199f1a3b026a085a7cc76ea687110a4df22e",
+        "bytes": 5853,
+        "observed_at": "2026-11-20T17:14:57.083303+00:00"
+      },
+      "raw_historical_matched_days": 85,
+      "later_paired_close_matched_days": 9,
+      "official_trade_days": 94,
+      "official_absent_dates": [],
+      "absent_dates_match_primary_nontrading": true,
+      "primary_float_precision_differences": [
+        {
+          "date": "2026-11-13",
+          "official": "7.5400",
+          "primary": "7.539999999999999",
+          "difference": "-1E-15"
+        },
+        {
+          "date": "2026-11-17",
+          "official": "7.4300",
+          "primary": "7.430000000000001",
+          "difference": "1E-15"
+        },
+        {
+          "date": "2026-11-19",
+          "official": "7.3300",
+          "primary": "7.330000000000001",
+          "difference": "1E-15"
+        }
+      ],
+      "first": {
+        "date": "2026-07-03",
+        "raw_close": "8.5800"
+      },
+      "last": {
+        "date": "2026-11-19",
+        "raw_close": "7.3300"
+      },
+      "mismatches": [],
+      "boundary": "前段核主源原价与腾讯原价；后段比较官方原价与既有主源/腾讯配对收盘数值，不新增因子或认定复权全窗一致。"
+    }
+  ],
+  "new_network_requests": 0,
+  "independent_experience_validations_added": 0,
+  "limits": [
+    "只补三家官方原价来源，未改变五家复权起点差异。",
+    "前段254个实际成交证券日与后段27日分别核；4个后段点有主源浮点尾差，最大3e-15，未称全精度相等。",
+    "官方响应只含收盘、前收、涨跌、成交量及金额，不含实际限价或OHLC，不能认证一字跌停与退出能力。",
+    "不因三家原价补强扩大141家复权报价一致集合或更改旧收益。"
+  ],
+  "evidence_sha256": "16b9426e0fb9d43e103bdf588d412ae37cafa47b48dd54e8eca39f7543524c7b",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "research_run_id": "RUN-A05FE1FA1A0347708F133B89"
+}

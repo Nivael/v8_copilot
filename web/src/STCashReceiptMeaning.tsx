@@ -1,3 +1,4 @@
+import {STBailiPaymentTerms} from './STBailiPaymentTerms'
 import audit from './cashReceiptMeaning.json'
 import type {STRegimeData} from './stRegimeTypes'
 export function cashReceiptMeaningBound(data:STRegimeData){
@@ -24,6 +25,7 @@ export function STCashReceiptMeaning({data}:{data:STRegimeData}){
   <h5>百利：筹资支持不等于经营收入，也不等于赠与全额到款</h5>
   <p>8月协议总额1.3亿元，协议写明经济实质为资本投入、拟计入资本公积，最终会计处理以审计认定为准；付款安排另要求赠与人在各期付款前具备股东身份，不能只截取“不附条件”几个字忽略安排。</p>
   <p>10月28日三季报列吸收投资收到现金3900万元，并解释筹资现金改善主要因收到重整投资人捐赠，支持部分落实。同期经营现金仍净流出26,215,410.77元，不能把这笔筹资流入当成主营回款或经营利润。</p>
+  <STBailiPaymentTerms data={data}/>
   <details><summary>1.3亿元减3900万元，能直接叫剩余欠款9100万元吗？</summary><p>算术差额是9100万元，但本轮没有逐赠与人、逐期付款的完整对应证据，不认证精确履行比例，也不把差额写成已确认逾期应收。三季报累计现金流项目不能自动替代全部协议履行明细；季度报表也不证明法院已受理重整。</p></details>
   <h5>京蓝：已收齐的是2025年度补偿，不是下一年度经营承诺</h5>
   <p>{audit.rows[0].interpretation}本轮没有为它补造现金流量表项目分类；2026年度须按协议约定范围核验全年扣非归母利润。</p>

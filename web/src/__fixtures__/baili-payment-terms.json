@@ -1,0 +1,26 @@
+{
+  "themes": {
+    "twentyseventh_period_followup": {
+      "sources": [
+        {
+          "symbol": "603959",
+          "announcement_id": "1225507583",
+          "title": "关于与重整投资人签订《现金赠与协议》的公告",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225507583.PDF",
+          "sha256": "19691f3cfecf417ae710c3c78139785d3b3a672ffa727889de699b7a4c06281e",
+          "published_on": "2026-08-26",
+          "pages": 12
+        },
+        {
+          "symbol": "603959",
+          "announcement_id": "1225507582",
+          "title": "关于公开招募和遴选重整投资人并签署《重整投资协议》暨公司庭外重组进展的公告",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225507582.PDF",
+          "sha256": "28822c98ed4e9812bc376d96db32e5a0da4121a252d27a4827e1cf6bc1231cbe",
+          "published_on": "2026-08-26",
+          "pages": 56
+        }
+      ]
+    }
+  }
+}

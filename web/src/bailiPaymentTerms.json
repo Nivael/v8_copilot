@@ -1,0 +1,90 @@
+{
+  "version": "baili_payment_terms_v1",
+  "symbol": "603959",
+  "source_theme": "twentyseventh_period_followup",
+  "sources": [
+    {
+      "symbol": "603959",
+      "announcement_id": "1225507583",
+      "title": "关于与重整投资人签订《现金赠与协议》的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225507583.PDF",
+      "sha256": "19691f3cfecf417ae710c3c78139785d3b3a672ffa727889de699b7a4c06281e",
+      "published_on": "2026-08-26",
+      "pages": 12
+    },
+    {
+      "symbol": "603959",
+      "announcement_id": "1225507582",
+      "title": "关于公开招募和遴选重整投资人并签署《重整投资协议》暨公司庭外重组进展的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225507582.PDF",
+      "sha256": "28822c98ed4e9812bc376d96db32e5a0da4121a252d27a4827e1cf6bc1231cbe",
+      "published_on": "2026-08-26",
+      "pages": 56
+    }
+  ],
+  "rows": [
+    {
+      "kind": "现金赠与",
+      "trigger": "按赠与协议汇入指定账户；各期付款前须具备股东身份",
+      "clock": "已披露赠与付款条款未列固定日期或“30%首期”表，不能套用投资款的批后30工作日",
+      "return": "赠与人承诺不以未获法院受理、计划未获批、终止上市等理由要求返还",
+      "source": "1225507583",
+      "pages": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "kind": "履约保证金",
+      "trigger": "同一七名投资人按各自投资款约定5%或不低于5%，在投资协议生效后5个工作日内支付",
+      "clock": "部分既有报名保证金转作履约保证金，不等于再新增一次现金流入",
+      "return": "满足约定解除情形且无不予退回事由时可退；特定违约情形下可没收，不能说一律可退",
+      "source": "1225507582",
+      "pages": [
+        39,
+        44,
+        45
+      ]
+    },
+    {
+      "kind": "受让转增股份的投资款",
+      "trigger": "法院裁定批准重整计划后，履约保证金自动转投资款；其余投资款在批准之日起30个工作日内支付",
+      "clock": "批准、全款支付及账户信息核实为交割前置条件；不把付款条款当股份已登记",
+      "return": "符合约定解除情形且无不予退回事由时退还投资款/保证金；不据条款认定已实际退款",
+      "source": "1225507582",
+      "pages": [
+        40,
+        44,
+        45
+      ]
+    }
+  ],
+  "deposit_example": {
+    "investor": "上海织箜",
+    "already_paid_application_deposit": "15500000",
+    "converted_per_disclosure": "6406277.72",
+    "not_automatic_new_cash": true
+  },
+  "scope_note": "投资协议只对照与该赠与七方对应的联合投资人部分，不套用其他产业投资人或无赠与投资人的条款。",
+  "reviewed_pages": {
+    "1225507583": [
+      9,
+      10,
+      11
+    ],
+    "1225507582": [
+      39,
+      40,
+      43,
+      44,
+      45
+    ]
+  },
+  "boundaries": {
+    "first_30_percent_payment_certified": false,
+    "actual_donor_breakdown_certified": false,
+    "later_effectiveness_or_refund_certified": false,
+    "refund_deadline_calendar_computed": false
+  }
+}

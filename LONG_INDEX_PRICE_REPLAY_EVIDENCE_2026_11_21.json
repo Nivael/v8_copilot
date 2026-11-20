@@ -1,0 +1,902 @@
+{
+  "version": "official_csi_daily_price_replay_v1",
+  "breadth_sha256": "03488f4f855c814d6649b7e3c64ff1b29dbe94f03b387daf480ae785470428dd",
+  "sources": [
+    {
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260703&endDate=20261119",
+      "sha256": "279327a7846b9dbb97e3cb5b1cbdf1099dfc66e5cae163c04419d06f073a20e5"
+    },
+    {
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260701&endDate=20260709",
+      "sha256": "8c53ad61703dee80dc69813b3038df8237fd2ebd27e56226d3ed5dec54d9757b"
+    },
+    {
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120",
+      "sha256": "f97dd51230a853c794a64593fc581806091e7ac523d3f1ce93177eb7a6e1af9b"
+    }
+  ],
+  "overlapping_closes_matched": 65,
+  "rows": [
+    {
+      "date": "2026-07-01",
+      "close": 6563.16,
+      "day_pct": null,
+      "five_day_pct": null,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-02",
+      "close": 6376.36,
+      "day_pct": -2.8461899450874273,
+      "five_day_pct": null,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-03",
+      "close": 6404.4,
+      "day_pct": 0.43974932406576794,
+      "five_day_pct": null,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-06",
+      "close": 6350.89,
+      "day_pct": -0.8355193304603086,
+      "five_day_pct": null,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-07",
+      "close": 6246.03,
+      "day_pct": -1.6511071676568165,
+      "five_day_pct": null,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-08",
+      "close": 6157.07,
+      "day_pct": -1.424264692932951,
+      "five_day_pct": -6.187415817990114,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-09",
+      "close": 6304.43,
+      "day_pct": 2.3933461857669314,
+      "five_day_pct": -1.1280730699019503,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-10",
+      "close": 6215.11,
+      "day_pct": -1.4167815329855356,
+      "five_day_pct": -2.9556242583224033,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-13",
+      "close": 6001.65,
+      "day_pct": -3.4345329366656423,
+      "five_day_pct": -5.499071783639773,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-14",
+      "close": 6119.19,
+      "day_pct": 1.958461423108645,
+      "five_day_pct": -2.0307299196449584,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-15",
+      "close": 6075.66,
+      "day_pct": -0.711368661538537,
+      "five_day_pct": -1.3222198220907022,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-16",
+      "close": 5956.5,
+      "day_pct": -1.9612684054078076,
+      "five_day_pct": -5.518817720237991,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-17",
+      "close": 5671.75,
+      "day_pct": -4.780491899605473,
+      "five_day_pct": -8.742564492020254,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-20",
+      "close": 5638.62,
+      "day_pct": -0.5841230660730815,
+      "five_day_pct": -6.048836569943266,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-21",
+      "close": 5833.73,
+      "day_pct": 3.460243818522972,
+      "five_day_pct": -4.664996510976126,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-22",
+      "close": 5790.76,
+      "day_pct": -0.7365784840916532,
+      "five_day_pct": -4.68920248993525,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-23",
+      "close": 5816.08,
+      "day_pct": 0.43724830592184794,
+      "five_day_pct": -2.3574246621338033,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-24",
+      "close": 5687.26,
+      "day_pct": -2.2148938804142997,
+      "five_day_pct": 0.27346057213382113,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-27",
+      "close": 5807.8,
+      "day_pct": 2.1194740525314475,
+      "five_day_pct": 3.0003795254867325,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": null,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-28",
+      "close": 5648.71,
+      "day_pct": -2.7392472192568613,
+      "five_day_pct": -3.1715557627795596,
+      "twenty_day_pct": null,
+      "from_twenty_close_high_pct": -13.93307492122697,
+      "twenty_day_realized_annualized_pct": null
+    },
+    {
+      "date": "2026-07-29",
+      "close": 5692.34,
+      "day_pct": 0.7723887400840191,
+      "five_day_pct": -1.6996041970311324,
+      "twenty_day_pct": -13.268303682981978,
+      "from_twenty_close_high_pct": -11.118293673099744,
+      "twenty_day_realized_annualized_pct": 33.656245885948785
+    },
+    {
+      "date": "2026-07-30",
+      "close": 5581.37,
+      "day_pct": -1.9494619084594385,
+      "five_day_pct": -4.035535962366405,
+      "twenty_day_pct": -12.467771581278347,
+      "from_twenty_close_high_pct": -12.851008681531447,
+      "twenty_day_realized_annualized_pct": 33.038353161488
+    },
+    {
+      "date": "2026-07-31",
+      "close": 5681.24,
+      "day_pct": 1.7893456266113876,
+      "five_day_pct": -0.10585062050970064,
+      "twenty_day_pct": -11.291612016738492,
+      "from_twenty_close_high_pct": -10.544191444033828,
+      "twenty_day_realized_annualized_pct": 33.95942429220876
+    },
+    {
+      "date": "2026-08-03",
+      "close": 5652.57,
+      "day_pct": -0.5046433525075512,
+      "five_day_pct": -2.6727848755122423,
+      "twenty_day_pct": -10.995624235343392,
+      "from_twenty_close_high_pct": -10.339713503044685,
+      "twenty_day_realized_annualized_pct": 33.94612470044794
+    },
+    {
+      "date": "2026-08-04",
+      "close": 5766.33,
+      "day_pct": 2.0125358907541173,
+      "five_day_pct": 2.08224532680913,
+      "twenty_day_pct": -7.6800783857906545,
+      "from_twenty_close_high_pct": -8.535268057540492,
+      "twenty_day_realized_annualized_pct": 34.861403267747036
+    },
+    {
+      "date": "2026-08-05",
+      "close": 5881.85,
+      "day_pct": 2.003353953034252,
+      "five_day_pct": 3.3292108342087787,
+      "twenty_day_pct": -4.469983287505258,
+      "from_twenty_close_high_pct": -6.702905734539046,
+      "twenty_day_realized_annualized_pct": 35.60919120842924
+    },
+    {
+      "date": "2026-08-06",
+      "close": 5896.36,
+      "day_pct": 0.24669109208837356,
+      "five_day_pct": 5.643596464667277,
+      "twenty_day_pct": -6.4727501138088614,
+      "from_twenty_close_high_pct": -5.128630064471908,
+      "twenty_day_realized_annualized_pct": 34.32428738945904
+    },
+    {
+      "date": "2026-08-07",
+      "close": 5978.3,
+      "day_pct": 1.3896709156157359,
+      "five_day_pct": 5.228788081475171,
+      "twenty_day_pct": -3.8102302292316628,
+      "from_twenty_close_high_pct": -2.302428916245451,
+      "twenty_day_realized_annualized_pct": 34.57061734135192
+    },
+    {
+      "date": "2026-08-10",
+      "close": 6009.53,
+      "day_pct": 0.5223893079972567,
+      "five_day_pct": 6.315003617823397,
+      "twenty_day_pct": 0.13129722659601942,
+      "from_twenty_close_high_pct": -1.7920672507308975,
+      "twenty_day_realized_annualized_pct": 32.402124803232795
+    },
+    {
+      "date": "2026-08-11",
+      "close": 5966.59,
+      "day_pct": -0.7145317520671334,
+      "five_day_pct": 3.472919517266615,
+      "twenty_day_pct": -2.493794113273162,
+      "from_twenty_close_high_pct": -1.7951959128720172,
+      "twenty_day_realized_annualized_pct": 31.669185291611377
+    },
+    {
+      "date": "2026-08-12",
+      "close": 6024.05,
+      "day_pct": 0.9630291338938992,
+      "five_day_pct": 2.4176067053733092,
+      "twenty_day_pct": -0.8494550386295481,
+      "from_twenty_close_high_pct": 0.0,
+      "twenty_day_realized_annualized_pct": 31.802934033247652
+    },
+    {
+      "date": "2026-08-13",
+      "close": 5973.27,
+      "day_pct": -0.8429544907495787,
+      "five_day_pct": 1.3043640483281211,
+      "twenty_day_pct": 0.2815411735079325,
+      "from_twenty_close_high_pct": -0.8429544907495787,
+      "twenty_day_realized_annualized_pct": 31.139996981274347
+    },
+    {
+      "date": "2026-08-14",
+      "close": 5991.02,
+      "day_pct": 0.29715716851908586,
+      "five_day_pct": 0.21276951641771072,
+      "twenty_day_pct": 5.6291268127121254,
+      "from_twenty_close_high_pct": -0.5483022219271089,
+      "twenty_day_realized_annualized_pct": 25.42232599546661
+    },
+    {
+      "date": "2026-08-17",
+      "close": 6112.7,
+      "day_pct": 2.031039789551696,
+      "five_day_pct": 1.7167731919135107,
+      "twenty_day_pct": 8.407730969634414,
+      "from_twenty_close_high_pct": 0.0,
+      "twenty_day_realized_annualized_pct": 25.92453337457355
+    },
+    {
+      "date": "2026-08-18",
+      "close": 6097.5,
+      "day_pct": -0.24866262044595677,
+      "five_day_pct": 2.1940505380795394,
+      "twenty_day_pct": 4.521463969021535,
+      "from_twenty_close_high_pct": -0.24866262044595677,
+      "twenty_day_realized_annualized_pct": 23.366912800890596
+    },
+    {
+      "date": "2026-08-19",
+      "close": 5846.42,
+      "day_pct": -4.1177531775317755,
+      "five_day_pct": -2.9486807048414274,
+      "twenty_day_pct": 0.9611864418487384,
+      "from_twenty_close_high_pct": -4.356176485022985,
+      "twenty_day_realized_annualized_pct": 27.87296565987292
+    },
+    {
+      "date": "2026-08-20",
+      "close": 5882.46,
+      "day_pct": 0.6164456197125763,
+      "five_day_pct": -1.520272815392574,
+      "twenty_day_pct": 1.1413185513266668,
+      "from_twenty_close_high_pct": -3.766584324439282,
+      "twenty_day_realized_annualized_pct": 27.912141623722803
+    },
+    {
+      "date": "2026-08-21",
+      "close": 5902.11,
+      "day_pct": 0.33404392040064873,
+      "five_day_pct": -1.484054468187387,
+      "twenty_day_pct": 3.7777418299849135,
+      "from_twenty_close_high_pct": -3.4451224499811866,
+      "twenty_day_realized_annualized_pct": 26.577324779378998
+    },
+    {
+      "date": "2026-08-24",
+      "close": 5818.51,
+      "day_pct": -1.4164425942586634,
+      "five_day_pct": -4.812766862433949,
+      "twenty_day_pct": 0.18440717655566652,
+      "from_twenty_close_high_pct": -4.812766862433949,
+      "twenty_day_realized_annualized_pct": 26.148789499478532
+    },
+    {
+      "date": "2026-08-25",
+      "close": 5832.92,
+      "day_pct": 0.2476579055462653,
+      "five_day_pct": -4.339155391553915,
+      "twenty_day_pct": 3.2610985517047255,
+      "from_twenty_close_high_pct": -4.577028154498012,
+      "twenty_day_realized_annualized_pct": 24.02864892874507
+    },
+    {
+      "date": "2026-08-26",
+      "close": 5867.44,
+      "day_pct": 0.5918133627754195,
+      "five_day_pct": 0.3595362632174904,
+      "twenty_day_pct": 3.076063622341603,
+      "from_twenty_close_high_pct": -4.012302255958906,
+      "twenty_day_realized_annualized_pct": 23.977257512493626
+    },
+    {
+      "date": "2026-08-27",
+      "close": 5958.93,
+      "day_pct": 1.5592830945011793,
+      "five_day_pct": 1.2999663406126007,
+      "twenty_day_pct": 6.764647389440227,
+      "from_twenty_close_high_pct": -2.5155823122351824,
+      "twenty_day_realized_annualized_pct": 23.096728664822045
+    },
+    {
+      "date": "2026-08-28",
+      "close": 5935.03,
+      "day_pct": -0.4010787171522404,
+      "five_day_pct": 0.5577666292224306,
+      "twenty_day_pct": 4.467158578056903,
+      "from_twenty_close_high_pct": -2.9065715641206014,
+      "twenty_day_realized_annualized_pct": 22.57394048858542
+    },
+    {
+      "date": "2026-08-31",
+      "close": 5969.33,
+      "day_pct": 0.5779246271712191,
+      "five_day_pct": 2.5920725409082395,
+      "twenty_day_pct": 5.603822685964084,
+      "from_twenty_close_high_pct": -2.345444729824791,
+      "twenty_day_realized_annualized_pct": 22.434291473928525
+    },
+    {
+      "date": "2026-09-01",
+      "close": 5939.14,
+      "day_pct": -0.5057519018047252,
+      "five_day_pct": 1.8210433196409346,
+      "twenty_day_pct": 2.9968801646801344,
+      "from_twenty_close_high_pct": -2.8393345003026487,
+      "twenty_day_realized_annualized_pct": 21.62501363447754
+    },
+    {
+      "date": "2026-09-02",
+      "close": 5860.85,
+      "day_pct": -1.318204319143849,
+      "five_day_pct": -0.11231474032968382,
+      "twenty_day_pct": -0.3570305261099824,
+      "from_twenty_close_high_pct": -4.120110589428567,
+      "twenty_day_realized_annualized_pct": 21.069992772335095
+    },
+    {
+      "date": "2026-09-03",
+      "close": 5867.18,
+      "day_pct": 0.10800481158876273,
+      "five_day_pct": -1.5397059539212576,
+      "twenty_day_pct": -0.4948815879627431,
+      "from_twenty_close_high_pct": -4.016555695519165,
+      "twenty_day_realized_annualized_pct": 21.053379354560185
+    },
+    {
+      "date": "2026-09-04",
+      "close": 5830.14,
+      "day_pct": -0.6313083968789095,
+      "five_day_pct": -1.7673036193582847,
+      "twenty_day_pct": -2.478296505695599,
+      "from_twenty_close_high_pct": -4.622507239026944,
+      "twenty_day_realized_annualized_pct": 20.477605675699976
+    },
+    {
+      "date": "2026-09-07",
+      "close": 5893.09,
+      "day_pct": 1.0797339343480603,
+      "five_day_pct": -1.2771952631199817,
+      "twenty_day_pct": -1.9375891292663485,
+      "from_twenty_close_high_pct": -3.592684083956353,
+      "twenty_day_realized_annualized_pct": 20.80156418910449
+    },
+    {
+      "date": "2026-09-08",
+      "close": 5894.74,
+      "day_pct": 0.02799889361947637,
+      "five_day_pct": -0.7475829833949023,
+      "twenty_day_pct": -1.2042054171645782,
+      "from_twenty_close_high_pct": -3.5656911021316278,
+      "twenty_day_realized_annualized_pct": 20.67224344799974
+    },
+    {
+      "date": "2026-09-09",
+      "close": 5899.03,
+      "day_pct": 0.07277674672674282,
+      "five_day_pct": 0.6514413438323793,
+      "twenty_day_pct": -2.075347980179447,
+      "from_twenty_close_high_pct": -3.495509349387341,
+      "twenty_day_realized_annualized_pct": 20.330968139478053
+    },
+    {
+      "date": "2026-09-10",
+      "close": 5851.83,
+      "day_pct": -0.8001315470509558,
+      "five_day_pct": -0.26162483509965606,
+      "twenty_day_pct": -2.033057270138467,
+      "from_twenty_close_high_pct": -4.267672223403733,
+      "twenty_day_realized_annualized_pct": 20.310684817768905
+    },
+    {
+      "date": "2026-09-11",
+      "close": 5769.02,
+      "day_pct": -1.4151128792189793,
+      "five_day_pct": -1.0483453227538275,
+      "twenty_day_pct": -3.705545967130806,
+      "from_twenty_close_high_pct": -5.622392723346476,
+      "twenty_day_realized_annualized_pct": 20.776523425972144
+    },
+    {
+      "date": "2026-09-14",
+      "close": 5761.88,
+      "day_pct": -0.12376452153051991,
+      "five_day_pct": -2.226505958673633,
+      "twenty_day_pct": -5.739198717424379,
+      "from_twenty_close_high_pct": -5.504223042230422,
+      "twenty_day_realized_annualized_pct": 19.072626303773752
+    },
+    {
+      "date": "2026-09-15",
+      "close": 5723.69,
+      "day_pct": -0.6628045013086007,
+      "five_day_pct": -2.9017395169252587,
+      "twenty_day_pct": -6.1305453054530545,
+      "from_twenty_close_high_pct": -4.115034685634736,
+      "twenty_day_realized_annualized_pct": 19.11786098721174
+    },
+    {
+      "date": "2026-09-16",
+      "close": 5797.55,
+      "day_pct": 1.2904262809481297,
+      "five_day_pct": -1.720282826159555,
+      "twenty_day_pct": -0.8358961552539845,
+      "from_twenty_close_high_pct": -2.8777098937401684,
+      "twenty_day_realized_annualized_pct": 13.696656954229425
+    },
+    {
+      "date": "2026-09-17",
+      "close": 5778.35,
+      "day_pct": -0.3311743753827048,
+      "five_day_pct": -1.255675574991071,
+      "twenty_day_pct": -1.769837788952241,
+      "from_twenty_close_high_pct": -3.199354031356953,
+      "twenty_day_realized_annualized_pct": 13.507465428092008
+    },
+    {
+      "date": "2026-09-18",
+      "close": 5862.03,
+      "day_pct": 1.4481642683465004,
+      "five_day_pct": 1.6122322335509325,
+      "twenty_day_pct": -0.679079176768986,
+      "from_twenty_close_high_pct": -1.7975216649104673,
+      "twenty_day_realized_annualized_pct": 14.50860345162796
+    },
+    {
+      "date": "2026-09-21",
+      "close": 5921.92,
+      "day_pct": 1.0216597322088081,
+      "five_day_pct": 2.7775656556540573,
+      "twenty_day_pct": 1.7772591264773971,
+      "from_twenty_close_high_pct": -0.7942264877297788,
+      "twenty_day_realized_annualized_pct": 13.990643967595398
+    },
+    {
+      "date": "2026-09-22",
+      "close": 5923.5,
+      "day_pct": 0.026680536042364637,
+      "five_day_pct": 3.490929802277901,
+      "twenty_day_pct": 1.552910034768178,
+      "from_twenty_close_high_pct": -0.7677578555717308,
+      "twenty_day_realized_annualized_pct": 13.979979523369792
+    },
+    {
+      "date": "2026-09-23",
+      "close": 5897.66,
+      "day_pct": -0.4362285810753777,
+      "five_day_pct": 1.726763891643884,
+      "twenty_day_pct": 0.515045743970113,
+      "from_twenty_close_high_pct": -1.2006372574476532,
+      "twenty_day_realized_annualized_pct": 13.957786155801577
+    },
+    {
+      "date": "2026-09-24",
+      "close": 5788.14,
+      "day_pct": -1.8570076945771712,
+      "five_day_pct": 0.1694255280486644,
+      "twenty_day_pct": -2.8661185816916794,
+      "from_twenty_close_high_pct": -3.0353490257700613,
+      "twenty_day_realized_annualized_pct": 14.25588852736659
+    },
+    {
+      "date": "2026-09-28",
+      "close": 5630.2,
+      "day_pct": -2.7286831348239677,
+      "five_day_pct": -3.954773346434597,
+      "twenty_day_pct": -5.136115571446143,
+      "from_twenty_close_high_pct": -5.681207103644797,
+      "twenty_day_realized_annualized_pct": 16.95651783507665
+    },
+    {
+      "date": "2026-09-29",
+      "close": 5650.25,
+      "day_pct": 0.35611523569322584,
+      "five_day_pct": -4.587532421917216,
+      "twenty_day_pct": -5.345323512018937,
+      "from_twenty_close_high_pct": -4.864172253895345,
+      "twenty_day_realized_annualized_pct": 16.829318133301623
+    },
+    {
+      "date": "2026-09-30",
+      "close": 5648.25,
+      "day_pct": -0.03539666386443078,
+      "five_day_pct": -4.646746011648519,
+      "twenty_day_pct": -4.8978471630572775,
+      "from_twenty_close_high_pct": -4.646746011648519,
+      "twenty_day_realized_annualized_pct": 16.82434924361004
+    },
+    {
+      "date": "2026-10-08",
+      "close": 5560.01,
+      "day_pct": -1.5622537954233613,
+      "five_day_pct": -5.725152009441032,
+      "twenty_day_pct": -5.133043841763567,
+      "from_twenty_close_high_pct": -6.136405841141217,
+      "twenty_day_realized_annualized_pct": 17.051514643429755
+    },
+    {
+      "date": "2026-10-09",
+      "close": 5570.32,
+      "day_pct": 0.18543132116668856,
+      "five_day_pct": -3.763212361829534,
+      "twenty_day_pct": -5.05967091515856,
+      "from_twenty_close_high_pct": -5.962353338397906,
+      "twenty_day_realized_annualized_pct": 17.075731671482895
+    },
+    {
+      "date": "2026-10-12",
+      "close": 5491.06,
+      "day_pct": -1.4228985049332894,
+      "five_day_pct": -2.471315406202266,
+      "twenty_day_pct": -5.815983835722641,
+      "from_twenty_close_high_pct": -7.3004136068202925,
+      "twenty_day_realized_annualized_pct": 17.532941747371094
+    },
+    {
+      "date": "2026-10-13",
+      "close": 5491.23,
+      "day_pct": 0.0030959414029349524,
+      "five_day_pct": -2.814388743860891,
+      "twenty_day_pct": -6.81917296358956,
+      "from_twenty_close_high_pct": -7.297543681944796,
+      "twenty_day_realized_annualized_pct": 16.81653512041798
+    },
+    {
+      "date": "2026-10-14",
+      "close": 5404.82,
+      "day_pct": -1.5736000859552413,
+      "five_day_pct": -4.309830478466782,
+      "twenty_day_pct": -8.311138404747282,
+      "from_twenty_close_high_pct": -8.756309614248332,
+      "twenty_day_realized_annualized_pct": 17.296765822908018
+    },
+    {
+      "date": "2026-10-15",
+      "close": 5282.71,
+      "day_pct": -2.259279679989343,
+      "five_day_pct": -4.987401101796579,
+      "twenty_day_pct": -10.447819387255192,
+      "from_twenty_close_high_pct": -10.81775977040601,
+      "twenty_day_realized_annualized_pct": 18.35134512375468
+    },
+    {
+      "date": "2026-10-16",
+      "close": 5289.37,
+      "day_pct": 0.12607165640362616,
+      "five_day_pct": -5.043695873845667,
+      "twenty_day_pct": -9.611694119617281,
+      "from_twenty_close_high_pct": -10.705326242930699,
+      "twenty_day_realized_annualized_pct": 18.473873354431905
+    },
+    {
+      "date": "2026-10-19",
+      "close": 5292.21,
+      "day_pct": 0.053692594770265646,
+      "five_day_pct": -3.621340870433031,
+      "twenty_day_pct": -8.2650086149814,
+      "from_twenty_close_high_pct": -10.657381615598887,
+      "twenty_day_realized_annualized_pct": 18.24050886117484
+    },
+    {
+      "date": "2026-10-20",
+      "close": 5306.57,
+      "day_pct": 0.271342218090363,
+      "five_day_pct": -3.362816709553233,
+      "twenty_day_pct": -7.902108339639145,
+      "from_twenty_close_high_pct": -10.414957373174643,
+      "twenty_day_realized_annualized_pct": 18.38017263570611
+    },
+    {
+      "date": "2026-10-21",
+      "close": 5283.5,
+      "day_pct": -0.43474410023800686,
+      "five_day_pct": -2.2446630970134067,
+      "twenty_day_pct": -7.690668083002399,
+      "from_twenty_close_high_pct": -10.80442306069047,
+      "twenty_day_realized_annualized_pct": 18.35544709276129
+    },
+    {
+      "date": "2026-10-22",
+      "close": 5154.03,
+      "day_pct": -2.4504589760575377,
+      "five_day_pct": -2.435870982885678,
+      "twenty_day_pct": -11.099861148243654,
+      "from_twenty_close_high_pct": -12.990124082046087,
+      "twenty_day_realized_annualized_pct": 18.606640174798088
+    },
+    {
+      "date": "2026-10-23",
+      "close": 5253.73,
+      "day_pct": 1.934408608409342,
+      "five_day_pct": -0.6738042526803759,
+      "twenty_day_pct": -9.079062362092985,
+      "from_twenty_close_high_pct": -11.306997552122901,
+      "twenty_day_realized_annualized_pct": 20.635731206508726
+    },
+    {
+      "date": "2026-10-26",
+      "close": 5213.98,
+      "day_pct": -0.7566053070865842,
+      "five_day_pct": -1.478210426268043,
+      "twenty_day_pct": -11.055044071763536,
+      "from_twenty_close_high_pct": -11.978053515657972,
+      "twenty_day_realized_annualized_pct": 19.367310705990363
+    },
+    {
+      "date": "2026-10-27",
+      "close": 5098.42,
+      "day_pct": -2.216349122934879,
+      "five_day_pct": -3.922496075619468,
+      "twenty_day_pct": -13.905962930941316,
+      "from_twenty_close_high_pct": -13.928927154553895,
+      "twenty_day_realized_annualized_pct": 19.232600646047157
+    },
+    {
+      "date": "2026-10-28",
+      "close": 5177.51,
+      "day_pct": 1.551264901675421,
+      "five_day_pct": -2.006056591274723,
+      "twenty_day_pct": -12.593736811007005,
+      "from_twenty_close_high_pct": -12.210775120980186,
+      "twenty_day_realized_annualized_pct": 20.739779272207752
+    },
+    {
+      "date": "2026-10-29",
+      "close": 5070.47,
+      "day_pct": -2.0674030566816866,
+      "five_day_pct": -1.6212555999868064,
+      "twenty_day_pct": -14.025732239566201,
+      "from_twenty_close_high_pct": -12.398974454660737,
+      "twenty_day_realized_annualized_pct": 21.304191803342658
+    },
+    {
+      "date": "2026-10-30",
+      "close": 4952.5,
+      "day_pct": -2.326608775912292,
+      "five_day_pct": -5.733640670533126,
+      "twenty_day_pct": -14.43710760278777,
+      "from_twenty_close_high_pct": -12.349011105703287,
+      "twenty_day_realized_annualized_pct": 21.691235002376462
+    },
+    {
+      "date": "2026-11-02",
+      "close": 5034.54,
+      "day_pct": 1.6565371024734983,
+      "five_day_pct": -3.4415168450972193,
+      "twenty_day_pct": -10.579730737806827,
+      "from_twenty_close_high_pct": -10.897039953984336,
+      "twenty_day_realized_annualized_pct": 22.01576989920202
+    },
+    {
+      "date": "2026-11-03",
+      "close": 4985.17,
+      "day_pct": -0.9806258367199386,
+      "five_day_pct": -2.2212763954323105,
+      "twenty_day_pct": -11.77080660147781,
+      "from_twenty_close_high_pct": -11.739565352100207,
+      "twenty_day_realized_annualized_pct": 21.79762309061019
+    },
+    {
+      "date": "2026-11-04",
+      "close": 5146.73,
+      "day_pct": 3.240812249130922,
+      "five_day_pct": -0.5944942646175478,
+      "twenty_day_pct": -8.879210374894878,
+      "from_twenty_close_high_pct": -7.604410518605754,
+      "twenty_day_realized_annualized_pct": 25.705426115382892
+    },
+    {
+      "date": "2026-11-05",
+      "close": 5211.79,
+      "day_pct": 1.264103615305252,
+      "five_day_pct": 2.7871183539198534,
+      "twenty_day_pct": -6.262938376010115,
+      "from_twenty_close_high_pct": -6.43643453158885,
+      "twenty_day_realized_annualized_pct": 26.041087336355922
+    },
+    {
+      "date": "2026-11-06",
+      "close": 5115.37,
+      "day_pct": -1.8500361679960244,
+      "five_day_pct": 3.2886420999495205,
+      "twenty_day_pct": -8.167394332821095,
+      "from_twenty_close_high_pct": -6.844732418784134,
+      "twenty_day_realized_annualized_pct": 26.52520872856108
+    },
+    {
+      "date": "2026-11-09",
+      "close": 5119.56,
+      "day_pct": 0.08191000846468584,
+      "five_day_pct": 1.688734223980741,
+      "twenty_day_pct": -6.765542536413735,
+      "from_twenty_close_high_pct": -6.76842893122306,
+      "twenty_day_realized_annualized_pct": 26.30135476050663
+    },
+    {
+      "date": "2026-11-10",
+      "close": 5161.13,
+      "day_pct": 0.8119838423614529,
+      "five_day_pct": 3.529668998248806,
+      "twenty_day_pct": -6.011403638164856,
+      "from_twenty_close_high_pct": -4.508753297982172,
+      "twenty_day_realized_annualized_pct": 26.59501339615804
+    },
+    {
+      "date": "2026-11-11",
+      "close": 5207.16,
+      "day_pct": 0.891858953368739,
+      "five_day_pct": 1.174143582430009,
+      "twenty_day_pct": -3.6571060645867948,
+      "from_twenty_close_high_pct": -1.8733381449787716,
+      "twenty_day_realized_annualized_pct": 26.463955601031376
+    },
+    {
+      "date": "2026-11-12",
+      "close": 5140.57,
+      "day_pct": -1.2788160916891358,
+      "five_day_pct": -1.366517069951015,
+      "twenty_day_pct": -2.690664450632346,
+      "from_twenty_close_high_pct": -3.1281976870181682,
+      "twenty_day_realized_annualized_pct": 25.65523059154387
+    },
+    {
+      "date": "2026-11-13",
+      "close": 5058.27,
+      "day_pct": -1.600989773507607,
+      "five_day_pct": -1.116243790771733,
+      "twenty_day_pct": -4.369140370214222,
+      "from_twenty_close_high_pct": -4.679105335461513,
+      "twenty_day_realized_annualized_pct": 26.15955513450743
+    },
+    {
+      "date": "2026-11-16",
+      "close": 4959.1,
+      "day_pct": -1.9605517301369837,
+      "five_day_pct": -3.134253724929486,
+      "twenty_day_pct": -6.2943458403956,
+      "from_twenty_close_high_pct": -6.547920784989174,
+      "twenty_day_realized_annualized_pct": 26.857791332511937
+    },
+    {
+      "date": "2026-11-17",
+      "close": 4929.86,
+      "day_pct": -0.5896231170978605,
+      "five_day_pct": -4.480995440920884,
+      "twenty_day_pct": -7.098935847449482,
+      "from_twenty_close_high_pct": -6.693290432478471,
+      "twenty_day_realized_annualized_pct": 26.783994408092465
+    },
+    {
+      "date": "2026-11-18",
+      "close": 4920.89,
+      "day_pct": -0.18195242866937397,
+      "five_day_pct": -5.497622504397791,
+      "twenty_day_pct": -6.863064256648055,
+      "from_twenty_close_high_pct": -6.335308438004998,
+      "twenty_day_realized_annualized_pct": 26.788917100969446
+    },
+    {
+      "date": "2026-11-19",
+      "close": 4877.36,
+      "day_pct": -0.8845960791645414,
+      "five_day_pct": -5.120249310874086,
+      "twenty_day_pct": -5.368032394068331,
+      "from_twenty_close_high_pct": -7.163862627123967,
+      "twenty_day_realized_annualized_pct": 25.70866560916149
+    },
+    {
+      "date": "2026-11-20",
+      "close": 4745.31,
+      "day_pct": -2.7074072859087703,
+      "five_day_pct": -6.187095588017247,
+      "twenty_day_pct": -9.677314974313488,
+      "from_twenty_close_high_pct": -8.988718790635945,
+      "twenty_day_realized_annualized_pct": 25.726356600891094
+    }
+  ],
+  "limits": [
+    "Official closes have two-decimal precision; existing higher precision studies unchanged",
+    "Returns require n+1 closes; unavailable early windows remain null",
+    "20-close high is a rolling closing reference, not intraday high or maximum drawdown",
+    "20 daily simple returns sample standard deviation annualized with sqrt(252), descriptive not forecast",
+    "Sources observed retrospectively; no historical real-time availability or executable-price claim"
+  ],
+  "content_digest": "6600e13f938cd323ae7e76a970007eea13fd88acbdb008a475ea0d4d00ebb3e6"
+}

@@ -130,3 +130,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 旧市场窗口续核：−10.61%/−12.80%对应9月4日收盘起点；7日是首个收益日。换成7日收盘起算为−11.56%/−13.46%，原方向不翻转。面板已增折叠对照，见 [结果](ST_MARKET_WINDOW_ANCHOR_RESULT_2026_11_20.md)。
 
 主阅读顺序更新：先行情与判断，登记/窗口核对集中到后部“资料与更正”，顶部可直达，原窗口直链保留自动展开。见 [结果](ST_READING_SOURCE_ORDER_RESULT_2026_11_20.md)。
+
+岭南债券补核：11月3日报告时一审未生效，质押登记/前置安排/变现/兑付分列；两份旧件29页核7关键图像页，0下载。新增问题入口，原退出缺口不变，见 [结果](ST_LINGNAN_BOND_FOLLOWUP_RESULT_2026_11_20.md)。

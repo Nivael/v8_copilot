@@ -1,0 +1,332 @@
+{
+  "version": "saved_catalog_selection_audit_v1",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "selected_source_identity_count": 1181,
+  "counts": {
+    "capture_pages": 138,
+    "saved_queries": 84,
+    "pagination_complete_queries": 84,
+    "symbols_with_complete_saved_queries": 84,
+    "fixed_symbols": 150,
+    "fixed_symbols_without_complete_saved_query": 66,
+    "unique_catalog_announcements": 3126,
+    "matched_titles": 13,
+    "unselected_title_leads": 8,
+    "unselected_primary_title_leads": 5,
+    "unselected_supporting_title_leads": 3
+  },
+  "candidates": [
+    {
+      "announcement_id": "1225438033",
+      "symbol": "600337",
+      "name": "ST美克",
+      "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438033.PDF",
+      "published_on": "2026-07-23",
+      "catalog_query": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "catalog_page": 2,
+      "catalog_sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225438037",
+      "symbol": "600337",
+      "name": "ST美克",
+      "title": "美克国际家居用品股份有限公司关于召开终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项投资者说明会的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438037.PDF",
+      "published_on": "2026-07-23",
+      "catalog_query": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "catalog_page": 2,
+      "catalog_sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": true,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225451821",
+      "symbol": "002932",
+      "name": "*ST明德",
+      "title": "关于终止部分募集资金投资项目暨变更募集资金用途的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451821.PDF",
+      "published_on": "2026-08-01",
+      "catalog_query": "st-twelfth-period-followup-20261120/catalog-period/002932",
+      "catalog_page": 2,
+      "catalog_sha256": "33c3f78d7ab42e10cb356afadc3e550d9713425d7dbe1b3243fe3eaa9afa2b44",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225451822",
+      "symbol": "002932",
+      "name": "*ST明德",
+      "title": "国金证券股份有限公司关于武汉明德生物科技股份有限公司终止部分募集资金投资项目暨变更募集资金用途的核查意见",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451822.PDF",
+      "published_on": "2026-08-01",
+      "catalog_query": "st-twelfth-period-followup-20261120/catalog-period/002932",
+      "catalog_page": 2,
+      "catalog_sha256": "33c3f78d7ab42e10cb356afadc3e550d9713425d7dbe1b3243fe3eaa9afa2b44",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": true,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225474980",
+      "symbol": "600337",
+      "name": "ST美克",
+      "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金事项暨关联交易相关主体买卖公司股票的自查报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225474980.PDF",
+      "published_on": "2026-08-15",
+      "catalog_query": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "catalog_page": 2,
+      "catalog_sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": true,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225579854",
+      "symbol": "600818",
+      "name": "ST中路",
+      "title": "关于控股股东被法院裁定受理破产清算的提示性公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579854.PDF",
+      "published_on": "2026-09-24",
+      "catalog_query": "st-twentyfirst-period-followup-20261120/catalog-period/600818",
+      "catalog_page": 1,
+      "catalog_sha256": "439ad2ce168a5a8a9ebbd47d91f1e2d3251f09afef8213c49f7a26766cfa0cab",
+      "rules": [
+        "judicial_change"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225616501",
+      "symbol": "600581",
+      "name": "*ST八钢",
+      "title": "八一钢铁关于终止新疆巨峰金属制品有限公司委托管理关系暨关联交易的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225616501.PDF",
+      "published_on": "2026-10-23",
+      "catalog_query": "st-nineteenth-period-followup-20261120/catalog-period/600581",
+      "catalog_page": 1,
+      "catalog_sha256": "3d770dde1f19d91d8ba47b7c353c2da701fe9928d96c09bcad4963eb3392bb2d",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225663625",
+      "symbol": "603008",
+      "name": "ST喜临门",
+      "title": "喜临门健康睡眠科技股份公司关于法院决定受理实际控制人、董事、高级管理人员个人债务集中清理的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-10/1225663625.PDF",
+      "published_on": "2026-11-10",
+      "catalog_query": "st-twentysecond-period-followup-20261120/catalog-period/603008",
+      "catalog_page": 1,
+      "catalog_sha256": "5b8e2e44c971087567a14bac0df1bb7e4b20d1a75984f0793fc5867228cd6d55",
+      "rules": [
+        "judicial_change"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    }
+  ],
+  "review_outcomes": [
+    {
+      "symbol": "600337",
+      "announcement_id": "1225438033",
+      "outcome": "事项链补充",
+      "title": "美克：收购终止，不等于预重整终止",
+      "fact": "公司7月22日决定终止收购万德溙100%股权，7月23日披露。交易尚在预案阶段，未签正式协议、未支付对价、标的未过户。",
+      "meaning": "这是资产购买交易的终止，不能替代同日另行披露的重整投资协议状态；也不能从未支付的交易推算退款或已实现经营贡献。",
+      "watch": "后续合作和上市公司重整仍按各自文件跟踪；本件不是司法重整终止决定。",
+      "source": {
+        "symbol": "600337",
+        "announcement_id": "1225438033",
+        "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438033.PDF",
+        "published_on": "2026-07-23",
+        "sha256": "384ef2baa2b484ff4a1a72b4b711afb6855913558f31ee5cbbc11eabecc5b230",
+        "pages": 3,
+        "observed_at": "2026-11-20T15:57:59.662287+00:00"
+      },
+      "expected_chain": {
+        "chain": "600337-协议已生效，为何仍不能把投资款当实收",
+        "source": "1225438035",
+        "pages": [
+          10,
+          11
+        ],
+        "subject": "协议已生效，为何仍不能把投资款当实收",
+        "changed": "7月21日签约、23日披露；协议经各方签章后生效。拟10转10.13、增加1455679113股；小磁368000000股按1.47元，其他330000000股按1.61元，产业批合计投资对价1072260000元。",
+        "open": "全款支付在上市公司及美克集团两份重整计划均获法院批准后10工作日内；保证金签约后10工作日内支付，约定不等于已收到。股数以最终登记为准，增加股份不是全部送给旧股东，价格不当二级市场底价。",
+        "supporting": []
+      },
+      "expected_source": {
+        "announcement_id": "1225438035",
+        "symbol": "600337",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438035.PDF",
+        "published_on": "2026-07-23"
+      },
+      "source_theme": "sixteenth_period_followup"
+    },
+    {
+      "symbol": "600818",
+      "announcement_id": "1225579854",
+      "outcome": "原件补强，原判断保留",
+      "title": "中路：清算主体是控股股东，不是上市公司",
+      "fact": "9月24日公司公告披露，9月23日收到中路集团破产清算受理裁定；截至9月23日，1248万元占款已收450万元、798万元未收。",
+      "meaning": "原期间复盘已有“股东清算及债权申报不等于回款”的判断，本件补强原件，不翻转该判断。450万元是截至当时累计已收，不新增一次回款；798万元也不当确定全部损失。",
+      "watch": "9月23日是公司收裁定日，本件未精确给出裁定作出日；后续实际收款、清偿和控制权状态仍另核。",
+      "source": {
+        "symbol": "600818",
+        "announcement_id": "1225579854",
+        "title": "关于控股股东被法院裁定受理破产清算的提示性公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579854.PDF",
+        "published_on": "2026-09-24",
+        "sha256": "a81685cde6c52d9d6754dfa5e3411e49c115be7caba0f96b16fecead3a1d3ee6",
+        "pages": 2,
+        "observed_at": "2026-11-20T15:57:59.801921+00:00"
+      },
+      "expected_chain": {
+        "chain": "600818-催告、诉讼和控股股东清算，是否代表占款已收回？",
+        "source": "1225448933",
+        "pages": [
+          2
+        ],
+        "subject": "催告、诉讼和控股股东清算，是否代表占款已收回？",
+        "changed": "7月30日仍未全额收回；截至10月29日1248万元占款中798万元仍未收，股权回购对赌也未履行。诉讼立案及控股股东破产清算受理、上市公司申报债权均不等于回款，更不是上市公司自身清算。",
+        "open": "核后续实收金额、方式和日期；保留股权退回与现金的区别。下一年度不利内控意见是条件风险，不写成现在已实施*ST。",
+        "boundary": "按当时已知信息更新；行情相对差值不是因果识别。",
+        "supporting": [
+          {
+            "source": "1225645646",
+            "pages": [
+              1
+            ],
+            "state": "仅已核原页，不认证全文。"
+          },
+          {
+            "source": "1225645645",
+            "pages": [
+              1
+            ],
+            "state": "仅已核原页，不认证全文。"
+          }
+        ]
+      },
+      "expected_source": {
+        "announcement_id": "1225448933",
+        "symbol": "600818",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448933.PDF",
+        "published_on": "2026-07-31"
+      },
+      "source_theme": "twentyfirst_period_followup"
+    },
+    {
+      "symbol": "603008",
+      "announcement_id": "1225663625",
+      "outcome": "主体与程序补充",
+      "title": "喜临门：三名自然人个人债务清理已受理，两法人预重整另看",
+      "fact": "11月10日公司披露，法院11月6日决定受理实际控制人及两位董事高管的个人债务集中清理并指定管理人。公告同时称华易智能制造、华瀚投资两法人股东仍为预重整。",
+      "meaning": "个人债务集中清理、两法人股东预重整和上市公司自身状态是三层对象；不能统称“公司已获重整受理”。原稿“股东及一致行动人仍为预重整”的阅读已明确限定到两法人。",
+      "watch": "公司披露不涉及上市公司及其控股子公司，控制权是否变化仍不确定；不得把受理直接当控制权已转移或占款回收。",
+      "source": {
+        "symbol": "603008",
+        "announcement_id": "1225663625",
+        "title": "喜临门健康睡眠科技股份公司关于法院决定受理实际控制人、董事、高级管理人员个人债务集中清理的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-10/1225663625.PDF",
+        "published_on": "2026-11-10",
+        "sha256": "25099abad84786095e3a0edaf6f3e8306f5581cef49aadeb65c21044902fa451",
+        "pages": 3,
+        "observed_at": "2026-11-20T15:57:59.925611+00:00"
+      },
+      "expected_chain": {
+        "chain": "603008-喜临门担保下降，是不是占款问题在收敛？",
+        "source": "1225647128",
+        "pages": [
+          4
+        ],
+        "subject": "喜临门担保下降，是不是占款问题在收敛？",
+        "changed": "6月至10月底初步占款余额由49280.91万元增至74206.54万元，担保由45905.95万元降至38934.04万元。担保转占款、新查占用与保证期满等因素并存；下降不等于回收，不能将不同余额相加成确定损失。股东及一致行动人仍为预重整，非上市公司自身重整，也非正式受理。单季虽微利，前三季仍累计亏损。",
+        "open": "继续核实际回款及担保责任司法裁定、调查和审计；补完整余额流水调节，单季现金改善与占款、现金可用性分别看。",
+        "boundary": "按当时已知信息更新；同窗行情不是公告因果识别。",
+        "supporting": [
+          {
+            "source": "1225647137",
+            "pages": [
+              1
+            ],
+            "state": "仅已核原页，不认证全文。"
+          },
+          {
+            "source": "1225502356",
+            "pages": [
+              6,
+              7
+            ],
+            "state": "仅已核原页，不认证全文。"
+          }
+        ]
+      },
+      "expected_source": {
+        "announcement_id": "1225647128",
+        "symbol": "603008",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647128.PDF",
+        "published_on": "2026-10-31"
+      },
+      "source_theme": "twentysecond_period_followup"
+    }
+  ],
+  "unreviewed_candidate_ids": [
+    "1225438037",
+    "1225451821",
+    "1225451822",
+    "1225474980",
+    "1225616501"
+  ],
+  "review_completed_on": "2026-11-21",
+  "new_downloads": 3,
+  "new_visual_pages": 8,
+  "method_promotions": 0,
+  "evidence_sha256": "45d0fbc1c88a3c8b0c5bdafc8966b37872dbb642a4a2e406543191b53938906f",
+  "selected_ids_digest": "1716b9f091637b31c917c04d89e92b59a04ecf5f0cf2c9e4c59c0d982ae8e32a"
+}

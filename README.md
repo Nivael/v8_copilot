@@ -1065,3 +1065,5 @@ ST五段横向经验检验已发布：7至9月相对强不等多数赚钱，10�
 同日摘帽公告/窗口题已发布：四通20日+6.23%与最新−6.89%分列；绝味后披露消息不倒填，起点冲突保留，见 [结果](ST_REMOVAL_ANNOUNCEMENT_CLOCKS_RESULT_2026_11_20.md)。
 
 第二组身份核对：16条旧研究分别绑定原快照截止11月6日，累计31条更正；原268条及方法登记保持，京蓝原版/更正版分开。见 [结果](ST_RESEARCH_IDENTITY_FOLLOWUP_RESULT_2026_11_20.md)。
+
+历史导入已接身份隔离：使用`import_ledger_with_audit`留存隔离说明；默认缺登记停止，损坏停止，发布再次核对，旧worktree不作新导入执行器。原历史阅读内容保持，见 [结果](ST_HISTORY_IDENTITY_IMPORT_RESULT_2026_11_20.md)。

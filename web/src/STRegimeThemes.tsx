@@ -36,6 +36,8 @@ import {STIssuerCheck} from './STIssuerCheck'
 import {STHaltStages} from './STHaltStages'
 import {STStockPriceCrosscheck} from './STStockPriceCrosscheck'
 import {useState} from 'react'
+import {STRemovalAnnouncementClocks} from './STRemovalAnnouncementClocks'
+import {removalClocksInput} from './removalAnnouncementClocks'
 import type {ReactNode} from 'react'
 import type {RegimeComparison,STRegimeData} from './stRegimeTypes'
 const pct=(v:number|null|undefined)=>v==null?'待核':`${v>0?'+':''}${v.toFixed(2)}%`
@@ -111,6 +113,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
    {topic==='quoteaudit'&&<div id="st-fixed-quote-audit"><STExitQuoteReplay data={themes?.exit_quote_replay}/><STFixedQuoteAudit data={themes?.fixed_quote_audit} anchorId="st-fixed-quote-audit-detail" dynamicPriceChecked={Boolean(themes?.dynamic_reference_audit)}/></div>}
    {topic==='prices'&&<div id="st-stock-price-check"><STStockPriceCrosscheck data={themes?.stock_price_crosscheck} onCompany={s=>{setSymbol(s);setShowAll(false);setTopic('events')}}/></div>}
    {topic==='earnings'&&<STEarningsWarning data={themes?.earnings_warning}/>}
+   {topic==='removalclocks'&&<STRemovalAnnouncementClocks input={removalClocksInput(themes)}/>}
    {topic==='cohort'&&<div id="st-removal-cohort"><STRemovalMatureWindows data={themes?.removal_mature_windows} prior={themes?.removal_era_comparison}/><STRemovalEraComparison data={themes?.removal_era_comparison} audit={themes?.official_pdf_audit}/>{themes?.removal_era_comparison?<details><summary>回看原12只摘帽股的停牌前起算比较</summary><STRemovalCohort data={themes?.removal_cohort}/></details>:<STRemovalCohort data={themes?.removal_cohort}/>}</div>}
    {topic==='strong'&&<STStrongRemovalCases data={themes?.strong_removal_cases}/>}
    {topic==='execution'&&<STShenwuExecution data={themes?.shenwu_execution}/>}

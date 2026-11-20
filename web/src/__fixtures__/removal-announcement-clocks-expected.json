@@ -1,0 +1,236 @@
+{
+  "source_snapshot": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "through": "2026-11-19",
+  "windows": [
+    {
+      "symbol": "603838",
+      "label": "首日收盘后20日",
+      "anchor": "2026-10-20",
+      "through": "2026-11-17",
+      "certified_pct": "6.234618539786710418375717800",
+      "primary_pct": "6.234618539786710418375717800",
+      "cross_pct": "6.234618539786710418375717800",
+      "market_pct": "-7.098926047018932048632289640",
+      "status": "matched",
+      "endpoints": [
+        {
+          "date": "2026-10-20",
+          "primary_close": "12.19",
+          "cross_close": "12.190",
+          "status": "matched"
+        },
+        {
+          "date": "2026-11-17",
+          "primary_close": "12.95",
+          "cross_close": "12.950",
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "symbol": "603838",
+      "label": "首日收盘至最新",
+      "anchor": "2026-10-20",
+      "through": "2026-11-19",
+      "certified_pct": "-6.890894175553732567678424940",
+      "primary_pct": "-6.890894175553732567678424940",
+      "cross_pct": "-6.890894175553732567678424940",
+      "market_pct": "-8.088380050771372583183674600",
+      "status": "matched",
+      "endpoints": [
+        {
+          "date": "2026-10-20",
+          "primary_close": "12.19",
+          "cross_close": "12.190",
+          "status": "matched"
+        },
+        {
+          "date": "2026-11-19",
+          "primary_close": "11.35",
+          "cross_close": "11.350",
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "symbol": "603838",
+      "label": "更正或季报前收盘至最新",
+      "anchor": "2026-10-27",
+      "through": "2026-11-19",
+      "certified_pct": "-20.23893183415319747013352073",
+      "primary_pct": "-20.23893183415319747013352073",
+      "cross_pct": "-20.23893183415319747013352073",
+      "market_pct": "-4.335919160221517223951330650",
+      "status": "matched",
+      "endpoints": [
+        {
+          "date": "2026-10-27",
+          "primary_close": "14.23",
+          "cross_close": "14.230",
+          "status": "matched"
+        },
+        {
+          "date": "2026-11-19",
+          "primary_close": "11.35",
+          "cross_close": "11.350",
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "symbol": "603517",
+      "label": "首日收盘后20日",
+      "anchor": "2026-10-20",
+      "through": "2026-11-17",
+      "certified_pct": null,
+      "primary_pct": "-0.5604135190932453357505939500",
+      "cross_pct": "-0.6647673314339981006647673300",
+      "market_pct": "-7.098926047018932048632289640",
+      "status": "price_conflict",
+      "endpoints": [
+        {
+          "date": "2026-10-20",
+          "primary_close": "10.518949615713066",
+          "cross_close": "10.530",
+          "status": "price_conflict"
+        },
+        {
+          "date": "2026-11-17",
+          "primary_close": "10.460000000000003",
+          "cross_close": "10.460",
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "symbol": "603517",
+      "label": "首日收盘至最新",
+      "anchor": "2026-10-20",
+      "through": "2026-11-19",
+      "certified_pct": null,
+      "primary_pct": "-5.979205516618783789001608440",
+      "cross_pct": "-6.077872744539411206077872740",
+      "market_pct": "-8.088380050771372583183674600",
+      "status": "price_conflict",
+      "endpoints": [
+        {
+          "date": "2026-10-20",
+          "primary_close": "10.518949615713066",
+          "cross_close": "10.530",
+          "status": "price_conflict"
+        },
+        {
+          "date": "2026-11-19",
+          "primary_close": "9.89",
+          "cross_close": "9.890",
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "symbol": "603517",
+      "label": "更正或季报前收盘至最新",
+      "anchor": "2026-10-27",
+      "through": "2026-11-19",
+      "certified_pct": "-1.592039800995024875621890550",
+      "primary_pct": "-1.592039800995024875621890550",
+      "cross_pct": "-1.592039800995024875621890550",
+      "market_pct": "-4.335919160221517223951330650",
+      "status": "matched",
+      "endpoints": [
+        {
+          "date": "2026-10-27",
+          "primary_close": "10.05",
+          "cross_close": "10.050",
+          "status": "matched"
+        },
+        {
+          "date": "2026-11-19",
+          "primary_close": "9.89",
+          "cross_close": "9.890",
+          "status": "matched"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "announcement_id": "1225608268",
+      "symbol": "603838",
+      "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF",
+      "published_on": "2026-10-17",
+      "sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7"
+    },
+    {
+      "announcement_id": "1225629182",
+      "symbol": "603838",
+      "title": "四通股份关于前期会计差错更正及追溯调整的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225629182.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "1db39a8d5f0f8b219dbb89f85f5f00dfb2033607254550a7bd0a5d80ecf49a7b"
+    },
+    {
+      "announcement_id": "1225629255",
+      "symbol": "603838",
+      "title": "四通股份2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225629255.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "cf2226f02e6fdb9568a4b7993711b27e7ba2c6bb55df4713baa6803a484c1f23"
+    },
+    {
+      "symbol": "603517",
+      "announcement_id": "1225609996",
+      "title": "关于撤销其他风险警示暨临时停牌的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF",
+      "sha256": "33531fddb6a838242c0f899ca394c470c2e910fa4dc266796cff8b71b4d7cec0",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T07:17:16.143967+00:00",
+      "published_on": "2026-10-19",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "603517",
+      "announcement_id": "1225610029",
+      "title": "2026年半年度权益分派实施公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225610029.PDF",
+      "sha256": "724c702f3db784000d1a4cb38777f960fe2cd5d3add72fe1e3ad085f90039b1b",
+      "pages": 4,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T07:17:15.764531+00:00",
+      "published_on": "2026-10-19",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "603517",
+      "announcement_id": "1225630481",
+      "title": "2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225630481.PDF",
+      "sha256": "f79a3db6d6b52b4af0c4cdbb069ac7583a631860dfdaff8214a393c71f2c9ed4",
+      "pages": 13,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T07:17:15.228400+00:00",
+      "published_on": "2026-10-28",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "603517",
+      "announcement_id": "1225676244",
+      "title": "关于终止转让参股公司股权的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-18/1225676244.PDF",
+      "sha256": "d023fd82fa0850a1634e6eadb4bedfc5a3dda0e53f687d250bc3c86acfd3aa6e",
+      "pages": 2,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T07:17:14.288705+00:00",
+      "published_on": "2026-11-18",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    }
+  ],
+  "new_network_requests": 0,
+  "boundary": "同日摘帽不代表同一公司事实；20日窗口结束11月17日，11月18日新公告不倒填；更正基数不当当期新增收入；同窗价格不是单项公告净因果。"
+}

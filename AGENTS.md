@@ -119,7 +119,7 @@ ST五段横向经验检验已发布：7至9月相对强不等多数赚钱，10�
 
 When reusing a saved evidence bank for a new historical study, call `bind_study_identity(pack, question=..., object_refs=[...], as_of=...)` and `validate_bound_identity(pack)` before rebuilding the draft, validation and recording. Changing only request_id is not rebinding. Retain individual asset dates; do not inherit the prior question, cutoff, retrieval hits or Lens calls as new execution. Retrieval is not usage or demonstrated benefit.
 
-Old worktrees and runs remain traceability artifacts. Correct old identity through bound, append-only identity notes, never SQL rewrites. Any future question-history import must honor those notes or quarantine affected runs first; the current general importer does not yet do so. Preserve owner policy, thresholds, method bodies, statuses and accepted registry. See [identity audit](ST_RESEARCH_IDENTITY_AUDIT_RESULT_2026_11_20.md).
+Old worktrees and runs remain traceability artifacts. Correct old identity through bound, append-only identity notes, never SQL rewrites. Question-history import must quarantine bound identity corrections; the current importer does so and publication rechecks prepared records, including merged sources and occurrences. Preserve these gates when updating the pipeline. Preserve owner policy, thresholds, method bodies, statuses and accepted registry. See [identity audit](ST_RESEARCH_IDENTITY_AUDIT_RESULT_2026_11_20.md).
 
 第二组身份核对：16条旧研究分别绑定原快照截止11月6日，累计31条更正；原268条及方法登记保持，京蓝原版/更正版分开。见 [结果](ST_RESEARCH_IDENTITY_FOLLOWUP_RESULT_2026_11_20.md)。
 

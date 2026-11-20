@@ -1,0 +1,173 @@
+{
+  "scope": "read-only operational experience inventory; repeated pack identifiers do not prove identical empirical cases, different identifiers do not prove independent cases",
+  "experience_count": 13,
+  "run_count": 273,
+  "status_counts": {
+    "accepted": 10,
+    "candidate": 3
+  },
+  "all_records_marked_not_evidence": true,
+  "experience_rows_digest": "492dcea7e2397fdbfd0b28fa9af666e8424e26c027ea7b29bc80e5749f812d88",
+  "research_rows_digest": "ce0802e368bc0727433f441d8f838ea9d83626b983c6d38bb5ac18a75881e6e8",
+  "records": [
+    {
+      "experience_id": "EXP-0C78ABF99736BAB325B2",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 5,
+      "found_runs": 4,
+      "valid_runs": 4,
+      "distinct_evidence_pack_sets": 4,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 4,
+      "distinct_object_ref_sets": 4
+    },
+    {
+      "experience_id": "EXP-3EF25D62ECE7A4453211",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 6,
+      "found_runs": 6,
+      "valid_runs": 6,
+      "distinct_evidence_pack_sets": 6,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 6,
+      "distinct_object_ref_sets": 6
+    },
+    {
+      "experience_id": "EXP-6035511EF7BD09AED0B3",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 3,
+      "found_runs": 3,
+      "valid_runs": 3,
+      "distinct_evidence_pack_sets": 3,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 3,
+      "distinct_object_ref_sets": 1
+    },
+    {
+      "experience_id": "EXP-67506A572D4A105A5776",
+      "status": "candidate",
+      "not_evidence": true,
+      "source_refs": 1,
+      "found_runs": 1,
+      "valid_runs": 1,
+      "distinct_evidence_pack_sets": 1,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 1,
+      "distinct_object_ref_sets": 1
+    },
+    {
+      "experience_id": "EXP-74E679332AEE94ADC122",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 3,
+      "found_runs": 3,
+      "valid_runs": 3,
+      "distinct_evidence_pack_sets": 3,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 3,
+      "distinct_object_ref_sets": 3
+    },
+    {
+      "experience_id": "EXP-9192C8C1A3DBE188C75F",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 6,
+      "found_runs": 5,
+      "valid_runs": 5,
+      "distinct_evidence_pack_sets": 4,
+      "repeated_evidence_pack_sets": 1,
+      "distinct_question_texts": 4,
+      "distinct_object_ref_sets": 2
+    },
+    {
+      "experience_id": "EXP-9700CBEDEC49302CAE87",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 2,
+      "found_runs": 2,
+      "valid_runs": 2,
+      "distinct_evidence_pack_sets": 2,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 2,
+      "distinct_object_ref_sets": 2
+    },
+    {
+      "experience_id": "EXP-D595709437D5371F7028",
+      "status": "candidate",
+      "not_evidence": true,
+      "source_refs": 7,
+      "found_runs": 7,
+      "valid_runs": 7,
+      "distinct_evidence_pack_sets": 7,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 7,
+      "distinct_object_ref_sets": 7
+    },
+    {
+      "experience_id": "EXP-D891F04538BD671515FF",
+      "status": "candidate",
+      "not_evidence": true,
+      "source_refs": 1,
+      "found_runs": 1,
+      "valid_runs": 1,
+      "distinct_evidence_pack_sets": 1,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 1,
+      "distinct_object_ref_sets": 1
+    },
+    {
+      "experience_id": "EXP-D9A1B99AA6A1DF488296",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 5,
+      "found_runs": 4,
+      "valid_runs": 4,
+      "distinct_evidence_pack_sets": 4,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 3,
+      "distinct_object_ref_sets": 3
+    },
+    {
+      "experience_id": "EXP-E6A0A3C110D74FE7A6DF",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 8,
+      "found_runs": 8,
+      "valid_runs": 8,
+      "distinct_evidence_pack_sets": 8,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 8,
+      "distinct_object_ref_sets": 7
+    },
+    {
+      "experience_id": "EXP-EF92B88B66DCC4ECCB68",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 4,
+      "found_runs": 4,
+      "valid_runs": 4,
+      "distinct_evidence_pack_sets": 4,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 4,
+      "distinct_object_ref_sets": 1
+    },
+    {
+      "experience_id": "EXP-F0A962407D4FF75D3ACE",
+      "status": "accepted",
+      "not_evidence": true,
+      "source_refs": 6,
+      "found_runs": 5,
+      "valid_runs": 5,
+      "distinct_evidence_pack_sets": 5,
+      "repeated_evidence_pack_sets": 0,
+      "distinct_question_texts": 4,
+      "distinct_object_ref_sets": 4
+    }
+  ],
+  "policy_source_sha256": "99103fef45451d3d238a10ac9496c1d1e5c50454809eadb0d211d54530a4a6f7",
+  "contract_source_sha256": "a13433bfb990071e314a2f671a8c62ee5f0d0a9f251e56a9100caffcbd5daf6c",
+  "method_promotions_this_audit": 0
+}

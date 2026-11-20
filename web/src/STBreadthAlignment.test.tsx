@@ -9,6 +9,7 @@ const data:BreadthReading={availability:'available',as_of:'2026-11-20',source_di
 
 it('keeps the rebound counterexample and incomplete common window',()=>{
  render(<STBreadthAlignment/>);expect(screen.getByText(/大盘涨1.61%/)).toBeVisible()
+ expect(screen.getByText('瑞茂、华幸、东珠：跨渠道核价后，20日有什么不同？')).toBeVisible()
  fireEvent.click(screen.getByText('展开三段事后同窗结果，包括未满窗口'))
  const table=screen.getByRole('table',{name:'从提示日收盘起算；完整5日与未满3日分别标注'});expect(within(table).getAllByRole('row')).toHaveLength(4)
  expect(table).toHaveTextContent('未满5日');expect(table).toHaveTextContent('-5.88%');expect(table).toHaveTextContent('-1.65%')

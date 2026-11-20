@@ -25,10 +25,11 @@ def test_packet_excludes_itself_and_rejects_changed_evidence(monkeypatch):
  baseline={'source':doc(pages={'1':'retained'})}
  calculation=audit_source_inputs(baseline,'snapshot')
  view={'counts':calculation['counts']}
- for key,value in {'BASELINE_DIGEST':digest(baseline),'SOURCE_SNAPSHOT':'snapshot','INVENTORY_DIGEST':digest(calculation),'VIEW_DIGEST':digest(view)}.items():monkeypatch.setattr(module,key,value)
+ for key,value in {'BASELINE_KEYS':tuple(baseline),'BASELINE_DIGEST':digest(baseline),'SOURCE_SNAPSHOT':'snapshot','INVENTORY_DIGEST':digest(calculation),'VIEW_DIGEST':digest(view)}.items():monkeypatch.setattr(module,key,value)
  packet={'version':1,'calculation':calculation,'result':view}
  packet['content_digest']=digest(packet)
  inputs={**baseline,'evidence_inventory':packet}
+ assert evidence_inventory({**inputs,'later_research':{'source':doc('3')}})==view
  result=evidence_inventory(inputs)
  assert result['counts']['embedded_reference_records']==1
  result['counts']['embedded_reference_records']=99

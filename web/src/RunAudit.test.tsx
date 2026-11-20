@@ -9,6 +9,7 @@ describe('RunAudit',()=>{
   it('drills from a run into evidence rows, lens, backing, gaps and weights',async()=>{
     const fetchMock=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
       const url=String(input)
+      if(url.includes('/api/v1/research/identity-corrections'))return new Response(JSON.stringify({availability:'available',corrections:[]}))
       if(url.includes('/api/v1/research/corrections'))return new Response(JSON.stringify({availability:'available',corrections:[]}))
       if(url.includes('/api/v1/research/evidence/'))return new Response(JSON.stringify({
         pack_id:'EP-AAAAAAAAAAAAAAAAAAAA',pack_digest:'a'.repeat(64),created_at:'2026-07-15T00:00:00Z',
@@ -43,7 +44,7 @@ describe('RunAudit',()=>{
     expect(await screen.findByRole('heading',{name:'当前阶段是什么？'})).toBeInTheDocument()
     expect(screen.getByRole('region',{name:'判断权重审计'})).toHaveTextContent('决定性')
     fireEvent.click(screen.getByRole('button',{name:/EP-AAAAAAAAAAAAAAAAAAAA/}))
-    expect(await screen.findByText('数据库行')).toBeInTheDocument()
+    expect(await screen.findByText('保存的证据行')).toBeInTheDocument()
     expect(screen.getAllByText(/RL-1/).length).toBeGreaterThan(0)
     expect(screen.getByText('回答 backing')).toBeInTheDocument()
     expect(screen.getByText('Coverage gap')).toBeInTheDocument()

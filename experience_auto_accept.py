@@ -58,9 +58,11 @@ class AutoAcceptanceResult(StrictModel):
 
 
 def _existing_run_ids(record: ExperienceRecord, ledger: ResearchRunLedger) -> list[str]:
+    from research_identity_notes import quarantined_run_ids
+    excluded=quarantined_run_ids(ledger.path)
     result = []
     for run_id in sorted(set(record.source_run_refs)):
-        if not run_id.startswith("RUN-"):
+        if not run_id.startswith("RUN-") or run_id in excluded:
             continue
         try:
             run = ledger.get(run_id)

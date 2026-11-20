@@ -195,6 +195,8 @@ class ResearchRunLedger:
         return connection
 
     def record(self, value: ResearchRunCreate) -> ResearchRunRecord:
+        from research_identity_notes import guard_record_identity
+        guard_record_identity(value,self.path)
         created_at = _now()
         run_id = f"RUN-{uuid4().hex[:24].upper()}"
         started_at = value.started_at or created_at
@@ -282,6 +284,8 @@ class ResearchRunLedger:
         feedback_text: str,
         submitted_by: str,
     ) -> str:
+        from research_identity_notes import guard_feedback_identity
+        guard_feedback_identity(run_id,self.path)
         dedupe_key = self._feedback_dedupe_key(
             run_id, category, feedback_text, submitted_by,
         )

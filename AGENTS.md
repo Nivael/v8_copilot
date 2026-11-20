@@ -114,3 +114,9 @@ ST五段横向经验检验已发布：7至9月相对强不等多数赚钱，10�
 摘帽20/40日同组比较已发布：同10家中位数1.14%与0.61%，5家短窗为正中3家回吐2家扩大；绝味四通各22日未满，见 [结果](ST_REMOVAL_PAIRED_40_RESULT_2026_11_20.md)。
 
 同日摘帽公告/窗口题已发布：四通20日+6.23%与最新−6.89%分列；绝味后披露消息不倒填，起点冲突保留，见 [结果](ST_REMOVAL_ANNOUNCEMENT_CLOCKS_RESULT_2026_11_20.md)。
+
+## Historical study identity registration
+
+When reusing a saved evidence bank for a new historical study, call `bind_study_identity(pack, question=..., object_refs=[...], as_of=...)` and `validate_bound_identity(pack)` before rebuilding the draft, validation and recording. Changing only request_id is not rebinding. Retain individual asset dates; do not inherit the prior question, cutoff, retrieval hits or Lens calls as new execution. Retrieval is not usage or demonstrated benefit.
+
+Old worktrees and runs remain traceability artifacts. Correct old identity through bound, append-only identity notes, never SQL rewrites. Any future question-history import must honor those notes or quarantine affected runs first; the current general importer does not yet do so. Preserve owner policy, thresholds, method bodies, statuses and accepted registry. See [identity audit](ST_RESEARCH_IDENTITY_AUDIT_RESULT_2026_11_20.md).

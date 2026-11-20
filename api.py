@@ -304,12 +304,22 @@ def research_validate(request: DraftValidationRequest) -> ValidationReport:
     status_code=status.HTTP_201_CREATED,
 )
 def record_research_run(request: ResearchRunCreate) -> ResearchRunRecord:
-    return research_run_ledger.record(request)
+    try:
+        return research_run_ledger.record(request)
+    except ValueError as exc:
+        raise HTTPException(status_code=422,detail=str(exc)) from exc
 
 
 @app.get("/api/v1/research/runs", response_model=list[ResearchRunRecord])
 def list_research_runs(limit: int = Query(default=50, ge=1, le=200)) -> list[ResearchRunRecord]:
+    """Immutable raw runs; corrected reading identity is a separate resource."""
     return research_run_ledger.list(limit=limit)
+
+
+@app.get("/api/v1/research/identity-corrections")
+def get_research_identity_corrections() -> dict[str, object]:
+    from research_identity_notes import reading_view
+    return reading_view(ledger_db=research_run_ledger.path)
 
 
 @app.get("/api/v1/research/corrections")
@@ -355,6 +365,8 @@ def add_research_feedback(
         )
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="research run 不存在") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422,detail=str(exc)) from exc
     run = research_run_ledger.get(run_id)
     candidate_input = distill_run_feedback(run, request)
     candidate = None

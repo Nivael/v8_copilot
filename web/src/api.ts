@@ -1,3 +1,4 @@
+import type {ResearchIdentityNote} from './ResearchIdentityNotice'
 import type {ResearchCorrection} from './ResearchCorrectionNotice'
 import type {
   Dossier, EvidencePackAuditRecord, Experience, ExperienceAutoAcceptance, ExperienceGovernanceStatus, ExperienceReviewDecisionExport,
@@ -169,4 +170,12 @@ export async function getDailyIntelligence(
   const response=await fetch(`/api/v1/p7/daily${query}`,{signal})
   if(!response.ok)throw new Error(`每日研究服务返回 ${response.status}`)
   return response.json()
+}
+
+export async function getResearchIdentityNotes(signal?:AbortSignal):Promise<ResearchIdentityNote[]> {
+ const response=await fetch('/api/v1/research/identity-corrections',{signal})
+ if(!response.ok)throw new Error('身份更正暂不可读')
+ const value=await response.json() as {availability:string;corrections:ResearchIdentityNote[]}
+ if(value.availability!=='available'||!Array.isArray(value.corrections))throw new Error('身份更正尚未完成核对')
+ return value.corrections
 }

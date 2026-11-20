@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {STRelativeLoss} from './STRelativeLoss'
 import {STRecoveryPath} from './STRecoveryPath'
 import {STCumulativeMarketContext} from './STCumulativeMarketContext'
 import type {MarketStageExperience} from './stRegimeTypes'
@@ -30,7 +31,7 @@ export function STMarketStageExperience({data}:{data?:MarketStageExperience|null
   </details>
   </>}
   {question==='recovery'&&<STRecoveryPath data={data}/>}
-  {question==='market'&&<STCumulativeMarketContext data={data}/>}
+  {question==='market'&&<><STCumulativeMarketContext data={data}/><STRelativeLoss data={data}/></>}
   <details><summary>来源、检验边界与证伪条件</summary><p>{data.boundary}</p><p>复用150份跨源历史响应、主源历史行情与官方指数原响应。六个唯一日期共900个逐股端点位置；相邻区间共用边界，不计为新增独立证据。ST参考仅复算既有研究序列，未认证完整官方逐日成员名单。</p><p><a href={data.official_index_source.url} target="_blank" rel="noreferrer">官方中证全指原响应</a> · 股票逐家历史响应链接在“分段走势何时转弱？”内的150家明细代码中，原观察时间和文件摘要随快照保留。</p><p>{data.falsification}</p></details>
  </section>
 }

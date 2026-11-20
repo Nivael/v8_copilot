@@ -6,6 +6,25 @@ import {RunAudit} from './RunAudit'
 describe('RunAudit',()=>{
   afterEach(()=>{cleanup();vi.restoreAllMocks();window.history.replaceState(null,'',window.location.pathname)})
 
+  it.each([
+    ['waiting_for_replication','有效来源运行1/4'],
+    ['accepted','行情效果仍需独立案例验证'],
+    ['blocked','不计为验证通过'],
+    ['unchanged','方法状态保持不变'],
+  ])('keeps workflow feedback separate from empirical evidence: %s',async(outcome,expected)=>{
+    vi.spyOn(globalThis,'fetch').mockImplementation(async(input,init)=>{
+      const url=String(input)
+      if(init?.method==='POST')return new Response(JSON.stringify({feedback_id:'test',experience_candidate:{title:'统一比较口径'},auto_acceptance:{outcome,distinct_source_runs:1,minimum_source_runs:4}}))
+      if(url.includes('corrections'))return new Response(JSON.stringify({availability:'available',corrections:[]}))
+      return new Response(JSON.stringify([{run_id:'RUN-'+'A'.repeat(24),question_text:'流程复现核查',agent_surface:'test',created_at:'2026-11-20T00:00:00Z',normalized_intent:'research',evidence_pack_ids:[],experience_candidate_ids:[],validation_report:{valid:true},source_freshness:{},final_answer:'测试资料',decision_audit:{},research_draft:{}}]))
+    })
+    render(<MemoryRouter><RunAudit/></MemoryRouter>)
+    expect(await screen.findByText(/另需独立案例、反例和不同市场阶段检验/)).toBeVisible()
+    fireEvent.click(screen.getByRole('button',{name:'沉淀这个方法'}))
+    expect(await screen.findByRole('status')).toHaveTextContent(expected)
+    expect(screen.queryByText(/再被一个真实运行/)).not.toBeInTheDocument()
+  })
+
   it('drills from a run into evidence rows, lens, backing, gaps and weights',async()=>{
     const fetchMock=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
       const url=String(input)

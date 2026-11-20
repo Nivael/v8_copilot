@@ -370,16 +370,17 @@ def processor_digest():
                    for name in (Path(__file__).name,'case_research_scopes.py','research_corrections.py','broad_etf_reading.py','broad_fund_evidence.py',
                                 'etf_issuer_nav.py','etf_nav_sources.py','etf_nav_parsers.py','etf_announcements.py','etf_document_capture.py','etf_quarterly.py',
                                 'trader_research_notes.py','market_reading_updates.py','market_close_membership.py',
-                                'market_price_reading.py','market_public_refresh.py','market_calendar.py')})
+                                'market_price_reading.py','latest_breadth_reading.py','market_breadth.py','market_breadth_refresh.py','market_breadth_export.py','exchange_risk_membership.py','market_public_refresh.py','market_calendar.py')})
 
 
 PROCESSOR_DIGEST = processor_digest()
 
 
 class ReadingViews:
-    def __init__(self, directory=OUTPUT, builder=None, ttl_seconds=600, price_directory=MARKET_ROOT / 'trader_observations/latest_index'):
+    def __init__(self, directory=OUTPUT, builder=None, ttl_seconds=600, price_directory=MARKET_ROOT / 'trader_observations/latest_index', breadth_directory=None):
         self.directory = directory; self.builder = builder; self.ttl_seconds = ttl_seconds
         self.price_directory = price_directory
+        self.breadth_directory = breadth_directory
         self.lock = Lock(); self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix='reading-view')
         self.future: Future | None = None; self.last_error = None; self.last_attempt = None
 
@@ -434,6 +435,11 @@ class ReadingViews:
         latest = newer_price(view, directory=self.price_directory)
         if latest is not None:
             view['latest_price'] = latest
+        from latest_breadth_reading import newer_breadth
+        breadth = (newer_breadth(view, directory=self.breadth_directory) if self.breadth_directory is not None
+                   else newer_breadth(view) if self.builder is None else None)
+        if breadth is not None:
+            view['latest_breadth'] = breadth
         packet = {'version': VERSION, 'processor_digest': PROCESSOR_DIGEST, 'checked_at': datetime.now(timezone.utc).isoformat(),
                   'market': view, 'watch_bases': bases, 'source_snapshot_digest': data['snapshot_digest']}
         packet['content_digest'] = digest(packet)

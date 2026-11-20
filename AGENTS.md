@@ -148,3 +148,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 - 2026-11-21 saved-catalog audit and market freshness priority: `ST_CATALOG_SELECTION_AUDIT_RESULT_2026_11_20.md`.
 
 - 2026-11-21 market price overlay, unchanged paired sources and next breadth/tail work: `MARKET_DATE_ALIGNMENT_RESULT_2026_11_21.md`.
+
+- 2026-11-21 complete daily breadth replay, original sources, denominator and tail limits: `MARKET_BREADTH_RESULT_2026_11_21.md`.

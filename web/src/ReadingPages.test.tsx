@@ -25,6 +25,16 @@ describe('trader reading pages',()=>{
     expect(screen.getByRole('link',{name:'查看跟踪与经验 →'})).toHaveAttribute('href','/learning')
     expect(fetch.mock.calls.every(([url])=>String(url).includes('/workbench/market'))).toBe(true)
   })
+  it('uses the new breadth date and denominator without advancing the old ST chart',async()=>{
+    const group={name:'沪深A股',listed_source_stocks:5224,observed_trading_stocks:5216,nontrading_stocks:8,advancing:297,declining:4897,flat:22,declining_5pct_or_more:2707,median_return_pct:-5.114705,advancing_pct:5.694,declining_5pct_or_more_pct:51.898}
+    serve({...marketReading,latest_price:{...latestPrice,as_of:'2026-11-20'},latest_breadth:{availability:'available',as_of:'2026-11-20',source_digest:'a'.repeat(64),observed_at:'2026-11-21T00:00:00+08:00',source_file_count:8,scope:'SSE_SZSE_A_shares_not_BSE',groups:[group,{...group,name:'当日ST简称组'}],sources:[],limits:[],transport_note:'Mixed official transports'}})
+    render(<MemoryRouter><MarketOverview/></MemoryRouter>)
+    expect(await screen.findByText('上涨股票占比（2026-11-20）')).toBeVisible()
+    expect(screen.getByText('上涨股票占比（2026-11-20）').parentElement).toHaveTextContent('5.7%')
+    expect(screen.getByText(/有成交的5216只股票中/)).toBeVisible()
+    expect(screen.getByText(/ST同窗参考截至2026-11-04/)).toBeVisible()
+    expect(screen.getByRole('img',{name:/大盘与ST走势比较/})).toBeVisible()
+  })
   it('connects historical judgment, later price and review, and filters methods by category',async()=>{
     serve(learningReading)
     render(<MemoryRouter><ExperienceHub/></MemoryRouter>)

@@ -1,3 +1,4 @@
+import {STEndpointBasisFollowup,type EndpointBasisFollowup} from './STEndpointBasisFollowup'
 import {STEndpointSelectionAudit,type EndpointSelectionAudit} from './STEndpointSelectionAudit'
 import {useState} from 'react'
 type Endpoint={date:string;data_status:string;traded_qfq_close:number|null;reference_qfq_close:number|null;meaning:string}
@@ -5,13 +6,13 @@ type Row={symbol:string;name:string;return_pct:number|null;gap:string|null;ancho
 export type EndpointReasons={through:string;windows:{key:string;anchor:string;through:string;days:number;total:number;covered:number;missing:number;rows:Row[]}[];cases:{symbol:string;title:string;reading:string;sources:{source:{url:string;title:string;published_on:string;original_observed_at:string;reused:boolean};pages:number[]}[]}[];directory_review:{start:string;through:string;record_count:number;matched_final_titles:string[];scope:string};counts:{new_primary_documents:number;reused_primary_documents:number;reused_primary_pages:number;rechecked_rendered_pages:number;new_price_points:number};boundaries:string[];method_promotions:number}
 const price=(n:number|null)=>n==null?'无当日成交端点':`${n.toFixed(2)}元（前复权）`
 const pct=(n:number|null)=>n==null?'不计算':`${n>0?'+':''}${n.toFixed(2)}%`
-export function STEndpointReasons({data:d,audit}:{data?:EndpointReasons|null;audit?:EndpointSelectionAudit|null}){
+export function STEndpointReasons({data:d,audit,basis}:{data?:EndpointReasons|null;audit?:EndpointSelectionAudit|null;basis?:EndpointBasisFollowup|null}){
  const [key,setKey]=useState('full'),[symbol,setSymbol]=useState('000016')
  if(!d)return null
  const w=d.windows.find(w=>w.key===key)??d.windows[0],selected=w.rows.find(r=>r.symbol===symbol)??w.rows[0],caseReading=d.cases.find(c=>c.symbol===selected.symbol)!
  return <section id="st-endpoint-reasons" className="regime-topic-body" aria-label="固定样本缺价与退出解释">
   <p className="reading-kicker">固定7月3日150只 · 核到{d.through} · 保留停牌、退出和空值</p>
-  <h3>缺价原因不同，换窗口也会换可比范围</h3>{audit&&<STEndpointSelectionAudit data={audit}/>}
+  <h3>缺价原因不同，换窗口也会换可比范围</h3>{audit&&<STEndpointSelectionAudit data={audit} basisExplained={Boolean(basis)}/>}<STEndpointBasisFollowup data={basis}/>
   <p>完整93日有146只主源两端有成交、4只缺口；最近9日有147只主源两端有成交、3只缺口。多出来的龙元缺的是7月3日实际成交起点，近期窗口已有共同端点；这不表示名单多了一家公司。</p>
   <p>150只历史样本全部保留。146或147只是各窗口可以计算收益的子集；不能把空值填成0%，也不能把最后成交价、现金选择权或停牌参考价当作期末交易。</p>
   <p>表内价格为有成交证据的前复权收盘，用于统一收益口径，不是原始成交价；没有成交证据的端点保持空值。旧页面保留的原始价格不覆盖。</p>

@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "code": "002547",
+  "sources": [
+    {
+      "announcement_id": "1225679975",
+      "adjunct_url": "finalpage/2026-11-20/1225679975.PDF",
+      "title": "关于签署《债务豁免协议》暨关联交易的公告",
+      "codes": [
+        "002547"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679975.PDF",
+      "sha256": "bf3ef1e7a5de816784972e0497d8c8e01e5bd54a0b8ae180c835d97cf29014a4",
+      "bytes": 160911,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/bf3ef1e7a5de816784972e0497d8c8e01e5bd54a0b8ae180c835d97cf29014a4.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-20T23:20:10.285093+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "3e3dcb54cc36e45d25ae88ba593ab67743ae687b10c9215c1798cba5ba0ec399",
+        "2": "4e046a0c2b27d143877e1c5da68638b0b1f79101e718ef13d7d3dd4225433d16",
+        "3": "d2634f06b872433c4c5a9bd9110896076ac48d5d805dc4f0029cb6d688e26aa2"
+      }
+    },
+    {
+      "announcement_id": "1225679974",
+      "adjunct_url": "finalpage/2026-11-20/1225679974.PDF",
+      "title": "关于签署《债权债务和解协议》的公告",
+      "codes": [
+        "002547"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679974.PDF",
+      "sha256": "a45ad32bfe7450dcd379b6f03db7f1dafa869d90209bf00f1aa58116dd263050",
+      "bytes": 213266,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/a45ad32bfe7450dcd379b6f03db7f1dafa869d90209bf00f1aa58116dd263050.pdf",
+      "pages": 8,
+      "observed_at": "2026-11-20T23:20:10.474085+00:00",
+      "visual_physical_pages": [
+        2,
+        5,
+        7,
+        8
+      ],
+      "visual_image_sha256": {
+        "2": "af27666600351b05630bba909b6aa25b688847f36711d4872f92f5dcd4c550bf",
+        "5": "f9def21cf3168b783e3e7b19b0fcd2ec311c20e1acc82529caf95da5b9ee0613",
+        "7": "6326013a7312070b63ad72b407222868b855f47addfe6655d58f38e83ac2134d",
+        "8": "1b51598405b0173f9b4bddf7fd2fe8e7951e3f21adbee6f286cbb2135b12c5f3"
+      }
+    },
+    {
+      "announcement_id": "1225679970",
+      "adjunct_url": "finalpage/2026-11-20/1225679970.PDF",
+      "title": "关于拟出售资产事项的公告",
+      "codes": [
+        "002547"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679970.PDF",
+      "sha256": "1b7fc3f32f518cdf1d6dda5c297f5aa9175a1331b7ad6d5028efe1656eb92cfb",
+      "bytes": 183502,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/1b7fc3f32f518cdf1d6dda5c297f5aa9175a1331b7ad6d5028efe1656eb92cfb.pdf",
+      "pages": 5,
+      "observed_at": "2026-11-20T23:20:10.677459+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "visual_image_sha256": {
+        "1": "996f39afbcef063606575aff199450322d0186506c9c7cb64782c3ddc2129c23",
+        "2": "74a12426f4ed468bafc4df88dd1a666e76283eaf4c0f07b746d62f18dd798639",
+        "3": "9329c7fdc440ebf89e24da35f9100528c1837a8999aa9755275542412b0de3cd",
+        "5": "2cab8e531a702988a5c33c1dfa1f25836fa77933f46658900a476ebea86aca84"
+      }
+    }
+  ],
+  "text_pages": 16,
+  "critical_visual_pages": 11,
+  "findings": [
+    {
+      "announcement_id": "1225679975",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "董秘无条件豁免公司及子公司借款利息约230.859万元，公告称本金此前已清偿。",
+      "boundary": "豁免不是现金流入；预计净利润增加约207万元仍待审计。公告未披露此前归还本金的金额与完整日期。"
+    },
+    {
+      "announcement_id": "1225679974",
+      "pages": [
+        2,
+        5,
+        7,
+        8
+      ],
+      "answer": "本次231.06万元债务须先依约支付69.32万元，才能取得约161.74万元豁免；签署不等于已经执行。",
+      "boundary": "截至11月18日，近12个月累计已付611.36万元、已获豁免1426.52万元；全部签约履行后可获3951.75万元不是当前已获金额。预计利润均待审计，不将两种豁免合并冒充已完成或现金流。"
+    },
+    {
+      "announcement_id": "1225679970",
+      "pages": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "answer": "拟出售部分房地产，价格底线参照15313.29万元清算价值，尚无买家和成交价格，仍待股东会。",
+      "boundary": "部分抵押、部分未办权属；清算估值不等于成交或实收。庭外重组不等于法院重整受理，出售完成后的租回成本尚待协商。"
+    }
+  ],
+  "calculation_checks": {
+    "unit": "yuan",
+    "new_settlement_debt": "2310628.43",
+    "new_settlement_payment": "693188.53",
+    "new_settlement_conditional_relief": "1617439.90",
+    "interest_relief_detail": "2308590.28",
+    "cumulative_remaining_relief_wan": "2525.23",
+    "rounding_note": "前12月摘要5322/1532/3790万元与本次两位小数数相加，不逐项等于累计两位小数披露，保留原精度而不倒造精确前期数；累计5553.07−1601.32=3951.75万元。剩余2525.23万元仅披露汇总差额，不是新的确定收益。"
+  },
+  "limits": [
+    "尚未接入页面或研究账本",
+    "同一公司三份公告不算三个独立经验验证",
+    "未逐笔获取付款凭证、完整评估附件或审计确认",
+    "未从披露推定行情因果或摘帽条件已满足"
+  ]
+}

@@ -106,6 +106,29 @@ def publish(client, *, through, directory=OUTPUT, now=None):
     return packet
 
 
+def price_context(packet):
+    """Describe verified price paths; no thresholds, scores or portfolio inference."""
+    labels = {'000985.CSI': '中证全指', '000300.SH': '沪深300', '932000.CSI': '中证2000'}
+    rows = []
+    for code, label in labels.items():
+        points = packet['indices'][code]
+        closes = [Decimal(str(p['close'])) for p in points]
+        last = closes[-1]
+        change = lambda prior: float((last / prior - 1) * 100)
+        peak = max(closes)
+        rows.append({'code': code, 'name': label,
+                     'twenty_day_change_pct': change(closes[-21]),
+                     'sixty_day_change_pct': change(closes[0]),
+                     'from_window_high_pct': change(peak),
+                     'window_high_on': next(p['trade_date'] for p in reversed(points) if Decimal(str(p['close'])) == peak),
+                     'above_ma20': last > sum(closes[-20:]) / 20,
+                     'above_ma60': last > sum(closes[-60:]) / 60,
+                     'source_url': next(r['url'] for r in packet['responses'] if r['code'] == code)})
+    return {'as_of': packet['through'], 'start': packet['calendar'][0],
+            'close_observations': len(packet['calendar']), 'rows': rows,
+            'scope': 'price_only_not_crisis_score', 'source_digest': packet['content_digest']}
+
+
 def newer_price(base, *, directory=OUTPUT, now=None):
     """Called at explicit/background publication, never fetches from a request."""
     try:
@@ -127,7 +150,8 @@ def newer_price(base, *, directory=OUTPUT, now=None):
         return {'availability': 'available', 'as_of': packet['through'], 'headline': headline, 'stance': stance,
                 'summary': text, 'metrics': {'day_change_pct': day, 'five_day_change_pct': week, 'twenty_day_change_pct': month},
                 'reason': {'title': '先看最新的价格方向', 'text': text, 'source_label': '中证全指原始收盘来源', 'source_url': source},
-                'source_digest': packet['content_digest'], 'checked_at': packet['checked_at']}
+                'source_digest': packet['content_digest'], 'checked_at': packet['checked_at'],
+                'price_context': price_context(packet)}
     except (OSError, ValueError, KeyError, TypeError, StopIteration, IndexError):
         return None
 

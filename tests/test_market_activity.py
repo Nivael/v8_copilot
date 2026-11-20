@@ -62,6 +62,44 @@ def test_missing_daily_row_does_not_become_trading_or_override_explicit_suspensi
     assert suspended.suspension_status == "suspended" and not suspended.eligible_for_anomaly
 
 
+@pytest.mark.parametrize("bounds,expected", [
+    ({}, None),
+    ({"up_limit": None, "down_limit": None}, None),
+    ({"up_limit": 10.4}, None),
+    ({"down_limit": 9.4}, None),
+    ({"up_limit": 0, "down_limit": 9.4}, None),
+    ({"up_limit": "nan", "down_limit": 9.4}, None),
+    ({"up_limit": 10.0}, True),
+    ({"down_limit": 10.0}, True),
+    ({"up_limit": 10.4, "down_limit": 9.4}, False),
+])
+def test_flat_quote_with_incomplete_limit_bounds_preserves_unknown(bounds, expected):
+    day = "2026-08-17"
+    raw = {**_raw("000001", day), "open": 10, "high": 10, "low": 10, "close": 10}
+    row = normalize_activity_rows(
+        trade_date=day, memberships=[_member("000001")], daily_rows=[raw],
+        daily_basic_rows=[_basic("000001", day)], suspend_rows=[],
+        limit_rows=[{"ts_code": "000001.SZ", "trade_date": "20260817", **bounds}],
+    )[0]
+    assert row.one_price_limit is expected
+    assert row.eligible_for_anomaly is (expected is False)
+    assert ("limit_status_unknown" in row.exclusion_reasons) is (expected is None)
+    assert not row.limit_state_conflict
+
+
+def test_incomplete_bounds_do_not_create_false_conflict_with_vendor_limit_status():
+    day = "2026-08-17"
+    raw = {**_raw("000001", day), "open": 10, "high": 10, "low": 10, "close": 10}
+    row = normalize_activity_rows(
+        trade_date=day, memberships=[_member("000001")], daily_rows=[raw],
+        daily_basic_rows=[{**_basic("000001", day), "limit_status": 3}], suspend_rows=[],
+        limit_rows=[{"ts_code": "000001.SZ", "trade_date": "20260817", "up_limit": 10.4}],
+    )[0]
+    assert row.one_price_limit is True
+    assert not row.limit_state_conflict
+    assert not row.eligible_for_anomaly
+
+
 def test_activity_normalization_uses_raw_limit_fallback_and_suspension_negative_evidence(tmp_path):
     day = "2026-08-17"
     rows = normalize_activity_rows(

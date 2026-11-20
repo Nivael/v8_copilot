@@ -215,7 +215,14 @@ def normalize_activity_rows(
         raw_one_price = None
         if None not in (open_value, high, low, close) and limit:
             flat = _same_price(open_value, high) and _same_price(high, low) and _same_price(low, close)
-            raw_one_price = bool(flat and (_same_price(close, up_limit) or _same_price(close, down_limit)))
+            # A metadata row can exist while one or both price bounds are absent.
+            # Non-matching missing bounds cannot rule out a flat limit session.
+            if not flat:
+                raw_one_price = False
+            elif _same_price(close, up_limit) or _same_price(close, down_limit):
+                raw_one_price = True
+            elif up_limit is not None and up_limit > 0 and down_limit is not None and down_limit > 0:
+                raw_one_price = False
         conflict = (
             vendor_one_price is not None
             and raw_one_price is not None

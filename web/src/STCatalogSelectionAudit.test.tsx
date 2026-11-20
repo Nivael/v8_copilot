@@ -65,9 +65,21 @@ it('separates five body reviews from execution and preserves source identity con
 
 it('shows current coverage without turning mixed-date totals or zero title leads into completeness',()=>{
  render(<STCatalogSelectionAudit data={data()}/>);
- expect(screen.getByText(/当前目录覆盖90／150家公司/)).toBeVisible()
+ fireEvent.click(screen.getByText('保留90家覆盖阶段与当时剩余60家'))
+ expect(screen.getByText(/当时目录覆盖90／150家公司/)).toBeVisible()
  fireEvent.click(screen.getByText('90家覆盖了哪段日期，为什么不是统一窗口公告总数？'))
  expect(screen.getByText(/原84家查询从7月4日开始，新增6家从7月1日开始/)).toBeVisible()
  expect(screen.getByText(/未选命中为0，不意味着零遗漏/)).toBeVisible()
  expect(screen.getByText(/尚未纳入的60家公司/)).toBeVisible()
+})
+
+it('shows fixed-cohort complete query scope while keeping eleven titles unresolved',()=>{
+ render(<STCatalogSelectionAudit data={data()}/>);
+ expect(screen.getByText(/固定150家公司均有完整保存查询/)).toBeVisible()
+ fireEvent.click(screen.getByText('查看11条待核标题：先核赠款、重整与子公司事项'))
+ const table=screen.getByRole('table',{name:'11条正文待核标题，不能直接用于事实判断'})
+ expect(within(table).getAllByRole('row')).toHaveLength(12)
+ expect(within(table).getAllByText('标题线索，正文待核')).toHaveLength(11)
+ expect(table).toHaveTextContent('1225677325')
+ expect(screen.getByText(/可能回指同一退出安排/)).toBeVisible()
 })

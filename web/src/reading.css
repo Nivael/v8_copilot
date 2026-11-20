@@ -42,3 +42,6 @@
 .reading-page .market-risk-question-table th:last-child{width:18%}
 .reading-page .market-risk-question-table button{max-width:100%;white-space:normal}
 @media(max-width:600px){.reading-page .market-risk-question-table th,.reading-page .market-risk-question-table td{padding:12px 6px;font-size:12px}.reading-page .market-risk-question-table th:first-child{width:24%}.reading-page .market-risk-question-table th:last-child{width:23%}}
+
+.reading-table-scroll-hint{display:none}
+@media(max-width:600px){.reading-page .reading-table-scroll-hint{display:block;font-size:12px;color:var(--reading-muted);margin:8px 0 14px}}

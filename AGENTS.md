@@ -126,3 +126,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 历史导入已接身份隔离：使用`import_ledger_with_audit`留存隔离说明；默认缺登记停止，损坏停止，发布再次核对，旧worktree不作新导入执行器。原历史阅读内容保持，见 [结果](ST_HISTORY_IDENTITY_IMPORT_RESULT_2026_11_20.md)。
 
 市场研究身份续核：三条11月5日研究不再沿用000996/2024年截止，累计34条更正；原402条用户问题完整，保存研究阅读131→130。见 [结果与限制](ST_MARKET_STUDY_IDENTITY_RESULT_2026_11_20.md)。
+
+旧市场窗口续核：−10.61%/−12.80%对应9月4日收盘起点；7日是首个收益日。换成7日收盘起算为−11.56%/−13.46%，原方向不翻转。面板已增折叠对照，见 [结果](ST_MARKET_WINDOW_ANCHOR_RESULT_2026_11_20.md)。

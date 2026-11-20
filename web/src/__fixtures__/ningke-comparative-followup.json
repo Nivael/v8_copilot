@@ -1,0 +1,174 @@
+{
+  "verified": true,
+  "values": {
+    "annual_2025": {
+      "assets": "2490053232.76",
+      "liabilities": "1154033141.25",
+      "parent_equity": "1207946343.83",
+      "minority_equity": "128073747.68",
+      "total_equity": "1336020091.51"
+    },
+    "annual_2024": {
+      "assets": "2167006487.74",
+      "parent_equity": "71793481.04"
+    },
+    "h1_summary_prior": {
+      "assets": "2318555923.88",
+      "parent_equity": "-99206789.77"
+    },
+    "h1_balance_prior": {
+      "assets": "2490053232.76",
+      "parent_equity": "1207946343.83"
+    },
+    "q3_summary_prior": {
+      "assets": "2490053232.76",
+      "parent_equity": "1207946343.83"
+    }
+  },
+  "annual_source_reading": "2025审计报告PDF物理第7、8页，表内第1、2页为扫描图片，按列标题2025/2024和人民币元人工读数；自动文本提取为空，不伪称文本命中。",
+  "asset_identity_exact": true,
+  "equity_identity_exact": true,
+  "annual_h1_balance_q3_agree": true,
+  "h1_summary_conflict_resolved": false,
+  "simple_2024_year_shift_supported": false,
+  "new_downloads": 0,
+  "sources": [
+    {
+      "announcement_id": "1225172303",
+      "title": "宁夏中科生物科技股份有限公司2025年度审计报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225172303.PDF",
+      "sha256": "4c635f57c6f6354cfd7f8af172ddc26de5631916dcec8e10e0e9f9131b5477e2",
+      "observed_at": "2026-11-20T01:07:00.369496+00:00",
+      "published_on": "2026-04-24",
+      "selected_pages": [
+        7,
+        8
+      ],
+      "reused": true
+    },
+    {
+      "announcement_id": "1225530042",
+      "title": "宁科生物2026年半年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225530042.PDF",
+      "sha256": "50677a7476ec53c6b1123d14dffe6f32797d033c17f7ac40bd204a9593b11d76",
+      "observed_at": "2026-11-20T01:23:12.017723+00:00",
+      "published_on": "2026-08-29",
+      "selected_pages": [
+        6,
+        32,
+        33
+      ],
+      "reused": true
+    },
+    {
+      "announcement_id": "1225650652",
+      "title": "宁科生物2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650652.PDF",
+      "sha256": "cc20c5c803ab5d1d6f20910199c956c12d70c224c9b876bdd807161c7a212ad6",
+      "observed_at": "2026-11-20T01:23:08.843423+00:00",
+      "published_on": "2026-10-31",
+      "selected_pages": [
+        1
+      ],
+      "reused": true
+    }
+  ],
+  "method_promotions": 0,
+  "visual_read": [
+    {
+      "announcement_id": "1225172303",
+      "pages": [
+        7,
+        8
+      ],
+      "image_sha256": {
+        "7": "8fe569cdb4f1617a73924d4f38404ba39ca15024c702b89b5e75cda087931611",
+        "8": "072f26a38c0fa1361f6e4c65d8d681428fdca33726527d44e0eb4ca29ee4c436"
+      }
+    },
+    {
+      "announcement_id": "1225530042",
+      "pages": [
+        6,
+        32,
+        33
+      ],
+      "image_sha256": {
+        "6": "8b606bfb7afc5bcf82915a7dbc2b72d7ff5350fac38a0cb761ddc7f64086d41c",
+        "32": "8bf3be0a928aa4efd7bafbd029129b81c76f8fe1cb90959a95add3ed590df890",
+        "33": "6d93cc52fba4a9f6151c533f3f1eafc81a2ce7d55bd64c736efc0f0bb7a60982"
+      }
+    },
+    {
+      "announcement_id": "1225650652",
+      "pages": [
+        1
+      ],
+      "image_sha256": {
+        "1": "38c971499e164015d621ae693074ba187389fd2aa43e6fc8a52fcfea5302f2d6"
+      }
+    }
+  ],
+  "visual_pages": 6,
+  "h1_parent_equity_change_matches_h1_parent_loss": true,
+  "comparison_rows": [
+    {
+      "metric": "assets",
+      "h1_current": "2341320637.37",
+      "h1_summary_prior": "2318555923.88",
+      "audited_2025": "2490053232.76",
+      "h1_balance_prior": "2490053232.76",
+      "q3_prior": "2490053232.76",
+      "annual_2024": "2167006487.74",
+      "change_using_summary": "22764713.49",
+      "change_using_corroborated_balance": "-148732595.39",
+      "recomputed_change_pct": "-5.973068906046771465729232930"
+    },
+    {
+      "metric": "parent_equity",
+      "h1_current": "1075477536.61",
+      "h1_summary_prior": "-99206789.77",
+      "audited_2025": "1207946343.83",
+      "h1_balance_prior": "1207946343.83",
+      "q3_prior": "1207946343.83",
+      "annual_2024": "71793481.04",
+      "change_using_summary": "1174684326.38",
+      "change_using_corroborated_balance": "-132468807.22",
+      "recomputed_change_pct": "-10.96644796324189723591822265"
+    }
+  ],
+  "title": "宁科：半年报净资产“转正”，是真的新增权益吗？",
+  "answer": "不能依据半年报主要指标页的负数比较基数认定当期净资产转正。新增核看的年度审计扫描表显示：2025年末归母权益原本为正，并与半年报合并表、三季报比较栏一致；半年报主要指标页的另一组上年末数仍存在未解释差异。",
+  "what_changed": "此前只有半年报内部与三季报对照；这轮补看年度审计报告扫描财务表，增强了对合并表比较数的交叉支持。主要指标页差异未被消除，也没有代替公司发布更正。",
+  "interpretation": "以相互印证的2025年末归母权益比较，半年归母权益减少约1.32亿元，金额与半年归母亏损相同；这支持继续核查权益变动，而不是把主要指标页所显示的负转正当作新资金到账。总资产在同一比较下也为下降，不能沿主要指标页另一基数称为增长。",
+  "boundary": "三份文件的同一比较时点并列不等于三次独立经营验证；半年报和三季报未经审计，不自动继承年度审计保证。年度审计的扫描读数由图像核对，原页无自动提取文本，不伪称机器检索命中。",
+  "watch": [
+    "核公司正式更正或关于半年报主要指标页比较栏的具体说明；在此之前两组原数和原页并列保留。",
+    "不把总权益与归母权益混列，不从主要指标页符号变化推出新资金、摘帽原因或持续经营恢复。",
+    "经营亏损、现金流出、处罚与诉讼分别跟踪；旧目录缺页和案件原文差异不因本轮财务交叉支持而关闭。"
+  ],
+  "new_requests": 0,
+  "new_quote_requests": 0,
+  "annual_scan_reading": {
+    "announcement_id": "1225172303",
+    "pdf_pages": [
+      7,
+      8
+    ],
+    "printed_table_pages": [
+      1,
+      2
+    ],
+    "period_columns": [
+      "2025-12-31",
+      "2024-12-31"
+    ],
+    "currency_unit": "CNY_yuan",
+    "extracted_text_lengths": {
+      "7": 0,
+      "8": 0
+    },
+    "basis": "human_visual_transcription",
+    "automatic_text_match": false
+  }
+}

@@ -310,4 +310,6 @@ def build_themes(inputs, daily):
     result['market_stage_experience']=market_stage_experience(inputs,{k:result[k]for k in ['endpoint_selection_audit','current_extension']})
     from st_exit_outcomes import exit_outcomes
     result['exit_outcomes']=exit_outcomes(inputs,{k:result[k]for k in ['endpoint_selection_audit','removal_cohort','endpoint_reasons']})
+    from st_ningke_comparative_followup import ningke_comparative_followup
+    result['ningke_comparative_followup']=ningke_comparative_followup(inputs,result['fourteenth_period_followup'])
     return result

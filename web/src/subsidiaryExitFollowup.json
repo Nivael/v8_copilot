@@ -1,0 +1,215 @@
+{
+  "sources": [
+    {
+      "announcement_id": "1225420265",
+      "symbol": "000752",
+      "title": "深圳久安会计师事务所（特殊普通合伙）关于西藏发展股份有限公司非经营性资金占用及清偿情况专项说明",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-11/1225420265.PDF",
+      "published_on": "2026-07-11",
+      "sha256": "00b997e3a05ca25879aab0a55c847c690664fe5b02aa872cdeb4ee501ff84e6f",
+      "pages": 10,
+      "observed_at": "2026-11-20T18:45:28.720691+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [],
+      "review_status": "body_review_pending"
+    },
+    {
+      "announcement_id": "1225479212",
+      "symbol": "000826",
+      "title": "关于参股子公司被法院裁定宣告破产的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225479212.PDF",
+      "published_on": "2026-08-19",
+      "sha256": "20171e56b5ee3ac046966f6c4d82fb4a33b8e50bf4bcbeceaf7355ed65ad85c9",
+      "pages": 2,
+      "observed_at": "2026-11-20T18:45:28.851234+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        2
+      ],
+      "review_status": "key_terms_reviewed"
+    },
+    {
+      "announcement_id": "1225504695",
+      "symbol": "000826",
+      "title": "关于关联方资金占用偿还情况的专项核查报告（大信专审字[2026]第2-00376号）",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225504695.PDF",
+      "published_on": "2026-08-26",
+      "sha256": "a0a5df732bf228e50a8fe737cbb81f23985ca8ba4728e29495542cdfbd4c56f3",
+      "pages": 8,
+      "observed_at": "2026-11-20T18:45:29.469749+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [],
+      "review_status": "body_review_pending"
+    },
+    {
+      "announcement_id": "1225522090",
+      "symbol": "000016",
+      "title": "关于召开本次终止上市事项投资者说明会的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225522090.PDF",
+      "published_on": "2026-08-28",
+      "sha256": "5c91ce570a8bcd8b925c00e39397e5a29d562d1fa2a0d7c82d98c0bc30823af7",
+      "pages": 2,
+      "observed_at": "2026-11-20T18:45:29.666120+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        2
+      ],
+      "review_status": "key_terms_reviewed"
+    },
+    {
+      "announcement_id": "1225537108",
+      "symbol": "000016",
+      "title": "关于本次终止上市事项暨距离公司股票停牌尚余3个交易日的提示性公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225537108.PDF",
+      "published_on": "2026-09-01",
+      "sha256": "07338f378d2e843c1cddc3463eedf539cbbb1c65b0e0973024b6a77c3fb53c39",
+      "pages": 3,
+      "observed_at": "2026-11-20T18:45:29.806313+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        2
+      ],
+      "review_status": "key_terms_reviewed"
+    },
+    {
+      "announcement_id": "1225540247",
+      "symbol": "000016",
+      "title": "关于本次终止上市事项暨距离公司股票停牌尚余2个交易日的提示性公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-02/1225540247.PDF",
+      "published_on": "2026-09-02",
+      "sha256": "105feb03aa7c2d4981829cc8fab4eb8a11cda940e095167d16b2591c84b5352d",
+      "pages": 3,
+      "observed_at": "2026-11-20T18:45:29.957874+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        2
+      ],
+      "review_status": "key_terms_reviewed"
+    },
+    {
+      "announcement_id": "1225543743",
+      "symbol": "000016",
+      "title": "关于本次终止上市事项暨距离公司股票停牌尚余1个交易日的提示性公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-03/1225543743.PDF",
+      "published_on": "2026-09-03",
+      "sha256": "d0ebb295e2023eabe248dd65f08bfd6175717592cc0116a82d9cdde8b76fbc43",
+      "pages": 3,
+      "observed_at": "2026-11-20T18:45:30.191821+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        2
+      ],
+      "review_status": "key_terms_reviewed"
+    },
+    {
+      "announcement_id": "1225557393",
+      "symbol": "000826",
+      "title": "关于法院裁定受理全资子公司破产重整的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-11/1225557393.PDF",
+      "published_on": "2026-09-11",
+      "sha256": "b7c21ecff1068a892933ec2e793fa6102ff5ff81dd596d6a44c745ec7cf8dcd3",
+      "pages": 6,
+      "observed_at": "2026-11-20T18:45:30.355452+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "review_status": "key_terms_reviewed"
+    },
+    {
+      "announcement_id": "1225650013",
+      "symbol": "002175",
+      "title": "关于终止对外投资暨关联交易的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650013.PDF",
+      "published_on": "2026-10-31",
+      "sha256": "a7f084d7ff112d5e8624801cf18395487080161dca3f35c2afe99acb34d5735d",
+      "pages": 2,
+      "observed_at": "2026-11-20T18:45:30.452657+00:00",
+      "protected_id_and_text_gates_passed": true,
+      "fulltext_extracted": true,
+      "visual_pages": [
+        1,
+        2
+      ],
+      "review_status": "key_terms_reviewed"
+    }
+  ],
+  "reviews": [
+    {
+      "key": "different_subsidiaries",
+      "symbol": "000826",
+      "source_ids": [
+        "1225479212",
+        "1225557393"
+      ],
+      "title": "参股公司宣告破产，与全资子公司重整受理不是同一主体",
+      "fact": "8月19日公告披露参股22.7673%的桑顿新能源终止重整并被宣告破产；9月11日公告披露全资子公司合加新能源重整申请获受理，仍有成功不确定性。都不能替代上市公司自身的程序状态。",
+      "meaning": "桑顿不在合并报表内，但公告时27166.54万元剩余担保尚未解除；6365.49万元占用余额为2025年末对湖南桑德的口径，不补成8月最新余额，也不与担保相加当损失。合加披露2025年末净资产20648.85万元为正，仍不能据此推翻后来到期债务清偿困难；不将旧年末净资产当9月即时余额。",
+      "limits": "公司引述裁定，不等本轮取得法院独立原文；近日查询/内部报告不补成精确裁定或收到日。母公司当时预重整与子公司受理分别核，不能从9月公告认证11月19日母公司仍未进入其他阶段。",
+      "next": "继续核担保实际代偿/追偿、占款最新余额、子公司计划与执行及财务处理，不由破产或受理标题直接算损失。"
+    },
+    {
+      "key": "one_exit_multiple_notices",
+      "symbol": "000016",
+      "source_ids": [
+        "1225522090",
+        "1225537108",
+        "1225540247",
+        "1225543743"
+      ],
+      "title": "说明会与三次倒计时回指同一主动退出安排",
+      "fact": "8月28日公告计划8月31日举行说明会；9月1、2、3日三件依次提示停牌尚余3、2、1个交易日，均对应9月4日起停牌安排，文件当时仍待9月14日股东会。",
+      "meaning": "投票股权登记日与现金选择权登记日不同：文件列A股投票登记9月3日、B股9月8日；现金选择权登记拟为A股9月22日、B股9月28日。登记、申报、取得现金和摘牌是不同节点；三份倒计时不增加三次退出案例或三次独立验证。",
+      "limits": "说明会安排不认证实际召开；现金选择权取决于股东会通过、权利限制等条件，不能当实际账户已获偿。这四份早期文件不替代后来正式终止上市、摘牌及现金执行原件，原已核退出结果保留。",
+      "next": "若核具体账户结果，再取实际申报、资金和股份登记证明；不把安排日期直接当执行完成。"
+    },
+    {
+      "key": "unpaid_investment_termination",
+      "symbol": "002175",
+      "source_ids": [
+        "1225650013"
+      ],
+      "title": "终止500万元拟投资，不等收回500万元",
+      "fact": "10月31日目录披露、PDF落款10月30日。东智决定终止拟出资500万元、持股10%的对外投资；披露时未签投资协议、未支付投资款、标的未设立。",
+      "meaning": "拟出资50万元注册资本加450万元资本公积合计500万元，没有因此形成已付款或退款。原件称事项在董事会权限内无需股东会，不应套用其他收购的股东会待审门槛。",
+      "limits": "本件不证明其他投资或关联交易的状态，也不据终止认定新增损失、回款或经营修复。",
+      "next": "原拟议事项可记录为终止，不新增实际收回资金；同窗行情与其因果另核。"
+    }
+  ],
+  "reviewed_ids": [
+    "1225479212",
+    "1225522090",
+    "1225537108",
+    "1225540247",
+    "1225543743",
+    "1225557393",
+    "1225650013"
+  ],
+  "pending_body_review_ids": [
+    "1225420265",
+    "1225504695"
+  ],
+  "prior_cash_plan_evidence_sha256": "02f252171c99a28d6a6cad131bef1104717a3d9726ddeb272fb457aadd5df1a8",
+  "queue_evidence_sha256": "ae3c889256a57225469515486e3e5f8447dfd1653628e001cdd56f6b09b428fc",
+  "critical_visual_pages": 16,
+  "reviewed_source_physical_pages": 21,
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "evidence_sha256": "980e76d4a9e492cab56494b118fde3617bb6260b52665b3b2db8407387048f4f",
+  "research_run_id": "RUN-A1170D2C71DA499DAE79962A"
+}

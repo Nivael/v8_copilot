@@ -76,10 +76,10 @@ it('shows current coverage without turning mixed-date totals or zero title leads
 it('shows fixed-cohort complete query scope while keeping eleven titles unresolved',()=>{
  render(<STCatalogSelectionAudit data={data()}/>);
  expect(screen.getByText(/固定150家公司均有完整保存查询/)).toBeVisible()
- fireEvent.click(screen.getByText('查看原11条线索：2条已核正文，9条待核'))
+ fireEvent.click(screen.getByText('查看原11条线索：9条已核正文，2条待核'))
  const table=screen.getByRole('table',{name:'原11条标题线索及后续正文核对状态'})
  expect(within(table).getAllByRole('row')).toHaveLength(12)
- expect(within(table).getAllByText('标题线索，正文待核')).toHaveLength(9)
+ expect(within(table).getAllByText('标题线索，正文待核')).toHaveLength(2)
  expect(table).toHaveTextContent('1225677325')
  expect(screen.getByText(/可能回指同一退出安排/)).toBeVisible()
 })

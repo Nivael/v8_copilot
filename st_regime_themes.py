@@ -1,3 +1,4 @@
+from st_twentythird_period_followup import followup_view as twentythird_period_followup
 from st_initial_twentythird_four import initial_twentythird_four
 from st_twentysecond_period_followup import followup_view as twentysecond_period_followup
 from st_initial_twentysecond_four import initial_twentysecond_four
@@ -259,6 +260,7 @@ def build_themes(inputs, daily):
     result['initial_twentyfirst_four']=initial_twentyfirst_four(inputs,result['initial_twentieth_four'],result['current_extension'])
     result['initial_twentysecond_four']=initial_twentysecond_four(inputs,result['initial_twentyfirst_four'],result['current_extension'])
     result['initial_twentythird_four']=initial_twentythird_four(inputs,result['initial_twentysecond_four'],result['current_extension'])
+    result['twentythird_period_followup']=twentythird_period_followup(inputs,result['initial_twentythird_four'])
     result['twentysecond_period_followup']=twentysecond_period_followup(inputs,result['initial_twentysecond_four'])
     result['twentyfirst_period_followup']=twentyfirst_period_followup(inputs,result['initial_twentyfirst_four'])
     result['twentieth_period_followup']=twentieth_period_followup(inputs,result['initial_twentieth_four'])

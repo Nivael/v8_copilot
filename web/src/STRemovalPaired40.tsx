@@ -1,0 +1,7 @@
+import type {RegimeRemovalEraComparison,RemovalMatureWindows} from './stRegimeTypes'
+import {removalPaired40} from './removalPaired40'
+export function STRemovalPaired40({data,prior}:{data:RemovalMatureWindows;prior:RegimeRemovalEraComparison}){
+ const paired=removalPaired40(data,prior)
+ if(!paired)return null
+ return <section aria-label="摘帽20与40日同组比较"><h3>20日上涨，到40日一定涨得更多吗？</h3><p>只比较两种窗口都已核的同一{paired.rows.length}家公司：20日中位数{paired.median20.toFixed(2)}%，40日为{paired.median40.toFixed(2)}%。20日上涨的{paired.positive20}家，其中{paired.positive20StillPositive}家到40日仍为正，{paired.gaveBack}家回吐了部分涨幅，{paired.extended}家继续扩大涨幅。累计为正与涨幅继续扩大，需要分别看。</p><p>截至{data.through}，{paired.waiting.map(r=>`${r.name}已有${r.days}个后续交易日`).join('、')}；未满或待核的40日收益不填零。不能用上一栏{data.summary.direct_verified}家20日中位数与这里{paired.rows.length}家40日中位数，直接说明同一组变好或变差。</p><details><summary>核对同一组公司的20日与40日路径</summary><table className="regime-table"><caption>同组比较：均从摘帽首日收盘起算</caption><thead><tr><th>公司</th><th>20日终点／变化</th><th>40日终点／变化</th><th>第21至40日变化</th></tr></thead><tbody>{paired.rows.map(r=><tr key={r.symbol}><th>{r.name} · {r.symbol}</th><td>{r.through20}／{r.return20.toFixed(2)}%</td><td>{r.through40}／{r.return40.toFixed(2)}%</td><td>{r.next20.toFixed(2)}%</td></tr>)}</tbody></table><p>后一段用复合关系计算，不用40日累计减20日累计代替区间涨跌。复用已核行情，未新增独立样本或经验晋级。</p>{paired.waiting.map(r=><p key={r.symbol}>{r.name} · {r.symbol}：已有{r.days}个后续市场交易日，{r.status==='insufficient_followup'?'40日仍未满':'40日旧结果需重新核验'}，收益不填零。</p>)}</details></section>
+}

@@ -1,0 +1,106 @@
+{
+  "verified": true,
+  "new_documents": 0,
+  "reused_documents": 2,
+  "new_quotes": 0,
+  "rows": [
+    {
+      "metric": "revenue",
+      "h1_original": "2411074484.44",
+      "nine_month_reported": "3474755999.40",
+      "q3_direct": "1063640842.40",
+      "nine_minus_original_h1": "1063681514.96",
+      "difference": "40672.56",
+      "implied_comparable_h1": "2411115157.00",
+      "implied_is_disclosed_h1": false
+    },
+    {
+      "metric": "parent_profit",
+      "h1_original": "-288479330.46",
+      "nine_month_reported": "-246410995.63",
+      "q3_direct": "42029482.30",
+      "nine_minus_original_h1": "42068334.83",
+      "difference": "38852.53",
+      "implied_comparable_h1": "-288440477.93",
+      "implied_is_disclosed_h1": false
+    },
+    {
+      "metric": "recurring_profit",
+      "h1_original": "-328203248.37",
+      "nine_month_reported": "-517453187.86",
+      "q3_direct": "-189288892.02",
+      "nine_minus_original_h1": "-189249939.49",
+      "difference": "38952.53",
+      "implied_comparable_h1": "-328164295.84",
+      "implied_is_disclosed_h1": false
+    }
+  ],
+  "nonrec_bridge": {
+    "h1_original": "39723917.91",
+    "nine_month_reported": "271042192.23",
+    "q3_direct": "231318374.32",
+    "derived_q3": "231318274.32",
+    "derived_minus_direct": "-100.00"
+  },
+  "same_control_premerge_profit": "38852.53",
+  "parent_difference_matches_premerge_profit_numerically": true,
+  "full_reconciliation_verified": false,
+  "method_promotions": 0,
+  "source_refs": [
+    {
+      "announcement_id": "1225493692",
+      "title": "际华集团2026年半年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225493692.PDF",
+      "sha256": "eae6d1e6c22cda207cde218717291867e5225277f49b3a01859d7c5b160db2cc",
+      "observed_at": "2026-11-20T06:10:01.452730+00:00",
+      "published_on": "2026-08-22",
+      "selected_pages": [
+        5,
+        6
+      ]
+    },
+    {
+      "announcement_id": "1225644670",
+      "title": "际华集团2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225644670.PDF",
+      "sha256": "22b3a696e95a48e7307c6c98c510331dca81a9f7917330bd50ffa1bf59a6e423",
+      "observed_at": "2026-11-20T06:09:56.367816+00:00",
+      "published_on": "2026-10-30",
+      "selected_pages": [
+        2,
+        3,
+        4,
+        10
+      ]
+    }
+  ],
+  "boundary": "倒推可比半年数只是算术隐含值，不是公司披露的更正半年报。金额对应只支持进一步核对，不认证三个差异均已调节。",
+  "visual_read": [
+    {
+      "announcement_id": "1225493692",
+      "pages": [
+        5,
+        6
+      ]
+    },
+    {
+      "announcement_id": "1225644670",
+      "pages": [
+        2,
+        3,
+        4,
+        10
+      ]
+    }
+  ],
+  "title": "际华：单季盈利了，为什么累计减半年却对不上？",
+  "answer": "第三季度直接披露归母盈利约4203万元、扣非亏损约1.89亿元，两个方向同时保留。累计减原半年产生三项差额，不能替换直接单季数；归母差额与同控合并前利润相同只是线索，扣非和非经常性损益仍有100元衔接差异，完整调节尚未确认。",
+  "interpretation": "三季报把追溯原因写为同一控制下企业合并；这是比较范围变化的线索，不能与2018—2021年度处罚对应的差错重述混为一件事。原半年数与新累计数是否同一范围，需要可比半年报或逐项调节表。",
+  "operating": "单季归母为正并不等于主营恢复。直接单季非经常性损益约2.31亿元，报告将归母改善主要归于冲回预计负债；相关2亿元或有事项损益不是新收到2亿元现金的证明。",
+  "watch": [
+    "核同控合并主体、合并日、合并前收入与扣非归属，及同范围半年可比数。",
+    "核100元衔接差异的明确原件解释，不以金额小或单个金额相等自动调平。",
+    "继续分别跟踪扣非经营、实际收款和风险条件；保留旧原报数字及其时点。"
+  ],
+  "experience": "发现一项金额与某条说明相等，可以缩小核查方向，但只有逐项、同范围的完整调节才能关闭差异。倒推数值须标为算术隐含值，不能冒充已披露事实。"
+}

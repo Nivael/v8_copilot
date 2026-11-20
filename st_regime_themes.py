@@ -304,4 +304,6 @@ def build_themes(inputs, daily):
     result['restatement_comparison']=restatement_comparison(inputs,{k:result[k] for k in PRIOR_KEYS})
     from st_baili_policy_followup import baili_policy_followup
     result['baili_policy_followup']=baili_policy_followup(inputs,result['restatement_comparison'])
+    from st_jihua_bridge_followup import jihua_bridge_followup
+    result['jihua_bridge_followup']=jihua_bridge_followup(inputs,result['twentysecond_period_followup'])
     return result

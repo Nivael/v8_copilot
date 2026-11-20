@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'jihua',anchor:'st-jihua-bridge-followup',title:'际华：单季盈利与三项衔接差额怎样看？',field:'jihua_bridge_followup'},
   {key:'restatement',anchor:'st-restatement-comparison',title:'财报更正后，应该改哪一层判断？',field:'restatement_comparison'},
   {key:'yigou',anchor:'st-yigou-settlement',title:'易购：利润为正，和解与现金兑现了吗？',field:'yigou_settlement'},
   {key:'endpoints',anchor:'st-endpoint-reasons',title:'固定150只：缺价、停牌和退出怎样分别看？',field:'endpoint_reasons'},

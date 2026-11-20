@@ -33,3 +33,12 @@
 .market-pressure-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;white-space:nowrap}.market-pressure-table caption{text-align:left;color:var(--text-muted,#666);padding:0 0 16px}.market-pressure-table th,.market-pressure-table td{padding:14px 12px;border-bottom:1px solid #deded7;text-align:right}.market-pressure-table th:first-child{text-align:left}.market-pressure-table small{display:block;font-size:11px;color:#6b716c;margin-top:5px}.market-pressure-table thead th{font-size:13px;font-weight:500;color:#626960}
 
 .reading-purpose-switch{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}.reading-purpose-switch button{border:1px solid #cbd4cd;background:transparent;padding:10px 15px;color:#486255;cursor:pointer;font:inherit;font-size:14px}.reading-purpose-switch button[aria-pressed="true"]{background:#e7eee9;border-color:#718a7a;color:#263f30}.reading-purpose-switch button:focus-visible{outline:2px solid #476c56;outline-offset:3px}.reading-breadth-plot{overflow-x:auto}.reading-breadth-plot svg{display:block}
+
+/* Reading tables own their horizontal containment; do not depend on the evidence page stylesheet. */
+.reading-page .learning-table-wrap{max-width:100%;overflow-x:auto}
+.reading-page .market-risk-question-table{table-layout:fixed;white-space:normal}
+.reading-page .market-risk-question-table th,.reading-page .market-risk-question-table td{text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.reading-page .market-risk-question-table th:first-child{width:25%}
+.reading-page .market-risk-question-table th:last-child{width:18%}
+.reading-page .market-risk-question-table button{max-width:100%;white-space:normal}
+@media(max-width:600px){.reading-page .market-risk-question-table th,.reading-page .market-risk-question-table td{padding:12px 6px;font-size:12px}.reading-page .market-risk-question-table th:first-child{width:24%}.reading-page .market-risk-question-table th:last-child{width:23%}}

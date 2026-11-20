@@ -1,0 +1,20 @@
+{
+  "viewport_width": 1280,
+  "before": {
+    "page_width": 1885,
+    "table_width": 1768.9296875
+  },
+  "after": {
+    "page_width": 1280,
+    "table_width": 1048
+  },
+  "measurement": "read-only browser DOM bounds before and after intentional reload; same 1280px viewport",
+  "code_sha256": {
+    "web/src/reading.css": "b859325286d3781874d40f68cb5e4cee897e90982c8f58a8c7e3e74e6c74c4cf",
+    "web/src/MarketRiskQuestions.tsx": "f24b6d9cfca7d3d4d05e953030fdab85e665178ba1b9dbe8e5a88f2862414ef2"
+  },
+  "tests": "MarketRiskQuestions: 3 passed; production build passed with existing bundle warning",
+  "scope": "desktop viewport only; narrower screens not measured this round",
+  "new_research": 0,
+  "new_independent_validations": 0
+}

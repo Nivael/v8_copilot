@@ -1,0 +1,71 @@
+{
+  "version": "qihuan_repayment_companion_v1",
+  "sources": [
+    {
+      "announcement_id": "1225504694",
+      "symbol": "000826",
+      "title": "关于资金占用事项解决完毕的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225504694.PDF",
+      "sha256": "19dcbf9d141252dd399a59a6fb63dfbe06e9d7386e5914cdcb67dbf6d3c9afee",
+      "pages": 2,
+      "observed_at": "2026-11-20T19:32:22.699757+00:00",
+      "catalog_sha256": "8d6239aef93d19de09b93dc21d6b2d03abc84a987327dfe75e177316a50b861b",
+      "protected_gate_passed": true,
+      "published_on": "2026-08-26",
+      "visual_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "announcement_id": "1225517129",
+      "symbol": "000826",
+      "title": "2026年上半年非经营性资金占用及其他关联资金往来情况汇总表",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517129.PDF",
+      "sha256": "313e035009c8628d8417fbc6925ca8c07c6006a047d161a086bcbf3743ac3d29",
+      "pages": 8,
+      "observed_at": "2026-11-20T19:32:22.576637+00:00",
+      "catalog_sha256": "8d6239aef93d19de09b93dc21d6b2d03abc84a987327dfe75e177316a50b861b",
+      "protected_gate_passed": true,
+      "published_on": "2026-08-28",
+      "visual_pages": [
+        1,
+        4
+      ]
+    }
+  ],
+  "physical_pages": 10,
+  "critical_visual_pages": 4,
+  "prior_accountant_evidence_sha256": "9e0654a80a3a2b7b0ced6c2291a206ee37e20d078860e6dd2076fcdc7b44f06f",
+  "facts": {
+    "company_receipt_on": "2026-08-25",
+    "company_disclosed_on": "2026-08-26",
+    "receipt_wan": "6365.49",
+    "company_stated_occupation_balance_wan": "0",
+    "half_year_balance_on": "2026-06-30",
+    "half_year_table_published_on": "2026-08-28",
+    "half_year_occupation_wan": "6365.49",
+    "half_year_occupation_account": "应收账款",
+    "company_receivable_account": "其他应收款",
+    "other_half_year_sangdun_equipment_wan": "1215.49",
+    "other_half_year_sangdun_advance_wan": "12.18"
+  },
+  "judgment": "公司配套公告支持8月25日投资人代偿已收、8月26日披露占款余额为零；8月28日上半年表的6365.49万元属于6月末，不构成8月新增占款证据。",
+  "remaining_conflicts": [
+    "会计师报告首页截至报告日未变化与后页已收回的表述冲突，配套公司公告支持收款但未提供正式更正或冲突解释。",
+    "会计师报告签章8月25日、开头核查截至8月26日的衔接问题未由公司公告解释。",
+    "半年表将6365.49万元列应收账款，公司解决公告称其他应收款；名称差异并列，不自行选择会计真值。"
+  ],
+  "limits": [
+    "公司与会计师材料描述同一代偿事项，未增加独立案例或验证次数。",
+    "未独立取得银行原始回单，不确认实际会计入账或利润，不推出桑顿自身偿还。",
+    "半年表另列1215.49万元设备款及12.18万元代付款往来，与本笔占款分开，不据此称全部关联往来为零。",
+    "本公告当时公司仍称尚未收到重整受理法律文书；不倒推11月母公司程序，不推出担保解除。",
+    "仅核两份10页中的4关键图像页，不声称所有表格逐行审计。"
+  ],
+  "publication_state": "source_review_saved; panel_and_bound_study_pending",
+  "independent_experience_validations_added": 0,
+  "evidence_sha256": "4cb2d2a6fe380027df53ee4b80d91e8af24415296498f8f0b7d4ea878192b53d",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "research_run_id": "RUN-10A6AC1C72DD47DBA922E83F"
+}

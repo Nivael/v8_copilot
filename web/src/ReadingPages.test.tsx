@@ -32,7 +32,9 @@ describe('trader reading pages',()=>{
     expect(await screen.findByText('上涨股票占比（2026-11-20）')).toBeVisible()
     expect(screen.getByText('上涨股票占比（2026-11-20）').parentElement).toHaveTextContent('5.7%')
     expect(screen.getByText(/有成交的5216只股票中/)).toBeVisible()
-    expect(screen.getByText(/ST同窗参考截至2026-11-04/)).toBeVisible()
+    expect(screen.getByText(/下方旧ST走势图截至2026-11-04/)).toBeVisible()
+    expect(screen.getByText(/冻结同窗复盘另截至2026-11-19/)).toBeVisible()
+    expect(screen.getByText(/冻结同窗复盘另截至/)).toHaveTextContent('不是实时更新')
     expect(screen.getByRole('img',{name:/大盘与ST走势比较/})).toBeVisible()
   })
   it('connects historical judgment, later price and review, and filters methods by category',async()=>{

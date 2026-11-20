@@ -1,0 +1,92 @@
+{
+  "version": "accountant_body_review_v1",
+  "sources": [
+    {
+      "announcement_id": "1225420265",
+      "symbol": "000752",
+      "title": "深圳久安会计师事务所（特殊普通合伙）关于西藏发展股份有限公司非经营性资金占用及清偿情况专项说明",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-11/1225420265.PDF",
+      "published_on": "2026-07-11",
+      "sha256": "00b997e3a05ca25879aab0a55c847c690664fe5b02aa872cdeb4ee501ff84e6f",
+      "pages": 10,
+      "observed_at": "2026-11-20T18:45:28.720691+00:00",
+      "visual_pages": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "announcement_id": "1225504695",
+      "symbol": "000826",
+      "title": "关于关联方资金占用偿还情况的专项核查报告（大信专审字[2026]第2-00376号）",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225504695.PDF",
+      "published_on": "2026-08-26",
+      "sha256": "a0a5df732bf228e50a8fe737cbb81f23985ca8ba4728e29495542cdfbd4c56f3",
+      "pages": 8,
+      "observed_at": "2026-11-20T18:45:29.469749+00:00",
+      "visual_pages": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "critical_visual_pages": 7,
+  "physical_pages": 18,
+  "prior_evidence_sha256": "980e76d4a9e492cab56494b118fde3617bb6260b52665b3b2db8407387048f4f",
+  "reviews": [
+    {
+      "symbol": "000752",
+      "announcement_id": "1225420265",
+      "catalog_date": "2026-07-11",
+      "signed_date": "2026-07-10",
+      "balance_date": "2025-12-31",
+      "total_recovered_wan": "92689.94",
+      "year_end_balance_wan": "0.00",
+      "settlement_modes": [
+        "cash",
+        "debt_offset"
+      ],
+      "table_rows_wan": [
+        "3570",
+        "27634.42",
+        "10695.33",
+        "963.74",
+        "9500",
+        "5116.76",
+        "13728.75",
+        "3543.56",
+        "550",
+        "700",
+        "2980",
+        "1225",
+        "1500",
+        "7677.56",
+        "500",
+        "2804.82"
+      ],
+      "table_sum_verified": "92689.94",
+      "conclusion": "会计师称截至2025年末累计通过现金及债权抵偿收回92689.94万元，截至报告出具日未发现未解决或新增占款、违规财务资助。",
+      "limits": "历史累计含债权抵偿，不是2026年7月新增现金，也不证明整体重整执行完成。"
+    },
+    {
+      "symbol": "000826",
+      "announcement_id": "1225504695",
+      "catalog_date": "2026-08-26",
+      "signed_date": "2026-08-25",
+      "stated_scope_date": "2026-08-26",
+      "receipt_cutoff": "2026-08-25",
+      "amount_wan": "6365.49",
+      "conclusion": "会计师称检查银行收款回单等资料，指定子公司账户截至8月25日收到经临时管理人账户转付的投资人代偿6365.49万元，桑顿占款已全部收回。",
+      "conflicts": [
+        "物理第2页称截至报告日被占用资金未发生变化，第3页称全部收回，原文冲突保留。",
+        "签章日期8月25日早于报告开头核查截至8月26日，日期衔接保留。"
+      ],
+      "limits": "未独立取得银行原始回单；不将代偿推为桑顿自身还款、担保解除、重整整体成功或利润确认。8月19日旧公告的年末余额仍保留，不改写当时已知。"
+    }
+  ],
+  "publication_state": "body_review_saved; panel_queue_and_bound_study_pending",
+  "independent_experience_validations_added": 0
+}

@@ -1,9 +1,14 @@
+import {useEffect,useRef,useState} from 'react'
 import {Link} from 'react-router-dom'
 import audit from './marketWindowAnchorAudit.json'
 
-export function MarketWindowAnchorNote(){
- return <section className="market-window-anchor-note" aria-label="旧市场复盘窗口核对" id="market-window-anchor-audit">
-  <details className="reading-disclosure">
+export function MarketWindowAnchorNote({readingReady=true}:{readingReady?:boolean}){
+ const [open,setOpen]=useState(()=>window.location.hash==='#market-window-anchor-audit')
+ const region=useRef<HTMLElement>(null)
+ useEffect(()=>{const reveal=()=>{if(window.location.hash==='#market-window-anchor-audit')setOpen(true)};window.addEventListener('hashchange',reveal);return()=>window.removeEventListener('hashchange',reveal)},[])
+ useEffect(()=>{if(open&&readingReady&&window.location.hash==='#market-window-anchor-audit')region.current?.scrollIntoView?.({block:'start'})},[open,readingReady])
+ return <section ref={region} className="market-window-anchor-note" aria-label="旧市场复盘窗口核对" id="market-window-anchor-audit">
+  <details className="reading-disclosure" open={open} onToggle={e=>setOpen(e.currentTarget.open)}>
    <summary>旧复盘的起点：9月4日与7日能互换吗？</summary>
    <p><strong>不能。−10.61%和−12.80%对应9月4日收盘起点。</strong>9月7日是首个计入收益的交易日，不能改写为从这天收盘开始。</p>
    <table aria-label="同一终点的两种收盘起点"><thead><tr><th scope="col">收盘起点 → 终点</th><th scope="col">中证全指</th><th scope="col">旧ST参考</th></tr></thead>

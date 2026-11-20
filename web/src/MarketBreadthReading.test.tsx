@@ -6,7 +6,8 @@ afterEach(cleanup)
 const a={name:'沪深A股',listed_source_stocks:5224,observed_trading_stocks:5216,nontrading_stocks:8,advancing:297,declining:4897,flat:22,declining_5pct_or_more:2707,median_return_pct:-5.114705,advancing_pct:5.694,declining_5pct_or_more_pct:51.898}
 const data:BreadthReading={availability:'available',as_of:'2026-11-20',source_digest:'a'.repeat(64),observed_at:'2026-11-21T00:00:00+08:00',source_file_count:8,scope:'SSE_SZSE_A_shares_not_BSE',groups:[a,{...a,name:'当日ST简称组'}],sources:[],limits:[],transport_note:'Official mixed transports'}
 it('shows one purpose at a time and keeps the old daily denominator intact',()=>{
- render(<MarketBreadthReading data={data} priceAsOf="2026-11-20"/>);expect(screen.getByRole('heading',{name:'下跌是否遍及多数股票？'})).toBeVisible()
+ render(<MarketBreadthReading data={data} priceAsOf="2026-11-20"/>);expect(screen.getByRole('heading',{name:'先分清风险来自哪里'})).toBeVisible()
+ fireEvent.click(screen.getByRole('button',{name:'当天跌得多广？'}));expect(screen.getByRole('heading',{name:'下跌是否遍及多数股票？'})).toBeVisible()
  expect(screen.queryByRole('heading',{name:'这次下跌，什么时候开始变得普遍？'})).not.toBeInTheDocument()
  fireEvent.click(screen.getByRole('button',{name:'这次怎样持续转弱？'}))
  expect(screen.getByRole('heading',{name:'这次下跌，什么时候开始变得普遍？'})).toBeVisible()

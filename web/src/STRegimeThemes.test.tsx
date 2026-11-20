@@ -67,9 +67,10 @@ describe('按问题查阅已核研究',()=>{
  })
  it('最新快捷入口与目录用同一路径，旧公司专题仍可查阅',()=>{
   mount();fireEvent.click(screen.getByRole('button',{name:/本轮新核/}));expect(window.location.hash).toBe('#st-earnings-warning')
+  choose('cashdirection');expect(screen.getByRole('region',{name:'现金流向与兑现阶段比较'})).toBeVisible()
   choose('followup');expect(screen.getByRole('region',{name:'京蓝摘帽后续复盘'})).toBeVisible()
-  expect(within(screen.getByRole('combobox',{name:'按具体问题查阅'})).getAllByRole('option')).toHaveLength(6)
-  expect(availableQuestions(fixture()).map(q=>q.key)).toEqual(['earnings','cohort','strong','execution','followup'])
+  expect(within(screen.getByRole('combobox',{name:'按具体问题查阅'})).getAllByRole('option')).toHaveLength(7)
+  expect(availableQuestions(fixture()).map(q=>q.key)).toEqual(['cashdirection','earnings','cohort','strong','execution','followup'])
  })
 })
 

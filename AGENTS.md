@@ -134,3 +134,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 岭南债券补核：11月3日报告时一审未生效，质押登记/前置安排/变现/兑付分列；两份旧件29页核7关键图像页，0下载。新增问题入口，原退出缺口不变，见 [结果](ST_LINGNAN_BOND_FOLLOWUP_RESULT_2026_11_20.md)。
 
 岭南2026-124正文及判项金额已补核：本息376991941元另计占用息，本息及两费小计与标题金额勾稽，生效/实付仍待原件；研究账本268→269且原行保持，见 [结果](ST_LINGNAN_JUDGMENT_TERMS_RESULT_2026_11_20.md)。
+
+现金流向横向比较已发布：京蓝两笔、神雾股份抵债、岭南债券判项分列；三家公司四事项逐项核流向、阶段和日期，原件按需展开，不新增方法验证次数。见 [结果](ST_CASH_DIRECTION_COMPARISON_RESULT_2026_11_20.md)。

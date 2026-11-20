@@ -1,0 +1,51 @@
+{
+  "through": "2026-11-06",
+  "themes": {
+    "removal_followup": {
+      "compensation": {
+        "payer": "云南佳骏",
+        "last_received_on": "2026-08-20",
+        "total_received_yuan": "151375161.76",
+        "status": "fully_received",
+        "source": {
+          "announcement_id": "1225486131",
+          "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-21/3f2ff2b1-0452-4b30-a536-0b0d43071e5c.PDF",
+          "sha256": "b152b8d0ec21a127ba518344ff49ab4d58e13206305a0f5bffbd5f6f9f54140e",
+          "published_on": "2026-08-21",
+          "title": "ST京蓝：关于2025年度公司业绩补偿款支付完毕的公告"
+        }
+      },
+      "recovery": {
+        "case_id": "（2026）京0102民初28638号",
+        "claim_cash_yuan": "16493477.46",
+        "claim_shares": "11644349",
+        "claim_total_yuan": "85893796.80",
+        "received_confirmed_yuan": null,
+        "final_judgment": null,
+        "source": {
+          "announcement_id": "1225542475",
+          "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-09-02/6165a141-8157-47b2-a3ea-6a8b064164b8.PDF",
+          "sha256": "18c3c8dd6764e720b30eac607c32a55b3b4e2b14a7c09cda69ff311997b54db2",
+          "published_on": "2026-09-02",
+          "title": "京蓝科技：重大诉讼公告（更正后）"
+        }
+      }
+    },
+    "shenwu_execution": {
+      "transfer": {
+        "shares": "33000000",
+        "mode": "court_debt_settlement",
+        "status": "registration_complete_per_disclosures",
+        "issuer_cash_received_yuan": null,
+        "control_changed": false,
+        "source": {
+          "announcement_id": "1225602417",
+          "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-13/b04d4859-9668-4b8d-9930-68953995f4c8.PDF",
+          "sha256": "cbbb817c9b305e9f5793e604380f3d7406f60b846886473281f8db3fc3b5971d",
+          "published_on": "2026-10-13",
+          "title": "神雾节能：关于股东权益发生变动的提示性公告"
+        }
+      }
+    }
+  }
+}

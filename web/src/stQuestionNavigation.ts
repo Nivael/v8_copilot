@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'lingnanbond',anchor:'st-lingnan-bond-followup',title:'岭南：有判决、有质押，就能当作已经兑付吗？',field:'lingnan_exit_followup'},
   {key:'removalclocks',anchor:'st-removal-announcement-clocks',title:'四通20日上涨，为什么最新又是下跌？',field:'removal_mature_windows'},
   {key:'inventory',anchor:'st-evidence-inventory',title:'研究材料有多少，哪些仍未核完？',field:'evidence_inventory'},
   {key:'jingjidividend',anchor:'st-jingji-dividend-followup',title:'京机：取整价格相同，能证明原公式正确吗？',field:'jingji_dividend_followup'},

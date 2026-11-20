@@ -1,3 +1,4 @@
+import {STLingnanBondFollowup} from './STLingnanBondFollowup'
 import {STEvidenceInventory} from './STEvidenceInventory'
 import {STJingjiDividendFollowup} from './STJingjiDividendFollowup'
 import {STNingkeComparativeFollowup} from './STNingkeComparativeFollowup'
@@ -78,6 +79,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
   {themes?.price_band_audit&&<button className="regime-text-link" onClick={()=>onEvidence('规则前后','st-price-band-audit')}>涨过5%，就突破旧涨停了吗？看具体例子 →</button>}
   {themes?.removal_era_comparison&&<button className="regime-text-link" onClick={()=>setTopic('cohort')}>本轮比较：摘帽以后，7月前后有什么不同？ →</button>}
   <p className="regime-topic-date">{themes?.current_extension?'原制度复盘窗口':'观察期'} {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
+  {topic==='lingnanbond'&&<STLingnanBondFollowup data={themes?.lingnan_exit_followup}/>}
   {topic==='endpoints'&&<STEndpointReasons data={themes?.endpoint_reasons} audit={themes?.endpoint_selection_audit} basis={themes?.endpoint_basis_followup} lingnan={themes?.lingnan_exit_followup}/>}
   {topic==='xilv'&&<STXilvTimeline data={themes?.xilv_timeline} followup={themes?.xilv_liability}/>}
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">

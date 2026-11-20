@@ -1,0 +1,208 @@
+{
+  "through": "2026-11-19",
+  "title": "岭南：财报更正以后，退出程序确认到哪一步？",
+  "answer": "交易触发和停牌已有对应原价与原件；10月更正了历史财报，后续披露仍使用拟决定、若最终决定的表述。尚未取得可认证的最终决定或摘牌日，更正与现金净流入也没有替代这些证据。",
+  "timeline": [
+    {
+      "date": "2026-10-13",
+      "published_on": "2026-10-13",
+      "event": "开始停牌",
+      "meaning": "连续低于面值触发与停牌，不当作最终决定或摘牌。",
+      "source": "1225602315",
+      "page": 1
+    },
+    {
+      "date": "2026-10-16",
+      "published_on": "2026-10-17",
+      "event": "收到终止上市事先告知",
+      "meaning": "收到日和披露日分列，不把有权听证当作已申请听证。",
+      "source": "1225609701",
+      "page": 1
+    },
+    {
+      "date": null,
+      "published_on": "2026-10-28",
+      "event": "财报更正后仍重述事先告知",
+      "meaning": "多年报表更正，不提供已经完成最终退出的证明。",
+      "source": "1225632584",
+      "page": 9
+    },
+    {
+      "date": null,
+      "published_on": "2026-10-30",
+      "event": "三季报仍使用条件式",
+      "meaning": "报表止于9月末，10月程序在期后事项披露，不倒填成9月末已知。",
+      "source": "1225644904",
+      "page": 6
+    },
+    {
+      "date": null,
+      "published_on": "2026-11-12",
+      "event": "受托报告继续重述拟决定",
+      "meaning": "此前已纳入的同一报告，本轮重看对应页；不是新增独立事件。",
+      "source": "1225667855",
+      "page": 6
+    }
+  ],
+  "corrections": [
+    {
+      "metric": "2025合并资产总额",
+      "source": "1225632584",
+      "page": 5,
+      "before": "11113176181.87",
+      "delta": "6001937.93",
+      "after": "11119178119.80"
+    },
+    {
+      "metric": "2025合并负债总额",
+      "source": "1225632584",
+      "page": 5,
+      "before": "12410089036.00",
+      "delta": "6473356.25",
+      "after": "12416562392.25"
+    },
+    {
+      "metric": "2025合并股东权益总额",
+      "source": "1225632584",
+      "page": 6,
+      "before": "-1296912854.13",
+      "delta": "-471418.32",
+      "after": "-1297384272.45"
+    },
+    {
+      "metric": "2025合并净利润",
+      "source": "1225632584",
+      "page": 6,
+      "before": "-2372739671.20",
+      "delta": "-471418.32",
+      "after": "-2373211089.52"
+    },
+    {
+      "metric": "2025归母净利润",
+      "source": "1225632584",
+      "page": 6,
+      "before": "-2335676137.90",
+      "delta": "-471418.32",
+      "after": "-2336147556.22"
+    }
+  ],
+  "quarter": {
+    "source": "1225644904",
+    "page": 2,
+    "through": "2026-09-30",
+    "revenue": {
+      "quarter": "43313248.67",
+      "nine_months": "101551515.26"
+    },
+    "parent_profit": {
+      "quarter": "-127320299.26",
+      "nine_months": "-411256076.11"
+    },
+    "recurring_profit": {
+      "quarter": "-129422387.20",
+      "nine_months": "-407890862.07"
+    },
+    "operating_cash": {
+      "quarter": null,
+      "nine_months": "26590475.12"
+    },
+    "parent_equity": "-1761033884.07",
+    "prior_year_parent_equity_restated": "-1349766328.01"
+  },
+  "trigger": {
+    "rows": 20,
+    "below_1_count": 20,
+    "dates": [
+      "2026-09-07",
+      "2026-09-08",
+      "2026-09-09",
+      "2026-09-10",
+      "2026-09-11",
+      "2026-09-14",
+      "2026-09-15",
+      "2026-09-16",
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-23",
+      "2026-09-24",
+      "2026-09-28",
+      "2026-09-29",
+      "2026-09-30",
+      "2026-10-08",
+      "2026-10-09",
+      "2026-10-12"
+    ],
+    "boundary": "原价冻结记录与公告交易区间对照；只核交易触发事实，不推算最终决定或摘牌日。"
+  },
+  "source_refs": [
+    {
+      "announcement_id": "1225667855",
+      "title": "岭南生态文旅股份有限公司向不特定对象发行可转换公司债券2026年度第三十五次临时受托管理事务报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-12/1225667855.PDF",
+      "published_on": "2026-11-12",
+      "sha256": "ac786c94dc108b334cb9b80141719365144f6172bd83fc04f9ef137a4c589236"
+    },
+    {
+      "announcement_id": "1225653774",
+      "title": "岭南生态文旅股份有限公司向不特定对象发行可转换公司债券2026年度第三十四次临时受托管理事务报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-03/1225653774.PDF",
+      "published_on": "2026-11-03",
+      "sha256": "f05f3859cfec2ab27304ce96dafaa635e1e6a2309190b93dcf564a192a352bff"
+    },
+    {
+      "announcement_id": "1225653773",
+      "title": "广发证券股份有限公司关于岭南转债2026年第三季度违约处置进展临时受托管理事务报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-03/1225653773.PDF",
+      "published_on": "2026-11-03",
+      "sha256": "553ddcab44e796b994eb2aaec88bea4724e106890ae957fef1bce7dbdf51728d"
+    },
+    {
+      "announcement_id": "1225644904",
+      "title": "2026年三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225644904.PDF",
+      "published_on": "2026-10-30",
+      "sha256": "866640480b7597d30881e6a63ce33baa4f2aee20c3e818fa7ee0a678304a62ef"
+    },
+    {
+      "announcement_id": "1225632584",
+      "title": "关于前期会计差错更正及追溯调整的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632584.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "09cf81c71f3795239aaa074509f864b765984c2ea9d3c0e4f88d968a3ea3fe7a"
+    },
+    {
+      "announcement_id": "1225602315",
+      "title": "关于公司股票及可转换公司债券将被终止上市暨停牌的风险提示公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-13/1225602315.PDF",
+      "published_on": "2026-10-13",
+      "sha256": "32a79fe046d35bcab49e962608d53500ad2da2067f70222346641e9cf5b2ba59"
+    },
+    {
+      "announcement_id": "1225609701",
+      "title": "关于收到终止上市事先告知书的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225609701.PDF",
+      "published_on": "2026-10-17",
+      "sha256": "9c2f3777bf177f750d12ad4151884e8eaed4c87a26111ff93ea1fbc22c1b4376"
+    }
+  ],
+  "counts": {
+    "materialized_documents": 5,
+    "materialized_pages": 61,
+    "new_evidence_documents": 4,
+    "reused_evidence_documents": 1,
+    "viewed_pages": 8,
+    "correction_rows": 5
+  },
+  "boundaries": [
+    "完整返回的34条目录沿前轮留档复用，本轮没有重新认证目录或检索已穷尽；没找到最终文件不证明最终文件不存在。",
+    "五份资料同属一家公司，重述同一事先告知不增加独立案例；两份11月3日报告仅完成文本定位，不声称61页全部逐页审阅。",
+    "更正公告中的148823356.25元未归还占款余额截止2025年8月25日，不能当成2026年11月最新余额或新回款。",
+    "合并股东权益总额和归母权益分开，现金流入与利润分开；未经审计季度数不认证年度风险解除。",
+    "正式决定、摘牌和股东账户结果仍需原件；两端无成交的同窗收益继续留空，不填零或最后成交价。"
+  ],
+  "final_decision_verified": false,
+  "delisting_date_verified": false,
+  "method_promotions": 0
+}

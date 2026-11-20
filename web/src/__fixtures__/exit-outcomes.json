@@ -1,0 +1,947 @@
+{
+  "through": "2026-11-19",
+  "rows": [
+    {
+      "symbol": "000016",
+      "name": "康佳A",
+      "classification": "voluntary_delisting",
+      "warning_removed": null,
+      "provider_first_absent": "2026-10-23",
+      "official_effective_or_stage_date": "2026-10-23",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-09-04",
+          "source": {
+            "announcement_id": "1225545707",
+            "page": 1,
+            "sha256": "8da7586099fb06bdd0d6666d2bd100077a92b5e05c6e73e11d07403b3c5a7dce",
+            "title": "*ST康佳A：关于本次终止上市事项的停牌公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-09-04/2d4e5a31-8f14-4283-aa1c-835246d90722.PDF#page=1"
+          },
+          "text": "9月4日起停牌；方案若获通过，停牌持续至摘牌。"
+        },
+        {
+          "published_on": "2026-10-15",
+          "source": {
+            "announcement_id": "1225605494",
+            "page": 2,
+            "sha256": "d666b067b10579361cf69bac74e1fff0ed4214e77b397b62e0a30e10398707e6",
+            "title": "*ST康佳A：关于以股东会决议方式主动终止公司股票上市现金选择权申报结果的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-15/2a1b8b3d-7b41-40e1-92d3-c5ab65945d6f.PDF#page=2"
+          },
+          "text": "10月15日公告有效申报现金选择权已完成交收，A股有效申报989276152份；不能据此认证每个持有人的账户收益。"
+        },
+        {
+          "published_on": "2026-10-23",
+          "source": {
+            "announcement_id": "1225615607",
+            "page": 1,
+            "sha256": "63d22af39ae73ee789d4492c4643f5a4b4ea02edfe51992d8752028b12dc320d",
+            "title": "*ST康佳A：关于股票终止上市暨摘牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-23/4334c9b6-2093-468d-aa67-4d33b8f7a8a1.PDF#page=1"
+          },
+          "text": "主动终止上市，10月23日摘牌；后续计划转入退市板块。"
+        }
+      ],
+      "later_reading": "9月4日停牌，10月23日主动摘牌。公告称有效申报现金选择权完成交收，但资格、实际申报、成本及到账不能据此推算每个持有人收益。",
+      "later_sources": [
+        {
+          "source": {
+            "announcement_id": "1225545707",
+            "observed_at": "2026-11-08T17:18:55.317629+00:00",
+            "page_text_hashes": [
+              "2ff6a48623505073bfdf7325883b31f3915ffc85ca7e5d6a92fbe4fdffd2b539",
+              "350260efae85181464826809df73f62f74a3aa3174c102ad831e21536a60b65a"
+            ],
+            "pages": 2,
+            "protected_gate_passed": true,
+            "published_on": "2026-09-04",
+            "sha256": "8da7586099fb06bdd0d6666d2bd100077a92b5e05c6e73e11d07403b3c5a7dce",
+            "symbol": "000016",
+            "title": "*ST康佳A：关于本次终止上市事项的停牌公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-09-04/2d4e5a31-8f14-4283-aa1c-835246d90722.PDF",
+            "reused": true,
+            "verified_at": "2026-11-19T18:08:39.280450+00:00",
+            "original_observed_at": "2026-11-08T17:18:55.317629+00:00"
+          },
+          "pages": [
+            1
+          ]
+        },
+        {
+          "source": {
+            "announcement_id": "1225605494",
+            "observed_at": "2026-11-08T17:18:55.099462+00:00",
+            "page_text_hashes": [
+              "61e01779b5a14d05408b8c77902f01035bc8f79694d070ba7922da9735afb377",
+              "b5297b0e7378fc5539c648283fcb975a4f27c9150445abf4948cbd61c3eeb472"
+            ],
+            "pages": 2,
+            "protected_gate_passed": true,
+            "published_on": "2026-10-15",
+            "sha256": "d666b067b10579361cf69bac74e1fff0ed4214e77b397b62e0a30e10398707e6",
+            "symbol": "000016",
+            "title": "*ST康佳A：关于以股东会决议方式主动终止公司股票上市现金选择权申报结果的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-15/2a1b8b3d-7b41-40e1-92d3-c5ab65945d6f.PDF",
+            "reused": true,
+            "verified_at": "2026-11-19T18:08:39.294057+00:00",
+            "original_observed_at": "2026-11-08T17:18:55.099462+00:00"
+          },
+          "pages": [
+            2
+          ]
+        },
+        {
+          "source": {
+            "announcement_id": "1225615607",
+            "observed_at": "2026-11-08T17:18:54.955533+00:00",
+            "page_text_hashes": [
+              "52e0533a385993529ce86a9930dee663626823484f987c40341895c873c32082",
+              "00f4bac20154f12ceee7b2aae6e56a4c65dc886c1401c0f37d90ff3bb2b242df"
+            ],
+            "pages": 2,
+            "protected_gate_passed": true,
+            "published_on": "2026-10-23",
+            "sha256": "63d22af39ae73ee789d4492c4643f5a4b4ea02edfe51992d8752028b12dc320d",
+            "symbol": "000016",
+            "title": "*ST康佳A：关于股票终止上市暨摘牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-23/4334c9b6-2093-468d-aa67-4d33b8f7a8a1.PDF",
+            "reused": true,
+            "verified_at": "2026-11-19T18:08:39.315062+00:00",
+            "original_observed_at": "2026-11-08T17:18:54.955533+00:00"
+          },
+          "pages": [
+            1
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "primary_endpoint_gap",
+          "certified_return_pct": null,
+          "primary_return_pct": null
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "primary_endpoint_gap",
+          "certified_return_pct": null,
+          "primary_return_pct": null
+        }
+      ]
+    },
+    {
+      "symbol": "000711",
+      "name": "京蓝科技",
+      "classification": "warning_removed",
+      "warning_removed": "other",
+      "provider_first_absent": "2026-08-31",
+      "official_effective_or_stage_date": "2026-08-31",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-08-28",
+          "source": {
+            "announcement_id": "1225522073",
+            "page": 1,
+            "sha256": "5fbb79fb18a23a4072831eb379c5f0ff9d70af4f028f455ec91662e83c8e08b7",
+            "title": "ST京蓝：关于公司撤销其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-28/c338c029-b409-4145-83f9-09dccda9d09e.PDF#page=1"
+          },
+          "text": "公告安排2026-08-28停牌一天，2026-08-31复牌并撤销其他风险警示；证券简称变为京蓝科技，代码000711不变。"
+        },
+        {
+          "published_on": "2026-08-28",
+          "source": {
+            "announcement_id": "1225522073",
+            "page": 2,
+            "sha256": "5fbb79fb18a23a4072831eb379c5f0ff9d70af4f028f455ec91662e83c8e08b7",
+            "title": "ST京蓝：关于公司撤销其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-28/c338c029-b409-4145-83f9-09dccda9d09e.PDF#page=2"
+          },
+          "text": "公告仍披露投资者索赔案件在审；本轮不把摘帽认证为诉讼风险消失。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-27.18631178707224334600760456",
+          "primary_return_pct": "-27.18631178707224334600760456"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "10.05747126436781609195402300",
+          "primary_return_pct": "10.05747126436781609195402300"
+        }
+      ]
+    },
+    {
+      "symbol": "000820",
+      "name": "神雾节能",
+      "classification": "warning_removed",
+      "warning_removed": "delisting",
+      "provider_first_absent": "2026-07-30",
+      "official_effective_or_stage_date": "2026-07-30",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-07-29",
+          "source": {
+            "announcement_id": "1225445676",
+            "page": 1,
+            "sha256": "c475ad2c5819f5f9960e5cbd9b1919383fa954bccec1e9ad52c03f8a7e8e4080",
+            "title": "*ST节能：关于公司股票交易撤销退市风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-29/30a864d9-fc5e-4adc-951e-665360e3af62.PDF#page=1"
+          },
+          "text": "公告安排2026-07-29停牌一天，2026-07-30复牌并撤销退市风险警示；证券简称变为神雾节能，代码000820不变。"
+        },
+        {
+          "published_on": "2026-07-29",
+          "source": {
+            "announcement_id": "1225445676",
+            "page": 1,
+            "sha256": "c475ad2c5819f5f9960e5cbd9b1919383fa954bccec1e9ad52c03f8a7e8e4080",
+            "title": "*ST节能：关于公司股票交易撤销退市风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-29/30a864d9-fc5e-4adc-951e-665360e3af62.PDF#page=1"
+          },
+          "text": "公告同时提示仍在立案调查期间、2026年半年扣非预亏及2025年扣非亏损。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-10.57692307692307692307692308",
+          "primary_return_pct": "-10.57692307692307692307692308"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-9.120521172638436482084690550",
+          "primary_return_pct": "-9.120521172638436482084690550"
+        }
+      ]
+    },
+    {
+      "symbol": "002005",
+      "name": "德豪润达",
+      "classification": "warning_removed",
+      "warning_removed": "other",
+      "provider_first_absent": "2026-07-14",
+      "official_effective_or_stage_date": "2026-07-14",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-07-11",
+          "source": {
+            "announcement_id": "1225420292",
+            "page": 1,
+            "sha256": "c4d40a0f34c056e9c9e5ecd33d3f363f49841a70909a081a7f8d95e858930bde",
+            "title": "ST德豪：关于公司股票交易撤销其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-11/b33de5b6-7427-4e7c-ab40-29d7bff78195.PDF#page=1"
+          },
+          "text": "公告安排2026-07-13停牌一天，2026-07-14复牌并撤销其他风险警示；证券简称变为德豪润达，代码002005不变。"
+        },
+        {
+          "published_on": "2026-07-11",
+          "source": {
+            "announcement_id": "1225420292",
+            "page": 3,
+            "sha256": "c4d40a0f34c056e9c9e5ecd33d3f363f49841a70909a081a7f8d95e858930bde",
+            "title": "ST德豪：关于公司股票交易撤销其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-11/b33de5b6-7427-4e7c-ab40-29d7bff78195.PDF#page=3"
+          },
+          "text": "公告所述2025年归母利润为正，但扣非净利润仍为负，不能以摘帽代替主营盈利改善。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-21.17647058823529411764705882",
+          "primary_return_pct": "-21.17647058823529411764705882"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-5.633802816901408450704225350",
+          "primary_return_pct": "-5.633802816901408450704225350"
+        }
+      ]
+    },
+    {
+      "symbol": "002199",
+      "name": "东晶电子",
+      "classification": "warning_removed",
+      "warning_removed": "delisting",
+      "provider_first_absent": "2026-07-23",
+      "official_effective_or_stage_date": "2026-07-23",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-07-22",
+          "source": {
+            "announcement_id": "1225436048",
+            "page": 1,
+            "sha256": "f49d09fa8db9a597b1c84034d831760218b8793b6b5e53baecfa1c36ef75b49c",
+            "title": "*ST东晶：关于公司股票交易撤销退市风险警示暨股票停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-22/fc9df353-bb5a-49ac-82ea-820381a724cf.PDF#page=1"
+          },
+          "text": "公告安排2026-07-22停牌一天，2026-07-23复牌并撤销退市风险警示；证券简称变为东晶电子，代码002199不变。"
+        },
+        {
+          "published_on": "2026-07-22",
+          "source": {
+            "announcement_id": "1225436048",
+            "page": 2,
+            "sha256": "f49d09fa8db9a597b1c84034d831760218b8793b6b5e53baecfa1c36ef75b49c",
+            "title": "*ST东晶：关于公司股票交易撤销退市风险警示暨股票停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-22/fc9df353-bb5a-49ac-82ea-820381a724cf.PDF#page=2"
+          },
+          "text": "公告所述2025年归母及扣非净利润仍为负，撤销的是对应规则情形。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-33.35919317300232738557020946",
+          "primary_return_pct": "-33.35919317300232738557020946"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-10.89211618257261410788381743",
+          "primary_return_pct": "-10.89211618257261410788381743"
+        }
+      ]
+    },
+    {
+      "symbol": "002214",
+      "name": "大立科技",
+      "classification": "warning_removed",
+      "warning_removed": "delisting",
+      "provider_first_absent": "2026-08-05",
+      "official_effective_or_stage_date": "2026-08-05",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-08-04",
+          "source": {
+            "announcement_id": "1225456226",
+            "page": 1,
+            "sha256": "a7dc460824cf06c0a59a6c9092a9cdaad71a84b37170b9b1870a7503c616db83",
+            "title": "*ST大立：浙江大立科技股份有限公司关于公司股票交易撤销退市风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-04/d7bb9c52-ce95-4147-bc1d-12c57efcf3d4.PDF#page=1"
+          },
+          "text": "公告安排2026-08-04停牌一天，2026-08-05复牌并撤销退市风险警示；证券简称变为大立科技，代码002214不变。"
+        },
+        {
+          "published_on": "2026-08-04",
+          "source": {
+            "announcement_id": "1225456226",
+            "page": 1,
+            "sha256": "a7dc460824cf06c0a59a6c9092a9cdaad71a84b37170b9b1870a7503c616db83",
+            "title": "*ST大立：浙江大立科技股份有限公司关于公司股票交易撤销退市风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-04/d7bb9c52-ce95-4147-bc1d-12c57efcf3d4.PDF#page=1"
+          },
+          "text": "本轮核实风险警示撤销与生效日，后续经营改善仍需另核财报和履约。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "6.875425459496270507205644600",
+          "primary_return_pct": "6.875425459496270507205644600"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-3.325123152709359605911330050",
+          "primary_return_pct": "-3.325123152709359605911330050"
+        }
+      ]
+    },
+    {
+      "symbol": "002586",
+      "name": "围海股份",
+      "classification": "warning_removed",
+      "warning_removed": "other",
+      "provider_first_absent": "2026-08-31",
+      "official_effective_or_stage_date": "2026-08-31",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-08-28",
+          "source": {
+            "announcement_id": "1225522023",
+            "page": 1,
+            "sha256": "c54a0a6b30e265af66a1e1a358872e8b47ace668f8a32e07192b4bd877dc5caf",
+            "title": "ST围海：关于公司股票交易撤销其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-28/e595f7d5-abad-4b0c-8e64-73fc1d1e1ad0.PDF#page=1"
+          },
+          "text": "公告安排2026-08-28停牌一天，2026-08-31复牌并撤销其他风险警示；证券简称变为围海股份，代码002586不变。"
+        },
+        {
+          "published_on": "2026-08-28",
+          "source": {
+            "announcement_id": "1225522023",
+            "page": 2,
+            "sha256": "c54a0a6b30e265af66a1e1a358872e8b47ace668f8a32e07192b4bd877dc5caf",
+            "title": "ST围海：关于公司股票交易撤销其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-28/e595f7d5-abad-4b0c-8e64-73fc1d1e1ad0.PDF#page=2"
+          },
+          "text": "公告依据包括处罚事项整改和规定期限；本轮不把撤销警示外推为所有后续风险已消除。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-29.20792079207920792079207921",
+          "primary_return_pct": "-29.20792079207920792079207921"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-6.229508196721293028755710830",
+          "primary_return_pct": "-6.229508196721293028755710830"
+        }
+      ]
+    },
+    {
+      "symbol": "002656",
+      "name": "摩登大道",
+      "classification": "warning_removed",
+      "warning_removed": "delisting",
+      "provider_first_absent": "2026-07-20",
+      "official_effective_or_stage_date": "2026-07-20",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-07-17",
+          "source": {
+            "announcement_id": "1225429054",
+            "page": 1,
+            "sha256": "ae1027bfc0de430fe4f49d40a668b26bf75b9be3a347f393f04ffd3f4ff7dea6",
+            "title": "*ST摩登：关于公司股票撤销退市风险警示暨停复牌安排的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-17/d2dba6de-2b16-42c8-b0ea-741712cf5377.PDF#page=1"
+          },
+          "text": "公告安排2026-07-17停牌一天，2026-07-20复牌并撤销退市风险警示；证券简称变为摩登大道，代码002656不变。"
+        },
+        {
+          "published_on": "2026-07-17",
+          "source": {
+            "announcement_id": "1225429054",
+            "page": 2,
+            "sha256": "ae1027bfc0de430fe4f49d40a668b26bf75b9be3a347f393f04ffd3f4ff7dea6",
+            "title": "*ST摩登：关于公司股票撤销退市风险警示暨停复牌安排的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-17/d2dba6de-2b16-42c8-b0ea-741712cf5377.PDF#page=2"
+          },
+          "text": "公告所述2025年归母及扣非净利润仍为负，不能把摘帽视为已扭亏。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-18.68852459016393442622950820",
+          "primary_return_pct": "-18.68852459016393442622950820"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-2.362204724409448818897637800",
+          "primary_return_pct": "-2.362204724409448818897637800"
+        }
+      ]
+    },
+    {
+      "symbol": "002713",
+      "name": "东易日盛",
+      "classification": "warning_removed",
+      "warning_removed": "both",
+      "provider_first_absent": "2026-07-20",
+      "official_effective_or_stage_date": "2026-07-20",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-07-17",
+          "source": {
+            "announcement_id": "1225429061",
+            "page": 1,
+            "sha256": "c128377fbaeb5836dc7d362883bd0b5a659b48f6419a3f76a6ae517a9cfe8388",
+            "title": "*ST东易：关于公司股票交易撤销退市风险警示及其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-17/ab1edd1b-d361-4416-8ea5-a2cd4162090d.PDF#page=1"
+          },
+          "text": "公告安排2026-07-17停牌一天，2026-07-20复牌并撤销退市风险警示及其他风险警示；证券简称变为东易日盛，代码002713不变。"
+        },
+        {
+          "published_on": "2026-07-17",
+          "source": {
+            "announcement_id": "1225429061",
+            "page": 2,
+            "sha256": "c128377fbaeb5836dc7d362883bd0b5a659b48f6419a3f76a6ae517a9cfe8388",
+            "title": "*ST东易：关于公司股票交易撤销退市风险警示及其他风险警示暨停复牌的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-07-17/ab1edd1b-d361-4416-8ea5-a2cd4162090d.PDF#page=2"
+          },
+          "text": "公告说明2025年权益和营运资金转正、持续经营事项影响消除；本轮仅核所述解除条件。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-44.95699765441751368256450352",
+          "primary_return_pct": "-44.95699765441751368256450352"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-7.124010554089709762532981530",
+          "primary_return_pct": "-7.124010554089709762532981530"
+        }
+      ]
+    },
+    {
+      "symbol": "002731",
+      "name": "萃华",
+      "classification": "delisting_period_then_delisted",
+      "warning_removed": null,
+      "provider_first_absent": "2026-10-23",
+      "official_effective_or_stage_date": "2026-10-23",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-10-16",
+          "source": {
+            "announcement_id": "1225607488",
+            "page": 2,
+            "sha256": "c3dc233140e5637d9769991b3ecee4c32d457d35a12b9ac4a5ef01d2f16efdfa",
+            "title": "*ST萃华：关于收到终止上市决定的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-16/e695f581-792d-47ed-a33d-2a35d2ea0905.PDF#page=2"
+          },
+          "text": "因未按期披露2025年年报，5月6日起停牌；7月7日起复牌并实施退市风险警示，7月3日仍在停牌。"
+        },
+        {
+          "published_on": "2026-10-16",
+          "source": {
+            "announcement_id": "1225607489",
+            "page": 1,
+            "sha256": "8d2be086e1a9d3329a2c70739f04e57811d01671546cdc8e82fb86ac68cde1fd",
+            "title": "*ST萃华：关于公司股票进入退市整理期交易的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-16/dd74a783-ddb7-4503-9adb-16369ac2757f.PDF#page=1"
+          },
+          "text": "退市整理期代码002731不变，简称萃华退；计划10月23日起交易，首日无涨跌幅限制，其后10%。"
+        },
+        {
+          "published_on": "2026-11-06",
+          "source": {
+            "announcement_id": "1225658976",
+            "page": 1,
+            "sha256": "8fd86ad527b38f3ee2261faca4db9537cd971208bfd8a834b18927498f3ad138",
+            "title": "萃华退：关于公司股票进入退市整理期交易的第四次风险提示公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-11-06/358789d0-d34e-421a-9b5c-f02a29e739a8.PDF#page=1"
+          },
+          "text": "11月6日公告确认10月23日起进入退市整理期，本公告日为第11个交易日，预计最后交易日11月12日；截至11月6日不能写成已经摘牌。"
+        }
+      ],
+      "later_reading": "7月3日仍因年报事项停牌，7月7日复牌；10月23日起退市整理，11月12日最后交易，11月13日摘牌。最近9日有11月6日起点，完整93日却没有7月3日成交起点。",
+      "later_sources": [
+        {
+          "source": {
+            "announcement_id": "1225607488",
+            "observed_at": "2026-11-08T17:18:55.586375+00:00",
+            "page_text_hashes": [
+              "8a5b880eab01d130c3030304778cd3da703d3e8d5750e947e4d67eef4191bb6e",
+              "ae2dfcddb3a1d611d4f0f31ba273210020835af43693a59603e0b5a7efec39e4",
+              "5beb9358281a5bfa89563175455293c64c66c2e4012b8fb61368e862a9f80475",
+              "f8ef52689e1d148cb3b9a8dbece997ed2840af0ace00cc8732087227aebfa74f"
+            ],
+            "pages": 4,
+            "protected_gate_passed": true,
+            "published_on": "2026-10-16",
+            "sha256": "c3dc233140e5637d9769991b3ecee4c32d457d35a12b9ac4a5ef01d2f16efdfa",
+            "symbol": "002731",
+            "title": "*ST萃华：关于收到终止上市决定的公告",
+            "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-16/e695f581-792d-47ed-a33d-2a35d2ea0905.PDF",
+            "reused": true,
+            "verified_at": "2026-11-19T18:08:39.340643+00:00",
+            "original_observed_at": "2026-11-08T17:18:55.586375+00:00"
+          },
+          "pages": [
+            2
+          ]
+        },
+        {
+          "source": {
+            "symbol": "002731",
+            "announcement_id": "1225669888",
+            "announcement_date": "2026-11-13",
+            "title": "关于公司股票终止上市暨摘牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-11-13/1225669888.PDF",
+            "raw_item": {
+              "id": null,
+              "secCode": "002731",
+              "secName": "萃华退",
+              "orgId": "9900022974",
+              "announcementId": "1225669888",
+              "announcementTitle": "关于公司股票终止上市暨摘牌的公告",
+              "announcementTime": 1794499200000,
+              "adjunctUrl": "finalpage/2026-11-13/1225669888.PDF",
+              "adjunctSize": 116,
+              "adjunctType": "PDF",
+              "storageTime": null,
+              "columnId": "09020202||250101||250109||251302||2705",
+              "pageColumn": "SZZB",
+              "announcementType": "01010503||010112||012507||012509",
+              "associateAnnouncement": null,
+              "important": null,
+              "batchNum": null,
+              "announcementContent": "",
+              "orgName": null,
+              "tileSecName": "萃华退",
+              "shortTitle": "关于公司股票终止上市暨摘牌的公告",
+              "announcementTypeName": null,
+              "secNameList": null
+            },
+            "sha256": "26788d351ebfd99bd32b4df65aeaa00f2b528cb5e975ad40b420106a78daaac3",
+            "pages": 3,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-19T15:31:27.360033+00:00",
+            "reused": true,
+            "verified_at": "2026-11-19T18:08:39.473627+00:00",
+            "original_observed_at": "2026-11-19T15:31:27.360033+00:00",
+            "published_on": "2026-11-13"
+          },
+          "pages": [
+            1,
+            2
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "primary_endpoint_gap",
+          "certified_return_pct": null,
+          "primary_return_pct": null
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "primary_endpoint_gap",
+          "certified_return_pct": null,
+          "primary_return_pct": null
+        }
+      ]
+    },
+    {
+      "symbol": "600165",
+      "name": "宁科生物",
+      "classification": "warning_removed",
+      "warning_removed": "other",
+      "provider_first_absent": "2026-08-26",
+      "official_effective_or_stage_date": "2026-08-26",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-08-25",
+          "source": {
+            "announcement_id": "1225497764",
+            "page": 1,
+            "sha256": "91109cc976ac4facc9cfb15bd9c5e2ff044866954d8a3a0a36d0c40ffbe91e6d",
+            "title": "ST宁科关于撤销其他风险警示暨临时停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225497764.PDF#page=1"
+          },
+          "text": "公告安排2026-08-25停牌一天，2026-08-26复牌并撤销其他风险警示；证券简称变为宁科生物，代码600165不变。"
+        },
+        {
+          "published_on": "2026-08-25",
+          "source": {
+            "announcement_id": "1225497764",
+            "page": 3,
+            "sha256": "91109cc976ac4facc9cfb15bd9c5e2ff044866954d8a3a0a36d0c40ffbe91e6d",
+            "title": "ST宁科关于撤销其他风险警示暨临时停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225497764.PDF#page=3"
+          },
+          "text": "公告同时披露2026年半年预亏及涉及核心产品技术的商业秘密诉讼，仍需分别追踪。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-14.53287197231833022832581028",
+          "primary_return_pct": "-14.53287197231833022832581028"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-11.78571428571428571428571429",
+          "primary_return_pct": "-11.78571428571428571428571429"
+        }
+      ]
+    },
+    {
+      "symbol": "600525",
+      "name": "长园集团",
+      "classification": "warning_removed",
+      "warning_removed": "other",
+      "provider_first_absent": "2026-08-26",
+      "official_effective_or_stage_date": "2026-08-26",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-08-25",
+          "source": {
+            "announcement_id": "1225499508",
+            "page": 1,
+            "sha256": "75d2dd064882b90e25006829226cea6b91570d87d1807dc1d8ae24d94006cd8a",
+            "title": "关于撤销其他风险警示暨停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499508.PDF#page=1"
+          },
+          "text": "公告安排2026-08-25停牌一天，2026-08-26复牌并撤销其他风险警示；证券简称变为长园集团，代码600525不变。"
+        },
+        {
+          "published_on": "2026-08-25",
+          "source": {
+            "announcement_id": "1225499508",
+            "page": 2,
+            "sha256": "75d2dd064882b90e25006829226cea6b91570d87d1807dc1d8ae24d94006cd8a",
+            "title": "关于撤销其他风险警示暨停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499508.PDF#page=2"
+          },
+          "text": "撤销依据涉及既有内控及审计意见事项的整改和影响消除，不等于认证未来盈利。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-25.71428571428570013605442177",
+          "primary_return_pct": "-25.71428571428570013605442177"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-3.465346534653465346534653470",
+          "primary_return_pct": "-3.465346534653465346534653470"
+        }
+      ]
+    },
+    {
+      "symbol": "603517",
+      "name": "绝味食品",
+      "classification": "warning_removed",
+      "warning_removed": "other",
+      "provider_first_absent": "2026-10-20",
+      "official_effective_or_stage_date": "2026-10-20",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-10-19",
+          "source": {
+            "announcement_id": "1225609996",
+            "page": 1,
+            "sha256": "33531fddb6a838242c0f899ca394c470c2e910fa4dc266796cff8b71b4d7cec0",
+            "title": "关于撤销其他风险警示暨临时停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF#page=1"
+          },
+          "text": "公告安排2026-10-19停牌一天，2026-10-20复牌并撤销其他风险警示；证券简称变为绝味食品，代码603517不变。"
+        },
+        {
+          "published_on": "2026-10-19",
+          "source": {
+            "announcement_id": "1225609996",
+            "page": 2,
+            "sha256": "33531fddb6a838242c0f899ca394c470c2e910fa4dc266796cff8b71b4d7cec0",
+            "title": "关于撤销其他风险警示暨临时停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-19/1225609996.PDF#page=2"
+          },
+          "text": "公告同时披露投资者索赔案件尚未开庭并已计提预计负债，不能因撤销警示而删除案件。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "quote_conflict_or_unverified",
+          "certified_return_pct": null,
+          "primary_return_pct": "-4.292335738352257523711881440"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-11.45926589077887197851387645",
+          "primary_return_pct": "-11.45926589077887197851387645"
+        }
+      ]
+    },
+    {
+      "symbol": "603838",
+      "name": "四通股份",
+      "classification": "warning_removed",
+      "warning_removed": "delisting",
+      "provider_first_absent": "2026-10-20",
+      "official_effective_or_stage_date": "2026-10-20",
+      "provider_no_reentry_through": "2026-11-19",
+      "facts": [
+        {
+          "published_on": "2026-10-17",
+          "source": {
+            "announcement_id": "1225608268",
+            "page": 1,
+            "sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7",
+            "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF#page=1"
+          },
+          "text": "公告安排2026-10-19停牌一天，2026-10-20复牌并撤销退市风险警示；证券简称变为四通股份，代码603838不变。"
+        },
+        {
+          "published_on": "2026-10-17",
+          "source": {
+            "announcement_id": "1225608268",
+            "page": 2,
+            "sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7",
+            "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF#page=2"
+          },
+          "text": "公告所述2025年归母及扣非利润仍为负，摘帽与扭亏需要分开核。"
+        }
+      ],
+      "later_reading": null,
+      "later_sources": [],
+      "returns": [
+        {
+          "window": "full",
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "23.10195227765726681127982650",
+          "primary_return_pct": "23.10195227765726681127982650"
+        },
+        {
+          "window": "recent",
+          "anchor": "2026-11-06",
+          "through": "2026-11-19",
+          "status": "matched",
+          "certified_return_pct": "-11.05015673981191222570532915",
+          "primary_return_pct": "-11.05015673981191222570532915"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "outside_provider_list": 14,
+    "warning_removed": 12,
+    "voluntary_delisting": 1,
+    "delisting_period_then_delisted": 1,
+    "no_reentry_in_provider_history": 14,
+    "new_requests": 0,
+    "method_promotions": 0
+  },
+  "removed_return_summary": [
+    {
+      "window": "full",
+      "members": 12,
+      "verified_paired": 11,
+      "positive": 2,
+      "median_pct": "-21.17647058823529411764705882"
+    },
+    {
+      "window": "recent",
+      "members": 12,
+      "verified_paired": 12,
+      "positive": 1,
+      "median_pct": "-6.67675937540550139564434618"
+    }
+  ],
+  "boundary": "正式撤销风险警示不等于经营痊愈或投资获利；期末分组使用后来信息，只作结果核对。12家不是全市场摘帽成功率，2家退出缺共同端点不填零或负100%。完整官方每日名单仍未穷尽认证。",
+  "title": "离开ST名单的14家公司，分别去了哪里？",
+  "answer": "固定150只样本中，期末不在提供方ST名单的14家，已有公告依据分为12家撤销风险警示、康佳主动终止上市、萃华退市整理后摘牌。离开名单不是统一的成功结果；正式撤销警示也不等于后来上涨。",
+  "interpretation": "12家撤销警示公司的近期共同窗口全部通过核价，只有1家上涨，中位数约-6.68%；完整区间有11家通过核价，2家上涨，中位数约-21.18%，绝味起点报价差异保留。窗口从固定日期起算，不是各自摘帽日后的收益。",
+  "selection_boundary": "这14家按11月19日期末状态事后识别，不能作为7月3日可执行名单；12家撤销也不能除以150就称为全市场摘帽成功率。另有仍在ST名单但已停牌的岭南，不在这14家中；名单、交易状态与最终法律程序分别核。",
+  "watch": [
+    "名单归类遇到新正式文件或重新实施警示时，更新对应日期和类型，不追改当时名单。",
+    "两家退出公司的实际股东结果、股份登记与现金选择权资格继续另核，不用交易缺价代替账户收益。",
+    "完整官方每日名单与全部退出原因仍按原缺口保留；本轮复用已有公告证据，并未重新逐页检查全部撤销公告。"
+  ],
+  "experience": "先按事件性质解释离开名单，再分别核交易端点和投资结果。保留未退出和退出失败样本，不能只选后来成功摘帽的公司来归纳策略。"
+}

@@ -383,6 +383,7 @@ def publish(inputs, *, root=ROOT):
                'baili_policy_processor_sha256': sha256(Path(__file__).with_name('st_baili_policy_followup.py').read_bytes()).hexdigest(),
                'jihua_bridge_processor_sha256': sha256(Path(__file__).with_name('st_jihua_bridge_followup.py').read_bytes()).hexdigest(),
                'market_stage_processor_sha256': sha256(Path(__file__).with_name('st_market_stage_experience.py').read_bytes()).hexdigest(),
+               'exit_outcomes_processor_sha256': sha256(Path(__file__).with_name('st_exit_outcomes.py').read_bytes()).hexdigest(),
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
@@ -467,6 +468,7 @@ def load(root=ROOT):
                 or value.get('baili_policy_processor_sha256')!=sha256(Path(__file__).with_name('st_baili_policy_followup.py').read_bytes()).hexdigest()
                 or value.get('jihua_bridge_processor_sha256')!=sha256(Path(__file__).with_name('st_jihua_bridge_followup.py').read_bytes()).hexdigest()
                 or value.get('market_stage_processor_sha256')!=sha256(Path(__file__).with_name('st_market_stage_experience.py').read_bytes()).hexdigest()
+                or value.get('exit_outcomes_processor_sha256')!=sha256(Path(__file__).with_name('st_exit_outcomes.py').read_bytes()).hexdigest()
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()

@@ -1,0 +1,23 @@
+{
+  "reading": {
+    "counts": {
+      "matched": 71,
+      "official_no_trade_excluded": 2,
+      "unresolved": 1
+    },
+    "hits": {
+      "touch_lower": [
+        "000826.SZ",
+        "002082.SZ"
+      ],
+      "close_lower": [],
+      "one_price_lower": [],
+      "close_upper": [
+        "000838.SZ"
+      ]
+    },
+    "complete_trading_coverage": false
+  },
+  "control_sha256": "26a01f05c1a734ab5d90be643493968049d500707dd59c499895adb6b299b30b",
+  "research_run_id": "RUN-954501712A1C4195BAC9E78F"
+}

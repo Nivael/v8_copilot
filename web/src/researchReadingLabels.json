@@ -1,0 +1,43 @@
+{
+  "version": "research_reading_labels_v1",
+  "scope": "three newly published long-window studies only",
+  "reason": "Copied explanatory headings still referred to a single-company limit-price study; conclusions, source backings and calculations unchanged",
+  "entries": [
+    {
+      "run_id": "RUN-492A3EE6677A4EC18B458E7E",
+      "pack_ids": [
+        "EP-01A4B93FF5D6B975B289"
+      ],
+      "draft_digest": "f5e72d507b52c5676d2b8612e36790dc21eaf7a9f2f1cf393565f02dcef7e5ba",
+      "old_title": "逐项核日线并补单家公司右边界",
+      "new_title": "核对97日广度与ST同窗，保留全部提示和反例",
+      "factor_id": "confirmation_lag",
+      "old_factor_label": "限价留档与已选样本",
+      "new_factor_label": "长窗口提示与同窗表现"
+    },
+    {
+      "run_id": "RUN-3450ABE427A94B5DB4242BD2",
+      "pack_ids": [
+        "EP-14C530AB7BCB98643566"
+      ],
+      "draft_digest": "b679f3d3854bf235b370e149111d7ec41199d69383eb2501a0e47e130be8d932",
+      "old_title": "逐项核日线并补单家公司右边界",
+      "new_title": "分开确认前三日与提示后窗口，核对复合关系",
+      "factor_id": "confirmation_lag",
+      "old_factor_label": "限价留档与已选样本",
+      "new_factor_label": "确认滞后与随后反例"
+    },
+    {
+      "run_id": "RUN-DAF379030FCC4D09861F2B51",
+      "pack_ids": [
+        "EP-8288E8E136E06C7C8470"
+      ],
+      "draft_digest": "18018ec209c37cf4442aa9b5cb86b001cd2959660f38905b21fca6ab25017eae",
+      "old_title": "逐项核日线并补单家公司右边界",
+      "new_title": "保留全部短片段，统一等待比较终点",
+      "factor_id": "confirmation_lag",
+      "old_factor_label": "限价留档与已选样本",
+      "new_factor_label": "短片段覆盖与同终点比较"
+    }
+  ]
+}

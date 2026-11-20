@@ -1,0 +1,2002 @@
+{
+  "through": "2026-11-19",
+  "title": "部分回款、现金改善和系统上线后，哪些判断仍需保留？",
+  "answer": "金顶后续违约与部分实收并存，专项检查不代替年度内控结论；实达亏损收窄和现金转正，收入按重述口径仍下降。新华锦部分警示撤销、股东集团延期及上市公司经营分开；闻泰系统运行改善，审计所涉事项仍未消除。",
+  "counts": {
+    "files": 23,
+    "new_files": 23,
+    "reused_files": 0,
+    "pages": 946,
+    "new_pages": 946,
+    "viewed_pages": 17,
+    "initial_coverage": 122,
+    "complete_windows": 61,
+    "unfinished_windows": 8,
+    "stock_endpoint_gaps": 0
+  },
+  "boundary": "138条期间目录，23份946页中核17关键页，不认证全部催化或全文。69窗口61满8未满，67股票端点跨渠道核；36共同阶段。16财务12单季直接与差额相符、4现金另算；实达重述比较期、闻泰合并范围变化保留。日期无公开分钟，非严格公告后因果。旧主题与缺口保持，不晋级通用经验。",
+  "method_promotions": 0,
+  "chains": [
+    {
+      "chain": "600678-收到部分款项后，履约风险是否真的下降？",
+      "source": "1225597901",
+      "pages": [
+        2
+      ],
+      "subject": "收到部分款项后，履约风险是否真的下降？",
+      "changed": "首笔收到后，7月30日第二笔本金和利息未按期支付，公司提交强制执行申请。9月30日又收本金和利息合计100万元。应更新为部分回收与违约并存，不是按期全部履行。",
+      "open": "核执行受理与实际后续回款，分别记录本金、利息和现金时点。二审审结不是全部执行完毕。",
+      "boundary": "发生、披露与现金/报表期间分别看；日期对齐行情不识别公告净影响。",
+      "supporting": [
+        {
+          "source": "1225450529",
+          "pages": [
+            2
+          ],
+          "state": "仅已核原页，不认证全文。"
+        }
+      ]
+    },
+    {
+      "chain": "600678-三笔专项检查，是否证明内控审计问题已消除？",
+      "source": "1225448756",
+      "pages": [
+        14,
+        15
+      ],
+      "subject": "三笔专项检查，是否证明内控审计问题已消除？",
+      "changed": "顺宇1500万元已收回；顺宏剩余615.32万元以银行承兑汇票背书偿还；中辉专项报告记载尚余1770万元本金。报告仅针对三笔预付款合规性，限独立董事履职、内部核查及监管备查，不是年度内控消除结论。",
+      "open": "核年度审计独立结论，不把承兑汇票当现金，不把其他子公司已收回款当中辉已全部收回，也不把7月出具报告倒填7月3日已知。",
+      "boundary": "发生、披露与现金/报表期间分别看；日期对齐行情不识别公告净影响。",
+      "supporting": []
+    },
+    {
+      "chain": "600734-亏损收窄、现金转正，收入也改善了吗？",
+      "source": "1225637504",
+      "pages": [
+        2
+      ],
+      "subject": "亏损收窄、现金转正，收入也改善了吗？",
+      "changed": "半年营收比较期因同控合并追溯调整，改为157106646.62元。第三季度归母亏损13804864.52元，前三季亏损42173381.13元；前三季经营现金10775074.23元转正，但收入按重述比较期下降22.75%。改善方向不一致。",
+      "open": "核实际年度扣除后收入、利润与审计条件；同比用调整后比较期，原报保留。单季现金由累计减半年另算。",
+      "boundary": "发生、披露与现金/报表期间分别看；日期对齐行情不识别公告净影响。",
+      "supporting": [
+        {
+          "source": "1225515124",
+          "pages": [
+            5
+          ],
+          "state": "仅已核原页，不认证全文。"
+        },
+        {
+          "source": "1225515109",
+          "pages": [
+            2
+          ],
+          "state": "仅已核原页，不认证全文。"
+        }
+      ]
+    },
+    {
+      "chain": "600735-占款警示已撤销，剩余内控待办关闭了吗？",
+      "source": "1225669762",
+      "pages": [
+        1
+      ],
+      "subject": "占款警示已撤销，剩余内控待办关闭了吗？",
+      "changed": "11月13日进展仍引用2025年度内控否定意见。占款问题4月20日解决、对应警示获撤销，与剩余内控警示分列；治理制度与检查措施属于推进，不是新审计验证。第三季度扣非转正，但前三季收入、归母与扣非仍同比下降。",
+      "open": "核内控独立验证、调查及合并范围变化，不从资金占用清偿直接推断全部经营或警示修复。",
+      "boundary": "发生、披露与现金/报表期间分别看；日期对齐行情不识别公告净影响。",
+      "supporting": [
+        {
+          "source": "1225523413",
+          "pages": [
+            6
+          ],
+          "state": "仅已核原页，不认证全文。"
+        },
+        {
+          "source": "1225650591",
+          "pages": [
+            1
+          ],
+          "state": "仅已核原页，不认证全文。"
+        }
+      ]
+    },
+    {
+      "chain": "600735-重整延期，究竟改变了谁的时间表？",
+      "source": "1225650603",
+      "pages": [
+        1
+      ],
+      "subject": "重整延期，究竟改变了谁的时间表？",
+      "changed": "控股与间接控股股东等22家公司重整计划草案提交期限延至2027年1月10日。当前是股东集团计划待提交，不是上市公司自身重整获批，也不能直接确认控制权已变更。",
+      "open": "核计划提交、法院批准、股权实施与控制权实际变化；不将集团程序进展替代上市公司内控整改。",
+      "boundary": "发生、披露与现金/报表期间分别看；日期对齐行情不识别公告净影响。",
+      "supporting": []
+    },
+    {
+      "chain": "600745-系统运行改善，审计事项和经营已恢复了吗？",
+      "source": "1225648279",
+      "pages": [
+        2
+      ],
+      "subject": "系统运行改善，审计事项和经营已恢复了吗？",
+      "changed": "10月31日披露新SAP运行与客户EDI搭建，但同时明确谈判无实质进展、未达成安排，无法表示意见所涉事项尚未消除。前三季归母亏损622759135.17元、经营现金净流出495083600.33元；业务剥离及境外控制权受限改变规模，不能按同一业务简单比较收入。",
+      "open": "核独立审计验证、控制权及历史数据证据，继续看亏损与现金；系统恢复不自动补足2025年度取证。",
+      "boundary": "发生、披露与现金/报表期间分别看；日期对齐行情不识别公告净影响。",
+      "supporting": [
+        {
+          "source": "1225474432",
+          "pages": [
+            7
+          ],
+          "state": "仅已核原页，不认证全文。"
+        },
+        {
+          "source": "1225620733",
+          "pages": [
+            1,
+            2
+          ],
+          "state": "仅已核原页，不认证全文。"
+        }
+      ]
+    }
+  ],
+  "financial_bridge": [
+    {
+      "symbol": "600678",
+      "metric": "revenue",
+      "h1_source": "1225511156",
+      "h1_page": 6,
+      "q3_source": "1225648728",
+      "q3_page": 1,
+      "h1_yuan": "336709620.41",
+      "prior_h1_yuan": "278224388.61",
+      "nine_month_yuan": "475043409.91",
+      "quarter_yuan": "138333789.50",
+      "reported_quarter_yuan": "138333789.50",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "21.02",
+      "reported_h1_yoy_pct": "21.02",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600678",
+      "metric": "parent_profit",
+      "h1_source": "1225511156",
+      "h1_page": 6,
+      "q3_source": "1225648728",
+      "q3_page": 1,
+      "h1_yuan": "12331501.16",
+      "prior_h1_yuan": "26305483.73",
+      "nine_month_yuan": "13464890.52",
+      "quarter_yuan": "1133389.36",
+      "reported_quarter_yuan": "1133389.36",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-53.12",
+      "reported_h1_yoy_pct": "-53.12",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600678",
+      "metric": "recurring_profit",
+      "h1_source": "1225511156",
+      "h1_page": 6,
+      "q3_source": "1225648728",
+      "q3_page": 1,
+      "h1_yuan": "16624147.11",
+      "prior_h1_yuan": "15661797.80",
+      "nine_month_yuan": "18608156.38",
+      "quarter_yuan": "1984009.27",
+      "reported_quarter_yuan": "1984009.27",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "6.14",
+      "reported_h1_yoy_pct": "6.14",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600678",
+      "metric": "operating_cash",
+      "h1_source": "1225511156",
+      "h1_page": 6,
+      "q3_source": "1225648728",
+      "q3_page": 1,
+      "h1_yuan": "19922305.35",
+      "prior_h1_yuan": "67636679.35",
+      "nine_month_yuan": "68353532.45",
+      "quarter_yuan": "48431227.10",
+      "reported_quarter_yuan": null,
+      "quarter_basis": "nine_month_minus_h1",
+      "quarter_difference_yuan": null,
+      "h1_yoy_pct": "-70.55",
+      "reported_h1_yoy_pct": "-70.55",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600734",
+      "metric": "revenue",
+      "h1_source": "1225515124",
+      "h1_page": 5,
+      "q3_source": "1225637504",
+      "q3_page": 2,
+      "h1_yuan": "106949282.12",
+      "prior_h1_yuan": "157106646.62",
+      "nine_month_yuan": "163248982.72",
+      "quarter_yuan": "56299700.60",
+      "reported_quarter_yuan": "56299700.60",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-31.93",
+      "reported_h1_yoy_pct": "-31.93",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "restated",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600734",
+      "metric": "parent_profit",
+      "h1_source": "1225515124",
+      "h1_page": 5,
+      "q3_source": "1225637504",
+      "q3_page": 2,
+      "h1_yuan": "-28368516.61",
+      "prior_h1_yuan": "-52850478.25",
+      "nine_month_yuan": "-42173381.13",
+      "quarter_yuan": "-13804864.52",
+      "reported_quarter_yuan": "-13804864.52",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "46.32",
+      "reported_h1_yoy_pct": "46.32",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "restated",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600734",
+      "metric": "recurring_profit",
+      "h1_source": "1225515124",
+      "h1_page": 5,
+      "q3_source": "1225637504",
+      "q3_page": 2,
+      "h1_yuan": "-28907464.36",
+      "prior_h1_yuan": "-49050750.80",
+      "nine_month_yuan": "-48216710.50",
+      "quarter_yuan": "-19309246.14",
+      "reported_quarter_yuan": "-19309246.14",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "41.07",
+      "reported_h1_yoy_pct": "41.07",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "restated",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600734",
+      "metric": "operating_cash",
+      "h1_source": "1225515124",
+      "h1_page": 5,
+      "q3_source": "1225637504",
+      "q3_page": 2,
+      "h1_yuan": "-53200936.36",
+      "prior_h1_yuan": "11577843.89",
+      "nine_month_yuan": "10775074.23",
+      "quarter_yuan": "63976010.59",
+      "reported_quarter_yuan": null,
+      "quarter_basis": "nine_month_minus_h1",
+      "quarter_difference_yuan": null,
+      "h1_yoy_pct": "-559.51",
+      "reported_h1_yoy_pct": "-559.51",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "restated",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600735",
+      "metric": "revenue",
+      "h1_source": "1225523413",
+      "h1_page": 6,
+      "q3_source": "1225650591",
+      "q3_page": 1,
+      "h1_yuan": "605328208.14",
+      "prior_h1_yuan": "668866391.88",
+      "nine_month_yuan": "889114123.63",
+      "quarter_yuan": "283785915.49",
+      "reported_quarter_yuan": "283785915.49",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-9.50",
+      "reported_h1_yoy_pct": "-9.50",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600735",
+      "metric": "parent_profit",
+      "h1_source": "1225523413",
+      "h1_page": 6,
+      "q3_source": "1225650591",
+      "q3_page": 1,
+      "h1_yuan": "5922278.20",
+      "prior_h1_yuan": "12867199.40",
+      "nine_month_yuan": "10013366.36",
+      "quarter_yuan": "4091088.16",
+      "reported_quarter_yuan": "4091088.16",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-53.97",
+      "reported_h1_yoy_pct": "-53.97",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600735",
+      "metric": "recurring_profit",
+      "h1_source": "1225523413",
+      "h1_page": 6,
+      "q3_source": "1225650591",
+      "q3_page": 1,
+      "h1_yuan": "-2992133.25",
+      "prior_h1_yuan": "5309859.80",
+      "nine_month_yuan": "3847574.36",
+      "quarter_yuan": "6839707.61",
+      "reported_quarter_yuan": "6839707.61",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-156.35",
+      "reported_h1_yoy_pct": "-156.35",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600735",
+      "metric": "operating_cash",
+      "h1_source": "1225523413",
+      "h1_page": 6,
+      "q3_source": "1225650591",
+      "q3_page": 1,
+      "h1_yuan": "37415829.41",
+      "prior_h1_yuan": "77262110.45",
+      "nine_month_yuan": "54092423.39",
+      "quarter_yuan": "16676593.98",
+      "reported_quarter_yuan": null,
+      "quarter_basis": "nine_month_minus_h1",
+      "quarter_difference_yuan": null,
+      "h1_yoy_pct": "-51.57",
+      "reported_h1_yoy_pct": "-51.57",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600745",
+      "metric": "revenue",
+      "h1_source": "1225474432",
+      "h1_page": 7,
+      "q3_source": "1225620733",
+      "q3_page": 1,
+      "h1_yuan": "1514356584.41",
+      "prior_h1_yuan": "25341222185.87",
+      "nine_month_yuan": "2049716406.90",
+      "quarter_yuan": "535359822.49",
+      "reported_quarter_yuan": "535359822.49",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-94.02",
+      "reported_h1_yoy_pct": "-94.02",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600745",
+      "metric": "parent_profit",
+      "h1_source": "1225474432",
+      "h1_page": 7,
+      "q3_source": "1225620733",
+      "q3_page": 1,
+      "h1_yuan": "-406161565.47",
+      "prior_h1_yuan": "473728282.89",
+      "nine_month_yuan": "-622759135.17",
+      "quarter_yuan": "-216597569.70",
+      "reported_quarter_yuan": "-216597569.70",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-185.74",
+      "reported_h1_yoy_pct": "-185.74",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600745",
+      "metric": "recurring_profit",
+      "h1_source": "1225474432",
+      "h1_page": 7,
+      "q3_source": "1225620733",
+      "q3_page": 1,
+      "h1_yuan": "-442558151.28",
+      "prior_h1_yuan": "334508692.90",
+      "nine_month_yuan": "-789912046.57",
+      "quarter_yuan": "-347353895.29",
+      "reported_quarter_yuan": "-347353895.29",
+      "quarter_basis": "direct_and_difference_checked",
+      "quarter_difference_yuan": "0.00",
+      "h1_yoy_pct": "-232.30",
+      "reported_h1_yoy_pct": "-232.30",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    },
+    {
+      "symbol": "600745",
+      "metric": "operating_cash",
+      "h1_source": "1225474432",
+      "h1_page": 7,
+      "q3_source": "1225620733",
+      "q3_page": 2,
+      "h1_yuan": "-154119180.04",
+      "prior_h1_yuan": "4260918582.73",
+      "nine_month_yuan": "-495083600.33",
+      "quarter_yuan": "-340964420.29",
+      "reported_quarter_yuan": null,
+      "quarter_basis": "nine_month_minus_h1",
+      "quarter_difference_yuan": null,
+      "h1_yoy_pct": "-103.62",
+      "reported_h1_yoy_pct": "-103.62",
+      "reported_h1_yoy_marker": null,
+      "prior_basis": "as_reported",
+      "h1_yoy_boundary": "实达采用同控合并重述比较期；其他按原报告比较栏。闻泰业务结构和合并范围改变，非同业务量变。",
+      "quarter_boundary": "单季现金差额推算，其余三项按报告值并核累计差额；季报未经审计。"
+    }
+  ],
+  "phase_comparisons": [
+    {
+      "symbol": "600678",
+      "anchor": "2026-07-03",
+      "through": "2026-07-30",
+      "stock_pct": "-27.04225352112676056338028169",
+      "market_pct": "-12.85100593471981521694307287",
+      "st_pct": "-10.86182905654534025609725330",
+      "cumulative_stock_pct": "-27.04225352112676056338028169",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-07-30",
+      "through": "2026-07-31",
+      "stock_pct": "4.247104247104247104247104200",
+      "market_pct": "1.789414575887166572965015200",
+      "st_pct": "2.554927586206896500",
+      "cumulative_stock_pct": "-23.94366197183098591549295775",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-07-31",
+      "through": "2026-08-26",
+      "stock_pct": "3.888888888888888888888888900",
+      "market_pct": "3.277396553369298127481335000",
+      "st_pct": "9.087973526850221007861603000",
+      "cumulative_stock_pct": "-20.98591549295774647887323944",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-08-26",
+      "through": "2026-08-31",
+      "stock_pct": "5.882352941176470588235294100",
+      "market_pct": "1.736495583532294393776200000",
+      "st_pct": "0.867114215638003080074382300",
+      "cumulative_stock_pct": "-16.33802816901408450704225352",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-08-31",
+      "through": "2026-09-30",
+      "stock_pct": "-2.693602693602693602693602690",
+      "market_pct": "-5.378731470457375110223923620",
+      "st_pct": "-1.387842669108274588369741910",
+      "cumulative_stock_pct": "-18.59154929577464788732394366",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-09-30",
+      "through": "2026-10-08",
+      "stock_pct": "-4.152249134948096885813148790",
+      "market_pct": "-1.562366634617221466954101920",
+      "st_pct": "-0.759914084507042200",
+      "cumulative_stock_pct": "-21.97183098591549295774647887",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-10-08",
+      "through": "2026-10-28",
+      "stock_pct": "-3.790613718411552346570397110",
+      "market_pct": "-6.879351356013995166515398830",
+      "st_pct": "-9.164522528725456428062136490",
+      "cumulative_stock_pct": "-24.92957746478873239436619718",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-10-28",
+      "through": "2026-10-30",
+      "stock_pct": "-4.502814258911819887429643530",
+      "market_pct": "-4.346057653549107457576639600",
+      "st_pct": "-4.508647588061040424817535100",
+      "cumulative_stock_pct": "-28.30985915492957746478873239",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600678",
+      "anchor": "2026-10-30",
+      "through": "2026-11-19",
+      "stock_pct": "18.46758349705304518664047150",
+      "market_pct": "-1.517174584698747720164418930",
+      "st_pct": "-6.162468098701455655933364310",
+      "cumulative_stock_pct": "-15.07042253521126760563380282",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-07-03",
+      "through": "2026-07-30",
+      "stock_pct": "-5.747126436781609195402298850",
+      "market_pct": "-12.85100593471981521694307287",
+      "st_pct": "-10.86182905654534025609725330",
+      "cumulative_stock_pct": "-5.747126436781609195402298850",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-07-30",
+      "through": "2026-07-31",
+      "stock_pct": "2.439024390243902439024390200",
+      "market_pct": "1.789414575887166572965015200",
+      "st_pct": "2.554927586206896500",
+      "cumulative_stock_pct": "-3.448275862068965517241379310",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-07-31",
+      "through": "2026-08-26",
+      "stock_pct": "2.380952380952380952380952400",
+      "market_pct": "3.277396553369298127481335000",
+      "st_pct": "9.087973526850221007861603000",
+      "cumulative_stock_pct": "-1.149425287356321839080459770",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-08-26",
+      "through": "2026-08-31",
+      "stock_pct": "0.581395348837209302325581400",
+      "market_pct": "1.736495583532294393776200000",
+      "st_pct": "0.867114215638003080074382300",
+      "cumulative_stock_pct": "-0.5747126436781609195402298900",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-08-31",
+      "through": "2026-09-30",
+      "stock_pct": "7.514450867052023121387283200",
+      "market_pct": "-5.378731470457375110223923620",
+      "st_pct": "-1.387842669108274588369741910",
+      "cumulative_stock_pct": "6.896551724137931034482758600",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-09-30",
+      "through": "2026-10-08",
+      "stock_pct": "-0.5376344086021505376344086000",
+      "market_pct": "-1.562366634617221466954101920",
+      "st_pct": "-0.759914084507042200",
+      "cumulative_stock_pct": "6.321839080459770114942528700",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-10-08",
+      "through": "2026-10-28",
+      "stock_pct": "-8.108108108108108108108108110",
+      "market_pct": "-6.879351356013995166515398830",
+      "st_pct": "-9.164522528725456428062136490",
+      "cumulative_stock_pct": "-2.298850574712643678160919540",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-10-28",
+      "through": "2026-10-30",
+      "stock_pct": "-7.058823529411764705882352940",
+      "market_pct": "-4.346057653549107457576639600",
+      "st_pct": "-4.508647588061040424817535100",
+      "cumulative_stock_pct": "-9.195402298850574712643678160",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600734",
+      "anchor": "2026-10-30",
+      "through": "2026-11-19",
+      "stock_pct": "0.632911392405063291139240500",
+      "market_pct": "-1.517174584698747720164418930",
+      "st_pct": "-6.162468098701455655933364310",
+      "cumulative_stock_pct": "-8.620689655172413793103448280",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-07-03",
+      "through": "2026-07-30",
+      "stock_pct": "-8.484848484848484848484848480",
+      "market_pct": "-12.85100593471981521694307287",
+      "st_pct": "-10.86182905654534025609725330",
+      "cumulative_stock_pct": "-8.484848484848484848484848480",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-07-30",
+      "through": "2026-07-31",
+      "stock_pct": "1.490066225165562913907284800",
+      "market_pct": "1.789414575887166572965015200",
+      "st_pct": "2.554927586206896500",
+      "cumulative_stock_pct": "-7.121212121212121212121212120",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-07-31",
+      "through": "2026-08-26",
+      "stock_pct": "-0.4893964110929853181076672100",
+      "market_pct": "3.277396553369298127481335000",
+      "st_pct": "9.087973526850221007861603000",
+      "cumulative_stock_pct": "-7.575757575757575757575757580",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-08-26",
+      "through": "2026-08-31",
+      "stock_pct": "-1.639344262295081967213114750",
+      "market_pct": "1.736495583532294393776200000",
+      "st_pct": "0.867114215638003080074382300",
+      "cumulative_stock_pct": "-9.090909090909090909090909090",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-08-31",
+      "through": "2026-09-30",
+      "stock_pct": "10.83333333333333333333333330",
+      "market_pct": "-5.378731470457375110223923620",
+      "st_pct": "-1.387842669108274588369741910",
+      "cumulative_stock_pct": "0.757575757575757575757575800",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-09-30",
+      "through": "2026-10-08",
+      "stock_pct": "-2.105263157894736842105263160",
+      "market_pct": "-1.562366634617221466954101920",
+      "st_pct": "-0.759914084507042200",
+      "cumulative_stock_pct": "-1.363636363636363636363636360",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-10-08",
+      "through": "2026-10-28",
+      "stock_pct": "-4.608294930875576036866359450",
+      "market_pct": "-6.879351356013995166515398830",
+      "st_pct": "-9.164522528725456428062136490",
+      "cumulative_stock_pct": "-5.909090909090909090909090910",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-10-28",
+      "through": "2026-10-30",
+      "stock_pct": "-10.46698872785829307568438003",
+      "market_pct": "-4.346057653549107457576639600",
+      "st_pct": "-4.508647588061040424817535100",
+      "cumulative_stock_pct": "-15.75757575757575757575757576",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600735",
+      "anchor": "2026-10-30",
+      "through": "2026-11-19",
+      "stock_pct": "-16.00719424460431654676258993",
+      "market_pct": "-1.517174584698747720164418930",
+      "st_pct": "-6.162468098701455655933364310",
+      "cumulative_stock_pct": "-29.24242424242424242424242424",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-07-03",
+      "through": "2026-07-30",
+      "stock_pct": "-12.27397260273972602739726027",
+      "market_pct": "-12.85100593471981521694307287",
+      "st_pct": "-10.86182905654534025609725330",
+      "cumulative_stock_pct": "-12.27397260273972602739726027",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-07-30",
+      "through": "2026-07-31",
+      "stock_pct": "3.622735790131168019987507800",
+      "market_pct": "1.789414575887166572965015200",
+      "st_pct": "2.554927586206896500",
+      "cumulative_stock_pct": "-9.095890410958904109589041100",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-07-31",
+      "through": "2026-08-26",
+      "stock_pct": "11.45268233875828812537673300",
+      "market_pct": "3.277396553369298127481335000",
+      "st_pct": "9.087973526850221007861603000",
+      "cumulative_stock_pct": "1.315068493150684931506849300",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-08-26",
+      "through": "2026-08-31",
+      "stock_pct": "3.407247160627366143861546800",
+      "market_pct": "1.736495583532294393776200000",
+      "st_pct": "0.867114215638003080074382300",
+      "cumulative_stock_pct": "4.767123287671232876712328800",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-08-31",
+      "through": "2026-09-30",
+      "stock_pct": "-14.06903765690376569037656904",
+      "market_pct": "-5.378731470457375110223923620",
+      "st_pct": "-1.387842669108274588369741910",
+      "cumulative_stock_pct": "-9.972602739726027397260273970",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-09-30",
+      "through": "2026-10-08",
+      "stock_pct": "-2.617163724893487522824102250",
+      "market_pct": "-1.562366634617221466954101920",
+      "st_pct": "-0.759914084507042200",
+      "cumulative_stock_pct": "-12.32876712328767123287671233",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-10-08",
+      "through": "2026-10-28",
+      "stock_pct": "-34.87500",
+      "market_pct": "-6.879351356013995166515398830",
+      "st_pct": "-9.164522528725456428062136490",
+      "cumulative_stock_pct": "-42.90410958904109589041095890",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-10-28",
+      "through": "2026-10-30",
+      "stock_pct": "9.404990403071017274472168900",
+      "market_pct": "-4.346057653549107457576639600",
+      "st_pct": "-4.508647588061040424817535100",
+      "cumulative_stock_pct": "-37.53424657534246575342465753",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    },
+    {
+      "symbol": "600745",
+      "anchor": "2026-10-30",
+      "through": "2026-11-19",
+      "stock_pct": "-16.49122807017543859649122807",
+      "market_pct": "-1.517174584698747720164418930",
+      "st_pct": "-6.162468098701455655933364310",
+      "cumulative_stock_pct": "-47.83561643835616438356164384",
+      "quote_basis": "共同实际成交端点，两渠道1e-9门槛核对；ST为动态组合累计。"
+    }
+  ],
+  "event_windows": [
+    {
+      "aid": "1225648728",
+      "symbol": "600678",
+      "published_on": "2026-10-31",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-30",
+          "through": "2026-11-02",
+          "status": "complete",
+          "stock_pct": "6.090373280943025540275049100",
+          "market_pct": "1.656556847211949903314395900",
+          "st_pct": "1.14772785714285700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-30",
+          "through": "2026-11-06",
+          "status": "complete",
+          "stock_pct": "19.25343811394891944990176820",
+          "market_pct": "3.288659355214330036820024800",
+          "st_pct": "4.319507304316807976503591100"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 14,
+          "anchor": "2026-10-30",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "18.46758349705304518664047150",
+          "market_pct": "-1.517174584698747720164418930",
+          "st_pct": "-6.162468098701455655933364310"
+        }
+      ]
+    },
+    {
+      "aid": "1225641054",
+      "symbol": "600678",
+      "published_on": "2026-10-30",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-29",
+          "through": "2026-10-30",
+          "status": "complete",
+          "stock_pct": "-1.737451737451737451737451740",
+          "market_pct": "-2.326687985271895838122913000",
+          "st_pct": "-1.913569285714285600"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-29",
+          "through": "2026-11-05",
+          "status": "complete",
+          "stock_pct": "12.93436293436293436293436290",
+          "market_pct": "2.787124655305574969165083000",
+          "st_pct": "2.492277207632238773244701900"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 15,
+          "anchor": "2026-10-29",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "16.40926640926640926640926640",
+          "market_pct": "-3.808562651192859012083950490",
+          "st_pct": "-7.958114287637049094419909820"
+        }
+      ]
+    },
+    {
+      "aid": "1225597901",
+      "symbol": "600678",
+      "published_on": "2026-10-09",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-08",
+          "through": "2026-10-09",
+          "status": "complete",
+          "stock_pct": "0",
+          "market_pct": "0.185519607328431863185454200",
+          "st_pct": "-0.1686971830985915500"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-08",
+          "through": "2026-10-15",
+          "status": "complete",
+          "stock_pct": "-8.122743682310469314079422380",
+          "market_pct": "-4.987292008516610586684152980",
+          "st_pct": "-5.778458904823893488030240000"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-10-08",
+          "through": "2026-11-05",
+          "status": "complete",
+          "stock_pct": "5.595667870036101083032491000",
+          "market_pct": "-6.262866332159791286529888740",
+          "st_pct": "-9.363785433582235781093038390"
+        }
+      ]
+    },
+    {
+      "aid": "1225511156",
+      "symbol": "600678",
+      "published_on": "2026-08-27",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-26",
+          "through": "2026-08-27",
+          "status": "complete",
+          "stock_pct": "2.139037433155080213903743300",
+          "market_pct": "1.559244453187991985394511000",
+          "st_pct": "-0.09410699300699300"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-26",
+          "through": "2026-09-02",
+          "status": "complete",
+          "stock_pct": "8.021390374331550802139037400",
+          "market_pct": "-0.1123420496704362222563957600",
+          "st_pct": "1.636756566974556135674093900"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-26",
+          "through": "2026-09-23",
+          "status": "complete",
+          "stock_pct": "2.139037433155080213903743300",
+          "market_pct": "0.515023772130592127783747000",
+          "st_pct": "0.997733493107238494091912800"
+        }
+      ]
+    },
+    {
+      "aid": "1225450529",
+      "symbol": "600678",
+      "published_on": "2026-08-01",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-07-31",
+          "through": "2026-08-03",
+          "status": "complete",
+          "stock_pct": "3.148148148148148148148148100",
+          "market_pct": "-0.5046590964076493778797734900",
+          "st_pct": "2.188782876712328700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-07-31",
+          "through": "2026-08-07",
+          "status": "complete",
+          "stock_pct": "3.703703703703703703703703700",
+          "market_pct": "5.228824032833248354835706600",
+          "st_pct": "3.946859159898608765557231400"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-07-31",
+          "through": "2026-08-28",
+          "status": "complete",
+          "stock_pct": "5.925925925925925925925925900",
+          "market_pct": "4.467127790087979191729778900",
+          "st_pct": "9.883596986761745733559780500"
+        }
+      ]
+    },
+    {
+      "aid": "1225448764",
+      "symbol": "600678",
+      "published_on": "2026-07-31",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-07-30",
+          "through": "2026-07-31",
+          "status": "complete",
+          "stock_pct": "4.247104247104247104247104200",
+          "market_pct": "1.789414575887166572965015200",
+          "st_pct": "2.554927586206896500"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-07-30",
+          "through": "2026-08-06",
+          "status": "complete",
+          "stock_pct": "9.845559845559845559845559800",
+          "market_pct": "5.643590236392433803810044900",
+          "st_pct": "6.974314991314900708120725100"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-07-30",
+          "through": "2026-08-27",
+          "status": "complete",
+          "stock_pct": "10.61776061776061776061776060",
+          "market_pct": "6.764620203368447011183084100",
+          "st_pct": "11.76980997047613454481810000"
+        }
+      ]
+    },
+    {
+      "aid": "1225448756",
+      "symbol": "600678",
+      "published_on": "2026-07-31",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-07-30",
+          "through": "2026-07-31",
+          "status": "complete",
+          "stock_pct": "4.247104247104247104247104200",
+          "market_pct": "1.789414575887166572965015200",
+          "st_pct": "2.554927586206896500"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-07-30",
+          "through": "2026-08-06",
+          "status": "complete",
+          "stock_pct": "9.845559845559845559845559800",
+          "market_pct": "5.643590236392433803810044900",
+          "st_pct": "6.974314991314900708120725100"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-07-30",
+          "through": "2026-08-27",
+          "status": "complete",
+          "stock_pct": "10.61776061776061776061776060",
+          "market_pct": "6.764620203368447011183084100",
+          "st_pct": "11.76980997047613454481810000"
+        }
+      ]
+    },
+    {
+      "aid": "1225408161",
+      "symbol": "600678",
+      "published_on": "2026-07-04",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-07-03",
+          "through": "2026-07-06",
+          "status": "complete",
+          "stock_pct": "-9.014084507042253521126760560",
+          "market_pct": "-0.8353964082206213116061345800",
+          "st_pct": "-1.093245270270270200"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-07-03",
+          "through": "2026-07-10",
+          "status": "complete",
+          "stock_pct": "-10.42253521126760563380281690",
+          "market_pct": "-2.955514919929928762845062360",
+          "st_pct": "-3.523593027985413606670053930"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "status": "complete",
+          "stock_pct": "-23.94366197183098591549295775",
+          "market_pct": "-11.29154913217664983182568937",
+          "st_pct": "-8.584413337270756937051820400"
+        }
+      ]
+    },
+    {
+      "aid": "1225637504",
+      "symbol": "600734",
+      "published_on": "2026-10-29",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-28",
+          "through": "2026-10-29",
+          "status": "complete",
+          "stock_pct": "-3.529411764705882352941176470",
+          "market_pct": "-2.067473321650761668778040730",
+          "st_pct": "-2.64570571428571400"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-28",
+          "through": "2026-11-04",
+          "status": "complete",
+          "stock_pct": "8.823529411764705882352941200",
+          "market_pct": "-0.5945035772966673381602325300",
+          "st_pct": "-1.539821862546121721007752820"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 16,
+          "anchor": "2026-10-28",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-6.470588235294117647058823530",
+          "market_pct": "-5.797294956091853366664651540",
+          "st_pct": "-10.39327171746536184429207777"
+        }
+      ]
+    },
+    {
+      "aid": "1225614713",
+      "symbol": "600734",
+      "published_on": "2026-10-22",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-21",
+          "through": "2026-10-22",
+          "status": "complete",
+          "stock_pct": "-2.890173410404624277456647400",
+          "market_pct": "-2.450536613580684333730039760",
+          "st_pct": "-2.68991285714285700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-21",
+          "through": "2026-10-28",
+          "status": "complete",
+          "stock_pct": "-1.734104046242774566473988440",
+          "market_pct": "-2.006073999376171570987738440",
+          "st_pct": "-3.223767688689207610096237650"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-10-21",
+          "through": "2026-11-18",
+          "status": "complete",
+          "stock_pct": "-6.358381502890173410404624280",
+          "market_pct": "-6.863168836438848158343402410",
+          "st_pct": "-11.57659294761157322995824743"
+        }
+      ]
+    },
+    {
+      "aid": "1225577870",
+      "symbol": "600734",
+      "published_on": "2026-09-23",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-09-22",
+          "through": "2026-09-23",
+          "status": "complete",
+          "stock_pct": "-2.525252525252515151515151520",
+          "market_pct": "-0.4362237889808422772206340400",
+          "st_pct": "-0.905288732394366200"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-09-22",
+          "through": "2026-09-30",
+          "status": "complete",
+          "stock_pct": "-6.060606060606060606060606060",
+          "market_pct": "-4.646657751774066272312856850",
+          "st_pct": "-2.406946904517780699408616550"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-09-22",
+          "through": "2026-10-28",
+          "status": "complete",
+          "stock_pct": "-14.14141414141414141414141414",
+          "market_pct": "-12.59363156857209482852213481",
+          "st_pct": "-12.02454135836081457005371009"
+        }
+      ]
+    },
+    {
+      "aid": "1225515124",
+      "symbol": "600734",
+      "published_on": "2026-08-27",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-26",
+          "through": "2026-08-27",
+          "status": "complete",
+          "stock_pct": "-0.5813953488372093023255814000",
+          "market_pct": "1.559244453187991985394511000",
+          "st_pct": "-0.09410699300699300"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-26",
+          "through": "2026-09-02",
+          "status": "complete",
+          "stock_pct": "1.744186046511627906976744200",
+          "market_pct": "-0.1123420496704362222563957600",
+          "st_pct": "1.636756566974556135674093900"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-26",
+          "through": "2026-09-23",
+          "status": "complete",
+          "stock_pct": "12.20930232558140697674418600",
+          "market_pct": "0.515023772130592127783747000",
+          "st_pct": "0.997733493107238494091912800"
+        }
+      ]
+    },
+    {
+      "aid": "1225515109",
+      "symbol": "600734",
+      "published_on": "2026-08-27",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-26",
+          "through": "2026-08-27",
+          "status": "complete",
+          "stock_pct": "-0.5813953488372093023255814000",
+          "market_pct": "1.559244453187991985394511000",
+          "st_pct": "-0.09410699300699300"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-26",
+          "through": "2026-09-02",
+          "status": "complete",
+          "stock_pct": "1.744186046511627906976744200",
+          "market_pct": "-0.1123420496704362222563957600",
+          "st_pct": "1.636756566974556135674093900"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-26",
+          "through": "2026-09-23",
+          "status": "complete",
+          "stock_pct": "12.20930232558140697674418600",
+          "market_pct": "0.515023772130592127783747000",
+          "st_pct": "0.997733493107238494091912800"
+        }
+      ]
+    },
+    {
+      "aid": "1225669762",
+      "symbol": "600735",
+      "published_on": "2026-11-13",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-11-12",
+          "through": "2026-11-13",
+          "status": "complete",
+          "stock_pct": "-1.503759398496240601503759400",
+          "market_pct": "-1.600916132029039352860756210",
+          "st_pct": "-1.464270921985815700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-11-12",
+          "through": "2026-11-19",
+          "status": "complete",
+          "stock_pct": "-12.21804511278195488721804511",
+          "market_pct": "-5.120285222894873643464884070",
+          "st_pct": "-9.881038111202728629874144370"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 5,
+          "anchor": "2026-11-12",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-12.21804511278195488721804511",
+          "market_pct": "-5.120285222894873643464884070",
+          "st_pct": "-9.881038111202728629874144370"
+        }
+      ]
+    },
+    {
+      "aid": "1225650603",
+      "symbol": "600735",
+      "published_on": "2026-10-31",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-30",
+          "through": "2026-11-02",
+          "status": "complete",
+          "stock_pct": "-1.079136690647482014388489210",
+          "market_pct": "1.656556847211949903314395900",
+          "st_pct": "1.14772785714285700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-30",
+          "through": "2026-11-06",
+          "status": "complete",
+          "stock_pct": "-5.395683453237410071942446040",
+          "market_pct": "3.288659355214330036820024800",
+          "st_pct": "4.319507304316807976503591100"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 14,
+          "anchor": "2026-10-30",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-16.00719424460431654676258993",
+          "market_pct": "-1.517174584698747720164418930",
+          "st_pct": "-6.162468098701455655933364310"
+        }
+      ]
+    },
+    {
+      "aid": "1225650591",
+      "symbol": "600735",
+      "published_on": "2026-10-31",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-30",
+          "through": "2026-11-02",
+          "status": "complete",
+          "stock_pct": "-1.079136690647482014388489210",
+          "market_pct": "1.656556847211949903314395900",
+          "st_pct": "1.14772785714285700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-30",
+          "through": "2026-11-06",
+          "status": "complete",
+          "stock_pct": "-5.395683453237410071942446040",
+          "market_pct": "3.288659355214330036820024800",
+          "st_pct": "4.319507304316807976503591100"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 14,
+          "anchor": "2026-10-30",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-16.00719424460431654676258993",
+          "market_pct": "-1.517174584698747720164418930",
+          "st_pct": "-6.162468098701455655933364310"
+        }
+      ]
+    },
+    {
+      "aid": "1225523413",
+      "symbol": "600735",
+      "published_on": "2026-08-28",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-27",
+          "through": "2026-08-28",
+          "status": "complete",
+          "stock_pct": "0.661157024793371791544293400",
+          "market_pct": "-0.4010152434190485613715331500",
+          "st_pct": "0.824223776223776200"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-27",
+          "through": "2026-09-03",
+          "status": "complete",
+          "stock_pct": "-2.314049586776892179495936070",
+          "market_pct": "-1.539582907361689496509236500",
+          "st_pct": "1.030691631954475423591594400"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-27",
+          "through": "2026-09-24",
+          "status": "complete",
+          "stock_pct": "8.595041322314048166108872300",
+          "market_pct": "-2.866026721327079499029153850",
+          "st_pct": "0.404025702790291710403286300"
+        }
+      ]
+    },
+    {
+      "aid": "1225470953",
+      "symbol": "600735",
+      "published_on": "2026-08-13",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-12",
+          "through": "2026-08-13",
+          "status": "complete",
+          "stock_pct": "-6.088280060882814902849305800",
+          "market_pct": "-0.8429584264767185693282268600",
+          "st_pct": "-1.097005442176870700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-12",
+          "through": "2026-08-19",
+          "status": "complete",
+          "stock_pct": "-12.63318112633182456115964592",
+          "market_pct": "-2.948583257736296020069967600",
+          "st_pct": "-2.895358100090307344929337560"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-12",
+          "through": "2026-09-09",
+          "status": "complete",
+          "stock_pct": "-9.893455098934564704192526800",
+          "market_pct": "-2.075296375578564677531657460",
+          "st_pct": "4.593374866776571304199008500"
+        }
+      ]
+    },
+    {
+      "aid": "1225648279",
+      "symbol": "600745",
+      "published_on": "2026-10-31",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-30",
+          "through": "2026-11-02",
+          "status": "complete",
+          "stock_pct": "3.245614035087719298245614000",
+          "market_pct": "1.656556847211949903314395900",
+          "st_pct": "1.14772785714285700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-30",
+          "through": "2026-11-06",
+          "status": "complete",
+          "stock_pct": "0.789473684210526315789473700",
+          "market_pct": "3.288659355214330036820024800",
+          "st_pct": "4.319507304316807976503591100"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 14,
+          "anchor": "2026-10-30",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-16.49122807017543859649122807",
+          "market_pct": "-1.517174584698747720164418930",
+          "st_pct": "-6.162468098701455655933364310"
+        }
+      ]
+    },
+    {
+      "aid": "1225620733",
+      "symbol": "600745",
+      "published_on": "2026-10-24",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-23",
+          "through": "2026-10-26",
+          "status": "complete",
+          "stock_pct": "-6.303972366148531951640759930",
+          "market_pct": "-0.7564667181539202404388122500",
+          "st_pct": "0.01394214285714285400"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-23",
+          "through": "2026-10-30",
+          "status": "complete",
+          "stock_pct": "-1.554404145077720207253886010",
+          "market_pct": "-5.733685273931698969921831690",
+          "st_pct": "-5.651153163023009404847114370"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 19,
+          "anchor": "2026-10-23",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-17.78929188255613126079447323",
+          "market_pct": "-7.163869842887740180662206020",
+          "st_pct": "-11.46537075084441384031975347"
+        }
+      ]
+    },
+    {
+      "aid": "1225537480",
+      "symbol": "600745",
+      "published_on": "2026-09-01",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-31",
+          "through": "2026-09-01",
+          "status": "complete",
+          "stock_pct": "-3.085774058577405857740585770",
+          "market_pct": "-0.5056349999464763666690192500",
+          "st_pct": "0.704873943661971900"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-31",
+          "through": "2026-09-07",
+          "status": "complete",
+          "stock_pct": "-5.334728033472803347280334730",
+          "market_pct": "-1.277050438041938304689925030",
+          "st_pct": "1.826150159501304519435102700"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-31",
+          "through": "2026-09-29",
+          "status": "complete",
+          "stock_pct": "-13.65062761506276150627615063",
+          "market_pct": "-5.345308934977362686040066470",
+          "st_pct": "-1.829932900152916983207434640"
+        }
+      ]
+    },
+    {
+      "aid": "1225474432",
+      "symbol": "600745",
+      "published_on": "2026-08-15",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-08-14",
+          "through": "2026-08-17",
+          "status": "complete",
+          "stock_pct": "0.801832760595647193585337900",
+          "market_pct": "2.031033451905260190294839700",
+          "st_pct": "0.755661224489795900"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-08-14",
+          "through": "2026-08-21",
+          "status": "complete",
+          "stock_pct": "-4.524627720504009163802978240",
+          "market_pct": "-1.484111467514958640591859250",
+          "st_pct": "1.543461622726586262488235600"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-08-14",
+          "through": "2026-09-11",
+          "status": "complete",
+          "stock_pct": "-1.890034364261168384879725090",
+          "market_pct": "-3.705476480712212730421986640",
+          "st_pct": "4.843257149192389456904830300"
+        }
+      ]
+    },
+    {
+      "aid": "1225451092",
+      "symbol": "600745",
+      "published_on": "2026-08-01",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-07-31",
+          "through": "2026-08-03",
+          "status": "complete",
+          "stock_pct": "-1.024713682941531042796865580",
+          "market_pct": "-0.5046590964076493778797734900",
+          "st_pct": "2.188782876712328700"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-07-31",
+          "through": "2026-08-07",
+          "status": "complete",
+          "stock_pct": "1.386377335744424352019288700",
+          "market_pct": "5.228824032833248354835706600",
+          "st_pct": "3.946859159898608765557231400"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 20,
+          "anchor": "2026-07-31",
+          "through": "2026-08-28",
+          "status": "complete",
+          "stock_pct": "19.28872814948764315852923450",
+          "market_pct": "4.467127790087979191729778900",
+          "st_pct": "9.883596986761745733559780500"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "symbol": "600678",
+      "announcement_id": "1225648728",
+      "title": "四川金顶（集团）股份有限公司2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225648728.PDF",
+      "sha256": "f1cc01e3d8c071b9aea49e937670d257401004b24fb577fab44358f656e9670b",
+      "pages": 18,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:55.695543+00:00",
+      "published_on": "2026-10-31",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225641054",
+      "title": "四川金顶（集团）股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225641054.PDF",
+      "sha256": "f4d94bd925d7e230b64e9e6cbf98312be6ab81b8b00a101587a811fc685b575c",
+      "pages": 4,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:55.482511+00:00",
+      "published_on": "2026-10-30",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225597901",
+      "title": "四川金顶（集团）股份有限公司关于全资子公司提起诉讼的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-09/1225597901.PDF",
+      "sha256": "1d1132bc9a2519621e5cc3fccaa9f2de42f309f44c4c1b4d645f90a6a5fc0a41",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:55.444995+00:00",
+      "published_on": "2026-10-09",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225511156",
+      "title": "四川金顶（集团）股份有限公司2026年半年度报告全文",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225511156.PDF",
+      "sha256": "df2f2c91940736ebe94c396d829d212383eb0a7b41f3a4474ad0d1502a696b6b",
+      "pages": 175,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:58.055243+00:00",
+      "published_on": "2026-08-27",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225450529",
+      "title": "四川金顶（集团）股份有限公司关于全资子公司提起诉讼的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225450529.PDF",
+      "sha256": "ed7ba709853dbbda6c5e5bfb2780b2b40153b8223b06301ad0f529bf5d8f138e",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:55.711578+00:00",
+      "published_on": "2026-08-01",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225448764",
+      "title": "四川金顶审计委员会暨独立董事关于委托第三方中介机构开展专项检查的工作报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448764.PDF",
+      "sha256": "ff7c6c2c775f16e63527447eff6f06f0121473c15ed15c89b66afa1175130c84",
+      "pages": 9,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:56.304725+00:00",
+      "published_on": "2026-07-31",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225448756",
+      "title": "广东中天粤会计师事务所对四川金顶三笔大额预付款项进行检查的专项审计报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448756.PDF",
+      "sha256": "98cfe4d28c49afc0ef85d5f2edff6f89b44e51e82f2801a9ed66ec318e760f31",
+      "pages": 15,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:56.488265+00:00",
+      "published_on": "2026-07-31",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600678",
+      "announcement_id": "1225408161",
+      "title": "中审亚太关于四川金顶（集团）股份有限公司2025年年度报告的信息披露监管问询函的回复",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-04/1225408161.PDF",
+      "sha256": "2c1a45af522021db108742ad36d8d01fbb9f2419290c4b76ab414eff4efe81f2",
+      "pages": 39,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:58.110841+00:00",
+      "published_on": "2026-07-04",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600734",
+      "announcement_id": "1225637504",
+      "title": "福建实达集团股份有限公司2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225637504.PDF",
+      "sha256": "890c681ba463a6d7d48ac9a16e4adcaf1c7116f59507e7ac9413fa78f96ec736",
+      "pages": 17,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:57.220792+00:00",
+      "published_on": "2026-10-29",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600734",
+      "announcement_id": "1225614713",
+      "title": "福建实达集团股份有限公司关于公司及子公司涉及重大诉讼的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-22/1225614713.PDF",
+      "sha256": "4da8cff0ec3f5b699d2e9639131b6aaebedfe39cedcd9d22ac0d2cab0d020064",
+      "pages": 5,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:57.650992+00:00",
+      "published_on": "2026-10-22",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600734",
+      "announcement_id": "1225577870",
+      "title": "福建实达集团股份有限公司关于全资孙公司涉及重大诉讼进展的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577870.PDF",
+      "sha256": "88b0623625d55153a157fe77d02e1d0393b8276092d0ea9e4c84505027a68d98",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:57.947096+00:00",
+      "published_on": "2026-09-23",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600734",
+      "announcement_id": "1225515124",
+      "title": "福建实达集团股份有限公司2026年半年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225515124.PDF",
+      "sha256": "9c427c3f50edc2176028f3088698df76ad77edddc344cf97a6634722d05ea3d4",
+      "pages": 160,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:01.035562+00:00",
+      "published_on": "2026-08-27",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600734",
+      "announcement_id": "1225515109",
+      "title": "福建实达集团股份有限公司关于同一控制下企业合并追溯调整对比期2025年半年度财务数据的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225515109.PDF",
+      "sha256": "e0f6f66abfaadcea2c7d55c5125b62594fcc91fea19a9346521f898ba08fe568",
+      "pages": 5,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:58.435433+00:00",
+      "published_on": "2026-08-27",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600735",
+      "announcement_id": "1225669762",
+      "title": "新华锦关于公司股票被实施其他风险警示事项的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-13/1225669762.PDF",
+      "sha256": "f7aea6d4dd672a2d69a66c709494592455ef716ed29604442175287060edc583",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:58.401879+00:00",
+      "published_on": "2026-11-13",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600735",
+      "announcement_id": "1225650603",
+      "title": "新华锦关于控股股东及间接控股股东等二十二家公司实质合并重整案延期提交重整计划草案的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650603.PDF",
+      "sha256": "40db87adf54a77a22f34ae3115c2a8093fc2960a9293ee84f3cc4bdba2ae6bab",
+      "pages": 2,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:58.702832+00:00",
+      "published_on": "2026-10-31",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600735",
+      "announcement_id": "1225650591",
+      "title": "新华锦2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225650591.PDF",
+      "sha256": "12ceb3f9d15b2a45f93c282c8c07f8214d25e622a39e414a3174d142c3e64ab2",
+      "pages": 13,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:59.179263+00:00",
+      "published_on": "2026-10-31",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600735",
+      "announcement_id": "1225523413",
+      "title": "新华锦2026年半年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225523413.PDF",
+      "sha256": "c4886e9919d81609594f5aeac38c9fdb2ae62bda275b5a44623b037f99765b02",
+      "pages": 216,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:03.276337+00:00",
+      "published_on": "2026-08-28",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600735",
+      "announcement_id": "1225470953",
+      "title": "新华锦关于公司股票被实施其他风险警示事项及2026年半年度报告编制的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-13/1225470953.PDF",
+      "sha256": "8ce9b00740c4197c1841aca6104206b6984de0fb668736e0670bb96e5a38ede7",
+      "pages": 4,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:03:59.651326+00:00",
+      "published_on": "2026-08-13",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600745",
+      "announcement_id": "1225648279",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225648279.PDF",
+      "sha256": "1b816af5226656fdf3915b75142e9c4e68efb87439ecee621c4bcf58f2b4ae04",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:00.154536+00:00",
+      "published_on": "2026-10-31",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600745",
+      "announcement_id": "1225620733",
+      "title": "2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225620733.PDF",
+      "sha256": "7038e5a6abccffcfca2ffd58b76efdf34875a64d9d321fd778f57450bba799c6",
+      "pages": 15,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:01.213788+00:00",
+      "published_on": "2026-10-24",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600745",
+      "announcement_id": "1225537480",
+      "title": "重大诉讼进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225537480.PDF",
+      "sha256": "bddd3e7c6fdf28fdebc643648983665f0ab9c034984dba3dd18b272a52b8ed86",
+      "pages": 3,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:01.478955+00:00",
+      "published_on": "2026-09-01",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600745",
+      "announcement_id": "1225474432",
+      "title": "2026年半年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225474432.PDF",
+      "sha256": "5c162749ce795879c79bc378c75a656990cfe8491b6cf989a0836b9d914e8e0a",
+      "pages": 229,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:05.139657+00:00",
+      "published_on": "2026-08-15",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    },
+    {
+      "symbol": "600745",
+      "announcement_id": "1225451092",
+      "title": "关于公司股票被实施其他风险警示的进展公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451092.PDF",
+      "sha256": "ffae0ddb23a8d68b8c2486f532160ad0a7e28afc02d415683ea0de5832e15e8f",
+      "pages": 2,
+      "protected_gate_passed": true,
+      "observed_at": "2026-11-20T05:04:01.865017+00:00",
+      "published_on": "2026-08-01",
+      "document_dated_on": null,
+      "document_date_boundary": "未确认原件落款，采用正式披露日。"
+    }
+  ]
+}

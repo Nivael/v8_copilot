@@ -1,3 +1,4 @@
+from st_endpoint_selection_audit import endpoint_selection_audit
 from st_initial_twentyseventh_four import initial_twentyseventh_four
 from st_twentyseventh_period_followup import followup_view as twentyseventh_period_followup
 from st_twentysixth_period_followup import followup_view as twentysixth_period_followup
@@ -294,4 +295,5 @@ def build_themes(inputs, daily):
     result['xilv_liability']=xilv_liability(inputs,result['xilv_timeline'])
     result['yigou_settlement']=yigou_settlement(inputs,result['initial_third_four'])
     result['endpoint_reasons']=endpoint_reasons(inputs,result['current_extension'],result['sample_integrity'],result['halt_stages'])
+    result['endpoint_selection_audit']=endpoint_selection_audit(inputs,result['current_extension'],result['endpoint_reasons'])
     return result

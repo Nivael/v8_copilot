@@ -6,7 +6,7 @@ import fixture from './__fixtures__/endpoint-reasons.json'
 afterEach(cleanup)
 const data=fixture as EndpointReasons
 it('explains why the two windows have different usable subsets of the same 150 stocks',()=>{
- render(<STEndpointReasons data={data}/>);expect(screen.getByText(/完整93日有146只可比、4只缺口/)).toBeTruthy();expect(screen.getByText(/不是原始成交价/)).toBeTruthy()
+ render(<STEndpointReasons data={data}/>);expect(screen.getByText(/完整93日有146只主源两端有成交、4只缺口/)).toBeTruthy();expect(screen.getByText(/不是原始成交价/)).toBeTruthy()
  const table=screen.getByRole('table');expect(within(table).getAllByRole('row')).toHaveLength(5);expect(table).toHaveTextContent('7月10日才复牌')
  fireEvent.change(screen.getByLabelText('想核哪段比较？'),{target:{value:'recent'}});expect(table).toHaveTextContent('2026-11-06收盘');expect(within(table).getAllByText('不计算')).toHaveLength(3)
 })

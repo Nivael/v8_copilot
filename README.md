@@ -1,3 +1,5 @@
+最新期间复盘：华幸签约/付款义务与司法、三房抵股权/过户与季度转亏、通葡执行二审、春天申请与经营分开核。已正式发布，期初仍110/150，见 [本轮结果](ST_SEVENTEENTH_PERIOD_FOLLOWUP_RESULT_2026_11_20.md)。
+
 最新更新：第17批期初证据已发布，覆盖110/150家，剩40家。见 [本轮结果](ST_INITIAL_SEVENTEENTH_FOUR_RESULT_2026_11_20.md)。
 
 # v8_copilot — ST Research Codex Workbench

@@ -66,3 +66,5 @@ in-place edit, is the default way to change one.
 最新期间复盘已发布：集友交割与80%付款、绝味摘帽与交易终止、起步专项债权与终审计提、东尼申请与重估分别核。初始仍138/150；绝味9个窗口报价差异保留。见 [本轮结果](ST_TWENTYFOURTH_PERIOD_FOLLOWUP_RESULT_2026_11_20.md)。
 
 最新初始补证：海利、龙韵、星农、华扬，覆盖142/150、剩8家。起源仅12页360行、两份官方PDF无目录行及星农日期冲突均保留。见 [结果](ST_INITIAL_TWENTYFIFTH_FOUR_RESULT_2026_11_20.md)。
+
+最新期间复盘：海利、龙韵、星农、华扬，6条问题链及现金分项表。星农现金毛额倒差保留，华扬负权益不直接认证年度触发。期初仍142/150。见 [结果](ST_TWENTYFIFTH_PERIOD_FOLLOWUP_RESULT_2026_11_20.md)。

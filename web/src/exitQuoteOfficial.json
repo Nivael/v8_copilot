@@ -1,0 +1,209 @@
+{
+  "version": "fixed_endpoint_official_source_check_v1",
+  "input_asset": "inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "observations": [
+    {
+      "symbol": "000016",
+      "status": "official_request_failed",
+      "message": "历史K线数据获取失败",
+      "source_identity_verified": false,
+      "endpoint_replaced": false
+    },
+    {
+      "symbol": "002717",
+      "status": "prior_quotes_corroborated_missing_endpoint",
+      "historical_raw_matched_days": 66,
+      "last_returned_record": "2026-10-12",
+      "last_returned_close": "0.45",
+      "nov19_returned": false,
+      "endpoint_replaced": false,
+      "legal_stage_advanced": false
+    },
+    {
+      "symbol": "002731",
+      "status": "official_request_failed",
+      "message": "历史K线数据获取失败",
+      "source_identity_verified": false,
+      "endpoint_replaced": false
+    },
+    {
+      "symbol": "600491",
+      "status": "anchor_not_returned_matches_primary_nontrading",
+      "july3_returned": false,
+      "nov19_returned": true,
+      "nov19_raw_close": "1.15",
+      "endpoint_replaced": false
+    }
+  ],
+  "latest_quote_probe": {
+    "source": {
+      "url": "https://www.szse.cn/api/market/ssjjhq/getTimeData?marketId=1&code=002514",
+      "sha256": "311e5dff6323a600e3a1c9c1c14d73b1d930e8223725fd8a8ca05f35522782d5",
+      "observed_at": "2026-11-20T20:05:30.026427+00:00",
+      "bytes": 24166,
+      "code": "0",
+      "data_keys": [
+        "code",
+        "name",
+        "close",
+        "open",
+        "now",
+        "high",
+        "low",
+        "volume",
+        "amount",
+        "delta",
+        "deltaPercent",
+        "lastVolume",
+        "marketTime",
+        "sellbuy5",
+        "sellbuy1",
+        "picupdata",
+        "picdowndata",
+        "picavgprice",
+        "groupId",
+        "volumeAhT",
+        "amountAhT",
+        "tradingPhaseCode1",
+        "tradingPhaseCode2",
+        "isCDR",
+        "isNoProfit",
+        "isVoteDifferent",
+        "isVIE",
+        "isRegistration",
+        "change20PerLimit",
+        "isDelisting"
+      ]
+    },
+    "market_time": "2026-11-20 15:30:00",
+    "relevant_returned_fields": [
+      "change20PerLimit"
+    ],
+    "aggregated_order_book_present": true,
+    "actual_price_bounds_present": false,
+    "boundary": "change20PerLimit flag is not upper/lower limit prices; a Nov20 post-close aggregate snapshot does not recover Nov9-19 order queues or certify executable exits."
+  },
+  "all_four_missing_endpoint_statuses_unchanged": true,
+  "new_independent_validations": 0,
+  "limits": [
+    "Failed official requests are diagnostics, not source-verified delisting facts or zero-return observations.",
+    "Kangjia and Cuihua failures have identical bytes, not two independent market outcomes.",
+    "Lingnan last returned quote corroborates prior raw prices; it does not supply final exchange decision or actual removal date.",
+    "Longyuan absent July3 quote is consistent with existing primary nontrading; no future price is substituted as anchor.",
+    "No fixed-cohort median, verified141 count, adjusted-price difference, or historical membership certification changed."
+  ],
+  "processor_sha256": "4fd594c18c83de85af4cb955243c31e37737f4b0f0d454c5f722a653bf1ad40b",
+  "verified_result": [
+    {
+      "symbol": "000016",
+      "status": "official_request_failed",
+      "usable_endpoint": false
+    },
+    {
+      "symbol": "002717",
+      "status": "prior_quotes_corroborated_missing_endpoint",
+      "raw_matched_days": 66,
+      "last_returned_record": "2026-10-12",
+      "usable_endpoint": false
+    },
+    {
+      "symbol": "002731",
+      "status": "official_request_failed",
+      "usable_endpoint": false
+    },
+    {
+      "symbol": "600491",
+      "status": "anchor_not_returned_matches_primary_nontrading",
+      "usable_endpoint": false
+    }
+  ],
+  "sources": [
+    {
+      "symbol": "000016",
+      "source": {
+        "symbol": "000016",
+        "url": "https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=000016",
+        "params": {
+          "cycleType": 32,
+          "marketId": 1,
+          "code": "000016"
+        },
+        "sha256": "7bab60ae27d3143ddd774feb405718f959466b7c0eb6b5b767ed1a7190e585bc",
+        "bytes": 123,
+        "observed_at": "2026-11-20T20:06:17.754893+00:00",
+        "response_code": "-1",
+        "response_message": "历史K线数据获取失败",
+        "data_code": null,
+        "data_name": null,
+        "rows": 0,
+        "first": null,
+        "last": null
+      }
+    },
+    {
+      "symbol": "002717",
+      "source": {
+        "symbol": "002717",
+        "url": "https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=002717",
+        "params": {
+          "cycleType": 32,
+          "marketId": 1,
+          "code": "002717"
+        },
+        "sha256": "08215ad1d50af8792869f89ee30e492c7feea3ed8a1c24d6e30f3241a16389c1",
+        "bytes": 21603,
+        "observed_at": "2026-11-20T20:06:17.934367+00:00",
+        "response_code": "0",
+        "response_message": "成功",
+        "data_code": "002717",
+        "data_name": "*ST岭南",
+        "rows": 201,
+        "first": "2025-12-08",
+        "last": "2026-10-12"
+      }
+    },
+    {
+      "symbol": "002731",
+      "source": {
+        "symbol": "002731",
+        "url": "https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=002731",
+        "params": {
+          "cycleType": 32,
+          "marketId": 1,
+          "code": "002731"
+        },
+        "sha256": "7bab60ae27d3143ddd774feb405718f959466b7c0eb6b5b767ed1a7190e585bc",
+        "bytes": 123,
+        "observed_at": "2026-11-20T20:06:17.747590+00:00",
+        "response_code": "-1",
+        "response_message": "历史K线数据获取失败",
+        "data_code": null,
+        "data_name": null,
+        "rows": 0,
+        "first": null,
+        "last": null
+      }
+    },
+    {
+      "symbol": "600491",
+      "source": {
+        "code": "600491",
+        "status": "captured",
+        "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/600491",
+        "params": {
+          "select": "date,close,prevClose,chg_rate,volume,amount",
+          "begin": -126,
+          "end": -1,
+          "period": "day"
+        },
+        "sha256": "f3a7cb645c375a7a6c23f628a077a93e5a950d4d89a257a396ecee5f2613e150",
+        "bytes": 6180,
+        "observed_at": "2026-11-20T17:07:12.668991+00:00"
+      }
+    }
+  ],
+  "evidence_sha256": "025212c3fe7ae347dab5ead8a491160c80b0769aa45d68e168eff41d670da4c4",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "research_run_id": "RUN-C1CB36ACF4344F2BA42FBA71"
+}

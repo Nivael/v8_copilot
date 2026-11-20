@@ -1,3 +1,4 @@
+import {STExitQuoteOfficial} from './STExitQuoteOfficial'
 import {STOfficialRawRecheck} from './STOfficialRawRecheck'
 import {STAccountantBodyReview} from './STAccountantBodyReview'
 import {STSubsidiaryExitFollowup} from './STSubsidiaryExitFollowup'
@@ -87,7 +88,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
   <p className="regime-topic-date">{themes?.current_extension?'原制度复盘窗口':'观察期'} {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
   {topic==='cashdirection'&&<STCashDirectionComparison data={data}/>}
   {topic==='lingnanbond'&&<STLingnanBondFollowup data={themes?.lingnan_exit_followup}/>}
-  {topic==='endpoints'&&<><STOfficialRawRecheck data={data}/><STEndpointReasons data={themes?.endpoint_reasons} audit={themes?.endpoint_selection_audit} basis={themes?.endpoint_basis_followup} lingnan={themes?.lingnan_exit_followup}/></>}
+  {topic==='endpoints'&&<><STOfficialRawRecheck data={data}/><STExitQuoteOfficial data={data}/><STEndpointReasons data={themes?.endpoint_reasons} audit={themes?.endpoint_selection_audit} basis={themes?.endpoint_basis_followup} lingnan={themes?.lingnan_exit_followup}/></>}
   {topic==='xilv'&&<STXilvTimeline data={themes?.xilv_timeline} followup={themes?.xilv_liability}/>}
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">
    {themes?.endpoint_reasons&&<p><button className="regime-text-link" onClick={()=>setTopic('endpoints')}>完整段缺4只、近期缺3只：停牌和退出怎样分开？ →</button></p>}

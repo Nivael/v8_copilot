@@ -14,9 +14,9 @@ it('keeps developer sales, capital support and compensation distinct without cla
  expect(region).toHaveTextContent('不能把“卖房”一律当成非经营现金')
  expect(region).toHaveTextContent('558,045,315.92元')
  expect(region).toHaveTextContent('售价也不是净利润')
- expect(region).toHaveTextContent('经营现金仍净流出26,215,410.77元')
- expect(region).toHaveTextContent('不认证精确履行比例')
- expect(region).toHaveTextContent('不把差额写成已确认逾期应收')
+ expect(region).toHaveTextContent('前三季经营现金净流出26,215,410.77元')
+ expect(region).toHaveTextContent('累计收款占协议额57.69%')
+ expect(region).toHaveTextContent('5500万元也不直接认定为逾期欠款')
  expect(screen.getByRole('link',{name:'1225612213 · PDF物理第11页 ↗'})).toHaveAttribute('href','https://static.cninfo.com.cn/finalpage/2026-10-21/1225612213.PDF#page=11')
 })
 it.each(['source','chain','missing','compensation','cutoff'])('withholds receipt interpretation when evidence changes: %s',kind=>{

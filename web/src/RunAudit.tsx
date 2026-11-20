@@ -128,7 +128,14 @@ export function RunAudit() {
 
   useEffect(()=>{
     const controller=new AbortController()
-    Promise.all([getResearchRuns(controller.signal),getResearchCorrections(controller.signal),getResearchIdentityNotes(controller.signal).catch(()=>{if(!controller.signal.aborted)setIdentityError(true);return []})]).then(([records,notes,identities])=>{setRuns(records);setCorrections(notes);setIdentityNotes(identities)}).catch(reason=>{
+    Promise.all([getResearchRuns(controller.signal),getResearchCorrections(controller.signal),getResearchIdentityNotes(controller.signal).catch(()=>{if(!controller.signal.aborted)setIdentityError(true);return []})]).then(async([records,notes,identities])=>{
+      const linkedId=window.location.hash.match(/^#research-(RUN-[A-F0-9]{24})$/)?.[1]
+      if(linkedId&&!records.some(run=>run.run_id===linkedId)){
+        try{const linked=await getResearchRun(linkedId,controller.signal);records=[linked,...records]}
+        catch{if(!controller.signal.aborted)setLinkError('关联的研究暂时无法打开，请稍后重试。')}
+      }
+      if(!controller.signal.aborted){setRuns(records);setCorrections(notes);setIdentityNotes(identities)}
+    }).catch(reason=>{
       if(!(reason instanceof DOMException&&reason.name==='AbortError'))setError('暂时无法读取研究记录或更正，请稍后重试。')
     }).finally(()=>{if(!controller.signal.aborted)setLoading(false)})
     return()=>controller.abort()

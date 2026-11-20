@@ -1,3 +1,4 @@
+import {STCashMarketComparison} from './STCashMarketComparison'
 import audit from './cashDirectionComparison.json'
 import terms from './lingnanJudgmentTerms.json'
 import type {STRegimeData} from './stRegimeTypes'
@@ -19,6 +20,7 @@ export function STCashDirectionComparison({data}:{data:STRegimeData}){
   <h3>同样说“有进展”，钱究竟流向谁、到了哪一步？</h3>
   <p><strong>先分清谁得到什么，再判断进展改变了哪一项风险。</strong>京蓝一笔补偿已到账，另一笔还在追偿；神雾完成的是股东股份抵债；岭南一审判项指向对债券持有人的支付义务。这些进展不能放在同一个“公司拿到钱”的刻度上。</p>
   <div className="table-scroll"><table><caption>逐项比较：流向、阶段与证据时点</caption><thead><tr><th scope="col">事项</th><th scope="col">谁向谁交付</th><th scope="col">已确认阶段</th><th scope="col">依据披露日</th></tr></thead><tbody>{audit.rows.map(row=><tr key={row.name}><th scope="row">{row.name}</th><td>{row.direction}</td><td>{row.stage}</td><td>{row.date}</td></tr>)}</tbody></table></div>
+  <STCashMarketComparison data={data}/>
   <h4>怎样据此更新判断？</h4>
   {audit.rows.map(row=><article key={row.name}><h5>{row.name}</h5><p>{row.meaning}</p><details><summary>下一步要看什么，以及原件依据</summary><p>{row.next}</p><a href={`${row.source.url}#page=${row.page}`} target="_blank" rel="noreferrer">{row.source.title} · {row.date} · 物理第{row.page}页 ↗</a><p>保存文件SHA256：<code>{row.source.sha256}</code></p></details></article>)}
   <h4>可以保留的一条阅读经验</h4>

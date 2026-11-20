@@ -1,0 +1,8 @@
+import packet from './stExitObservation.json'
+import alignment from './stBreadthAlignment.json'
+const names:Record<string,string>={'603398':'沐邦','002514':'宝馨','600363':'联光','002667':'威领','688053':'思科瑞'}
+export function STExitObservation(){
+ if(packet.alignment_evidence_sha256!==alignment.evidence_sha256)return <p role="status">同窗来源变化，日线与退出边界需重核。</p>
+ const d=packet.reading
+ return <details className="reading-disclosure"><summary>日线有成交，就能按复盘收盘价退出吗？</summary><p>还不能这样判断。{d.start}至{d.through}，此前跟踪的五家共{d.total_trading_stock_days}个实际成交证券日，没有全天同价日，{d.close_at_low_stock_days}个证券日收在当日最低价；这些观察不能证明你的委托能按收盘价成交。</p><p>这里只描述五家，不是全ST或全市场。思科瑞属于科创板，期间撤销ST，未把它套进主板ST口径。未计11月6日比较起点，思科瑞停牌日也不计为成交。</p><div className="learning-table-wrap"><table className="market-pressure-table"><caption>日线状态与实际可退出不同</caption><thead><tr><th>此前跟踪公司</th><th>成交日</th><th>全天同价</th><th>收在最低价</th></tr></thead><tbody>{d.companies.map(c=><tr key={c.symbol}><th>{names[c.symbol]}<small>{c.symbol}</small></th><td>{c.observed_trading_days}</td><td>{c.one_price_days}</td><td>{c.close_at_low_days}</td></tr>)}</tbody></table></div><p>全天同价、收盘触低、实际跌停、排队无法成交是不同事实。目前缺实际限价和盘口队列，不计算连续跌停或可退出概率。</p><details><summary>日线证据、来源与仍缺什么</summary>{packet.limits.map(l=><p key={l}>{l}</p>)}{d.companies.map(c=><article key={c.symbol}><h4>{names[c.symbol]} · {c.symbol}</h4><p>观察{c.source.observed_at}；原件SHA256：<code>{c.source.sha256}</code>。</p><a href={c.source.url} target="_blank" rel="noreferrer">保存来源对应接口 · {c.symbol} ↗</a></article>)}<p>保存日线逐条核OHLC区间、日期、证券身份与主源原始收盘。来源摘要<code>{packet.evidence_sha256}</code>。</p></details><p><a href={'/runs#research-'+packet.research_run_id}>查看日线与退出边界研究 →</a></p></details>
+}

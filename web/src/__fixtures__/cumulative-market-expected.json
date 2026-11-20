@@ -1,0 +1,52 @@
+{
+  "source_snapshot": "c2c15689368d763b2a5ef415086457af160a35ffd39cc9f0421971f9e347e733",
+  "anchor": "2026-07-03",
+  "rows": [
+    {
+      "through": "2026-07-31",
+      "market_cumulative_pct": "-11.29154913217664983182568937",
+      "dynamic_st_cumulative_pct": "-8.584413337270756937051820400",
+      "fixed_common_median_pct": "-8.299866131191432396251673360",
+      "fixed_median_minus_market_pp": "2.991683000985217435574016010",
+      "common_outperform_market": 89,
+      "common_members": 139
+    },
+    {
+      "through": "2026-08-31",
+      "market_cumulative_pct": "-6.793317472042292445750588800",
+      "dynamic_st_cumulative_pct": "0.588126850962703747108591100",
+      "fixed_common_median_pct": "0",
+      "fixed_median_minus_market_pp": "6.793317472042292445750588800",
+      "common_outperform_market": 96,
+      "common_members": 139
+    },
+    {
+      "through": "2026-09-30",
+      "market_cumulative_pct": "-11.80665463774284937720987833",
+      "dynamic_st_cumulative_pct": "-0.8078780935317140730665574800",
+      "fixed_common_median_pct": "0",
+      "fixed_median_minus_market_pp": "11.80665463774284937720987833",
+      "common_outperform_market": 104,
+      "common_members": 139
+    },
+    {
+      "through": "2026-10-30",
+      "market_cumulative_pct": "-22.67038517460981141283768384",
+      "dynamic_st_cumulative_pct": "-14.61455230842108297977365065",
+      "fixed_common_median_pct": "-15.17241379310344827586206897",
+      "fixed_median_minus_market_pp": "7.49797138150636313697561487",
+      "common_outperform_market": 96,
+      "common_members": 139
+    },
+    {
+      "through": "2026-11-19",
+      "market_cumulative_pct": "-23.84361043718606625351611964",
+      "dynamic_st_cumulative_pct": "-19.87640328334805222581559620",
+      "fixed_common_median_pct": "-20.77294685990338164251207729",
+      "fixed_median_minus_market_pp": "3.07066357728268461100404235",
+      "common_outperform_market": 76,
+      "common_members": 139
+    }
+  ],
+  "boundary": "动态ST参考、固定139家中位数和中证全指为三种对象；同起点累计价格比较不等于可交易组合回报或制度净效应。个股较大盘多/少跌为百分点差，不当阿尔法。"
+}

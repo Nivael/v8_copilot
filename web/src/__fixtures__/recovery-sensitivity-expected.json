@@ -1,0 +1,82 @@
+{
+  "source_snapshot": "c2c15689368d763b2a5ef415086457af160a35ffd39cc9f0421971f9e347e733",
+  "anchor": "2026-07-03",
+  "fixed_members": 150,
+  "common_members": 139,
+  "windows": [
+    {
+      "through": "2026-07-31",
+      "members": 142,
+      "missing_or_conflicting": 8,
+      "positive": 20,
+      "zero": 1,
+      "negative": 121,
+      "median_pct": "-8.14232850285807361257450588",
+      "common_median_pct": "-8.299866131191432396251673360",
+      "extra_symbols": [
+        "000016",
+        "002667",
+        "002717"
+      ]
+    },
+    {
+      "through": "2026-08-31",
+      "members": 143,
+      "missing_or_conflicting": 7,
+      "positive": 68,
+      "zero": 3,
+      "negative": 72,
+      "median_pct": "-0.3571428571428571428571428600",
+      "common_median_pct": "0",
+      "extra_symbols": [
+        "000016",
+        "002667",
+        "002717",
+        "600238"
+      ]
+    },
+    {
+      "through": "2026-09-30",
+      "members": 141,
+      "missing_or_conflicting": 9,
+      "positive": 68,
+      "zero": 2,
+      "negative": 71,
+      "median_pct": "-0.0494315373208106772120613000",
+      "common_median_pct": "0",
+      "extra_symbols": [
+        "002717",
+        "600238"
+      ]
+    },
+    {
+      "through": "2026-10-30",
+      "members": 141,
+      "missing_or_conflicting": 9,
+      "positive": 21,
+      "zero": 0,
+      "negative": 120,
+      "median_pct": "-15.17241379310344827586206897",
+      "common_median_pct": "-15.17241379310344827586206897",
+      "extra_symbols": [
+        "002667",
+        "600238"
+      ]
+    },
+    {
+      "through": "2026-11-19",
+      "members": 141,
+      "missing_or_conflicting": 9,
+      "positive": 21,
+      "zero": 1,
+      "negative": 119,
+      "median_pct": "-20.74235807860262008733624454",
+      "common_median_pct": "-20.77294685990338164251207729",
+      "extra_symbols": [
+        "002667",
+        "600238"
+      ]
+    }
+  ],
+  "boundary": "各截止日的起终点核价通过子样本，分母不同；不要求中间每个日期齐全，也不恢复未核价或缺失价格。不能从两个子样本近似推断缺失非随机问题已消除。"
+}

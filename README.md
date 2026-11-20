@@ -1,3 +1,5 @@
+最新更新：第17批期初证据已发布，覆盖110/150家，剩40家。见 [本轮结果](ST_INITIAL_SEVENTEENTH_FOUR_RESULT_2026_11_20.md)。
+
 # v8_copilot — ST Research Codex Workbench
 
 独立、只读的证据研究内核，以及由 Codex 主持的本地研究工作台。

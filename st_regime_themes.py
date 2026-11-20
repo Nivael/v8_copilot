@@ -308,4 +308,6 @@ def build_themes(inputs, daily):
     result['jihua_bridge_followup']=jihua_bridge_followup(inputs,result['twentysecond_period_followup'])
     from st_market_stage_experience import market_stage_experience
     result['market_stage_experience']=market_stage_experience(inputs,{k:result[k]for k in ['endpoint_selection_audit','current_extension']})
+    from st_exit_outcomes import exit_outcomes
+    result['exit_outcomes']=exit_outcomes(inputs,{k:result[k]for k in ['endpoint_selection_audit','removal_cohort','endpoint_reasons']})
     return result

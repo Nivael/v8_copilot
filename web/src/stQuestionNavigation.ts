@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'exitoutcomes',anchor:'st-exit-outcomes',title:'离开ST名单的14家公司，分别去了哪里？',field:'exit_outcomes'},
   {key:'marketstages',anchor:'st-market-stage-experience',title:'ST相对抗跌，为什么到10月就变了？',field:'market_stage_experience'},
   {key:'jihua',anchor:'st-jihua-bridge-followup',title:'际华：单季盈利与三项衔接差额怎样看？',field:'jihua_bridge_followup'},
   {key:'restatement',anchor:'st-restatement-comparison',title:'财报更正后，应该改哪一层判断？',field:'restatement_comparison'},

@@ -1127,5 +1127,6 @@
     "independent_validations_added": 0
   },
   "alignment_sha256": "9f3abc3359f7fd52b24ef0657f9e0fd82d64af9eb00f226759bed9e85bd3cbeb",
-  "research_run_id": "RUN-DAF379030FCC4D09861F2B51"
+  "research_run_id": "RUN-DAF379030FCC4D09861F2B51",
+  "evidence_sha256": "e81d3cbcedec94cd1b0e373d688293a2aa4e0993f684c2fa877ac345c9d4a1f7"
 }

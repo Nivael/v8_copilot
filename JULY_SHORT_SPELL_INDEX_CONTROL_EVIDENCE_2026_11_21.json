@@ -1,0 +1,35 @@
+{
+  "version": "july_short_spell_index_control_v1",
+  "source": {
+    "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260701&endDate=20260709",
+    "response_sha256": "8c53ad61703dee80dc69813b3038df8237fd2ebd27e56226d3ed5dec54d9757b",
+    "bytes": 2576,
+    "observed_at": "2026-11-20T22:47:48.748453+00:00",
+    "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/july_index_control/20261121"
+  },
+  "wait_evidence_sha256": "e81d3cbcedec94cd1b0e373d688293a2aa4e0993f684c2fa877ac345c9d4a1f7",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "reading": {
+    "matched_closes": 7,
+    "dates": [
+      "2026-07-01",
+      "2026-07-02",
+      "2026-07-03",
+      "2026-07-06",
+      "2026-07-07",
+      "2026-07-08",
+      "2026-07-09"
+    ],
+    "symbol": "000985.CSI",
+    "primary_before_pct": -2.8462488530875962,
+    "official_before_pct": -2.8461899450874273,
+    "primary_remaining_pct": -1.12814351923347,
+    "official_remaining_pct": -1.1280730699019503,
+    "matched_at_two_decimal_precision": true
+  },
+  "limits": [
+    "Primary higher precision returns remain displayed; rounded official endpoints are a control",
+    "Does not change source observation date or establish historical real-time availability",
+    "One extra source for the same spell, not independent strategy validation"
+  ]
+}

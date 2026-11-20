@@ -1,0 +1,160 @@
+{
+  "evidence_sha256": "28d1ba418590aaeaef746bf88f3a82d457fae5efe72311387e04cc2c3941e699",
+  "breadth_sha256": "03488f4f855c814d6649b7e3c64ff1b29dbe94f03b387daf480ae785470428dd",
+  "source_cohort_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "days": [
+    {
+      "date": "2026-11-09",
+      "official_trading": 5218,
+      "provider_trading_in_official_set": 5218,
+      "paired": 5218,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 2,
+        "touch_down": 4,
+        "one_price_down": 1
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "official_trading": 5218,
+      "provider_trading_in_official_set": 5218,
+      "paired": 5218,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 0,
+        "touch_down": 3,
+        "one_price_down": 0
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "official_trading": 5219,
+      "provider_trading_in_official_set": 5219,
+      "paired": 5219,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 3,
+        "touch_down": 6,
+        "one_price_down": 0
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-12",
+      "official_trading": 5218,
+      "provider_trading_in_official_set": 5218,
+      "paired": 5218,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 6,
+        "touch_down": 9,
+        "one_price_down": 0
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "official_trading": 5216,
+      "provider_trading_in_official_set": 5216,
+      "paired": 5216,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 39,
+        "touch_down": 60,
+        "one_price_down": 1
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-16",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 68,
+        "touch_down": 98,
+        "one_price_down": 1
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 84,
+        "touch_down": 109,
+        "one_price_down": 2
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-18",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 47,
+        "touch_down": 66,
+        "one_price_down": 7
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-19",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 83,
+        "touch_down": 106,
+        "one_price_down": 6
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    }
+  ]
+}

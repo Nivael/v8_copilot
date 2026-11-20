@@ -138,3 +138,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 现金流向横向比较已发布：京蓝两笔、神雾股份抵债、岭南债券判项分列；三家公司四事项逐项核流向、阶段和日期，原件按需展开，不新增方法验证次数。见 [结果](ST_CASH_DIRECTION_COMPARISON_RESULT_2026_11_20.md)。
 
 兑现与行情对照已接入：京蓝实收后首日涨/20日跌、神雾过户后绝对跌/相对少跌并列；1/5日切换、停牌空值、期间新消息及同窗大盘分列。见 [结果](ST_CASH_MARKET_COMPARISON_RESULT_2026_11_20.md)。
+
+到账性质比较已接入：京蓝补偿、海泰项目销售、百利资本赠与分列；不把全部卖房排为非经营，也不把算术差额当逾期欠款。阶段/性质/行情三问切换，见 [结果](ST_CASH_RECEIPT_MEANING_RESULT_2026_11_20.md)。

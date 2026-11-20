@@ -1,0 +1,2888 @@
+{
+  "version": "early_two_venue_breadth_v1",
+  "scope": "SSE_SZSE_ordinary_A_shares",
+  "start": "2026-07-01",
+  "through": "2026-08-31",
+  "sessions": 44,
+  "basis_sha256": "c61af203bdd2ddadf44d6d23c2e0b7a5dc75dd62f9693a9c0d0585d96af8e0e5",
+  "halts_sha256": "9fca45d423c1837139c1a592dcbfd6fae541de1b3a901370a7d8a75afcf3a9b5",
+  "extra_sha256": "e9c09a090e1cc498c06ea3adde6e8220288a9028094dd3dc8308adbf9afdcdc7",
+  "szse_capture": {
+    "version": "recent_szse_verified_breadth_v1",
+    "scope": "SZSE_A_shares_only",
+    "complete_market_history": false,
+    "missing_venues": [
+      "SSE"
+    ],
+    "historical_PIT": false,
+    "start": "2026-07-01",
+    "through": "2026-08-31",
+    "source_digest": "dd216b4113c0cea795c82b68f0e001f808419836183ef78a1a7ac2697d5879c1",
+    "points": [
+      {
+        "date": "2026-07-01",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "5b1107d74b7c77693107b4fa889c21ea18188b10ef53e3ade7085ed958a2169b",
+        "all": {
+          "observed_trading_stocks": 2887,
+          "listed_source_stocks": 2894,
+          "nontrading_stocks": 7,
+          "advancing": 2281,
+          "declining": 588,
+          "flat": 18,
+          "declining_5pct_or_more": 100,
+          "median_return_pct": 2.170659,
+          "mean_return_pct": 2.224114,
+          "declining_share_pct": 20.367163,
+          "amount_yuan": 1963686523900.0
+        }
+      },
+      {
+        "date": "2026-07-02",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "6ce4686dc7ad518bb1f5ce1e658a45d9c22eba4cfead287813f51c4909aaec8b",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 5,
+          "advancing": 1132,
+          "declining": 1689,
+          "flat": 69,
+          "declining_5pct_or_more": 286,
+          "median_return_pct": -0.523073,
+          "mean_return_pct": -0.633074,
+          "declining_share_pct": 58.442907,
+          "amount_yuan": 1874525854800.0
+        }
+      },
+      {
+        "date": "2026-07-03",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "70f1b60b8051e3e90d91a4c54026819203ed6d1b5e3ab5733f7843a6f23a74c0",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 5,
+          "advancing": 1987,
+          "declining": 860,
+          "flat": 43,
+          "declining_5pct_or_more": 151,
+          "median_return_pct": 1.25,
+          "mean_return_pct": 1.216566,
+          "declining_share_pct": 29.757785,
+          "amount_yuan": 1718622467000.0
+        }
+      },
+      {
+        "date": "2026-07-06",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "23e97d1c562d1fe31a085a9d47f9a2526f349e16ced94c2f1c4ecde7707e546a",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 4,
+          "advancing": 897,
+          "declining": 1936,
+          "flat": 58,
+          "declining_5pct_or_more": 395,
+          "median_return_pct": -1.527778,
+          "mean_return_pct": -1.402794,
+          "declining_share_pct": 66.966448,
+          "amount_yuan": 1661454722200.0
+        }
+      },
+      {
+        "date": "2026-07-07",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "118a3b0fc52f26840f8991b2023bcb507f5dd52041357099e11016032fdce99e",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 4,
+          "advancing": 337,
+          "declining": 2545,
+          "flat": 9,
+          "declining_5pct_or_more": 418,
+          "median_return_pct": -3.052805,
+          "mean_return_pct": -2.774215,
+          "declining_share_pct": 88.031823,
+          "amount_yuan": 1386846885000.0
+        }
+      },
+      {
+        "date": "2026-07-08",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "b5d3a485c76a3c369a51abde71597ad5992cf5db78371760ae87e38ee6ecb67c",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 4,
+          "advancing": 787,
+          "declining": 2038,
+          "flat": 66,
+          "declining_5pct_or_more": 405,
+          "median_return_pct": -1.492537,
+          "mean_return_pct": -1.601838,
+          "declining_share_pct": 70.494639,
+          "amount_yuan": 1372469208500.0
+        }
+      },
+      {
+        "date": "2026-07-09",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "cea9df9efed9328cba60a1653b39d07a09120a493eff149675aad0646c0816fe",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 4,
+          "advancing": 1311,
+          "declining": 1500,
+          "flat": 80,
+          "declining_5pct_or_more": 66,
+          "median_return_pct": -0.165289,
+          "mean_return_pct": 0.482979,
+          "declining_share_pct": 51.885161,
+          "amount_yuan": 1551437920600.0
+        }
+      },
+      {
+        "date": "2026-07-10",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "fce5d0b1a3bc555908ed880eda2842929dc4dea254f3e9b728b50697778913cd",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 5,
+          "advancing": 1993,
+          "declining": 860,
+          "flat": 37,
+          "declining_5pct_or_more": 167,
+          "median_return_pct": 1.264333,
+          "mean_return_pct": 1.277181,
+          "declining_share_pct": 29.757785,
+          "amount_yuan": 1828141657700.0
+        }
+      },
+      {
+        "date": "2026-07-13",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "4349f93c42fa9396502ed1d9248aff97604a97fe3badc8f14ffb1cb4d80a658d",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 5,
+          "advancing": 344,
+          "declining": 2528,
+          "flat": 18,
+          "declining_5pct_or_more": 1252,
+          "median_return_pct": -4.470764,
+          "mean_return_pct": -4.389297,
+          "declining_share_pct": 87.474048,
+          "amount_yuan": 1484501198800.0
+        }
+      },
+      {
+        "date": "2026-07-14",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "af3712718b274542d25759a09348fb3ec3d6f67eaaff8e8bf04d23441e2de602",
+        "all": {
+          "observed_trading_stocks": 2889,
+          "listed_source_stocks": 2893,
+          "nontrading_stocks": 4,
+          "advancing": 2211,
+          "declining": 653,
+          "flat": 25,
+          "declining_5pct_or_more": 92,
+          "median_return_pct": 1.59268,
+          "mean_return_pct": 1.568068,
+          "declining_share_pct": 22.602977,
+          "amount_yuan": 1434774012900.0
+        }
+      },
+      {
+        "date": "2026-07-15",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "8600da13568eb9d8d4d1111c1f005218e311296368c8b8528ccfe62c7668c262",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2893,
+          "nontrading_stocks": 3,
+          "advancing": 1763,
+          "declining": 1088,
+          "flat": 39,
+          "declining_5pct_or_more": 234,
+          "median_return_pct": 0.755763,
+          "mean_return_pct": 0.291489,
+          "declining_share_pct": 37.647059,
+          "amount_yuan": 1345981857900.0
+        }
+      },
+      {
+        "date": "2026-07-16",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "73b0bc0daed11004555e7a6692a54dea52c6e82c12f5a04d5c4ff265d76448d4",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2893,
+          "nontrading_stocks": 2,
+          "advancing": 1413,
+          "declining": 1379,
+          "flat": 99,
+          "declining_5pct_or_more": 254,
+          "median_return_pct": 0.0,
+          "mean_return_pct": -0.380827,
+          "declining_share_pct": 47.699758,
+          "amount_yuan": 1282458155000.0
+        }
+      },
+      {
+        "date": "2026-07-17",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "33814003361ff1ee67e68764a4bc59c2f1baf8373a5c22f1aeef38c30f182fce",
+        "all": {
+          "observed_trading_stocks": 2889,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 3,
+          "advancing": 205,
+          "declining": 2673,
+          "flat": 11,
+          "declining_5pct_or_more": 1269,
+          "median_return_pct": -4.447533,
+          "mean_return_pct": -4.843307,
+          "declining_share_pct": 92.523364,
+          "amount_yuan": 1409763953000.0
+        }
+      },
+      {
+        "date": "2026-07-20",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "3d39a7ca6138a51b0b6b51005d3f415e68c027f6a7021de8f6566dbc15c6be01",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 1,
+          "advancing": 819,
+          "declining": 2027,
+          "flat": 45,
+          "declining_5pct_or_more": 798,
+          "median_return_pct": -2.28385,
+          "mean_return_pct": -2.661091,
+          "declining_share_pct": 70.114147,
+          "amount_yuan": 1408135488600.0
+        }
+      },
+      {
+        "date": "2026-07-21",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "0f8a3eb3b09d3bbe8bf5dfab0b5607da14fe80c5a8b66f03d0d4399940367a66",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 1,
+          "advancing": 1661,
+          "declining": 1175,
+          "flat": 55,
+          "declining_5pct_or_more": 77,
+          "median_return_pct": 0.669394,
+          "mean_return_pct": 1.461081,
+          "declining_share_pct": 40.643376,
+          "amount_yuan": 1561975002200.0
+        }
+      },
+      {
+        "date": "2026-07-22",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "5aa0f71ace12722d9ea125e12cd6e348dcb9701aebb7a3de7fbd6b276adc7e98",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 1,
+          "advancing": 714,
+          "declining": 2120,
+          "flat": 57,
+          "declining_5pct_or_more": 119,
+          "median_return_pct": -1.449275,
+          "mean_return_pct": -1.034358,
+          "declining_share_pct": 73.331027,
+          "amount_yuan": 1396342677500.0
+        }
+      },
+      {
+        "date": "2026-07-23",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "944a45ad09553de912295431ab56aece1e7d3f80d8fb8d0c6fea1337756b0c00",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 2,
+          "advancing": 2287,
+          "declining": 574,
+          "flat": 29,
+          "declining_5pct_or_more": 35,
+          "median_return_pct": 2.025634,
+          "mean_return_pct": 2.116531,
+          "declining_share_pct": 19.861592,
+          "amount_yuan": 1171003691700.0
+        }
+      },
+      {
+        "date": "2026-07-24",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "a279e3402e1056654462a1d2bf391732b96ed9e025f2c1cb65cf04c61bc13eb0",
+        "all": {
+          "observed_trading_stocks": 2889,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 3,
+          "advancing": 287,
+          "declining": 2589,
+          "flat": 13,
+          "declining_5pct_or_more": 352,
+          "median_return_pct": -2.88,
+          "mean_return_pct": -2.628645,
+          "declining_share_pct": 89.615784,
+          "amount_yuan": 1016833511000.0
+        }
+      },
+      {
+        "date": "2026-07-27",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "20c7d49b9ab376c24731bfdaaa5573954da588873b3354708990dfaf178e57f3",
+        "all": {
+          "observed_trading_stocks": 2885,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 7,
+          "advancing": 2772,
+          "declining": 100,
+          "flat": 13,
+          "declining_5pct_or_more": 12,
+          "median_return_pct": 3.007519,
+          "mean_return_pct": 3.361841,
+          "declining_share_pct": 3.466205,
+          "amount_yuan": 1046332747400.0
+        }
+      },
+      {
+        "date": "2026-07-28",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "5a03dffefaf4eae31a2efc2c635803f5b2b694e7df2ddeffaff4fb2e2b0fc0ec",
+        "all": {
+          "observed_trading_stocks": 2885,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 7,
+          "advancing": 1319,
+          "declining": 1486,
+          "flat": 80,
+          "declining_5pct_or_more": 303,
+          "median_return_pct": -0.143988,
+          "mean_return_pct": -0.690613,
+          "declining_share_pct": 51.507799,
+          "amount_yuan": 1076743302000.0
+        }
+      },
+      {
+        "date": "2026-07-29",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "8e3b7b30095a808bff8c1087977599531e743490c1281d7a409c91b335d2667b",
+        "all": {
+          "observed_trading_stocks": 2884,
+          "listed_source_stocks": 2892,
+          "nontrading_stocks": 8,
+          "advancing": 2191,
+          "declining": 661,
+          "flat": 32,
+          "declining_5pct_or_more": 93,
+          "median_return_pct": 1.538462,
+          "mean_return_pct": 1.22786,
+          "declining_share_pct": 22.919556,
+          "amount_yuan": 1210170969200.0
+        }
+      },
+      {
+        "date": "2026-07-30",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "dbda50e55cdbb2afce4b3d4f96b98c698245d8c3bb27eda443df291a45d3c037",
+        "all": {
+          "observed_trading_stocks": 2887,
+          "listed_source_stocks": 2893,
+          "nontrading_stocks": 6,
+          "advancing": 765,
+          "declining": 2061,
+          "flat": 61,
+          "declining_5pct_or_more": 546,
+          "median_return_pct": -1.441441,
+          "mean_return_pct": -1.983771,
+          "declining_share_pct": 71.388985,
+          "amount_yuan": 1237252431200.0
+        }
+      },
+      {
+        "date": "2026-07-31",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "dc111475a260e90ac85e80d3fcebaa0945b8ee034817d3da7b354e3672ae1a50",
+        "all": {
+          "observed_trading_stocks": 2889,
+          "listed_source_stocks": 2893,
+          "nontrading_stocks": 4,
+          "advancing": 2537,
+          "declining": 308,
+          "flat": 44,
+          "declining_5pct_or_more": 8,
+          "median_return_pct": 2.297461,
+          "mean_return_pct": 2.837036,
+          "declining_share_pct": 10.661128,
+          "amount_yuan": 1355383107000.0
+        }
+      },
+      {
+        "date": "2026-08-03",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "3e81bb10d4c11bf837d0bda0ed8016955ddca11923a745a737603822fecf7777",
+        "all": {
+          "observed_trading_stocks": 2889,
+          "listed_source_stocks": 2893,
+          "nontrading_stocks": 4,
+          "advancing": 2237,
+          "declining": 622,
+          "flat": 30,
+          "declining_5pct_or_more": 95,
+          "median_return_pct": 1.629073,
+          "mean_return_pct": 1.521433,
+          "declining_share_pct": 21.529941,
+          "amount_yuan": 1045884738900.0
+        }
+      },
+      {
+        "date": "2026-08-04",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "56e93741ff81675ba0bf53d6935295195317b0138e939f1c8459e86e29785c14",
+        "all": {
+          "observed_trading_stocks": 2888,
+          "listed_source_stocks": 2894,
+          "nontrading_stocks": 6,
+          "advancing": 2037,
+          "declining": 783,
+          "flat": 68,
+          "declining_5pct_or_more": 3,
+          "median_return_pct": 1.209085,
+          "mean_return_pct": 2.122406,
+          "declining_share_pct": 27.112188,
+          "amount_yuan": 1206240030100.0
+        }
+      },
+      {
+        "date": "2026-08-05",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "680100b5705b39e23cbbbab8eb44035dd7aa131df0f4dda65907cf4ec7f57983",
+        "all": {
+          "observed_trading_stocks": 2890,
+          "listed_source_stocks": 2894,
+          "nontrading_stocks": 4,
+          "advancing": 1967,
+          "declining": 826,
+          "flat": 97,
+          "declining_5pct_or_more": 5,
+          "median_return_pct": 0.931427,
+          "mean_return_pct": 1.750079,
+          "declining_share_pct": 28.581315,
+          "amount_yuan": 1452580594000.0
+        }
+      },
+      {
+        "date": "2026-08-06",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "2e9909e62aca8a3eb6389ce1b76ae81f7dbd0ac9d2a68434dadf095d5c88ce37",
+        "all": {
+          "observed_trading_stocks": 2889,
+          "listed_source_stocks": 2894,
+          "nontrading_stocks": 5,
+          "advancing": 1444,
+          "declining": 1361,
+          "flat": 84,
+          "declining_5pct_or_more": 30,
+          "median_return_pct": 0.0,
+          "mean_return_pct": 0.474003,
+          "declining_share_pct": 47.109727,
+          "amount_yuan": 1363399099300.0
+        }
+      },
+      {
+        "date": "2026-08-07",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "410f678d1283bf77443268031b86d4c73badcaf72a899b23a30c17240f0e872a",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 4,
+          "advancing": 1476,
+          "declining": 1347,
+          "flat": 68,
+          "declining_5pct_or_more": 31,
+          "median_return_pct": 0.087184,
+          "mean_return_pct": 0.954257,
+          "declining_share_pct": 46.592874,
+          "amount_yuan": 1456003133500.0
+        }
+      },
+      {
+        "date": "2026-08-10",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "c0d77d96ca1e243ea21142ef230e4e28cbaefe604001d2a101c438184395572c",
+        "all": {
+          "observed_trading_stocks": 2894,
+          "listed_source_stocks": 2895,
+          "nontrading_stocks": 1,
+          "advancing": 2190,
+          "declining": 671,
+          "flat": 33,
+          "declining_5pct_or_more": 38,
+          "median_return_pct": 1.493784,
+          "mean_return_pct": 1.525694,
+          "declining_share_pct": 23.185902,
+          "amount_yuan": 1357528059600.0
+        }
+      },
+      {
+        "date": "2026-08-11",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "da1b15ea5f8a57915a6b75b79bdaede473859e88303a5822b5a800fe81995ca4",
+        "all": {
+          "observed_trading_stocks": 2895,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 1,
+          "advancing": 849,
+          "declining": 1960,
+          "flat": 86,
+          "declining_5pct_or_more": 50,
+          "median_return_pct": -0.628033,
+          "mean_return_pct": -0.118522,
+          "declining_share_pct": 67.702936,
+          "amount_yuan": 1255781655800.0
+        }
+      },
+      {
+        "date": "2026-08-12",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "9a862420720a6e53eabc237b676db9f5b072ba6eebaa4bf0df3c6a52fd859e82",
+        "all": {
+          "observed_trading_stocks": 2895,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 1,
+          "advancing": 2220,
+          "declining": 610,
+          "flat": 65,
+          "declining_5pct_or_more": 9,
+          "median_return_pct": 0.913838,
+          "mean_return_pct": 1.277188,
+          "declining_share_pct": 21.070812,
+          "amount_yuan": 1167456154700.0
+        }
+      },
+      {
+        "date": "2026-08-13",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "39281e8a58fa1a234e8f78cd6583471c0a8a6dabc44c51c8a5f7ab955ac069cc",
+        "all": {
+          "observed_trading_stocks": 2895,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 1,
+          "advancing": 565,
+          "declining": 2291,
+          "flat": 39,
+          "declining_5pct_or_more": 70,
+          "median_return_pct": -1.560694,
+          "mean_return_pct": -1.102941,
+          "declining_share_pct": 79.136442,
+          "amount_yuan": 1387818966700.0
+        }
+      },
+      {
+        "date": "2026-08-14",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "bc427bf7994df91be8ad676a877645345946f1432c166320ba7f145a70aea011",
+        "all": {
+          "observed_trading_stocks": 2895,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 1,
+          "advancing": 1327,
+          "declining": 1482,
+          "flat": 86,
+          "declining_5pct_or_more": 55,
+          "median_return_pct": -0.094697,
+          "mean_return_pct": 0.22423,
+          "declining_share_pct": 51.19171,
+          "amount_yuan": 1153342359000.0
+        }
+      },
+      {
+        "date": "2026-08-17",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "e3b4fbdc8b54b3b7cc2f2c7d361b65d4f4aae6acc7c8d76a1f4e6a76f475d42d",
+        "all": {
+          "observed_trading_stocks": 2893,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 3,
+          "advancing": 2306,
+          "declining": 528,
+          "flat": 59,
+          "declining_5pct_or_more": 16,
+          "median_return_pct": 1.426534,
+          "mean_return_pct": 1.791638,
+          "declining_share_pct": 18.250951,
+          "amount_yuan": 1275859154100.0
+        }
+      },
+      {
+        "date": "2026-08-18",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "4bde0370d1fb8237ba53dc2405097fca934aae30bae4007dec066e3ff7c5c0af",
+        "all": {
+          "observed_trading_stocks": 2892,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 4,
+          "advancing": 936,
+          "declining": 1891,
+          "flat": 65,
+          "declining_5pct_or_more": 59,
+          "median_return_pct": -0.720378,
+          "mean_return_pct": -0.315688,
+          "declining_share_pct": 65.387275,
+          "amount_yuan": 1266636289900.0
+        }
+      },
+      {
+        "date": "2026-08-19",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "a57dd6ae8e05e476ba0d46e723272cbbc03d9570e4b149096511ab45d99991e2",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2896,
+          "nontrading_stocks": 5,
+          "advancing": 185,
+          "declining": 2697,
+          "flat": 9,
+          "declining_5pct_or_more": 1114,
+          "median_return_pct": -4.150504,
+          "mean_return_pct": -4.370865,
+          "declining_share_pct": 93.289519,
+          "amount_yuan": 1293623661000.0
+        }
+      },
+      {
+        "date": "2026-08-20",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "5bbff70d4a84597f833c2e85dfa407a89405d9cef1a8e8e18e525153cd003e99",
+        "all": {
+          "observed_trading_stocks": 2891,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 6,
+          "advancing": 2235,
+          "declining": 618,
+          "flat": 38,
+          "declining_5pct_or_more": 63,
+          "median_return_pct": 1.348257,
+          "mean_return_pct": 1.55757,
+          "declining_share_pct": 21.376686,
+          "amount_yuan": 1061685742400.0
+        }
+      },
+      {
+        "date": "2026-08-21",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "bbf998637bbcd207a88a8621a7123ed9e3e07d42eca259e9e7c068eff50544e3",
+        "all": {
+          "observed_trading_stocks": 2892,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 5,
+          "advancing": 1402,
+          "declining": 1398,
+          "flat": 92,
+          "declining_5pct_or_more": 112,
+          "median_return_pct": 0.0,
+          "mean_return_pct": 0.064932,
+          "declining_share_pct": 48.340249,
+          "amount_yuan": 997456544000.0
+        }
+      },
+      {
+        "date": "2026-08-24",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "cebca71181dc83f66f464590c36bd26f4f8e2567f6cc62cd167eb30a3e55afd5",
+        "all": {
+          "observed_trading_stocks": 2894,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 3,
+          "advancing": 710,
+          "declining": 2125,
+          "flat": 59,
+          "declining_5pct_or_more": 202,
+          "median_return_pct": -1.277588,
+          "mean_return_pct": -1.185815,
+          "declining_share_pct": 73.427782,
+          "amount_yuan": 1056020551100.0
+        }
+      },
+      {
+        "date": "2026-08-25",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "0af8717028abf11d75445bc12ec0fda84fd98b2ccbc27db4b3a0e6cae46380de",
+        "all": {
+          "observed_trading_stocks": 2895,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 2,
+          "advancing": 2298,
+          "declining": 574,
+          "flat": 23,
+          "declining_5pct_or_more": 35,
+          "median_return_pct": 1.837753,
+          "mean_return_pct": 1.762544,
+          "declining_share_pct": 19.827288,
+          "amount_yuan": 974042705700.0
+        }
+      },
+      {
+        "date": "2026-08-26",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "a9517f47a101b42e1440f40b22095c4dc2b4294900c003608f722fed9bee2224",
+        "all": {
+          "observed_trading_stocks": 2894,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 3,
+          "advancing": 1464,
+          "declining": 1344,
+          "flat": 86,
+          "declining_5pct_or_more": 43,
+          "median_return_pct": 0.074842,
+          "mean_return_pct": 0.174068,
+          "declining_share_pct": 46.440912,
+          "amount_yuan": 952274389300.0
+        }
+      },
+      {
+        "date": "2026-08-27",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "caca25e08a7098a1b27223bd4491bcc989834aafcc54b8452ec197250db75183",
+        "all": {
+          "observed_trading_stocks": 2895,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 2,
+          "advancing": 1839,
+          "declining": 932,
+          "flat": 124,
+          "declining_5pct_or_more": 17,
+          "median_return_pct": 0.639659,
+          "mean_return_pct": 1.257089,
+          "declining_share_pct": 32.193437,
+          "amount_yuan": 1116977323400.0
+        }
+      },
+      {
+        "date": "2026-08-28",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "a0a173f49f1552bf7360e1d65d3dbb183b7fbff7f14680f81c5c77f8959fd417",
+        "all": {
+          "observed_trading_stocks": 2893,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 4,
+          "advancing": 1528,
+          "declining": 1283,
+          "flat": 82,
+          "declining_5pct_or_more": 68,
+          "median_return_pct": 0.151057,
+          "mean_return_pct": 0.203084,
+          "declining_share_pct": 44.348427,
+          "amount_yuan": 1132321383900.0
+        }
+      },
+      {
+        "date": "2026-08-31",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "95b2b7879123a4cad940c1bc9c32153f2aba9491ecdc6a8119c11fd99504e5d8",
+        "all": {
+          "observed_trading_stocks": 2893,
+          "listed_source_stocks": 2897,
+          "nontrading_stocks": 4,
+          "advancing": 1740,
+          "declining": 1080,
+          "flat": 73,
+          "declining_5pct_or_more": 61,
+          "median_return_pct": 0.632911,
+          "mean_return_pct": 0.921291,
+          "declining_share_pct": 37.33149,
+          "amount_yuan": 1117810588100.0
+        }
+      }
+    ],
+    "source_files": 132
+  },
+  "points": [
+    {
+      "date": "2026-07-01",
+      "all": {
+        "observed_trading_stocks": 5189,
+        "listed_source_stocks": 5205,
+        "nontrading_stocks": 16,
+        "advancing": 4043,
+        "declining": 1110,
+        "flat": 36,
+        "declining_5pct_or_more": 198,
+        "median_return_pct": 2.088452,
+        "mean_return_pct": 2.082079,
+        "declining_share_pct": 21.391405,
+        "amount_yuan": 3662014625714.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2302,
+        "listed_source_stocks": 2311,
+        "nontrading_stocks": 9,
+        "advancing": 1762,
+        "declining": 522,
+        "flat": 18,
+        "declining_5pct_or_more": 98,
+        "median_return_pct": 1.983073,
+        "mean_return_pct": 1.903948,
+        "declining_share_pct": 22.675934,
+        "amount_yuan": 1698328101814.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2887,
+        "listed_source_stocks": 2894,
+        "nontrading_stocks": 7,
+        "advancing": 2281,
+        "declining": 588,
+        "flat": 18,
+        "declining_5pct_or_more": 100,
+        "median_return_pct": 2.170659,
+        "mean_return_pct": 2.224114,
+        "declining_share_pct": 20.367163,
+        "amount_yuan": 1963686523900.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600193",
+        "600608",
+        "601369",
+        "603001",
+        "603559",
+        "603722",
+        "605081",
+        "688072",
+        "688121"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-02",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5206,
+        "nontrading_stocks": 12,
+        "advancing": 2113,
+        "declining": 2955,
+        "flat": 126,
+        "declining_5pct_or_more": 529,
+        "median_return_pct": -0.457741,
+        "mean_return_pct": -0.694164,
+        "declining_share_pct": 56.892568,
+        "amount_yuan": 3451612546575.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2304,
+        "listed_source_stocks": 2311,
+        "nontrading_stocks": 7,
+        "advancing": 981,
+        "declining": 1266,
+        "flat": 57,
+        "declining_5pct_or_more": 243,
+        "median_return_pct": -0.386901,
+        "mean_return_pct": -0.770793,
+        "declining_share_pct": 54.947917,
+        "amount_yuan": 1577086691775.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 5,
+        "advancing": 1132,
+        "declining": 1689,
+        "flat": 69,
+        "declining_5pct_or_more": 286,
+        "median_return_pct": -0.523073,
+        "mean_return_pct": -0.633074,
+        "declining_share_pct": 58.442907,
+        "amount_yuan": 1874525854800.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600193",
+        "600608",
+        "601369",
+        "603722",
+        "605081",
+        "688072",
+        "688121"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-03",
+      "all": {
+        "observed_trading_stocks": 5193,
+        "listed_source_stocks": 5204,
+        "nontrading_stocks": 11,
+        "advancing": 3527,
+        "declining": 1584,
+        "flat": 82,
+        "declining_5pct_or_more": 306,
+        "median_return_pct": 1.179245,
+        "mean_return_pct": 1.067074,
+        "declining_share_pct": 30.5026,
+        "amount_yuan": 3184070585021.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2303,
+        "listed_source_stocks": 2309,
+        "nontrading_stocks": 6,
+        "advancing": 1540,
+        "declining": 724,
+        "flat": 39,
+        "declining_5pct_or_more": 155,
+        "median_return_pct": 1.080774,
+        "mean_return_pct": 0.879477,
+        "declining_share_pct": 31.437256,
+        "amount_yuan": 1465448118021.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 5,
+        "advancing": 1987,
+        "declining": 860,
+        "flat": 43,
+        "declining_5pct_or_more": 151,
+        "median_return_pct": 1.25,
+        "mean_return_pct": 1.216566,
+        "declining_share_pct": 29.757785,
+        "amount_yuan": 1718622467000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600193",
+        "600491",
+        "601369",
+        "603722",
+        "688072",
+        "688121"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-06",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 9,
+        "advancing": 1817,
+        "declining": 3278,
+        "flat": 99,
+        "declining_5pct_or_more": 669,
+        "median_return_pct": -1.176471,
+        "mean_return_pct": -1.167207,
+        "declining_share_pct": 63.111282,
+        "amount_yuan": 3093471040677.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2303,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 5,
+        "advancing": 920,
+        "declining": 1342,
+        "flat": 41,
+        "declining_5pct_or_more": 274,
+        "median_return_pct": -0.739372,
+        "mean_return_pct": -0.871471,
+        "declining_share_pct": 58.271819,
+        "amount_yuan": 1432016318477.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 4,
+        "advancing": 897,
+        "declining": 1936,
+        "flat": 58,
+        "declining_5pct_or_more": 395,
+        "median_return_pct": -1.527778,
+        "mean_return_pct": -1.402794,
+        "declining_share_pct": 66.966448,
+        "amount_yuan": 1661454722200.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600405",
+        "600491",
+        "601369",
+        "688072",
+        "688121"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-07",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 9,
+        "advancing": 639,
+        "declining": 4535,
+        "flat": 20,
+        "declining_5pct_or_more": 742,
+        "median_return_pct": -2.952169,
+        "mean_return_pct": -2.687021,
+        "declining_share_pct": 87.312283,
+        "amount_yuan": 2583125285613.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2303,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 5,
+        "advancing": 302,
+        "declining": 1990,
+        "flat": 11,
+        "declining_5pct_or_more": 324,
+        "median_return_pct": -2.815433,
+        "mean_return_pct": -2.577565,
+        "declining_share_pct": 86.409032,
+        "amount_yuan": 1196278400613.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 4,
+        "advancing": 337,
+        "declining": 2545,
+        "flat": 9,
+        "declining_5pct_or_more": 418,
+        "median_return_pct": -3.052805,
+        "mean_return_pct": -2.774215,
+        "declining_share_pct": 88.031823,
+        "amount_yuan": 1386846885000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600405",
+        "600491",
+        "601369",
+        "603580",
+        "688072"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-08",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 9,
+        "advancing": 1533,
+        "declining": 3532,
+        "flat": 129,
+        "declining_5pct_or_more": 665,
+        "median_return_pct": -1.341727,
+        "mean_return_pct": -1.451822,
+        "declining_share_pct": 68.00154,
+        "amount_yuan": 2564726025080.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2303,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 5,
+        "advancing": 746,
+        "declining": 1494,
+        "flat": 63,
+        "declining_5pct_or_more": 260,
+        "median_return_pct": -1.09356,
+        "mean_return_pct": -1.263504,
+        "declining_share_pct": 64.871906,
+        "amount_yuan": 1192256816580.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 4,
+        "advancing": 787,
+        "declining": 2038,
+        "flat": 66,
+        "declining_5pct_or_more": 405,
+        "median_return_pct": -1.492537,
+        "mean_return_pct": -1.601838,
+        "declining_share_pct": 70.494639,
+        "amount_yuan": 1372469208500.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600405",
+        "600491",
+        "601369",
+        "603580",
+        "688072"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-09",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 9,
+        "advancing": 2382,
+        "declining": 2674,
+        "flat": 138,
+        "declining_5pct_or_more": 99,
+        "median_return_pct": -0.150886,
+        "mean_return_pct": 0.621525,
+        "declining_share_pct": 51.48248,
+        "amount_yuan": 2915504539570.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2303,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 5,
+        "advancing": 1071,
+        "declining": 1174,
+        "flat": 58,
+        "declining_5pct_or_more": 33,
+        "median_return_pct": -0.141911,
+        "mean_return_pct": 0.795444,
+        "declining_share_pct": 50.976987,
+        "amount_yuan": 1364066618970.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 4,
+        "advancing": 1311,
+        "declining": 1500,
+        "flat": 80,
+        "declining_5pct_or_more": 66,
+        "median_return_pct": -0.165289,
+        "mean_return_pct": 0.482979,
+        "declining_share_pct": 51.885161,
+        "amount_yuan": 1551437920600.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600405",
+        "600491",
+        "601369",
+        "603580",
+        "688072"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-10",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 9,
+        "advancing": 3512,
+        "declining": 1612,
+        "flat": 70,
+        "declining_5pct_or_more": 359,
+        "median_return_pct": 1.170282,
+        "mean_return_pct": 0.973404,
+        "declining_share_pct": 31.035811,
+        "amount_yuan": 3391140610363.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2304,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 4,
+        "advancing": 1519,
+        "declining": 752,
+        "flat": 33,
+        "declining_5pct_or_more": 192,
+        "median_return_pct": 1.064426,
+        "mean_return_pct": 0.592365,
+        "declining_share_pct": 32.638889,
+        "amount_yuan": 1562998952663.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 5,
+        "advancing": 1993,
+        "declining": 860,
+        "flat": 37,
+        "declining_5pct_or_more": 167,
+        "median_return_pct": 1.264333,
+        "mean_return_pct": 1.277181,
+        "declining_share_pct": 29.757785,
+        "amount_yuan": 1828141657700.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600405",
+        "601369",
+        "603580",
+        "688072"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-13",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 6,
+        "advancing": 780,
+        "declining": 4377,
+        "flat": 40,
+        "declining_5pct_or_more": 2053,
+        "median_return_pct": -4.074703,
+        "mean_return_pct": -4.016448,
+        "declining_share_pct": 84.221666,
+        "amount_yuan": 2819270726535.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2307,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 1,
+        "advancing": 436,
+        "declining": 1849,
+        "flat": 22,
+        "declining_5pct_or_more": 801,
+        "median_return_pct": -3.479657,
+        "mean_return_pct": -3.549377,
+        "declining_share_pct": 80.147378,
+        "amount_yuan": 1334769527735.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 5,
+        "advancing": 344,
+        "declining": 2528,
+        "flat": 18,
+        "declining_5pct_or_more": 1252,
+        "median_return_pct": -4.470764,
+        "mean_return_pct": -4.389297,
+        "declining_share_pct": 87.474048,
+        "amount_yuan": 1484501198800.0
+      },
+      "missing_prices_classified_as_halted": [
+        "603580"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-14",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 4,
+        "advancing": 3919,
+        "declining": 1215,
+        "flat": 63,
+        "declining_5pct_or_more": 160,
+        "median_return_pct": 1.506591,
+        "mean_return_pct": 1.511295,
+        "declining_share_pct": 23.378872,
+        "amount_yuan": 2706459075637.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 0,
+        "advancing": 1708,
+        "declining": 562,
+        "flat": 38,
+        "declining_5pct_or_more": 68,
+        "median_return_pct": 1.402245,
+        "mean_return_pct": 1.440229,
+        "declining_share_pct": 24.350087,
+        "amount_yuan": 1271685062737.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2889,
+        "listed_source_stocks": 2893,
+        "nontrading_stocks": 4,
+        "advancing": 2211,
+        "declining": 653,
+        "flat": 25,
+        "declining_5pct_or_more": 92,
+        "median_return_pct": 1.59268,
+        "mean_return_pct": 1.568068,
+        "declining_share_pct": 22.602977,
+        "amount_yuan": 1434774012900.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-15",
+      "all": {
+        "observed_trading_stocks": 5198,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 3,
+        "advancing": 3198,
+        "declining": 1930,
+        "flat": 70,
+        "declining_5pct_or_more": 448,
+        "median_return_pct": 0.824176,
+        "mean_return_pct": 0.259514,
+        "declining_share_pct": 37.129665,
+        "amount_yuan": 2572163519707.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 0,
+        "advancing": 1435,
+        "declining": 842,
+        "flat": 31,
+        "declining_5pct_or_more": 214,
+        "median_return_pct": 0.913938,
+        "mean_return_pct": 0.219476,
+        "declining_share_pct": 36.481802,
+        "amount_yuan": 1226181661807.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2893,
+        "nontrading_stocks": 3,
+        "advancing": 1763,
+        "declining": 1088,
+        "flat": 39,
+        "declining_5pct_or_more": 234,
+        "median_return_pct": 0.755763,
+        "mean_return_pct": 0.291489,
+        "declining_share_pct": 37.647059,
+        "amount_yuan": 1345981857900.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-16",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 4,
+        "advancing": 2344,
+        "declining": 2695,
+        "flat": 158,
+        "declining_5pct_or_more": 570,
+        "median_return_pct": -0.190476,
+        "mean_return_pct": -0.669654,
+        "declining_share_pct": 51.85684,
+        "amount_yuan": 2406583287064.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2306,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 2,
+        "advancing": 931,
+        "declining": 1316,
+        "flat": 59,
+        "declining_5pct_or_more": 316,
+        "median_return_pct": -0.479043,
+        "mean_return_pct": -1.031753,
+        "declining_share_pct": 57.068517,
+        "amount_yuan": 1124125132064.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2893,
+        "nontrading_stocks": 2,
+        "advancing": 1413,
+        "declining": 1379,
+        "flat": 99,
+        "declining_5pct_or_more": 254,
+        "median_return_pct": 0.0,
+        "mean_return_pct": -0.380827,
+        "declining_share_pct": 47.699758,
+        "amount_yuan": 1282458155000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688237",
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-17",
+      "all": {
+        "observed_trading_stocks": 5195,
+        "listed_source_stocks": 5200,
+        "nontrading_stocks": 5,
+        "advancing": 405,
+        "declining": 4758,
+        "flat": 32,
+        "declining_5pct_or_more": 2197,
+        "median_return_pct": -4.289865,
+        "mean_return_pct": -4.731205,
+        "declining_share_pct": 91.588065,
+        "amount_yuan": 2656083764306.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2306,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 2,
+        "advancing": 200,
+        "declining": 2085,
+        "flat": 21,
+        "declining_5pct_or_more": 928,
+        "median_return_pct": -4.05886,
+        "mean_return_pct": -4.590763,
+        "declining_share_pct": 90.416305,
+        "amount_yuan": 1246319811306.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2889,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 3,
+        "advancing": 205,
+        "declining": 2673,
+        "flat": 11,
+        "declining_5pct_or_more": 1269,
+        "median_return_pct": -4.447533,
+        "mean_return_pct": -4.843307,
+        "declining_share_pct": 92.523364,
+        "amount_yuan": 1409763953000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688237",
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-20",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5200,
+        "nontrading_stocks": 3,
+        "advancing": 1709,
+        "declining": 3415,
+        "flat": 73,
+        "declining_5pct_or_more": 1399,
+        "median_return_pct": -1.916767,
+        "mean_return_pct": -2.357988,
+        "declining_share_pct": 65.710987,
+        "amount_yuan": 2702684259573.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2306,
+        "listed_source_stocks": 2308,
+        "nontrading_stocks": 2,
+        "advancing": 890,
+        "declining": 1388,
+        "flat": 28,
+        "declining_5pct_or_more": 601,
+        "median_return_pct": -1.322318,
+        "mean_return_pct": -1.977992,
+        "declining_share_pct": 60.190807,
+        "amount_yuan": 1294548770973.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 1,
+        "advancing": 819,
+        "declining": 2027,
+        "flat": 45,
+        "declining_5pct_or_more": 798,
+        "median_return_pct": -2.28385,
+        "mean_return_pct": -2.661091,
+        "declining_share_pct": 70.114147,
+        "amount_yuan": 1408135488600.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688237",
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-21",
+      "all": {
+        "observed_trading_stocks": 5198,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 3,
+        "advancing": 2871,
+        "declining": 2219,
+        "flat": 108,
+        "declining_5pct_or_more": 147,
+        "median_return_pct": 0.520837,
+        "mean_return_pct": 1.475506,
+        "declining_share_pct": 42.689496,
+        "amount_yuan": 2958413095445.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2307,
+        "listed_source_stocks": 2309,
+        "nontrading_stocks": 2,
+        "advancing": 1210,
+        "declining": 1044,
+        "flat": 53,
+        "declining_5pct_or_more": 70,
+        "median_return_pct": 0.309598,
+        "mean_return_pct": 1.493584,
+        "declining_share_pct": 45.253576,
+        "amount_yuan": 1396438093245.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 1,
+        "advancing": 1661,
+        "declining": 1175,
+        "flat": 55,
+        "declining_5pct_or_more": 77,
+        "median_return_pct": 0.669394,
+        "mean_return_pct": 1.461081,
+        "declining_share_pct": 40.643376,
+        "amount_yuan": 1561975002200.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688237",
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-22",
+      "all": {
+        "observed_trading_stocks": 5198,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 3,
+        "advancing": 1432,
+        "declining": 3650,
+        "flat": 116,
+        "declining_5pct_or_more": 222,
+        "median_return_pct": -1.272727,
+        "mean_return_pct": -0.929095,
+        "declining_share_pct": 70.219315,
+        "amount_yuan": 2654427328015.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2307,
+        "listed_source_stocks": 2309,
+        "nontrading_stocks": 2,
+        "advancing": 718,
+        "declining": 1530,
+        "flat": 59,
+        "declining_5pct_or_more": 103,
+        "median_return_pct": -1.038961,
+        "mean_return_pct": -0.797185,
+        "declining_share_pct": 66.319896,
+        "amount_yuan": 1258084650515.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 1,
+        "advancing": 714,
+        "declining": 2120,
+        "flat": 57,
+        "declining_5pct_or_more": 119,
+        "median_return_pct": -1.449275,
+        "mean_return_pct": -1.034358,
+        "declining_share_pct": 73.331027,
+        "amount_yuan": 1396342677500.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688237",
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-23",
+      "all": {
+        "observed_trading_stocks": 5198,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 3,
+        "advancing": 3997,
+        "declining": 1143,
+        "flat": 58,
+        "declining_5pct_or_more": 108,
+        "median_return_pct": 1.806634,
+        "mean_return_pct": 1.835358,
+        "declining_share_pct": 21.989227,
+        "amount_yuan": 2196668636201.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2309,
+        "nontrading_stocks": 1,
+        "advancing": 1710,
+        "declining": 569,
+        "flat": 29,
+        "declining_5pct_or_more": 73,
+        "median_return_pct": 1.519329,
+        "mean_return_pct": 1.483283,
+        "declining_share_pct": 24.65338,
+        "amount_yuan": 1025664944501.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 2,
+        "advancing": 2287,
+        "declining": 574,
+        "flat": 29,
+        "declining_5pct_or_more": 35,
+        "median_return_pct": 2.025634,
+        "mean_return_pct": 2.116531,
+        "declining_share_pct": 19.861592,
+        "amount_yuan": 1171003691700.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-24",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5201,
+        "nontrading_stocks": 4,
+        "advancing": 534,
+        "declining": 4632,
+        "flat": 31,
+        "declining_5pct_or_more": 607,
+        "median_return_pct": -2.805377,
+        "mean_return_pct": -2.571849,
+        "declining_share_pct": 89.128343,
+        "amount_yuan": 1932028129614.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2309,
+        "nontrading_stocks": 1,
+        "advancing": 247,
+        "declining": 2043,
+        "flat": 18,
+        "declining_5pct_or_more": 255,
+        "median_return_pct": -2.701006,
+        "mean_return_pct": -2.500755,
+        "declining_share_pct": 88.518198,
+        "amount_yuan": 915194618614.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2889,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 3,
+        "advancing": 287,
+        "declining": 2589,
+        "flat": 13,
+        "declining_5pct_or_more": 352,
+        "median_return_pct": -2.88,
+        "mean_return_pct": -2.628645,
+        "declining_share_pct": 89.615784,
+        "amount_yuan": 1016833511000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-27",
+      "all": {
+        "observed_trading_stocks": 5193,
+        "listed_source_stocks": 5202,
+        "nontrading_stocks": 9,
+        "advancing": 4885,
+        "declining": 268,
+        "flat": 40,
+        "declining_5pct_or_more": 23,
+        "median_return_pct": 2.78174,
+        "mean_return_pct": 3.162568,
+        "declining_share_pct": 5.160793,
+        "amount_yuan": 2077552522048.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 2,
+        "advancing": 2113,
+        "declining": 168,
+        "flat": 27,
+        "declining_5pct_or_more": 11,
+        "median_return_pct": 2.417545,
+        "mean_return_pct": 2.913477,
+        "declining_share_pct": 7.279029,
+        "amount_yuan": 1031219774648.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2885,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 7,
+        "advancing": 2772,
+        "declining": 100,
+        "flat": 13,
+        "declining_5pct_or_more": 12,
+        "median_return_pct": 3.007519,
+        "mean_return_pct": 3.361841,
+        "declining_share_pct": 3.466205,
+        "amount_yuan": 1046332747400.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688089",
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-28",
+      "all": {
+        "observed_trading_stocks": 5194,
+        "listed_source_stocks": 5202,
+        "nontrading_stocks": 8,
+        "advancing": 2373,
+        "declining": 2673,
+        "flat": 148,
+        "declining_5pct_or_more": 602,
+        "median_return_pct": -0.138478,
+        "mean_return_pct": -0.805759,
+        "declining_share_pct": 51.463227,
+        "amount_yuan": 2026327614922.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2309,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 1,
+        "advancing": 1054,
+        "declining": 1187,
+        "flat": 68,
+        "declining_5pct_or_more": 299,
+        "median_return_pct": -0.135777,
+        "mean_return_pct": -0.949629,
+        "declining_share_pct": 51.407536,
+        "amount_yuan": 949584312922.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2885,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 7,
+        "advancing": 1319,
+        "declining": 1486,
+        "flat": 80,
+        "declining_5pct_or_more": 303,
+        "median_return_pct": -0.143988,
+        "mean_return_pct": -0.690613,
+        "declining_share_pct": 51.507799,
+        "amount_yuan": 1076743302000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-29",
+      "all": {
+        "observed_trading_stocks": 5193,
+        "listed_source_stocks": 5202,
+        "nontrading_stocks": 9,
+        "advancing": 3968,
+        "declining": 1173,
+        "flat": 52,
+        "declining_5pct_or_more": 168,
+        "median_return_pct": 1.553829,
+        "mean_return_pct": 1.242762,
+        "declining_share_pct": 22.588099,
+        "amount_yuan": 2297436344804.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2309,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 1,
+        "advancing": 1777,
+        "declining": 512,
+        "flat": 20,
+        "declining_5pct_or_more": 75,
+        "median_return_pct": 1.584507,
+        "mean_return_pct": 1.261374,
+        "declining_share_pct": 22.174101,
+        "amount_yuan": 1087265375604.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2884,
+        "listed_source_stocks": 2892,
+        "nontrading_stocks": 8,
+        "advancing": 2191,
+        "declining": 661,
+        "flat": 32,
+        "declining_5pct_or_more": 93,
+        "median_return_pct": 1.538462,
+        "mean_return_pct": 1.22786,
+        "declining_share_pct": 22.919556,
+        "amount_yuan": 1210170969200.0
+      },
+      "missing_prices_classified_as_halted": [
+        "688277"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-30",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 6,
+        "advancing": 1636,
+        "declining": 3447,
+        "flat": 114,
+        "declining_5pct_or_more": 981,
+        "median_return_pct": -1.1994,
+        "mean_return_pct": -1.848739,
+        "declining_share_pct": 66.326727,
+        "amount_yuan": 2343601832700.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2310,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 0,
+        "advancing": 871,
+        "declining": 1386,
+        "flat": 53,
+        "declining_5pct_or_more": 435,
+        "median_return_pct": -0.813288,
+        "mean_return_pct": -1.679978,
+        "declining_share_pct": 60.0,
+        "amount_yuan": 1106349401500.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2887,
+        "listed_source_stocks": 2893,
+        "nontrading_stocks": 6,
+        "advancing": 765,
+        "declining": 2061,
+        "flat": 61,
+        "declining_5pct_or_more": 546,
+        "median_return_pct": -1.441441,
+        "mean_return_pct": -1.983771,
+        "declining_share_pct": 71.388985,
+        "amount_yuan": 1237252431200.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-07-31",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 6,
+        "advancing": 4395,
+        "declining": 695,
+        "flat": 107,
+        "declining_5pct_or_more": 13,
+        "median_return_pct": 2.03275,
+        "mean_return_pct": 2.587568,
+        "declining_share_pct": 13.3731,
+        "amount_yuan": 2542939383219.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 2,
+        "advancing": 1858,
+        "declining": 387,
+        "flat": 63,
+        "declining_5pct_or_more": 5,
+        "median_return_pct": 1.61854,
+        "mean_return_pct": 2.275301,
+        "declining_share_pct": 16.767764,
+        "amount_yuan": 1187556276219.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2889,
+        "listed_source_stocks": 2893,
+        "nontrading_stocks": 4,
+        "advancing": 2537,
+        "declining": 308,
+        "flat": 44,
+        "declining_5pct_or_more": 8,
+        "median_return_pct": 2.297461,
+        "mean_return_pct": 2.837036,
+        "declining_share_pct": 10.661128,
+        "amount_yuan": 1355383107000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600238",
+        "600439"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-03",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5203,
+        "nontrading_stocks": 6,
+        "advancing": 3866,
+        "declining": 1279,
+        "flat": 52,
+        "declining_5pct_or_more": 213,
+        "median_return_pct": 1.438849,
+        "mean_return_pct": 1.266467,
+        "declining_share_pct": 24.610352,
+        "amount_yuan": 1997976255961.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2308,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 2,
+        "advancing": 1629,
+        "declining": 657,
+        "flat": 22,
+        "declining_5pct_or_more": 118,
+        "median_return_pct": 1.226427,
+        "mean_return_pct": 0.947318,
+        "declining_share_pct": 28.466205,
+        "amount_yuan": 952091517061.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2889,
+        "listed_source_stocks": 2893,
+        "nontrading_stocks": 4,
+        "advancing": 2237,
+        "declining": 622,
+        "flat": 30,
+        "declining_5pct_or_more": 95,
+        "median_return_pct": 1.629073,
+        "mean_return_pct": 1.521433,
+        "declining_share_pct": 21.529941,
+        "amount_yuan": 1045884738900.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600530",
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-04",
+      "all": {
+        "observed_trading_stocks": 5197,
+        "listed_source_stocks": 5204,
+        "nontrading_stocks": 7,
+        "advancing": 3406,
+        "declining": 1664,
+        "flat": 127,
+        "declining_5pct_or_more": 7,
+        "median_return_pct": 1.006036,
+        "mean_return_pct": 1.92145,
+        "declining_share_pct": 32.018472,
+        "amount_yuan": 2214472642463.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2309,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 1,
+        "advancing": 1369,
+        "declining": 881,
+        "flat": 59,
+        "declining_5pct_or_more": 4,
+        "median_return_pct": 0.681896,
+        "mean_return_pct": 1.670102,
+        "declining_share_pct": 38.155045,
+        "amount_yuan": 1008232612363.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2888,
+        "listed_source_stocks": 2894,
+        "nontrading_stocks": 6,
+        "advancing": 2037,
+        "declining": 783,
+        "flat": 68,
+        "declining_5pct_or_more": 3,
+        "median_return_pct": 1.209085,
+        "mean_return_pct": 2.122406,
+        "declining_share_pct": 27.112188,
+        "amount_yuan": 1206240030100.0
+      },
+      "missing_prices_classified_as_halted": [
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-05",
+      "all": {
+        "observed_trading_stocks": 5199,
+        "listed_source_stocks": 5204,
+        "nontrading_stocks": 5,
+        "advancing": 3427,
+        "declining": 1599,
+        "flat": 173,
+        "declining_5pct_or_more": 9,
+        "median_return_pct": 0.859813,
+        "mean_return_pct": 1.746878,
+        "declining_share_pct": 30.755915,
+        "amount_yuan": 2661175322495.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2309,
+        "listed_source_stocks": 2310,
+        "nontrading_stocks": 1,
+        "advancing": 1460,
+        "declining": 773,
+        "flat": 76,
+        "declining_5pct_or_more": 4,
+        "median_return_pct": 0.72314,
+        "mean_return_pct": 1.742872,
+        "declining_share_pct": 33.477696,
+        "amount_yuan": 1208594728495.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2890,
+        "listed_source_stocks": 2894,
+        "nontrading_stocks": 4,
+        "advancing": 1967,
+        "declining": 826,
+        "flat": 97,
+        "declining_5pct_or_more": 5,
+        "median_return_pct": 0.931427,
+        "mean_return_pct": 1.750079,
+        "declining_share_pct": 28.581315,
+        "amount_yuan": 1452580594000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-06",
+      "all": {
+        "observed_trading_stocks": 5200,
+        "listed_source_stocks": 5205,
+        "nontrading_stocks": 5,
+        "advancing": 2639,
+        "declining": 2416,
+        "flat": 145,
+        "declining_5pct_or_more": 45,
+        "median_return_pct": 0.072559,
+        "mean_return_pct": 0.568681,
+        "declining_share_pct": 46.461538,
+        "amount_yuan": 2530098460662.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2311,
+        "nontrading_stocks": 0,
+        "advancing": 1195,
+        "declining": 1055,
+        "flat": 61,
+        "declining_5pct_or_more": 15,
+        "median_return_pct": 0.114416,
+        "mean_return_pct": 0.687039,
+        "declining_share_pct": 45.651233,
+        "amount_yuan": 1166699361362.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2889,
+        "listed_source_stocks": 2894,
+        "nontrading_stocks": 5,
+        "advancing": 1444,
+        "declining": 1361,
+        "flat": 84,
+        "declining_5pct_or_more": 30,
+        "median_return_pct": 0.0,
+        "mean_return_pct": 0.474003,
+        "declining_share_pct": 47.109727,
+        "amount_yuan": 1363399099300.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-07",
+      "all": {
+        "observed_trading_stocks": 5202,
+        "listed_source_stocks": 5206,
+        "nontrading_stocks": 4,
+        "advancing": 2671,
+        "declining": 2399,
+        "flat": 132,
+        "declining_5pct_or_more": 48,
+        "median_return_pct": 0.109112,
+        "mean_return_pct": 0.987885,
+        "declining_share_pct": 46.116878,
+        "amount_yuan": 2665442675439.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2311,
+        "nontrading_stocks": 0,
+        "advancing": 1195,
+        "declining": 1052,
+        "flat": 64,
+        "declining_5pct_or_more": 17,
+        "median_return_pct": 0.137363,
+        "mean_return_pct": 1.029954,
+        "declining_share_pct": 45.521419,
+        "amount_yuan": 1209439541939.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 4,
+        "advancing": 1476,
+        "declining": 1347,
+        "flat": 68,
+        "declining_5pct_or_more": 31,
+        "median_return_pct": 0.087184,
+        "mean_return_pct": 0.954257,
+        "declining_share_pct": 46.592874,
+        "amount_yuan": 1456003133500.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-10",
+      "all": {
+        "observed_trading_stocks": 5205,
+        "listed_source_stocks": 5206,
+        "nontrading_stocks": 1,
+        "advancing": 3878,
+        "declining": 1253,
+        "flat": 74,
+        "declining_5pct_or_more": 66,
+        "median_return_pct": 1.335878,
+        "mean_return_pct": 1.433436,
+        "declining_share_pct": 24.073007,
+        "amount_yuan": 2524331295899.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2311,
+        "listed_source_stocks": 2311,
+        "nontrading_stocks": 0,
+        "advancing": 1688,
+        "declining": 582,
+        "flat": 41,
+        "declining_5pct_or_more": 28,
+        "median_return_pct": 1.151832,
+        "mean_return_pct": 1.317904,
+        "declining_share_pct": 25.183903,
+        "amount_yuan": 1166803236299.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2894,
+        "listed_source_stocks": 2895,
+        "nontrading_stocks": 1,
+        "advancing": 2190,
+        "declining": 671,
+        "flat": 33,
+        "declining_5pct_or_more": 38,
+        "median_return_pct": 1.493784,
+        "mean_return_pct": 1.525694,
+        "declining_share_pct": 23.185902,
+        "amount_yuan": 1357528059600.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-11",
+      "all": {
+        "observed_trading_stocks": 5205,
+        "listed_source_stocks": 5208,
+        "nontrading_stocks": 3,
+        "advancing": 1560,
+        "declining": 3506,
+        "flat": 139,
+        "declining_5pct_or_more": 105,
+        "median_return_pct": -0.640296,
+        "mean_return_pct": -0.170108,
+        "declining_share_pct": 67.358309,
+        "amount_yuan": 2322411312970.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2310,
+        "listed_source_stocks": 2312,
+        "nontrading_stocks": 2,
+        "advancing": 711,
+        "declining": 1546,
+        "flat": 53,
+        "declining_5pct_or_more": 55,
+        "median_return_pct": -0.650759,
+        "mean_return_pct": -0.234759,
+        "declining_share_pct": 66.926407,
+        "amount_yuan": 1066629657170.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 1,
+        "advancing": 849,
+        "declining": 1960,
+        "flat": 86,
+        "declining_5pct_or_more": 50,
+        "median_return_pct": -0.628033,
+        "mean_return_pct": -0.118522,
+        "declining_share_pct": 67.702936,
+        "amount_yuan": 1255781655800.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984",
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-12",
+      "all": {
+        "observed_trading_stocks": 5204,
+        "listed_source_stocks": 5208,
+        "nontrading_stocks": 4,
+        "advancing": 3860,
+        "declining": 1217,
+        "flat": 127,
+        "declining_5pct_or_more": 13,
+        "median_return_pct": 0.826446,
+        "mean_return_pct": 1.200495,
+        "declining_share_pct": 23.385857,
+        "amount_yuan": 2153476146956.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2309,
+        "listed_source_stocks": 2312,
+        "nontrading_stocks": 3,
+        "advancing": 1640,
+        "declining": 607,
+        "flat": 62,
+        "declining_5pct_or_more": 4,
+        "median_return_pct": 0.680272,
+        "mean_return_pct": 1.104338,
+        "declining_share_pct": 26.288437,
+        "amount_yuan": 986019992256.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 1,
+        "advancing": 2220,
+        "declining": 610,
+        "flat": 65,
+        "declining_5pct_or_more": 9,
+        "median_return_pct": 0.913838,
+        "mean_return_pct": 1.277188,
+        "declining_share_pct": 21.070812,
+        "amount_yuan": 1167456154700.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984",
+        "603221",
+        "688646"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-13",
+      "all": {
+        "observed_trading_stocks": 5205,
+        "listed_source_stocks": 5208,
+        "nontrading_stocks": 3,
+        "advancing": 1085,
+        "declining": 4041,
+        "flat": 79,
+        "declining_5pct_or_more": 117,
+        "median_return_pct": -1.453958,
+        "mean_return_pct": -1.032685,
+        "declining_share_pct": 77.636888,
+        "amount_yuan": 2551934247275.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2310,
+        "listed_source_stocks": 2312,
+        "nontrading_stocks": 2,
+        "advancing": 520,
+        "declining": 1750,
+        "flat": 40,
+        "declining_5pct_or_more": 47,
+        "median_return_pct": -1.321263,
+        "mean_return_pct": -0.944636,
+        "declining_share_pct": 75.757576,
+        "amount_yuan": 1164115280575.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 1,
+        "advancing": 565,
+        "declining": 2291,
+        "flat": 39,
+        "declining_5pct_or_more": 70,
+        "median_return_pct": -1.560694,
+        "mean_return_pct": -1.102941,
+        "declining_share_pct": 79.136442,
+        "amount_yuan": 1387818966700.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984",
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-14",
+      "all": {
+        "observed_trading_stocks": 5205,
+        "listed_source_stocks": 5208,
+        "nontrading_stocks": 3,
+        "advancing": 2322,
+        "declining": 2720,
+        "flat": 163,
+        "declining_5pct_or_more": 96,
+        "median_return_pct": -0.137552,
+        "mean_return_pct": 0.184925,
+        "declining_share_pct": 52.257445,
+        "amount_yuan": 2143632809187.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2310,
+        "listed_source_stocks": 2312,
+        "nontrading_stocks": 2,
+        "advancing": 995,
+        "declining": 1238,
+        "flat": 77,
+        "declining_5pct_or_more": 41,
+        "median_return_pct": -0.1999,
+        "mean_return_pct": 0.135667,
+        "declining_share_pct": 53.593074,
+        "amount_yuan": 990290450187.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 1,
+        "advancing": 1327,
+        "declining": 1482,
+        "flat": 86,
+        "declining_5pct_or_more": 55,
+        "median_return_pct": -0.094697,
+        "mean_return_pct": 0.22423,
+        "declining_share_pct": 51.19171,
+        "amount_yuan": 1153342359000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984",
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-17",
+      "all": {
+        "observed_trading_stocks": 5203,
+        "listed_source_stocks": 5208,
+        "nontrading_stocks": 5,
+        "advancing": 4067,
+        "declining": 1000,
+        "flat": 136,
+        "declining_5pct_or_more": 29,
+        "median_return_pct": 1.381215,
+        "mean_return_pct": 1.810221,
+        "declining_share_pct": 19.219681,
+        "amount_yuan": 2388608390202.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2310,
+        "listed_source_stocks": 2312,
+        "nontrading_stocks": 2,
+        "advancing": 1761,
+        "declining": 472,
+        "flat": 77,
+        "declining_5pct_or_more": 13,
+        "median_return_pct": 1.2923,
+        "mean_return_pct": 1.833494,
+        "declining_share_pct": 20.4329,
+        "amount_yuan": 1112749236102.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2893,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 3,
+        "advancing": 2306,
+        "declining": 528,
+        "flat": 59,
+        "declining_5pct_or_more": 16,
+        "median_return_pct": 1.426534,
+        "mean_return_pct": 1.791638,
+        "declining_share_pct": 18.250951,
+        "amount_yuan": 1275859154100.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984",
+        "603221"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-18",
+      "all": {
+        "observed_trading_stocks": 5204,
+        "listed_source_stocks": 5209,
+        "nontrading_stocks": 5,
+        "advancing": 1841,
+        "declining": 3240,
+        "flat": 123,
+        "declining_5pct_or_more": 98,
+        "median_return_pct": -0.564144,
+        "mean_return_pct": -0.091869,
+        "declining_share_pct": 62.2598,
+        "amount_yuan": 2401741953990.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2312,
+        "listed_source_stocks": 2313,
+        "nontrading_stocks": 1,
+        "advancing": 905,
+        "declining": 1349,
+        "flat": 58,
+        "declining_5pct_or_more": 39,
+        "median_return_pct": -0.39801,
+        "mean_return_pct": 0.188098,
+        "declining_share_pct": 58.347751,
+        "amount_yuan": 1135105664090.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2892,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 4,
+        "advancing": 936,
+        "declining": 1891,
+        "flat": 65,
+        "declining_5pct_or_more": 59,
+        "median_return_pct": -0.720378,
+        "mean_return_pct": -0.315688,
+        "declining_share_pct": 65.387275,
+        "amount_yuan": 1266636289900.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-19",
+      "all": {
+        "observed_trading_stocks": 5204,
+        "listed_source_stocks": 5210,
+        "nontrading_stocks": 6,
+        "advancing": 421,
+        "declining": 4760,
+        "flat": 23,
+        "declining_5pct_or_more": 1881,
+        "median_return_pct": -3.909465,
+        "mean_return_pct": -4.036044,
+        "declining_share_pct": 91.468101,
+        "amount_yuan": 2511619874798.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2314,
+        "nontrading_stocks": 1,
+        "advancing": 236,
+        "declining": 2063,
+        "flat": 14,
+        "declining_5pct_or_more": 767,
+        "median_return_pct": -3.527875,
+        "mean_return_pct": -3.617553,
+        "declining_share_pct": 89.191526,
+        "amount_yuan": 1217996213798.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2896,
+        "nontrading_stocks": 5,
+        "advancing": 185,
+        "declining": 2697,
+        "flat": 9,
+        "declining_5pct_or_more": 1114,
+        "median_return_pct": -4.150504,
+        "mean_return_pct": -4.370865,
+        "declining_share_pct": 93.289519,
+        "amount_yuan": 1293623661000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-20",
+      "all": {
+        "observed_trading_stocks": 5204,
+        "listed_source_stocks": 5211,
+        "nontrading_stocks": 7,
+        "advancing": 3916,
+        "declining": 1204,
+        "flat": 84,
+        "declining_5pct_or_more": 110,
+        "median_return_pct": 1.246568,
+        "mean_return_pct": 1.462607,
+        "declining_share_pct": 23.136049,
+        "amount_yuan": 2080178069685.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2314,
+        "nontrading_stocks": 1,
+        "advancing": 1681,
+        "declining": 586,
+        "flat": 46,
+        "declining_5pct_or_more": 47,
+        "median_return_pct": 1.122095,
+        "mean_return_pct": 1.343912,
+        "declining_share_pct": 25.335063,
+        "amount_yuan": 1018492327285.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2891,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 6,
+        "advancing": 2235,
+        "declining": 618,
+        "flat": 38,
+        "declining_5pct_or_more": 63,
+        "median_return_pct": 1.348257,
+        "mean_return_pct": 1.55757,
+        "declining_share_pct": 21.376686,
+        "amount_yuan": 1061685742400.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-21",
+      "all": {
+        "observed_trading_stocks": 5205,
+        "listed_source_stocks": 5211,
+        "nontrading_stocks": 6,
+        "advancing": 2407,
+        "declining": 2627,
+        "flat": 171,
+        "declining_5pct_or_more": 201,
+        "median_return_pct": -0.054915,
+        "mean_return_pct": -0.034026,
+        "declining_share_pct": 50.470701,
+        "amount_yuan": 1880814411941.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2314,
+        "nontrading_stocks": 1,
+        "advancing": 1005,
+        "declining": 1229,
+        "flat": 79,
+        "declining_5pct_or_more": 89,
+        "median_return_pct": -0.183352,
+        "mean_return_pct": -0.157755,
+        "declining_share_pct": 53.134457,
+        "amount_yuan": 883357867941.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2892,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 5,
+        "advancing": 1402,
+        "declining": 1398,
+        "flat": 92,
+        "declining_5pct_or_more": 112,
+        "median_return_pct": 0.0,
+        "mean_return_pct": 0.064932,
+        "declining_share_pct": 48.340249,
+        "amount_yuan": 997456544000.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-24",
+      "all": {
+        "observed_trading_stocks": 5207,
+        "listed_source_stocks": 5211,
+        "nontrading_stocks": 4,
+        "advancing": 1384,
+        "declining": 3705,
+        "flat": 118,
+        "declining_5pct_or_more": 362,
+        "median_return_pct": -1.2,
+        "mean_return_pct": -1.152759,
+        "declining_share_pct": 71.154215,
+        "amount_yuan": 2007893811582.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2314,
+        "nontrading_stocks": 1,
+        "advancing": 674,
+        "declining": 1580,
+        "flat": 59,
+        "declining_5pct_or_more": 160,
+        "median_return_pct": -1.041667,
+        "mean_return_pct": -1.111399,
+        "declining_share_pct": 68.309555,
+        "amount_yuan": 951873260482.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2894,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 3,
+        "advancing": 710,
+        "declining": 2125,
+        "flat": 59,
+        "declining_5pct_or_more": 202,
+        "median_return_pct": -1.277588,
+        "mean_return_pct": -1.185815,
+        "declining_share_pct": 73.427782,
+        "amount_yuan": 1056020551100.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600984"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-25",
+      "all": {
+        "observed_trading_stocks": 5208,
+        "listed_source_stocks": 5212,
+        "nontrading_stocks": 4,
+        "advancing": 3967,
+        "declining": 1177,
+        "flat": 64,
+        "declining_5pct_or_more": 59,
+        "median_return_pct": 1.513241,
+        "mean_return_pct": 1.562285,
+        "declining_share_pct": 22.599846,
+        "amount_yuan": 1832758056223.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2315,
+        "nontrading_stocks": 2,
+        "advancing": 1669,
+        "declining": 603,
+        "flat": 41,
+        "declining_5pct_or_more": 24,
+        "median_return_pct": 1.156069,
+        "mean_return_pct": 1.311635,
+        "declining_share_pct": 26.070039,
+        "amount_yuan": 858715350523.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 2,
+        "advancing": 2298,
+        "declining": 574,
+        "flat": 23,
+        "declining_5pct_or_more": 35,
+        "median_return_pct": 1.837753,
+        "mean_return_pct": 1.762544,
+        "declining_share_pct": 19.827288,
+        "amount_yuan": 974042705700.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600165",
+        "600525"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-26",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5212,
+        "nontrading_stocks": 3,
+        "advancing": 2760,
+        "declining": 2310,
+        "flat": 139,
+        "declining_5pct_or_more": 68,
+        "median_return_pct": 0.161812,
+        "mean_return_pct": 0.2619,
+        "declining_share_pct": 44.346324,
+        "amount_yuan": 1809251743128.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2315,
+        "nontrading_stocks": 0,
+        "advancing": 1296,
+        "declining": 966,
+        "flat": 53,
+        "declining_5pct_or_more": 25,
+        "median_return_pct": 0.26455,
+        "mean_return_pct": 0.371699,
+        "declining_share_pct": 41.727862,
+        "amount_yuan": 856977353828.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2894,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 3,
+        "advancing": 1464,
+        "declining": 1344,
+        "flat": 86,
+        "declining_5pct_or_more": 43,
+        "median_return_pct": 0.074842,
+        "mean_return_pct": 0.174068,
+        "declining_share_pct": 46.440912,
+        "amount_yuan": 952274389300.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-27",
+      "all": {
+        "observed_trading_stocks": 5209,
+        "listed_source_stocks": 5212,
+        "nontrading_stocks": 3,
+        "advancing": 3191,
+        "declining": 1821,
+        "flat": 197,
+        "declining_5pct_or_more": 38,
+        "median_return_pct": 0.537857,
+        "mean_return_pct": 1.204924,
+        "declining_share_pct": 34.958725,
+        "amount_yuan": 2126984853965.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2314,
+        "listed_source_stocks": 2315,
+        "nontrading_stocks": 1,
+        "advancing": 1352,
+        "declining": 889,
+        "flat": 73,
+        "declining_5pct_or_more": 21,
+        "median_return_pct": 0.432344,
+        "mean_return_pct": 1.139662,
+        "declining_share_pct": 38.418323,
+        "amount_yuan": 1010007530565.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2895,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 2,
+        "advancing": 1839,
+        "declining": 932,
+        "flat": 124,
+        "declining_5pct_or_more": 17,
+        "median_return_pct": 0.639659,
+        "mean_return_pct": 1.257089,
+        "declining_share_pct": 32.193437,
+        "amount_yuan": 1116977323400.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600491"
+      ],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-28",
+      "all": {
+        "observed_trading_stocks": 5208,
+        "listed_source_stocks": 5212,
+        "nontrading_stocks": 4,
+        "advancing": 2796,
+        "declining": 2270,
+        "flat": 142,
+        "declining_5pct_or_more": 127,
+        "median_return_pct": 0.200354,
+        "mean_return_pct": 0.212507,
+        "declining_share_pct": 43.58679,
+        "amount_yuan": 2102531328962.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2315,
+        "listed_source_stocks": 2315,
+        "nontrading_stocks": 0,
+        "advancing": 1268,
+        "declining": 987,
+        "flat": 60,
+        "declining_5pct_or_more": 59,
+        "median_return_pct": 0.245098,
+        "mean_return_pct": 0.224283,
+        "declining_share_pct": 42.634989,
+        "amount_yuan": 970209945062.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2893,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 4,
+        "advancing": 1528,
+        "declining": 1283,
+        "flat": 82,
+        "declining_5pct_or_more": 68,
+        "median_return_pct": 0.151057,
+        "mean_return_pct": 0.203084,
+        "declining_share_pct": 44.348427,
+        "amount_yuan": 1132321383900.0
+      },
+      "missing_prices_classified_as_halted": [],
+      "unexplained_missing": []
+    },
+    {
+      "date": "2026-08-31",
+      "all": {
+        "observed_trading_stocks": 5206,
+        "listed_source_stocks": 5212,
+        "nontrading_stocks": 6,
+        "advancing": 3000,
+        "declining": 2071,
+        "flat": 135,
+        "declining_5pct_or_more": 107,
+        "median_return_pct": 0.47518,
+        "mean_return_pct": 0.788272,
+        "declining_share_pct": 39.781022,
+        "amount_yuan": 2131745665957.0
+      },
+      "SSE": {
+        "observed_trading_stocks": 2313,
+        "listed_source_stocks": 2315,
+        "nontrading_stocks": 2,
+        "advancing": 1260,
+        "declining": 991,
+        "flat": 62,
+        "declining_5pct_or_more": 46,
+        "median_return_pct": 0.278552,
+        "mean_return_pct": 0.621897,
+        "declining_share_pct": 42.84479,
+        "amount_yuan": 1013935077857.0
+      },
+      "SZSE": {
+        "observed_trading_stocks": 2893,
+        "listed_source_stocks": 2897,
+        "nontrading_stocks": 4,
+        "advancing": 1740,
+        "declining": 1080,
+        "flat": 73,
+        "declining_5pct_or_more": 61,
+        "median_return_pct": 0.632911,
+        "mean_return_pct": 0.921291,
+        "declining_share_pct": 37.33149,
+        "amount_yuan": 1117810588100.0
+      },
+      "missing_prices_classified_as_halted": [
+        "600929",
+        "688432"
+      ],
+      "unexplained_missing": []
+    }
+  ],
+  "limits": [
+    "Retrospective source observation; no historical same-day execution claim",
+    "Fixed decline of 5 percent is not actual limit-down",
+    "Separate early window; Sep1-Sep3 bridge not included",
+    "No calibrated crisis score or independent strategy validation"
+  ],
+  "szse_source_folder": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/early_breadth/dd216b4113c0cea795c82b68f0e001f808419836183ef78a1a7ac2697d5879c1/szse-history"
+}

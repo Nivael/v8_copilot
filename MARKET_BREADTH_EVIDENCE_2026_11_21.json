@@ -1,0 +1,197 @@
+{
+  "version": "dated_official_breadth_reading_evidence_v1",
+  "as_of": "2026-11-20",
+  "source_digest": "c19c55589b805ec4733594716650c7533be1ab2d34db60d3d55f6de39d7974fd",
+  "fetched_at": "2026-11-20T16:34:51.979288+00:00",
+  "reading": {
+    "availability": "available",
+    "as_of": "2026-11-20",
+    "source_digest": "c19c55589b805ec4733594716650c7533be1ab2d34db60d3d55f6de39d7974fd",
+    "observed_at": "2026-11-20T16:34:53.838536+00:00",
+    "source_file_count": 8,
+    "szse_acquisition": "official_xlsx_with_dated_boundary_controls",
+    "scope": "SSE_SZSE_A_shares_not_BSE",
+    "return_basis": "当日收盘价/官方前收参考价−1；保留源端已取整涨跌幅作交叉校验，不用四舍五入值划分平盘或5%跌幅边界。",
+    "groups": [
+      {
+        "name": "沪深A股",
+        "listed_source_stocks": 5224,
+        "observed_trading_stocks": 5216,
+        "nontrading_stocks": 8,
+        "advancing": 297,
+        "declining": 4897,
+        "flat": 22,
+        "declining_5pct_or_more": 2707,
+        "median_return_pct": -5.114705,
+        "advancing_pct": 5.694018404907975,
+        "declining_5pct_or_more_pct": 51.89800613496932
+      },
+      {
+        "name": "当日ST简称组",
+        "listed_source_stocks": 193,
+        "observed_trading_stocks": 189,
+        "nontrading_stocks": 4,
+        "advancing": 31,
+        "declining": 150,
+        "flat": 8,
+        "declining_5pct_or_more": 37,
+        "median_return_pct": -2.6,
+        "advancing_pct": 16.402116402116402,
+        "declining_5pct_or_more_pct": 19.576719576719576
+      }
+    ],
+    "sources": [
+      {
+        "label": "上交所股票行情",
+        "url": "https://www.sse.com.cn/market/price/report/"
+      },
+      {
+        "label": "深交所股票收盘报表",
+        "url": "https://www.szse.cn/market/trend/index.html"
+      }
+    ],
+    "transport_note": "首控制页为HTTPS；末控制页和完整Excel使用官方HTTP地址，未声称全部原件经HTTPS取得。",
+    "limits": [
+      "跌幅至少5%只是固定幅度分布，不是跌停家数；不同板块及特殊交易日限制尚未逐股核验。",
+      "无成交股票不计作平盘，不进入涨跌比例分母；不含北交所。",
+      "ST只是当日简称分组，未据此认证独立风险名单或连续历史成员。",
+      "单日截面不能说明连续恶化、连续跌停、均线覆盖或实际可退出性。"
+    ]
+  },
+  "sources": [
+    {
+      "venue": "SSE",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+      "params": {
+        "select": "code,name,last,prev_close,chg_rate,volume,amount,tradephase,cpxxsubtype,cpxxprodusta",
+        "begin": 0,
+        "end": 500
+      },
+      "response_sha256": "c7699222880c2a69829102eaafd27962ebf2ce9945878aad02e8d457c50bb7f2",
+      "observed_at": "2026-11-20T16:34:52.257226+00:00",
+      "bytes": 52289
+    },
+    {
+      "venue": "SSE",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+      "params": {
+        "select": "code,name,last,prev_close,chg_rate,volume,amount,tradephase,cpxxsubtype,cpxxprodusta",
+        "begin": 500,
+        "end": 1000
+      },
+      "response_sha256": "8f70ebb5c0464c1eb707c56246acfb6a463a2a758528449c9c98c9d8f9fface9",
+      "observed_at": "2026-11-20T16:34:52.598978+00:00",
+      "bytes": 52486
+    },
+    {
+      "venue": "SSE",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+      "params": {
+        "select": "code,name,last,prev_close,chg_rate,volume,amount,tradephase,cpxxsubtype,cpxxprodusta",
+        "begin": 1000,
+        "end": 1500
+      },
+      "response_sha256": "d9d4ae17c0cb344b2207658b43de971176d4671174b570e5dc4b10f425950eb7",
+      "observed_at": "2026-11-20T16:34:53.003003+00:00",
+      "bytes": 52352
+    },
+    {
+      "venue": "SSE",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+      "params": {
+        "select": "code,name,last,prev_close,chg_rate,volume,amount,tradephase,cpxxsubtype,cpxxprodusta",
+        "begin": 1500,
+        "end": 2000
+      },
+      "response_sha256": "08b0e0ba58dea1b740f7720ff4a683b36e14012b8f94cd934ef8443a4a977b1a",
+      "observed_at": "2026-11-20T16:34:53.436833+00:00",
+      "bytes": 52513
+    },
+    {
+      "venue": "SSE",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+      "params": {
+        "select": "code,name,last,prev_close,chg_rate,volume,amount,tradephase,cpxxsubtype,cpxxprodusta",
+        "begin": 2000,
+        "end": 2500
+      },
+      "response_sha256": "fcd66313bbdf2a4873cb0d9f981d1b2d776964e1b6a72ad94f974ebb19962586",
+      "observed_at": "2026-11-20T16:34:53.838536+00:00",
+      "bytes": 37622
+    },
+    {
+      "venue": "SZSE",
+      "url": "https://fund.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "1815_stock_snapshot",
+        "TABKEY": "tab1",
+        "txtBeginDate": "2026-11-20",
+        "txtEndDate": "2026-11-20",
+        "PAGENO": 1
+      },
+      "response_sha256": "0d32a9e8825d38a84b00b6be873b593ee4eaa623526451441dc3035cefd7bf1b",
+      "observed_at": "2026-11-20T16:31:03.598879+00:00",
+      "bytes": 5237
+    },
+    {
+      "venue": "SZSE",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "1815_stock_snapshot",
+        "TABKEY": "tab1",
+        "txtBeginDate": "2026-11-20",
+        "txtEndDate": "2026-11-20",
+        "PAGENO": 295
+      },
+      "response_sha256": "e447c2ffc52dbd95de232a42505103e822e890fd06d1edaa39c2306816518f7b",
+      "bytes": 3939,
+      "observed_at": "2026-11-20T16:34:21.374490+00:00"
+    },
+    {
+      "kind": "szse_complete_xlsx",
+      "venue": "SZSE",
+      "url": "http://www.szse.cn/api/report/ShowReport",
+      "params": {
+        "SHOWTYPE": "xlsx",
+        "CATALOGID": "1815_stock_snapshot",
+        "txtBeginDate": "2026-11-20",
+        "txtEndDate": "2026-11-20"
+      },
+      "response_sha256": "cfe7ede4c2ea6cf31eeea7c732434549686d91e70eac3c915845616ecf33b479",
+      "observed_at": "2026-11-20T16:33:50.439697+00:00",
+      "bytes": 232496
+    }
+  ],
+  "raw_scope": "SSE_SZSE_A_shares",
+  "venue_counts": {
+    "SSE": {
+      "reported_total": 2360,
+      "received_total": 2360,
+      "excluded_b_shares": 41,
+      "excluded_preferred_codes": []
+    },
+    "SZSE": {
+      "reported_total": 2943,
+      "received_total": 2943,
+      "excluded_b_shares": 36,
+      "excluded_preferred_codes": [
+        "140001",
+        "140008"
+      ]
+    }
+  },
+  "additional_json_controls": {
+    "controls": 59,
+    "rows": 590,
+    "all_match": true
+  },
+  "processor_sha256": "fa2cf3dff85703bd9b5e5ed47d79dfd298faf8128ee1a03392d94504ae0777ab",
+  "limitations": [
+    "跌幅至少5%只是固定幅度分布，不是跌停家数；不同板块及特殊交易日限制尚未逐股核验。",
+    "无成交股票不计作平盘，不进入涨跌比例分母；不含北交所。",
+    "ST只是当日简称分组，未据此认证独立风险名单或连续历史成员。",
+    "单日截面不能说明连续恶化、连续跌停、均线覆盖或实际可退出性。"
+  ]
+}

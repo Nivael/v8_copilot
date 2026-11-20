@@ -1,3 +1,4 @@
+from st_initial_fifteenth_four import initial_fifteenth_four
 """Question-oriented, descriptive views of the frozen ST comparison input."""
 from collections import Counter
 from math import prod
@@ -231,6 +232,7 @@ def build_themes(inputs, daily):
     result['thirteenth_period_followup']=thirteenth_period_followup(inputs,result['initial_thirteenth_four'])
     result['initial_fourteenth_four']=initial_fourteenth_four(inputs,result['initial_thirteenth_four'],result['current_extension'])
     result['fourteenth_period_followup']=fourteenth_period_followup(inputs,result['initial_fourteenth_four'])
+    result['initial_fifteenth_four']=initial_fifteenth_four(inputs,result['initial_fourteenth_four'],result['current_extension'])
     result['tenth_period_followup']=tenth_period_followup(inputs,result['initial_tenth_four'])
     result['eleventh_period_followup']=eleventh_period_followup(inputs,result['initial_eleventh_four'])
     result['ninth_period_followup']=ninth_period_followup(inputs,result['initial_ninth_four'])

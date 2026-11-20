@@ -52,3 +52,5 @@ explicit, versioned, reversible decision; a new contract version, not an
 in-place edit, is the default way to change one.
 
 最新期间复盘已发布：海钦旧处罚/新监管与现金、洲际补认/独立审计、中路798万元未收与司法、京化重述/非经常性损益分别核。6条问题链、四家同窗横向比较；期初仍126/150。见 [本轮结果](ST_TWENTYFIRST_PERIOD_FOLLOWUP_RESULT_2026_11_20.md)。
+
+最新期初补证已发布：福成双审计、文峰部分回收和年份冲突、际华告知依据及审计分类、喜临门担保转占款与股东预重整分别核。覆盖130/150、剩20家。见 [本轮结果](ST_INITIAL_TWENTYSECOND_FOUR_RESULT_2026_11_20.md)。

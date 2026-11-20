@@ -300,4 +300,6 @@ def build_themes(inputs, daily):
     result['endpoint_selection_audit']=endpoint_selection_audit(inputs,result['current_extension'],result['endpoint_reasons'])
     result['endpoint_basis_followup']=basis_followup(inputs,result['endpoint_selection_audit'])
     result['lingnan_exit_followup']=lingnan_followup(inputs,result['endpoint_reasons'])
+    from st_restatement_comparison import restatement_comparison, PRIOR_KEYS
+    result['restatement_comparison']=restatement_comparison(inputs,{k:result[k] for k in PRIOR_KEYS})
     return result

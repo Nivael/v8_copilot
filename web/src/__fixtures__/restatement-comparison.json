@@ -1,0 +1,444 @@
+{
+  "through": "2026-11-19",
+  "title": "财报更正后，应该改哪一层判断？",
+  "answer": "先确认更正影响的是当期数字、历史比较基数，还是风险条件。四通先摘帽后更正；百利半年亏损扩大；岭南更正后仍保留交易触发与退出程序缺口。三种情况不能统一当成经营改善或摘帽催化。",
+  "cases": [
+    {
+      "symbol": "603838",
+      "name": "四通",
+      "source": "1225629182",
+      "affected": "更正2025年前三季度比较数，不涉及年度报表；当期半年收入不变。",
+      "update": "重算同比基数，不能把同比读数提高当新增收入。10月20日已摘帽，早于28日更正，不能倒因为果。",
+      "operations": "第三季度归母仍亏约1611万元，单季经营现金净流出约3872万元；原半年报另说明新增并表业务贡献。",
+      "watch": "继续核可比经营、并表贡献和真实收款；摘帽不等于季度扭亏。",
+      "refs": [
+        {
+          "id": "1225629182",
+          "pages": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "1225608268",
+          "pages": [
+            1
+          ]
+        },
+        {
+          "id": "1225516212",
+          "pages": [
+            5
+          ]
+        },
+        {
+          "id": "1225629255",
+          "pages": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "symbol": "603959",
+      "name": "百利",
+      "source": "1225631527",
+      "affected": "更正2026年半年净利润和权益，归母净利润调低约477万元，利润总额不变。",
+      "update": "更新半年亏损与权益缓冲，并用更正半年数衔接季度。利润总额不变，不等于净利润未变。",
+      "operations": "第三季度直接归母亏约1.29亿元；更正半年差额衔接保留0.01元差异，更正半年扣非缺直接值不补造。",
+      "watch": "核政策原文、更正依据及主营收款；部分赠与收款另核，不混成经营盈利。",
+      "refs": [
+        {
+          "id": "1225631527",
+          "pages": [
+            2
+          ]
+        },
+        {
+          "id": "1225631555",
+          "pages": [
+            2,
+            3
+          ]
+        },
+        {
+          "id": "1225631518",
+          "pages": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "symbol": "002717",
+      "name": "岭南",
+      "source": "1225632584",
+      "affected": "更正2021—2025年度及2026年一季度，2025年归母多亏约47万元，合并总权益仍为负。",
+      "update": "更新历史数值和对应口径；此前连续低于面值触发及10月13日停牌不被更正公告替代。",
+      "operations": "第三季度归母亏约1.27亿元，前三季现金净流入约2659万元；最终决定与摘牌仍未认证。",
+      "watch": "等正式最终文件及新时点回款，保留停牌端点空值；旧余额不冒充最新余额。",
+      "refs": [
+        {
+          "id": "1225632584",
+          "pages": [
+            1,
+            5,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "1225644904",
+          "pages": [
+            2,
+            6
+          ]
+        },
+        {
+          "id": "1225609701",
+          "pages": [
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "growth_recalculation": {
+    "current_h1_revenue": "204439311.81",
+    "old_comparison_h1_revenue": "173729613.67",
+    "corrected_comparison_h1_revenue": "159424111.01",
+    "original_reported_yoy_pct": "17.68",
+    "original_recomputed_yoy_pct": "17.67672044579180235277155900",
+    "corrected_basis_yoy_pct": "28.23613098095079664700461800",
+    "original_display_pct": "17.68",
+    "corrected_display_pct": "28.24",
+    "boundary": "更正后的同比为本轮按新比较基数复算，不冒充原半年报当时已经披露；当期收入仍为204439311.81元，且原半年报说明新增并表业务贡献。"
+  },
+  "event_windows": [
+    {
+      "aid": "1225629182",
+      "symbol": "603838",
+      "published_on": "2026-10-28",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-27",
+          "through": "2026-10-28",
+          "status": "complete",
+          "stock_pct": "1.335207308503162333099086400",
+          "market_pct": "1.551309800699655875789143900",
+          "st_pct": "0.2132500"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-27",
+          "through": "2026-11-03",
+          "status": "complete",
+          "stock_pct": "-13.77371749824314827828531272",
+          "market_pct": "-2.221327086640770935203522930",
+          "st_pct": "-2.335510246935089112198480610"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 17,
+          "anchor": "2026-10-27",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "-20.23893183415319747013352073",
+          "market_pct": "-4.335919160221517223951330650",
+          "st_pct": "-10.20218536940285672842503070"
+        }
+      ]
+    },
+    {
+      "aid": "1225631527",
+      "symbol": "603959",
+      "published_on": "2026-10-28",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-27",
+          "through": "2026-10-28",
+          "status": "complete",
+          "stock_pct": "2.793296089385474860335195500",
+          "market_pct": "1.551309800699655875789143900",
+          "st_pct": "0.2132500"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-27",
+          "through": "2026-11-03",
+          "status": "complete",
+          "stock_pct": "-0.2793296089385474860335195500",
+          "market_pct": "-2.221327086640770935203522930",
+          "st_pct": "-2.335510246935089112198480610"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 17,
+          "anchor": "2026-10-27",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": "2.234636871508379888268156400",
+          "market_pct": "-4.335919160221517223951330650",
+          "st_pct": "-10.20218536940285672842503070"
+        }
+      ]
+    },
+    {
+      "aid": "1225632584",
+      "symbol": "002717",
+      "published_on": "2026-10-28",
+      "windows": [
+        {
+          "requested_days": 1,
+          "observed_days": 1,
+          "anchor": "2026-10-27",
+          "through": "2026-10-28",
+          "status": "complete",
+          "stock_pct": null,
+          "market_pct": "1.551309800699655875789143900",
+          "st_pct": "0.2132500",
+          "stock_gap": "2026-10-27、2026-10-28缺收盘记录，保留空值，不借其他日期或填零。"
+        },
+        {
+          "requested_days": 5,
+          "observed_days": 5,
+          "anchor": "2026-10-27",
+          "through": "2026-11-03",
+          "status": "complete",
+          "stock_pct": null,
+          "market_pct": "-2.221327086640770935203522930",
+          "st_pct": "-2.335510246935089112198480610",
+          "stock_gap": "2026-10-27、2026-11-03缺收盘记录，保留空值，不借其他日期或填零。"
+        },
+        {
+          "requested_days": 20,
+          "observed_days": 17,
+          "anchor": "2026-10-27",
+          "through": "2026-11-19",
+          "status": "unfinished",
+          "stock_pct": null,
+          "market_pct": "-4.335919160221517223951330650",
+          "st_pct": "-10.20218536940285672842503070",
+          "stock_gap": "2026-10-27、2026-11-19缺收盘记录，保留空值，不借其他日期或填零。"
+        }
+      ]
+    }
+  ],
+  "window_reviews": [
+    {
+      "symbol": "603838",
+      "aid": "1225629182",
+      "requested_days": 1,
+      "status": "matched",
+      "cross_return_pct": "1.335207308503162333099086400"
+    },
+    {
+      "symbol": "603838",
+      "aid": "1225629182",
+      "requested_days": 5,
+      "status": "matched",
+      "cross_return_pct": "-13.77371749824314827828531272"
+    },
+    {
+      "symbol": "603838",
+      "aid": "1225629182",
+      "requested_days": 20,
+      "status": "matched",
+      "cross_return_pct": "-20.23893183415319747013352073"
+    },
+    {
+      "symbol": "603959",
+      "aid": "1225631527",
+      "requested_days": 1,
+      "status": "matched",
+      "cross_return_pct": "2.793296089385474860335195500"
+    },
+    {
+      "symbol": "603959",
+      "aid": "1225631527",
+      "requested_days": 5,
+      "status": "matched",
+      "cross_return_pct": "-0.2793296089385474860335195500"
+    },
+    {
+      "symbol": "603959",
+      "aid": "1225631527",
+      "requested_days": 20,
+      "status": "matched",
+      "cross_return_pct": "2.234636871508379888268156400"
+    },
+    {
+      "symbol": "002717",
+      "aid": "1225632584",
+      "requested_days": 1,
+      "status": "nontraded_or_missing",
+      "cross_return_pct": null
+    },
+    {
+      "symbol": "002717",
+      "aid": "1225632584",
+      "requested_days": 5,
+      "status": "nontraded_or_missing",
+      "cross_return_pct": null
+    },
+    {
+      "symbol": "002717",
+      "aid": "1225632584",
+      "requested_days": 20,
+      "status": "nontraded_or_missing",
+      "cross_return_pct": null
+    }
+  ],
+  "source_refs": [
+    {
+      "announcement_id": "1225629182",
+      "symbol": "603838",
+      "title": "四通股份关于前期会计差错更正及追溯调整的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225629182.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "1db39a8d5f0f8b219dbb89f85f5f00dfb2033607254550a7bd0a5d80ecf49a7b"
+    },
+    {
+      "announcement_id": "1225608268",
+      "symbol": "603838",
+      "title": "四通股份关于撤销退市风险警示暨停牌的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225608268.PDF",
+      "published_on": "2026-10-17",
+      "sha256": "1527d7b7339276698033b0e6ba5f40725faa8d9d71f449b7d4499ee84e316ac7"
+    },
+    {
+      "announcement_id": "1225516212",
+      "symbol": "603838",
+      "title": "四通股份2026年半年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225516212.PDF",
+      "published_on": "2026-08-28",
+      "sha256": "c538b3059aac1e876e0be85ec4c7932c323c41a043af13520af35b7c684f3181"
+    },
+    {
+      "announcement_id": "1225629255",
+      "symbol": "603838",
+      "title": "四通股份2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225629255.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "cf2226f02e6fdb9568a4b7993711b27e7ba2c6bb55df4713baa6803a484c1f23"
+    },
+    {
+      "announcement_id": "1225631527",
+      "symbol": "603959",
+      "title": "关于前期会计差错更正及追溯调整专项说明的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225631527.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "b5b41330d5f452542807d3bf9d0a2e01a2c0bcb3bf84c30282c3b384c2f66b8d"
+    },
+    {
+      "announcement_id": "1225631555",
+      "symbol": "603959",
+      "title": "百利科技更正后的2026年半年度财务报表",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225631555.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "63e359b7f7ffba6fba48e84ae8e28c31d6ae92dcaeaf33ca1cb44592a9c34361"
+    },
+    {
+      "announcement_id": "1225631518",
+      "symbol": "603959",
+      "title": "2026年第三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225631518.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "15c3dc09e2cf3336dd5436a0ccd2d8f34f10d4f4f6fce535d92828d30c78e11c"
+    },
+    {
+      "announcement_id": "1225632584",
+      "symbol": "002717",
+      "title": "关于前期会计差错更正及追溯调整的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632584.PDF",
+      "published_on": "2026-10-28",
+      "sha256": "09cf81c71f3795239aaa074509f864b765984c2ea9d3c0e4f88d968a3ea3fe7a"
+    },
+    {
+      "announcement_id": "1225644904",
+      "symbol": "002717",
+      "title": "2026年三季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225644904.PDF",
+      "published_on": "2026-10-30",
+      "sha256": "866640480b7597d30881e6a63ce33baa4f2aee20c3e818fa7ee0a678304a62ef"
+    },
+    {
+      "announcement_id": "1225609701",
+      "symbol": "002717",
+      "title": "关于收到终止上市事先告知书的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225609701.PDF",
+      "published_on": "2026-10-17",
+      "sha256": "9c2f3777bf177f750d12ad4151884e8eaed4c87a26111ff93ea1fbc22c1b4376"
+    }
+  ],
+  "index_review": {
+    "source": {
+      "key": "000985",
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260703&endDate=20261119",
+      "sha256": "279327a7846b9dbb97e3cb5b1cbdf1099dfc66e5cae163c04419d06f073a20e5",
+      "observed_at": "2026-11-19T16:39:37.921602+00:00"
+    },
+    "rows": [
+      {
+        "date": "2026-10-27",
+        "provider": "5098.4207",
+        "official": "5098.42",
+        "difference": "0.0007"
+      },
+      {
+        "date": "2026-10-28",
+        "provider": "5177.513",
+        "official": "5177.51",
+        "difference": "0.003"
+      },
+      {
+        "date": "2026-11-03",
+        "provider": "4985.1681",
+        "official": "4985.17",
+        "difference": "-0.0019"
+      },
+      {
+        "date": "2026-11-19",
+        "provider": "4877.3573",
+        "official": "4877.36",
+        "difference": "-0.0027"
+      }
+    ],
+    "precision": "official_two_decimal_places",
+    "boundary": "官方精度端点一致不等于原始未取整值完全一致；ST为既有研究序列复算。"
+  },
+  "counts": {
+    "companies": 3,
+    "common_disclosure_dates": 1,
+    "windows": 9,
+    "complete_windows": 6,
+    "unfinished_windows": 3,
+    "matched_stock_windows": 6,
+    "nontraded_stock_windows": 3,
+    "new_primary_documents": 0,
+    "reused_primary_documents": 10,
+    "new_quote_requests": 0,
+    "independent_regime_tests": 0
+  },
+  "experience": {
+    "status": "阅读方法归纳，行情假设仍待检验",
+    "retain": "先核影响期间和科目，再分别更新同比、经营与风险条件；用实际发生顺序检查解释，保留反例和空值。",
+    "not_supported": "更正通常利好、摘帽后必涨、现金转正就恢复，均不能由这组三家公司确认。",
+    "falsification": "若新原件、可比口径或正式程序推翻当前事实，逐项改判断；若要检验行情预测，还需其他独立时段与事先定义的样本，不能把同日横截面或重复窗口当多次验证。"
+  },
+  "boundaries": [
+    "三家公司共用10月28日披露日，是一个同期横截面，不是三段独立市场检验。",
+    "同日还披露季度报告或其他事项，且四通摘帽在更正之前；同窗涨跌不识别更正公告净影响。",
+    "20日窗口截至11月19日仅17个市场日，统一标未满；岭南停牌无共同成交端点，收益留空，不借最后交易价。",
+    "旧财务差异、原价接口限制、最终退出原件及完整历史名单缺口仍保留，不自动晋级经验方法。"
+  ],
+  "method_promotions": 0
+}

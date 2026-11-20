@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'restatement',anchor:'st-restatement-comparison',title:'财报更正后，应该改哪一层判断？',field:'restatement_comparison'},
   {key:'yigou',anchor:'st-yigou-settlement',title:'易购：利润为正，和解与现金兑现了吗？',field:'yigou_settlement'},
   {key:'endpoints',anchor:'st-endpoint-reasons',title:'固定150只：缺价、停牌和退出怎样分别看？',field:'endpoint_reasons'},
   {key:'xilv',anchor:'st-xilv-timeline',title:'西旅：先跌后涨，公告和大盘分别说明了什么？',field:'xilv_timeline'},

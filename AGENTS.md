@@ -153,4 +153,4 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 
 - 2026-11-21 historical breadth first-hit condition, counterexample and point-in-time limits: `MARKET_BREADTH_SEQUENCE_RESULT_2026_11_21.md`.
 
-- Recent full SSE capture is in flight; see `MARKET_RECENT_BREADTH_CAPTURE_RESULT_2026_11_21.md` and ignored `out/market-recent-breadth-20261121/live-handoff.json`. Verify the same live tool session or exact PID command/cwd before waiting or resuming. A progress file alone is not liveness. Do not restart on an observation timeout or publish partial prices as full-market breadth.
+- Recent SSE capture is terminal (exit 0), fully replayed and published as a 50-session two-venue breadth extension. Do not restart session 35957. See `MARKET_RECENT_BREADTH_RESULT_2026_11_21.md`; old capture notes are dated snapshots. Preserve source snapshots and null immature windows.

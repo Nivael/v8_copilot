@@ -1,0 +1,121 @@
+{
+  "version": "recent_halt_clauses_v1",
+  "documents": [
+    {
+      "symbol": "600567",
+      "announcement_id": "1225678735",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225678735.PDF",
+      "sha256": "7372ec44552872f58bc010aa44e561ff3cff3e879915909fe357b897b101b73a",
+      "page_count": 2,
+      "reviewed_pages": [
+        1
+      ],
+      "source_file": "halt-supplements/1225678735-source.json",
+      "pdf_file": "halt-supplements/1225678735.pdf",
+      "claims": [
+        {
+          "role": "halt_start",
+          "effective_on": "2026-11-19",
+          "physical_pages": [
+            1
+          ],
+          "clause": "公司股票将于2026年11月19日（星期四）开市起停牌"
+        }
+      ]
+    },
+    {
+      "symbol": "688798",
+      "announcement_id": "1225673122",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-17/1225673122.PDF",
+      "sha256": "020287766d19528c6639ab670921c9bc45a9df6345990d32e2bfebb2813cd5ce",
+      "page_count": 2,
+      "reviewed_pages": [
+        1
+      ],
+      "source_file": "halt-supplements/1225673122-source.json",
+      "pdf_file": "halt-supplements/1225673122.pdf",
+      "claims": [
+        {
+          "role": "halt_start",
+          "effective_on": "2026-11-10",
+          "physical_pages": [
+            1
+          ],
+          "clause": "自2026年11月10日（星期二）开市起开始停牌"
+        }
+      ]
+    },
+    {
+      "symbol": "605255",
+      "announcement_id": "1225678240",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225678240.PDF",
+      "sha256": "92b0e5099d78137c27378321d85d418f871fda455442ef29e18d330cef77c7b4",
+      "page_count": 7,
+      "reviewed_pages": [
+        1
+      ],
+      "source_file": "halt-supplements/1225678240-source.json",
+      "pdf_file": "halt-supplements/1225678240.pdf",
+      "claims": [
+        {
+          "role": "resume",
+          "effective_on": "2026-11-19",
+          "physical_pages": [
+            1
+          ],
+          "clause": "公司股票将于2026年11月19日（星期四）开市起复牌"
+        }
+      ]
+    },
+    {
+      "symbol": "605255",
+      "announcement_id": "1225671956",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-14/1225671956.PDF",
+      "sha256": "bf3ed36de661b192a33a4fd3a91c93293e0eb5a26800304e217cd1ceb356d11f",
+      "page_count": 1,
+      "reviewed_pages": [
+        1
+      ],
+      "source_file": "halt-supplements/1225671956-source.json",
+      "pdf_file": "halt-supplements/1225671956.pdf",
+      "claims": [
+        {
+          "role": "halt_start",
+          "effective_on": "2026-11-16",
+          "physical_pages": [
+            1
+          ],
+          "clause": "公司股票将于2026年11月16日（星期一）开市起停牌"
+        }
+      ]
+    },
+    {
+      "symbol": "600185",
+      "announcement_id": "1225677106",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225677106.PDF",
+      "sha256": "dbac99960d1c625be17c123c8c8d54063f5e93d17264cd7101cc3c9b399f90d7",
+      "page_count": 2,
+      "reviewed_pages": [
+        1,
+        2
+      ],
+      "source_file": "halt-notice/source.json",
+      "pdf_file": "halt-notice/1225677106.pdf",
+      "claims": [
+        {
+          "role": "halt_start",
+          "effective_on": "2026-11-12",
+          "physical_pages": [
+            1
+          ],
+          "clause": "自2026年11月12日（星期四）开市起开始停牌"
+        }
+      ]
+    }
+  ],
+  "reused_start_symbols": [
+    "688121",
+    "688496"
+  ],
+  "scope": "missing_day_classification_not_company_investment_judgment"
+}

@@ -50,3 +50,5 @@ is kept up to date; this file is only a pointer.
 `ST_invest_quant/AGENTS.md` — do not edit without the change being an
 explicit, versioned, reversible decision; a new contract version, not an
 in-place edit, is the default way to change one.
+
+最新期间复盘已发布：海钦旧处罚/新监管与现金、洲际补认/独立审计、中路798万元未收与司法、京化重述/非经常性损益分别核。6条问题链、四家同窗横向比较；期初仍126/150。见 [本轮结果](ST_TWENTYFIRST_PERIOD_FOLLOWUP_RESULT_2026_11_20.md)。

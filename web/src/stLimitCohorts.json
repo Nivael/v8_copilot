@@ -1,0 +1,949 @@
+{
+  "reading": {
+    "version": "st_limit_cohorts_v1",
+    "start": "2026-11-09",
+    "through": "2026-11-19",
+    "boundary": "每日组按保存供应商当日ST名单筛主板；不是完整官方法定名录。固定150组保留退出/停牌或缺价样本；无日线记录不等于停牌、退市或零次跌停。分母仅有成交日线且限价与OHLC配对通过的股票；有成交也不证明委托可成交。",
+    "independent_validations_added": 0,
+    "groups": [
+      {
+        "key": "daily_members",
+        "days": [
+          {
+            "date": "2026-11-09",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 1,
+            "touch_down": 2,
+            "one_price_down": 0,
+            "close_at_up": 3
+          },
+          {
+            "date": "2026-11-10",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 0,
+            "touch_down": 0,
+            "one_price_down": 0,
+            "close_at_up": 2
+          },
+          {
+            "date": "2026-11-11",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 2,
+            "touch_down": 3,
+            "one_price_down": 0,
+            "close_at_up": 0
+          },
+          {
+            "date": "2026-11-12",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 0,
+            "touch_down": 1,
+            "one_price_down": 0,
+            "close_at_up": 0
+          },
+          {
+            "date": "2026-11-13",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 1,
+            "touch_down": 2,
+            "one_price_down": 0,
+            "close_at_up": 1
+          },
+          {
+            "date": "2026-11-16",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 4,
+            "touch_down": 7,
+            "one_price_down": 0,
+            "close_at_up": 1
+          },
+          {
+            "date": "2026-11-17",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 10,
+            "touch_down": 13,
+            "one_price_down": 0,
+            "close_at_up": 0
+          },
+          {
+            "date": "2026-11-18",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 4,
+            "touch_down": 9,
+            "one_price_down": 3,
+            "close_at_up": 2
+          },
+          {
+            "date": "2026-11-19",
+            "members": 142,
+            "trading_daily_rows": 141,
+            "limit_rows": 142,
+            "paired": 141,
+            "missing_daily": 1,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 5,
+            "touch_down": 9,
+            "one_price_down": 1,
+            "close_at_up": 3
+          }
+        ],
+        "one_price_rows": [
+          {
+            "date": "2026-11-18",
+            "symbol": "000826.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST启环",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "1.3",
+            "low": "1.3",
+            "high": "1.3",
+            "down_limit": "1.3",
+            "up_limit": "1.58"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "600340.SH",
+            "in_saved_daily_st": true,
+            "name": "*ST华幸",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "0.83",
+            "low": "0.83",
+            "high": "0.83",
+            "down_limit": "0.83",
+            "up_limit": "1.01"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "603359.SH",
+            "in_saved_daily_st": true,
+            "name": "*ST东珠",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "0.98",
+            "low": "0.98",
+            "high": "0.98",
+            "down_limit": "0.98",
+            "up_limit": "1.2"
+          },
+          {
+            "date": "2026-11-19",
+            "symbol": "000826.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST启环",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "1.17",
+            "low": "1.17",
+            "high": "1.17",
+            "down_limit": "1.17",
+            "up_limit": "1.43"
+          }
+        ],
+        "unresolved_rows": [
+          {
+            "date": "2026-11-09",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-10",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-11",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-12",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-13",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-16",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-17",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-19",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          }
+        ]
+      },
+      {
+        "key": "fixed150",
+        "days": [
+          {
+            "date": "2026-11-09",
+            "members": 150,
+            "trading_daily_rows": 148,
+            "limit_rows": 150,
+            "paired": 148,
+            "missing_daily": 2,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 1,
+            "touch_down": 2,
+            "one_price_down": 0,
+            "close_at_up": 3
+          },
+          {
+            "date": "2026-11-10",
+            "members": 150,
+            "trading_daily_rows": 148,
+            "limit_rows": 150,
+            "paired": 148,
+            "missing_daily": 2,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 0,
+            "touch_down": 0,
+            "one_price_down": 0,
+            "close_at_up": 1
+          },
+          {
+            "date": "2026-11-11",
+            "members": 150,
+            "trading_daily_rows": 148,
+            "limit_rows": 150,
+            "paired": 148,
+            "missing_daily": 2,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 2,
+            "touch_down": 3,
+            "one_price_down": 0,
+            "close_at_up": 1
+          },
+          {
+            "date": "2026-11-12",
+            "members": 150,
+            "trading_daily_rows": 148,
+            "limit_rows": 150,
+            "paired": 148,
+            "missing_daily": 2,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 1,
+            "touch_down": 2,
+            "one_price_down": 0,
+            "close_at_up": 0
+          },
+          {
+            "date": "2026-11-13",
+            "members": 150,
+            "trading_daily_rows": 147,
+            "limit_rows": 150,
+            "paired": 147,
+            "missing_daily": 3,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 1,
+            "touch_down": 2,
+            "one_price_down": 0,
+            "close_at_up": 1
+          },
+          {
+            "date": "2026-11-16",
+            "members": 150,
+            "trading_daily_rows": 147,
+            "limit_rows": 150,
+            "paired": 147,
+            "missing_daily": 3,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 4,
+            "touch_down": 7,
+            "one_price_down": 0,
+            "close_at_up": 0
+          },
+          {
+            "date": "2026-11-17",
+            "members": 150,
+            "trading_daily_rows": 147,
+            "limit_rows": 150,
+            "paired": 147,
+            "missing_daily": 3,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 10,
+            "touch_down": 13,
+            "one_price_down": 0,
+            "close_at_up": 0
+          },
+          {
+            "date": "2026-11-18",
+            "members": 150,
+            "trading_daily_rows": 147,
+            "limit_rows": 150,
+            "paired": 147,
+            "missing_daily": 3,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 4,
+            "touch_down": 9,
+            "one_price_down": 3,
+            "close_at_up": 3
+          },
+          {
+            "date": "2026-11-19",
+            "members": 150,
+            "trading_daily_rows": 147,
+            "limit_rows": 150,
+            "paired": 147,
+            "missing_daily": 3,
+            "nontrading_daily": 0,
+            "unresolved_trading": 0,
+            "close_at_down": 7,
+            "touch_down": 10,
+            "one_price_down": 1,
+            "close_at_up": 3
+          }
+        ],
+        "one_price_rows": [
+          {
+            "date": "2026-11-18",
+            "symbol": "000826.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST启环",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "1.3",
+            "low": "1.3",
+            "high": "1.3",
+            "down_limit": "1.3",
+            "up_limit": "1.58"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "600340.SH",
+            "in_saved_daily_st": true,
+            "name": "*ST华幸",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "0.83",
+            "low": "0.83",
+            "high": "0.83",
+            "down_limit": "0.83",
+            "up_limit": "1.01"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "603359.SH",
+            "in_saved_daily_st": true,
+            "name": "*ST东珠",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "0.98",
+            "low": "0.98",
+            "high": "0.98",
+            "down_limit": "0.98",
+            "up_limit": "1.2"
+          },
+          {
+            "date": "2026-11-19",
+            "symbol": "000826.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST启环",
+            "limit_row_present": true,
+            "status": "paired",
+            "close_at_down": true,
+            "touch_down": true,
+            "one_price_down": true,
+            "close_at_up": false,
+            "close": "1.17",
+            "low": "1.17",
+            "high": "1.17",
+            "down_limit": "1.17",
+            "up_limit": "1.43"
+          }
+        ],
+        "unresolved_rows": [
+          {
+            "date": "2026-11-09",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-09",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-10",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-10",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-11",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-11",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-12",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-12",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-13",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-13",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-13",
+            "symbol": "002731.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-16",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-16",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-16",
+            "symbol": "002731.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-17",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-17",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-17",
+            "symbol": "002731.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-18",
+            "symbol": "002731.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-19",
+            "symbol": "000016.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-19",
+            "symbol": "002717.SZ",
+            "in_saved_daily_st": true,
+            "name": "*ST岭南",
+            "limit_row_present": true,
+            "status": "missing_daily"
+          },
+          {
+            "date": "2026-11-19",
+            "symbol": "002731.SZ",
+            "in_saved_daily_st": false,
+            "name": null,
+            "limit_row_present": true,
+            "status": "missing_daily"
+          }
+        ]
+      }
+    ]
+  },
+  "evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "alignment_evidence_sha256": "2b6fbc2ab6d9eb3e3c994b98c23727b8c6c9c90c8aa09d8a4cb3024c30d5348f",
+  "research_run_id": "RUN-23D0943ABA464A44BA347509",
+  "input_asset": "inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "source_refs": [
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261109"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7dab24e1752408841b9e2e31feb863597437e92c159ee02f0fec30a95de5d82b",
+      "bytes": 537168,
+      "fetched_at": "2026-11-19T15:27:56.714032+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261109"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "47b67d2d2d6f1dc7bde7f53cf2949cd52722093a3ccf2e46fc72cc2e351da771",
+      "bytes": 276002,
+      "fetched_at": "2026-11-19T15:27:58.168974+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261109"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "e9c068696b588f16cf7faa823e9080b3cf5674fe7399bde3b08a351deec7b6a9",
+      "bytes": 12867,
+      "fetched_at": "2026-11-19T15:27:55.993579+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261110"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "3c78d2a3399c5596aa50f5bcf3d3901617dad2ef3e063aa08be3356063b24af9",
+      "bytes": 534088,
+      "fetched_at": "2026-11-19T15:27:59.312568+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261110"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "978116d78198afa4d51b8efad84e37140422372731d1a8d36be424b9c69181ca",
+      "bytes": 276025,
+      "fetched_at": "2026-11-19T15:28:00.831145+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261110"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "e502b5d94663227aa250c62c658cae953f1e5b1015c7975db77ca6a9d8ca1360",
+      "bytes": 12867,
+      "fetched_at": "2026-11-19T15:27:58.534463+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261111"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "43c87e251cd547f4a5305de0a77c04d2a477c8e7381a16e829321e9824f752ce",
+      "bytes": 535626,
+      "fetched_at": "2026-11-19T15:28:01.746240+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261111"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "2442c0a7259985fb886d2831c9ebb17ddbf288748de44a3af415262a04d87f62",
+      "bytes": 276185,
+      "fetched_at": "2026-11-19T15:28:03.276505+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261111"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "0da11c95051a76e2f87522537c3c6c554402657813bad3c491c67a2922f55031",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:00.984613+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261112"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "cd43b88ac2ce83c45d52f369f81023a0628a7b4ee5a9ff14547bd06795d2d7bc",
+      "bytes": 541851,
+      "fetched_at": "2026-11-19T15:28:04.295011+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261112"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "837b7a7a3b58cf475614e610d4cca75b2ac6d725a62bda0262703ec6b27a2b7e",
+      "bytes": 276246,
+      "fetched_at": "2026-11-19T15:28:05.718415+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261112"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "218042bb2b33cc7304d5938c1af12d0e38da4515ba1e3f9c10bc64150dd434db",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:03.473889+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261113"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "2d1624a0241792e904362468d850d1bf9d3eb31e1e9d087f1212db6e4d306540",
+      "bytes": 541707,
+      "fetched_at": "2026-11-19T15:28:06.982439+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261113"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "2da4f3a0a6674fa95d53fc0966ec588b26a68485004f3de423f39ef3b47f9145",
+      "bytes": 276096,
+      "fetched_at": "2026-11-19T15:28:08.157208+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261113"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "e7f53fec1fddb5ce28384983466fcf281303fde9530a8d9ab45687c65d942971",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:05.975030+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261116"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "fad8a487386123c2911ee1e0c4b2abb8c9e1e7fc5f52fff72f12dd043488d726",
+      "bytes": 540915,
+      "fetched_at": "2026-11-19T15:28:09.252470+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261116"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "bd1244b5d98f5bda56a0c31e3040f830322e55751467911d9800908dafb26756",
+      "bytes": 275928,
+      "fetched_at": "2026-11-19T15:28:10.610290+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261116"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "7a020badfc4cf388a7f8fb0d9716e7c5785c8d906843f5409282dbf6f04779ff",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:08.545226+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7ed240a4a3be91bc75c12ddcec0e8911347beb85b13a021d7385bde7fa45574f",
+      "bytes": 539517,
+      "fetched_at": "2026-11-19T15:28:11.719493+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "9894fc6124ddc4a347a9388b29fae88d972b8e2ed70a55ab5c236c7a1e0381ce",
+      "bytes": 275835,
+      "fetched_at": "2026-11-19T15:28:13.160531+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "bed3be4349ab788ad02fefddc658b6314a9bb5d5d1f90c2bd30d670ffd88a56d",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:10.972011+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261118"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7f08fae46fc0691984393474fc9430ca45a46ce6827ede01814daa7545b5f5d9",
+      "bytes": 539221,
+      "fetched_at": "2026-11-19T15:28:14.248738+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261118"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "d8c7ffd34f1c01111b7707f8f7a202e7309d4622e51b51d242f9870df477fc82",
+      "bytes": 275679,
+      "fetched_at": "2026-11-19T15:28:15.617411+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261118"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "f0587ee63585efeaaa9898c1a67fad668899a73bdc619842e6254601c4283aff",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:13.469675+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261119"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "0aafdf47c8068eb888cc397201f5cf522adfe66cf9aa1246dc10f404b304fb28",
+      "bytes": 540282,
+      "fetched_at": "2026-11-19T15:28:16.705121+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261119"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "30179da26789da2b422b3d222edcb7050dedf98714f158f22b4e2fcd27472b93",
+      "bytes": 275666,
+      "fetched_at": "2026-11-19T15:28:18.139805+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261119"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "bb0c5ba9c685bb6fb36151506fc74747ada9caae697da7c1ed3cbde1870817b3",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:15.974001+00:00"
+    }
+  ]
+}

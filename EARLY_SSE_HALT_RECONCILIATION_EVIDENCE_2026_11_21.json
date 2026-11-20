@@ -1,0 +1,394 @@
+{
+  "basis_sha256": "c61af203bdd2ddadf44d6d23c2e0b7a5dc75dd62f9693a9c0d0585d96af8e0e5",
+  "gap_sha256": "9e6e117d44ae046bec1d799d2598e79a2b6b1d512187b743fa2b9baa78bf450d",
+  "suspension_content_digest": "5359a15e88f37059542c42f81a0b4421a4e6c859034d01e667ecdc87e3658627",
+  "suspension_source_refs": [
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260101",
+        "endStopDate": "20261120",
+        "pageHelp.pageNo": 1
+      },
+      "sha256": "aa7b22330dd4b8e34b1cc92aa85b253e6b98e186cf8c023b62a3c89d18dd6a5e",
+      "bytes": 43647,
+      "observed_at": "2026-11-20T17:07:18.152508+00:00"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260101",
+        "endStopDate": "20261120",
+        "pageHelp.pageNo": 2
+      },
+      "sha256": "572f4f94f1b36ebc8b7e28ce66357623c981a9767834a056501f4304a69cf62b",
+      "bytes": 43343,
+      "observed_at": "2026-11-20T17:07:19.685368+00:00"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260101",
+        "endStopDate": "20261120",
+        "pageHelp.pageNo": 3
+      },
+      "sha256": "a59337ffda5998d2d84f2ef5c673f8880a2c2abb01c12d2b5bfbe0d38595e1ac",
+      "bytes": 43359,
+      "observed_at": "2026-11-20T17:07:21.207406+00:00"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260101",
+        "endStopDate": "20261120",
+        "pageHelp.pageNo": 4
+      },
+      "sha256": "9f4fa970e9e846ccf55e091e175128e519d5d8374b38247d9316e8dcfb6ccc9b",
+      "bytes": 43003,
+      "observed_at": "2026-11-20T17:07:22.762440+00:00"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260101",
+        "endStopDate": "20261120",
+        "pageHelp.pageNo": 5
+      },
+      "sha256": "4151e4cc8936252a1cc002ac36878ad1620bc0aec5ea934d156e8192c53b2eab",
+      "bytes": 43391,
+      "observed_at": "2026-11-20T17:07:24.616592+00:00"
+    },
+    {
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "isPagination": "true",
+        "sqlId": "GW_PL_JYTS_TFPXX",
+        "pageHelp.pageSize": 100,
+        "productCode": "",
+        "keyWords": "",
+        "startStopDate": "20260101",
+        "endStopDate": "20261120",
+        "pageHelp.pageNo": 6
+      },
+      "sha256": "a2247a34089cebc7958c479c3a353c8c27f7d87f9e0c60d8fc8ea7f656e190a7",
+      "bytes": 27363,
+      "observed_at": "2026-11-20T17:07:26.226594+00:00"
+    }
+  ],
+  "source_query_start": "2026-01-01",
+  "source_query_through": "2026-11-20",
+  "query_rows": 562,
+  "matched_days": 90,
+  "unresolved": [],
+  "intervals": [
+    {
+      "symbol": "600929",
+      "start": "2026-08-31",
+      "last_suspended_on": "2026-09-11",
+      "days": [
+        "2026-08-31"
+      ]
+    },
+    {
+      "symbol": "688432",
+      "start": "2026-08-31",
+      "last_suspended_on": "2026-09-11",
+      "days": [
+        "2026-08-31"
+      ]
+    },
+    {
+      "symbol": "600491",
+      "start": "2026-08-27",
+      "last_suspended_on": "2026-08-27",
+      "days": [
+        "2026-08-27"
+      ]
+    },
+    {
+      "symbol": "600165",
+      "start": "2026-08-25",
+      "last_suspended_on": "2026-08-25",
+      "days": [
+        "2026-08-25"
+      ]
+    },
+    {
+      "symbol": "600525",
+      "start": "2026-08-25",
+      "last_suspended_on": "2026-08-25",
+      "days": [
+        "2026-08-25"
+      ]
+    },
+    {
+      "symbol": "688646",
+      "start": "2026-08-12",
+      "last_suspended_on": "2026-08-12",
+      "days": [
+        "2026-08-12"
+      ]
+    },
+    {
+      "symbol": "600984",
+      "start": "2026-08-11",
+      "last_suspended_on": "2026-08-24",
+      "days": [
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19",
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-24"
+      ]
+    },
+    {
+      "symbol": "603221",
+      "start": "2026-08-11",
+      "last_suspended_on": "2026-08-17",
+      "days": [
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-17"
+      ]
+    },
+    {
+      "symbol": "600530",
+      "start": "2026-08-03",
+      "last_suspended_on": "2026-08-03",
+      "days": [
+        "2026-08-03"
+      ]
+    },
+    {
+      "symbol": "603221",
+      "start": "2026-08-03",
+      "last_suspended_on": "2026-08-05",
+      "days": [
+        "2026-08-03",
+        "2026-08-04",
+        "2026-08-05"
+      ]
+    },
+    {
+      "symbol": "600238",
+      "start": "2026-07-31",
+      "last_suspended_on": "2026-07-31",
+      "days": [
+        "2026-07-31"
+      ]
+    },
+    {
+      "symbol": "600439",
+      "start": "2026-07-31",
+      "last_suspended_on": "2026-07-31",
+      "days": [
+        "2026-07-31"
+      ]
+    },
+    {
+      "symbol": "688089",
+      "start": "2026-07-27",
+      "last_suspended_on": "2026-07-27",
+      "days": [
+        "2026-07-27"
+      ]
+    },
+    {
+      "symbol": "688237",
+      "start": "2026-07-16",
+      "last_suspended_on": "2026-07-22",
+      "days": [
+        "2026-07-16",
+        "2026-07-17",
+        "2026-07-20",
+        "2026-07-21",
+        "2026-07-22"
+      ]
+    },
+    {
+      "symbol": "688277",
+      "start": "2026-07-16",
+      "last_suspended_on": "2026-07-29",
+      "days": [
+        "2026-07-16",
+        "2026-07-17",
+        "2026-07-20",
+        "2026-07-21",
+        "2026-07-22",
+        "2026-07-23",
+        "2026-07-24",
+        "2026-07-27",
+        "2026-07-28",
+        "2026-07-29"
+      ]
+    },
+    {
+      "symbol": "603580",
+      "start": "2026-07-07",
+      "last_suspended_on": "2026-07-13",
+      "days": [
+        "2026-07-07",
+        "2026-07-08",
+        "2026-07-09",
+        "2026-07-10",
+        "2026-07-13"
+      ]
+    },
+    {
+      "symbol": "600405",
+      "start": "2026-07-06",
+      "last_suspended_on": "2026-07-10",
+      "days": [
+        "2026-07-06",
+        "2026-07-07",
+        "2026-07-08",
+        "2026-07-09",
+        "2026-07-10"
+      ]
+    },
+    {
+      "symbol": "600491",
+      "start": "2026-07-03",
+      "last_suspended_on": "2026-07-09",
+      "days": [
+        "2026-07-03",
+        "2026-07-06",
+        "2026-07-07",
+        "2026-07-08",
+        "2026-07-09"
+      ]
+    },
+    {
+      "symbol": "603559",
+      "start": "2026-07-01",
+      "last_suspended_on": "2026-07-01",
+      "days": [
+        "2026-07-01"
+      ]
+    },
+    {
+      "symbol": "600193",
+      "start": "2026-06-30",
+      "last_suspended_on": "2026-07-03",
+      "days": [
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03"
+      ]
+    },
+    {
+      "symbol": "600608",
+      "start": "2026-06-30",
+      "last_suspended_on": "2026-07-02",
+      "days": [
+        "2026-07-01",
+        "2026-07-02"
+      ]
+    },
+    {
+      "symbol": "605081",
+      "start": "2026-06-30",
+      "last_suspended_on": "2026-07-02",
+      "days": [
+        "2026-07-01",
+        "2026-07-02"
+      ]
+    },
+    {
+      "symbol": "601369",
+      "start": "2026-06-29",
+      "last_suspended_on": "2026-07-10",
+      "days": [
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-06",
+        "2026-07-07",
+        "2026-07-08",
+        "2026-07-09",
+        "2026-07-10"
+      ]
+    },
+    {
+      "symbol": "603722",
+      "start": "2026-06-29",
+      "last_suspended_on": "2026-07-03",
+      "days": [
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03"
+      ]
+    },
+    {
+      "symbol": "688072",
+      "start": "2026-06-29",
+      "last_suspended_on": "2026-07-10",
+      "days": [
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-06",
+        "2026-07-07",
+        "2026-07-08",
+        "2026-07-09",
+        "2026-07-10"
+      ]
+    },
+    {
+      "symbol": "603001",
+      "start": "2026-06-25",
+      "last_suspended_on": "2026-07-01",
+      "days": [
+        "2026-07-01"
+      ]
+    },
+    {
+      "symbol": "688121",
+      "start": "2026-05-06",
+      "last_suspended_on": "2026-07-06",
+      "days": [
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-06"
+      ]
+    }
+  ],
+  "limits": [
+    "Exchange closed halt intervals explain missing trading days; not independent announcement-body/legal-exit review",
+    "Names from source observation, not a historical ST membership classification",
+    "SSE-only source preparation; no full-market breadth or independent strategy validation"
+  ]
+}

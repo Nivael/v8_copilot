@@ -1,0 +1,23 @@
+{
+  "reading": {
+    "symbol": "000826",
+    "date": "2026-11-20",
+    "upper": "1.29",
+    "lower": "1.05",
+    "close": "1.06",
+    "touched_lower": true,
+    "closed_lower": false,
+    "one_price": false,
+    "scope": "one quote only; no executable fill inference"
+  },
+  "research_run_id": "RUN-B2F6D64CB1E945F58F376397",
+  "evidence_sha256": "31758dd4633af98d74f7ed51e63cd6982c574f8e6af46d3982a314ed4731b437",
+  "quote_source": {
+    "url": "https://push2.eastmoney.com/api/qt/stock/get?invt=2&fltt=1&secid=0.000826&fields=f43%2Cf44%2Cf45%2Cf46%2Cf51%2Cf52%2Cf57%2Cf58%2Cf59%2Cf60%2Cf86&dect=1",
+    "sha256": "a0c9a8ca483b2a1046d2093d3db5ad6ada2d367b4d194836a4edcac6aa8cad5a",
+    "bytes": 206,
+    "status": 200,
+    "observed_at": "2026-11-20T21:46:32.096590+00:00"
+  },
+  "official_sha256": "21e81fe49e022415fb6868e0946ca9f34aef4f6eb4c4234628268dc51dbbd245"
+}

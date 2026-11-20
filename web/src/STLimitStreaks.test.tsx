@@ -22,13 +22,16 @@ it('follows parent cohort selection without counting overlapping cases twice',()
  expect(screen.getByText(/两组重叠股票和两种状态不增加独立案例/)).toBeVisible()
 })
 
-it('dates the individual Nov20 OHLC observation without claiming an actual lower-limit quote',()=>{
+it('adds the dated limit quote without extending the whole cohort',()=>{
  render(<STLimitCohorts/>);fireEvent.click(screen.getByText('把限价核到整个样本后，压力怎样变化？'));fireEvent.click(screen.getByText('连续出现时，窗口里能确认几天？'))
  const note=screen.getByRole('complementary',{name:'启环官网日线补核'})
  expect(note).toHaveTextContent('36个价格逐项一致')
  expect(note).toHaveTextContent('收盘1.06元')
  expect(note).toHaveTextContent('最高1.29元')
  fireEvent.click(screen.getByText('官网日线能补哪一层，仍缺哪一层？'))
- expect(screen.getByText(/本轮没有补入20日实际下限价字段/)).toBeVisible()
+ expect(screen.getByText(/旧官网日线研究没有实际下限字段/)).toBeVisible()
+ expect(note).toHaveTextContent('下限1.05元、上限1.29元')
+ expect(note).toHaveTextContent('收盘1.06元未收在下限')
+ expect(screen.getByRole('link',{name:'查看20日限价补核研究 →'})).toHaveAttribute('href','/runs#research-RUN-B2F6D64CB1E945F58F376397')
  expect(screen.getByRole('link',{name:'深交所启环日线来源 ↗'})).toHaveAttribute('href','https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=000826')
 })

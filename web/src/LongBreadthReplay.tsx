@@ -20,7 +20,7 @@ export function LongBreadthReplay(){
   <p>{row.streak?`从${row.weak_start}起，上涨股票在覆盖内连续${row.streak}日不足半数。`:'这一天上涨股票不低于半数，覆盖内连续偏弱计数归零。'}{row.third_day_first_signal?'今天刚达到沿用的连续三日示例条件。':row.streak>3?'三日条件此前已经达到，今天不是新的独立提示。':'尚未在当前连续段形成三日提示。'}</p>
   {priceBound?<aside aria-label="同日指数价格压力"><h4>同一天，指数跌了多深，波动有多大？</h4>
    <p>中证全指{price.date}收盘{price.close.toFixed(2)}点。指数与沪深个股广度的成分范围不同，用同日对照，不混用分母。</p>
-   <div className="learning-table-wrap"><table className="market-pressure-table market-risk-question-table"><caption>截至所选收盘日，只使用此前价格</caption><thead><tr><th>观察什么</th><th>数值</th><th>怎样理解</th></tr></thead><tbody>
+   <div className="learning-table-wrap"><table className="market-pressure-table daily-price-pressure-table"><caption>截至所选收盘日，只使用此前价格</caption><thead><tr><th>观察什么</th><th>数值</th><th>怎样理解</th></tr></thead><tbody>
     <tr><th>当日变化</th><td>{windowValue(price.day_pct)}</td><td>当日指数冲击</td></tr>
     <tr><th>近5个交易日</th><td>{windowValue(price.five_day_pct)}</td><td>短期价格变化，与连续偏弱天数一起看</td></tr>
     <tr><th>近20个交易日</th><td>{windowValue(price.twenty_day_pct)}</td><td>较长窗口的累计价格变化</td></tr>

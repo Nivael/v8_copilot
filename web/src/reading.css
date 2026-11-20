@@ -45,3 +45,10 @@
 
 .reading-table-scroll-hint{display:none}
 @media(max-width:600px){.reading-page .reading-table-scroll-hint{display:block;font-size:12px;color:var(--reading-muted);margin:8px 0 14px}}
+
+/* Daily numeric context needs space for interpretation, unlike question/action tables. */
+.reading-page .daily-price-pressure-table{table-layout:fixed;white-space:normal}
+.reading-page .daily-price-pressure-table th,.reading-page .daily-price-pressure-table td{text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.reading-page .daily-price-pressure-table th:first-child{width:25%}
+.reading-page .daily-price-pressure-table th:nth-child(2){width:23%}
+@media(max-width:600px){.reading-page .daily-price-pressure-table th,.reading-page .daily-price-pressure-table td{padding:12px 6px;font-size:12px}.reading-page .daily-price-pressure-table th:first-child{width:28%}.reading-page .daily-price-pressure-table th:nth-child(2){width:25%}}

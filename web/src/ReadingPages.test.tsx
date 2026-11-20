@@ -4,6 +4,7 @@ import {afterEach,describe,expect,it,vi} from 'vitest'
 import {MarketOverview} from './MarketOverview'
 import {ExperienceHub} from './ExperienceHub'
 import {ReadingChart} from './ReadingChart'
+import fixedNov20 from './stFixedNov20.json'
 import {marketReading,learningReading} from './test/readingFixtures'
 
 const latestPrice:NonNullable<typeof marketReading.latest_price>={availability:'available',as_of:'2026-11-05',headline:'大盘风险仍偏高，短期压力尚在',stance:'弱势判断',summary:'新收盘仍弱，短线反弹未变成近月回升。',metrics:{day_change_pct:-2,five_day_change_pct:3,twenty_day_change_pct:-8},reason:{title:'先看最新的价格方向',text:'新收盘的价格依据。',source_label:'最新收盘原始来源',source_url:'https://www.csindex.com.cn/latest'}}
@@ -171,5 +172,14 @@ describe('trader reading pages',()=>{
     expect(visibleJudgment[0]).toBeVisible()
     expect(screen.getByRole('heading',{name:'需要结合新资料再复盘'})).toBeVisible()
     expect(request.mock.calls.every(([url,options])=>(/\/workbench\/(learning|swing|history|st-regime)/.test(String(url))||String(url)==='/api/v1/research/identity-corrections')&&!options?.body)).toBe(true)
+  })
+
+  it('exposes the official fixed-cohort one-day comparison only with its matching market source',async()=>{
+   serve({...marketReading,latest_price:{...latestPrice,as_of:'2026-11-20',source_digest:fixedNov20.benchmark_source_digest}})
+   render(<MemoryRouter><MarketOverview/></MemoryRouter>)
+   const question=await screen.findByText('11月20日，固定ST旧样本是否跟着大盘下跌？')
+   fireEvent.click(question)
+   expect(screen.getByText(/固定7月3日的150只旧样本中/)).toBeVisible()
+   expect(screen.getByText(/不能用一天的相对少跌/)).toBeVisible()
   })
 })

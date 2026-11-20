@@ -8,7 +8,7 @@ export type BroadETFReading={fund_evidence?:BroadFundEvidence;availability:'avai
 export type MarketReading={
   latest_breadth?:BreadthReading;
   availability:string;as_of:string;start:string;headline:string;stance:string;summary:string
-  latest_price?:{price_context?:PriceContext;availability:'available';as_of:string;headline:string;stance:string;summary:string;metrics:{day_change_pct:number;five_day_change_pct:number;twenty_day_change_pct:number};reason:{title:string;text:string;source_label:string;source_url:string}}
+  latest_price?:{source_digest?:string;price_context?:PriceContext;availability:'available';as_of:string;headline:string;stance:string;summary:string;metrics:{day_change_pct:number;five_day_change_pct:number;twenty_day_change_pct:number};reason:{title:string;text:string;source_label:string;source_url:string}}
   metrics:{day_change_pct:number|null;five_day_change_pct:number|null;twenty_day_change_pct:number|null;period_change_pct:number|null;st_change_pct:number|null;advancing_pct:number|null}
   chart:ReadingSeries[];why:{title:string;text:string;source_label:string;source_url:string}[]
   source_notes?:{title:string;text:string;source_label:string;source_url:string}[]

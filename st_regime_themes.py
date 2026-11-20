@@ -1,3 +1,4 @@
+from st_seventeenth_period_followup import followup_view as seventeenth_period_followup
 from st_initial_seventeenth_four import initial_seventeenth_four
 from st_sixteenth_period_followup import followup_view as sixteenth_period_followup
 from st_initial_sixteenth_four import initial_sixteenth_four
@@ -241,6 +242,7 @@ def build_themes(inputs, daily):
     result['initial_sixteenth_four']=initial_sixteenth_four(inputs,result['initial_fifteenth_four'],result['current_extension'])
     result['sixteenth_period_followup']=sixteenth_period_followup(inputs,result['initial_sixteenth_four'])
     result['initial_seventeenth_four']=initial_seventeenth_four(inputs,result['initial_sixteenth_four'],result['current_extension'])
+    result['seventeenth_period_followup']=seventeenth_period_followup(inputs,result['initial_seventeenth_four'])
     result['tenth_period_followup']=tenth_period_followup(inputs,result['initial_tenth_four'])
     result['eleventh_period_followup']=eleventh_period_followup(inputs,result['initial_eleventh_four'])
     result['ninth_period_followup']=ninth_period_followup(inputs,result['initial_ninth_four'])

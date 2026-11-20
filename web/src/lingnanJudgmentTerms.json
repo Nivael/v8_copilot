@@ -1,0 +1,79 @@
+{
+  "version": "lingnan_judgment_terms_v1",
+  "symbol": "002717",
+  "case_ref": "（2025）粤20民初20号",
+  "source": {
+    "announcement_id": "1225632581",
+    "announcement_date": "2026-10-28",
+    "notice_number": "2026-124",
+    "title": "关于重大诉讼的进展公告",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632581.PDF",
+    "sha256": "aed1d414f94295d61f4e4d1aa3ea9a475279b09bf7421927c7a821fc205fb760",
+    "pages": 4,
+    "source_kind": "issuer_disclosure_of_first_instance_judgment_not_court_original"
+  },
+  "request": {
+    "principal": "345057600",
+    "bond_interest": "31945641",
+    "subtotal": "377003241",
+    "occupation_interest_rate": "原告诉请6%/年",
+    "first_start": "2024-08-15"
+  },
+  "award": {
+    "bond_principal_and_interest": "376991941",
+    "lawyer_fee": "450000",
+    "insurance_fee": "100478.93",
+    "three_item_subtotal": "377542419.93",
+    "header_wan": "37754.24",
+    "difference_from_requested_bond_subtotal": "11300",
+    "payment_trigger": "判决生效之日起七日内",
+    "occupation_interest_rate": "公告转述判项采用一年期LPR",
+    "first_start": "2024-08-22",
+    "interest_segments": [
+      {
+        "base": "488311941",
+        "start": "2024-08-22",
+        "through": "2025-01-27"
+      },
+      {
+        "base": "442664841",
+        "start": "2025-01-28",
+        "through": "2025-07-31"
+      },
+      {
+        "base": "410982341",
+        "start": "2025-08-01",
+        "through": "2026-02-10"
+      },
+      {
+        "base": "390939041",
+        "start": "2026-02-11",
+        "through": "2026-08-11"
+      },
+      {
+        "base": "376991941",
+        "start": "2026-08-12",
+        "through": "实际清偿日"
+      }
+    ]
+  },
+  "receivable_limits": [
+    {
+      "pledgor": "邻水岭南",
+      "cap": "103201445.57",
+      "page": 3
+    },
+    {
+      "pledgor": "乳山岭南",
+      "cap": "260175412.47",
+      "page": 4
+    }
+  ],
+  "visual_review_pages": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "later_effectiveness_or_payment_verified": false
+}

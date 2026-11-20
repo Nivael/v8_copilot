@@ -1012,5 +1012,22 @@
     "沪市全组仍在采集，过程数量不是完整覆盖或已发布状态。",
     "缺行尚须停复牌及退出原因核对，不填零收益；未生成新危机评分或研究结论。",
     "部分深市控制页及Excel取自官方HTTP地址，未声称全部原件经HTTPS取得。"
-  ]
+  ],
+  "verified_halt_notice": {
+    "announcement_id": "1225677106",
+    "symbol": "600185",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225677106.PDF",
+    "published_on": "2026-11-19",
+    "sha256": "dbac99960d1c625be17c123c8c8d54063f5e93d17264cd7101cc3c9b399f90d7",
+    "pages": 2,
+    "observed_at": "2026-11-20T17:14:01.043414+00:00",
+    "protected_gate_passed": true,
+    "title": "关于筹划重大资产重组事项的进展公告",
+    "visual_reviewed_pages": [
+      1,
+      2
+    ],
+    "fact": "公司披露自2026年11月12日开市起停牌；截至2026年11月19日仍继续停牌，尚处筹划及商讨论证阶段。",
+    "boundary": "不是已复牌或交易完成的证据；11月20日状态须再与官方交易提示和当日无成交截面核对。"
+  }
 }

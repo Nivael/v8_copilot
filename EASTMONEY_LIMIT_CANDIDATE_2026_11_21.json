@@ -1,0 +1,53 @@
+{
+  "status": "candidate_not_published_to_dashboard",
+  "scope": "000826.SZ only; quote time 2026-11-20 15:34:24 Asia/Shanghai",
+  "source_refs": [
+    {
+      "url": "https://quote.eastmoney.com/sz000826.html",
+      "sha256": "d0e5929ef694c1fe41236528224672b0b532d648c9d01e83bda83c9794f5a319",
+      "bytes": 56888,
+      "observed_at": "2026-11-20T21:41:02.797499+00:00"
+    },
+    {
+      "url": "https://quote.eastmoney.com/newstatic/build/vendor.js",
+      "sha256": "504cabef35a0f41ceb8ab4905c911ad317f47e36eabf82e3775bed30acc6d683",
+      "bytes": 396740,
+      "observed_at": "2026-11-20T21:41:18.674287+00:00"
+    },
+    {
+      "url": "https://push2.eastmoney.com/api/qt/stock/get?invt=2&fltt=1&secid=0.000826&fields=f43%2Cf44%2Cf45%2Cf46%2Cf51%2Cf52%2Cf57%2Cf58%2Cf59%2Cf60%2Cf86&dect=1",
+      "sha256": "a0c9a8ca483b2a1046d2093d3db5ad6ada2d367b4d194836a4edcac6aa8cad5a",
+      "bytes": 206,
+      "status": 200,
+      "observed_at": "2026-11-20T21:46:32.096590+00:00"
+    }
+  ],
+  "field_mapping_excerpts": {
+    "r[r[\"涨停价\"]=176]": "r[r[\"涨停价\"]=176]=\"涨停价\",r[r[\"跌停价\"]=177]=\"跌停价\",r[r[\"主力流入\"]=178]=\"主力流入\",r[r[\"主力流出\"]=179]=\"主力流出\",r[r[\"主力净流入\"]=180]=\"主力净流入\",r[r[\"超大单流入\"]=181]=\"超大单流入\",r[r[\"超大单流出\"]=182]=\"超大单流出\",r[r[\"超大单净流入\"]=183]=\"超大单净流入\",r[r[\"超大单净占比\"]=184]=\"超大单净占比\",r[r[",
+    "r[r[\"跌停价\"]=177]": "r[r[\"跌停价\"]=177]=\"跌停价\",r[r[\"主力流入\"]=178]=\"主力流入\",r[r[\"主力流出\"]=179]=\"主力流出\",r[r[\"主力净流入\"]=180]=\"主力净流入\",r[r[\"超大单流入\"]=181]=\"超大单流入\",r[r[\"超大单流出\"]=182]=\"超大单流出\",r[r[\"超大单净流入\"]=183]=\"超大单净流入\",r[r[\"超大单净占比\"]=184]=\"超大单净占比\",r[r[\"大单流入\"]=185]=\"大单流入\",r[",
+    "r[r[\"交易时间\"]=95]": "r[r[\"交易时间\"]=95]=\"交易时间\",r[r[\"交易时间不带括号\"]=96]=\"交易时间不带括号\",r[r[\"交易时间带星期\"]=97]=\"交易时间带星期\",r[r[\"交易币种\"]=98]=\"交易币种\",r[r[\"交易币种_汇率\"]=99]=\"交易币种_汇率\",r[r[\"总股本\"]=100]=\"总股本\",r[r[\"流通股本\"]=101]=\"流通股本\",r[r[\"换手率\"]=102]=\"换手率\",r[r[\"每股收益TTM\"]=103]=\"每股收益TT",
+    "(o,176,{fid:": "(o,176,{fid:[\"f51\",\"f59\",\"f60\"],value:function(e){return p(e.f51,e.f59,e.f51-e.f60,-1)}}),(0,a._)(o,177,{fid:[\"f52\",\"f59\",\"f60\"],value:function(e){return p(e.f52,e.f59,e.f52-e.f60,-1)}}),(0,a._)(o,178,{fid:[\"f135\"],value:function(",
+    "(o,177,{fid:": "(o,177,{fid:[\"f52\",\"f59\",\"f60\"],value:function(e){return p(e.f52,e.f59,e.f52-e.f60,-1)}}),(0,a._)(o,178,{fid:[\"f135\"],value:function(e){return p(e.f135,-1,1,4)}}),(0,a._)(o,179,{fid:[\"f136\"],value:function(e){return p(e.f136,-1,-1",
+    "(o,95,{fid:": "(o,95,{fid:[\"f86\"],value:function(e){return{txt:x(e.f86),html:(0,s.jsx)(\"span\",{children:x(e.f86)}),blink_html:(0,s.jsx)(\"span\",{children:x(e.f86)}),color:\"\",source:e.f86}}}),(0,a._)(o,96,{fid:[\"f86\"],value:function(e){return{txt:"
+  },
+  "returned_data": {
+    "f43": 106,
+    "f44": 129,
+    "f45": 105,
+    "f46": 105,
+    "f51": 129,
+    "f52": 105,
+    "f57": "000826",
+    "f58": "*ST启环",
+    "f59": 2,
+    "f60": 117,
+    "f86": 1795160064
+  },
+  "crosscheck": "Returned open/high/low/close/reference integers match saved official 1.05/1.29/1.05/1.06/1.17 at decimal precision 2",
+  "remaining": [
+    "Persist source bytes to shared content-addressed store",
+    "Verify decimal and timestamp formatters fully",
+    "Build repeatable source-bound verifier and study identity",
+    "Do not generalize to all Nov20 stocks or executable fills"
+  ]
+}

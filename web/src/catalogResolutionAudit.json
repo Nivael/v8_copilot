@@ -1,0 +1,47 @@
+{
+  "result": {
+    "version": "saved_catalog_resolution_audit_v2",
+    "rule": "资金占用.*(解决完毕|解决完成|整改完毕|整改完成|全部解决|全部收回|清理完毕)",
+    "base_counts": {
+      "capture_pages": 253,
+      "saved_queries": 150,
+      "pagination_complete_queries": 150,
+      "symbols_with_complete_saved_queries": 150,
+      "fixed_symbols": 150,
+      "fixed_symbols_without_complete_saved_query": 0,
+      "unique_catalog_announcements": 5593,
+      "matched_titles": 25,
+      "unselected_title_leads": 0,
+      "unselected_primary_title_leads": 0,
+      "unselected_supporting_title_leads": 0
+    },
+    "identity_conflicts": [],
+    "unverified_queries": [],
+    "new_title_matches": [
+      {
+        "announcement_id": "1225504694",
+        "symbol": "000826",
+        "title": "关于资金占用事项解决完毕的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225504694.PDF",
+        "published_on": "2026-08-26",
+        "catalog_query": "remaining-sixty/000826",
+        "catalog_page": 2,
+        "catalog_sha256": "8d6239aef93d19de09b93dc21d6b2d03abc84a987327dfe75e177316a50b861b",
+        "rule": "occupation_resolution_v2",
+        "selected_source_identity_present": true,
+        "protected_id": false,
+        "body_status": "selected_identity_not_body_certification",
+        "classification": "title_lead_not_confirmed_fact"
+      }
+    ],
+    "new_unselected_title_leads": [],
+    "v1_unselected_title_leads": [],
+    "boundary": "Additional title matches only; no new independent cases, repayment facts or completeness guarantee."
+  },
+  "evidence_sha256": "d6fd0ef84dedc8e203b58979daa4d8a39a3ad5148124f820d0be59ca02c4b2ef",
+  "prior_11_queue_evidence_sha256": "ae3c889256a57225469515486e3e5f8447dfd1653628e001cdd56f6b09b428fc",
+  "scope_boundary": "253 saved pages;144 queries July4-Nov19 and6 July1-Nov19; mixed-start5593 IDs, not a uniform-window census.",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "companion_evidence_sha256": "4cb2d2a6fe380027df53ee4b80d91e8af24415296498f8f0b7d4ea878192b53d",
+  "research_run_id": "RUN-69DDF49C4AC4440A947B4C7D"
+}

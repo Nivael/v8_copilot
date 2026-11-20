@@ -1,0 +1,85 @@
+{
+  "title": "京机：价格算得出来，为什么公式冲突仍要保留？",
+  "answer": "后续可交换债券公告重复了原分母与结果，并没有消除公式冲突。总股本口径可复算公告参考额，但最终换股价取两位小数后，两种输入都得到14.47元；结果吻合不能反过来证明输入口径唯一正确。",
+  "calculation": {
+    "printed_numerator": "20348617.67",
+    "printed_denominator": "616624778",
+    "total_shares": "622874778",
+    "excluded_shares": "6250000",
+    "eligible_per_share_cash": "0.033",
+    "printed_ten_exact": "0.3299999999351307287233274301",
+    "printed_ten_truncated_6": "0.329999",
+    "total_ten_exact": "0.3266887404774639951788190724",
+    "total_ten_truncated_6": "0.326688",
+    "total_per_share_exact": "0.03266887404774639951788190724",
+    "total_per_share_truncated_7": "0.0326688",
+    "reported_ten": "0.326688",
+    "reported_per_share": "0.0326688",
+    "eb_before": "14.50",
+    "eb_using_reported_reference_exact": "14.4673312",
+    "eb_using_eligible_cash_exact": "14.467",
+    "eb_using_reported_reference_rounded": "14.47",
+    "eb_using_eligible_cash_rounded": "14.47"
+  },
+  "what_changed": "新增6月30日发行人原件，看到原式在另一用途被再次引用；这是同一事项的后续重述，不增加独立验证次数，也不替代发行人正式更正。",
+  "interpretation": "每股实派现金0.033元、排除回购股后的参与股本、按总股本摊薄的参考额0.0326688元，以及债券换股价是不同对象。能重建报价或取整价格，不表示所有原式均无冲突，更不证明债券持有人已经换股或收到收益。",
+  "precision_boundary": "按印刷现金总额20348617.67元及印刷分母616624778股乘10，原文六位直接截取得0.329999，约为0.33而非0.326688；分红总额已经取到分，不能把近似值误写成精确相等。",
+  "issuer_correction_verified": false,
+  "unique_input_identified": false,
+  "method_promotions": 0,
+  "sources": [
+    {
+      "announcement_id": "1225390702",
+      "symbol": "000821",
+      "title": "2025年年度权益分派实施公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-06-27/1225390702.PDF",
+      "published_on": "2026-06-27",
+      "observed_at": "2026-11-09T01:16:54.821038+00:00",
+      "sha256": "5ca18a9f2daee49a5132f5d68999f3d759ee66a30e9a238aebf8b9b63ea5f4b4",
+      "selected_pages": [
+        1,
+        4
+      ],
+      "reused": true
+    },
+    {
+      "announcement_id": "1225394064",
+      "symbol": "000821",
+      "title": "关于公司控股股东非公开发行可交换公司债券因公司实施权益分派后换股价格调整的提示性公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-06-30/1225394064.PDF",
+      "published_on": "2026-06-30",
+      "observed_at": "2026-11-20T11:41:27.906859+00:00",
+      "sha256": "9036cfff10288e9c310bf6fff93828387755996ef78b6a8f3e8882beea7e78ab",
+      "selected_pages": [
+        3
+      ],
+      "reused": false
+    }
+  ],
+  "visual_read": [
+    {
+      "file": "old-p1.png",
+      "sha256": "89995e4b039ad8175905324520640d1cb0eb9bdbcc999ddcc054f2ecca0ddf9b"
+    },
+    {
+      "file": "old-p4.png",
+      "sha256": "600366eca0a7c5fd7acefd72e10d66629541ea6db9a8329de07669eaff1ab4d4"
+    },
+    {
+      "file": "new-p3.png",
+      "sha256": "a32b8b924247bc8af20f25e6ef86bfce15d81c10595c807ca05210e67a573c55"
+    }
+  ],
+  "counts": {
+    "new_documents": 1,
+    "reused_documents": 1,
+    "total_document_pages": 10,
+    "visual_pages": 3,
+    "new_quote_queries": 0
+  },
+  "watch": [
+    "等待发行人对原式分母冲突的明确说明或更正；本轮搜索定位并非完整目录穷尽，不把未找到更正说成没有更正。",
+    "原始价、实派现金、调整参考额和债券换股价分列；实际换股数量及持有人收益另核。",
+    "继续保留旧价格构造解释与直接报价差异，不能因新增原件重复同一金额就把统计分母扩充为完全一致。"
+  ]
+}

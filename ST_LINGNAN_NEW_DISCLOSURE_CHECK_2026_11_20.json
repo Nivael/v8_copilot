@@ -1,0 +1,54 @@
+{
+  "version": "lingnan_new_disclosure_check_v1",
+  "observed_at": "2026-11-20T14:25:51.069630+00:00",
+  "observed_at_beijing": "2026-11-20T22:25:51.069630+08:00",
+  "coverage": {
+    "version": "cninfo_issuer_pagination_v1",
+    "symbol": "002717",
+    "issuer_org_id": "9900023171",
+    "start_date": "2026-11-20",
+    "end_date": "2026-11-20",
+    "observed_at": "2026-11-20T14:25:51.069343+00:00",
+    "query_url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "query": {
+      "pageSize": "30",
+      "column": "szse",
+      "tabName": "fulltext",
+      "plate": "sz",
+      "stock": "002717,9900023171",
+      "searchkey": "",
+      "secid": "",
+      "category": "",
+      "trade": "",
+      "seDate": "2026-11-20~2026-11-20",
+      "sortName": "",
+      "sortType": "",
+      "isHLtitle": "true"
+    },
+    "stock_index_sha256": "a5d3c68e0caa19e85198efe5a9701cff9719607ab9e1f13be21880b13e4eb99d",
+    "page_count": 1,
+    "pages": [
+      {
+        "number": 1,
+        "rows": 0,
+        "has_more": false,
+        "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+      }
+    ],
+    "record_count": 0,
+    "reported_total": 0,
+    "terminal_has_more": false,
+    "announcement_ids": [],
+    "records_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "scope": "Only this issuer and requested date window; retained records absent from this receipt are not reverified."
+  },
+  "new_final_decision_verified": false,
+  "pdf_bodies_fetched": 0,
+  "boundary": "仅指定主体与11月20日窗口在查询时的目录结果；未返回不证明未披露、未发生或其他来源不存在。",
+  "preservation": {
+    "all_268_runs_exact": true,
+    "method_and_accepted_registry_exact": true,
+    "identity_notes_and_history_exact": true,
+    "whole_formal_st_snapshot_exact": true
+  }
+}

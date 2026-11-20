@@ -20,3 +20,15 @@ it('does not merge changed dates or denominators with the frozen sequence',()=>{
  const {rerender}=render(<MarketRiskQuestions data={{...data,as_of:'2026-11-23'}} onRead={()=>{}}/>);expect(screen.queryByRole('table')).not.toBeInTheDocument()
  rerender(<MarketRiskQuestions data={{...data,groups:[{...data.groups[0],observed_trading_stocks:1}]}} onRead={()=>{}}/>);expect(screen.queryByRole('table')).not.toBeInTheDocument()
 })
+
+it('shows waiting cost and rebound counterexample before the indicator table',()=>{
+ render(<MarketRiskQuestions data={data} onRead={()=>{}}/>)
+ const warning=screen.getByRole('complementary',{name:'风险信号怎样读'})
+ expect(warning).toHaveTextContent('2026-11-16')
+ expect(warning).toHaveTextContent('-5.59%')
+ expect(warning).toHaveTextContent('-4.76%')
+ expect(warning).toHaveTextContent('反弹反例')
+ expect(warning).toHaveTextContent('+1.61%')
+ expect(warning).toHaveTextContent('不是你的账户损失')
+ expect(warning.compareDocumentPosition(screen.getByRole('table')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+})

@@ -7,7 +7,7 @@ from sse_history_archive import body,ordinary_date,REGISTRY_PARAMS,OVERVIEW_PARA
 from market_calendar import sessions_2026
 
 
-def verify(e):
+def verify(e, *, start="2026-07-01", through="2026-08-31"):
     now=datetime.now(timezone.utc);folder=Path(e['source_store']);pages=defaultdict(list);pool={}
     for ref in e['registry_refs']:
         x=body(folder,ref,now);p=ref['params'];board=p['STOCK_TYPE'];page=p['pageHelp.pageNo']
@@ -26,9 +26,9 @@ def verify(e):
                 if code in allrows or r['STOCK_TYPE']!=board or not code.startswith('60'if board=='1'else'68'):raise ValueError('security identity changed')
                 listed=ordinary_date(r['LIST_DATE']);ended=ordinary_date(r['DELIST_DATE'])if r['DELIST_DATE']!='-'else None
                 allrows[code]=dict(code=code,name=r['COMPANY_ABBR'],listed=listed,ended=ended,board=board)
-    pool={c:r for c,r in allrows.items()if r['listed']<='2026-08-31'and(r['ended']is None or r['ended']>'2026-07-01')}
+    pool={c:r for c,r in allrows.items()if r['listed']<=through and(r['ended']is None or r['ended']>start)}
     if pool!=e['pool']:raise ValueError('reconstructed pool differs')
-    days=sessions_2026(date(2026,7,1),date(2026,8,31));controls=[]
+    days=sessions_2026(date.fromisoformat(start),date.fromisoformat(through));controls=[]
     if [r['params']['SEARCH_DATE']for r in e['overview_refs']]!=days:raise ValueError('calendar coverage changed')
     for ref in e['overview_refs']:
         day=ref['params']['SEARCH_DATE'];x=body(folder,ref,now)

@@ -10,5 +10,5 @@ export function ResearchIdentitySummary(){
  useEffect(()=>{const c=new AbortController();getResearchIdentityNotes(c.signal).then(setNotes).catch(()=>{if(!c.signal.aborted)setError(true)});return()=>c.abort()},[])
  if(error)return <p role="status">研究登记身份核对暂不可读，<Link to="/runs">查看原运行记录</Link>；未将缺失视为已审无误。</p>
  if(!notes?.length)return null
- return <section aria-label="近期研究登记更正"><p>{notes.length}条近期复盘的登记身份已校正，原登记、原答和原证据包保留。<Link to="/runs">查看更正与原记录 →</Link></p><details><summary>哪些主题和日期经过校正？</summary><ul>{notes.map(n=><li key={n.run_id}><Link to={'/runs#research-'+n.run_id}>{n.corrected_question}</Link> · 资料截止{n.corrected_research_as_of}{n.topic_changed?' · 主题与对象已校正':' · 原主题保留，仅校正日期与上下文标记'}</li>)}</ul><p>这不是新增研究或经验验证；其他历史记录未因此获得身份审计认证。</p></details></section>
+ return <section aria-label="近期研究登记更正"><p>{notes.length}条近期复盘的登记身份已校正，原登记、原答和原证据包保留。<Link to="/runs">查看更正与原记录 →</Link></p><details><summary>哪些主题和日期经过校正？</summary><ul>{notes.map(n=><li key={n.run_id}><Link to={'/runs#research-'+n.run_id}>{n.corrected_question}</Link> · 资料截止{n.corrected_research_as_of}{n.topic_changed?' · 主题与对象已校正':' · 原主题保留，对象、日期与上下文以更正为准'}</li>)}</ul><p>这不是新增研究或经验验证；其他历史记录未因此获得身份审计认证。</p></details></section>
 }

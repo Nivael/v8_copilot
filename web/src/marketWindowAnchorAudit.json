@@ -1,0 +1,50 @@
+{
+  "version": "market_window_anchor_audit_v1",
+  "through": "2026-11-05",
+  "basis": "same_saved_price_series_close_to_close",
+  "first_return_day": "2026-09-07",
+  "rows": [
+    {
+      "anchor": "2026-09-04",
+      "through": "2026-11-05",
+      "sessions_after_anchor": 38,
+      "market_pct": "-10.606091791963829342005509301663424892026606565194",
+      "st_pct": "-12.795154095824776645939436059777574645380230621066"
+    },
+    {
+      "anchor": "2026-09-07",
+      "through": "2026-11-05",
+      "sessions_after_anchor": 37,
+      "market_pct": "-11.560997710878333777356191743211116748598782642043",
+      "st_pct": "-13.461082902138748583334564514817679085352142881010"
+    }
+  ],
+  "endpoints": [
+    {
+      "date": "2026-09-04",
+      "market": "5830.14",
+      "st": "1007.95096217"
+    },
+    {
+      "date": "2026-09-07",
+      "market": "5893.09",
+      "st": "1015.70728272"
+    },
+    {
+      "date": "2026-11-05",
+      "market": "5211.79",
+      "st": "878.98208335"
+    }
+  ],
+  "source": {
+    "official_index_url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000985",
+    "official_index_response_sha256": "94ce33914737444bf464e27e38e10d31b27c3758d70d3ed7b17d61e87c0544c4",
+    "saved_market_packet_sha256": "b0d80bf74c036942b0d5e86873b4d76ac1612b7e6f16d8592440423f490da372",
+    "st_basis": "saved_materialized_reference_not_new_member_or_price_validation"
+  },
+  "corrected_run_id": "RUN-D4965805AFE84D908F518402",
+  "earlier_run_ids": [
+    "RUN-5EF6A6FD579643D18CD508A8",
+    "RUN-974C2BB691EB48BE90203EF8"
+  ]
+}

@@ -57,3 +57,18 @@ export function endpointSensitivity(data:MarketStageExperience){
  }
  return windows
 }
+
+export function cumulativeMarketContext(data:MarketStageExperience){
+ const path=recoveryPath(data)
+ if(!path)return null
+ let market=1,st=1
+ const result=[]
+ for(const [j,stage]of data.stages.entries()){
+  const mr=Number(stage.market_pct),sr=Number(stage.st_pct)
+  if(!Number.isFinite(mr)||!Number.isFinite(sr)||mr<=-100||sr<=-100)return null
+  market*=1+mr/100;st*=1+sr/100
+  const marketPct=(market-1)*100,stPct=(st-1)*100
+  result.push({through:stage.through,marketPct,stPct,fixedMedian:path.summaries[j].median,relativePP:path.summaries[j].median-marketPct,outperform:path.rows.filter(r=>r.cumulative[j]-marketPct>epsilon).length,members:path.members})
+ }
+ return result
+}

@@ -1,0 +1,713 @@
+{
+  "source_evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "processor_sha256": "4a763f73069839970154b65438a04987017d116b3945ac12ebdbfc24b06bac8d",
+  "reading": {
+    "version": "st_limit_streaks_v1",
+    "start": "2026-11-09",
+    "through": "2026-11-19",
+    "groups": [
+      {
+        "key": "daily_members",
+        "metrics": [
+          {
+            "metric": "close_at_down",
+            "observed_hit_sessions": 27,
+            "blocks_including_singletons": 18,
+            "continuous_blocks": 5,
+            "continuous_companies": 5,
+            "longest_observed_sessions": 4
+          },
+          {
+            "metric": "one_price_down",
+            "observed_hit_sessions": 4,
+            "blocks_including_singletons": 3,
+            "continuous_blocks": 1,
+            "continuous_companies": 1,
+            "longest_observed_sessions": 2
+          }
+        ],
+        "runs": [
+          {
+            "symbol": "000010.SZ",
+            "name": "*ST美丽",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16",
+              "2026-11-17"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000056.SZ",
+            "name": "*ST皇庭",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000632.SZ",
+            "name": "ST三木",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-11"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000632.SZ",
+            "name": "ST三木",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000826.SZ",
+            "name": "*ST启环",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16",
+              "2026-11-17",
+              "2026-11-18",
+              "2026-11-19"
+            ],
+            "observed_sessions": 4,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "000826.SZ",
+            "name": "*ST启环",
+            "metric": "one_price_down",
+            "dates": [
+              "2026-11-18",
+              "2026-11-19"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "000838.SZ",
+            "name": "*ST发展",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002431.SZ",
+            "name": "ST棕榈",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002547.SZ",
+            "name": "*ST春兴",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002581.SZ",
+            "name": "*ST未名",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "002667.SZ",
+            "name": "*ST威领",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-09"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "window_edge",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": true,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002726.SZ",
+            "name": "ST龙大",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-11"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002789.SZ",
+            "name": "*ST建艺",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-13"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600180.SH",
+            "name": "*ST瑞茂",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16",
+              "2026-11-17",
+              "2026-11-18",
+              "2026-11-19"
+            ],
+            "observed_sessions": 4,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "600340.SH",
+            "name": "*ST华幸",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17",
+              "2026-11-18"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600340.SH",
+            "name": "*ST华幸",
+            "metric": "one_price_down",
+            "dates": [
+              "2026-11-18"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600537.SH",
+            "name": "*ST亿晶",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600537.SH",
+            "name": "*ST亿晶",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "603359.SH",
+            "name": "*ST东珠",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17",
+              "2026-11-18"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "603359.SH",
+            "name": "*ST东珠",
+            "metric": "one_price_down",
+            "dates": [
+              "2026-11-18"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "603398.SH",
+            "name": "*ST沐邦",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          }
+        ],
+        "unpaired_observations": 9
+      },
+      {
+        "key": "fixed150",
+        "metrics": [
+          {
+            "metric": "close_at_down",
+            "observed_hit_sessions": 30,
+            "blocks_including_singletons": 21,
+            "continuous_blocks": 5,
+            "continuous_companies": 5,
+            "longest_observed_sessions": 4
+          },
+          {
+            "metric": "one_price_down",
+            "observed_hit_sessions": 4,
+            "blocks_including_singletons": 3,
+            "continuous_blocks": 1,
+            "continuous_companies": 1,
+            "longest_observed_sessions": 2
+          }
+        ],
+        "runs": [
+          {
+            "symbol": "000010.SZ",
+            "name": "*ST美丽",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16",
+              "2026-11-17"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000056.SZ",
+            "name": "*ST皇庭",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000632.SZ",
+            "name": "ST三木",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-11"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000632.SZ",
+            "name": "ST三木",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "000826.SZ",
+            "name": "*ST启环",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16",
+              "2026-11-17",
+              "2026-11-18",
+              "2026-11-19"
+            ],
+            "observed_sessions": 4,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "000826.SZ",
+            "name": "*ST启环",
+            "metric": "one_price_down",
+            "dates": [
+              "2026-11-18",
+              "2026-11-19"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "000838.SZ",
+            "name": "*ST发展",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002005.SZ",
+            "name": "002005.SZ",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "002431.SZ",
+            "name": "ST棕榈",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002547.SZ",
+            "name": "*ST春兴",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002581.SZ",
+            "name": "*ST未名",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "002667.SZ",
+            "name": "*ST威领",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-09"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "window_edge",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": true,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002726.SZ",
+            "name": "ST龙大",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-11"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002731.SZ",
+            "name": "002731.SZ",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-12"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "missing_daily",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "002789.SZ",
+            "name": "*ST建艺",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-13"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600180.SH",
+            "name": "*ST瑞茂",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-16",
+              "2026-11-17",
+              "2026-11-18",
+              "2026-11-19"
+            ],
+            "observed_sessions": 4,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "600340.SH",
+            "name": "*ST华幸",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17",
+              "2026-11-18"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600340.SH",
+            "name": "*ST华幸",
+            "metric": "one_price_down",
+            "dates": [
+              "2026-11-18"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600537.SH",
+            "name": "*ST亿晶",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "600537.SH",
+            "name": "*ST亿晶",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "603359.SH",
+            "name": "*ST东珠",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-17",
+              "2026-11-18"
+            ],
+            "observed_sessions": 2,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "603359.SH",
+            "name": "*ST东珠",
+            "metric": "one_price_down",
+            "dates": [
+              "2026-11-18"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "observed_nonhit",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": false,
+            "ongoing_at_cutoff": false
+          },
+          {
+            "symbol": "603398.SH",
+            "name": "*ST沐邦",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          },
+          {
+            "symbol": "603838.SH",
+            "name": "603838.SH",
+            "metric": "close_at_down",
+            "dates": [
+              "2026-11-19"
+            ],
+            "observed_sessions": 1,
+            "left_reason": "observed_nonhit",
+            "right_reason": "window_edge",
+            "left_boundary_unknown": false,
+            "right_boundary_unknown": true,
+            "ongoing_at_cutoff": true
+          }
+        ],
+        "unpaired_observations": 23
+      }
+    ],
+    "boundary": "连续按交易日历计数，不跨缺日线、未核配限价或不在当日组的日期连段。窗口边界或缺失相邻日的真实起止未知，长度只是可观察连续日数；两组重叠股票和两种状态不增加独立案例。收盘达到下限不等于全天同价，全天同价不直接证明某笔委托无法成交。",
+    "independent_validations_added": 0
+  },
+  "evidence_sha256": "f97a1d07c768e0a05a9ca13e5040c18c0daa3ea1be4a8a0ee612568c1558a34c",
+  "research_run_id": "RUN-2E82C903CCDB4AD88098438E"
+}

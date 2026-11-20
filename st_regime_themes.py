@@ -302,4 +302,6 @@ def build_themes(inputs, daily):
     result['lingnan_exit_followup']=lingnan_followup(inputs,result['endpoint_reasons'])
     from st_restatement_comparison import restatement_comparison, PRIOR_KEYS
     result['restatement_comparison']=restatement_comparison(inputs,{k:result[k] for k in PRIOR_KEYS})
+    from st_baili_policy_followup import baili_policy_followup
+    result['baili_policy_followup']=baili_policy_followup(inputs,result['restatement_comparison'])
     return result

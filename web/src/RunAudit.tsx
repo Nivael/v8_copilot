@@ -67,16 +67,17 @@ function RunFeedback({run}:{run:ResearchRun}) {
     setBusy(action.category);setMessage('')
     try{
       const result=await submitRunFeedback(run.run_id,action.category,note.trim()||action.text)
-      if(result.auto_acceptance?.outcome==='accepted')setMessage(`已通过自动门并写入经验“${result.experience_candidate?.title}”。`)
-      else if(result.auto_acceptance?.outcome==='waiting_for_replication')setMessage(`已记录；同类方法再被一个真实运行复现后会自动验证。`)
-      else if(result.auto_acceptance?.outcome==='blocked')setMessage('已记录，但自动验证未通过；系统已 blocked，不需要你处理。')
+      if(result.auto_acceptance?.outcome==='accepted')setMessage(`已采用流程方法“${result.experience_candidate?.title||'未命名方法'}”，软件检查通过；行情效果仍需独立案例验证。`)
+      else if(result.auto_acceptance?.outcome==='waiting_for_replication')setMessage(`已记录为流程方法候选；有效来源运行${result.auto_acceptance.distinct_source_runs}/${result.auto_acceptance.minimum_source_runs}。来源数量达标后仍须通过软件检查；行情经验另需独立案例验证。`)
+      else if(result.auto_acceptance?.outcome==='blocked')setMessage('已记录；本次流程方法未通过自动检查，保留为已阻断，不计为验证通过。')
+      else if(result.auto_acceptance?.outcome==='unchanged')setMessage('已记录；方法状态保持不变。')
       else setMessage(result.experience_candidate?`已记录，并归入候选“${result.experience_candidate.title}”。`:'已记录；本次不生成经验候选。')
       setNote('')
     }catch{setMessage('反馈未写入，请稍后重试。')}
     finally{setBusy('')}
   }
   return <section className="run-feedback" aria-label="本次研究反馈">
-    <header><MessageSquarePlus size={16}/><div><h3>这次有什么值得留下？</h3><p>点一次即可；方法被两个真实运行复现并通过回归后自动写入，不再需要你审卡。</p></div></header>
+    <header><MessageSquarePlus size={16}/><div><h3>这次有什么值得留下？</h3><p>这里记录可复用的研究步骤和错误模式。不同运行的复现与软件检查用于流程方法入库；行情判断是否有效，另需独立案例、反例和不同市场阶段检验。</p></div></header>
     <div>{feedbackActions.map(action=><button type="button" key={action.category} disabled={Boolean(busy)} onClick={()=>void send(action)}>{busy===action.category?'正在记录…':action.label}</button>)}</div>
     <details><summary>补一句可选说明</summary><textarea value={note} onChange={event=>setNote(event.target.value)} placeholder="例如：同日十份附件要按一套证据包处理。"/></details>
     {message&&<p role="status">{message}</p>}

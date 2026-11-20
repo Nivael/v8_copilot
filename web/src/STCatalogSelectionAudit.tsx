@@ -1,5 +1,6 @@
 import audit from './catalogSelectionAudit.json'
 import followup from './catalogLeadFollowup.json'
+import coverage from './catalogCoverageReuse.json'
 import type {STRegimeData} from './stRegimeTypes'
 export function catalogCaseBound(context:unknown,symbol:string){
  const review=audit.review_outcomes.find(r=>r.symbol===symbol)
@@ -28,10 +29,14 @@ export function STCatalogSelectionAudit({data}:{data:STRegimeData}){
  const c=audit.counts
  const followupBound=followup.baseline_snapshot_digest===data.content_digest&&followup.prior_evidence_sha256===audit.evidence_sha256
  const newReviews=followupBound?followup.sources:[]
+ const coverageBound=followupBound&&coverage.baseline_snapshot_digest===data.content_digest&&coverage.prior_evidence_sha256===audit.evidence_sha256&&coverage.body_review_sha256===followup.source_review_sha256
  return <section aria-label="保存目录与选源完整性核对" className="regime-topic-body">
   <h3>公告已经列在目录里，是否都选进了研究？</h3>
+  {coverageBound&&<><p><strong>当前目录覆盖90／150家公司，仍有60家未纳入完整期间查询核对。</strong>这是目录范围，不是正文已读率。复用本地6家公司10页完整保存响应，并回核原138页，没有新增下载。</p><details><summary>90家覆盖了哪段日期，为什么不是统一窗口公告总数？</summary><p>共同目标期间为{coverage.target_period}。原84家查询从7月4日开始，新增6家从7月1日开始，均到11月19日；新增范围包含更早三天，保存查询去重{coverage.counts.unique_catalog_announcements}条不当作统一日期窗口的公告总数。</p><p>新增公司代码：{coverage.new_symbols.join('、')}。148页原始响应分别与查询参数、文件摘要、连续分页及终页标记核对；只认证这些保存查询，不认证所有渠道的全部公告。</p><p>沿用原有限标题规则，新增6家未出现新未选线索。原8条现均有正文补核，更新已选源集合后未选命中为0，不意味着零遗漏或所有事项已完成。</p><p>尚未纳入的60家公司：{coverage.uncovered_symbols.join('、')}。</p><p>覆盖核对证据摘要：<code>{coverage.evidence_sha256}</code>。原8条线索与原84家范围继续保留在下面。</p><p><a href={'/runs#research-'+coverage.research_run_id}>查看目录覆盖续核研究 →</a></p></details></>}
+  <details><summary>保留前轮84家目录审查与原8条线索来由</summary>
   <p><strong>还不能这样认为。</strong>百利收款公告的遗漏促成本轮核对：检查{c.symbols_with_complete_saved_queries}家公司的{c.capture_pages}页保存目录，共{c.unique_catalog_announcements}条去重记录；按本轮标题规则找到{c.unselected_title_leads}条未进入原选源的线索。正文已核3条：美克补事项链，喜临门补主体区别，中路增强原件依据且原判断保留。</p>
   <p>{followupBound?'前轮其余5条现已补核正文：2份公司公告、3份配套材料，分别识别募投改投收购、解除受托管理及同事项配套文件。完成正文补核不等于批准、交割或实付完成。':'其余5条的后续补核尚未与当前来源绑定，暂保留前轮待核状态。'}标题命中不等于已确认遗漏或新事实，未命中也不证明没有遗漏。固定150家中另66家尚未纳入这批保存目录核对，继续保留范围缺口。</p>
+  </details>
   <p><a href="/runs#research-RUN-83C04A08D7CE4577B6CB4B3C">查看本轮目录核对与正文研究 →</a></p>
   {followupBound&&<details><summary>后续补核五份：哪些不是新的终止事件？</summary>{newReviews.map(r=><article key={r.announcement_id}><h4>{r.symbol} · {r.review_title}</h4><p>{r.reviewed_fact}</p><details><summary>原件与核验范围 · {r.announcement_id}</summary><p>目录披露日{r.published_on}；文件共{r.pages}物理页，全文已提取，关键图像页核看{r.visual_physical_pages.join('、')}。不将全文提取当成全文逐页看图。</p>{r.visual_physical_pages.map(page=><p key={page}><a href={r.url+'#page='+page} target="_blank" rel="noreferrer">原件物理第{page}页 ↗</a></p>)}<p>文件SHA256：<code>{r.sha256}</code>。</p></details></article>)}<p>美克说明会PDF有2物理页且页脚重复1/3，异常保留，不据此补造缺页或认定完整性无疑。本轮5份共{followup.physical_pages}页，核{followup.critical_visual_pages}关键图像页；多份材料不增加独立案例。</p><p><a href={'/runs#research-'+followup.research_run_id}>查看五份正文补核研究 →</a></p></details>}
   <details><summary>已核三条：分别改变了什么？</summary>{audit.review_outcomes.map(r=><STCatalogCaseUpdate key={r.symbol} symbol={r.symbol} context={data.themes?.[r.source_theme as keyof NonNullable<STRegimeData['themes']>]}/>)}</details>

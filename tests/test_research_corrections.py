@@ -23,7 +23,10 @@ def sample(tmp_path):
             final_answer=answer, validation_report={'valid': True}, source_freshness={}, agent_surface='test',
             completed_at=f'2026-06-0{n+1}T08:00:00+00:00'))
         ids.append(row.run_id)
-    records = h.import_ledger(ledger.path, {'002856.SZ': '*ST美芝'})
+    records = h.import_ledger(ledger.path, {'002856.SZ': '*ST美芝'}, allow_unreviewed=True)
+    # This fixture has no identity corrections; publication still requires its registry.
+    from research_identity_notes import publish_notes
+    publish_notes([], ledger_db=ledger.path, scopes_path=tmp_path/'no-identity-scopes.json')
     original = {'id': 'QUESTION-original', 'kind': 'original_question', 'asked_at': '2026-05-29T06:00:00Z',
                 'question': '债务多吗？', 'answers': [{'text': '长期借款约8664.7万元。'}],
                 'sources': [], 'symbols': ['002856.SZ'], 'categories': ['财报与监管']}

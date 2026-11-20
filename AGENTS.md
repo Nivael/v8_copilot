@@ -122,3 +122,5 @@ When reusing a saved evidence bank for a new historical study, call `bind_study_
 Old worktrees and runs remain traceability artifacts. Correct old identity through bound, append-only identity notes, never SQL rewrites. Any future question-history import must honor those notes or quarantine affected runs first; the current general importer does not yet do so. Preserve owner policy, thresholds, method bodies, statuses and accepted registry. See [identity audit](ST_RESEARCH_IDENTITY_AUDIT_RESULT_2026_11_20.md).
 
 第二组身份核对：16条旧研究分别绑定原快照截止11月6日，累计31条更正；原268条及方法登记保持，京蓝原版/更正版分开。见 [结果](ST_RESEARCH_IDENTITY_FOLLOWUP_RESULT_2026_11_20.md)。
+
+历史导入已接身份隔离：使用`import_ledger_with_audit`留存隔离说明；默认缺登记停止，损坏停止，发布再次核对，旧worktree不作新导入执行器。原历史阅读内容保持，见 [结果](ST_HISTORY_IDENTITY_IMPORT_RESULT_2026_11_20.md)。

@@ -221,15 +221,60 @@ def import_codex_capture(path,known):
     return records,value['sources']
 
 
-def import_ledger(path,known):
+def import_ledger_with_audit(path,known,*,identity_path=None,scopes_path=None,allow_unreviewed=False):
+    """Import raw saved research, quarantining corrected identities without fabricating asks.
+
+    The audit is explicit about missing coverage. Invalid existing annotations stop
+    import entirely; correcting a research title never recovers a user's question.
+    """
     import sqlite3
+    from research_identity_notes import reading_view
+    options={'ledger_db':path}
+    if identity_path is not None:options['path']=identity_path
+    if scopes_path is not None:options['scopes_path']=scopes_path
+    view=reading_view(**options)
+    if view['availability']=='invalid':raise ValueError('research identity corrections are invalid; history import stopped')
+    if view['availability']=='missing' and not allow_unreviewed:raise ValueError('research identity corrections are missing; explicitly allow unreviewed legacy import or restore the registry')
     with sqlite3.connect(path.as_uri()+'?mode=ro',uri=True) as db:
-        db.row_factory=sqlite3.Row;rows=[dict(r) for r in db.execute('select run_id,question_text,object_refs_json,final_answer,completed_at,thread_id,turn_id from research_runs order by completed_at')]
-    return [{'id':r['run_id'],'asked_at':r['completed_at'],'date_source':'saved_research_time_not_original_ask','question':r['question_text'],
+        db.row_factory=sqlite3.Row;rows=[dict(r) for r in db.execute('select * from research_runs order by completed_at')]
+    excluded={note['run_id']:note for note in view['corrections']}
+    current={r['run_id']:r for r in rows}
+    if any(identity not in current or digest(current[identity])!=note['run_digest'] for identity,note in excluded.items()):
+        raise ValueError('research identity binding changed during history import')
+    records=[{'id':r['run_id'],'asked_at':r['completed_at'],'date_source':'saved_research_time_not_original_ask','question':r['question_text'],
              'kind':'saved_research','symbols':mentioned(r['object_refs_json']+' '+r['question_text'],known),'scope_kind':'research_record',
              'categories':[k for k,terms in TOPICS.items() if any(t in r['question_text'] for t in terms)] or ['研究方法'],
              'answers':[{'text':r['final_answer'],'summary':judgment(r['final_answer']),'completed_at':r['completed_at'],'truncated':False,'source_thread_id':r['thread_id']}],
-             'sources':[{'kind':'research_ledger','run_id':r['run_id'],'thread_id':r['thread_id'],'turn_id':r['turn_id']}]} for r in rows]
+             'sources':[{'kind':'research_ledger','run_id':r['run_id'],'thread_id':r['thread_id'],'turn_id':r['turn_id']}]} for r in rows if r['run_id'] not in excluded]
+
+    audit={'version':'history_ledger_identity_audit_v1','identity_availability':view['availability'],
+           'identity_content_digest':view.get('content_digest'),'ledger_rows':len(rows),'imported_rows':len(records),
+           'quarantined_runs':[{'run_id':identity,'run_digest':note['run_digest'],
+                                'reason':'corrected_research_identity_not_original_question'} for identity,note in sorted(excluded.items())],
+           'unreviewed_rows':len(records),
+           'boundary':'仅导入保存的研究，不当用户原问；已更正身份隔离。其余登记未因导入通过身份审计。'}
+    return records,audit
+
+
+def import_ledger(path,known,*,identity_path=None,scopes_path=None,allow_unreviewed=False):
+    records,_=import_ledger_with_audit(path,known,identity_path=identity_path,scopes_path=scopes_path,allow_unreviewed=allow_unreviewed)
+    return records
+
+
+def validate_saved_history_identities(records,*,ledger_db,identity_path=None,scopes_path=None):
+    """Reject stale prepared imports too, including copies merged before this guard."""
+    candidates=[r for r in records if r['kind']=='saved_research' or r['id'].startswith('RUN-') or any(o.get('id','').startswith('RUN-') for o in r.get('occurrences',[])) or any(s.get('kind')=='research_ledger' for s in r.get('sources',[]))]
+    if not candidates:return
+    from research_identity_notes import reading_view
+    options={'ledger_db':ledger_db}
+    if identity_path is not None:options['path']=identity_path
+    if scopes_path is not None:options['scopes_path']=scopes_path
+    view=reading_view(**options)
+    if view['availability']!='available':raise ValueError('saved research identity registry unavailable; history publication stopped')
+    excluded={note['run_id']for note in view['corrections']}
+    for record in candidates:
+        identities={record['id'],*(o['id']for o in record.get('occurrences',[])),*(s.get('run_id')for s in record.get('sources',[])if s.get('kind')=='research_ledger')}
+        if identities & excluded:raise ValueError('quarantined saved research in prepared history; rebuild the ledger import before publication')
 
 
 def deduplicate(records):
@@ -239,6 +284,7 @@ def deduplicate(records):
         day=question_day(record)
         # Identical words inside an uncertain date range do not prove a retry.
         key=(day if day is not None else ('range',record['id']),re.sub(r'\s+','',record['question']),record['kind'])
+        if record['kind']=='saved_research':key=('saved_research',record['id'])
         if key in seen:
             old=seen[key];old['sources'].extend(record['sources'])
             occurrence=lambda r:{'id':r['id'],'asked_at':r.get('asked_at'),'asked_on':question_day(r),'time_precision':r.get('time_precision','instant'),'source_date_marker':r.get('source_date_marker')}
@@ -390,12 +436,14 @@ def assemble(records,paths,*,reviews=None,correction_notes=None):
     unique={r['id']:r for r in records};return {'stocks':stocks,'details':details,'unique':unique}
 
 
-def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None):
+def publish(imported,*,root=ROOT,ledger_db=None,corrections_path=None,identity_path=None,identity_scopes_path=None):
     from research_history_prices import bound
     from research_history_price_chain import validate_price_packet
     from research_corrections import annotations,verified_packet
     from settings import RESEARCH_RUN_LEDGER_DB
+    validate_saved_history_identities(imported['records'],ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,identity_path=identity_path,scopes_path=identity_scopes_path)
     paths=bound(root/'price_paths/current.json');records=prepare_history_records(imported,root=root)
+    validate_saved_history_identities(records,ledger_db=ledger_db or RESEARCH_RUN_LEDGER_DB,identity_path=identity_path,scopes_path=identity_scopes_path)
     if paths.get('processor_digest')!=sha256(Path(__file__).with_name('research_history_prices.py').read_bytes()).hexdigest():raise ValueError('history price processor changed; rebuild paths before publishing')
     validate_price_packet(paths,root=root)
     review_path=root/'reviews.json';reviews=json.loads(review_path.read_text()) if review_path.exists() else {}

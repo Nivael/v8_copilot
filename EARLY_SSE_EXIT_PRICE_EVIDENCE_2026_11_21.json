@@ -1,0 +1,61 @@
+{
+  "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/july_august_sse_basis/20261121",
+  "basis_sha256": "c61af203bdd2ddadf44d6d23c2e0b7a5dc75dd62f9693a9c0d0585d96af8e0e5",
+  "sources": [
+    {
+      "code": "600193",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/600193",
+      "params": {
+        "select": "date,close,prevClose,chg_rate,volume,amount",
+        "begin": -126,
+        "end": -1,
+        "period": "day"
+      },
+      "observed_at": "2026-11-20T22:11:00.049494+00:00",
+      "sha256": "502a5a0338196dbf90f20e95f4848d9436a34724bb209941b15f2d2b18a6222c",
+      "bytes": 6022,
+      "status": "captured",
+      "period_rows": [],
+      "first": "20251112",
+      "last": "20260629"
+    },
+    {
+      "code": "600608",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/600608",
+      "params": {
+        "select": "date,close,prevClose,chg_rate,volume,amount",
+        "begin": -126,
+        "end": -1,
+        "period": "day"
+      },
+      "observed_at": "2026-11-20T22:11:00.199677+00:00",
+      "sha256": "8507df8aadb8bbafbd2bbe8df2a00a36a62724aee6c63578627bbc1681d2d8e5",
+      "bytes": 5956,
+      "status": "captured",
+      "period_rows": [],
+      "first": "20251114",
+      "last": "20260629"
+    },
+    {
+      "code": "605081",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/605081",
+      "params": {
+        "select": "date,close,prevClose,chg_rate,volume,amount",
+        "begin": -126,
+        "end": -1,
+        "period": "day"
+      },
+      "observed_at": "2026-11-20T22:11:00.626305+00:00",
+      "sha256": "8ea714b8eb08bb0c3b74628404f1ca74faa673ad1a7119728ece9d35fa5565a3",
+      "bytes": 6075,
+      "status": "captured",
+      "period_rows": [],
+      "first": "20251114",
+      "last": "20260629"
+    }
+  ],
+  "limits": [
+    "Returns do not establish suspension reasons or legal delisting decision",
+    "Retain missing active days; never fill zero returns"
+  ]
+}

@@ -4,7 +4,7 @@ import {afterEach,describe,expect,it,vi} from 'vitest'
 import {RunAudit} from './RunAudit'
 
 describe('RunAudit',()=>{
-  afterEach(()=>{cleanup();vi.restoreAllMocks()})
+  afterEach(()=>{cleanup();vi.restoreAllMocks();window.history.replaceState(null,'',window.location.pathname)})
 
   it('drills from a run into evidence rows, lens, backing, gaps and weights',async()=>{
     const fetchMock=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
@@ -81,6 +81,23 @@ describe('RunAudit',()=>{
     render(<MemoryRouter><RunAudit/></MemoryRouter>)
     expect(await screen.findByRole('alert')).toHaveTextContent('暂时无法读取研究记录或更正')
     expect(screen.queryByText('还没有 Codex 研究运行')).not.toBeInTheDocument()
+  })
+
+  it.each([true,false])('loads an older deep-linked run outside the recent 100; available=%s',async available=>{
+    const id='RUN-'+'D'.repeat(24)
+    window.history.replaceState(null,'',`#research-${id}`)
+    Object.defineProperty(HTMLElement.prototype,'scrollIntoView',{configurable:true,value:vi.fn()})
+    const run={run_id:id,question_text:'旧研究的正确阅读身份',agent_surface:'test',created_at:'2026-06-03T00:00:00Z',normalized_intent:'research',evidence_pack_ids:[],experience_candidate_ids:[],validation_report:{valid:true},source_freshness:{},final_answer:'原文保留',decision_audit:{},research_draft:{}}
+    const request=vi.spyOn(globalThis,'fetch').mockImplementation(async input=>{
+      const url=String(input)
+      if(url.includes('corrections'))return new Response(JSON.stringify({availability:'available',corrections:[]}))
+      if(url.endsWith(`/runs/${id}`))return new Response(JSON.stringify(available?run:{}),{status:available?200:404})
+      return new Response(JSON.stringify([]))
+    })
+    render(<MemoryRouter><RunAudit/></MemoryRouter>)
+    if(available)expect(await screen.findByRole('heading',{name:run.question_text})).toBeVisible()
+    else expect(await screen.findByRole('alert')).toHaveTextContent('关联的研究暂时无法打开')
+    expect(request.mock.calls.filter(c=>String(c[0]).endsWith(`/runs/${id}`))).toHaveLength(1)
   })
 
 })

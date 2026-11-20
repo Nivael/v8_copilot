@@ -1,0 +1,352 @@
+{
+  "version": "market_limit_scope_audit_v1",
+  "source_cohort_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "source_refs": [
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261109"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7dab24e1752408841b9e2e31feb863597437e92c159ee02f0fec30a95de5d82b",
+      "bytes": 537168,
+      "fetched_at": "2026-11-19T15:27:56.714032+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261109"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "47b67d2d2d6f1dc7bde7f53cf2949cd52722093a3ccf2e46fc72cc2e351da771",
+      "bytes": 276002,
+      "fetched_at": "2026-11-19T15:27:58.168974+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261110"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "3c78d2a3399c5596aa50f5bcf3d3901617dad2ef3e063aa08be3356063b24af9",
+      "bytes": 534088,
+      "fetched_at": "2026-11-19T15:27:59.312568+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261110"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "978116d78198afa4d51b8efad84e37140422372731d1a8d36be424b9c69181ca",
+      "bytes": 276025,
+      "fetched_at": "2026-11-19T15:28:00.831145+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261111"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "43c87e251cd547f4a5305de0a77c04d2a477c8e7381a16e829321e9824f752ce",
+      "bytes": 535626,
+      "fetched_at": "2026-11-19T15:28:01.746240+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261111"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "2442c0a7259985fb886d2831c9ebb17ddbf288748de44a3af415262a04d87f62",
+      "bytes": 276185,
+      "fetched_at": "2026-11-19T15:28:03.276505+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261112"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "cd43b88ac2ce83c45d52f369f81023a0628a7b4ee5a9ff14547bd06795d2d7bc",
+      "bytes": 541851,
+      "fetched_at": "2026-11-19T15:28:04.295011+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261112"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "837b7a7a3b58cf475614e610d4cca75b2ac6d725a62bda0262703ec6b27a2b7e",
+      "bytes": 276246,
+      "fetched_at": "2026-11-19T15:28:05.718415+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261113"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "2d1624a0241792e904362468d850d1bf9d3eb31e1e9d087f1212db6e4d306540",
+      "bytes": 541707,
+      "fetched_at": "2026-11-19T15:28:06.982439+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261113"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "2da4f3a0a6674fa95d53fc0966ec588b26a68485004f3de423f39ef3b47f9145",
+      "bytes": 276096,
+      "fetched_at": "2026-11-19T15:28:08.157208+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261116"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "fad8a487386123c2911ee1e0c4b2abb8c9e1e7fc5f52fff72f12dd043488d726",
+      "bytes": 540915,
+      "fetched_at": "2026-11-19T15:28:09.252470+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261116"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "bd1244b5d98f5bda56a0c31e3040f830322e55751467911d9800908dafb26756",
+      "bytes": 275928,
+      "fetched_at": "2026-11-19T15:28:10.610290+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7ed240a4a3be91bc75c12ddcec0e8911347beb85b13a021d7385bde7fa45574f",
+      "bytes": 539517,
+      "fetched_at": "2026-11-19T15:28:11.719493+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "9894fc6124ddc4a347a9388b29fae88d972b8e2ed70a55ab5c236c7a1e0381ce",
+      "bytes": 275835,
+      "fetched_at": "2026-11-19T15:28:13.160531+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261118"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7f08fae46fc0691984393474fc9430ca45a46ce6827ede01814daa7545b5f5d9",
+      "bytes": 539221,
+      "fetched_at": "2026-11-19T15:28:14.248738+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261118"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "d8c7ffd34f1c01111b7707f8f7a202e7309d4622e51b51d242f9870df477fc82",
+      "bytes": 275679,
+      "fetched_at": "2026-11-19T15:28:15.617411+00:00"
+    },
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261119"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "0aafdf47c8068eb888cc397201f5cf522adfe66cf9aa1246dc10f404b304fb28",
+      "bytes": 540282,
+      "fetched_at": "2026-11-19T15:28:16.705121+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261119"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "30179da26789da2b422b3d222edcb7050dedf98714f158f22b4e2fcd27472b93",
+      "bytes": 275666,
+      "fetched_at": "2026-11-19T15:28:18.139805+00:00"
+    }
+  ],
+  "sse_basis_digest": "875dd46a4ca9340696669516a4fe0d3cc746d2a90db67c8d39685dda16e14c70",
+  "szse_control_digest": "b9419f25b61af261c7380ac984327851cb8104b4cfa7e0adac73c88abba8e4b6",
+  "breadth_sha256": "03488f4f855c814d6649b7e3c64ff1b29dbe94f03b387daf480ae785470428dd",
+  "days": [
+    {
+      "date": "2026-11-09",
+      "official_trading": 5218,
+      "provider_trading_in_official_set": 5218,
+      "paired": 5218,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 2,
+        "touch_down": 4,
+        "one_price_down": 1
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "official_trading": 5218,
+      "provider_trading_in_official_set": 5218,
+      "paired": 5218,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 0,
+        "touch_down": 3,
+        "one_price_down": 0
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "official_trading": 5219,
+      "provider_trading_in_official_set": 5219,
+      "paired": 5219,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 3,
+        "touch_down": 6,
+        "one_price_down": 0
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-12",
+      "official_trading": 5218,
+      "provider_trading_in_official_set": 5218,
+      "paired": 5218,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 6,
+        "touch_down": 9,
+        "one_price_down": 0
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "official_trading": 5216,
+      "provider_trading_in_official_set": 5216,
+      "paired": 5216,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 39,
+        "touch_down": 60,
+        "one_price_down": 1
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-16",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 68,
+        "touch_down": 98,
+        "one_price_down": 1
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 84,
+        "touch_down": 109,
+        "one_price_down": 2
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-18",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 47,
+        "touch_down": 66,
+        "one_price_down": 7
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    },
+    {
+      "date": "2026-11-19",
+      "official_trading": 5217,
+      "provider_trading_in_official_set": 5217,
+      "paired": 5217,
+      "missing": [],
+      "official_close_or_reference_conflicts": [],
+      "unpaired": [],
+      "limit_counts_in_paired": {
+        "close_at_down": 83,
+        "touch_down": 106,
+        "one_price_down": 6
+      },
+      "naive_prefix_omissions": [
+        "302132.SZ"
+      ]
+    }
+  ],
+  "limits": [
+    "Coverage audit; price conflicts and unpaired securities remain unresolved",
+    "Official close/reference cross-check is not independent official limit certification",
+    "Provider actual limits, not percentage-inferred limits; no order-queue execution claim",
+    "Sources observed retrospectively; not proof of then-available data",
+    "Use official daily identities including 302132.SZ rather than hand-written prefixes"
+  ],
+  "content_digest": "4a610f7a12dcbd94cf120219e11dd659150669455dbb88b20833ea6be3cf5fbf"
+}

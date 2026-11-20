@@ -1,0 +1,174 @@
+{
+  "version": "lingnan_final_exit_source_check_v1",
+  "checked_at": "2026-11-20T19:55:44.695575+00:00",
+  "saved_query_through": "2026-11-19",
+  "pages_rechecked": 4,
+  "unique_records": 97,
+  "latest_catalog_published_on": "2026-11-12",
+  "source_refs": [
+    {
+      "query_id": "remaining-sixty/002717",
+      "symbol": "002717",
+      "page_number": 1,
+      "sha256": "56d142de21f208b96540c473f5f5c3a8c2707cc69b02635eba134048d377956a",
+      "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002717-1.json"
+    },
+    {
+      "query_id": "remaining-sixty/002717",
+      "symbol": "002717",
+      "page_number": 2,
+      "sha256": "3a1b4455fa4b3ec6e12f8426bc06269e143bed384036f4c60bcf6a3dc3d66632",
+      "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002717-2.json"
+    },
+    {
+      "query_id": "remaining-sixty/002717",
+      "symbol": "002717",
+      "page_number": 3,
+      "sha256": "8283d81054865ed514ba7575dde13efbf0afbdf9be29bc744cfc39a3d8521e10",
+      "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002717-3.json"
+    },
+    {
+      "query_id": "remaining-sixty/002717",
+      "symbol": "002717",
+      "page_number": 4,
+      "sha256": "5bf8ddc134392ba161339c28bf59554b6d1a78d0429c966b61e191d3861d6b67",
+      "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002717-4.json"
+    }
+  ],
+  "legal_title_rows": [
+    {
+      "announcement_id": "1225609701",
+      "title": "关于收到终止上市事先告知书的公告",
+      "published_on": "2026-10-17",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225609701.PDF"
+    },
+    {
+      "announcement_id": "1225602315",
+      "title": "关于公司股票及可转换公司债券将被终止上市暨停牌的风险提示公告",
+      "published_on": "2026-10-13",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-13/1225602315.PDF"
+    },
+    {
+      "announcement_id": "1225600052",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第十一次风险提示公告",
+      "published_on": "2026-10-10",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-10/1225600052.PDF"
+    },
+    {
+      "announcement_id": "1225598267",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第十次风险提示公告",
+      "published_on": "2026-10-09",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-09/1225598267.PDF"
+    },
+    {
+      "announcement_id": "1225591283",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第九次风险提示公告",
+      "published_on": "2026-10-08",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-08/1225591283.PDF"
+    },
+    {
+      "announcement_id": "1225588280",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第八次风险提示公告",
+      "published_on": "2026-09-30",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-30/1225588280.PDF"
+    },
+    {
+      "announcement_id": "1225586129",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第七次风险提示公告",
+      "published_on": "2026-09-29",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-29/1225586129.PDF"
+    },
+    {
+      "announcement_id": "1225582839",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第六次风险提示公告",
+      "published_on": "2026-09-28",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-28/1225582839.PDF"
+    },
+    {
+      "announcement_id": "1225579800",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第五次风险提示公告",
+      "published_on": "2026-09-24",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579800.PDF"
+    },
+    {
+      "announcement_id": "1225577827",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第四次风险提示公告",
+      "published_on": "2026-09-23",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577827.PDF"
+    },
+    {
+      "announcement_id": "1225575538",
+      "title": "关于公司股票可能触及财务类及规范类终止上市的第五次风险提示公告",
+      "published_on": "2026-09-22",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575538.PDF"
+    },
+    {
+      "announcement_id": "1225575537",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第三次风险提示公告",
+      "published_on": "2026-09-22",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575537.PDF"
+    },
+    {
+      "announcement_id": "1225572554",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的第二次风险提示公告",
+      "published_on": "2026-09-19",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225572554.PDF"
+    },
+    {
+      "announcement_id": "1225551599",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的风险提示公告",
+      "published_on": "2026-09-08",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-08/1225551599.PDF"
+    },
+    {
+      "announcement_id": "1225483143",
+      "title": "关于公司股票可能被终止上市的第四次风险提示公告",
+      "published_on": "2026-08-20",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225483143.PDF"
+    },
+    {
+      "announcement_id": "1225480081",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的风险提示公告",
+      "published_on": "2026-08-19",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225480081.PDF"
+    },
+    {
+      "announcement_id": "1225441870",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的风险提示公告",
+      "published_on": "2026-07-25",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441870.PDF"
+    },
+    {
+      "announcement_id": "1225435575",
+      "title": "关于公司股票可能被终止上市的第三次风险提示公告",
+      "published_on": "2026-07-22",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-22/1225435575.PDF"
+    },
+    {
+      "announcement_id": "1225422523",
+      "title": "关于公司股票存在可能因股价低于面值被终止上市的风险提示公告",
+      "published_on": "2026-07-14",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-14/1225422523.PDF"
+    }
+  ],
+  "final_decision_or_removal_title_candidates": [],
+  "result": "No final decision/removal original acquired in this check; stage remains unresolved.",
+  "fresh_search_queries": [
+    "site.szse.cn 岭南股份 2026 终止上市 决定",
+    "site.cninfo.com.cn 岭南股份 2026 11 终止上市 摘牌"
+  ],
+  "fresh_search_primary_results": [
+    "https://static.cninfo.com.cn/finalpage/2026-10-17/1225609701.PDF",
+    "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632584.PDF"
+  ],
+  "limits": [
+    "A title scan and web search are not proof no final decision exists.",
+    "Saved query ends Nov19; later disclosures and other channels remain outside that capture.",
+    "Prior stock suspension and bond proceedings do not establish final stock delisting or removal date."
+  ],
+  "next_evidence_required": [
+    "Final exchange decision or issuer original explicitly receiving that decision.",
+    "Issuer/exchange original stating actual stock removal date."
+  ],
+  "new_independent_validations": 0
+}

@@ -1,3 +1,4 @@
+from st_lingnan_exit_followup import lingnan_followup
 from st_endpoint_basis_followup import basis_followup
 from st_endpoint_selection_audit import endpoint_selection_audit
 from st_initial_twentyseventh_four import initial_twentyseventh_four
@@ -298,4 +299,5 @@ def build_themes(inputs, daily):
     result['endpoint_reasons']=endpoint_reasons(inputs,result['current_extension'],result['sample_integrity'],result['halt_stages'])
     result['endpoint_selection_audit']=endpoint_selection_audit(inputs,result['current_extension'],result['endpoint_reasons'])
     result['endpoint_basis_followup']=basis_followup(inputs,result['endpoint_selection_audit'])
+    result['lingnan_exit_followup']=lingnan_followup(inputs,result['endpoint_reasons'])
     return result

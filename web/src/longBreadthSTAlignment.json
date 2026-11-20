@@ -742,5 +742,6 @@
     "Dynamic ST reference compounds daily changing groups; no account or executable portfolio claim",
     "Official index controls have two-decimal precision; source return calculation retained separately"
   ],
-  "research_run_id": "RUN-492A3EE6677A4EC18B458E7E"
+  "research_run_id": "RUN-492A3EE6677A4EC18B458E7E",
+  "evidence_sha256": "9f3abc3359f7fd52b24ef0657f9e0fd82d64af9eb00f226759bed9e85bd3cbeb"
 }

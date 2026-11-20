@@ -1,0 +1,113 @@
+{
+  "version": "long_confirmation_cost_v1",
+  "alignment_sha256": "9f3abc3359f7fd52b24ef0657f9e0fd82d64af9eb00f226759bed9e85bd3cbeb",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "reading": {
+    "rows": [
+      {
+        "signal_date": "2026-07-08",
+        "anchor": "2026-07-03",
+        "confirmation_dates": [
+          "2026-07-06",
+          "2026-07-07",
+          "2026-07-08"
+        ],
+        "already_st_pct": -3.7567757327245905,
+        "already_market_pct": -3.8617813915243526,
+        "following_through": "2026-07-15",
+        "following_sessions": 5,
+        "complete_five": true,
+        "following_st_pct": -1.3323669475294737,
+        "following_market_pct": -1.322306903333885
+      },
+      {
+        "signal_date": "2026-07-20",
+        "anchor": "2026-07-15",
+        "confirmation_dates": [
+          "2026-07-16",
+          "2026-07-17",
+          "2026-07-20"
+        ],
+        "already_st_pct": -8.393799154537835,
+        "already_market_pct": -7.193277435405145,
+        "following_through": "2026-07-27",
+        "following_sessions": 5,
+        "complete_five": true,
+        "following_st_pct": 2.094409467227185,
+        "following_market_pct": 3.0004015522525314
+      },
+      {
+        "signal_date": "2026-09-04",
+        "anchor": "2026-09-01",
+        "confirmation_dates": [
+          "2026-09-02",
+          "2026-09-03",
+          "2026-09-04"
+        ],
+        "already_st_pct": 0.2483585600008624,
+        "already_market_pct": -1.8353490647732806,
+        "following_through": "2026-09-11",
+        "following_sessions": 5,
+        "complete_five": true,
+        "following_st_pct": 0.16885788369775082,
+        "following_market_pct": -1.0482683713854217
+      },
+      {
+        "signal_date": "2026-09-11",
+        "anchor": "2026-09-08",
+        "confirmation_dates": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ],
+        "already_st_pct": -1.3551721836500272,
+        "already_market_pct": -2.132658046300218,
+        "following_through": "2026-09-18",
+        "following_sessions": 5,
+        "complete_five": true,
+        "following_st_pct": -0.8327084440853595,
+        "following_market_pct": 1.6122001381446882
+      },
+      {
+        "signal_date": "2026-09-24",
+        "anchor": "2026-09-21",
+        "confirmation_dates": [
+          "2026-09-22",
+          "2026-09-23",
+          "2026-09-24"
+        ],
+        "already_st_pct": -2.1162256364507015,
+        "already_market_pct": -2.259011354091703,
+        "following_through": "2026-10-09",
+        "following_sessions": 5,
+        "complete_five": true,
+        "following_st_pct": -1.7592444390246307,
+        "following_market_pct": -3.763228858342282
+      },
+      {
+        "signal_date": "2026-11-16",
+        "anchor": "2026-11-11",
+        "confirmation_dates": [
+          "2026-11-12",
+          "2026-11-13",
+          "2026-11-16"
+        ],
+        "already_st_pct": -5.590081184432938,
+        "already_market_pct": -4.763770325358413,
+        "following_through": "2026-11-19",
+        "following_sessions": 3,
+        "complete_five": false,
+        "following_st_pct": -5.880245046179585,
+        "following_market_pct": -1.6483770650412122
+      }
+    ],
+    "signal_count": 6
+  },
+  "limits": [
+    "Confirmation-window returns are already realized by third close, not advance warning",
+    "Not account loss, opportunity cost or executed strategy return",
+    "Earlier warning may avoid loss or miss rebounds; no optimal waiting rule inferred",
+    "Before/after percentages compound, never simply add"
+  ],
+  "research_run_id": "RUN-3450ABE427A94B5DB4242BD2"
+}

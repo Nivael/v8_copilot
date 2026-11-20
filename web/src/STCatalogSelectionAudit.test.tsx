@@ -62,3 +62,12 @@ it('separates five body reviews from execution and preserves source identity con
  expect(screen.getByText(/本轮5份共41页，核14关键图像页/)).toBeVisible()
  expect(screen.getByText(/末页签章日期为空/)).toBeVisible()
 })
+
+it('shows current coverage without turning mixed-date totals or zero title leads into completeness',()=>{
+ render(<STCatalogSelectionAudit data={data()}/>);
+ expect(screen.getByText(/当前目录覆盖90／150家公司/)).toBeVisible()
+ fireEvent.click(screen.getByText('90家覆盖了哪段日期，为什么不是统一窗口公告总数？'))
+ expect(screen.getByText(/原84家查询从7月4日开始，新增6家从7月1日开始/)).toBeVisible()
+ expect(screen.getByText(/未选命中为0，不意味着零遗漏/)).toBeVisible()
+ expect(screen.getByText(/尚未纳入的60家公司/)).toBeVisible()
+})

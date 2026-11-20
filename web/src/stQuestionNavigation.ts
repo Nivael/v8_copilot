@@ -2,6 +2,7 @@ import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'jingjidividend',anchor:'st-jingji-dividend-followup',title:'京机：取整价格相同，能证明原公式正确吗？',field:'jingji_dividend_followup'},
   {key:'ningkecomparative',anchor:'st-ningke-comparative-followup',title:'宁科：半年报净资产转正，比较基数可靠吗？',field:'ningke_comparative_followup'},
   {key:'exitoutcomes',anchor:'st-exit-outcomes',title:'离开ST名单的14家公司，分别去了哪里？',field:'exit_outcomes'},
   {key:'marketstages',anchor:'st-market-stage-experience',title:'ST相对抗跌，为什么到10月就变了？',field:'market_stage_experience'},

@@ -1,0 +1,3574 @@
+{
+  "version": "saved_catalog_selection_audit_v1",
+  "queries": [
+    {
+      "query_id": "st-eighteenth-period-followup-20261120/catalog-period/600423",
+      "symbol": "600423",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 20,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "05c0d8c51b8da8096e0b5099904a13e89d2f1f49407e5254c1a16821a3cb29f9",
+          "locator": "st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600423-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighteenth-period-followup-20261120/catalog-period/600476",
+      "symbol": "600476",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 33,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "a430c8dad63c1acc79220c103b87e577c781bca38866dcc1f3b7ce58163897df",
+          "locator": "st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600476-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "3e69431cb8053d4e43aee5ce1f5f4e42b5fbaa1e9a8ec419339d8a8bc75482be",
+          "locator": "st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600476-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighteenth-period-followup-20261120/catalog-period/600525",
+      "symbol": "600525",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 45,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "a8edd3db87e35ac1ed44f6ec29ad1ba5aca3fedcd119ed1dcad43731cd61500e",
+          "locator": "st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600525-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "7d542e9642ef11c16f01a36397e300780a7042235c55d6ecb3315323d41cdaea",
+          "locator": "st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600525-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighteenth-period-followup-20261120/catalog-period/600537",
+      "symbol": "600537",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 27,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "c79f84555a1bd43104531a3adc63d9cd2edd9833dbdbee8cd8d78baeb14d45c7",
+          "locator": "st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600537-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighth-period-followup-20261120/catalog-period/002528",
+      "symbol": "002528",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 85,
+      "pages": 3,
+      "provider_totalpages_values": [
+        2,
+        2,
+        2
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "6ea90f0ede366a957ea56cb2b06b0745774f5b959e901f77cfc58db70103e515",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002528-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "bafe9dc6824810cc4ac7c1c127fe4e903ffc4e8944b9fcae60f4080a33a9bf34",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002528-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "771be1dabbf4920177d7c2b93b4776de4779df56d261cb56d93408bdf6beee81",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002528-3.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighth-period-followup-20261120/catalog-period/002581",
+      "symbol": "002581",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 21,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "8c76f02d0087e69bbfea729b678a8a8935b77e6fbac50a4d4cc1c85253b6b25d",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002581-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighth-period-followup-20261120/catalog-period/002630",
+      "symbol": "002630",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 40,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b4a866082cc9b62697c78c1e02d273d2574f1bcd0fe3d100708a57edc24110a0",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002630-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "a68871d6106109ccd907336bb752be4cafa9d822112dc065077cd22827028f2a",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002630-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eighth-period-followup-20261120/catalog-period/002634",
+      "symbol": "002634",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 26,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "48d71076d3c0ad84861beee0d15c29bab6065636aa41237211c76a3c0ca66eae",
+          "locator": "st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002634-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eleventh-period-followup-20261120/catalog-period/002822",
+      "symbol": "002822",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 17,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "9dc20fdc74e79a85510e955957ea5244c6858c08f666f2835ea8adbed8059b72",
+          "locator": "st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002822-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eleventh-period-followup-20261120/catalog-period/002856",
+      "symbol": "002856",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 36,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "ba852658d6a63f8a8fdcab7049301a919efeb2a2dc02c6f0cfbdc6dfa5c14d98",
+          "locator": "st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002856-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d42a8ba0a8538c5d43afedb62a4412d9fd288c853025f1192ac11ce0e22963d3",
+          "locator": "st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002856-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eleventh-period-followup-20261120/catalog-period/002872",
+      "symbol": "002872",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 23,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "d81774685c32251d044876bd6ded17d8ccf3b8867362a45459260bbfc4e13940",
+          "locator": "st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002872-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-eleventh-period-followup-20261120/catalog-period/002883",
+      "symbol": "002883",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 11,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "cecd5d2470b1b509efdf326af0e7b8e3f1414581f45665002c9f9a6777a7f6fd",
+          "locator": "st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002883-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fifteenth-period-followup-20261120/catalog-period/600187",
+      "symbol": "600187",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 54,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "c5f525225945ba212cd694b7c9b7da14e3c1d6aa68d98347127fbc8aa8b0cdf4",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600187-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "813ac9e5d0cc339b39ac3550d2cddaf949ced250f25ced77b7abbbb2945c69cb",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600187-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fifteenth-period-followup-20261120/catalog-period/600238",
+      "symbol": "600238",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 53,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "9c2730151739abdfdd06f3c852bc50da3493ff812219ee59f1d632a27a78a00a",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600238-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d5de1ecfd4388c9cf950ad7c118f1cf92ecd8b36a6ad1bfab8c606e19536269e",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600238-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fifteenth-period-followup-20261120/catalog-period/600239",
+      "symbol": "600239",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 50,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "36a388be9a721391a85c350c483cc0cdeaf90278dd9826e9bdf822b5d261f465",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600239-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "b336ea3386d6f42048c6d2f3d35b51797cca7ea5b9f11f87b52b2f29f6a0a75a",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600239-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fifteenth-period-followup-20261120/catalog-period/600243",
+      "symbol": "600243",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 10,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "674c40111ba9bef9a4ba2056954495a5202a213a7f9c6ecd836973ced2095c90",
+          "locator": "st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600243-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fourteenth-period-followup-20261120/catalog-period/600136",
+      "symbol": "600136",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 26,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "7c9db4d9e4ab660817ff189e9231db06e9570c92467b9253ba6dbabf9e79cc8a",
+          "locator": "st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600136-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fourteenth-period-followup-20261120/catalog-period/600165",
+      "symbol": "600165",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 25,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "dfae8f0daffa51cc0099dd4c9c9d039028cd3c0d21919ac74515b66107ff3482",
+          "locator": "st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600165-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fourteenth-period-followup-20261120/catalog-period/600169",
+      "symbol": "600169",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 25,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "55d96f2d7b395e2ed29f5dfe2d2b80193bf74f0fd0ed1d29dbfab7043b3e1288",
+          "locator": "st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600169-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-fourteenth-period-followup-20261120/catalog-period/600180",
+      "symbol": "600180",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 44,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "2d4d39fe81101958fc49556bbc5d636717b072324436661ecb228e508e13c4c9",
+          "locator": "st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600180-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "abe52d44842f33127c954cf6a25127a2b133521c527926591f8d7107ced02c23",
+          "locator": "st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600180-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-nineteenth-period-followup-20261120/catalog-period/600543",
+      "symbol": "600543",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 26,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "4836511daff3e1f89941a6fb6a1673ec9f4910d3ed14fa0667134bd606f1a11d",
+          "locator": "st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600543-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-nineteenth-period-followup-20261120/catalog-period/600568",
+      "symbol": "600568",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 32,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b082f5555be74f4194a3b22bace3f8a3978162ed5dc753f5cd1b64e3d02c9384",
+          "locator": "st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600568-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "8c8e0ae4e394da94b8473dbe48486f274b1ae4b9c5a8ebef37d22ea27184221f",
+          "locator": "st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600568-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-nineteenth-period-followup-20261120/catalog-period/600581",
+      "symbol": "600581",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 54,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "3d770dde1f19d91d8ba47b7c353c2da701fe9928d96c09bcad4963eb3392bb2d",
+          "locator": "st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600581-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "deb56a87eb5ee231081af397e35ce1c10b6d690cc06f3dbfc9483eaffb3b7227",
+          "locator": "st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600581-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-nineteenth-period-followup-20261120/catalog-period/600624",
+      "symbol": "600624",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 17,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "d90154501008bb2aa7e92f706733dc47ae277dc88665bbc6277d426af32a03c2",
+          "locator": "st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600624-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-ninth-period-followup-20261120/catalog-period/002650",
+      "symbol": "002650",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 8,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "ff4d4114b61270a8fb210efb0fe4e6811a0df654e77828adfc31acc0186c5bbb",
+          "locator": "st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002650-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-ninth-period-followup-20261120/catalog-period/002694",
+      "symbol": "002694",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 39,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "a22674192ee72ee4d0675eadd52e7ffd9a56a303f56535228ca32c7ce634d53c",
+          "locator": "st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002694-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "461093c1dd3a1ad1455624a2f5ac267f63a70952e008c4abd1ad89975e275f57",
+          "locator": "st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002694-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-ninth-period-followup-20261120/catalog-period/002713",
+      "symbol": "002713",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 33,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "7715713c62679fb05554c16ad89a6c9dd55922ff51324ee924f1df98a0c252d0",
+          "locator": "st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002713-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "52dee86186a7f543a5aaf83f40f397431e436d494a39ce96415aabe8efce5efb",
+          "locator": "st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002713-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-ninth-period-followup-20261120/catalog-period/002719",
+      "symbol": "002719",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 19,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b99c302e66078df9d8cd0fd9f25d0e47ada4c510aed10f6ddc4ed5b685374d0d",
+          "locator": "st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002719-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventeenth-period-followup-20261120/catalog-period/600340",
+      "symbol": "600340",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 22,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "f6e27666d42b14165be4a631e9704a0716738210636f5b05a5deb6f32a6d874f",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600340-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventeenth-period-followup-20261120/catalog-period/600365",
+      "symbol": "600365",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 25,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "01ce7bb0bebfb04eef7f95ea547339bea0033dfd6b4e847406e72a870c537294",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600365-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventeenth-period-followup-20261120/catalog-period/600370",
+      "symbol": "600370",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 107,
+      "pages": 4,
+      "provider_totalpages_values": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "8805cb6983afa58f5ecb6a341bd2a451a471f5e6e43542f3034b2b32649850fa",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600370-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "c9431c61a5ab576467f764bb61df52868938cdd5b56568c11bfcc9fc629b391a",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600370-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "a3be7b13d6f98c84550e7d99c5ecb8fb1f314836f6751eb30ba38ea55fd97f82",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600370-3.json"
+        },
+        {
+          "page_number": 4,
+          "sha256": "48c46ad20b2330abeac9af9aa1b0aa7dfa450d10b72a3d1579e790fa2fa51186",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600370-4.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventeenth-period-followup-20261120/catalog-period/600381",
+      "symbol": "600381",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 17,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "a81c823120c1ae7b5c1cff5eded0a5b17dc40618cf4d8be1e1391224a9d39250",
+          "locator": "st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600381-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventh-period-followup-20261120/catalog-period/002424",
+      "symbol": "002424",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 25,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "80ab0c661ff9dfcefe3d3e5ee71aeffd83d5dbbe11b6d09943806bf459c662d9",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002424-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventh-period-followup-20261120/catalog-period/002431",
+      "symbol": "002431",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 83,
+      "pages": 3,
+      "provider_totalpages_values": [
+        2,
+        2,
+        2
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "780b841f3bc489b3abdc1916baf614b907071260c85accdf18cc104c0cc638c0",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002431-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "dafa7af7e54daadc236107ce5d5ab35e371d0fea94da350955543618d7ed0716",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002431-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "af67c658798fd67393dc8495736eeede738160011cc411955406df1f2aa505a0",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002431-3.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventh-period-followup-20261120/catalog-period/002485",
+      "symbol": "002485",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 16,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "dbddfaebcfdf49ad41f3288807428f57319d20d1f8d59c9f29bf391105dda74d",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002485-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-seventh-period-followup-20261120/catalog-period/002501",
+      "symbol": "002501",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 32,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "369a653ce1895c1e191f0c3c8621c3f825e97337977ba38d4d0ac8fcbaf4ed39",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002501-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "bdb2b2e313a62149a91da095191da95bd6ee7e56ea8aa97135ff42977fad3c26",
+          "locator": "st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002501-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-sixteenth-period-followup-20261120/catalog-period/600265",
+      "symbol": "600265",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 21,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "cf2950e9a17c2aaccc4e08c5c53d766e2dca6f98f25278a94d7b194f05ed9703",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600265-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-sixteenth-period-followup-20261120/catalog-period/600289",
+      "symbol": "600289",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 31,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "f18aac5d14374a3c73d2da8620bfd4bbb3072002f23e5e225e5f8b26499aad83",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600289-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "15e2083d52038b6abdfe3caabc758554a06c0fc06d4eaa65eb75f38d686ce493",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600289-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-sixteenth-period-followup-20261120/catalog-period/600302",
+      "symbol": "600302",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 33,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "e62a9536db33fc3d765dc325d7a97803809e62ae763ffc2fb442f25965f9d0b8",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600302-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "19ccd43712f0a20815a3d8cea964cdd6468d62ae9311e4ee73052409c1be473d",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600302-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "symbol": "600337",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 48,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "5c9a53b9c7cf0cec8cda7121ee092dec7325aef476be0649685236576f479a14",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600337-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+          "locator": "st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600337-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-tenth-period-followup-20261120/catalog-period/002726",
+      "symbol": "002726",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 97,
+      "pages": 4,
+      "provider_totalpages_values": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b39eb2c631110f87afce74851f79fd1ddd662e96372773c0bdd618beaa14d461",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002726-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "2f5344ce11ebd9c64f4d5651c6e14dc96f1edce1c19e319ce3ad624676532f2e",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002726-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "47b3712f299c3eb95cde920d1b173bac5bef04f5281fad00ae7c41874e86296b",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002726-3.json"
+        },
+        {
+          "page_number": 4,
+          "sha256": "acf227d8274dcece9d859325f0657ba2bfeeac800e19cb6fbade3f4449f644c4",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002726-4.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-tenth-period-followup-20261120/catalog-period/002731",
+      "symbol": "002731",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 58,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "fa6795f7026eaef5138942876caf49053bd6571a3bd9a7753eac35711b9fb45d",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002731-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "12b7e58d87e2aaebdd057195ebead9bc1bb3e0a021b3f50b9432bca78210a881",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002731-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-tenth-period-followup-20261120/catalog-period/002789",
+      "symbol": "002789",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 41,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "a1b047ee73db0abe6d01354dac204d4687f34d7d2ca82db1c91bb1edc34ae4e0",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002789-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "98497b91e4433c92e9e733e8ca3b9287273dba7b644aed26e40cc056df2b3dda",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002789-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-tenth-period-followup-20261120/catalog-period/002816",
+      "symbol": "002816",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 16,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "f9fe12e18dc9b30ead352fab83beaf37647a50d5bcd0b7ce97e1ec44a098ec0c",
+          "locator": "st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002816-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-thirteenth-period-followup-20261120/catalog-period/600082",
+      "symbol": "600082",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 24,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "34ef8af9965a00231babede67fb248c7b3ca30ab4ad3ff4a91134ef07f845b4d",
+          "locator": "st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600082-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-thirteenth-period-followup-20261120/catalog-period/600084",
+      "symbol": "600084",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 31,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "dd83a9c8910619d6dc89d2ee2569e1c9f26619fa040682505d2ad60b7d09ac45",
+          "locator": "st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600084-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d41d1859df2b6ed3d90bf5a25dda0c077047a0aca1656305bfd42fd937a7a11c",
+          "locator": "st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600084-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-thirteenth-period-followup-20261120/catalog-period/600107",
+      "symbol": "600107",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 29,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "640927b29eb097a41f77d5ee6192d1efd9e545c0f527bb5baeea2b33793c7e0b",
+          "locator": "st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600107-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-thirteenth-period-followup-20261120/catalog-period/600119",
+      "symbol": "600119",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 22,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "4c474ec2443e4abc7a81f10f90a0923878162b7b8451ad51c2463357038180b4",
+          "locator": "st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600119-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twelfth-period-followup-20261120/catalog-period/002932",
+      "symbol": "002932",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 53,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "9cb50cb29e300ad5c77633a055e63c478d60940e97f3cdf0c4dc716a7ad77f6f",
+          "locator": "st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-002932-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "33c3f78d7ab42e10cb356afadc3e550d9713425d7dbe1b3243fe3eaa9afa2b44",
+          "locator": "st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-002932-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twelfth-period-followup-20261120/catalog-period/600053",
+      "symbol": "600053",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 18,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "90ba3b3b32e4af9457ba10a79d16af55cef8007d534e91f9c4cfa5b8da60ce29",
+          "locator": "st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600053-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twelfth-period-followup-20261120/catalog-period/600079",
+      "symbol": "600079",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 60,
+      "pages": 2,
+      "provider_totalpages_values": [
+        2,
+        2
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "49110963eb7f2db7b2abf104687eb35b117ba461aa783901caaa8bc9e95e1b2f",
+          "locator": "st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600079-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "bf670807424c100e31adb3bcedf2b152670f201d61f969622018a1bc2e9114b1",
+          "locator": "st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600079-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twelfth-period-followup-20261120/catalog-period/600080",
+      "symbol": "600080",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 29,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b1362dfe7df1054003fa980b77a464dd729cacf62adad2243b7c487065cdd913",
+          "locator": "st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600080-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentieth-period-followup-20261120/catalog-period/600678",
+      "symbol": "600678",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 50,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "e847d0330c9b7fc068a59a47f9830af2ff914876f92b6e1271e827bb6fe6b893",
+          "locator": "st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600678-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "5192033f5c0bbd1bbfc0a7f02e150b8ab89fe2aee68bd272b0a8cdeed66e977a",
+          "locator": "st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600678-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentieth-period-followup-20261120/catalog-period/600734",
+      "symbol": "600734",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 27,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "86e153b235b03df320870d088ee70deed91885078da83afe47ba9e07191a2264",
+          "locator": "st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600734-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentieth-period-followup-20261120/catalog-period/600735",
+      "symbol": "600735",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 19,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "69c3354fdfa15f753664c2e604a2d0b68a2914ea2fa567c6b321973068642431",
+          "locator": "st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600735-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentieth-period-followup-20261120/catalog-period/600745",
+      "symbol": "600745",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 42,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "f8fbd8eb56ce3462ffe4d1cc9d4b88d5090dfc55febe9ba7160896a95e23374f",
+          "locator": "st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600745-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "65ebd62a6f5020b109684dca1e0ae3c354fac47ca55614708705e446b43b596a",
+          "locator": "st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600745-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfifth-period-followup-20261120/catalog-period/603718",
+      "symbol": "603718",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 22,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "22c90a17b532384c0a79d320175384a0471d295acb7cf821c87f28cc4fb4780e",
+          "locator": "st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603718-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfifth-period-followup-20261120/catalog-period/603729",
+      "symbol": "603729",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 33,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "19152025bd87e7c539e783a8a796196e0167a16c157860a59ad461edc95896f9",
+          "locator": "st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603729-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "38ac966c72b77a49bc27636f8776552204afc26a36bebf02291b01f46d092d78",
+          "locator": "st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603729-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfifth-period-followup-20261120/catalog-period/603789",
+      "symbol": "603789",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 20,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "8f3565a9d02eac2a101f1f0318532f44a35706b17cf1b2ef67f88f6bf4070b71",
+          "locator": "st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603789-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfifth-period-followup-20261120/catalog-period/603825",
+      "symbol": "603825",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 52,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "879b98100e02e2dd763b07bf8e6a59c31a574b13e556027fec5743b8d6867798",
+          "locator": "st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603825-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d5b59b0554ee33a0ac94137007336e4b0ad7740f67304e0342a7967893892fea",
+          "locator": "st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603825-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfirst-period-followup-20261120/catalog-period/600753",
+      "symbol": "600753",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 27,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "fcd5402e07ec8ae2fed9026fe5f6d0e668c521dbc7a2cf587aa504160bf280d5",
+          "locator": "st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600753-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfirst-period-followup-20261120/catalog-period/600759",
+      "symbol": "600759",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 51,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "2175ae4c7b3646ba0f37d88c743a2771a304c22068902017f9860f47400da03b",
+          "locator": "st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600759-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d195f65d835f4ed5f97d37af8564402c8db13a6236e5e661d2e4539681695e6b",
+          "locator": "st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600759-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfirst-period-followup-20261120/catalog-period/600818",
+      "symbol": "600818",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 28,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "439ad2ce168a5a8a9ebbd47d91f1e2d3251f09afef8213c49f7a26766cfa0cab",
+          "locator": "st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600818-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfirst-period-followup-20261120/catalog-period/600889",
+      "symbol": "600889",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 32,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "00f981d6a687f50e3683aebe0f1293e033a7422bb7c15158930ce65491c7ec21",
+          "locator": "st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600889-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "e3d99cb5e16b8c28a40f67c277dd865fc67f319e45de323bf82fe945aba5e5bd",
+          "locator": "st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600889-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfourth-period-followup-20261120/catalog-period/603429",
+      "symbol": "603429",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 97,
+      "pages": 4,
+      "provider_totalpages_values": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "9c5d371429f80ae0634433f2cafc08915cb8d507f9de3a40bace9aca0c752a8f",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603429-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "e65e99f878cc842dddf8c43b009a0fdf0217263f93b238ff7284cbac0f8622e5",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603429-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "badbc260fd3c23da069864dc8a26180bc458875296ebd36f968a508ae7ee8318",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603429-3.json"
+        },
+        {
+          "page_number": 4,
+          "sha256": "94e4ffaf1a61df469bfa3ab630e6f15521eeace24115d3778325506e05153a6a",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603429-4.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfourth-period-followup-20261120/catalog-period/603517",
+      "symbol": "603517",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 59,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b80bb1746df39a620f8a2ea8e9fc528659f7777a8b9d9659bf545fcb57651859",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603517-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d2d950e792a6ad1350e651ef89342178172c010e26cf23aa93debe999568c322",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603517-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfourth-period-followup-20261120/catalog-period/603557",
+      "symbol": "603557",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 33,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "b192d3cb16e92971b93ef436bce8f0b5b417bddd2394564bce84678b33605b9c",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603557-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "20bbd13a47efd1a1a2b7ffd5aee8df10c3634c3e716051d993ec2dba15cf377a",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603557-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyfourth-period-followup-20261120/catalog-period/603595",
+      "symbol": "603595",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 24,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "fd7d657d717ed83799256b20cc4644a699e9f05f61fe99f20703b2e167281e23",
+          "locator": "st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603595-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysecond-period-followup-20261120/catalog-period/600965",
+      "symbol": "600965",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 30,
+      "pages": 1,
+      "provider_totalpages_values": [
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "6c351f021945f20b8193533436fbc817172a23231b4f90bd45e0fdd0d504f6d3",
+          "locator": "st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-600965-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysecond-period-followup-20261120/catalog-period/601010",
+      "symbol": "601010",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 59,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "e10fddd6db5d3d80553ebc79a718ca9890c583fa8cf2916c8012065868419218",
+          "locator": "st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-601010-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "990958aab92905c0fc7d7e81792c2e56499f8afd37918a4d34feb892fa92f329",
+          "locator": "st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-601010-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysecond-period-followup-20261120/catalog-period/601718",
+      "symbol": "601718",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 46,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "1348a9b4b12f3d4cf1be0c80f37841dc56294c8e7a3f542497b4d8637e828ce6",
+          "locator": "st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-601718-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "e7ca34b1461e6045b59dab1f80c0f7eed79c584ddb12dd217cd306b1a91e71aa",
+          "locator": "st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-601718-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysecond-period-followup-20261120/catalog-period/603008",
+      "symbol": "603008",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 23,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "5b8e2e44c971087567a14bac0df1bb7e4b20d1a75984f0793fc5867228cd6d55",
+          "locator": "st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-603008-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyseventh-period-followup-20261120/catalog-v2/603922",
+      "symbol": "603922",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 48,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "2de3a5fcd5959993c424e522ea63811e561b2ffa76e356e1dc6760e2e57233be",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-603922-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d37dbd8590e70a9192efaca9bf9d2128fb2393708596b460cebaccd453b38e0e",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-603922-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyseventh-period-followup-20261120/catalog-v2/603959",
+      "symbol": "603959",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 41,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "a21fe5e907289a660709656bdd6ad5bd077b3b1c2bc26efeca1660e90accf901",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-603959-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "1c3f5c98a6c5ff56b1dd4e018149ca061bbb574e202c70bdc9d7943ee6884ff7",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-603959-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyseventh-period-followup-20261120/catalog-v2/605199",
+      "symbol": "605199",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 48,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "5dd5bc930cdbd77e72f9be94bb5d95da159ad5f2447271ba73437e6fd10209c7",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605199-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "069746e84578f55336f9eef0a3bcc73f61fb15a50d7b416ad2af7cd4b6f47413",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605199-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentyseventh-period-followup-20261120/catalog-v2/605336",
+      "symbol": "605336",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 91,
+      "pages": 4,
+      "provider_totalpages_values": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "6ece758c56c3834f61a23f7c5d548bf045df0e95af7aa73c633dab970095c398",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605336-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "d01e5b4e956a2757908cb05f8601e0544bb7380716993ce5642cfd62aba1e94b",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605336-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "a4cc6e2e8bec7a9f81e6ef0bc17c65ea1217ab6b85496d3d163a351d5496edf4",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605336-3.json"
+        },
+        {
+          "page_number": 4,
+          "sha256": "a65c53d182f676ca420f982c5f3f82b63365ecc07551a02b50cc596fb83b08bb",
+          "locator": "st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605336-4.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysixth-period-followup-20261120/catalog-v2/603828",
+      "symbol": "603828",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 30,
+      "pages": 1,
+      "provider_totalpages_values": [
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "adb76b8204c74b8ddcb9488ca243a8c62c9c1225779e0f561565dfb5a4fc0121",
+          "locator": "st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603828-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysixth-period-followup-20261120/catalog-v2/603838",
+      "symbol": "603838",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 29,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "e037022e168db2e8eef4905e95a7828ef602d0ee166fe3c8da1011e5edc4ba79",
+          "locator": "st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603838-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysixth-period-followup-20261120/catalog-v2/603843",
+      "symbol": "603843",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 17,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "511838d8df0ef903ee8e4cc28b2d72f6743cb28719a55db6cd502a3754e83ae1",
+          "locator": "st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603843-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentysixth-period-followup-20261120/catalog-v2/603869",
+      "symbol": "603869",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 24,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "63a165daadcf504e45337d591cc1eaffb5cb7b774b71dbdc06c90af25fbe5412",
+          "locator": "st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603869-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentythird-period-followup-20261120/catalog-period/603272",
+      "symbol": "603272",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 37,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "ddddc431b868378a72426153f1b3c0edd603d6f2956908bce2b630099f732ad9",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603272-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "7ca5b7fc9695ad73fa07d7d03db302c9a77e8bc0258216a7ad98bd0e485e0a71",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603272-2.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentythird-period-followup-20261120/catalog-period/603359",
+      "symbol": "603359",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 24,
+      "pages": 1,
+      "provider_totalpages_values": [
+        0
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "43dd96433e8a92f0a7b9a07c2aa0fbe0791a3fa52af83bf2dbec26c3b5eefec1",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603359-1.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentythird-period-followup-20261120/catalog-period/603377",
+      "symbol": "603377",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 73,
+      "pages": 3,
+      "provider_totalpages_values": [
+        2,
+        2,
+        2
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "c5a631132107490443238414a6bdb5327346b1c6b96ad8182238ca60ce5ac1a2",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603377-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "4f8e602e0e537b83452e12d5e4d3554dec5d9d06365ce6880423c1d85de738f7",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603377-2.json"
+        },
+        {
+          "page_number": 3,
+          "sha256": "d48e3d7fb67fd41fa7a4d6244a1ccfd5774e0f415eeccdb37ddca526ebfcd159",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603377-3.json"
+        }
+      ]
+    },
+    {
+      "query_id": "st-twentythird-period-followup-20261120/catalog-period/603378",
+      "symbol": "603378",
+      "status": "saved_pagination_complete",
+      "errors": [],
+      "rows": 53,
+      "pages": 2,
+      "provider_totalpages_values": [
+        1,
+        1
+      ],
+      "captures": [
+        {
+          "page_number": 1,
+          "sha256": "062f6a0f2f33c5ddc214d65de8bd236fb06597aaeb6f44e444d8b2a92c37a5b2",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603378-1.json"
+        },
+        {
+          "page_number": 2,
+          "sha256": "4de801734545fc432dafaa679b6b4a73a446d029cbf08ae7f4bbb49615160c34",
+          "locator": "st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603378-2.json"
+        }
+      ]
+    }
+  ],
+  "identity_conflicts": [],
+  "candidates": [
+    {
+      "announcement_id": "1225438033",
+      "symbol": "600337",
+      "name": "ST美克",
+      "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438033.PDF",
+      "published_on": "2026-07-23",
+      "catalog_query": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "catalog_page": 2,
+      "catalog_sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225438037",
+      "symbol": "600337",
+      "name": "ST美克",
+      "title": "美克国际家居用品股份有限公司关于召开终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项投资者说明会的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438037.PDF",
+      "published_on": "2026-07-23",
+      "catalog_query": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "catalog_page": 2,
+      "catalog_sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": true,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225451821",
+      "symbol": "002932",
+      "name": "*ST明德",
+      "title": "关于终止部分募集资金投资项目暨变更募集资金用途的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451821.PDF",
+      "published_on": "2026-08-01",
+      "catalog_query": "st-twelfth-period-followup-20261120/catalog-period/002932",
+      "catalog_page": 2,
+      "catalog_sha256": "33c3f78d7ab42e10cb356afadc3e550d9713425d7dbe1b3243fe3eaa9afa2b44",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225451822",
+      "symbol": "002932",
+      "name": "*ST明德",
+      "title": "国金证券股份有限公司关于武汉明德生物科技股份有限公司终止部分募集资金投资项目暨变更募集资金用途的核查意见",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451822.PDF",
+      "published_on": "2026-08-01",
+      "catalog_query": "st-twelfth-period-followup-20261120/catalog-period/002932",
+      "catalog_page": 2,
+      "catalog_sha256": "33c3f78d7ab42e10cb356afadc3e550d9713425d7dbe1b3243fe3eaa9afa2b44",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": true,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225474980",
+      "symbol": "600337",
+      "name": "ST美克",
+      "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金事项暨关联交易相关主体买卖公司股票的自查报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225474980.PDF",
+      "published_on": "2026-08-15",
+      "catalog_query": "st-sixteenth-period-followup-20261120/catalog-period/600337",
+      "catalog_page": 2,
+      "catalog_sha256": "fa0350f05d4402b7585dbe87708e3f9886d698f3d1df44d3fdacb1f6f3fe01f1",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": true,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225579854",
+      "symbol": "600818",
+      "name": "ST中路",
+      "title": "关于控股股东被法院裁定受理破产清算的提示性公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579854.PDF",
+      "published_on": "2026-09-24",
+      "catalog_query": "st-twentyfirst-period-followup-20261120/catalog-period/600818",
+      "catalog_page": 1,
+      "catalog_sha256": "439ad2ce168a5a8a9ebbd47d91f1e2d3251f09afef8213c49f7a26766cfa0cab",
+      "rules": [
+        "judicial_change"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225616501",
+      "symbol": "600581",
+      "name": "*ST八钢",
+      "title": "八一钢铁关于终止新疆巨峰金属制品有限公司委托管理关系暨关联交易的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225616501.PDF",
+      "published_on": "2026-10-23",
+      "catalog_query": "st-nineteenth-period-followup-20261120/catalog-period/600581",
+      "catalog_page": 1,
+      "catalog_sha256": "3d770dde1f19d91d8ba47b7c353c2da701fe9928d96c09bcad4963eb3392bb2d",
+      "rules": [
+        "transaction_termination"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    },
+    {
+      "announcement_id": "1225663625",
+      "symbol": "603008",
+      "name": "ST喜临门",
+      "title": "喜临门健康睡眠科技股份公司关于法院决定受理实际控制人、董事、高级管理人员个人债务集中清理的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-10/1225663625.PDF",
+      "published_on": "2026-11-10",
+      "catalog_query": "st-twentysecond-period-followup-20261120/catalog-period/603008",
+      "catalog_page": 1,
+      "catalog_sha256": "5b8e2e44c971087567a14bac0df1bb7e4b20d1a75984f0793fc5867228cd6d55",
+      "rules": [
+        "judicial_change"
+      ],
+      "supporting_document_title": false,
+      "selected_source_identity_present": false,
+      "body_status": "not_evaluated_by_this_audit",
+      "protected_id": false,
+      "classification": "title_lead_not_confirmed_omission"
+    }
+  ],
+  "counts": {
+    "capture_pages": 138,
+    "saved_queries": 84,
+    "pagination_complete_queries": 84,
+    "symbols_with_complete_saved_queries": 84,
+    "fixed_symbols": 150,
+    "fixed_symbols_without_complete_saved_query": 66,
+    "unique_catalog_announcements": 3126,
+    "matched_titles": 13,
+    "unselected_title_leads": 8,
+    "unselected_primary_title_leads": 5,
+    "unselected_supporting_title_leads": 3
+  },
+  "uncovered_fixed_symbols": [
+    "000010",
+    "000016",
+    "000056",
+    "000078",
+    "000488",
+    "000609",
+    "000610",
+    "000615",
+    "000632",
+    "000639",
+    "000669",
+    "000677",
+    "000698",
+    "000711",
+    "000752",
+    "000793",
+    "000820",
+    "000821",
+    "000826",
+    "000838",
+    "000903",
+    "000909",
+    "000911",
+    "002005",
+    "002024",
+    "002055",
+    "002082",
+    "002102",
+    "002109",
+    "002122",
+    "002168",
+    "002175",
+    "002193",
+    "002198",
+    "002199",
+    "002207",
+    "002211",
+    "002214",
+    "002217",
+    "002227",
+    "002305",
+    "002306",
+    "002323",
+    "002360",
+    "002512",
+    "002514",
+    "002538",
+    "002542",
+    "002547",
+    "002569",
+    "002586",
+    "002592",
+    "002598",
+    "002620",
+    "002656",
+    "002667",
+    "002689",
+    "002691",
+    "002717",
+    "002977",
+    "600491",
+    "600730",
+    "603021",
+    "603189",
+    "603398",
+    "603822"
+  ],
+  "boundary": "Complete pagination applies only to these saved queries. Title leads are not established body facts, proven omissions, a complete event census, or independent cases.",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "selected_source_identity_count": 1181,
+  "selected_source_ids": [
+    "1218685262",
+    "1222975603",
+    "1223155412",
+    "1223370266",
+    "1223381687",
+    "1223386717",
+    "1223411160",
+    "1223419026",
+    "1223426982",
+    "1224000135",
+    "1224561595",
+    "1224672367",
+    "1224672384",
+    "1224696715",
+    "1224764257",
+    "1224768534",
+    "1224781398",
+    "1224812570",
+    "1224833816",
+    "1224874140",
+    "1224888781",
+    "1224888881",
+    "1224901278",
+    "1224901982",
+    "1224904927",
+    "1224914772",
+    "1224930399",
+    "1224984682",
+    "1225014049",
+    "1225021033",
+    "1225021044",
+    "1225022161",
+    "1225022238",
+    "1225022358",
+    "1225037593",
+    "1225043459",
+    "1225044690",
+    "1225050234",
+    "1225050434",
+    "1225050666",
+    "1225058546",
+    "1225058547",
+    "1225061216",
+    "1225064494",
+    "1225074277",
+    "1225090626",
+    "1225090629",
+    "1225092611",
+    "1225096042",
+    "1225096720",
+    "1225096728",
+    "1225111512",
+    "1225121789",
+    "1225121809",
+    "1225123757",
+    "1225132031",
+    "1225132036",
+    "1225132337",
+    "1225132345",
+    "1225132800",
+    "1225133126",
+    "1225133140",
+    "1225139412",
+    "1225139423",
+    "1225139466",
+    "1225139533",
+    "1225140244",
+    "1225144943",
+    "1225144967",
+    "1225145043",
+    "1225145292",
+    "1225150078",
+    "1225155507",
+    "1225156047",
+    "1225156288",
+    "1225156289",
+    "1225156316",
+    "1225156612",
+    "1225156643",
+    "1225165170",
+    "1225165760",
+    "1225165949",
+    "1225166249",
+    "1225170058",
+    "1225170075",
+    "1225170088",
+    "1225170536",
+    "1225172303",
+    "1225172319",
+    "1225173668",
+    "1225173882",
+    "1225181447",
+    "1225182732",
+    "1225183004",
+    "1225183014",
+    "1225183072",
+    "1225183513",
+    "1225183550",
+    "1225183563",
+    "1225183668",
+    "1225185997",
+    "1225186746",
+    "1225186844",
+    "1225186977",
+    "1225188979",
+    "1225188982",
+    "1225189000",
+    "1225190804",
+    "1225191006",
+    "1225191017",
+    "1225193616",
+    "1225195300",
+    "1225195310",
+    "1225195575",
+    "1225195659",
+    "1225195661",
+    "1225196578",
+    "1225197307",
+    "1225197393",
+    "1225197559",
+    "1225197981",
+    "1225197985",
+    "1225197995",
+    "1225208598",
+    "1225208669",
+    "1225211734",
+    "1225212355",
+    "1225212367",
+    "1225212391",
+    "1225212709",
+    "1225212727",
+    "1225212749",
+    "1225213294",
+    "1225215035",
+    "1225215514",
+    "1225215555",
+    "1225218891",
+    "1225219075",
+    "1225219229",
+    "1225219250",
+    "1225219591",
+    "1225219618",
+    "1225219691",
+    "1225220339",
+    "1225220340",
+    "1225220425",
+    "1225220597",
+    "1225221467",
+    "1225221629",
+    "1225221644",
+    "1225222296",
+    "1225222777",
+    "1225222790",
+    "1225222839",
+    "1225222889",
+    "1225222892",
+    "1225222896",
+    "1225222913",
+    "1225222980",
+    "1225227092",
+    "1225227384",
+    "1225231978",
+    "1225233398",
+    "1225233410",
+    "1225233470",
+    "1225234874",
+    "1225234962",
+    "1225234988",
+    "1225235583",
+    "1225235662",
+    "1225241191",
+    "1225241270",
+    "1225241272",
+    "1225241865",
+    "1225242871",
+    "1225242879",
+    "1225243092",
+    "1225243115",
+    "1225243942",
+    "1225243996",
+    "1225244006",
+    "1225244262",
+    "1225244280",
+    "1225244457",
+    "1225244747",
+    "1225244786",
+    "1225244906",
+    "1225245306",
+    "1225245896",
+    "1225246007",
+    "1225246019",
+    "1225246370",
+    "1225246382",
+    "1225247389",
+    "1225247906",
+    "1225247953",
+    "1225247965",
+    "1225248771",
+    "1225248784",
+    "1225248801",
+    "1225249854",
+    "1225250031",
+    "1225250043",
+    "1225250236",
+    "1225250266",
+    "1225250289",
+    "1225250295",
+    "1225250474",
+    "1225250484",
+    "1225250502",
+    "1225250896",
+    "1225250914",
+    "1225250921",
+    "1225250932",
+    "1225250941",
+    "1225250952",
+    "1225251063",
+    "1225251103",
+    "1225251124",
+    "1225251135",
+    "1225251137",
+    "1225251545",
+    "1225251557",
+    "1225251583",
+    "1225251686",
+    "1225251761",
+    "1225252038",
+    "1225256589",
+    "1225257194",
+    "1225257229",
+    "1225257367",
+    "1225258893",
+    "1225258924",
+    "1225261660",
+    "1225261701",
+    "1225261829",
+    "1225263279",
+    "1225263624",
+    "1225264720",
+    "1225264753",
+    "1225264993",
+    "1225266057",
+    "1225266086",
+    "1225266127",
+    "1225266131",
+    "1225266132",
+    "1225266134",
+    "1225266160",
+    "1225266560",
+    "1225266575",
+    "1225266592",
+    "1225266678",
+    "1225266703",
+    "1225266706",
+    "1225266715",
+    "1225266726",
+    "1225266735",
+    "1225267320",
+    "1225267982",
+    "1225268023",
+    "1225268133",
+    "1225268165",
+    "1225268438",
+    "1225268975",
+    "1225268978",
+    "1225269013",
+    "1225269055",
+    "1225272770",
+    "1225273254",
+    "1225273390",
+    "1225274079",
+    "1225274500",
+    "1225274917",
+    "1225277438",
+    "1225277487",
+    "1225280892",
+    "1225282206",
+    "1225282423",
+    "1225282465",
+    "1225282697",
+    "1225284754",
+    "1225291803",
+    "1225292876",
+    "1225292893",
+    "1225307317",
+    "1225307829",
+    "1225312619",
+    "1225313620",
+    "1225313933",
+    "1225314269",
+    "1225314875",
+    "1225318270",
+    "1225318280",
+    "1225321685",
+    "1225322073",
+    "1225322166",
+    "1225322985",
+    "1225323739",
+    "1225324431",
+    "1225326146",
+    "1225326692",
+    "1225327651",
+    "1225327872",
+    "1225327963",
+    "1225328398",
+    "1225329576",
+    "1225330073",
+    "1225336644",
+    "1225337437",
+    "1225338105",
+    "1225338294",
+    "1225338778",
+    "1225338959",
+    "1225340289",
+    "1225340351",
+    "1225340352",
+    "1225340563",
+    "1225341628",
+    "1225342323",
+    "1225344185",
+    "1225344565",
+    "1225344572",
+    "1225346266",
+    "1225346702",
+    "1225347065",
+    "1225347074",
+    "1225347106",
+    "1225347133",
+    "1225348788",
+    "1225354167",
+    "1225354459",
+    "1225356346",
+    "1225361395",
+    "1225362401",
+    "1225362891",
+    "1225363266",
+    "1225363897",
+    "1225363928",
+    "1225363995",
+    "1225365570",
+    "1225365705",
+    "1225365940",
+    "1225365990",
+    "1225366223",
+    "1225366268",
+    "1225367322",
+    "1225367713",
+    "1225369476",
+    "1225369698",
+    "1225369785",
+    "1225370971",
+    "1225373435",
+    "1225374326",
+    "1225374517",
+    "1225376575",
+    "1225376580",
+    "1225376732",
+    "1225376733",
+    "1225376816",
+    "1225377029",
+    "1225377075",
+    "1225377076",
+    "1225379627",
+    "1225379653",
+    "1225379811",
+    "1225380075",
+    "1225381421",
+    "1225381424",
+    "1225381688",
+    "1225382007",
+    "1225384023",
+    "1225384306",
+    "1225384335",
+    "1225384452",
+    "1225386382",
+    "1225386494",
+    "1225386553",
+    "1225387913",
+    "1225388521",
+    "1225389261",
+    "1225389952",
+    "1225390375",
+    "1225390702",
+    "1225392070",
+    "1225392237",
+    "1225392239",
+    "1225392248",
+    "1225394062",
+    "1225394064",
+    "1225394126",
+    "1225394192",
+    "1225394811",
+    "1225395225",
+    "1225395270",
+    "1225395891",
+    "1225395911",
+    "1225395993",
+    "1225396360",
+    "1225397185",
+    "1225397191",
+    "1225397222",
+    "1225397243",
+    "1225397447",
+    "1225397705",
+    "1225397748",
+    "1225398760",
+    "1225400347",
+    "1225400591",
+    "1225400676",
+    "1225400711",
+    "1225400864",
+    "1225401051",
+    "1225401180",
+    "1225401321",
+    "1225401582",
+    "1225401799",
+    "1225401844",
+    "1225401864",
+    "1225401990",
+    "1225403155",
+    "1225403248",
+    "1225403513",
+    "1225405413",
+    "1225405415",
+    "1225405535",
+    "1225405748",
+    "1225405756",
+    "1225405760",
+    "1225405830",
+    "1225405831",
+    "1225405936",
+    "1225406020",
+    "1225406064",
+    "1225406065",
+    "1225406067",
+    "1225406309",
+    "1225406315",
+    "1225406415",
+    "1225406416",
+    "1225406422",
+    "1225406622",
+    "1225406627",
+    "1225406691",
+    "1225406728",
+    "1225406741",
+    "1225406743",
+    "1225406887",
+    "1225406992",
+    "1225407049",
+    "1225407050",
+    "1225407087",
+    "1225407197",
+    "1225407358",
+    "1225407410",
+    "1225407412",
+    "1225407475",
+    "1225407516",
+    "1225407586",
+    "1225408161",
+    "1225409302",
+    "1225409315",
+    "1225409633",
+    "1225409826",
+    "1225410169",
+    "1225411209",
+    "1225411229",
+    "1225411455",
+    "1225411643",
+    "1225412070",
+    "1225413450",
+    "1225413577",
+    "1225414090",
+    "1225414253",
+    "1225414334",
+    "1225414376",
+    "1225414403",
+    "1225414412",
+    "1225415068",
+    "1225417943",
+    "1225418030",
+    "1225418686",
+    "1225418964",
+    "1225420084",
+    "1225420221",
+    "1225420292",
+    "1225420862",
+    "1225421385",
+    "1225421621",
+    "1225422339",
+    "1225422610",
+    "1225422612",
+    "1225422616",
+    "1225422630",
+    "1225422979",
+    "1225423041",
+    "1225423244",
+    "1225423572",
+    "1225423937",
+    "1225423959",
+    "1225423971",
+    "1225424015",
+    "1225424106",
+    "1225424112",
+    "1225424214",
+    "1225424295",
+    "1225424856",
+    "1225425401",
+    "1225425493",
+    "1225426487",
+    "1225426619",
+    "1225426620",
+    "1225426745",
+    "1225427192",
+    "1225427424",
+    "1225427871",
+    "1225428852",
+    "1225429054",
+    "1225429061",
+    "1225429877",
+    "1225430134",
+    "1225430291",
+    "1225430571",
+    "1225431003",
+    "1225431048",
+    "1225431095",
+    "1225431172",
+    "1225432825",
+    "1225433443",
+    "1225433557",
+    "1225434353",
+    "1225434356",
+    "1225434868",
+    "1225435305",
+    "1225435750",
+    "1225435982",
+    "1225435983",
+    "1225436048",
+    "1225436857",
+    "1225437642",
+    "1225437752",
+    "1225437985",
+    "1225438034",
+    "1225438035",
+    "1225439252",
+    "1225439257",
+    "1225439848",
+    "1225440071",
+    "1225440525",
+    "1225441242",
+    "1225441402",
+    "1225441523",
+    "1225441543",
+    "1225441546",
+    "1225443031",
+    "1225445481",
+    "1225445676",
+    "1225445923",
+    "1225446681",
+    "1225446816",
+    "1225446817",
+    "1225446889",
+    "1225447178",
+    "1225447295",
+    "1225448177",
+    "1225448660",
+    "1225448701",
+    "1225448756",
+    "1225448764",
+    "1225448817",
+    "1225448827",
+    "1225448933",
+    "1225448962",
+    "1225449328",
+    "1225449700",
+    "1225449756",
+    "1225450112",
+    "1225450413",
+    "1225450529",
+    "1225450840",
+    "1225450843",
+    "1225450857",
+    "1225450858",
+    "1225450939",
+    "1225451092",
+    "1225451646",
+    "1225452476",
+    "1225454517",
+    "1225454951",
+    "1225456226",
+    "1225458192",
+    "1225461074",
+    "1225462121",
+    "1225462269",
+    "1225462271",
+    "1225463181",
+    "1225463476",
+    "1225463838",
+    "1225464090",
+    "1225464415",
+    "1225464983",
+    "1225465715",
+    "1225467171",
+    "1225468445",
+    "1225468494",
+    "1225469215",
+    "1225469364",
+    "1225469570",
+    "1225470953",
+    "1225470994",
+    "1225471401",
+    "1225471769",
+    "1225472564",
+    "1225472629",
+    "1225473457",
+    "1225473990",
+    "1225474432",
+    "1225474469",
+    "1225475518",
+    "1225475744",
+    "1225475954",
+    "1225476634",
+    "1225476643",
+    "1225477571",
+    "1225477641",
+    "1225478331",
+    "1225478332",
+    "1225478576",
+    "1225478846",
+    "1225480400",
+    "1225481712",
+    "1225481746",
+    "1225482294",
+    "1225483477",
+    "1225483493",
+    "1225484630",
+    "1225485749",
+    "1225485841",
+    "1225486131",
+    "1225487786",
+    "1225487892",
+    "1225489089",
+    "1225489096",
+    "1225489602",
+    "1225490092",
+    "1225493319",
+    "1225493674",
+    "1225493692",
+    "1225494051",
+    "1225495024",
+    "1225495044",
+    "1225495364",
+    "1225497032",
+    "1225497053",
+    "1225497253",
+    "1225497271",
+    "1225497432",
+    "1225497764",
+    "1225497819",
+    "1225498049",
+    "1225498295",
+    "1225498625",
+    "1225499239",
+    "1225499449",
+    "1225499508",
+    "1225500431",
+    "1225500432",
+    "1225500441",
+    "1225501314",
+    "1225502356",
+    "1225503059",
+    "1225503101",
+    "1225503716",
+    "1225504555",
+    "1225504556",
+    "1225504557",
+    "1225505188",
+    "1225505445",
+    "1225505459",
+    "1225505806",
+    "1225507582",
+    "1225507583",
+    "1225508741",
+    "1225509138",
+    "1225509844",
+    "1225510581",
+    "1225511156",
+    "1225511626",
+    "1225511663",
+    "1225511738",
+    "1225512825",
+    "1225515109",
+    "1225515124",
+    "1225515498",
+    "1225516212",
+    "1225517447",
+    "1225517851",
+    "1225518215",
+    "1225518255",
+    "1225519173",
+    "1225519647",
+    "1225519688",
+    "1225519689",
+    "1225519929",
+    "1225519956",
+    "1225519962",
+    "1225520055",
+    "1225520778",
+    "1225520969",
+    "1225521154",
+    "1225521542",
+    "1225521729",
+    "1225521730",
+    "1225522023",
+    "1225522073",
+    "1225522076",
+    "1225522498",
+    "1225522783",
+    "1225522787",
+    "1225522791",
+    "1225523413",
+    "1225523850",
+    "1225524804",
+    "1225524836",
+    "1225525169",
+    "1225526003",
+    "1225526423",
+    "1225526431",
+    "1225526544",
+    "1225527263",
+    "1225527619",
+    "1225528489",
+    "1225528723",
+    "1225529151",
+    "1225529175",
+    "1225529347",
+    "1225529447",
+    "1225530036",
+    "1225530042",
+    "1225531390",
+    "1225532102",
+    "1225532134",
+    "1225532237",
+    "1225533235",
+    "1225533549",
+    "1225533551",
+    "1225534310",
+    "1225534551",
+    "1225534583",
+    "1225534676",
+    "1225534699",
+    "1225534993",
+    "1225535059",
+    "1225535092",
+    "1225535217",
+    "1225535288",
+    "1225537480",
+    "1225538017",
+    "1225538581",
+    "1225538584",
+    "1225539050",
+    "1225540491",
+    "1225541480",
+    "1225541847",
+    "1225542398",
+    "1225542411",
+    "1225542475",
+    "1225543868",
+    "1225544831",
+    "1225545707",
+    "1225547362",
+    "1225547841",
+    "1225548627",
+    "1225548783",
+    "1225549240",
+    "1225549293",
+    "1225549792",
+    "1225552021",
+    "1225552244",
+    "1225552250",
+    "1225552265",
+    "1225552681",
+    "1225552910",
+    "1225554222",
+    "1225554537",
+    "1225555185",
+    "1225555415",
+    "1225555470",
+    "1225555668",
+    "1225556177",
+    "1225556367",
+    "1225556368",
+    "1225557731",
+    "1225560935",
+    "1225560938",
+    "1225560952",
+    "1225561327",
+    "1225561328",
+    "1225561409",
+    "1225563014",
+    "1225563707",
+    "1225564124",
+    "1225564163",
+    "1225564828",
+    "1225565967",
+    "1225566561",
+    "1225567047",
+    "1225567309",
+    "1225567335",
+    "1225568647",
+    "1225568734",
+    "1225570143",
+    "1225570475",
+    "1225570800",
+    "1225571174",
+    "1225572315",
+    "1225573373",
+    "1225574915",
+    "1225575037",
+    "1225575791",
+    "1225575978",
+    "1225576745",
+    "1225577870",
+    "1225577884",
+    "1225577942",
+    "1225577950",
+    "1225577951",
+    "1225578143",
+    "1225578249",
+    "1225579482",
+    "1225580456",
+    "1225581326",
+    "1225581927",
+    "1225582069",
+    "1225582995",
+    "1225583005",
+    "1225583013",
+    "1225583137",
+    "1225583185",
+    "1225584110",
+    "1225585687",
+    "1225585850",
+    "1225585932",
+    "1225585935",
+    "1225586219",
+    "1225586236",
+    "1225586280",
+    "1225586281",
+    "1225586286",
+    "1225586523",
+    "1225586604",
+    "1225586937",
+    "1225587085",
+    "1225587280",
+    "1225587488",
+    "1225588245",
+    "1225588365",
+    "1225588596",
+    "1225589083",
+    "1225590208",
+    "1225590288",
+    "1225590832",
+    "1225590833",
+    "1225590892",
+    "1225590893",
+    "1225591491",
+    "1225591919",
+    "1225591937",
+    "1225597159",
+    "1225597901",
+    "1225597943",
+    "1225598035",
+    "1225598978",
+    "1225599349",
+    "1225599639",
+    "1225599640",
+    "1225599714",
+    "1225599833",
+    "1225599834",
+    "1225599917",
+    "1225599921",
+    "1225600966",
+    "1225601005",
+    "1225601392",
+    "1225601565",
+    "1225601827",
+    "1225602315",
+    "1225602415",
+    "1225602416",
+    "1225602417",
+    "1225603213",
+    "1225603727",
+    "1225604123",
+    "1225605469",
+    "1225605494",
+    "1225605766",
+    "1225607488",
+    "1225607489",
+    "1225607502",
+    "1225608097",
+    "1225608268",
+    "1225608723",
+    "1225608733",
+    "1225609701",
+    "1225609725",
+    "1225609996",
+    "1225610007",
+    "1225610010",
+    "1225610029",
+    "1225610079",
+    "1225610521",
+    "1225610546",
+    "1225610718",
+    "1225610790",
+    "1225610804",
+    "1225610808",
+    "1225611148",
+    "1225611760",
+    "1225611814",
+    "1225612083",
+    "1225612213",
+    "1225612250",
+    "1225612451",
+    "1225612633",
+    "1225612675",
+    "1225612690",
+    "1225613104",
+    "1225614303",
+    "1225614380",
+    "1225614713",
+    "1225615607",
+    "1225615644",
+    "1225616528",
+    "1225616677",
+    "1225618730",
+    "1225619001",
+    "1225619039",
+    "1225619049",
+    "1225619169",
+    "1225619481",
+    "1225620016",
+    "1225620036",
+    "1225620105",
+    "1225620733",
+    "1225620912",
+    "1225621034",
+    "1225621333",
+    "1225621493",
+    "1225621541",
+    "1225621744",
+    "1225622842",
+    "1225622853",
+    "1225622970",
+    "1225623265",
+    "1225623866",
+    "1225625332",
+    "1225625467",
+    "1225626073",
+    "1225626235",
+    "1225626289",
+    "1225626293",
+    "1225626812",
+    "1225627208",
+    "1225627508",
+    "1225628125",
+    "1225628498",
+    "1225629182",
+    "1225629255",
+    "1225629261",
+    "1225629262",
+    "1225629343",
+    "1225629497",
+    "1225630330",
+    "1225630481",
+    "1225631489",
+    "1225631518",
+    "1225631527",
+    "1225631555",
+    "1225631800",
+    "1225631814",
+    "1225632581",
+    "1225632584",
+    "1225633260",
+    "1225633264",
+    "1225633265",
+    "1225633536",
+    "1225633577",
+    "1225634661",
+    "1225635078",
+    "1225636178",
+    "1225636186",
+    "1225636636",
+    "1225636800",
+    "1225637186",
+    "1225637504",
+    "1225637854",
+    "1225637859",
+    "1225638414",
+    "1225638979",
+    "1225640094",
+    "1225640259",
+    "1225640293",
+    "1225640363",
+    "1225640409",
+    "1225640804",
+    "1225640975",
+    "1225641054",
+    "1225641111",
+    "1225641348",
+    "1225641381",
+    "1225641384",
+    "1225642095",
+    "1225642128",
+    "1225642443",
+    "1225642463",
+    "1225642596",
+    "1225642978",
+    "1225643095",
+    "1225643194",
+    "1225643678",
+    "1225644049",
+    "1225644169",
+    "1225644187",
+    "1225644194",
+    "1225644494",
+    "1225644502",
+    "1225644521",
+    "1225644526",
+    "1225644670",
+    "1225644904",
+    "1225644974",
+    "1225644977",
+    "1225645252",
+    "1225645258",
+    "1225645540",
+    "1225645645",
+    "1225645646",
+    "1225646013",
+    "1225646118",
+    "1225646860",
+    "1225646956",
+    "1225647037",
+    "1225647128",
+    "1225647137",
+    "1225647155",
+    "1225647473",
+    "1225647479",
+    "1225647822",
+    "1225647845",
+    "1225647864",
+    "1225647933",
+    "1225647947",
+    "1225647990",
+    "1225648130",
+    "1225648141",
+    "1225648277",
+    "1225648279",
+    "1225648307",
+    "1225648348",
+    "1225648349",
+    "1225648471",
+    "1225648728",
+    "1225648731",
+    "1225648868",
+    "1225648979",
+    "1225649024",
+    "1225649049",
+    "1225649078",
+    "1225649229",
+    "1225649255",
+    "1225649302",
+    "1225649377",
+    "1225649407",
+    "1225649540",
+    "1225649550",
+    "1225649569",
+    "1225649576",
+    "1225649802",
+    "1225649813",
+    "1225649837",
+    "1225649856",
+    "1225649857",
+    "1225649881",
+    "1225650273",
+    "1225650278",
+    "1225650279",
+    "1225650591",
+    "1225650603",
+    "1225650652",
+    "1225650665",
+    "1225650708",
+    "1225650716",
+    "1225650855",
+    "1225651004",
+    "1225652178",
+    "1225653773",
+    "1225653774",
+    "1225654047",
+    "1225654140",
+    "1225654160",
+    "1225655167",
+    "1225655588",
+    "1225656282",
+    "1225656284",
+    "1225657722",
+    "1225658225",
+    "1225658226",
+    "1225658976",
+    "1225660310",
+    "1225660311",
+    "1225660313",
+    "1225661174",
+    "1225661533",
+    "1225661582",
+    "1225661882",
+    "1225661950",
+    "1225662164",
+    "1225662165",
+    "1225662349",
+    "1225662350",
+    "1225662351",
+    "1225662648",
+    "1225662716",
+    "1225662730",
+    "1225663116",
+    "1225663122",
+    "1225663133",
+    "1225663598",
+    "1225663603",
+    "1225664076",
+    "1225664151",
+    "1225664823",
+    "1225665354",
+    "1225665393",
+    "1225665722",
+    "1225666030",
+    "1225666031",
+    "1225666175",
+    "1225666404",
+    "1225667372",
+    "1225667450",
+    "1225667855",
+    "1225668568",
+    "1225669041",
+    "1225669430",
+    "1225669614",
+    "1225669757",
+    "1225669762",
+    "1225669888",
+    "1225670150",
+    "1225670825",
+    "1225673592",
+    "1225673622",
+    "1225673637",
+    "1225673918",
+    "1225674024",
+    "1225674027",
+    "1225675068",
+    "1225675211",
+    "1225675216",
+    "1225675857",
+    "1225676031",
+    "1225676244",
+    "1225676310",
+    "1225676326",
+    "1225676574",
+    "1225676705",
+    "1225677413",
+    "1225678141",
+    "1225678178",
+    "1225678423",
+    "1225678637",
+    "603825_20250911_FG3F",
+    "CNINFO-3841dcef118e444e96b2571b7c527294",
+    "SINA-12329033",
+    "SINA-12361633",
+    "SINA-12390955",
+    "SINA-12391668",
+    "SINA-12401725",
+    "SINA-12419797",
+    "SINA-12483004",
+    "SINA-12649852"
+  ],
+  "fixed_symbols": [
+    "000010",
+    "000016",
+    "000056",
+    "000078",
+    "000488",
+    "000609",
+    "000610",
+    "000615",
+    "000632",
+    "000639",
+    "000669",
+    "000677",
+    "000698",
+    "000711",
+    "000752",
+    "000793",
+    "000820",
+    "000821",
+    "000826",
+    "000838",
+    "000903",
+    "000909",
+    "000911",
+    "002005",
+    "002024",
+    "002055",
+    "002082",
+    "002102",
+    "002109",
+    "002122",
+    "002168",
+    "002175",
+    "002193",
+    "002198",
+    "002199",
+    "002207",
+    "002211",
+    "002214",
+    "002217",
+    "002227",
+    "002305",
+    "002306",
+    "002323",
+    "002360",
+    "002424",
+    "002431",
+    "002485",
+    "002501",
+    "002512",
+    "002514",
+    "002528",
+    "002538",
+    "002542",
+    "002547",
+    "002569",
+    "002581",
+    "002586",
+    "002592",
+    "002598",
+    "002620",
+    "002630",
+    "002634",
+    "002650",
+    "002656",
+    "002667",
+    "002689",
+    "002691",
+    "002694",
+    "002713",
+    "002717",
+    "002719",
+    "002726",
+    "002731",
+    "002789",
+    "002816",
+    "002822",
+    "002856",
+    "002872",
+    "002883",
+    "002932",
+    "002977",
+    "600053",
+    "600079",
+    "600080",
+    "600082",
+    "600084",
+    "600107",
+    "600119",
+    "600136",
+    "600165",
+    "600169",
+    "600180",
+    "600187",
+    "600238",
+    "600239",
+    "600243",
+    "600265",
+    "600289",
+    "600302",
+    "600337",
+    "600340",
+    "600365",
+    "600370",
+    "600381",
+    "600423",
+    "600476",
+    "600491",
+    "600525",
+    "600537",
+    "600543",
+    "600568",
+    "600581",
+    "600624",
+    "600678",
+    "600730",
+    "600734",
+    "600735",
+    "600745",
+    "600753",
+    "600759",
+    "600818",
+    "600889",
+    "600965",
+    "601010",
+    "601718",
+    "603008",
+    "603021",
+    "603189",
+    "603272",
+    "603359",
+    "603377",
+    "603378",
+    "603398",
+    "603429",
+    "603517",
+    "603557",
+    "603595",
+    "603718",
+    "603729",
+    "603789",
+    "603822",
+    "603825",
+    "603828",
+    "603838",
+    "603843",
+    "603869",
+    "603922",
+    "603959",
+    "605199",
+    "605336"
+  ],
+  "review_outcomes": [
+    {
+      "symbol": "600337",
+      "announcement_id": "1225438033",
+      "outcome": "事项链补充",
+      "title": "美克：收购终止，不等于预重整终止",
+      "fact": "公司7月22日决定终止收购万德溙100%股权，7月23日披露。交易尚在预案阶段，未签正式协议、未支付对价、标的未过户。",
+      "meaning": "这是资产购买交易的终止，不能替代同日另行披露的重整投资协议状态；也不能从未支付的交易推算退款或已实现经营贡献。",
+      "watch": "后续合作和上市公司重整仍按各自文件跟踪；本件不是司法重整终止决定。",
+      "source": {
+        "symbol": "600337",
+        "announcement_id": "1225438033",
+        "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438033.PDF",
+        "published_on": "2026-07-23",
+        "sha256": "384ef2baa2b484ff4a1a72b4b711afb6855913558f31ee5cbbc11eabecc5b230",
+        "pages": 3,
+        "observed_at": "2026-11-20T15:57:59.662287+00:00"
+      },
+      "expected_chain": {
+        "chain": "600337-协议已生效，为何仍不能把投资款当实收",
+        "source": "1225438035",
+        "pages": [
+          10,
+          11
+        ],
+        "subject": "协议已生效，为何仍不能把投资款当实收",
+        "changed": "7月21日签约、23日披露；协议经各方签章后生效。拟10转10.13、增加1455679113股；小磁368000000股按1.47元，其他330000000股按1.61元，产业批合计投资对价1072260000元。",
+        "open": "全款支付在上市公司及美克集团两份重整计划均获法院批准后10工作日内；保证金签约后10工作日内支付，约定不等于已收到。股数以最终登记为准，增加股份不是全部送给旧股东，价格不当二级市场底价。",
+        "supporting": []
+      },
+      "expected_source": {
+        "announcement_id": "1225438035",
+        "symbol": "600337",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438035.PDF",
+        "published_on": "2026-07-23"
+      },
+      "source_theme": "sixteenth_period_followup"
+    },
+    {
+      "symbol": "600818",
+      "announcement_id": "1225579854",
+      "outcome": "原件补强，原判断保留",
+      "title": "中路：清算主体是控股股东，不是上市公司",
+      "fact": "9月24日公司公告披露，9月23日收到中路集团破产清算受理裁定；截至9月23日，1248万元占款已收450万元、798万元未收。",
+      "meaning": "原期间复盘已有“股东清算及债权申报不等于回款”的判断，本件补强原件，不翻转该判断。450万元是截至当时累计已收，不新增一次回款；798万元也不当确定全部损失。",
+      "watch": "9月23日是公司收裁定日，本件未精确给出裁定作出日；后续实际收款、清偿和控制权状态仍另核。",
+      "source": {
+        "symbol": "600818",
+        "announcement_id": "1225579854",
+        "title": "关于控股股东被法院裁定受理破产清算的提示性公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579854.PDF",
+        "published_on": "2026-09-24",
+        "sha256": "a81685cde6c52d9d6754dfa5e3411e49c115be7caba0f96b16fecead3a1d3ee6",
+        "pages": 2,
+        "observed_at": "2026-11-20T15:57:59.801921+00:00"
+      },
+      "expected_chain": {
+        "chain": "600818-催告、诉讼和控股股东清算，是否代表占款已收回？",
+        "source": "1225448933",
+        "pages": [
+          2
+        ],
+        "subject": "催告、诉讼和控股股东清算，是否代表占款已收回？",
+        "changed": "7月30日仍未全额收回；截至10月29日1248万元占款中798万元仍未收，股权回购对赌也未履行。诉讼立案及控股股东破产清算受理、上市公司申报债权均不等于回款，更不是上市公司自身清算。",
+        "open": "核后续实收金额、方式和日期；保留股权退回与现金的区别。下一年度不利内控意见是条件风险，不写成现在已实施*ST。",
+        "boundary": "按当时已知信息更新；行情相对差值不是因果识别。",
+        "supporting": [
+          {
+            "source": "1225645646",
+            "pages": [
+              1
+            ],
+            "state": "仅已核原页，不认证全文。"
+          },
+          {
+            "source": "1225645645",
+            "pages": [
+              1
+            ],
+            "state": "仅已核原页，不认证全文。"
+          }
+        ]
+      },
+      "expected_source": {
+        "announcement_id": "1225448933",
+        "symbol": "600818",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448933.PDF",
+        "published_on": "2026-07-31"
+      },
+      "source_theme": "twentyfirst_period_followup"
+    },
+    {
+      "symbol": "603008",
+      "announcement_id": "1225663625",
+      "outcome": "主体与程序补充",
+      "title": "喜临门：三名自然人个人债务清理已受理，两法人预重整另看",
+      "fact": "11月10日公司披露，法院11月6日决定受理实际控制人及两位董事高管的个人债务集中清理并指定管理人。公告同时称华易智能制造、华瀚投资两法人股东仍为预重整。",
+      "meaning": "个人债务集中清理、两法人股东预重整和上市公司自身状态是三层对象；不能统称“公司已获重整受理”。原稿“股东及一致行动人仍为预重整”的阅读已明确限定到两法人。",
+      "watch": "公司披露不涉及上市公司及其控股子公司，控制权是否变化仍不确定；不得把受理直接当控制权已转移或占款回收。",
+      "source": {
+        "symbol": "603008",
+        "announcement_id": "1225663625",
+        "title": "喜临门健康睡眠科技股份公司关于法院决定受理实际控制人、董事、高级管理人员个人债务集中清理的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-10/1225663625.PDF",
+        "published_on": "2026-11-10",
+        "sha256": "25099abad84786095e3a0edaf6f3e8306f5581cef49aadeb65c21044902fa451",
+        "pages": 3,
+        "observed_at": "2026-11-20T15:57:59.925611+00:00"
+      },
+      "expected_chain": {
+        "chain": "603008-喜临门担保下降，是不是占款问题在收敛？",
+        "source": "1225647128",
+        "pages": [
+          4
+        ],
+        "subject": "喜临门担保下降，是不是占款问题在收敛？",
+        "changed": "6月至10月底初步占款余额由49280.91万元增至74206.54万元，担保由45905.95万元降至38934.04万元。担保转占款、新查占用与保证期满等因素并存；下降不等于回收，不能将不同余额相加成确定损失。股东及一致行动人仍为预重整，非上市公司自身重整，也非正式受理。单季虽微利，前三季仍累计亏损。",
+        "open": "继续核实际回款及担保责任司法裁定、调查和审计；补完整余额流水调节，单季现金改善与占款、现金可用性分别看。",
+        "boundary": "按当时已知信息更新；同窗行情不是公告因果识别。",
+        "supporting": [
+          {
+            "source": "1225647137",
+            "pages": [
+              1
+            ],
+            "state": "仅已核原页，不认证全文。"
+          },
+          {
+            "source": "1225502356",
+            "pages": [
+              6,
+              7
+            ],
+            "state": "仅已核原页，不认证全文。"
+          }
+        ]
+      },
+      "expected_source": {
+        "announcement_id": "1225647128",
+        "symbol": "603008",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647128.PDF",
+        "published_on": "2026-10-31"
+      },
+      "source_theme": "twentysecond_period_followup"
+    }
+  ],
+  "unreviewed_candidate_ids": [
+    "1225438037",
+    "1225451821",
+    "1225451822",
+    "1225474980",
+    "1225616501"
+  ],
+  "review_completed_on": "2026-11-21",
+  "new_downloads": 3,
+  "new_visual_pages": 8,
+  "method_promotions": 0,
+  "generated_at": "2026-11-20T16:02:46.009740+00:00"
+}

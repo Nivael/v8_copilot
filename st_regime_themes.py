@@ -306,4 +306,6 @@ def build_themes(inputs, daily):
     result['baili_policy_followup']=baili_policy_followup(inputs,result['restatement_comparison'])
     from st_jihua_bridge_followup import jihua_bridge_followup
     result['jihua_bridge_followup']=jihua_bridge_followup(inputs,result['twentysecond_period_followup'])
+    from st_market_stage_experience import market_stage_experience
+    result['market_stage_experience']=market_stage_experience(inputs,{k:result[k]for k in ['endpoint_selection_audit','current_extension']})
     return result

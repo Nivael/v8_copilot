@@ -48,7 +48,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
  const events=(ann?.verified_events??[]).filter(e=>e.symbol===selected)
  const condition=after.conditions.find(c=>c.key==='down')
  return <div className="regime-topics">
-  <STCurrentExtension data={themes?.current_extension} followup={themes?.weiling_stage_check} endpointAvailable={Boolean(themes?.endpoint_reasons)}/>
+  <STCurrentExtension data={themes?.current_extension} followup={themes?.weiling_stage_check} endpointAvailable={Boolean(themes?.endpoint_reasons)} audit={themes?.endpoint_selection_audit} onEndpointAudit={()=>setTopic('endpoints')}/>
   <p className="regime-topic-intro">想弄清哪件事？选一个问题，先看答案，再核对过程和证据。</p>
   <nav className="regime-topic-nav" aria-label="复盘问题">{topics.map(([key,title,sub],i)=><button type="button" key={key} aria-pressed={topic===key} onClick={()=>setTopic(key)}><small>0{i+1} · {sub}</small><span>{title}</span></button>)}</nav>
   {questions.length>0&&<div className="regime-question-directory">
@@ -66,7 +66,7 @@ export function STRegimeThemes({data,comparison,chart,onEvidence}:{data:STRegime
   {themes?.price_band_audit&&<button className="regime-text-link" onClick={()=>onEvidence('规则前后','st-price-band-audit')}>涨过5%，就突破旧涨停了吗？看具体例子 →</button>}
   {themes?.removal_era_comparison&&<button className="regime-text-link" onClick={()=>setTopic('cohort')}>本轮比较：摘帽以后，7月前后有什么不同？ →</button>}
   <p className="regime-topic-date">{themes?.current_extension?'原制度复盘窗口':'观察期'} {after.start} — {data.through} · {after.days} 个交易日 · 末月只到{data.through}；不是整月</p>
-  {topic==='endpoints'&&<STEndpointReasons data={themes?.endpoint_reasons}/>}
+  {topic==='endpoints'&&<STEndpointReasons data={themes?.endpoint_reasons} audit={themes?.endpoint_selection_audit}/>}
   {topic==='xilv'&&<STXilvTimeline data={themes?.xilv_timeline} followup={themes?.xilv_liability}/>}
   {topic==='journey'&&<div id="st-question-journey" className="regime-topic-body">
    {themes?.endpoint_reasons&&<p><button className="regime-text-link" onClick={()=>setTopic('endpoints')}>完整段缺4只、近期缺3只：停牌和退出怎样分开？ →</button></p>}

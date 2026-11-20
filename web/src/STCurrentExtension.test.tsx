@@ -1,3 +1,5 @@
+import auditFixture from './__fixtures__/endpoint-selection-audit.json'
+import type {EndpointSelectionAudit} from './STEndpointSelectionAudit'
 import {render,screen,fireEvent,cleanup,within} from '@testing-library/react'
 import {afterEach,it,expect} from 'vitest'
 import STCurrentExtension from './STCurrentExtension'
@@ -11,3 +13,5 @@ it('continues tracking a removed STAR stock without putting it in main-board ref
 it('keeps proposed donation separate from profit and cash receipt',()=>{show();fireEvent.change(screen.getByRole('combobox'),{target:{value:'002667.SZ'}});expect(screen.getByText(/资本公积/)).toBeVisible();expect(screen.getAllByText(/5亿/).length).toBeGreaterThan(0)})
 it('preserves fixed-sample missing endpoints and allows all 150 rows',()=>{show();fireEvent.click(screen.getByText('固定150只：查看缺价、退出与完整样本'));const table=screen.getByRole('table',{name:'最新固定样本价格覆盖'});expect(within(table).getAllByRole('row')).toHaveLength(4);expect(table).toHaveTextContent('002731');fireEvent.click(screen.getByRole('button',{name:'展开全部150只'}));expect(within(table).getAllByRole('row')).toHaveLength(151)})
 it('keeps Baoxin publication-order conflict and page-specific evidence',()=>{show();fireEvent.change(screen.getByRole('combobox'),{target:{value:'002514.SZ'}});expect(screen.getByText(/本件仍称南京宇宏/)).toBeVisible();fireEvent.click(screen.getAllByText('依据与下一步核对')[1]);expect(screen.getByText(/11月7日件与11月11日件/)).toBeVisible();expect(screen.getAllByRole('link').some(a=>a.getAttribute('href')?.endsWith('1225666030.PDF#page=4'))).toBe(true)})
+
+it('uses audited full-window subset and provides a working route to its limitations',()=>{let opened=false;render(<STCurrentExtension data={fixture as CurrentExtension} audit={auditFixture as EndpointSelectionAudit} onEndpointAudit={()=>{opened=true}}/>);fireEvent.click(screen.getByText('比较最近9日与7月以来全段'));const table=screen.getByRole('table',{name:'新旧窗口的相对表现'});expect(table).toHaveTextContent('核价通过子样本中位数');expect(table).toHaveTextContent('-20.74%');expect(table).toHaveTextContent('141/150只核价通过');fireEvent.click(screen.getByRole('button',{name:'核对报价差异、退出与全部150家 →'}));expect(opened).toBe(true)})

@@ -15,6 +15,7 @@ it('keeps persistence, severity, relative weakness and execution evidence separa
  fireEvent.click(screen.getByRole('button',{name:'看转弱过程'}));expect(open).toHaveBeenCalledWith('recent')
  fireEvent.click(screen.getByRole('button',{name:'看当天分布'}));expect(open).toHaveBeenLastCalledWith('today')
  fireEvent.click(screen.getByRole('button',{name:'看ST同窗对照'}));expect(open).toHaveBeenLastCalledWith('st')
+ fireEvent.click(screen.getByRole('button',{name:'核对限价与退出缺口'}));expect(open).toHaveBeenLastCalledWith('st')
 })
 it('does not merge changed dates or denominators with the frozen sequence',()=>{
  const {rerender}=render(<MarketRiskQuestions data={{...data,as_of:'2026-11-23'}} onRead={()=>{}}/>);expect(screen.queryByRole('table')).not.toBeInTheDocument()

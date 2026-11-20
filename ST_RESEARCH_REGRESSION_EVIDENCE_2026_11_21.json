@@ -1,0 +1,174 @@
+{
+  "version": "st_research_regression_review_v1",
+  "source_commit": "46a94af",
+  "frontend": {
+    "tests": 984,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "backend_initial": {
+    "tests": 4392,
+    "failures": 3,
+    "errors": 0,
+    "skipped": 16
+  },
+  "backend_targeted_retry": {
+    "tests": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "retry_basis": "Copied missing announcement refresh/body and recruitment-deadline inputs into isolated test data; no code or assertion changed. Retried affected files only, not a second full suite.",
+  "lint": {
+    "errors": 0,
+    "warnings": 12
+  },
+  "view_bindings": [
+    {
+      "view": "subsidiaryExitFollowup",
+      "evidence_sha256": "980e76d4a9e492cab56494b118fde3617bb6260b52665b3b2db8407387048f4f",
+      "run_id": "RUN-A1170D2C71DA499DAE79962A",
+      "question": "核两类子公司司法事项、同一退出安排的多份提示及未付款投资终止：怎样区分主体、程序和财务暴露，避免把担保当损失、倒计时当多案例、未付款终止当回款？",
+      "objects": [
+        "000826",
+        "000016",
+        "002175"
+      ]
+    },
+    {
+      "view": "accountantBodyReview",
+      "evidence_sha256": "9e0654a80a3a2b7b0ced6c2291a206ee37e20d078860e6dd2076fcdc7b44f06f",
+      "run_id": "RUN-AA8DA1EE198D4433856EA73B",
+      "question": "会计师报告如何更新西发历史清偿与启环投资人代偿判断？怎样保留现金/抵偿、余额表述冲突和签章/截止日期差异？",
+      "objects": [
+        "000752",
+        "000826"
+      ]
+    },
+    {
+      "view": "stBreadthAlignment",
+      "evidence_sha256": "2b6fbc2ab6d9eb3e3c994b98c23727b8c6c9c90c8aa09d8a4cb3024c30d5348f",
+      "run_id": "RUN-CD820EB14E8E48788BA34D71",
+      "question": "连续三日上涨不足半数后，动态ST与大盘的同窗表现有什么区别？反弹反例和最近未满窗口怎样限制经验？",
+      "objects": [
+        "SH_SZ_A",
+        "DYNAMIC_MAINBOARD_ST",
+        "CSI000985"
+      ]
+    },
+    {
+      "view": "stBreadthTiming",
+      "evidence_sha256": "8cacb4fbb94adb6e8db5d30c591e1dd6465c715edeee0b7e5e24fc18ddf6adb2",
+      "run_id": "RUN-62EDC7C7628749109830A1E8",
+      "question": "等到连续三日广度转弱条件形成时，动态ST与大盘已经变化多少？怎样区分已发生损失和随后行情，避免把滞后提示当及时预警？",
+      "objects": [
+        "SH_SZ_A",
+        "DYNAMIC_MAINBOARD_ST",
+        "CSI000985"
+      ]
+    },
+    {
+      "view": "stExitObservation",
+      "evidence_sha256": "d6c04f43f90c69f3b82ea427a36bbd52b593387aee2d44a49a435178ec40dc15",
+      "run_id": "RUN-175E2EFCB2834B43B4D6F24C",
+      "question": "此前跟踪五家近期日线能否证明按复盘收盘价退出？全天同价与收在最低价怎样观察，限价、排队及实际执行哪些仍没有证据？",
+      "objects": [
+        "603398",
+        "002514",
+        "600363",
+        "002667",
+        "688053"
+      ]
+    },
+    {
+      "view": "officialRawRecheck",
+      "evidence_sha256": "16b9426e0fb9d43e103bdf588d412ae37cafa47b48dd54e8eca39f7543524c7b",
+      "run_id": "RUN-A05FE1FA1A0347708F133B89",
+      "question": "复用上交所原件核人福、绝味、智知原始收盘，能补强哪些日期和来源？为何不能因此取消复权起点差异、扩大核价通过样本或推实际可退出？",
+      "objects": [
+        "600079",
+        "603517",
+        "603869"
+      ]
+    },
+    {
+      "view": "qihuanRepaymentCompanion",
+      "evidence_sha256": "4cb2d2a6fe380027df53ee4b80d91e8af24415296498f8f0b7d4ea878192b53d",
+      "run_id": "RUN-10A6AC1C72DD47DBA922E83F",
+      "question": "启环资金占用解决公告与半年往来表如何更新代偿判断？披露日和余额日怎样区分，原会计师报告冲突与会计科目差异哪些仍未解决？",
+      "objects": [
+        "000826"
+      ]
+    },
+    {
+      "view": "catalogResolutionAudit",
+      "evidence_sha256": "d6fd0ef84dedc8e203b58979daa4d8a39a3ad5148124f820d0be59ca02c4b2ef",
+      "run_id": "RUN-69DDF49C4AC4440A947B4C7D",
+      "question": "版本化增加资金占用解决完毕类标题规则后，完整重放固定样本已保存目录还会出现哪些未选线索？与旧队列和零遗漏结论怎样区分？",
+      "objects": [
+        "FIXED_ST_COHORT_150",
+        "CATALOG_RULES_V2"
+      ]
+    }
+  ],
+  "scope": {
+    "st_baseline_through": "2026-11-06",
+    "st_extension_through": "2026-11-19",
+    "initial_fact_coverage": {
+      "before": 146,
+      "after": 150,
+      "remaining": 0,
+      "members": 150,
+      "new_companies": 4,
+      "new_files": 26,
+      "new_pages": 769
+    },
+    "fixed_windows": [
+      {
+        "key": "full",
+        "summary": {
+          "members": 150,
+          "primary_paired": 146,
+          "primary_missing": 4,
+          "verified_paired": 141,
+          "unverified_paired": 5,
+          "primary_median_pct": "-20.08014940471557942961637226",
+          "verified_subset_median_pct": "-20.74235807860262008733624454",
+          "verified_subset_positive": 21,
+          "verified_subset_positive_denominator": 141
+        }
+      },
+      {
+        "key": "recent",
+        "summary": {
+          "members": 150,
+          "primary_paired": 147,
+          "primary_missing": 3,
+          "verified_paired": 147,
+          "unverified_paired": 0,
+          "primary_median_pct": "-9.523809523809523809523809520",
+          "verified_subset_median_pct": "-9.523809523809523809523809520",
+          "verified_subset_positive": 14,
+          "verified_subset_positive_denominator": 147
+        }
+      }
+    ],
+    "market_baseline_through": "2026-11-06",
+    "latest_price_through": "2026-11-20",
+    "latest_breadth_through": "2026-11-20",
+    "st_content_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f"
+  },
+  "preservation": {
+    "old_287_runs_exact": true,
+    "current_runs": 288,
+    "methods_accepted_exact": true,
+    "st_market_api_data_exact": true
+  },
+  "goal_complete": false,
+  "limits": [
+    "Initial collection lacked frozen library; full collection rerun after copying frozen shared source data.",
+    "No claim of a second complete backend run in final supplemental-fixture environment.",
+    "Actual limit/queue/exit evidence, independent market phases, official historical membership certification and documented source conflicts remain open."
+  ]
+}

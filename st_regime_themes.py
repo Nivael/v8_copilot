@@ -314,4 +314,6 @@ def build_themes(inputs, daily):
     result['ningke_comparative_followup']=ningke_comparative_followup(inputs,result['fourteenth_period_followup'])
     from st_jingji_dividend_followup import jingji_dividend_followup
     result['jingji_dividend_followup']=jingji_dividend_followup(inputs,result['remaining_basis'])
+    from st_evidence_inventory import evidence_inventory
+    result['evidence_inventory']=evidence_inventory(inputs)
     return result

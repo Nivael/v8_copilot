@@ -5,7 +5,7 @@ import {useState} from 'react'
 import type {RegimeComparison,RegimeFixed,RegimePeriod} from './stRegimeTypes'
 
 type CurrentEvent={id:string;symbol:string;name:string;published_on:string;document_dated_on:string|null;title:string;change:string;pages:number[];watch:string;source:{url:string;title:string;sha256:string}}
-export type CurrentExtension={stage_followup?:WeilingStageCheck|null;baseline_through:string;through:string;latest:RegimePeriod;fixed:RegimeFixed;full_comparison:RegimeComparison;tracked:{symbol:string;name:string;still_st:boolean;in_main_board_reference:boolean;anchor:string;through:string;close:number;change_pct:number;events:CurrentEvent[]}[];events:CurrentEvent[];source_counts:{new_pdf_files:number;new_pdf_pages:number;catalog_companies:number;catalog_rows:number};boundary:string}
+export type CurrentExtension={path?:{date:string;market:number}[];stage_followup?:WeilingStageCheck|null;baseline_through:string;through:string;latest:RegimePeriod;fixed:RegimeFixed;full_comparison:RegimeComparison;tracked:{symbol:string;name:string;still_st:boolean;in_main_board_reference:boolean;anchor:string;through:string;close:number;change_pct:number;events:CurrentEvent[]}[];events:CurrentEvent[];source_counts:{new_pdf_files:number;new_pdf_pages:number;catalog_companies:number;catalog_rows:number};boundary:string}
 const pct=(n:number|null)=>n==null?'缺价，保留空值':`${n>0?'+':''}${n.toFixed(2)}%`
 export default function STCurrentExtension({data:d,followup,endpointAvailable,audit,onEndpointAudit}:{data?:CurrentExtension|null;followup?:WeilingStageCheck|null;endpointAvailable?:boolean;audit?:EndpointSelectionAudit|null;onEndpointAudit?:()=>void}){
  const [symbol,setSymbol]=useState('603398.SH')

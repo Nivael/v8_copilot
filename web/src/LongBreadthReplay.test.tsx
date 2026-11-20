@@ -17,3 +17,14 @@ it('steps through historical state and distinguishes first signal from continuin
  expect(screen.getByRole('region')).toHaveTextContent('不等于实际跌停')
  expect(screen.getByRole('region')).toHaveTextContent('资料在事后取得')
 })
+it('keeps same-day price windows and early missing history distinct from zero',()=>{
+ render(<LongBreadthReplay/>);
+ expect(screen.getByRole('complementary',{name:'同日指数价格压力'})).toHaveTextContent('-6.19%')
+ expect(screen.getByRole('complementary',{name:'同日指数价格压力'})).toHaveTextContent('-9.68%')
+ fireEvent.change(screen.getByRole('combobox',{name:'长窗广度观察日'}),{target:{value:0}})
+ const price=screen.getByRole('complementary',{name:'同日指数价格压力'})
+ expect(price).toHaveTextContent('2026-07-01')
+ expect(price).toHaveTextContent('前序收盘不足，未计算')
+ expect(price).not.toHaveTextContent('-9.68%')
+ expect(price).toHaveTextContent('不是危机概率')
+})

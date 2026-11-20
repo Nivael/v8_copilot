@@ -30,3 +30,8 @@ def test_rolling_high_and_volatility_are_not_full_future_or_full_sample_values()
     assert out[-1]['from_twenty_close_high_pct']==-50
     prices[0]['close']=0
     with pytest.raises(ValueError,match='invalid close'):derive(prices)
+
+
+def test_reading_projection_is_source_bound_and_exact():
+    from build_long_index_reading import reading
+    assert reading()==json.loads(Path('web/src/longIndexReading.json').read_text())

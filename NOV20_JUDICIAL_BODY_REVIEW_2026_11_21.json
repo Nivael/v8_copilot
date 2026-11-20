@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "sources": [
+    {
+      "announcement_id": "1225679913",
+      "adjunct_url": "finalpage/2026-11-20/1225679913.PDF",
+      "title": "关于公司控股股东所持公司部分股份司法拍卖流拍的公告",
+      "codes": [
+        "002514"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679913.PDF",
+      "sha256": "c2e1e82fcb7d965c62469a2d7721966c9a52b882d4efba4ebbcb1505883bd41a",
+      "bytes": 103096,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/c2e1e82fcb7d965c62469a2d7721966c9a52b882d4efba4ebbcb1505883bd41a.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-20T23:46:33.469214+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "31a17ede0845b7d9f8676ef7dfd516d66dd2119946b99a8ed05b8be9c68d9107",
+        "2": "06c976661134003276f1092219d26d5bcb83a7420e2de250b2e984843c642dc9"
+      }
+    },
+    {
+      "announcement_id": "1225679789",
+      "adjunct_url": "finalpage/2026-11-20/1225679789.PDF",
+      "title": "关于公司及子公司诉讼进展的公告",
+      "codes": [
+        "600180"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679789.PDF",
+      "sha256": "8ea7c237f306cc1949854301479e3987966b0012eaacb400f4305062ad0a9bad",
+      "bytes": 117319,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/8ea7c237f306cc1949854301479e3987966b0012eaacb400f4305062ad0a9bad.pdf",
+      "pages": 5,
+      "observed_at": "2026-11-20T23:46:33.618884+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "visual_image_sha256": {
+        "1": "59133a57da0ae428f31cc69799271f0ba5348396d31a170d267b6ad0ffabee38",
+        "2": "440fc9eef0900029d21e4426b4fe19937ac8549d21af1ae1f9b1eac0c0ffc43e",
+        "3": "17e08b7dd038eac19b0ee314ea839053dd470779537378ec0e12a182879cb096",
+        "4": "16beb299ff1c4d1405445a65586524ce2b5afd3aa5530f1a4660abddd32090f4"
+      }
+    },
+    {
+      "announcement_id": "1225679623",
+      "adjunct_url": "finalpage/2026-11-20/1225679623.PDF",
+      "title": "喜临门健康睡眠科技股份公司关于控股股东、实际控制人及其一致行动人部分股份将被司法拍卖的提示性公告",
+      "codes": [
+        "603008"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679623.PDF",
+      "sha256": "9a2bcc56e54566c26ac088453f4d40daa542536158067290db5dcfb4bf8ae373",
+      "bytes": 126150,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9a2bcc56e54566c26ac088453f4d40daa542536158067290db5dcfb4bf8ae373.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-20T23:46:33.744556+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "63dc12acce63342bfca8a504e7c1994b6d711301aa99ff4013758dd58e58a0c7",
+        "2": "f654b8c289230065e10a010db59bd75664d5e6a899a0ad5635b38b18b71b27e0",
+        "3": "944ae8c3b5efb26ecc58c19155b56452c49a53a911b87102d00a624adaec5128"
+      }
+    }
+  ],
+  "text_pages": 11,
+  "critical_visual_pages": 9,
+  "findings": [
+    {
+      "code": "002514",
+      "announcement_id": "1225679913",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "江苏立青所持200万股首发后限售股，11月18—19日一拍流拍；另列四笔未来拍卖，公告合计3020万股。",
+      "boundary": "流拍没有产生本笔竞买成交或过户；四笔预告不当已成交。本文件不替代此前其他批次股份过户事实，也不认定控制权已转移。未来表最后一行原文为“3,000000”，保留格式异常，不静默修成已核法院拍卖数量。"
+    },
+    {
+      "code": "600180",
+      "announcement_id": "1225679789",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "answer": "公司及子公司作为被告的八项既有诉讼有新进展，披露涉案合计约104449.1965万元；包含判决、三份执行通知、驳回起诉及拟处置所持子公司股权的通知。",
+      "boundary": "约10.44亿元是本公告案件涉案金额，不等于本期新损失、已支付或全部新案。驳回起诉不直接当债务清偿；拟处置股权不当已成交/到账，损益仍以相关结果和确认口径为准。"
+    },
+    {
+      "code": "603008",
+      "announcement_id": "1225679623",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "控股股东、实控人及一致行动人合计15616487股（总股本4.24%）预告12月19—20日拍卖，截至公告仍公示。",
+      "boundary": "尚未成交、缴款或过户。公告称若本次全部过户，合计持股由36.36%降至32.12%、华易仍为控股股东；这是假设本笔结果，不是最终控制权保证。股东华易及华瀚处预重整，后续正式受理可能影响未完成拍卖；不是上市公司已进入重整。"
+    }
+  ],
+  "calculation_checks": {
+    "ruimao_case_amounts_wan": [
+      "20.6279",
+      "7.3893",
+      "784.7345",
+      "3562.8441",
+      "51.2020",
+      "6297.8148",
+      "25645.4999",
+      "68079.0840"
+    ],
+    "ruimao_table_sum_wan": "104449.1965",
+    "ruimao_declared_total_wan": "104449.1965",
+    "ruimao_table_minus_declared_wan": "0.0000",
+    "xilinmen_auction_shares": 15616487,
+    "xilinmen_conditional_remaining_shares": 118293747
+  },
+  "limits": [
+    "尚未接入页面或研究账本",
+    "未独立取得法院原件或拍卖平台结果",
+    "宝馨未来拍卖表格式异常保留，瑞茂表内金额与合计按原精度分别核算",
+    "同一事项阶段变化不自动增加独立经验次数",
+    "未据公告推断行情因果或实际可交易性"
+  ]
+}

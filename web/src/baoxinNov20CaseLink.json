@@ -1,0 +1,217 @@
+{
+  "original_input_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "expected_context": {
+    "through": "2026-11-06",
+    "prior_digest": "c5126f97642146b104b4e4b3051a63eedbd922b11d41fb2180c5b78208570a08",
+    "sources": [
+      {
+        "announcement_date": "2026-11-06",
+        "announcement_id": "1225660310",
+        "fetched_at": "2026-11-09T05:23:01.512796+00:00",
+        "pages": 16,
+        "protected_gate_passed": true,
+        "sha256": "1bb5b79aaeee99813090e802518be1fff7d85704300e5d4fbfedf065165f61cb",
+        "title": "*ST宝馨：简式权益变动报告书 （江苏立青及其一致行动人）",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-11-06/75a5e940-9d2e-4e2f-a52e-5be2551dd692.PDF"
+      },
+      {
+        "announcement_date": "2026-11-06",
+        "announcement_id": "1225660311",
+        "fetched_at": "2026-11-09T05:23:01.733230+00:00",
+        "pages": 5,
+        "protected_gate_passed": true,
+        "sha256": "725944be32a36a8ead09e218e092baacfdb8e0f7d95ee490528f5abb920f82fc",
+        "title": "*ST宝馨：关于公司控股股东所持公司部分股份司法拍卖过户完成暨权益变动触及1%刻度及5%整数倍的提示性公告",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-11-06/b8f522fb-82f5-4e47-8e2f-5c9e58216e72.PDF"
+      },
+      {
+        "announcement_date": "2026-10-31",
+        "announcement_id": "1225649857",
+        "fetched_at": "2026-11-09T05:23:01.907199+00:00",
+        "pages": 2,
+        "protected_gate_passed": true,
+        "sha256": "c5f907f7e8525d8f23066556b82be15f71d5a4b3122746b7234fc7d5ea0b858c",
+        "title": "*ST宝馨：关于公司控股股东及一致行动人所持公司部分股份被司法裁定以物抵债的公告",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-31/57d226c3-e446-4a54-a078-7f92e5f5df97.PDF"
+      },
+      {
+        "announcement_date": "2026-10-27",
+        "announcement_id": "1225626235",
+        "fetched_at": "2026-11-09T05:23:02.146630+00:00",
+        "pages": 5,
+        "protected_gate_passed": true,
+        "sha256": "bdbad00130bbc48481a39470b8fa4c19e932fa5412641e7b8de238a493628011",
+        "title": "*ST宝馨：关于公司控股股东所持公司部分股份司法拍卖过户完成暨权益变动触及1%刻度的提示性公告",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-27/174b6ad7-0249-4445-983c-47cb91cca745.PDF"
+      },
+      {
+        "announcement_date": "2026-10-21",
+        "announcement_id": "1225612083",
+        "fetched_at": "2026-11-09T05:23:02.411950+00:00",
+        "pages": 5,
+        "protected_gate_passed": true,
+        "sha256": "145b4cad40aa510fb268c8daf65d829632806c8e2d9fde06df425c245f12ab8d",
+        "title": "*ST宝馨：关于公司控股股东所持公司部分股份司法拍卖过户完成暨权益变动触及1%刻度的提示性公告",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-21/47a95f54-b28d-435a-a7fe-8af65c9d200d.PDF"
+      },
+      {
+        "announcement_date": "2026-10-20",
+        "announcement_id": "1225610808",
+        "fetched_at": "2026-11-09T05:23:02.657025+00:00",
+        "pages": 5,
+        "protected_gate_passed": true,
+        "sha256": "fe919f922bcec5e8b5c9ad397afb9a35c09df7765c570d1b31ab0f9c3b28eb25",
+        "title": "*ST宝馨：关于公司控股股东所持公司部分股份司法拍卖过户完成暨权益变动触及1%刻度的提示性公告",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-20/f1efed56-213c-4904-b0dd-00f15307fdfa.PDF"
+      },
+      {
+        "announcement_date": "2026-09-29",
+        "announcement_id": "1225586236",
+        "fetched_at": "2026-11-09T05:23:24.701006+00:00",
+        "pages": 5,
+        "protected_gate_passed": true,
+        "sha256": "6bf3c36c046ce636178d02f0f8d6ab1a5cea70d83d5f7f0c7283c2eccfb046bd",
+        "title": "*ST宝馨：关于公司控股股东所持公司部分股份司法拍卖过户完成暨权益变动触及1%刻度的提示性公告",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-09-29/5cd438c0-3cf1-48c1-aee8-ca603e4bcb67.PDF"
+      }
+    ],
+    "rows": [
+      {
+        "after": 166141714,
+        "announcement_id": "1225586236",
+        "as_of": "2026-09-23",
+        "before": 174981714,
+        "identity_tokens": [
+          "余芳琴",
+          "S2290",
+          "曹思聪",
+          "M3132",
+          "2026-077",
+          "2026-079"
+        ],
+        "note": "S2290、M3132；回指077、079号，分别对应重拍与另一组股份。",
+        "pages": [
+          1,
+          2,
+          3
+        ],
+        "published_on": "2026-09-29",
+        "registered_shares": 8840000,
+        "title": "余芳琴550万流通股＋曹思聪334万限售股"
+      },
+      {
+        "after": 160641714,
+        "announcement_id": "1225610808",
+        "as_of": "2026-10-16",
+        "before": 166141714,
+        "identity_tokens": [
+          "陈飞跃",
+          "P9195",
+          "2026-077"
+        ],
+        "note": "P9195；回指077号，对应七月异议后重拍的限售组。",
+        "pages": [
+          1,
+          2,
+          3
+        ],
+        "published_on": "2026-10-20",
+        "registered_shares": 5500000,
+        "title": "陈飞跃550万限售股"
+      },
+      {
+        "after": 151321714,
+        "announcement_id": "1225612083",
+        "as_of": "2026-10-19",
+        "before": 160641714,
+        "identity_tokens": [
+          "叶铭康",
+          "H7302",
+          "932",
+          "2026-079"
+        ],
+        "note": "十位买受人完成，叶铭康10万因未付清余款悔拍；不是942万全部完成。",
+        "pages": [
+          1,
+          2,
+          3
+        ],
+        "published_on": "2026-10-21",
+        "registered_shares": 9320000,
+        "title": "942万竞得组中的932万登记"
+      },
+      {
+        "after": 147321714,
+        "announcement_id": "1225626235",
+        "as_of": "2026-10-23",
+        "before": 151321714,
+        "identity_tokens": [
+          "曹沈阳",
+          "高远",
+          "2026-083",
+          "2026-086"
+        ],
+        "note": "回指083、086号，两笔安庆法院股份；不能并入早前350万流拍组。",
+        "pages": [
+          1,
+          2,
+          3
+        ],
+        "published_on": "2026-10-27",
+        "registered_shares": 4000000,
+        "title": "曹沈阳、高远各200万限售股"
+      }
+    ],
+    "partial": {
+      "auction_shares": 9420000,
+      "defaulted_bid": "H7302",
+      "defaulted_buyer": "叶铭康",
+      "defaulted_shares": 100000,
+      "registered_shares": 9320000
+    },
+    "debt": {
+      "liqing_shares": 16840000,
+      "registered": false,
+      "yuhong_shares": 2618800
+    }
+  },
+  "judicial_review_sha256": "7b04d1cbcead444a1a1c53d086cef6ad3b91642916844c081ff06002ca818711",
+  "finding": {
+    "code": "002514",
+    "announcement_id": "1225679913",
+    "pages": [
+      1,
+      2
+    ],
+    "answer": "江苏立青所持200万股首发后限售股，11月18—19日一拍流拍；另列四笔未来拍卖，公告合计3020万股。",
+    "boundary": "流拍没有产生本笔竞买成交或过户；四笔预告不当已成交。本文件不替代此前其他批次股份过户事实，也不认定控制权已转移。未来表最后一行原文为“3,000000”，保留格式异常，不静默修成已核法院拍卖数量。"
+  },
+  "source": {
+    "announcement_id": "1225679913",
+    "adjunct_url": "finalpage/2026-11-20/1225679913.PDF",
+    "title": "关于公司控股股东所持公司部分股份司法拍卖流拍的公告",
+    "codes": [
+      "002514"
+    ],
+    "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679913.PDF",
+    "sha256": "c2e1e82fcb7d965c62469a2d7721966c9a52b882d4efba4ebbcb1505883bd41a",
+    "bytes": 103096,
+    "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/c2e1e82fcb7d965c62469a2d7721966c9a52b882d4efba4ebbcb1505883bd41a.pdf",
+    "pages": 3,
+    "observed_at": "2026-11-20T23:46:33.469214+00:00",
+    "visual_physical_pages": [
+      1,
+      2
+    ],
+    "visual_image_sha256": {
+      "1": "31a17ede0845b7d9f8676ef7dfd516d66dd2119946b99a8ed05b8be9c68d9107",
+      "2": "06c976661134003276f1092219d26d5bcb83a7420e2de250b2e984843c642dc9"
+    }
+  },
+  "reading": {
+    "title": "11月20日更新：另一笔200万股流拍，旧过户记录分别保留",
+    "meaning": "先前几组股份已有登记凭据；这次公告新增的是11月18—19日一拍流拍的200万股。不能因股数同为200万，就把它与此前已过户的两笔200万股配成同一标的。",
+    "watch": "接下来追这笔流拍是否重拍、后续四笔预告的实际结果及过户文件。12月2—3日10万股预告与叶铭康悔拍10万股的关系仍未核清；本公告没有证明此前抵债股份登记完成。"
+  },
+  "evidence_sha256": "80ab96f3af9a501f57a47af671eea3376e29ee6f37388dcf2607f48c1677f3b2"
+}

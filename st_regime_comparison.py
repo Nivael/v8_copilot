@@ -379,6 +379,7 @@ def publish(inputs, *, root=ROOT):
     payload = {**data, 'generated_at': datetime.now(timezone.utc).isoformat(), 'source_asset': source,
                'processor_sha256': sha256(Path(__file__).read_bytes()).hexdigest(),
                'themes_processor_sha256': sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest(),
+               'restatement_comparison_processor_sha256': sha256(Path(__file__).with_name('st_restatement_comparison.py').read_bytes()).hexdigest(),
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
@@ -459,6 +460,7 @@ def load(root=ROOT):
         if (value['version']!=VERSION or digest({k:v for k,v in value.items() if k!='content_digest'})!=value['content_digest']
                 or value['processor_sha256']!=sha256(Path(__file__).read_bytes()).hexdigest()
                 or value.get('themes_processor_sha256')!=sha256(Path(__file__).with_name('st_regime_themes.py').read_bytes()).hexdigest()
+                or value.get('restatement_comparison_processor_sha256')!=sha256(Path(__file__).with_name('st_restatement_comparison.py').read_bytes()).hexdigest()
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()

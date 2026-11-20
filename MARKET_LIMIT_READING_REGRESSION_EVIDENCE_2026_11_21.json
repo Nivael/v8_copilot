@@ -1,0 +1,23 @@
+{
+  "api_checks": {
+    "st_data_exact": true,
+    "market_data_exact": true
+  },
+  "first_frontend": {
+    "passed": 1005,
+    "failed": 1,
+    "failure": "ExperienceCenter post-submit heading remained at wait deadline"
+  },
+  "isolated_recheck": "1 passed",
+  "second_full_frontend": {
+    "files": 208,
+    "passed": 1006,
+    "failed": 0
+  },
+  "backend_focused": 9,
+  "lint_errors": 0,
+  "lint_warnings": 12,
+  "build": "passed; existing bundle-size warning",
+  "new_studies": 0,
+  "independent_validations": 0
+}

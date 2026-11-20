@@ -18,6 +18,6 @@ export function MarketRiskQuestions({data,onRead}:{data:BreadthReading;onRead:(p
  <tr><th>是一天冲击，还是持续走弱？</th><td>{weakStart}至{last.date}，上涨股票连续{last.streak}个交易日不足一半。</td><td><button type="button" onClick={()=>onRead('recent')}>看转弱过程</button></td></tr>
  <tr><th>当天压力扩散到多广？</th><td>{last.date}，有成交的{last.trading}只股票中，上涨{last.advancing_pct.toFixed(1)}%；跌幅至少5%的占{last.declining_5pct_or_more_pct.toFixed(1)}%。后者不是跌停率。</td><td><button type="button" onClick={()=>onRead('today')}>看当天分布</button></td></tr>
  <tr><th>ST是否比大盘更弱？</th><td>{signal.date}收盘至{signal.through}，ST参考{percent(signal.st_pct)}，大盘{percent(signal.market_pct)}；仅{signal.observed_following_sessions}日，未满5日。</td><td><button type="button" onClick={()=>onRead('st')}>看ST同窗对照</button></td></tr>
- <tr><th>需要退出时能否成交？</th><td>尚不能确认。11月9—19日每日名单主板组及固定150组已核限价配对；官方成员交叉核实、历史盘口队列与执行成本仍待补；日线有成交不等于能按收盘价退出。</td><td><button type="button" onClick={()=>onRead('st')}>核对限价与退出缺口</button></td></tr>
+ <tr><th>需要退出时能否成交？</th><td>尚不能确认。11月9—19日每日名单主板组及固定150组已核限价配对；20日另有深市部分覆盖及沪市三家补核，完整沪深覆盖、历史盘口队列与执行成本仍待补；日线有成交不等于能按收盘价退出。</td><td><button type="button" onClick={()=>onRead('st')}>核对限价与退出缺口</button></td></tr>
  </tbody></table></div><p>接下来检验：参与面改善能否持续、大跌比例是否收敛、ST是否同步修复。单日上涨或一次压力缓和，不直接改判为全面修复；这些条件还不是已经验证的仓位规则。</p></section>
 }

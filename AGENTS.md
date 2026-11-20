@@ -152,3 +152,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 - 2026-11-21 complete daily breadth replay, original sources, denominator and tail limits: `MARKET_BREADTH_RESULT_2026_11_21.md`.
 
 - 2026-11-21 historical breadth first-hit condition, counterexample and point-in-time limits: `MARKET_BREADTH_SEQUENCE_RESULT_2026_11_21.md`.
+
+- Recent SSE capture is terminal (exit 0), fully replayed and published as a 50-session two-venue breadth extension. Do not restart session 35957. See `MARKET_RECENT_BREADTH_RESULT_2026_11_21.md`; old capture notes are dated snapshots. Preserve source snapshots and null immature windows.

@@ -31,3 +31,5 @@
 .research-source-notes{scroll-margin-top:90px}.research-source-notes>header>p{color:var(--reading-muted)}
 
 .market-pressure-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;white-space:nowrap}.market-pressure-table caption{text-align:left;color:var(--text-muted,#666);padding:0 0 16px}.market-pressure-table th,.market-pressure-table td{padding:14px 12px;border-bottom:1px solid #deded7;text-align:right}.market-pressure-table th:first-child{text-align:left}.market-pressure-table small{display:block;font-size:11px;color:#6b716c;margin-top:5px}.market-pressure-table thead th{font-size:13px;font-weight:500;color:#626960}
+
+.reading-purpose-switch{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}.reading-purpose-switch button{border:1px solid #cbd4cd;background:transparent;padding:10px 15px;color:#486255;cursor:pointer;font:inherit;font-size:14px}.reading-purpose-switch button[aria-pressed="true"]{background:#e7eee9;border-color:#718a7a;color:#263f30}.reading-purpose-switch button:focus-visible{outline:2px solid #476c56;outline-offset:3px}.reading-breadth-plot{overflow-x:auto}.reading-breadth-plot svg{display:block}

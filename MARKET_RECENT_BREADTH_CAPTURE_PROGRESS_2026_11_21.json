@@ -1,0 +1,1033 @@
+{
+  "version": "recent_breadth_capture_progress_v1",
+  "observed_at": "2026-11-20T17:11:05.448765+00:00",
+  "status": "source_capture_in_progress_not_published",
+  "sse_basis": {
+    "start": "2026-09-18",
+    "through": "2026-11-20",
+    "days": 40,
+    "pool": 2321,
+    "endpoint_members": 2319,
+    "basis_capture_digest": "875dd46a4ca9340696669516a4fe0d3cc746d2a90db67c8d39685dda16e14c70",
+    "source_refs": [
+      {
+        "url": "https://query.sse.com.cn/sseQuery/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
+          "COMPANY_STATUS": "2,3,4,5,7,8",
+          "type": "inParams",
+          "isPagination": "true",
+          "pageHelp.pageSize": 500,
+          "pageHelp.cacheSize": 1,
+          "STOCK_TYPE": "1",
+          "pageHelp.pageNo": 1,
+          "pageHelp.beginPage": 1,
+          "pageHelp.endPage": 1
+        },
+        "sha256": "73adc14c7e1e27c0b06a94a49005a5ccef7a8c44f59995d6bdc269685781475f",
+        "observed_at": "2026-11-20T17:02:18.555741+00:00",
+        "bytes": 565814
+      },
+      {
+        "url": "https://query.sse.com.cn/sseQuery/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
+          "COMPANY_STATUS": "2,3,4,5,7,8",
+          "type": "inParams",
+          "isPagination": "true",
+          "pageHelp.pageSize": 500,
+          "pageHelp.cacheSize": 1,
+          "STOCK_TYPE": "1",
+          "pageHelp.pageNo": 2,
+          "pageHelp.beginPage": 2,
+          "pageHelp.endPage": 2
+        },
+        "sha256": "294caf024b0bbd1731b933561d9c59af13e2c06875f4dbd522ba407d72a18d00",
+        "observed_at": "2026-11-20T17:02:21.987747+00:00",
+        "bytes": 568654
+      },
+      {
+        "url": "https://query.sse.com.cn/sseQuery/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
+          "COMPANY_STATUS": "2,3,4,5,7,8",
+          "type": "inParams",
+          "isPagination": "true",
+          "pageHelp.pageSize": 500,
+          "pageHelp.cacheSize": 1,
+          "STOCK_TYPE": "1",
+          "pageHelp.pageNo": 3,
+          "pageHelp.beginPage": 3,
+          "pageHelp.endPage": 3
+        },
+        "sha256": "c1eaad12d7dc5337454bbc17397a5f956a9920ccefbc3bbccdcda7aed8c5559f",
+        "observed_at": "2026-11-20T17:02:24.936372+00:00",
+        "bytes": 573276
+      },
+      {
+        "url": "https://query.sse.com.cn/sseQuery/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
+          "COMPANY_STATUS": "2,3,4,5,7,8",
+          "type": "inParams",
+          "isPagination": "true",
+          "pageHelp.pageSize": 500,
+          "pageHelp.cacheSize": 1,
+          "STOCK_TYPE": "1",
+          "pageHelp.pageNo": 4,
+          "pageHelp.beginPage": 4,
+          "pageHelp.endPage": 4
+        },
+        "sha256": "c654e978b0902cfe49796a31b4ac2dfc20a665dfc514e927692105b72a0e4a60",
+        "observed_at": "2026-11-20T17:02:28.260522+00:00",
+        "bytes": 394550
+      },
+      {
+        "url": "https://query.sse.com.cn/sseQuery/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
+          "COMPANY_STATUS": "2,3,4,5,7,8",
+          "type": "inParams",
+          "isPagination": "true",
+          "pageHelp.pageSize": 500,
+          "pageHelp.cacheSize": 1,
+          "STOCK_TYPE": "8",
+          "pageHelp.pageNo": 1,
+          "pageHelp.beginPage": 1,
+          "pageHelp.endPage": 1
+        },
+        "sha256": "6ad17dc3cd2907459ad8f327407611ca89f7646194e9aec93fbab61360ba0eec",
+        "observed_at": "2026-11-20T17:02:31.311721+00:00",
+        "bytes": 579065
+      },
+      {
+        "url": "https://query.sse.com.cn/sseQuery/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
+          "COMPANY_STATUS": "2,3,4,5,7,8",
+          "type": "inParams",
+          "isPagination": "true",
+          "pageHelp.pageSize": 500,
+          "pageHelp.cacheSize": 1,
+          "STOCK_TYPE": "8",
+          "pageHelp.pageNo": 2,
+          "pageHelp.beginPage": 2,
+          "pageHelp.endPage": 2
+        },
+        "sha256": "7c8729ca80f46dcea913179ecfcf671eebebab530e4da6b782d6afda885a1a3e",
+        "observed_at": "2026-11-20T17:02:33.484508+00:00",
+        "bytes": 141219
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-18"
+        },
+        "sha256": "adc45e7cb7fad066a870f6ffd136331cbddec8d650aeab2ae7624fbadb8b4dc2",
+        "observed_at": "2026-11-20T17:02:34.731096+00:00",
+        "bytes": 1491
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-21"
+        },
+        "sha256": "61a774fd99ed72bce53d8bfc87c801641aa103c72a63d92d6a697e0d2988fcbc",
+        "observed_at": "2026-11-20T17:02:36.297839+00:00",
+        "bytes": 1493
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-22"
+        },
+        "sha256": "3f9e6c79047407a8bb2db276d61bc22dc30e1d05da42b16f7578ced6145fc75d",
+        "observed_at": "2026-11-20T17:02:37.721092+00:00",
+        "bytes": 1713
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-23"
+        },
+        "sha256": "8461ed457d5783e32a347d70f13cfc5f1a94db9cdda21704c58871313b5b6333",
+        "observed_at": "2026-11-20T17:02:39.219816+00:00",
+        "bytes": 1712
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-24"
+        },
+        "sha256": "ded2b4fdc27a6ddfe39d3a2a59e75b95c67f3f580b98fe9ee2595f68fd779559",
+        "observed_at": "2026-11-20T17:02:40.492712+00:00",
+        "bytes": 1493
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-28"
+        },
+        "sha256": "163f3fc702cd78c2fdcef69647d683a80159afd28ec56eb8133aa80a75a061eb",
+        "observed_at": "2026-11-20T17:02:41.900040+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-29"
+        },
+        "sha256": "f2c66089ba0f3c878e05d125ff3b103197c5cfa349543b12d59c5e503633ef11",
+        "observed_at": "2026-11-20T17:02:43.382543+00:00",
+        "bytes": 1713
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-09-30"
+        },
+        "sha256": "36e662482d4868904ec4ac0d1bf8a724d215d9e4f1e8a1fd4f9bcf6c38a3c3f9",
+        "observed_at": "2026-11-20T17:02:44.919036+00:00",
+        "bytes": 1708
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-08"
+        },
+        "sha256": "f67f7fa3600da6c4598c961d9e94d7ff5dc03a57185f6edadd107cc6135ca29f",
+        "observed_at": "2026-11-20T17:02:46.277267+00:00",
+        "bytes": 1714
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-09"
+        },
+        "sha256": "8338383db5d78587cf6b2177d4d080212542331d31c5da009241a20f2f06130a",
+        "observed_at": "2026-11-20T17:02:47.849843+00:00",
+        "bytes": 1711
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-12"
+        },
+        "sha256": "564129dac10874e8478ec3f1d71be3c2b89bc5f8b9c234b66b6bf59a20550590",
+        "observed_at": "2026-11-20T17:02:49.406611+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-13"
+        },
+        "sha256": "87d6ed4007e436b9c702c791dc52d70c632908437333835b7356dc245fa1ce04",
+        "observed_at": "2026-11-20T17:02:50.818447+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-14"
+        },
+        "sha256": "5c08b8970b107e37e6f1985728c5acec57796ce44bca8b2baace24318c095b7d",
+        "observed_at": "2026-11-20T17:02:52.321086+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-15"
+        },
+        "sha256": "07efd584e8213836cd6c6b6efa9403e032fb734dd619105d89e9180e03e1418b",
+        "observed_at": "2026-11-20T17:02:53.601677+00:00",
+        "bytes": 1712
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-16"
+        },
+        "sha256": "ebbe61a86d04cdf83d9d6ee548141bdfe80950436ce145eb38f25a56c113ee39",
+        "observed_at": "2026-11-20T17:02:55.002758+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-19"
+        },
+        "sha256": "fb274707ab05c8650376c377707c2bb079cf6ee926fff08c672971dd5ebdb49f",
+        "observed_at": "2026-11-20T17:02:56.256622+00:00",
+        "bytes": 1492
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-20"
+        },
+        "sha256": "5f92dfe20810808c0d07a976da8f310d2cddc96703d74053df0f8782d60e2db9",
+        "observed_at": "2026-11-20T17:02:57.836134+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-21"
+        },
+        "sha256": "e1cb88faf27954646b359bff158a2741ad45187c449d3b2f290aa097fc64fd34",
+        "observed_at": "2026-11-20T17:03:05.437269+00:00",
+        "bytes": 1707
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-22"
+        },
+        "sha256": "6ab9e694c38a5a920e375f92b37a6344dba0b7104229c172a780cf7076e50307",
+        "observed_at": "2026-11-20T17:03:06.734411+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-23"
+        },
+        "sha256": "e0a585b270f250c22da4738552aa4eb30757480867264d6723537f36503a5787",
+        "observed_at": "2026-11-20T17:03:12.966346+00:00",
+        "bytes": 1711
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-26"
+        },
+        "sha256": "ad18c2ea61486eae2b194c6769be799ac35b6fdcb58014d967a6597c0e6b17d4",
+        "observed_at": "2026-11-20T17:03:16.670752+00:00",
+        "bytes": 1709
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-27"
+        },
+        "sha256": "57c0da3500fd7dff82e445d5c4ab4cbaf34acfe7dad62b1edfafa0cf30925778",
+        "observed_at": "2026-11-20T17:03:18.079130+00:00",
+        "bytes": 1711
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-28"
+        },
+        "sha256": "5bf6059fd513c01943dcc2bc4dab48ce7d55f30da4e6e9c14c11d7d2c36533fe",
+        "observed_at": "2026-11-20T17:03:19.323744+00:00",
+        "bytes": 1712
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-29"
+        },
+        "sha256": "b445ebc06a3ff158b2719b0c0d40b81ceec6c2bc60c2a49d30f48bad49321149",
+        "observed_at": "2026-11-20T17:03:20.624935+00:00",
+        "bytes": 1491
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-10-30"
+        },
+        "sha256": "551376c2225982fb98ad5b98ae6c6c54c669dbdaf30e8ae2c8b271701e9af5f7",
+        "observed_at": "2026-11-20T17:03:21.928444+00:00",
+        "bytes": 1709
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-02"
+        },
+        "sha256": "edf5bd66b5987b0b39d082ca9ed14e1620a14beb605827dcf54ffa3d2039221a",
+        "observed_at": "2026-11-20T17:03:23.264682+00:00",
+        "bytes": 1709
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-03"
+        },
+        "sha256": "a5990a80db33cff10202e39fbd24fc78bb825e3094ea22590b06ea825afeb764",
+        "observed_at": "2026-11-20T17:03:24.530414+00:00",
+        "bytes": 1708
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-04"
+        },
+        "sha256": "96b1bc4673f9b71935f4ecf0f8e5da08d010c6f7709d14ff641ce1f4cfe9cd70",
+        "observed_at": "2026-11-20T17:03:25.944064+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-05"
+        },
+        "sha256": "cba0db4da90d7679c19fbaab29bd9cb219df37d0971aeae48762af36a6204e76",
+        "observed_at": "2026-11-20T17:03:27.418061+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-06"
+        },
+        "sha256": "c51ea15ed52e17bb5faab6619f54a5a8afec6503e5e7d176507af36406d86e95",
+        "observed_at": "2026-11-20T17:03:28.737567+00:00",
+        "bytes": 1706
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-09"
+        },
+        "sha256": "dc9c028613e2ec1a5b8dcbb14054f8f2f7fdbd326d5e97a05d9c5988d2d6180a",
+        "observed_at": "2026-11-20T17:03:30.322190+00:00",
+        "bytes": 1709
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-10"
+        },
+        "sha256": "e52db6cf37648008b66253ed45f8d74116bd8a0e9ffbe01a3350cd92a131b04d",
+        "observed_at": "2026-11-20T17:03:31.873897+00:00",
+        "bytes": 1487
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-11"
+        },
+        "sha256": "14d7be86cad8c1e572b5fb6011351a7022304ecbb5d6f073e0a668083553222f",
+        "observed_at": "2026-11-20T17:03:33.129464+00:00",
+        "bytes": 1705
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-12"
+        },
+        "sha256": "9bb9062cca9db66511a357af4edc2efc40dc5cc0969a2b5937c67dc4f45b8039",
+        "observed_at": "2026-11-20T17:03:34.495013+00:00",
+        "bytes": 1490
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-13"
+        },
+        "sha256": "47eef054347c19bc27df8b9ed0235f6b3e83c1496217a92e229fafd88abff3f7",
+        "observed_at": "2026-11-20T17:03:35.908571+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-16"
+        },
+        "sha256": "4e92c21705c738ae8b9e225a0ec9faf6ec505004ff716bd070ee53205db56494",
+        "observed_at": "2026-11-20T17:03:37.393072+00:00",
+        "bytes": 1707
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-17"
+        },
+        "sha256": "1597fd7a43a86263988e0688d59e84cd1377a659d70a35cb804b894cf92bf92b",
+        "observed_at": "2026-11-20T17:03:38.915940+00:00",
+        "bytes": 1710
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-18"
+        },
+        "sha256": "98a7fcd9a2ecb7745996d01a07a5df81820ca04f10321b1ea56e01efc87c86fb",
+        "observed_at": "2026-11-20T17:03:40.379996+00:00",
+        "bytes": 1709
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-19"
+        },
+        "sha256": "f50e51137f03389c54f029a89003b801e10e9d85ec28916c6b679bfc15b500e1",
+        "observed_at": "2026-11-20T17:03:41.853672+00:00",
+        "bytes": 1707
+      },
+      {
+        "url": "https://query.sse.com.cn/commonQuery.do",
+        "params": {
+          "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_MRGK_C",
+          "PRODUCT_CODE": "01,02,03,11,17",
+          "type": "inParams",
+          "isPagination": "false",
+          "SEARCH_DATE": "2026-11-20"
+        },
+        "sha256": "3965c80c148577629efde330482ff473bb5dee10a36e80ad2fc739e41b68918c",
+        "observed_at": "2026-11-20T17:03:43.196091+00:00",
+        "bytes": 1710
+      }
+    ],
+    "retained_exits": [
+      {
+        "code": "601059",
+        "listed_on": "2023-02-01",
+        "ended_on": "2026-10-19",
+        "observed_name": "信达证券",
+        "board": "1"
+      },
+      {
+        "code": "601198",
+        "listed_on": "2015-02-26",
+        "ended_on": "2026-10-19",
+        "observed_name": "东兴证券",
+        "board": "1"
+      }
+    ]
+  },
+  "szse_verified": {
+    "version": "recent_szse_verified_breadth_v1",
+    "scope": "SZSE_A_shares_only",
+    "complete_market_history": false,
+    "missing_venues": [
+      "SSE"
+    ],
+    "historical_PIT": false,
+    "start": "2026-11-09",
+    "through": "2026-11-20",
+    "source_digest": "b9419f25b61af261c7380ac984327851cb8104b4cfa7e0adac73c88abba8e4b6",
+    "points": [
+      {
+        "date": "2026-11-09",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "624e482e7a94c1f7d6a298d4ed0403b12d2d9947eb6b9cc055faeffac36d9ff6",
+        "all": {
+          "observed_trading_stocks": 2902,
+          "listed_source_stocks": 2906,
+          "nontrading_stocks": 4,
+          "advancing": 1139,
+          "declining": 1681,
+          "flat": 82,
+          "declining_5pct_or_more": 20,
+          "median_return_pct": -0.381574,
+          "mean_return_pct": 0.056468,
+          "declining_share_pct": 57.925569,
+          "amount_yuan": 800876201600.0
+        }
+      },
+      {
+        "date": "2026-11-10",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "7f80cca9cc30bf3ab86f92d0cbbc982ef59ffb95ef17591a577fb9abe97c0d38",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2906,
+          "nontrading_stocks": 3,
+          "advancing": 2360,
+          "declining": 469,
+          "flat": 74,
+          "declining_5pct_or_more": 5,
+          "median_return_pct": 1.631321,
+          "mean_return_pct": 2.024026,
+          "declining_share_pct": 16.155701,
+          "amount_yuan": 831908525900.0
+        }
+      },
+      {
+        "date": "2026-11-11",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "e2ec8589442083a154226912999fcc320c379ded9ab11b8a8ead012010bf3898",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2906,
+          "nontrading_stocks": 3,
+          "advancing": 1973,
+          "declining": 816,
+          "flat": 114,
+          "declining_5pct_or_more": 22,
+          "median_return_pct": 0.786164,
+          "mean_return_pct": 1.301998,
+          "declining_share_pct": 28.108853,
+          "amount_yuan": 941652027800.0
+        }
+      },
+      {
+        "date": "2026-11-12",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "234c9e9afec7e366eb109db00292b28dbef2145a0e9704ec257c835a1d862da7",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2906,
+          "nontrading_stocks": 3,
+          "advancing": 413,
+          "declining": 2460,
+          "flat": 30,
+          "declining_5pct_or_more": 137,
+          "median_return_pct": -1.754386,
+          "mean_return_pct": -1.650574,
+          "declining_share_pct": 84.739924,
+          "amount_yuan": 1053383361500.0
+        }
+      },
+      {
+        "date": "2026-11-13",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "041fe18d42e3f36ca9a52e14baf14fbf595cda13abce5243e766b4110ae4edc7",
+        "all": {
+          "observed_trading_stocks": 2901,
+          "listed_source_stocks": 2905,
+          "nontrading_stocks": 4,
+          "advancing": 368,
+          "declining": 2506,
+          "flat": 27,
+          "declining_5pct_or_more": 299,
+          "median_return_pct": -2.012712,
+          "mean_return_pct": -2.108749,
+          "declining_share_pct": 86.384006,
+          "amount_yuan": 885698814400.0
+        }
+      },
+      {
+        "date": "2026-11-16",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "707c175fa609c4768e0644a8852bc830a33eb6cb02224d9a43da24f5b9c78585",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2905,
+          "nontrading_stocks": 2,
+          "advancing": 528,
+          "declining": 2333,
+          "flat": 42,
+          "declining_5pct_or_more": 494,
+          "median_return_pct": -2.192408,
+          "mean_return_pct": -2.364268,
+          "declining_share_pct": 80.36514,
+          "amount_yuan": 778676915800.0
+        }
+      },
+      {
+        "date": "2026-11-17",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "7e07f047d32c0fd0625ad17f354d4dbb80d2f8efea27a5b78c564f0c81617b86",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2905,
+          "nontrading_stocks": 2,
+          "advancing": 627,
+          "declining": 2218,
+          "flat": 58,
+          "declining_5pct_or_more": 301,
+          "median_return_pct": -1.587302,
+          "mean_return_pct": -1.658227,
+          "declining_share_pct": 76.40372,
+          "amount_yuan": 767969119100.0
+        }
+      },
+      {
+        "date": "2026-11-18",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "18483396fd08713303bdf19c480ac75f52174bef25bb42616826d9d5428e94d8",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2905,
+          "nontrading_stocks": 2,
+          "advancing": 685,
+          "declining": 2158,
+          "flat": 60,
+          "declining_5pct_or_more": 142,
+          "median_return_pct": -1.237113,
+          "mean_return_pct": -1.046643,
+          "declining_share_pct": 74.336893,
+          "amount_yuan": 719965448100.0
+        }
+      },
+      {
+        "date": "2026-11-19",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "b38f13824c62f8aa5d9b2300be148ca0c9026e9e3094c1a3ab2bbb6f7ec881ad",
+        "all": {
+          "observed_trading_stocks": 2903,
+          "listed_source_stocks": 2905,
+          "nontrading_stocks": 2,
+          "advancing": 282,
+          "declining": 2601,
+          "flat": 20,
+          "declining_5pct_or_more": 407,
+          "median_return_pct": -2.8,
+          "mean_return_pct": -2.776922,
+          "declining_share_pct": 89.596969,
+          "amount_yuan": 668689047000.0
+        }
+      },
+      {
+        "date": "2026-11-20",
+        "scope": "SZSE_A_shares_only",
+        "source_digest": "1b223310968c696eeaedfc63c3835c972f9ef00d6fbfde275a6b1478d3a07d77",
+        "all": {
+          "observed_trading_stocks": 2902,
+          "listed_source_stocks": 2905,
+          "nontrading_stocks": 3,
+          "advancing": 141,
+          "declining": 2752,
+          "flat": 9,
+          "declining_5pct_or_more": 1671,
+          "median_return_pct": -5.418565,
+          "mean_return_pct": -4.997161,
+          "declining_share_pct": 94.831151,
+          "amount_yuan": 720638780400.0
+        }
+      }
+    ],
+    "source_files": 30
+  },
+  "sse_progress_when_observed": {
+    "version": "sse_recent_capture_progress_v1",
+    "status": "running",
+    "process_id": 7495,
+    "started_at": "2026-11-20T17:04:51.672195+00:00",
+    "observed_at": "2026-11-20T17:11:01.447190+00:00",
+    "through": "2026-11-20",
+    "expected": 2321,
+    "captured": 925,
+    "reused": 0,
+    "failed": 0,
+    "errors": {},
+    "plan_digest": "384f562962b1a25ec299b7e73cfae56a7aa9f5bbd128559e35f692fe5fa9d488",
+    "not_market_publication": true
+  },
+  "suspension_source": {
+    "version": "recent_sse_suspension_capture_v1",
+    "start_query": "2026-01-01",
+    "through_query": "2026-11-20",
+    "source_refs": [
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260101",
+          "endStopDate": "20261120",
+          "pageHelp.pageNo": 1
+        },
+        "sha256": "aa7b22330dd4b8e34b1cc92aa85b253e6b98e186cf8c023b62a3c89d18dd6a5e",
+        "bytes": 43647,
+        "observed_at": "2026-11-20T17:07:18.152508+00:00"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260101",
+          "endStopDate": "20261120",
+          "pageHelp.pageNo": 2
+        },
+        "sha256": "572f4f94f1b36ebc8b7e28ce66357623c981a9767834a056501f4304a69cf62b",
+        "bytes": 43343,
+        "observed_at": "2026-11-20T17:07:19.685368+00:00"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260101",
+          "endStopDate": "20261120",
+          "pageHelp.pageNo": 3
+        },
+        "sha256": "a59337ffda5998d2d84f2ef5c673f8880a2c2abb01c12d2b5bfbe0d38595e1ac",
+        "bytes": 43359,
+        "observed_at": "2026-11-20T17:07:21.207406+00:00"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260101",
+          "endStopDate": "20261120",
+          "pageHelp.pageNo": 4
+        },
+        "sha256": "9f4fa970e9e846ccf55e091e175128e519d5d8374b38247d9316e8dcfb6ccc9b",
+        "bytes": 43003,
+        "observed_at": "2026-11-20T17:07:22.762440+00:00"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260101",
+          "endStopDate": "20261120",
+          "pageHelp.pageNo": 5
+        },
+        "sha256": "4151e4cc8936252a1cc002ac36878ad1620bc0aec5ea934d156e8192c53b2eab",
+        "bytes": 43391,
+        "observed_at": "2026-11-20T17:07:24.616592+00:00"
+      },
+      {
+        "url": "https://query.sse.com.cn/commonSoaQuery.do",
+        "params": {
+          "isPagination": "true",
+          "sqlId": "GW_PL_JYTS_TFPXX",
+          "pageHelp.pageSize": 100,
+          "productCode": "",
+          "keyWords": "",
+          "startStopDate": "20260101",
+          "endStopDate": "20261120",
+          "pageHelp.pageNo": 6
+        },
+        "sha256": "a2247a34089cebc7958c479c3a353c8c27f7d87f9e0c60d8fc8ea7f656e190a7",
+        "bytes": 27363,
+        "observed_at": "2026-11-20T17:07:26.226594+00:00"
+      }
+    ],
+    "materialized_at": "2026-11-20T17:07:26.229214+00:00",
+    "content_digest": "5359a15e88f37059542c42f81a0b4421a4e6c859034d01e667ecdc87e3658627"
+  },
+  "partial_endpoint_control": {
+    "checked_at": "2026-11-20T17:09:39.523434+00:00",
+    "archived_members_checked": 720,
+    "closed_endpoint_conflicts": [],
+    "recent_missing_quote_pairs": [
+      [
+        "2026-11-12",
+        "600185"
+      ],
+      [
+        "2026-11-13",
+        "600185"
+      ],
+      [
+        "2026-11-16",
+        "600185"
+      ],
+      [
+        "2026-11-17",
+        "600185"
+      ],
+      [
+        "2026-11-18",
+        "600185"
+      ],
+      [
+        "2026-11-19",
+        "600185"
+      ],
+      [
+        "2026-11-19",
+        "600567"
+      ]
+    ],
+    "partial_only": true
+  },
+  "limitations": [
+    "深市10日是单所数据，不是完整沪深历史。",
+    "沪市全组仍在采集，过程数量不是完整覆盖或已发布状态。",
+    "缺行尚须停复牌及退出原因核对，不填零收益；未生成新危机评分或研究结论。",
+    "部分深市控制页及Excel取自官方HTTP地址，未声称全部原件经HTTPS取得。"
+  ],
+  "verified_halt_notice": {
+    "announcement_id": "1225677106",
+    "symbol": "600185",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225677106.PDF",
+    "published_on": "2026-11-19",
+    "sha256": "dbac99960d1c625be17c123c8c8d54063f5e93d17264cd7101cc3c9b399f90d7",
+    "pages": 2,
+    "observed_at": "2026-11-20T17:14:01.043414+00:00",
+    "protected_gate_passed": true,
+    "title": "关于筹划重大资产重组事项的进展公告",
+    "visual_reviewed_pages": [
+      1,
+      2
+    ],
+    "fact": "公司披露自2026年11月12日开市起停牌；截至2026年11月19日仍继续停牌，尚处筹划及商讨论证阶段。",
+    "boundary": "不是已复牌或交易完成的证据；11月20日状态须再与官方交易提示和当日无成交截面核对。"
+  }
+}

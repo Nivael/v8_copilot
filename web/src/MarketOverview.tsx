@@ -5,7 +5,7 @@ import type {MarketReading} from './readingTypes'
 import {useReadingView} from './useReadingView'
 import './reading.css'
 import {MarketBreadthSequence} from './MarketBreadthSequence'
-import {MarketBreadthContext} from './MarketBreadthContext'
+import {MarketBreadthReading} from './MarketBreadthReading'
 import {MarketPriceContext} from './MarketPriceContext'
 import {BroadETFSection} from './BroadETFSection'
 
@@ -24,8 +24,8 @@ export function MarketOverview(){
     {error&&<p role="alert" className="reading-error">{error}。{data?'当前保留上次判断。':'请稍后重试。'}</p>}
     {!data||!price?<div className="reading-placeholder" role="status"><h2>正在整理最近的市场判断</h2><p>完成后会显示大盘、ST和ETF的结论。</p></div>:<>
       <section className="reading-verdict" aria-label="已保存的市场价格判断"><span className="reading-stance">{price.stance}</span><h2>{price.headline}</h2><p>{price.summary}</p><a className="reading-text-link" href="#market-reasons">为什么这样判断 ↓</a></section>
-      <section className="reading-section" aria-label="市场数据日期与判断范围"><h2>这份判断能说明什么？</h2><p>价格判断截至{price.as_of}；上涨股票占比截至{breadthDay}；ST同窗参考截至{data.as_of}；ETF份额与同窗价格截至{broad?.as_of||data.as_of}。刷新只重读已保存资料。</p><p>这里先回答价格是否承压。跌停、连续跌停、历史广度与退出能力尚未接齐，当前不能据此给出完整危机等级或仓位上限。</p><p><a href="#market-breadth-sequence">连续转弱后是否必跌？查看历史反例 →</a></p></section>
-      <MarketBreadthContext data={breadth||undefined} priceAsOf={price.as_of}/>
+      <section className="reading-section" aria-label="市场数据日期与判断范围"><h2>这份判断能说明什么？</h2><p>价格判断截至{price.as_of}；上涨股票占比截至{breadthDay}；ST同窗参考截至{data.as_of}；ETF份额与同窗价格截至{broad?.as_of||data.as_of}。刷新只重读已保存资料。</p><p>已能核对价格与参与面是否同向走弱。逐股跌停、连续跌停、均线覆盖与退出能力尚未接齐，当前不能据此给出完整危机等级或仓位上限。</p><p><a href="#market-breadth-sequence">连续转弱后是否必跌？查看历史反例 →</a></p></section>
+      {breadth&&<MarketBreadthReading data={breadth} priceAsOf={price.as_of}/>}
       <MarketPriceContext data={latest?.price_context} priceAsOf={price.as_of}/>
       <dl className="reading-metrics"><div><dt>最近一个交易日</dt><dd>{percent(price.metrics.day_change_pct)}</dd></div><div><dt>最近5个交易日</dt><dd>{percent(price.metrics.five_day_change_pct)}</dd></div><div><dt>最近20个交易日</dt><dd>{percent(price.metrics.twenty_day_change_pct)}</dd></div><div><dt>{`上涨股票占比（${breadthDay}）`}</dt><dd>{advancing==null?'待更新':`${advancing.toFixed(1)}%`}</dd></div></dl>
       <section className="reading-section"><header><h2>大盘与ST，放在一起看</h2><p>{data.start} — {data.as_of} · 同期累计涨跌</p></header><ReadingChart series={data.chart} label="大盘与ST走势比较"/><p className="reading-caption">线越低，期间跌幅越大。一次上涨，要放回整段走势里看。</p></section>

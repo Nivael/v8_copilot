@@ -1,0 +1,40 @@
+{
+  "version": "baili_receipt_update_v1",
+  "source": {
+    "announcement_id": "1225654047",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-11-03/1225654047.PDF",
+    "sha256": "1c8b84407c8730e9c55d0cd2836baf868555a0ea6d1a867fe22785de642fd767",
+    "pages": 4,
+    "observed_at": "2026-11-20T15:37:25.616246+00:00",
+    "symbol": "603959",
+    "published_on": "2026-11-03",
+    "title": "关于收到《现金赠与协议》项下赠与款暨公司庭外重组进展的公告",
+    "notice_number": "2026-111"
+  },
+  "facts_as_of": "2026-10-30",
+  "published_on": "2026-11-03",
+  "research_cutoff": "2026-11-19",
+  "agreement_yuan": "130000000",
+  "received_yuan": "75000000",
+  "remaining_arithmetic_yuan": "55000000",
+  "received_ratio_pct": "57.69",
+  "reported_receipt_count": 2,
+  "issuer_reports_initial_obligation_timely_fulfilled": true,
+  "quarter_cashflow_item_yuan": "39000000",
+  "difference_from_quarter_item_yuan": "36000000",
+  "individual_receipt_breakdown_verified": false,
+  "later_court_status_verified": false,
+  "display_row": {
+    "name": "百利：投资人赠与",
+    "delivery": "重整投资人 → 上市公司",
+    "receipt": "截至10月30日，两笔赠与合计7500万元；11月3日公告确认",
+    "cash_kind": "资本支持已进一步落实；仍不是经营收入，协议剩余差额5500万元",
+    "interpretation": "公司披露首期付款义务已按期履行；逐笔金额、付款人与后续余款仍分别核。",
+    "date": "2026-11-03（事实截至2026-10-30）"
+  },
+  "correction": {
+    "prior_reading": "仅用三季报吸收投资现金3900万元说明部分落实，沿用9100万元算术差额，遗漏已在目录的11月3日收款公告。",
+    "current_reading": "现按公司专门公告确认协议项下两笔累计7500万元，剩余算术差额5500万元；首期按期履行已有公司披露，不再笼统写成尚未确认。",
+    "discovery": "保存目录共41条、两页完整，1225654047已在第1页，但未进入旧已选来源；属于选源遗漏，不是本次接口新披露。"
+  }
+}

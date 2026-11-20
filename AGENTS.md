@@ -142,3 +142,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 到账性质比较已接入：京蓝补偿、海泰项目销售、百利资本赠与分列；不把全部卖房排为非经营，也不把算术差额当逾期欠款。阶段/性质/行情三问切换，见 [结果](ST_CASH_RECEIPT_MEANING_RESULT_2026_11_20.md)。
 
 百利付款条款补核已接入：赠与、履约保证金和受让转增股投资款分列，5/30工作日触发与返还/没收例外分别核；保证金转换不重复计现金，3900万元逐笔对应仍缺。见 [结果](ST_BAILI_PAYMENT_TERMS_RESULT_2026_11_20.md)。
+
+百利11月3日收款补证更正已发布：目录原有但漏选，累计7500万元/余差5500万元与旧3900万元季度项分列；原269行保持，新增历史研究1条，见[结果](ST_BAILI_RECEIPT_CORRECTION_RESULT_2026_11_20.md)。

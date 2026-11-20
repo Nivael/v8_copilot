@@ -1,0 +1,17 @@
+{
+  "api": "stk_limit",
+  "trade_date": "20261120",
+  "observed_at": "2026-11-20T18:06:38.589329+00:00",
+  "credentials_source": "existing_local_provider_configuration",
+  "current_snapshots_unchanged": true,
+  "status": "failed",
+  "error_type": "RuntimeError",
+  "failure_class": "token_expired",
+  "documentation": "https://tushare.pro/document/2?doc_id=183",
+  "documentation_scope": "per-security daily price bounds; B shares/funds may be included; verify target universe and pagination before use",
+  "rejected_substitute": {
+    "url": "https://tushare.pro/document/2?doc_id=298",
+    "reason": "documentation explicitly excludes ST; cannot replace ST limitdown counts"
+  },
+  "coverage_claim": "Only configured provider probe failed; no claim all possible sources unavailable."
+}

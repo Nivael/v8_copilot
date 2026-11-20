@@ -1,0 +1,27 @@
+{
+  "scope": "latest qualifying snapshot per saved day, exactly repository latest_facts selection; ST activity only, not full market",
+  "database_name": "market_activity_v1.sqlite3",
+  "snapshots_count": 1333,
+  "snapshot_metadata_digest": "f75bb0810cb6ed4bc044b31728514f3f99904251897fc186587f782b7a2c0d21",
+  "selected_payload_digest": "363e4fb42a9521404f02bd3fee1e91b582d415eb08bf858e64b963e1a6d658fc",
+  "counts": {
+    "rows": 211948,
+    "both_positive_bounds": 210832,
+    "eligible_for_anomaly": 196291,
+    "incomplete_bounds": 1116
+  },
+  "date_start": "2021-03-17",
+  "date_end": "2026-09-03",
+  "dates_count": 1328,
+  "target_recent_start": "2026-11-09",
+  "target_recent_end": "2026-11-20",
+  "target_recent_saved_rows": 0,
+  "affected": [],
+  "limits": [
+    "Normalized stored bounds do not certify independently replayable exchange originals.",
+    "No writes, no restatement of saved snapshots.",
+    "No claim of complete-market coverage, limitdown counts, queue availability or executable exit."
+  ],
+  "full_daily_audit_sha256": "ba46649a14ba4644d33b1f996443429e27f7427648443fee4d9b7af077d4556e",
+  "repository_selection_crosscheck": true
+}

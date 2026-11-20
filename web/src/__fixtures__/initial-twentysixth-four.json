@@ -1,0 +1,2999 @@
+{
+  "anchor": "2026-07-03",
+  "through": "2026-11-19",
+  "title": "审计改善、资金归还和撤销申请，能说明什么？",
+  "intro": "利达回收占款仍有财务取证及内控缺陷；四通双无保留仍在补材料。正平申请仅针对退市风险警示，持续经营及募资问题保留；智知内控改善与处罚条件分别看。",
+  "window_note": "统一7月3日收盘起算，最初20日与至11月19日分开。智知锚定报价有跨源冲突，两段收益留空；同期差异不识别公告净影响。",
+  "counts": {
+    "before": 142,
+    "after": 146,
+    "remaining": 4,
+    "members": 150,
+    "new_companies": 4,
+    "new_files": 21,
+    "new_pages": 623
+  },
+  "selection_note": "剩余8家按固定代码升序取前四，不按后续涨跌挑选。",
+  "boundary": "245条近期与575条起源目录完整，仅覆盖声明窗口。21份623页中实际核27页，不认证全文。智知复权差异及受保护旧预重整原件排除保留；独立处罚原文和四通10月批准另存后续补证，不倒填期初。",
+  "method_promotions": 0,
+  "full_membership_certification_added": false,
+  "rows": [
+    {
+      "symbol": "603828",
+      "name": "*ST利达",
+      "risk_group": "连续内控否定、资金回收与双重取证限制",
+      "known_at_anchor": "资金回收、财务审计取证和内控整改是三件事。原件确认已收回本息16016.15万元，但归还金额、年末余额及利息计提仍有取证限制；内控重大缺陷仍未有效消除。财务保留意见还包括证监会立案未结带来的取证限制，不能只看占款这一项。",
+      "watch": "继续核财务保留意见后续基础、整改及下一份独立验证，不能由收款直接推导撤销警示。",
+      "source": {
+        "symbol": "603828",
+        "announcement_id": "1225222892",
+        "title": "柯利达关于实施退市风险警示暨停牌的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225222892.PDF",
+        "sha256": "076a0f95898c4aabb78042187076fdbafccb4bb9ba7ddf0fc12bb490c730db88",
+        "pages": 3,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-20T08:20:34.652334+00:00",
+        "published_on": "2026-04-28",
+        "empty_text_pages": 0,
+        "document_dated_on": null,
+        "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+        "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+      },
+      "pages": [
+        1
+      ],
+      "supporting": [
+        {
+          "source": {
+            "symbol": "603828",
+            "announcement_id": "1225222889",
+            "title": "柯利达2025年度审计报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225222889.pdf",
+            "sha256": "81f24ccb1d211b37f5389b8f54244b9c714ac1e2f379c4cc8186245e070a8764",
+            "pages": 128,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:36.707533+00:00",
+            "published_on": "2026-04-28",
+            "empty_text_pages": 15,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            3,
+            4
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603828",
+            "announcement_id": "1225222896",
+            "title": "柯利达2025年度内部控制审计报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225222896.pdf",
+            "sha256": "5e2b6eac504d5a36196ba4fa30d37372a84a44c4032c9e2987eab60b8958c4db",
+            "pages": 9,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:35.249777+00:00",
+            "published_on": "2026-04-28",
+            "empty_text_pages": 2,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            4
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        }
+      ],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -10.560344827586189,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": -9.913793103448276,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    },
+    {
+      "symbol": "603838",
+      "name": "*ST四通",
+      "risk_group": "亏损收入组合、双无保留与申请待批",
+      "known_at_anchor": "2025财务和内控原件均为无保留意见，但5月披露仍在补充撤销申请材料。审计改善与交易所正式批准是不同阶段。",
+      "watch": "7月期初仍在申请补材，正式库存与原件名称均为*ST四通。10月正式撤销仅列期后更新，不倒填当时已知信息。",
+      "source": {
+        "symbol": "603838",
+        "announcement_id": "1225322073",
+        "title": "四通股份关于申请撤销公司股票退市风险警示的进展公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-05-22/1225322073.PDF",
+        "sha256": "9548bd2f40574fdf5a2d19e4179e9aad46a36419881cedcc4e05727e1fa17dfb",
+        "pages": 2,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-20T08:20:34.777887+00:00",
+        "published_on": "2026-05-22",
+        "empty_text_pages": 0,
+        "document_dated_on": null,
+        "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+        "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "supporting": [
+        {
+          "source": {
+            "symbol": "603838",
+            "announcement_id": "1223370266",
+            "title": "四通股份关于实施退市风险警示暨停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223370266.PDF",
+            "sha256": "95bba579ff12517dacf6381eef06ba48e5bf6e28fe67e3d227ca523d45689cac",
+            "pages": 4,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:21:50.134287+00:00",
+            "published_on": "2025-04-29",
+            "empty_text_pages": 0,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            1
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603838",
+            "announcement_id": "1225215514",
+            "title": "四通股份2025年审计报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225215514.PDF",
+            "sha256": "5bef8b94e8516c1f019d6d5e3dd1db1abee908b3358c38efa7fd636f0d9c7626",
+            "pages": 95,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:36.868322+00:00",
+            "published_on": "2026-04-28",
+            "empty_text_pages": 95,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            2
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603838",
+            "announcement_id": "1225215555",
+            "title": "四通股份2025年12月31日内部控制审计报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225215555.PDF",
+            "sha256": "464cd4af23713a46f5483f157823b4ca9ad9be2c0f6efe347cf92703911aba39",
+            "pages": 7,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:36.069743+00:00",
+            "published_on": "2026-04-28",
+            "empty_text_pages": 7,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            3
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        }
+      ],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -20.49891540130152,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": 23.101952277657254,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    },
+    {
+      "symbol": "603843",
+      "name": "*ST正平",
+      "risk_group": "旧无法表示改善、持续经营及募资强调保留",
+      "known_at_anchor": "不是。财务原件保留持续经营重大不确定性；内控意见有效，但强调补流募集资金到期未归还专户。预重整中的归还方案仍是安排，不能当作已实收或正式重整完成。5月申请只针对退市风险警示；连续亏损伴持续经营不确定性等其他警示仍保留。",
+      "watch": "核撤销申请保留的其他警示、实际归还余额和后续司法阶段。1.9亿元是历史授权上限，不能直接认定报告日欠款余额。",
+      "source": {
+        "symbol": "603843",
+        "announcement_id": "1225292893",
+        "title": "正平股份关于申请撤销公司股票退市风险警示并继续实施其他风险警示的公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-05-12/1225292893.PDF",
+        "sha256": "87399b1715458c6bc0e29a0c2e475fc841476795cd0bdcb74ef2586196133836",
+        "pages": 3,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-20T08:20:36.884190+00:00",
+        "published_on": "2026-05-12",
+        "empty_text_pages": 0,
+        "document_dated_on": null,
+        "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+        "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+      },
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "supporting": [
+        {
+          "source": {
+            "symbol": "603843",
+            "announcement_id": "1223426982",
+            "title": "正平股份关于公司股票被实施退市风险警示及其他风险警示暨停牌的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223426982.PDF",
+            "sha256": "19a70436b2f33a6eda0bb284940dc601185b52a0aed9099d7ac49b1804afff76",
+            "pages": 4,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:21:50.528776+00:00",
+            "published_on": "2025-04-30",
+            "empty_text_pages": 0,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            1
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603843",
+            "announcement_id": "1225269055",
+            "title": "正平股份2025年度审计报告（中瑞诚审字[2026]第612005号）",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225269055.PDF",
+            "sha256": "7839e0249b836d2f1541a2da06db5b4dbf167c75aca84d63b810c6f0b4ccb87a",
+            "pages": 177,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:39.769766+00:00",
+            "published_on": "2026-04-30",
+            "empty_text_pages": 13,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            3
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603843",
+            "announcement_id": "1225269013",
+            "title": "正平路桥建设股份有限公司2025年度内部控制审计报告（中瑞诚审字[2026]第612004号）",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225269013.PDF",
+            "sha256": "382bf9011aafc467efdb1d3ff51fb0ff8dcad63dbbd1819b97a23cded0a7b6ba",
+            "pages": 14,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:38.085879+00:00",
+            "published_on": "2026-04-30",
+            "empty_text_pages": 10,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            3,
+            4
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        }
+      ],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": -10.609756097560963,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": -47.317073170731696,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null
+        }
+      }
+    },
+    {
+      "symbol": "603869",
+      "name": "ST智知",
+      "risk_group": "内控整改与处罚警示分列",
+      "known_at_anchor": "2025年度财务无保留与年末内控有效意见已从独立审计原件核实。但处罚警示、满期判断和交易所批准仍须分别跟踪，不能以审计改善替代全部撤销条件。",
+      "watch": "监管原文落款2024年12月27日；公司披露同日收到，分开记录。仍需核正式撤销批准文件。",
+      "source": {
+        "symbol": "603869",
+        "announcement_id": "1225273254",
+        "title": "新智认知数字科技股份有限公司关于申请撤销其他风险警示的进展公告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-05-01/1225273254.PDF",
+        "sha256": "95f3cfff7d3e07743d4dc37c29191da7d3a3da45feea77ac9064267d374c0314",
+        "pages": 3,
+        "protected_gate_passed": true,
+        "observed_at": "2026-11-20T08:20:38.389403+00:00",
+        "published_on": "2026-05-01",
+        "empty_text_pages": 0,
+        "document_dated_on": null,
+        "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+        "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "supporting": [
+        {
+          "source": {
+            "symbol": "603869",
+            "announcement_id": "1223386717",
+            "title": "新智认知数字科技股份有限公司关于公司股票继续实施其他风险警示的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223386717.PDF",
+            "sha256": "a790c7e788accb0fba9b3b0327aa73a39b8609a70e3c50e97f6cf634194504d1",
+            "pages": 2,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:21:50.694600+00:00",
+            "published_on": "2025-04-29",
+            "empty_text_pages": 0,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            1
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603869",
+            "announcement_id": "1225090629",
+            "title": "2025年年度审计报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225090629.PDF",
+            "sha256": "85208fd81213e1b7fd27854353917276130f774001f563f65383d700b9e56470",
+            "pages": 130,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:41.031151+00:00",
+            "published_on": "2026-04-10",
+            "empty_text_pages": 24,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            2
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        },
+        {
+          "source": {
+            "symbol": "603869",
+            "announcement_id": "1225090626",
+            "title": "2025年度内部控制审计报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225090626.PDF",
+            "sha256": "c6eaccaf8956f3be6994ca96c39b2212fdca13a808181cb858ba1fd27b8ce013",
+            "pages": 3,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T08:20:40.108636+00:00",
+            "published_on": "2026-04-10",
+            "empty_text_pages": 1,
+            "document_dated_on": null,
+            "document_date_boundary": "正式披露日与落款日分别核；未核落款不推定。",
+            "text_extraction_boundary": "扫描空文本原样保留；看图记录不伪装成原始抽取文本。"
+          },
+          "pages": [
+            3
+          ],
+          "note": "对应已核原页；不将审计改善、申请或还款方案当正式解除。"
+        }
+      ],
+      "comparisons": {
+        "early20": {
+          "anchor": "2026-07-03",
+          "through": "2026-07-31",
+          "days": 20,
+          "stock_pct": null,
+          "market_pct": -11.291549132176637,
+          "st_pct": -8.58441333727077,
+          "gap": null,
+          "return_status": "price_basis_conflict"
+        },
+        "full": {
+          "anchor": "2026-07-03",
+          "through": "2026-11-19",
+          "days": 93,
+          "stock_pct": null,
+          "market_pct": -23.84361043718607,
+          "st_pct": -19.87640328334801,
+          "gap": null,
+          "return_status": "price_basis_conflict"
+        }
+      }
+    }
+  ],
+  "inventory": [
+    {
+      "symbol": "000010",
+      "name": "*ST美丽",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225405830"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000016",
+      "name": "*ST康佳A",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225405760"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000056",
+      "name": "*ST皇庭",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_four_1225173882"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000078",
+      "name": "ST海王",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407049"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000488",
+      "name": "ST晨鸣",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-08",
+      "fact_ids": [
+        "initial_four_1225282465",
+        "initial_four_1222975603",
+        "initial_four_1225058546",
+        "initial_four_1225058547"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000609",
+      "name": "*ST中迪",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-22",
+      "fact_ids": [
+        "initial_four_1225140244"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000610",
+      "name": "*ST西旅",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_four_1225173668"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000615",
+      "name": "*ST美谷",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-23",
+      "fact_ids": [
+        "initial_next_four:1225326692",
+        "initial_next_four:1225197985",
+        "initial_next_four:1225197981"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000632",
+      "name": "ST三木",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406627"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000639",
+      "name": "ST西王",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "warning_followup_1225247389",
+        "initial_status_1225405413"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000669",
+      "name": "ST金鸿",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_next_four:1225251137",
+        "initial_next_four:1225251135",
+        "initial_next_four:1225251124"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000677",
+      "name": "ST海龙",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406691"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000698",
+      "name": "ST沈化",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406992"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000711",
+      "name": "ST京蓝",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406741"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000752",
+      "name": "*ST西发",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-03",
+      "fact_ids": [
+        "initial_next_four:1225347065",
+        "initial_next_four:1225197995",
+        "initial_next_four:1225196578"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000793",
+      "name": "*ST华闻",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-22",
+      "fact_ids": [
+        "remaining_reorg_1225365705",
+        "remaining_reorg_1225376732",
+        "remaining_reorg_1225380075"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000820",
+      "name": "*ST节能",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407087"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000821",
+      "name": "ST京机",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "remaining_basis_1225390702"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000826",
+      "name": "*ST启环",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-24",
+      "fact_ids": [
+        "initial_next_four:1225384023",
+        "initial_next_four:1225242879"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000838",
+      "name": "*ST发展",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_third_four:1225400676",
+        "initial_third_four:1225170536"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000903",
+      "name": "ST云动",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-28",
+      "fact_ids": [
+        "initial_third_four:1225212391",
+        "initial_third_four:1225212355",
+        "initial_third_four:1225212367"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000909",
+      "name": "*ST数源",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_status_1225405831"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "000911",
+      "name": "*ST广糖",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "initial_third_four:1225389952",
+        "initial_third_four:1225245896"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002005",
+      "name": "ST德豪",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406065"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002024",
+      "name": "ST易购",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-26",
+      "fact_ids": [
+        "initial_third_four:1225346702",
+        "initial_third_four:1225064494",
+        "initial_third_four:1225388521"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002055",
+      "name": "ST得润",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-12",
+      "fact_ids": [
+        "initial_fourth_four:1225365570",
+        "initial_fourth_four:1225244280",
+        "initial_fourth_four:1225244262",
+        "initial_fourth_four:1225044690"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002082",
+      "name": "ST万邦",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406415"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002102",
+      "name": "ST能特",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406422"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002109",
+      "name": "ST兴化",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406416"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002122",
+      "name": "ST汇洲",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2025-11-19",
+      "fact_ids": [
+        "initial_fourth_four:1224768534",
+        "initial_fourth_four:1224812570"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002168",
+      "name": "ST惠程",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-08",
+      "fact_ids": [
+        "initial_fourth_four:1225282697",
+        "initial_fourth_four:1225061216"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002175",
+      "name": "*ST东智",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406743"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002193",
+      "name": "ST如意",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-23",
+      "fact_ids": [
+        "initial_fourth_four:1225326146",
+        "initial_fourth_four:1225263624",
+        "initial_fourth_four:1225211734"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002198",
+      "name": "ST嘉应",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406315"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002199",
+      "name": "*ST东晶",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-22",
+      "fact_ids": [
+        "initial_fifth_four:1225322166",
+        "initial_fifth_four:1225219075"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002207",
+      "name": "*ST准油",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-28",
+      "fact_ids": [
+        "initial_fifth_four:1225213294"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002211",
+      "name": "ST宏达",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_fifth_four:1225165170"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002214",
+      "name": "*ST大立",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-02",
+      "fact_ids": [
+        "initial_fifth_four:1225403248",
+        "initial_fifth_four:1225037593"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002217",
+      "name": "ST合力泰",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-18",
+      "fact_ids": [
+        "initial_sixth_four:1225379627"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002227",
+      "name": "*ST特迅",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-21",
+      "fact_ids": [
+        "initial_sixth_four:1225133140",
+        "initial_sixth_four:1225133126"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002305",
+      "name": "*ST南置",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "warning_followup_1223381687",
+        "warning_followup_1225215035",
+        "warning_followup_1225328398",
+        "initial_status_1225407050"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002306",
+      "name": "ST云网",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-11",
+      "fact_ids": [
+        "initial_sixth_four:1225363995",
+        "initial_sixth_four:1225092611"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002323",
+      "name": "*ST雅博",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_sixth_four:1225251686"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002360",
+      "name": "ST同德",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406622"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002424",
+      "name": "ST百灵",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-28",
+      "fact_ids": [
+        "initial_seventh_four:1225220340",
+        "initial_seventh_four:1225220339",
+        "initial_seventh_four:1225043459",
+        "initial_seventh_four:1224888781",
+        "initial_seventh_four:1224000135"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002431",
+      "name": "ST棕榈",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-25",
+      "fact_ids": [
+        "initial_seventh_four:1225193616"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002485",
+      "name": "ST雪发",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_seventh_four:1225244457",
+        "initial_seventh_four:1218685262"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002501",
+      "name": "*ST利源",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_seventh_four:1225250484",
+        "initial_seventh_four:1225250474"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002512",
+      "name": "ST达华",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406020"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002514",
+      "name": "*ST宝馨",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "board_july1"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002528",
+      "name": "*ST英飞",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-22",
+      "fact_ids": [
+        "initial_eighth_four:1225347074",
+        "initial_eighth_four:1225246382",
+        "initial_eighth_four:1225246370",
+        "initial_eighth_four:1225379653"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002538",
+      "name": "ST司特",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-18",
+      "fact_ids": [
+        "remaining_basis_1225376580"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002542",
+      "name": "*ST中岩",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_status_1225406067"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002547",
+      "name": "*ST春兴",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_status_1225405415"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002569",
+      "name": "*ST步森",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407475"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002581",
+      "name": "*ST未名",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_eighth_four:1225251557",
+        "initial_eighth_four:1225251545"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002586",
+      "name": "ST围海",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225405756"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002592",
+      "name": "ST八菱",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-12",
+      "fact_ids": [
+        "dividend_basis_1225291803"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002598",
+      "name": "ST章鼓",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "dividend_basis_1225405748"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002620",
+      "name": "*ST瑞和",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "ruihe_process_1225307829",
+        "initial_status_1225405535"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002630",
+      "name": "*ST华西",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_eighth_four:1225250043",
+        "initial_eighth_four:1225250031"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002634",
+      "name": "*ST棒杰",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-23",
+      "fact_ids": [
+        "initial_eighth_four:1225382007",
+        "initial_eighth_four:1225377076",
+        "initial_eighth_four:1225377075",
+        "initial_eighth_four:1225195300",
+        "initial_eighth_four:1225195310"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002650",
+      "name": "ST加加",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_ninth_four:1225188982",
+        "initial_ninth_four:1225189000",
+        "initial_ninth_four:1225394811",
+        "initial_ninth_four:1225111512",
+        "initial_ninth_four:1225188979"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002656",
+      "name": "*ST摩登",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407358"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002667",
+      "name": "*ST威领",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406064"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002689",
+      "name": "ST远智",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-22",
+      "fact_ids": [
+        "remaining_basis_1225323739"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002691",
+      "name": "*ST冀凯",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225406309"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002694",
+      "name": "*ST顾地",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_ninth_four:1225243996",
+        "initial_ninth_four:1225244006"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002713",
+      "name": "*ST东易",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-27",
+      "fact_ids": [
+        "initial_ninth_four:1225274500",
+        "initial_ninth_four:1225330073",
+        "initial_ninth_four:1225219618"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002717",
+      "name": "*ST岭南",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "halt_stage_1225251761"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002719",
+      "name": "ST麦趣",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-28",
+      "fact_ids": [
+        "initial_ninth_four:1225222777",
+        "initial_ninth_four:1225222790"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002726",
+      "name": "ST龙大",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_tenth_four:1225397843",
+        "initial_tenth_four:1225386494",
+        "initial_tenth_four:1225362891",
+        "initial_tenth_four:1225252055",
+        "initial_tenth_four:1225252054",
+        "initial_tenth_four:1225252038"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002731",
+      "name": "ST萃华",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-02",
+      "fact_ids": [
+        "initial_tenth_four:1225403513",
+        "initial_tenth_four:1225274917",
+        "initial_tenth_four:1225120623",
+        "initial_tenth_four:1225116981"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002789",
+      "name": "*ST建艺",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-22",
+      "fact_ids": [
+        "initial_tenth_four:1225322985",
+        "initial_tenth_four:1225222315",
+        "initial_tenth_four:1225222310",
+        "initial_tenth_four:1225222296"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002816",
+      "name": "*ST和科",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-30",
+      "fact_ids": [
+        "initial_tenth_four:1225338778",
+        "initial_tenth_four:1225150096",
+        "initial_tenth_four:1225150082",
+        "initial_tenth_four:1225150078"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002822",
+      "name": "ST中装",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-23",
+      "fact_ids": [
+        "initial_eleventh_four:1225381688",
+        "initial_eleventh_four:1225266511",
+        "initial_eleventh_four:1225155507",
+        "initial_eleventh_four:1225155484"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002856",
+      "name": "*ST美芝",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_eleventh_four:1225248801",
+        "initial_eleventh_four:1225248784",
+        "initial_eleventh_four:1225248771"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002872",
+      "name": "ST天圣",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-12",
+      "fact_ids": [
+        "initial_eleventh_four:1225366268",
+        "initial_eleventh_four:1225249854",
+        "initial_eleventh_four:1225249813"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002883",
+      "name": "*ST中设",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_eleventh_four:1225266086",
+        "initial_eleventh_four:1225266069",
+        "initial_eleventh_four:1225266057",
+        "initial_eleventh_four:1225395270"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002932",
+      "name": "*ST明德",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twelfth_four:1225132337",
+        "initial_twelfth_four:1225132350",
+        "initial_twelfth_four:1225132345",
+        "initial_twelfth_four:1225397705",
+        "initial_twelfth_four:1225397748"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "002977",
+      "name": "*ST天箭",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_day_1225407197"
+      ],
+      "new_this_batch": true,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600053",
+      "name": "*ST九鼎",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_twelfth_four:1225250914",
+        "initial_twelfth_four:1225250266",
+        "initial_twelfth_four:1225250289"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600079",
+      "name": "ST人福",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-03-31",
+      "fact_ids": [
+        "initial_twelfth_four:1225050708",
+        "initial_twelfth_four:1225050666",
+        "initial_twelfth_four:1225050650",
+        "initial_twelfth_four:1225050758",
+        "initial_twelfth_four:1224874140",
+        "initial_twelfth_four:1224904927"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600080",
+      "name": "ST金花",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twelfth_four:1225397185",
+        "initial_twelfth_four:1225242871",
+        "initial_twelfth_four:1225243115",
+        "initial_twelfth_four:1225243092"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600082",
+      "name": "ST海泰",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_thirteenth_four:1225096042",
+        "initial_thirteenth_four:1225181447",
+        "initial_thirteenth_four:1225246019",
+        "initial_thirteenth_four:1225246007"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600084",
+      "name": "*ST尼雅",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-28",
+      "fact_ids": [
+        "initial_thirteenth_four:1225212709",
+        "initial_thirteenth_four:1225212749",
+        "initial_thirteenth_four:1225212727"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600107",
+      "name": "*ST尔雅",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_thirteenth_four:1225264753",
+        "initial_thirteenth_four:1225264722",
+        "initial_thirteenth_four:1225264720",
+        "initial_thirteenth_four:1225264661",
+        "initial_thirteenth_four:1225407516",
+        "initial_thirteenth_four:1225407517",
+        "initial_thirteenth_four:1223419026",
+        "initial_thirteenth_four:1223419024"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600119",
+      "name": "*ST长投",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-27",
+      "fact_ids": [
+        "initial_thirteenth_four:1225197307",
+        "initial_thirteenth_four:1225197559",
+        "initial_thirteenth_four:1225197393"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600136",
+      "name": "ST明诚",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-23",
+      "fact_ids": [
+        "initial_fourteenth_four:1225021044",
+        "initial_fourteenth_four:1225021033",
+        "initial_fourteenth_four:1225145292",
+        "initial_fourteenth_four:1225145303"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600165",
+      "name": "ST宁科",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_fourteenth_four:1224930399",
+        "initial_fourteenth_four:1224914772",
+        "initial_fourteenth_four:1223006651",
+        "initial_fourteenth_four:1225172303",
+        "initial_fourteenth_four:1225172319",
+        "initial_fourteenth_four:1225401321"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600169",
+      "name": "ST太重",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-21",
+      "fact_ids": [
+        "initial_fourteenth_four:1224781398",
+        "initial_fourteenth_four:1224901278",
+        "initial_fourteenth_four:1225132800",
+        "initial_fourteenth_four:1225132776"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600180",
+      "name": "*ST瑞茂",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_fourteenth_four:1225251103",
+        "initial_fourteenth_four:1225251063",
+        "initial_fourteenth_four:1225251057",
+        "initial_fourteenth_four:1225387913",
+        "initial_fourteenth_four:1225406982"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600187",
+      "name": "*ST国中",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_fifteenth_four:1225400864",
+        "initial_fifteenth_four:1225277487",
+        "initial_fifteenth_four:1225277438",
+        "initial_fifteenth_four:1225268454",
+        "initial_fifteenth_four:1225268438",
+        "initial_fifteenth_four:1225277463"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600238",
+      "name": "*ST椰岛",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-26",
+      "fact_ids": [
+        "initial_fifteenth_four:1225329576",
+        "initial_fifteenth_four:1225329571",
+        "initial_fifteenth_four:1225280892",
+        "initial_fifteenth_four:1225268978",
+        "initial_fifteenth_four:1225268975",
+        "initial_fifteenth_four:1225268943"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600239",
+      "name": "ST云城",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "initial_fifteenth_four:1225250502",
+        "initial_fifteenth_four:1225250278",
+        "initial_fifteenth_four:1225250236",
+        "initial_fifteenth_four:1225250229",
+        "initial_fifteenth_four:1225392248",
+        "initial_fifteenth_four:1225373440",
+        "initial_fifteenth_four:1225373435",
+        "initial_fifteenth_four:1225250295"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600243",
+      "name": "*ST海华",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-24",
+      "fact_ids": [
+        "initial_fifteenth_four:1225314613",
+        "initial_fifteenth_four:1225219691",
+        "initial_fifteenth_four:1225219591",
+        "initial_fifteenth_four:1225219553",
+        "initial_fifteenth_four:1225341628",
+        "initial_fifteenth_four:1225219563",
+        "initial_fifteenth_four:1225384452",
+        "initial_fifteenth_four:1225351513"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600265",
+      "name": "*ST景谷",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_sixteenth_four:1225165949",
+        "initial_sixteenth_four:1225165760",
+        "initial_sixteenth_four:1225166249",
+        "initial_sixteenth_four:1225165931"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600289",
+      "name": "ST信通",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_sixteenth_four:1225401051",
+        "initial_sixteenth_four:1225221502",
+        "initial_sixteenth_four:1225221467",
+        "initial_sixteenth_four:1225221460"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600302",
+      "name": "ST标准",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_sixteenth_four:1225395911",
+        "initial_sixteenth_four:1225266706",
+        "initial_sixteenth_four:1225266703",
+        "initial_sixteenth_four:1225266715",
+        "initial_sixteenth_four:1225266678"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600337",
+      "name": "ST美克",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_sixteenth_four:1225377109",
+        "initial_sixteenth_four:1225266726",
+        "initial_sixteenth_four:1225266668",
+        "initial_sixteenth_four:1225266763",
+        "initial_sixteenth_four:1225266735",
+        "initial_sixteenth_four:1225406728",
+        "initial_sixteenth_four:1225401180",
+        "initial_sixteenth_four:1225365940",
+        "initial_sixteenth_four:1225273390",
+        "initial_sixteenth_four:1225272778",
+        "initial_sixteenth_four:1225272770"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600340",
+      "name": "*ST华幸",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-11",
+      "fact_ids": [
+        "initial_seventeenth_four:1225363266",
+        "initial_seventeenth_four:1225268023",
+        "initial_seventeenth_four:1225267982",
+        "initial_seventeenth_four:1225267924"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600365",
+      "name": "ST通葡",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-02",
+      "fact_ids": [
+        "initial_seventeenth_four:1225403529",
+        "initial_seventeenth_four:1225400591",
+        "initial_seventeenth_four:1225132036",
+        "initial_seventeenth_four:1225132031",
+        "initial_seventeenth_four:1225131977"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600370",
+      "name": "*ST三房",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_seventeenth_four:1225400347",
+        "initial_seventeenth_four:1225400328",
+        "initial_seventeenth_four:1225233470",
+        "initial_seventeenth_four:1225233410",
+        "initial_seventeenth_four:1225233408",
+        "initial_seventeenth_four:1225233398"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600381",
+      "name": "*ST春天",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-03",
+      "fact_ids": [
+        "initial_seventeenth_four:1225346266",
+        "initial_seventeenth_four:1225266134",
+        "initial_seventeenth_four:1225266132",
+        "initial_seventeenth_four:1225266127"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600423",
+      "name": "*ST柳化",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-25",
+      "fact_ids": [
+        "initial_eighteenth_four:1225183072",
+        "initial_eighteenth_four:1225183014",
+        "initial_eighteenth_four:1225183004",
+        "initial_eighteenth_four:1225137830"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600476",
+      "name": "*ST湘邮",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_eighteenth_four:1225227384",
+        "initial_eighteenth_four:1225222498",
+        "initial_eighteenth_four:1225220597",
+        "initial_eighteenth_four:1225220467",
+        "initial_eighteenth_four:1225220425"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600491",
+      "name": "ST龙元",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "halt_stage_1225407586"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600525",
+      "name": "ST长园",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "initial_eighteenth_four:1225392239",
+        "initial_eighteenth_four:1225392237",
+        "initial_eighteenth_four:1225245306",
+        "initial_eighteenth_four:1225245224",
+        "initial_eighteenth_four:1225244960",
+        "initial_eighteenth_four:1225244906"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600537",
+      "name": "*ST亿晶",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-17",
+      "fact_ids": [
+        "initial_eighteenth_four:1225374326",
+        "initial_eighteenth_four:1225362401",
+        "initial_eighteenth_four:1225228133",
+        "initial_eighteenth_four:1225208669",
+        "initial_eighteenth_four:1225208598",
+        "initial_eighteenth_four:1225208200"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600543",
+      "name": "*ST莫高",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-24",
+      "fact_ids": [
+        "initial_nineteenth_four:1225170075",
+        "initial_nineteenth_four:1225170058",
+        "initial_nineteenth_four:1225170082",
+        "initial_nineteenth_four:1225170088"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600568",
+      "name": "ST中珠",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-13",
+      "fact_ids": [
+        "initial_nineteenth_four:1225183550",
+        "initial_nineteenth_four:1225183513",
+        "initial_nineteenth_four:1225183668",
+        "initial_nineteenth_four:1225183563",
+        "initial_nineteenth_four:1225367322",
+        "initial_nineteenth_four:1225282423",
+        "initial_nineteenth_four:1225075986"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600581",
+      "name": "*ST八钢",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_nineteenth_four:1225050234",
+        "initial_nineteenth_four:1225049408",
+        "initial_nineteenth_four:1224960840",
+        "initial_nineteenth_four:1225274079",
+        "initial_nineteenth_four:1225354459",
+        "initial_nineteenth_four:1225354465",
+        "initial_nineteenth_four:1225381424",
+        "initial_nineteenth_four:1225381421",
+        "initial_nineteenth_four:1225394192"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600624",
+      "name": "ST复华",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-30",
+      "fact_ids": [
+        "initial_nineteenth_four:1224672384",
+        "initial_nineteenth_four:1224901982",
+        "initial_nineteenth_four:1225258924",
+        "initial_nineteenth_four:1225258893"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600678",
+      "name": "ST金顶",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "initial_twentieth_four:1225244747",
+        "initial_twentieth_four:1225284767",
+        "initial_twentieth_four:1225284754",
+        "initial_twentieth_four:1225244786",
+        "initial_twentieth_four:1225390375",
+        "initial_twentieth_four:1225407556",
+        "initial_twentieth_four:1225401990"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600730",
+      "name": "*ST高科",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-25",
+      "fact_ids": [
+        "gaoke_1225182732"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600734",
+      "name": "*ST实达",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-29",
+      "fact_ids": [
+        "initial_twentieth_four:1225241272",
+        "initial_twentieth_four:1225241270",
+        "initial_twentieth_four:1225241191"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600735",
+      "name": "ST新华锦",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_twentieth_four:1225282206",
+        "initial_twentieth_four:1225190804",
+        "initial_twentieth_four:1225190431",
+        "initial_twentieth_four:1225191006",
+        "initial_twentieth_four:1225191017",
+        "initial_twentieth_four:1225384530",
+        "initial_twentieth_four:1225402147",
+        "initial_twentieth_four:1225402144",
+        "initial_twentieth_four:1224984682"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600745",
+      "name": "*ST闻泰",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_twentieth_four:1225266560",
+        "initial_twentieth_four:1225266575",
+        "initial_twentieth_four:1225266592",
+        "initial_twentieth_four:1225398760",
+        "initial_twentieth_four:1225266554"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600753",
+      "name": "ST海钦",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-13",
+      "fact_ids": [
+        "initial_twentyfirst_four:1225367713",
+        "initial_twentyfirst_four:1225272643",
+        "initial_twentyfirst_four:1225096737",
+        "initial_twentyfirst_four:1225096728",
+        "initial_twentyfirst_four:1225096722",
+        "initial_twentyfirst_four:1225096720",
+        "initial_twentyfirst_four:1225096713"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600759",
+      "name": "ST洲际",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twentyfirst_four:1225395891",
+        "initial_twentyfirst_four:1225321745",
+        "initial_twentyfirst_four:1225222980",
+        "initial_twentyfirst_four:1225222913",
+        "initial_twentyfirst_four:1225222839"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600818",
+      "name": "ST中路",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "initial_twentyfirst_four:1225392070",
+        "initial_twentyfirst_four:1225221644",
+        "initial_twentyfirst_four:1225221629",
+        "initial_twentyfirst_four:1225221472"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600889",
+      "name": "*ST京化",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-23",
+      "fact_ids": [
+        "initial_twentyfirst_four:1225145043",
+        "initial_twentyfirst_four:1225144967",
+        "initial_twentyfirst_four:1225144943"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "600965",
+      "name": "*ST福成",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-24",
+      "fact_ids": [
+        "initial_twentysecond_four:1225384335",
+        "initial_twentysecond_four:1225384306",
+        "initial_twentysecond_four:1225332783",
+        "initial_twentysecond_four:1225266160",
+        "initial_twentysecond_four:1225266131",
+        "initial_twentysecond_four:1225266056"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "601010",
+      "name": "ST文峰",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twentysecond_four:1225396360",
+        "initial_twentysecond_four:1225234988",
+        "initial_twentysecond_four:1225234962",
+        "initial_twentysecond_four:1225234913",
+        "initial_twentysecond_four:1225234874"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "601718",
+      "name": "ST际华",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-30",
+      "fact_ids": [
+        "initial_twentysecond_four:1225263279",
+        "initial_twentysecond_four:1225263144",
+        "initial_twentysecond_four:1225250921",
+        "initial_twentysecond_four:1225250896"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603008",
+      "name": "ST喜临门",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twentysecond_four:1225395993",
+        "initial_twentysecond_four:1225186212",
+        "initial_twentysecond_four:1225185997",
+        "initial_twentysecond_four:1225185958",
+        "initial_twentysecond_four:1225072202"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603021",
+      "name": "*ST华鹏",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "huapeng_anchor_1225403155",
+        "huapeng_anchor_1225406887"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603189",
+      "name": "*ST网达",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-16",
+      "fact_ids": [
+        "remaining_basis_1225370971"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603272",
+      "name": "*ST联翔",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twentythird_four:1225397521",
+        "initial_twentythird_four:1225219250",
+        "initial_twentythird_four:1225219229",
+        "initial_twentythird_four:1225219218",
+        "initial_twentythird_four:1225218891"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603359",
+      "name": "*ST东珠",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twentythird_four:1225394126",
+        "initial_twentythird_four:1225265013",
+        "initial_twentythird_four:1225264993",
+        "initial_twentythird_four:1225256589",
+        "initial_twentythird_four:1225243942"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603377",
+      "name": "ST东时",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-30",
+      "fact_ids": [
+        "initial_twentythird_four:1225397447",
+        "initial_twentythird_four:1225273321",
+        "initial_twentythird_four:1225123774",
+        "initial_twentythird_four:1225123764",
+        "initial_twentythird_four:1225123757",
+        "initial_twentythird_four:1225123756"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603378",
+      "name": "*ST亚士",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-01",
+      "fact_ids": [
+        "initial_twentythird_four:1225272915",
+        "initial_twentythird_four:1225268165",
+        "initial_twentythird_four:1225268149",
+        "initial_twentythird_four:1225268133"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603398",
+      "name": "*ST沐邦",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-03",
+      "fact_ids": [
+        "grandchild_claims",
+        "grandchild_court"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603429",
+      "name": "*ST集友",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-07-01",
+      "fact_ids": [
+        "initial_twentyfourth_four:1225399638",
+        "initial_twentyfourth_four:1225379813",
+        "initial_twentyfourth_four:1225379811",
+        "initial_twentyfourth_four:1225022358",
+        "initial_twentyfourth_four:1225022238",
+        "initial_twentyfourth_four:1225022161"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603517",
+      "name": "ST绝味",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-23",
+      "fact_ids": [
+        "initial_twentyfourth_four:1225156316",
+        "initial_twentyfourth_four:1225156289",
+        "initial_twentyfourth_four:1225156288",
+        "initial_twentyfourth_four:1225156272",
+        "initial_twentyfourth_four:1224695866",
+        "initial_twentyfourth_four:1224672367"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603557",
+      "name": "*ST起步",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-30",
+      "fact_ids": [
+        "initial_twentyfourth_four:1225257367",
+        "initial_twentyfourth_four:1225257306",
+        "initial_twentyfourth_four:1225257229",
+        "initial_twentyfourth_four:1225257194"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603595",
+      "name": "ST东尼",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-27",
+      "fact_ids": [
+        "initial_twentyfourth_four:1225392692",
+        "initial_twentyfourth_four:1225338959",
+        "initial_twentyfourth_four:1225121809",
+        "initial_twentyfourth_four:1225121789",
+        "initial_twentyfourth_four:1224800854",
+        "initial_twentyfourth_four:1224764257"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603718",
+      "name": "*ST海利",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-30",
+      "fact_ids": [
+        "initial_twentyfifth_four:1225261829",
+        "initial_twentyfifth_four:1225261701",
+        "initial_twentyfifth_four:1225261660"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603729",
+      "name": "ST龙韵",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-30",
+      "fact_ids": [
+        "initial_twentyfifth_four:1225267320",
+        "initial_twentyfifth_four:1225247965",
+        "initial_twentyfifth_four:1225247953",
+        "initial_twentyfifth_four:1225247906"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603789",
+      "name": "ST星农",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-19",
+      "fact_ids": [
+        "initial_twentyfifth_four:1225313620",
+        "initial_twentyfifth_four:1225195661",
+        "initial_twentyfifth_four:1225195659",
+        "initial_twentyfifth_four:1225195651",
+        "initial_twentyfifth_four:1225195575",
+        "initial_twentyfifth_four:1225050434",
+        "initial_twentyfifth_four:1225014049",
+        "initial_twentyfifth_four:1225014048",
+        "initial_twentyfifth_four:1223423082"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603822",
+      "name": "ST嘉澳",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-04",
+      "fact_ids": [
+        "remaining_basis_1225348788"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603825",
+      "name": "ST华扬",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-23",
+      "fact_ids": [
+        "initial_twentyfifth_four:1225156643",
+        "initial_twentyfifth_four:1225156612",
+        "initial_twentyfifth_four:1224561595",
+        "initial_twentyfifth_four:603825_20250911_FG3F"
+      ],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603828",
+      "name": "*ST利达",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-04-28",
+      "fact_ids": [
+        "initial_twentysixth_four:1225222896",
+        "initial_twentysixth_four:1225222892",
+        "initial_twentysixth_four:1225222889"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "603838",
+      "name": "*ST四通",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-22",
+      "fact_ids": [
+        "initial_twentysixth_four:1225322073",
+        "initial_twentysixth_four:1225215555",
+        "initial_twentysixth_four:1225215514",
+        "initial_twentysixth_four:1225215494",
+        "initial_twentysixth_four:1223370266"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "603843",
+      "name": "*ST正平",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-06-06",
+      "fact_ids": [
+        "initial_twentysixth_four:1225355062",
+        "initial_twentysixth_four:1225292893",
+        "initial_twentysixth_four:1225269055",
+        "initial_twentysixth_four:1225269031",
+        "initial_twentysixth_four:1225269013",
+        "initial_twentysixth_four:1225268960",
+        "initial_twentysixth_four:1225004039",
+        "initial_twentysixth_four:1223426982"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "603869",
+      "name": "ST智知",
+      "has_timely_reading_facts": true,
+      "latest_fact_on": "2026-05-01",
+      "fact_ids": [
+        "initial_twentysixth_four:1225273254",
+        "initial_twentysixth_four:1225090636",
+        "initial_twentysixth_four:1225090629",
+        "initial_twentysixth_four:1225090626",
+        "initial_twentysixth_four:1223386717"
+      ],
+      "new_this_batch": false,
+      "new_this_round": true
+    },
+    {
+      "symbol": "603922",
+      "name": "ST金鸿顺",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "603959",
+      "name": "ST百利",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "605199",
+      "name": "ST葫芦娃",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    },
+    {
+      "symbol": "605336",
+      "name": "*ST帅电",
+      "has_timely_reading_facts": false,
+      "latest_fact_on": null,
+      "fact_ids": [],
+      "new_this_batch": false,
+      "new_this_round": false
+    }
+  ],
+  "quote_audit": {
+    "stock_endpoint_points": 11,
+    "stock_return_windows": 6,
+    "stock_max_float_tail": "0",
+    "stock_absolute_tolerance": "0.000000001",
+    "index_endpoint_points_at_official_precision": 6,
+    "unrounded_index_differences": [
+      {
+        "index": "000985",
+        "date": "2026-07-03",
+        "provider": "6404.3967",
+        "official": "6404.4"
+      },
+      {
+        "index": "000985",
+        "date": "2026-07-31",
+        "provider": "5681.2411",
+        "official": "5681.24"
+      },
+      {
+        "index": "000985",
+        "date": "2026-11-19",
+        "provider": "4877.3573",
+        "official": "4877.36"
+      },
+      {
+        "index": "932000",
+        "date": "2026-07-03",
+        "provider": "3487.715",
+        "official": "3487.72"
+      },
+      {
+        "index": "932000",
+        "date": "2026-07-31",
+        "provider": "2809.2143",
+        "official": "2809.21"
+      },
+      {
+        "index": "932000",
+        "date": "2026-11-19",
+        "provider": "2485.1072",
+        "official": "2485.11"
+      }
+    ],
+    "crossquote_returns": [],
+    "source_refs": [
+      {
+        "key": "sh603828",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603828,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "4c0628819b5e30216d3a8d7e615027162a0cb66f32c15b3fa49e2ff1bb4a490c",
+        "observed_at": "2026-11-20T08:31:18.842419+00:00"
+      },
+      {
+        "key": "sh603838",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603838,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "ffaada2c387e891c4df8870f0ae1e39fe3383819d72db48013c1baa9bfb52e43",
+        "observed_at": "2026-11-20T08:31:19.033209+00:00"
+      },
+      {
+        "key": "sh603843",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603843,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "673b87157ef5450c0ca3d8818245938af578fc71b225aa2bdab7bdd1d32e03ef",
+        "observed_at": "2026-11-20T08:31:19.224985+00:00"
+      },
+      {
+        "key": "sh603869",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603869,day,2026-07-03,2026-11-19,320,qfq",
+        "sha256": "83a5521d12995b61611449aa59c0fcdd69528eb75bccf469a9619d5423ab655c",
+        "observed_at": "2026-11-20T08:31:19.401177+00:00"
+      },
+      {
+        "key": "000985",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260703&endDate=20261119",
+        "sha256": "279327a7846b9dbb97e3cb5b1cbdf1099dfc66e5cae163c04419d06f073a20e5",
+        "observed_at": "2026-11-19T16:39:37.921602+00:00"
+      },
+      {
+        "key": "932000",
+        "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=932000&startDate=20260703&endDate=20261119",
+        "sha256": "3172505cf5cc24a4989a28c8844a5e391ae270922abcb536bcaae133b5577010",
+        "observed_at": "2026-11-19T16:39:38.155105+00:00"
+      }
+    ],
+    "stock_reviews": [
+      {
+        "symbol": "603828",
+        "points": [
+          {
+            "date": "2026-07-03",
+            "status": "matched",
+            "provider_close": 4.64,
+            "cross_close": "4.640",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-07-31",
+            "status": "matched",
+            "provider_close": 4.15,
+            "cross_close": "4.150",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-11-19",
+            "status": "matched",
+            "provider_close": 4.18,
+            "cross_close": "4.180",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          }
+        ],
+        "windows": [
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-07-31",
+            "return_pct": -10.560344827586206,
+            "gaps": []
+          },
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-11-19",
+            "return_pct": -9.913793103448276,
+            "gaps": []
+          }
+        ],
+        "source_sha256": "4c0628819b5e30216d3a8d7e615027162a0cb66f32c15b3fa49e2ff1bb4a490c"
+      },
+      {
+        "symbol": "603838",
+        "points": [
+          {
+            "date": "2026-07-03",
+            "status": "matched",
+            "provider_close": 9.22,
+            "cross_close": "9.220",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-07-31",
+            "status": "matched",
+            "provider_close": 7.33,
+            "cross_close": "7.330",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-11-19",
+            "status": "matched",
+            "provider_close": 11.35,
+            "cross_close": "11.350",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          }
+        ],
+        "windows": [
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-07-31",
+            "return_pct": -20.498915401301517,
+            "gaps": []
+          },
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-11-19",
+            "return_pct": 23.10195227765727,
+            "gaps": []
+          }
+        ],
+        "source_sha256": "ffaada2c387e891c4df8870f0ae1e39fe3383819d72db48013c1baa9bfb52e43"
+      },
+      {
+        "symbol": "603843",
+        "points": [
+          {
+            "date": "2026-07-03",
+            "status": "matched",
+            "provider_close": 8.2,
+            "cross_close": "8.200",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-07-31",
+            "status": "matched",
+            "provider_close": 7.33,
+            "cross_close": "7.330",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-11-19",
+            "status": "matched",
+            "provider_close": 4.32,
+            "cross_close": "4.320",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          }
+        ],
+        "windows": [
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-07-31",
+            "return_pct": -10.609756097560975,
+            "gaps": []
+          },
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-11-19",
+            "return_pct": -47.31707317073171,
+            "gaps": []
+          }
+        ],
+        "source_sha256": "673b87157ef5450c0ca3d8818245938af578fc71b225aa2bdab7bdd1d32e03ef"
+      },
+      {
+        "symbol": "603869",
+        "points": [
+          {
+            "date": "2026-07-03",
+            "status": "price_basis_conflict",
+            "provider_close": 8.55690519957983,
+            "cross_close": "8.556",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-07-31",
+            "status": "matched",
+            "provider_close": 8.06,
+            "cross_close": "8.060",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          },
+          {
+            "date": "2026-11-19",
+            "status": "matched",
+            "provider_close": 7.330000000000001,
+            "cross_close": "7.330",
+            "provider_has_trade": true,
+            "cross_has_trade": true
+          }
+        ],
+        "windows": [
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-07-31",
+            "return_pct": null,
+            "gaps": [
+              {
+                "date": "2026-07-03",
+                "status": "price_basis_conflict",
+                "provider_close": 8.55690519957983,
+                "cross_close": "8.556",
+                "provider_has_trade": true,
+                "cross_has_trade": true
+              }
+            ]
+          },
+          {
+            "anchor": "2026-07-03",
+            "through": "2026-11-19",
+            "return_pct": null,
+            "gaps": [
+              {
+                "date": "2026-07-03",
+                "status": "price_basis_conflict",
+                "provider_close": 8.55690519957983,
+                "cross_close": "8.556",
+                "provider_has_trade": true,
+                "cross_has_trade": true
+              }
+            ]
+          }
+        ],
+        "source_sha256": "83a5521d12995b61611449aa59c0fcdd69528eb75bccf469a9619d5423ab655c"
+      }
+    ],
+    "review_note": "12端点11匹配；智知期初复权冲突，相关两段收益保持空值。",
+    "boundary": "保持1e-9阈值；仅同期描述，不识别公告净影响。"
+  },
+  "visual_read": [
+    {
+      "announcement_id": "1225222892",
+      "page": 1,
+      "source_sha256": "076a0f95898c4aabb78042187076fdbafccb4bb9ba7ddf0fc12bb490c730db88",
+      "page_text_sha256": "331f0342aece980d3d927b26a38e746267ead8d1742184f3b928022295c56434",
+      "image_file": "1225222892-p1.png",
+      "image_sha256": "a99146ad927dfc34b8f25c312c31e348861dc0982961351494b66f298d3336a0",
+      "verified": true,
+      "note": "已实际看图核警示起日、补材和条件性申请；不将自查及收到处罚日期当独立核准或监管作出日。"
+    },
+    {
+      "announcement_id": "1225322073",
+      "page": 1,
+      "source_sha256": "9548bd2f40574fdf5a2d19e4179e9aad46a36419881cedcc4e05727e1fa17dfb",
+      "page_text_sha256": "e0a472050ee77476294177889830334c59f481f8433b8b533439b305b794a341",
+      "image_file": "1225322073-p1.png",
+      "image_sha256": "8c15c2e4ddbc48d78c3ae2dd6e9a98e3f2ac1d6d019107b4eeeff1054b0337dd",
+      "verified": true,
+      "note": "已实际看图核警示起日、补材和条件性申请；不将自查及收到处罚日期当独立核准或监管作出日。"
+    },
+    {
+      "announcement_id": "1225322073",
+      "page": 2,
+      "source_sha256": "9548bd2f40574fdf5a2d19e4179e9aad46a36419881cedcc4e05727e1fa17dfb",
+      "page_text_sha256": "d5c13349880845834bdcebd29ddfc25c7772ecadfe0ca229bbb561dac4097475",
+      "image_file": "1225322073-p2.png",
+      "image_sha256": "a5d2df402315e8acf87e65be3f191f1b41b52824f02173ca5206193e1c5bf5fb",
+      "verified": true,
+      "note": "已实际看图核警示起日、补材和条件性申请；不将自查及收到处罚日期当独立核准或监管作出日。"
+    },
+    {
+      "announcement_id": "1225292893",
+      "page": 1,
+      "source_sha256": "87399b1715458c6bc0e29a0c2e475fc841476795cd0bdcb74ef2586196133836",
+      "page_text_sha256": "032a820a59122e43fc1c275ff5c2950b5d66c787fa0d6944f8091ad215ec525c",
+      "image_file": "1225292893-p1.png",
+      "image_sha256": "90459f50a507ff1b93c04ab527490c1e7f2fccf86f8997e9dc814420a9bd3ec9",
+      "verified": true,
+      "note": "已实际看图核警示起日、补材和条件性申请；不将自查及收到处罚日期当独立核准或监管作出日。"
+    },
+    {
+      "announcement_id": "1225273254",
+      "page": 1,
+      "source_sha256": "95f3cfff7d3e07743d4dc37c29191da7d3a3da45feea77ac9064267d374c0314",
+      "page_text_sha256": "fbaf07f9f256c9ecb11397cdfb78d9a104f972529e99c412d037a4b2a3a69c5b",
+      "image_file": "1225273254-p1.png",
+      "image_sha256": "b0ad0ccca605468f3414980882b748a22eb1b453a7572d8d67b9153bc8109355",
+      "verified": true,
+      "note": "已实际看图核警示起日、补材和条件性申请；不将自查及收到处罚日期当独立核准或监管作出日。"
+    },
+    {
+      "announcement_id": "1225273254",
+      "page": 2,
+      "source_sha256": "95f3cfff7d3e07743d4dc37c29191da7d3a3da45feea77ac9064267d374c0314",
+      "page_text_sha256": "005ea4e1c63c5f2b9441a52b1546cc8dc1257ab01c587c152460cf912b90c0b8",
+      "image_file": "1225273254-p2.png",
+      "image_sha256": "dac7ebd635b4e154cd4c1b8fb540260153e489f11d6d3b35ce4d51e515cbc253",
+      "verified": true,
+      "note": "已实际看图核警示起日、补材和条件性申请；不将自查及收到处罚日期当独立核准或监管作出日。"
+    },
+    {
+      "announcement_id": "1225222889",
+      "page": 3,
+      "source_sha256": "81f24ccb1d211b37f5389b8f54244b9c714ac1e2f379c4cc8186245e070a8764",
+      "page_text_sha256": "97201a27c7631b4eea0e0fb1cf1def0b25ea1444fd3735cbe4458c2b666b1fc2",
+      "image_file": "1225222889-p3.png",
+      "image_sha256": "550982d3462a6f5537c5c8116b072ccabdf5d0b9a111fa0ba173aaf15508188d",
+      "verified": true,
+      "note": "财务保留意见；已收回本息16016.15万元，但归还金额、2025年末占用余额与利息计提完整准确性仍无法取得充分适当证据。"
+    },
+    {
+      "announcement_id": "1225222896",
+      "page": 4,
+      "source_sha256": "5e2b6eac504d5a36196ba4fa30d37372a84a44c4032c9e2987eab60b8958c4db",
+      "page_text_sha256": "ee0b8b3276bdf613ebd930b3e89a70e5b6bdf5b5dd7b533bc19f48e81d2d8800",
+      "image_file": "1225222896-p4.png",
+      "image_sha256": "20d621f5bb4a4cc4599ac18434915c0a4a707abb6db386c6531216f36f5973b0",
+      "verified": true,
+      "note": "内控否定意见；占款收回不等于治理合规及关键流程重大缺陷已有效整改；调查结论尚未出具。"
+    },
+    {
+      "announcement_id": "1225222896",
+      "page": 5,
+      "source_sha256": "5e2b6eac504d5a36196ba4fa30d37372a84a44c4032c9e2987eab60b8958c4db",
+      "page_text_sha256": "ed126fbbfde6484a088dd2149559cf3f2c09efd1a14c85ecb1f4044d8d1fc5db",
+      "image_file": "1225222896-p5.png",
+      "image_sha256": "f22ac49ad00d706146cb253e8d4ff10934b79ece639243082aab1cc5c8370f5a",
+      "verified": true,
+      "note": "仅核签章及报告日2026年4月27日，此页不承载审计意见。"
+    },
+    {
+      "announcement_id": "1225269055",
+      "page": 3,
+      "source_sha256": "7839e0249b836d2f1541a2da06db5b4dbf167c75aca84d63b810c6f0b4ccb87a",
+      "page_text_sha256": "9f9b2dd8a66584713b37914041f8866a92dbdb60c2d6feb9b5a2184f92fb33c2",
+      "image_file": "1225269055-p3.png",
+      "image_sha256": "e73fd492e9f16aacbba3d80fa6e0e9584094d6280f562886cd1c0431753c7cbf",
+      "verified": true,
+      "note": "财务无保留；持续经营重大不确定性单列，不影响该审计意见。2025净亏损154005543.96元，流动负债超流动资产2402454802.00元。"
+    },
+    {
+      "announcement_id": "1225269055",
+      "page": 4,
+      "source_sha256": "7839e0249b836d2f1541a2da06db5b4dbf167c75aca84d63b810c6f0b4ccb87a",
+      "page_text_sha256": "b80c1c0f2c324efa19df1cd4b7ee19d321cadaedea31796236599ca9aa916d7a",
+      "image_file": "1225269055-p4.png",
+      "image_sha256": "77b74558720c63c5914dcaab5d6bc6aab0f2555ea37c09a4ca7aaf5cf064f3dd",
+      "verified": true,
+      "note": "收入确认关键审计事项及应对；不属于保留意见段。"
+    },
+    {
+      "announcement_id": "1225215514",
+      "page": 2,
+      "source_sha256": "5bef8b94e8516c1f019d6d5e3dd1db1abee908b3358c38efa7fd636f0d9c7626",
+      "page_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "image_file": "1225215514-p2.png",
+      "image_sha256": "f73cd75ee51b0d3f5280dde3976834bf357b57c481347e7573d5af4083352da8",
+      "verified": true,
+      "note": "扫描原页实际核财务无保留意见，不能依赖空文本抽取。"
+    },
+    {
+      "announcement_id": "1225215514",
+      "page": 3,
+      "source_sha256": "5bef8b94e8516c1f019d6d5e3dd1db1abee908b3358c38efa7fd636f0d9c7626",
+      "page_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "image_file": "1225215514-p3.png",
+      "image_sha256": "c3d8ccb6366c71ec3ccce22a691edc2732462fc2758828c825e09ca085d84835",
+      "verified": true,
+      "note": "收入确认与应收款坏账关键审计事项；营业收入35640.11万元。此页不是审计意见首页。"
+    },
+    {
+      "announcement_id": "1225215555",
+      "page": 2,
+      "source_sha256": "464cd4af23713a46f5483f157823b4ca9ad9be2c0f6efe347cf92703911aba39",
+      "page_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "image_file": "1225215555-p2.png",
+      "image_sha256": "8fdc6b4e3b563038964c12d24780ccf12d55bdc99b65d818b769d919e075ef9f",
+      "verified": true,
+      "note": "仅责任及固有限制，意见需看PDF第3页。"
+    },
+    {
+      "announcement_id": "1225215555",
+      "page": 3,
+      "source_sha256": "464cd4af23713a46f5483f157823b4ca9ad9be2c0f6efe347cf92703911aba39",
+      "page_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "image_file": "1225215555-p3.png",
+      "image_sha256": "9b7f681bb912ed97f7d262ac810c9a5b8bfe1e73cbfdf5f576d6efc843d6368a",
+      "verified": true,
+      "note": "扫描原页核2025年末财务报告内控有效意见，签章日期2026年4月24日。"
+    },
+    {
+      "announcement_id": "1225269013",
+      "page": 2,
+      "source_sha256": "382bf9011aafc467efdb1d3ff51fb0ff8dcad63dbbd1819b97a23cded0a7b6ba",
+      "page_text_sha256": "4b941f610369514fba38b2fe3f5d2f9a7bdf8ef877cd7388fa5a005a2b1fd510",
+      "image_file": "1225269013-p2.png",
+      "image_sha256": "0e68ed352ebbd2a2e62dae6d3633596d90a23f8fd8a274bd3b27ab047cf18253",
+      "verified": true,
+      "note": "目录页，不承载内控审计意见；需改查PDF第3页及后续页。"
+    },
+    {
+      "announcement_id": "1225269013",
+      "page": 3,
+      "source_sha256": "382bf9011aafc467efdb1d3ff51fb0ff8dcad63dbbd1819b97a23cded0a7b6ba",
+      "page_text_sha256": "d29b3c77c9b2eb91fe5eab61fe411738aeb068fe3c15f904586144565ea369af",
+      "image_file": "1225269013-p3.png",
+      "image_sha256": "fb51f707c54198908c43c2eedb9a40731efd95a79ee4844df8dbf0c0bfbb4422",
+      "verified": true,
+      "note": "2025年末财务报告内控有效意见；强调募集资金补流授权上限1.9亿元、期限12个月，截至报告日到期未归还专户；授权上限不能直接当实欠余额。"
+    },
+    {
+      "announcement_id": "1225269013",
+      "page": 4,
+      "source_sha256": "382bf9011aafc467efdb1d3ff51fb0ff8dcad63dbbd1819b97a23cded0a7b6ba",
+      "page_text_sha256": "2fdf0e056c96a2c4a962fe280ff8625bd39b90e1feb5c7fcc0b9b7654419170e",
+      "image_file": "1225269013-p4.png",
+      "image_sha256": "45b7ce59ce6e3cc354b70442a8bdeb6f09a5b980d4a02b5fa225a93662bf5a40",
+      "verified": true,
+      "note": "接续强调事项：2025年12月24日法院受理预重整申请，拟引入投资人制定归还方案为前瞻安排，非还款完成；不影响内控审计意见。报告日2026年4月29日。"
+    },
+    {
+      "announcement_id": "1225090629",
+      "page": 2,
+      "source_sha256": "85208fd81213e1b7fd27854353917276130f774001f563f65383d700b9e56470",
+      "page_text_sha256": "625ad2be7996d5d861144740107869ce566a01b4cfc6947002cca65c343c57c4",
+      "image_file": "1225090629-p2.png",
+      "image_sha256": "f6d6a3337190770ba2797187a6a6f1c28f332ed43f37fb11fb0d1e284be5404b",
+      "verified": true,
+      "note": "毕马威2025财务无保留意见，独立原件核实，不只引用公司申请自述。"
+    },
+    {
+      "announcement_id": "1225090626",
+      "page": 2,
+      "source_sha256": "c6eaccaf8956f3be6994ca96c39b2212fdca13a808181cb858ba1fd27b8ce013",
+      "page_text_sha256": "cb78af2fc0c1c8bface141d4a1476eb47671e9e2852e721d67619da9c013fd30",
+      "image_file": "1225090626-p2.png",
+      "image_sha256": "5fd223b615bc81b97565c0cfd688206f29114d44821c0a626b363fa913f686e5",
+      "verified": true,
+      "note": "审计范围2025年末，责任与局限，意见在下一页。"
+    },
+    {
+      "announcement_id": "1225090626",
+      "page": 3,
+      "source_sha256": "c6eaccaf8956f3be6994ca96c39b2212fdca13a808181cb858ba1fd27b8ce013",
+      "page_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "image_file": "1225090626-p3.png",
+      "image_sha256": "662025449634a150bd1692b53898128f799ee27d6bea0720418f7ba0522f8c86",
+      "verified": true,
+      "note": "2025年末财务报告内控有效意见，报告日2026年4月8日；不等于交易所批准撤销其他风险警示。"
+    },
+    {
+      "announcement_id": "1225222889",
+      "page": 4,
+      "source_sha256": "81f24ccb1d211b37f5389b8f54244b9c714ac1e2f379c4cc8186245e070a8764",
+      "page_text_sha256": "a0929b571f39932265f72993e4740c7b3e799bab49fcc58b0ad66400cfaea0e4",
+      "image_file": "1225222889-p4.png",
+      "image_sha256": "c2973856ca989e5a04eaff6e8696fabc10892a69870769ce3f32b5fb304eb61f",
+      "verified": true,
+      "note": "保留基础第二项为证监会立案未结，未能取得证据判断可能财报影响；不能只列资金占用。"
+    },
+    {
+      "announcement_id": "1225292893",
+      "page": 2,
+      "source_sha256": "87399b1715458c6bc0e29a0c2e475fc841476795cd0bdcb74ef2586196133836",
+      "page_text_sha256": "dfb3336845c49f0bb52ca6abc062255259d1d6713733dab9e4caedeb4d583478",
+      "image_file": "1225292893-p2.png",
+      "image_sha256": "2a98918fd3b89b230bb50a53aa69bba89ca751afd5238a98114ca6fafea5da76",
+      "verified": true,
+      "note": "申请仅撤销退市风险警示；连续三年低者负值并持续经营不确定性及内控带强调事项仍支持其他风险警示。"
+    },
+    {
+      "announcement_id": "1225292893",
+      "page": 3,
+      "source_sha256": "87399b1715458c6bc0e29a0c2e475fc841476795cd0bdcb74ef2586196133836",
+      "page_text_sha256": "2f2e889a436cb1a4ffb82f837842e1f56aaffa9d81640adbc5e5fc4916b8a50e",
+      "image_file": "1225292893-p3.png",
+      "image_sha256": "21ba4508d1396478805b6730d9b374877dca1f92fe50ea843b93181e7dd34385",
+      "verified": true,
+      "note": "2026年5月12日落款；申请尚需交易所同意，不能当作已批准。"
+    },
+    {
+      "announcement_id": "1223386717",
+      "page": 1,
+      "source_sha256": "a790c7e788accb0fba9b3b0327aa73a39b8609a70e3c50e97f6cf634194504d1",
+      "page_text_sha256": "ca38bcd174d15140615c8d1b079058e6a9ae5bd2473732e5ad3646abd31feba3",
+      "image_file": "1223386717-p1.png",
+      "image_sha256": "63c5c5093e6dd36257a2294f69fc7cab3383ff944ccce0994fc4520b2e5f7e15",
+      "verified": true,
+      "note": "2024年5月6日内控否定导致ST；2024年11月27日处罚告知叠加。2025部分情形消除但处罚条件保留。"
+    },
+    {
+      "announcement_id": "1223370266",
+      "page": 1,
+      "source_sha256": "95bba579ff12517dacf6381eef06ba48e5bf6e28fe67e3d227ca523d45689cac",
+      "page_text_sha256": "d7e3357d1bb556e0eb247a4362354c563e5242bd60cef669abbeaaa3c62d9567",
+      "image_file": "1223370266-p1.png",
+      "image_sha256": "fab422ec4966020260c5355587659c48c8d692841b7bc646ad48c1e92fa120c8",
+      "verified": true,
+      "note": "四通2025年4月30日起*ST，亏损与扣除后收入不足3亿元组合触发；不是ST四通。"
+    },
+    {
+      "announcement_id": "1223426982",
+      "page": 1,
+      "source_sha256": "19a70436b2f33a6eda0bb284940dc601185b52a0aed9099d7ac49b1804afff76",
+      "page_text_sha256": "2b36912143f4fb0f9e926b2e746d48d9e982345fa786db25431931121d75364c",
+      "image_file": "1223426982-p1.png",
+      "image_sha256": "3f746800c1e1a67d005b20fc725c5d0e461ba3b46c56055c017ff923ef727601",
+      "verified": true,
+      "note": "正平2025年5月6日起退市与其他警示并存：财务无法表示、内控否定、违规担保及持续亏损持续经营。"
+    }
+  ],
+  "regulator_sources": [],
+  "source_conflicts": [
+    {
+      "company": "603869",
+      "field": "7月3日前复权收盘",
+      "values": [
+        "8.55690519957983",
+        "8.556"
+      ],
+      "resolution": "保持1e-9阈值，两段锚定收益不认证；不以四舍五入关闭冲突。"
+    }
+  ]
+}

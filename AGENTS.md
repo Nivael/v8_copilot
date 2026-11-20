@@ -68,3 +68,5 @@ in-place edit, is the default way to change one.
 最新初始补证：海利、龙韵、星农、华扬，覆盖142/150、剩8家。起源仅12页360行、两份官方PDF无目录行及星农日期冲突均保留。见 [结果](ST_INITIAL_TWENTYFIFTH_FOUR_RESULT_2026_11_20.md)。
 
 最新期间复盘：海利、龙韵、星农、华扬，6条问题链及现金分项表。星农现金毛额倒差保留，华扬负权益不直接认证年度触发。期初仍142/150。见 [结果](ST_TWENTYFIFTH_PERIOD_FOLLOWUP_RESULT_2026_11_20.md)。
+
+第26批期初补证已发布：利达资金回收与审计取证、四通申请与后续批准、正平持续经营/募资强调、智知内控与处罚分别核。覆盖146/150、剩4家，智知两段收益因报价冲突留空。见 [结果](ST_INITIAL_TWENTYSIXTH_FOUR_RESULT_2026_11_20.md)。

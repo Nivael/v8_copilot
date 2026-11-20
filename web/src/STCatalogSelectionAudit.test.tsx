@@ -20,8 +20,8 @@ it('keeps 84-company saved-query scope and 8 title leads separate from confirmed
  fireEvent.click(screen.getByText('查看8条原始线索及当前处理状态'))
  const table=screen.getByRole('table',{name:'选源核对线索，不是8个独立新事件'})
  expect(within(table).getAllByRole('row')).toHaveLength(9)
- expect(table).toHaveTextContent('公司公告标题线索，正文待核')
- expect(table).toHaveTextContent('配套材料标题线索，正文待核')
+ expect(table).toHaveTextContent('正文已补核：原募投终止并拟改投收购，非全部业务终止')
+ expect(table).toHaveTextContent('正文已补核：保荐核查意见，不替代股东会或交割')
  fireEvent.click(screen.getByText('已核三条：分别改变了什么？'))
  expect(screen.getByRole('complementary',{name:'600818目录正文补核'})).toHaveTextContent('原件补强，原判断保留')
  expect(screen.getByRole('complementary',{name:'603008目录正文补核'})).toHaveTextContent('个人债务集中清理')
@@ -52,4 +52,13 @@ it('does not invent a status note for an unrelated company',()=>{
  render(<STCatalogCaseUpdate symbol="600965" context={twentysecond}/>)
  expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
  expect(screen.queryByRole('status')).not.toBeInTheDocument()
+})
+
+it('separates five body reviews from execution and preserves source identity conflicts',()=>{
+ render(<STCatalogSelectionAudit data={data()}/>);
+ fireEvent.click(screen.getByText('后续补核五份：哪些不是新的终止事件？'))
+ expect(screen.getByText(/目录简称\*ST明德，PDF为明德生物/)).toBeVisible()
+ expect(screen.getByText(/本件不证明已结算实付/)).toBeVisible()
+ expect(screen.getByText(/本轮5份共41页，核14关键图像页/)).toBeVisible()
+ expect(screen.getByText(/末页签章日期为空/)).toBeVisible()
 })

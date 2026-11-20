@@ -1,3 +1,4 @@
+import {DailySTExitPressure} from './DailySTExitPressure'
 import {useState} from 'react'
 import data from './longBreadthReplay.json'
 import coverage from './longBreadthCoverage.json'
@@ -29,6 +30,7 @@ export function LongBreadthReplay(){
    <details><summary>指数来源与窗口怎样计算？</summary><p>价格来自三组已保存的中证指数官网原件，97个收盘与65个重叠值核同；官方两位小数精度另算，不改旧研究的较高精度数值。</p><p>n日收益需要n+1个收盘；近20个收盘高点需要20个收盘。实现波动取20个日简单收益的样本标准差，乘√252年化，需要21个收盘。早期不足窗口留空，未借后续价格补齐。</p>{prices.sources.map(source=><p key={source.sha256}><a href={source.url} target="_blank" rel="noreferrer">官方指数原件 ↗</a> · <code style={{overflowWrap:'anywhere'}}>{source.sha256}</code></p>)}<p>计算留档摘要：<code style={{overflowWrap:'anywhere'}}>{prices.evidence_sha256}</code>。资料事后取得，价格变化与波动相互相关，不当多份独立风险验证。</p></details>
   </aside>:<p role="status">指数与广度日期尚未对应，价格压力暂不合并展示。</p>}
   <p>分母为当日有成交{row.trading}只：上涨{row.advancing}、下跌{row.declining}、平盘{row.flat}。另有{row.nontrading}只无成交，不填成平盘；跌幅至少5%的{row.tail}只不等于实际跌停。</p>
+  <DailySTExitPressure day={row.date}/>
   <p>上涨不足一半包含平盘，不必然等于多数股票下跌；三日条件是观察示例，未校准危机概率或仓位。这里没有把后续收益放进当天判断，后续表现请切换“提示后怎样？”核对全部命中和反例。</p>
  </section>
 }

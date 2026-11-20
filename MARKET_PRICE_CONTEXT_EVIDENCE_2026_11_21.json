@@ -1,0 +1,1277 @@
+{
+  "version": "market_price_pressure_evidence_v1",
+  "observed_at": "2026-11-20T16:23:33.984404+00:00",
+  "through": "2026-11-20",
+  "calendar": [
+    "2026-08-20",
+    "2026-08-21",
+    "2026-08-24",
+    "2026-08-25",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-07",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-08",
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23",
+    "2026-10-26",
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30",
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-19",
+    "2026-11-20"
+  ],
+  "source_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba",
+  "scope": "three_official_price_indices_only_first_observed_now_not_historical_PIT",
+  "sources": [
+    {
+      "code": "000985.CSI",
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120",
+      "response_sha256": "f97dd51230a853c794a64593fc581806091e7ac523d3f1ce93177eb7a6e1af9b",
+      "observed_at": "2026-11-20T16:23:33.633263+00:00",
+      "reported_amount_unit": "CNY100M",
+      "normalized_amount_unit": "CNY"
+    },
+    {
+      "code": "000300.SH",
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000300&startDate=20260820&endDate=20261120",
+      "response_sha256": "386761d8eb2098e729e98a27f3b2e839e4328bbcf35ed0783b8926188903982e",
+      "observed_at": "2026-11-20T16:23:33.839946+00:00",
+      "reported_amount_unit": "CNY100M",
+      "normalized_amount_unit": "CNY"
+    },
+    {
+      "code": "932000.CSI",
+      "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=932000&startDate=20260820&endDate=20261120",
+      "response_sha256": "fcc86d330ec420467d10e7ac2ce9e3201c4d045ffc24e6594f64c4f8dc5067a6",
+      "observed_at": "2026-11-20T16:23:33.984387+00:00",
+      "reported_amount_unit": "CNY100M",
+      "normalized_amount_unit": "CNY"
+    }
+  ],
+  "indices": {
+    "000985.CSI": [
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-20",
+        "close": 5882.46,
+        "amount": 2009416000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-21",
+        "close": 5902.11,
+        "amount": 1818334999999.9998
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-24",
+        "close": 5818.51,
+        "amount": 1945441000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-25",
+        "close": 5832.92,
+        "amount": 1773716999999.9998
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-26",
+        "close": 5867.44,
+        "amount": 1750798000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-27",
+        "close": 5958.93,
+        "amount": 2059474000000.0002
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-28",
+        "close": 5935.03,
+        "amount": 2036946000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-08-31",
+        "close": 5969.33,
+        "amount": 2064025000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-01",
+        "close": 5939.14,
+        "amount": 1980796000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-02",
+        "close": 5860.85,
+        "amount": 1748912000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-03",
+        "close": 5867.18,
+        "amount": 1714590000000.0002
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-04",
+        "close": 5830.14,
+        "amount": 1982986000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-07",
+        "close": 5893.09,
+        "amount": 1884204000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-08",
+        "close": 5894.74,
+        "amount": 1905934000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-09",
+        "close": 5899.03,
+        "amount": 1804591000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-10",
+        "close": 5851.83,
+        "amount": 1598297000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-11",
+        "close": 5769.02,
+        "amount": 1908358000000.0002
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-14",
+        "close": 5761.88,
+        "amount": 1574570000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-15",
+        "close": 5723.69,
+        "amount": 1556380000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-16",
+        "close": 5797.55,
+        "amount": 1778008000000.0002
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-17",
+        "close": 5778.35,
+        "amount": 1755224000000.0002
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-18",
+        "close": 5862.03,
+        "amount": 1988311000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-21",
+        "close": 5921.92,
+        "amount": 1950080000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-22",
+        "close": 5923.5,
+        "amount": 2055062000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-23",
+        "close": 5897.66,
+        "amount": 1701400999999.9998
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-24",
+        "close": 5788.14,
+        "amount": 1595766000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-28",
+        "close": 5630.2,
+        "amount": 1642461000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-29",
+        "close": 5650.25,
+        "amount": 1355645000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-09-30",
+        "close": 5648.25,
+        "amount": 1381583000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-08",
+        "close": 5560.01,
+        "amount": 1614501000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-09",
+        "close": 5570.32,
+        "amount": 1837300999999.9998
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-12",
+        "close": 5491.06,
+        "amount": 1487464000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-13",
+        "close": 5491.23,
+        "amount": 1612630000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-14",
+        "close": 5404.82,
+        "amount": 1367027000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-15",
+        "close": 5282.71,
+        "amount": 1578134000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-16",
+        "close": 5289.37,
+        "amount": 1497697000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-19",
+        "close": 5292.21,
+        "amount": 1375907000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-20",
+        "close": 5306.57,
+        "amount": 1399136000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-21",
+        "close": 5283.5,
+        "amount": 1380130000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-22",
+        "close": 5154.03,
+        "amount": 1470701000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-23",
+        "close": 5253.73,
+        "amount": 1876825000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-26",
+        "close": 5213.98,
+        "amount": 1543560000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-27",
+        "close": 5098.42,
+        "amount": 1404335000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-28",
+        "close": 5177.51,
+        "amount": 1561962000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-29",
+        "close": 5070.47,
+        "amount": 1498916000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-10-30",
+        "close": 4952.5,
+        "amount": 1618311000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-02",
+        "close": 5034.54,
+        "amount": 1727979000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-03",
+        "close": 4985.17,
+        "amount": 1643505000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-04",
+        "close": 5146.73,
+        "amount": 1955927000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-05",
+        "close": 5211.79,
+        "amount": 2036687000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-06",
+        "close": 5115.37,
+        "amount": 1597482000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-09",
+        "close": 5119.56,
+        "amount": 1424326000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-10",
+        "close": 5161.13,
+        "amount": 1444045000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-11",
+        "close": 5207.16,
+        "amount": 1609430000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-12",
+        "close": 5140.57,
+        "amount": 1846361000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-13",
+        "close": 5058.27,
+        "amount": 1587538000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-16",
+        "close": 4959.1,
+        "amount": 1424294000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-17",
+        "close": 4929.86,
+        "amount": 1394559000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-18",
+        "close": 4920.89,
+        "amount": 1315387000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-19",
+        "close": 4877.36,
+        "amount": 1252494000000.0
+      },
+      {
+        "ts_code": "000985.CSI",
+        "trade_date": "2026-11-20",
+        "close": 4745.31,
+        "amount": 1367262000000.0
+      }
+    ],
+    "000300.SH": [
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-20",
+        "close": 4592.75,
+        "amount": 554021000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-21",
+        "close": 4618.9,
+        "amount": 505501000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-24",
+        "close": 4563.13,
+        "amount": 590426000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-25",
+        "close": 4552.03,
+        "amount": 480422000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-26",
+        "close": 4590.79,
+        "amount": 489057000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-27",
+        "close": 4630.28,
+        "amount": 587120000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-28",
+        "close": 4609.18,
+        "amount": 549813000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-08-31",
+        "close": 4625.09,
+        "amount": 583434000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-01",
+        "close": 4611.44,
+        "amount": 535708000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-02",
+        "close": 4547.96,
+        "amount": 474680000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-03",
+        "close": 4552.58,
+        "amount": 439941000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-04",
+        "close": 4548.05,
+        "amount": 517509000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-07",
+        "close": 4575.02,
+        "amount": 535812000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-08",
+        "close": 4558.74,
+        "amount": 492087000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-09",
+        "close": 4572.6,
+        "amount": 440047999999.99994
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-10",
+        "close": 4548.39,
+        "amount": 390616000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-11",
+        "close": 4510.16,
+        "amount": 522207000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-14",
+        "close": 4480.08,
+        "amount": 398685000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-15",
+        "close": 4450.04,
+        "amount": 394776000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-16",
+        "close": 4480.27,
+        "amount": 476452000000.00006
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-17",
+        "close": 4460.16,
+        "amount": 448339000000.00006
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-18",
+        "close": 4507.39,
+        "amount": 537699000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-21",
+        "close": 4539.57,
+        "amount": 495435999999.99994
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-22",
+        "close": 4544.59,
+        "amount": 523617000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-23",
+        "close": 4517.28,
+        "amount": 378289000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-24",
+        "close": 4439.14,
+        "amount": 375462000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-28",
+        "close": 4340.76,
+        "amount": 428620000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-29",
+        "close": 4345.21,
+        "amount": 334951000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-09-30",
+        "close": 4357.62,
+        "amount": 356492000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-08",
+        "close": 4310.28,
+        "amount": 446208000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-09",
+        "close": 4317.25,
+        "amount": 496179000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-12",
+        "close": 4287.98,
+        "amount": 405574000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-13",
+        "close": 4275.68,
+        "amount": 442038000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-14",
+        "close": 4217.68,
+        "amount": 368451000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-15",
+        "close": 4166.01,
+        "amount": 483520000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-16",
+        "close": 4170.61,
+        "amount": 413749000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-19",
+        "close": 4174.53,
+        "amount": 363448000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-20",
+        "close": 4152.11,
+        "amount": 396229000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-21",
+        "close": 4111.93,
+        "amount": 387930000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-22",
+        "close": 4036.3,
+        "amount": 435084000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-23",
+        "close": 4105.33,
+        "amount": 558205000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-26",
+        "close": 4103.54,
+        "amount": 456247000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-27",
+        "close": 4049.55,
+        "amount": 383126000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-28",
+        "close": 4083.87,
+        "amount": 419279000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-29",
+        "close": 4041.84,
+        "amount": 411893000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-10-30",
+        "close": 3985.5,
+        "amount": 456856000000.00006
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-02",
+        "close": 4016.92,
+        "amount": 528847000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-03",
+        "close": 4008.87,
+        "amount": 553054000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-04",
+        "close": 4101.34,
+        "amount": 597260000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-05",
+        "close": 4113.41,
+        "amount": 622089000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-06",
+        "close": 4054.28,
+        "amount": 478839999999.99994
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-09",
+        "close": 4056.11,
+        "amount": 395205000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-10",
+        "close": 4059.11,
+        "amount": 380090000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-11",
+        "close": 4075.71,
+        "amount": 442128000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-12",
+        "close": 4043.93,
+        "amount": 508195000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-13",
+        "close": 4016.29,
+        "amount": 460246000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-16",
+        "close": 3979.8,
+        "amount": 430554000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-17",
+        "close": 3976.46,
+        "amount": 409477000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-18",
+        "close": 3983.77,
+        "amount": 389914000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-19",
+        "close": 3984.84,
+        "amount": 395441000000.0
+      },
+      {
+        "ts_code": "000300.SH",
+        "trade_date": "2026-11-20",
+        "close": 3954.57,
+        "amount": 441108000000.0
+      }
+    ],
+    "932000.CSI": [
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-20",
+        "close": 3084.59,
+        "amount": 389553000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-21",
+        "close": 3091.37,
+        "amount": 356203000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-24",
+        "close": 3045.14,
+        "amount": 366852000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-25",
+        "close": 3094.29,
+        "amount": 379613000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-26",
+        "close": 3091.34,
+        "amount": 371740000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-27",
+        "close": 3152.45,
+        "amount": 416100000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-28",
+        "close": 3149.18,
+        "amount": 434774000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-08-31",
+        "close": 3180.13,
+        "amount": 423985999999.99994
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-01",
+        "close": 3174.62,
+        "amount": 421101000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-02",
+        "close": 3154.39,
+        "amount": 396994000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-03",
+        "close": 3153.78,
+        "amount": 406302000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-04",
+        "close": 3120.61,
+        "amount": 441089999999.99994
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-07",
+        "close": 3172.35,
+        "amount": 394946000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-08",
+        "close": 3189.76,
+        "amount": 425410000000.00006
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-09",
+        "close": 3181.87,
+        "amount": 426437000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-10",
+        "close": 3130.96,
+        "amount": 383162000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-11",
+        "close": 3073.67,
+        "amount": 413878000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-14",
+        "close": 3104.57,
+        "amount": 375318000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-15",
+        "close": 3068.61,
+        "amount": 372496000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-16",
+        "close": 3132.97,
+        "amount": 394112000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-17",
+        "close": 3136.58,
+        "amount": 407222000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-18",
+        "close": 3192.21,
+        "amount": 442709000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-21",
+        "close": 3256.53,
+        "amount": 453941000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-22",
+        "close": 3258.67,
+        "amount": 476789000000.00006
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-23",
+        "close": 3259.79,
+        "amount": 443610000000.00006
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-24",
+        "close": 3209.63,
+        "amount": 413080000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-28",
+        "close": 3104.84,
+        "amount": 388298000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-29",
+        "close": 3128.95,
+        "amount": 329045000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-09-30",
+        "close": 3107.26,
+        "amount": 337238000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-08",
+        "close": 3064.0,
+        "amount": 370899000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-09",
+        "close": 3065.3,
+        "amount": 418138000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-12",
+        "close": 3000.95,
+        "amount": 340846000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-13",
+        "close": 3024.95,
+        "amount": 369314000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-14",
+        "close": 2960.19,
+        "amount": 323402000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-15",
+        "close": 2862.58,
+        "amount": 336974000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-16",
+        "close": 2868.98,
+        "amount": 345327000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-19",
+        "close": 2855.66,
+        "amount": 324659000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-20",
+        "close": 2902.7,
+        "amount": 317741000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-21",
+        "close": 2902.23,
+        "amount": 316304000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-22",
+        "close": 2804.46,
+        "amount": 326171000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-23",
+        "close": 2856.27,
+        "amount": 408649000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-26",
+        "close": 2818.98,
+        "amount": 332006000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-27",
+        "close": 2729.5,
+        "amount": 328427000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-28",
+        "close": 2800.7,
+        "amount": 360296000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-29",
+        "close": 2709.19,
+        "amount": 331710000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-10-30",
+        "close": 2616.74,
+        "amount": 362051000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-02",
+        "close": 2681.29,
+        "amount": 354624000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-03",
+        "close": 2623.84,
+        "amount": 328349000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-04",
+        "close": 2713.36,
+        "amount": 391909000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-05",
+        "close": 2785.55,
+        "amount": 397301000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-06",
+        "close": 2718.86,
+        "amount": 324744000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-09",
+        "close": 2737.41,
+        "amount": 314136000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-10",
+        "close": 2804.55,
+        "amount": 332585000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-11",
+        "close": 2853.22,
+        "amount": 372119000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-12",
+        "close": 2801.02,
+        "amount": 407143000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-13",
+        "close": 2724.74,
+        "amount": 342201000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-16",
+        "close": 2636.87,
+        "amount": 297527000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-17",
+        "close": 2589.94,
+        "amount": 290905000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-18",
+        "close": 2562.74,
+        "amount": 277901000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-19",
+        "close": 2485.11,
+        "amount": 260811000000.0
+      },
+      {
+        "ts_code": "932000.CSI",
+        "trade_date": "2026-11-20",
+        "close": 2351.93,
+        "amount": 288323000000.0
+      }
+    ]
+  },
+  "derived": {
+    "availability": "available",
+    "as_of": "2026-11-20",
+    "headline": "大盘风险仍偏高，短期压力尚在",
+    "stance": "弱势判断",
+    "summary": "2026-11-20中证全指-2.71%；最近5个交易日-6.19%，最近20个交易日-9.68%。",
+    "metrics": {
+      "day_change_pct": -2.7074072859087703,
+      "five_day_change_pct": -6.187095588017247,
+      "twenty_day_change_pct": -9.677314974313488
+    },
+    "reason": {
+      "title": "先看最新的价格方向",
+      "text": "2026-11-20中证全指-2.71%；最近5个交易日-6.19%，最近20个交易日-9.68%。",
+      "source_label": "中证全指原始收盘来源",
+      "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120"
+    },
+    "source_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba",
+    "checked_at": "2026-11-20T16:23:33.984404+00:00",
+    "price_context": {
+      "as_of": "2026-11-20",
+      "start": "2026-08-20",
+      "close_observations": 61,
+      "rows": [
+        {
+          "code": "000985.CSI",
+          "name": "中证全指",
+          "twenty_day_change_pct": -9.677314974313488,
+          "sixty_day_change_pct": -19.331198172193265,
+          "from_window_high_pct": -20.505148819046692,
+          "window_high_on": "2026-08-31",
+          "above_ma20": false,
+          "above_ma60": false,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120"
+        },
+        {
+          "code": "000300.SH",
+          "name": "沪深300",
+          "twenty_day_change_pct": -3.672299181795373,
+          "sixty_day_change_pct": -13.8953785858146,
+          "from_window_high_pct": -14.593285935191824,
+          "window_high_on": "2026-08-27",
+          "above_ma20": false,
+          "above_ma60": false,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000300&startDate=20260820&endDate=20261120"
+        },
+        {
+          "code": "932000.CSI",
+          "name": "中证2000",
+          "twenty_day_change_pct": -17.657294303409692,
+          "sixty_day_change_pct": -23.752265292956277,
+          "from_window_high_pct": -27.85026029284095,
+          "window_high_on": "2026-09-23",
+          "above_ma20": false,
+          "above_ma60": false,
+          "source_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=932000&startDate=20260820&endDate=20261120"
+        }
+      ],
+      "scope": "price_only_not_crisis_score",
+      "source_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba"
+    }
+  },
+  "processor_sha256": "44261e455bb46f2522066c0a534af4e58a59bf793b84571e456d10015340c226",
+  "unchanged": {
+    "old_common_chart_exact": true,
+    "old_breadth_etf_exact": true,
+    "st_entire_file_exact": true,
+    "research_ledger_and_methods_exact": true
+  },
+  "limitations": [
+    "广度、ST同窗和ETF仍截至11月6日，独立ST复盘扩展截至11月19日，不能拼成同日综合危机等级。",
+    "价格窗口只有61个收盘点，距窗内高点不是历史最大回撤；未据此生成仓位上限或概率。",
+    "三个指数来自同一官方提供方；原件校验和重叠历史一致，不等于新增第二独立来源。",
+    "没有新增经验验证、方法晋级或研究登记。"
+  ]
+}

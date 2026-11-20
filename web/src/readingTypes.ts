@@ -1,3 +1,4 @@
+export type PriceContext={as_of:string;start:string;close_observations:number;scope:'price_only_not_crisis_score';source_digest:string;rows:{code:string;name:string;twenty_day_change_pct:number;sixty_day_change_pct:number;from_window_high_pct:number;window_high_on:string;above_ma20:boolean;above_ma60:boolean;source_url:string}[]}
 export type ReadingPoint={date:string;value:number|null;level:number|null}
 export type ReadingSeries={key:string;name:string;points:ReadingPoint[];change_pct:number|null}
 export type CapitalAction={name:string;date:string;judgment:string;detail:string;scope:string;sources:{label:string;url:string}[]}
@@ -5,7 +6,7 @@ export type BroadFundEvidence={unit_nav:{availability:string;as_of?:string;fetch
 export type BroadETFReading={fund_evidence?:BroadFundEvidence;availability:'available';as_of:string;start:string;headline:string;interpretation:string;institution_reading:string;sample_funds:number;source_url:string;capital_actions?:{headline:string;summary:string;actions:CapitalAction[]}|null;groups:{name:string;sample_count:number;increasing_5d:number;decreasing_5d:number;five_day_price_change_pct:number;twenty_day_price_change_pct:number;reading:string;source_url:string;funds:{code:string;name:string;five_day_share_change_pct:number;twenty_day_share_change_pct:number;period_share_change_pct:number}[]}[]}
 export type MarketReading={
   availability:string;as_of:string;start:string;headline:string;stance:string;summary:string
-  latest_price?:{availability:'available';as_of:string;headline:string;stance:string;summary:string;metrics:{day_change_pct:number;five_day_change_pct:number;twenty_day_change_pct:number};reason:{title:string;text:string;source_label:string;source_url:string}}
+  latest_price?:{price_context?:PriceContext;availability:'available';as_of:string;headline:string;stance:string;summary:string;metrics:{day_change_pct:number;five_day_change_pct:number;twenty_day_change_pct:number};reason:{title:string;text:string;source_label:string;source_url:string}}
   metrics:{day_change_pct:number|null;five_day_change_pct:number|null;twenty_day_change_pct:number|null;period_change_pct:number|null;st_change_pct:number|null;advancing_pct:number|null}
   chart:ReadingSeries[];why:{title:string;text:string;source_label:string;source_url:string}[]
   source_notes?:{title:string;text:string;source_label:string;source_url:string}[]

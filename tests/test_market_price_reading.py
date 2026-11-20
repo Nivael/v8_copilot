@@ -121,3 +121,25 @@ def test_missing_equal_or_older_prices_do_not_change_the_base(tmp_path):
 ])
 def test_price_judgment_separates_rebound_and_continuing_weakness(day, week, month, headline):
     assert m.price_judgment(day, week, month)[0] == headline
+
+
+def test_price_context_uses_60_returns_61_closes_and_current_drawdown_not_max_drawdown(tmp_path):
+    packet, current = ready(tmp_path)
+    result = m.newer_price(current, directory=tmp_path, now=NOW)['price_context']
+    assert result['close_observations'] == 61 and result['as_of'] == packet['through']
+    assert [r['code'] for r in result['rows']] == ['000985.CSI', '000300.SH', '932000.CSI']
+    for row in result['rows']:
+        assert row['sixty_day_change_pct'] == pytest.approx(60)
+        assert row['from_window_high_pct'] == 0
+        assert row['above_ma20'] and row['above_ma60']
+        assert row['window_high_on'] == packet['through']
+    # Deep early loss followed by partial recovery: current drawdown differs from max drawdown.
+    points = packet['indices']['000985.CSI']
+    for point in points: point['close'] = 100
+    points[0]['close'] = 200
+    points[1]['close'] = 50
+    points[-1]['close'] = 150
+    row = m.price_context(packet)['rows'][0]
+    assert row['from_window_high_pct'] == -25  # max drawdown would be -75
+    assert row['sixty_day_change_pct'] == -25
+    assert row['window_high_on'] == points[0]['trade_date']

@@ -146,3 +146,5 @@ Old worktrees and runs remain traceability artifacts. Correct old identity throu
 百利11月3日收款补证更正已发布：目录原有但漏选，累计7500万元/余差5500万元与旧3900万元季度项分列；原269行保持，新增历史研究1条，见[结果](ST_BAILI_RECEIPT_CORRECTION_RESULT_2026_11_20.md)。
 
 - 2026-11-21 saved-catalog audit and market freshness priority: `ST_CATALOG_SELECTION_AUDIT_RESULT_2026_11_20.md`.
+
+- 2026-11-21 market price overlay, unchanged paired sources and next breadth/tail work: `MARKET_DATE_ALIGNMENT_RESULT_2026_11_21.md`.

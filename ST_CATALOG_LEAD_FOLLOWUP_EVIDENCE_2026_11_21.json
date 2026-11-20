@@ -1,0 +1,115 @@
+{
+  "version": "catalog_lead_body_followup_v1",
+  "reviewed_on": "2026-11-21",
+  "prior_evidence_sha256": "45d0fbc1c88a3c8b0c5bdafc8966b37872dbb642a4a2e406543191b53938906f",
+  "prior_pending_ids": [
+    "1225438037",
+    "1225451821",
+    "1225451822",
+    "1225474980",
+    "1225616501"
+  ],
+  "sources": [
+    {
+      "announcement_id": "1225438037",
+      "symbol": "600337",
+      "title": "美克国际家居用品股份有限公司关于召开终止发行股份及支付现金购买资产并募集配套资金暨关联交易事项投资者说明会的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-07-23/1225438037.PDF",
+      "published_on": "2026-07-23",
+      "sha256": "e9b77230f75fd737e1ccf8d8a0df3530eae790dad27051227b8dadc28429eac6",
+      "pages": 2,
+      "observed_at": "2026-11-20T18:17:46.846292+00:00",
+      "review_title": "说明会安排，不是新终止",
+      "reviewed_fact": "计划于7月27日召开终止交易说明会，回指7月22日决议；本件不证明会议后来实际召开，也不增加一次收购终止事件。",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "fulltext_extracted": true,
+      "protected_id_and_canonical_legacy_text_gates_passed": true
+    },
+    {
+      "announcement_id": "1225451821",
+      "symbol": "002932",
+      "title": "关于终止部分募集资金投资项目暨变更募集资金用途的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451821.PDF",
+      "published_on": "2026-08-01",
+      "sha256": "71b2805635e71ccb9e09bd08846081cddeb4406e4225baebf0dfb0732655f111",
+      "pages": 17,
+      "observed_at": "2026-11-20T18:17:47.140916+00:00",
+      "review_title": "原募投终止并拟改投收购，非全部业务终止",
+      "reviewed_fact": "7月31日董事会同意终止医疗健康信息化项目，余额及理财利息拟用于收购必凯尔100%股权，拟总价19000万元，披露时尚需股东会审议。本金10020.64万元与利息963.45万元分别列示，不当新融资或已付款。目录简称*ST明德，PDF为明德生物，保留差异，不推摘帽日期。",
+      "visual_physical_pages": [
+        1,
+        2,
+        3,
+        17
+      ],
+      "fulltext_extracted": true,
+      "protected_id_and_canonical_legacy_text_gates_passed": true
+    },
+    {
+      "announcement_id": "1225451822",
+      "symbol": "002932",
+      "title": "国金证券股份有限公司关于武汉明德生物科技股份有限公司终止部分募集资金投资项目暨变更募集资金用途的核查意见",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-01/1225451822.PDF",
+      "published_on": "2026-08-01",
+      "sha256": "9ef6d2e365a9cd5d4a68ec4d00c963c337607892c586e7879be6364d3a2ebc66",
+      "pages": 17,
+      "observed_at": "2026-11-20T18:17:47.424671+00:00",
+      "review_title": "保荐核查意见，不替代股东会或交割",
+      "reviewed_fact": "国金证券对同一募投用途变更事项无异议，仍明确尚需股东会审议；不能当收购已完成或独立新案例。末页签章日期为空，不从目录日补造实际签署日。",
+      "visual_physical_pages": [
+        1,
+        16,
+        17
+      ],
+      "fulltext_extracted": true,
+      "protected_id_and_canonical_legacy_text_gates_passed": true
+    },
+    {
+      "announcement_id": "1225474980",
+      "symbol": "600337",
+      "title": "美克国际家居用品股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金事项暨关联交易相关主体买卖公司股票的自查报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225474980.PDF",
+      "published_on": "2026-08-15",
+      "sha256": "d1daf00734ece82c91b80c59999b84b2dcc3daae8270ee3d071c4f9f3c6fb40f",
+      "pages": 2,
+      "observed_at": "2026-11-20T18:17:47.523782+00:00",
+      "review_title": "限定主体和期间的自查报告",
+      "reviewed_fact": "回指同一7月22日终止决议；公司披露相关自查主体在1月1日至7月22日期间没有买卖股票，不等于监管独立认定、全市场没有交易或本次新增终止。",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "fulltext_extracted": true,
+      "protected_id_and_canonical_legacy_text_gates_passed": true
+    },
+    {
+      "announcement_id": "1225616501",
+      "symbol": "600581",
+      "title": "八一钢铁关于终止新疆巨峰金属制品有限公司委托管理关系暨关联交易的公告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225616501.PDF",
+      "published_on": "2026-10-23",
+      "sha256": "41753a4842657688c1915f19d44f2c7e3961d670522fcc16b20a1f1f32522fbc",
+      "pages": 3,
+      "observed_at": "2026-11-20T18:17:47.717672+00:00",
+      "review_title": "解除受托管理，非出售或债务豁免",
+      "reviewed_fact": "八钢10月22日董事会通过解除巨峰委托管理关系，年固定托管费20万元按实际期限结算，除实际管理费外不另付违约金补偿金；本件不证明已结算实付。巨峰是控股股东的控股子公司，其负净资产不能直接当上市公司资产剥离金额。",
+      "visual_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "fulltext_extracted": true,
+      "protected_id_and_canonical_legacy_text_gates_passed": true
+    }
+  ],
+  "new_downloads": 5,
+  "physical_pages": 41,
+  "critical_visual_pages": 14,
+  "pending_body_review_in_this_frozen_five": [],
+  "scope_boundary": "Only prior five saved title leads reviewed; not all announcements or full 150-company catalogs. Later approval, closing, actual settlement, name/date conflicts remain unresolved.",
+  "method_promotions": 0,
+  "publication_state": "source_review_saved; panel and bound historical registration pending"
+}

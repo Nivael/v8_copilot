@@ -1,0 +1,746 @@
+{
+  "version": "long_breadth_st_alignment_v1",
+  "breadth_sha256": "03488f4f855c814d6649b7e3c64ff1b29dbe94f03b387daf480ae785470428dd",
+  "input_asset": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/st_regime_comparison/inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "index_source": {
+    "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260703&endDate=20261119",
+    "sha256": "279327a7846b9dbb97e3cb5b1cbdf1099dfc66e5cae163c04419d06f073a20e5"
+  },
+  "reading": {
+    "breadth_start": "2026-07-01",
+    "breadth_through": "2026-11-20",
+    "breadth_days": 97,
+    "common_start": "2026-07-03",
+    "common_through": "2026-11-19",
+    "common_days": 94,
+    "official_index_dates": 94,
+    "signal_count": 6,
+    "complete_signal_count": 5,
+    "partial_signal_count": 1,
+    "signals": [
+      {
+        "date": "2026-07-08",
+        "three_closes": [
+          "2026-07-06",
+          "2026-07-07",
+          "2026-07-08"
+        ],
+        "following_dates": [
+          "2026-07-09",
+          "2026-07-10",
+          "2026-07-13",
+          "2026-07-14",
+          "2026-07-15"
+        ],
+        "through": "2026-07-15",
+        "complete_five": true,
+        "observed_following_sessions": 5,
+        "st_pct": -1.3323669475294737,
+        "market_pct": -1.322306903333885,
+        "official_rounded_market_pct": -1.3222198220907022,
+        "st_minus_market_pp": -0.010060044195588702
+      },
+      {
+        "date": "2026-07-20",
+        "three_closes": [
+          "2026-07-16",
+          "2026-07-17",
+          "2026-07-20"
+        ],
+        "following_dates": [
+          "2026-07-21",
+          "2026-07-22",
+          "2026-07-23",
+          "2026-07-24",
+          "2026-07-27"
+        ],
+        "through": "2026-07-27",
+        "complete_five": true,
+        "observed_following_sessions": 5,
+        "st_pct": 2.094409467227185,
+        "market_pct": 3.0004015522525314,
+        "official_rounded_market_pct": 3.0003795254867325,
+        "st_minus_market_pp": -0.9059920850253462
+      },
+      {
+        "date": "2026-09-04",
+        "three_closes": [
+          "2026-09-02",
+          "2026-09-03",
+          "2026-09-04"
+        ],
+        "following_dates": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ],
+        "through": "2026-09-11",
+        "complete_five": true,
+        "observed_following_sessions": 5,
+        "st_pct": 0.16885788369775082,
+        "market_pct": -1.0482683713854217,
+        "official_rounded_market_pct": -1.0483453227538275,
+        "st_minus_market_pp": 1.2171262550831725
+      },
+      {
+        "date": "2026-09-11",
+        "three_closes": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ],
+        "following_dates": [
+          "2026-09-14",
+          "2026-09-15",
+          "2026-09-16",
+          "2026-09-17",
+          "2026-09-18"
+        ],
+        "through": "2026-09-18",
+        "complete_five": true,
+        "observed_following_sessions": 5,
+        "st_pct": -0.8327084440853595,
+        "market_pct": 1.6122001381446882,
+        "official_rounded_market_pct": 1.6122322335509325,
+        "st_minus_market_pp": -2.4449085822300476
+      },
+      {
+        "date": "2026-09-24",
+        "three_closes": [
+          "2026-09-22",
+          "2026-09-23",
+          "2026-09-24"
+        ],
+        "following_dates": [
+          "2026-09-28",
+          "2026-09-29",
+          "2026-09-30",
+          "2026-10-08",
+          "2026-10-09"
+        ],
+        "through": "2026-10-09",
+        "complete_five": true,
+        "observed_following_sessions": 5,
+        "st_pct": -1.7592444390246307,
+        "market_pct": -3.763228858342282,
+        "official_rounded_market_pct": -3.763212361829534,
+        "st_minus_market_pp": 2.0039844193176513
+      },
+      {
+        "date": "2026-11-16",
+        "three_closes": [
+          "2026-11-12",
+          "2026-11-13",
+          "2026-11-16"
+        ],
+        "following_dates": [
+          "2026-11-17",
+          "2026-11-18",
+          "2026-11-19"
+        ],
+        "through": "2026-11-19",
+        "complete_five": false,
+        "observed_following_sessions": 3,
+        "st_pct": -5.880245046179585,
+        "market_pct": -1.6483770650412122,
+        "official_rounded_market_pct": -1.6482829545683693,
+        "st_minus_market_pp": -4.231867981138373
+      }
+    ],
+    "days": [
+      {
+        "date": "2026-07-01",
+        "trading": 5189,
+        "advancing": 4043,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-02",
+        "trading": 5194,
+        "advancing": 2113,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-03",
+        "trading": 5193,
+        "advancing": 3527,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-06",
+        "trading": 5194,
+        "advancing": 1817,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-07",
+        "trading": 5194,
+        "advancing": 639,
+        "streak": 2
+      },
+      {
+        "date": "2026-07-08",
+        "trading": 5194,
+        "advancing": 1533,
+        "streak": 3
+      },
+      {
+        "date": "2026-07-09",
+        "trading": 5194,
+        "advancing": 2382,
+        "streak": 4
+      },
+      {
+        "date": "2026-07-10",
+        "trading": 5194,
+        "advancing": 3512,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-13",
+        "trading": 5197,
+        "advancing": 780,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-14",
+        "trading": 5197,
+        "advancing": 3919,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-15",
+        "trading": 5198,
+        "advancing": 3198,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-16",
+        "trading": 5197,
+        "advancing": 2344,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-17",
+        "trading": 5195,
+        "advancing": 405,
+        "streak": 2
+      },
+      {
+        "date": "2026-07-20",
+        "trading": 5197,
+        "advancing": 1709,
+        "streak": 3
+      },
+      {
+        "date": "2026-07-21",
+        "trading": 5198,
+        "advancing": 2871,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-22",
+        "trading": 5198,
+        "advancing": 1432,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-23",
+        "trading": 5198,
+        "advancing": 3997,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-24",
+        "trading": 5197,
+        "advancing": 534,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-27",
+        "trading": 5193,
+        "advancing": 4885,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-28",
+        "trading": 5194,
+        "advancing": 2373,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-29",
+        "trading": 5193,
+        "advancing": 3968,
+        "streak": 0
+      },
+      {
+        "date": "2026-07-30",
+        "trading": 5197,
+        "advancing": 1636,
+        "streak": 1
+      },
+      {
+        "date": "2026-07-31",
+        "trading": 5197,
+        "advancing": 4395,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-03",
+        "trading": 5197,
+        "advancing": 3866,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-04",
+        "trading": 5197,
+        "advancing": 3406,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-05",
+        "trading": 5199,
+        "advancing": 3427,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-06",
+        "trading": 5200,
+        "advancing": 2639,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-07",
+        "trading": 5202,
+        "advancing": 2671,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-10",
+        "trading": 5205,
+        "advancing": 3878,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-11",
+        "trading": 5205,
+        "advancing": 1560,
+        "streak": 1
+      },
+      {
+        "date": "2026-08-12",
+        "trading": 5204,
+        "advancing": 3860,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-13",
+        "trading": 5205,
+        "advancing": 1085,
+        "streak": 1
+      },
+      {
+        "date": "2026-08-14",
+        "trading": 5205,
+        "advancing": 2322,
+        "streak": 2
+      },
+      {
+        "date": "2026-08-17",
+        "trading": 5203,
+        "advancing": 4067,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-18",
+        "trading": 5204,
+        "advancing": 1841,
+        "streak": 1
+      },
+      {
+        "date": "2026-08-19",
+        "trading": 5204,
+        "advancing": 421,
+        "streak": 2
+      },
+      {
+        "date": "2026-08-20",
+        "trading": 5204,
+        "advancing": 3916,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-21",
+        "trading": 5205,
+        "advancing": 2407,
+        "streak": 1
+      },
+      {
+        "date": "2026-08-24",
+        "trading": 5207,
+        "advancing": 1384,
+        "streak": 2
+      },
+      {
+        "date": "2026-08-25",
+        "trading": 5208,
+        "advancing": 3967,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-26",
+        "trading": 5209,
+        "advancing": 2760,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-27",
+        "trading": 5209,
+        "advancing": 3191,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-28",
+        "trading": 5208,
+        "advancing": 2796,
+        "streak": 0
+      },
+      {
+        "date": "2026-08-31",
+        "trading": 5206,
+        "advancing": 3000,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-01",
+        "trading": 5207,
+        "advancing": 3095,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-02",
+        "trading": 5208,
+        "advancing": 1247,
+        "streak": 1
+      },
+      {
+        "date": "2026-09-03",
+        "trading": 5209,
+        "advancing": 1805,
+        "streak": 2
+      },
+      {
+        "date": "2026-09-04",
+        "trading": 5207,
+        "advancing": 2249,
+        "streak": 3
+      },
+      {
+        "date": "2026-09-07",
+        "trading": 5207,
+        "advancing": 3040,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-08",
+        "trading": 5207,
+        "advancing": 3257,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-09",
+        "trading": 5207,
+        "advancing": 1729,
+        "streak": 1
+      },
+      {
+        "date": "2026-09-10",
+        "trading": 5206,
+        "advancing": 932,
+        "streak": 2
+      },
+      {
+        "date": "2026-09-11",
+        "trading": 5207,
+        "advancing": 605,
+        "streak": 3
+      },
+      {
+        "date": "2026-09-14",
+        "trading": 5207,
+        "advancing": 2939,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-15",
+        "trading": 5205,
+        "advancing": 1054,
+        "streak": 1
+      },
+      {
+        "date": "2026-09-16",
+        "trading": 5206,
+        "advancing": 3888,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-17",
+        "trading": 5209,
+        "advancing": 2504,
+        "streak": 1
+      },
+      {
+        "date": "2026-09-18",
+        "trading": 5209,
+        "advancing": 3937,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-21",
+        "trading": 5209,
+        "advancing": 4216,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-22",
+        "trading": 5209,
+        "advancing": 2284,
+        "streak": 1
+      },
+      {
+        "date": "2026-09-23",
+        "trading": 5210,
+        "advancing": 1757,
+        "streak": 2
+      },
+      {
+        "date": "2026-09-24",
+        "trading": 5210,
+        "advancing": 1084,
+        "streak": 3
+      },
+      {
+        "date": "2026-09-28",
+        "trading": 5210,
+        "advancing": 862,
+        "streak": 4
+      },
+      {
+        "date": "2026-09-29",
+        "trading": 5211,
+        "advancing": 3261,
+        "streak": 0
+      },
+      {
+        "date": "2026-09-30",
+        "trading": 5213,
+        "advancing": 2346,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-08",
+        "trading": 5209,
+        "advancing": 1634,
+        "streak": 2
+      },
+      {
+        "date": "2026-10-09",
+        "trading": 5210,
+        "advancing": 2989,
+        "streak": 0
+      },
+      {
+        "date": "2026-10-12",
+        "trading": 5212,
+        "advancing": 1111,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-13",
+        "trading": 5212,
+        "advancing": 2791,
+        "streak": 0
+      },
+      {
+        "date": "2026-10-14",
+        "trading": 5214,
+        "advancing": 918,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-15",
+        "trading": 5215,
+        "advancing": 400,
+        "streak": 2
+      },
+      {
+        "date": "2026-10-16",
+        "trading": 5216,
+        "advancing": 3061,
+        "streak": 0
+      },
+      {
+        "date": "2026-10-19",
+        "trading": 5213,
+        "advancing": 2202,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-20",
+        "trading": 5217,
+        "advancing": 3433,
+        "streak": 0
+      },
+      {
+        "date": "2026-10-21",
+        "trading": 5216,
+        "advancing": 1941,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-22",
+        "trading": 5218,
+        "advancing": 448,
+        "streak": 2
+      },
+      {
+        "date": "2026-10-23",
+        "trading": 5219,
+        "advancing": 4197,
+        "streak": 0
+      },
+      {
+        "date": "2026-10-26",
+        "trading": 5217,
+        "advancing": 2082,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-27",
+        "trading": 5217,
+        "advancing": 576,
+        "streak": 2
+      },
+      {
+        "date": "2026-10-28",
+        "trading": 5217,
+        "advancing": 3872,
+        "streak": 0
+      },
+      {
+        "date": "2026-10-29",
+        "trading": 5216,
+        "advancing": 756,
+        "streak": 1
+      },
+      {
+        "date": "2026-10-30",
+        "trading": 5217,
+        "advancing": 854,
+        "streak": 2
+      },
+      {
+        "date": "2026-11-02",
+        "trading": 5217,
+        "advancing": 4382,
+        "streak": 0
+      },
+      {
+        "date": "2026-11-03",
+        "trading": 5216,
+        "advancing": 2023,
+        "streak": 1
+      },
+      {
+        "date": "2026-11-04",
+        "trading": 5218,
+        "advancing": 4331,
+        "streak": 0
+      },
+      {
+        "date": "2026-11-05",
+        "trading": 5217,
+        "advancing": 4538,
+        "streak": 0
+      },
+      {
+        "date": "2026-11-06",
+        "trading": 5218,
+        "advancing": 716,
+        "streak": 1
+      },
+      {
+        "date": "2026-11-09",
+        "trading": 5218,
+        "advancing": 2043,
+        "streak": 2
+      },
+      {
+        "date": "2026-11-10",
+        "trading": 5218,
+        "advancing": 4003,
+        "streak": 0
+      },
+      {
+        "date": "2026-11-11",
+        "trading": 5219,
+        "advancing": 3381,
+        "streak": 0
+      },
+      {
+        "date": "2026-11-12",
+        "trading": 5218,
+        "advancing": 838,
+        "streak": 1
+      },
+      {
+        "date": "2026-11-13",
+        "trading": 5216,
+        "advancing": 744,
+        "streak": 2
+      },
+      {
+        "date": "2026-11-16",
+        "trading": 5217,
+        "advancing": 1109,
+        "streak": 3
+      },
+      {
+        "date": "2026-11-17",
+        "trading": 5217,
+        "advancing": 1216,
+        "streak": 4
+      },
+      {
+        "date": "2026-11-18",
+        "trading": 5217,
+        "advancing": 1277,
+        "streak": 5
+      },
+      {
+        "date": "2026-11-19",
+        "trading": 5217,
+        "advancing": 638,
+        "streak": 6
+      },
+      {
+        "date": "2026-11-20",
+        "trading": 5216,
+        "advancing": 297,
+        "streak": 7
+      }
+    ]
+  },
+  "limits": [
+    "First hit only on third weak close, no parameter optimization",
+    "Complete 5-day and partial 3-day outcomes stay separate",
+    "More historical intervals are not independent policy experiments or strategy validation",
+    "Dynamic ST reference compounds daily changing groups; no account or executable portfolio claim",
+    "Official index controls have two-decimal precision; source return calculation retained separately"
+  ],
+  "research_run_id": "RUN-492A3EE6677A4EC18B458E7E"
+}

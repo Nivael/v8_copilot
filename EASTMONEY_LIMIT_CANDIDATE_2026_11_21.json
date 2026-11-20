@@ -49,5 +49,11 @@
     "Verify decimal and timestamp formatters fully",
     "Build repeatable source-bound verifier and study identity",
     "Do not generalize to all Nov20 stocks or executable fills"
-  ]
+  ],
+  "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/eastmoney_limit_candidate/20261120",
+  "formatter_evidence": {
+    "price": "(e/Math.pow(10,t)).toFixed(t)",
+    "time": "new Date(1e3*e)",
+    "timezone": "Asia/Shanghai explicitly applied in replay"
+  }
 }

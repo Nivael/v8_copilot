@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {STRecoveryPath} from './STRecoveryPath'
 import type {MarketStageExperience} from './stRegimeTypes'
 const pct=(s:string)=>`${Number(s).toFixed(2)}%`
 export function STMarketStageExperience({data}:{data?:MarketStageExperience|null}){
@@ -12,6 +13,7 @@ export function STMarketStageExperience({data}:{data?:MarketStageExperience|null
   <label><input type="checkbox" checked={common} onChange={e=>setCommon(e.target.checked)}/>用五段都通过核价的同一139家公司比较</label>
   <table className="regime-table"><caption>动态ST参考与大盘；固定150只原样本中核价通过子样本的分布</caption><thead><tr><th>观察区间</th><th>ST参考</th><th>中证全指</th><th>ST相对大盘</th><th>个股中位数</th><th>上涨／可比</th></tr></thead><tbody>{data.stages.map(s=><tr key={s.anchor}><th>{s.anchor} → {s.through}<small> {s.market_days}个市场日</small></th><td>{pct(s.st_pct)}</td><td>{pct(s.market_pct)}</td><td>{Number(s.st_minus_market_pp).toFixed(2)}个百分点</td><td>{pct(common?s.common_sample.median_pct:s.verified_median_pct)}</td><td>{common?s.common_sample.positive:s.verified_positive}／{common?s.common_sample.members:s.verified_paired}</td></tr>)}</tbody></table>
   <p>{common?data.common_sample_boundary:'各段可比数量不同；未通过核价、停牌和退出缺端点仍保留在150家明细，收益不填零。'}</p>
+  <STRecoveryPath data={data}/>
   <h3>这会怎样改变原判断？</h3><p>{data.what_changed}</p>
   <h3>能留下什么，不能推出什么？</h3><p>{data.kept}</p><p>{data.not_established}</p>
   <details><summary>查看每段分母和全部150家核验状态</summary>

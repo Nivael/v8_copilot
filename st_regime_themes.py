@@ -35,6 +35,7 @@ from st_initial_tenth_four import initial_tenth_four
 from st_initial_twelfth_correction import correction_view as initial_twelfth_correction
 from st_initial_twelfth_four import initial_twelfth_four
 from st_initial_thirteenth_four import initial_thirteenth_four
+from st_initial_fourteenth_four import initial_fourteenth_four
 from st_initial_eleventh_four import initial_eleventh_four
 from st_thirteenth_period_followup import followup_view as thirteenth_period_followup
 from st_twelfth_period_followup import followup_view as twelfth_period_followup
@@ -227,6 +228,7 @@ def build_themes(inputs, daily):
     result['twelfth_period_followup']=twelfth_period_followup(inputs,result['initial_twelfth_four'])
     result['initial_thirteenth_four']=initial_thirteenth_four(inputs,result['initial_twelfth_four'],result['current_extension'])
     result['thirteenth_period_followup']=thirteenth_period_followup(inputs,result['initial_thirteenth_four'])
+    result['initial_fourteenth_four']=initial_fourteenth_four(inputs,result['initial_thirteenth_four'],result['current_extension'])
     result['tenth_period_followup']=tenth_period_followup(inputs,result['initial_tenth_four'])
     result['eleventh_period_followup']=eleventh_period_followup(inputs,result['initial_eleventh_four'])
     result['ninth_period_followup']=ninth_period_followup(inputs,result['initial_ninth_four'])

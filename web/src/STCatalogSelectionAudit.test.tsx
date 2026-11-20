@@ -84,3 +84,11 @@ it('shows fixed-cohort complete query scope while keeping eleven titles unresolv
  expect(table).toHaveTextContent('1225677325')
  expect(screen.getByText(/可能回指同一退出安排/)).toBeVisible()
 })
+it('keeps four empty Nov20 queries separate from the 150-company dated coverage',()=>{
+ render(<STCatalogSelectionAudit data={data()}/>);fireEvent.click(screen.getByText('150家目录覆盖的日期、来源与限制'))
+ const note=screen.getByRole('complementary',{name:'四家公司20日目录增量查询'})
+ expect(note).toHaveTextContent('它不延长150家统一覆盖日期')
+ expect(note).toHaveTextContent('四个空响应为同一份字节内容，且未声明数据日')
+ expect(note).toHaveTextContent('不认证当天没有公告')
+ expect(screen.getByText(/共同目标期间2026-07-04至2026-11-19/)).toBeVisible()
+})

@@ -1,0 +1,130 @@
+{
+  "version": "szse_two_raw_recheck_v1",
+  "input_asset": "inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "results": [
+    {
+      "symbol": "002592",
+      "name": "ST八菱",
+      "source": {
+        "symbol": "002592",
+        "url": "https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=002592",
+        "params": {
+          "cycleType": 32,
+          "marketId": 1,
+          "code": "002592"
+        },
+        "sha256": "b6112c17755a93e0d5fef8a7cfd241701142aea8a156a308cd221142f3917e1f",
+        "observed_at": "2026-11-20T19:58:29.499486+00:00",
+        "bytes": 21253,
+        "top_keys": [
+          "code",
+          "data",
+          "message"
+        ],
+        "code": "0",
+        "data_keys": [
+          "code",
+          "name",
+          "picupdata",
+          "picdowndata"
+        ]
+      },
+      "response_rows": 201,
+      "response_start": "2026-01-21",
+      "response_through": "2026-11-20",
+      "comparison_start": "2026-07-03",
+      "comparison_through": "2026-11-19",
+      "official_trading_days": 94,
+      "historical_raw_matched_days": 85,
+      "later_paired_matched_days": 9,
+      "float_precision_differences": [],
+      "first_raw_close": "6.70",
+      "last_raw_close": "5.08",
+      "mismatches": []
+    },
+    {
+      "symbol": "002598",
+      "name": "ST章鼓",
+      "source": {
+        "symbol": "002598",
+        "url": "https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=002598",
+        "params": {
+          "cycleType": 32,
+          "marketId": 1,
+          "code": "002598"
+        },
+        "sha256": "8f4237b1590420d2dda8ee8bce4b3359e7ca0944c6a86cc26ed44e1c774b1bcd",
+        "observed_at": "2026-11-20T19:58:29.498049+00:00",
+        "bytes": 21225,
+        "top_keys": [
+          "code",
+          "data",
+          "message"
+        ],
+        "code": "0",
+        "data_keys": [
+          "code",
+          "name",
+          "picupdata",
+          "picdowndata"
+        ]
+      },
+      "response_rows": 201,
+      "response_start": "2026-01-20",
+      "response_through": "2026-11-20",
+      "comparison_start": "2026-07-03",
+      "comparison_through": "2026-11-19",
+      "official_trading_days": 94,
+      "historical_raw_matched_days": 85,
+      "later_paired_matched_days": 9,
+      "float_precision_differences": [
+        {
+          "date": "2026-11-18",
+          "official": "6.43",
+          "primary": "6.429999999999999",
+          "difference": "-1E-15"
+        }
+      ],
+      "first_raw_close": "6.99",
+      "last_raw_close": "6.28",
+      "mismatches": []
+    }
+  ],
+  "site_discovery": {
+    "page": "https://www.szse.cn/market/trend/index.html",
+    "page_sha256": "d12209740871e566a9f4f34c0214d225098313d8f3a96b5c15c18a52ad3edb0c",
+    "config_url": "https://res.szse.cn/common/js/concatversion.js",
+    "config_sha256": "23af5344704b02eb9ebc55880f54acf05f5051dffd2bb6b026225b2f3b7333e8",
+    "loader_rule": "Production loader inserts .min.js and version=1.2.225",
+    "script": {
+      "url": "https://res.szse.cn/modules/marketdata/trend/js/trend.min.js?version=1.2.225",
+      "sha256": "d2f26350ab8bef9940ddd915f0aa801ab35bfd5152b58227b38641c35614f2e4",
+      "bytes": 20287
+    },
+    "endpoint_path": "/api/market/ssjjhq/getHistoryData",
+    "params_from_script": {
+      "cycleType": 32,
+      "marketId": 1
+    }
+  },
+  "historical_raw_points": 170,
+  "later_paired_points": 18,
+  "total_trading_stock_days": 188,
+  "new_price_requests": 2,
+  "independent_experience_validations_added": 0,
+  "limits": [
+    "No claim of all-history completeness outside July3-Nov19; each response is a limited 201-row window.",
+    "Historical raw closes match; later paired closes are checked separately with 1e-12 tolerance for primary float tails.",
+    "Official chart change/rate fields are not certified as actual ex-dividend reference returns; no actual daily price limits inferred.",
+    "No actual limit price, order queue, execution cost or historical ST membership certification added.",
+    "Raw-price corroboration does not eliminate five adjusted-price product differences or expand the141 cohort.",
+    "Response extends Nov20, but this study stops Nov19 and does not advance existing ST/reference endpoints."
+  ],
+  "prior_sse_evidence_sha256": "16b9426e0fb9d43e103bdf588d412ae37cafa47b48dd54e8eca39f7543524c7b",
+  "processor_sha256": "59930b7db2113d7c2ade470a9541564ac4f4abf1ef4b85e7542aab488e9d6282",
+  "all_five_official_raw_stock_days": 469,
+  "evidence_sha256": "b63d42333d4305cf13653c18a27f08c95eba6c25f323b08e56b214b02d651abc",
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "research_run_id": "RUN-8B6C2916E3F24EA9AE48007F"
+}

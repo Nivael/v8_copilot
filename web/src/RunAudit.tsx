@@ -1,6 +1,7 @@
+import {ResearchIdentityNotice,type ResearchIdentityNote} from './ResearchIdentityNotice'
 import {CheckCircle2, ChevronDown, Clock3, FileClock, MessageSquarePlus, Scale, ShieldAlert} from 'lucide-react'
 import {useEffect, useMemo, useState} from 'react'
-import {getEvidencePack, getResearchCorrections, getResearchRun, getResearchRuns, submitRunFeedback} from './api'
+import {getEvidencePack, getResearchIdentityNotes, getResearchCorrections, getResearchRun, getResearchRuns, submitRunFeedback} from './api'
 import {ResearchCorrectionNotice} from './ResearchCorrectionNotice'
 import type {ResearchCorrection,ResearchCorrectionNote} from './ResearchCorrectionNotice'
 import type {
@@ -82,7 +83,7 @@ function RunFeedback({run}:{run:ResearchRun}) {
   </section>
 }
 
-function EvidencePackView({packId,run}:{packId:string;run:ResearchRun}) {
+function EvidencePackView({packId,run,identityCorrected=false}:{packId:string;run:ResearchRun;identityCorrected?:boolean}) {
   const [open,setOpen]=useState(false)
   const [record,setRecord]=useState<EvidencePackAuditRecord|null>(null)
   const [error,setError]=useState('')
@@ -103,9 +104,9 @@ function EvidencePackView({packId,run}:{packId:string;run:ResearchRun}) {
       {loading&&<p>正在读取 EvidencePack…</p>}
       {error&&<p className="experience-error" role="alert">{error}</p>}
       {record&&<>
-        <div className="pack-summary"><span>查询计划：{record.payload.query_plan_id}</span><span>Digest：{record.pack_digest.slice(0,16)}…</span><span>Manifest：{String(record.payload.freshness_manifest.manifest_id||record.payload.freshness_manifest.status||'未记录')}</span><span>{record.payload.rows.length} 行数据库证据</span><span>{record.payload.lens_invocations.length} 条 Lens</span><span>{record.payload.external_evidence?.length||0} 项联网事实</span></div>
-        <section><h4>数据库行</h4>{record.payload.rows.length?<div className="audit-json-list">{record.payload.rows.map((row,index)=><details key={String(row.row_id||index)}><summary>{String(row.row_id||`row-${index+1}`)}</summary><pre>{JSON.stringify(row,null,2)}</pre></details>)}</div>:<p>本 EvidencePack 没有数据库行。</p>}</section>
-        <section><h4>Lens 调用</h4>{record.payload.lens_invocations.length?<div className="audit-json-list">{record.payload.lens_invocations.map((lens,index)=><details key={String(lens.release_id||index)}><summary>{String(lens.release_id||`lens-${index+1}`)} · {String(lens.contributed_section||'未标注贡献段')}</summary><pre>{JSON.stringify(lens,null,2)}</pre></details>)}</div>:<p>本题未调用适用 Lens；这不等于没有数据库事实证据。</p>}</section>
+        <div className="pack-summary"><span>查询计划：{record.payload.query_plan_id}</span><span>Digest：{record.pack_digest.slice(0,16)}…</span><span>Manifest：{String(record.payload.freshness_manifest.manifest_id||record.payload.freshness_manifest.status||'未记录')}</span><span>{record.payload.rows.length} 行保存证据</span><span>{record.payload.lens_invocations.length} 条 Lens</span><span>{record.payload.external_evidence?.length||0} 项联网事实</span></div>
+        <section><h4>保存的证据行</h4>{record.payload.rows.length?<div className="audit-json-list">{record.payload.rows.map((row,index)=><details key={String(row.row_id||index)}><summary>{String(row.row_id||`row-${index+1}`)}</summary><pre>{JSON.stringify(row,null,2)}</pre></details>)}</div>:<p>本 EvidencePack 没有保存的证据行。</p>}</section>
+        <section><h4>{identityCorrected?'原包保存的Lens上下文（不认证本轮调用）':'Lens 调用'}</h4>{record.payload.lens_invocations.length?<div className="audit-json-list">{record.payload.lens_invocations.map((lens,index)=><details key={String(lens.release_id||index)}><summary>{String(lens.release_id||`lens-${index+1}`)} · {String(lens.contributed_section||'未标注贡献段')}</summary><pre>{JSON.stringify(lens,null,2)}</pre></details>)}</div>:<p>本题未调用适用 Lens；这不等于没有数据库事实证据。</p>}</section>
         <section><h4>联网事实</h4>{record.payload.external_evidence?.length?<div className="audit-json-list">{record.payload.external_evidence.map((item,index)=><details key={String(item.evidence_id||index)}><summary>{String(item.evidence_id||`external-${index+1}`)} · {String(item.title||'未命名来源')}</summary><pre>{JSON.stringify(item,null,2)}</pre></details>)}</div>:<p>本 EvidencePack 没有联网补充事实；所有 backing 均来自本地确定性证据。</p>}</section>
         <section><h4>回答 backing</h4>{backings.length?<ul className="backing-list">{backings.map((item,index)=><li key={`${item.label}-${index}`}><strong>{item.label}</strong><span>{item.text}</span><code>{item.backing.map(ref=>`${ref.kind}:${ref.ref}`).join(' · ')}</code></li>)}</ul>:<p>该运行没有保存结构化研究稿；旧记录只能查看最终文本。</p>}</section>
         <section><h4>Coverage gap</h4>{record.payload.coverage_gaps.length?<div className="audit-json-list">{record.payload.coverage_gaps.map((gap,index)=><pre key={index}>{JSON.stringify(gap,null,2)}</pre>)}</div>:<p>EvidencePack 没有声明 coverage gap。</p>}</section>
@@ -118,14 +119,16 @@ function EvidencePackView({packId,run}:{packId:string;run:ResearchRun}) {
 export function RunAudit() {
   const [runs,setRuns]=useState<ResearchRun[]>([])
   const [corrections,setCorrections]=useState<ResearchCorrection[]>([])
-  const [focusId,setFocusId]=useState('')
+  const [identityNotes,setIdentityNotes]=useState<ResearchIdentityNote[]>([])
+  const [identityError,setIdentityError]=useState(false)
+  const [focusId,setFocusId]=useState(()=>window.location.hash.match(/^#research-(RUN-[A-F0-9]{24})$/)?.[1]??'')
   const [linkError,setLinkError]=useState('')
   const [loading,setLoading]=useState(true)
   const [error,setError]=useState('')
 
   useEffect(()=>{
     const controller=new AbortController()
-    Promise.all([getResearchRuns(controller.signal),getResearchCorrections(controller.signal)]).then(([records,notes])=>{setRuns(records);setCorrections(notes)}).catch(reason=>{
+    Promise.all([getResearchRuns(controller.signal),getResearchCorrections(controller.signal),getResearchIdentityNotes(controller.signal).catch(()=>{if(!controller.signal.aborted)setIdentityError(true);return []})]).then(([records,notes,identities])=>{setRuns(records);setCorrections(notes);setIdentityNotes(identities)}).catch(reason=>{
       if(!(reason instanceof DOMException&&reason.name==='AbortError'))setError('暂时无法读取研究记录或更正，请稍后重试。')
     }).finally(()=>{if(!controller.signal.aborted)setLoading(false)})
     return()=>controller.abort()
@@ -149,18 +152,20 @@ export function RunAudit() {
       {loading&&<p className="experience-empty">正在读取运行记录…</p>}
       {error&&<p className="experience-error" role="alert">{error}</p>}
       {!loading&&!error&&runs.length===0&&<section className="experience-empty"><h2>还没有 Codex 研究运行</h2><p>通过项目 skill 完成并校验的研究会记录在这里。</p></section>}
-      {linkError&&<p role="alert">{linkError}</p>}
+      {linkError&&<p role="alert">{linkError}</p>}{identityError&&<p role="status">身份更正暂不可读；以下原始登记不视为已核身份。</p>}
       <section className="audit-list">
         {runs.map(run=>{
           const notes:ResearchCorrectionNote[]=corrections.filter(note=>note.old_run_id===run.run_id||note.replacement_run_id===run.run_id).map(note=>({...note,role:note.old_run_id===run.run_id?'corrected_study':'replacement_study'}))
           const corrected=notes.some(note=>note.role==='corrected_study')
+          const identity=identityNotes.find(n=>n.run_id===run.run_id)
           return <article key={run.run_id} id={`research-${run.run_id}`}>
           {notes.map(note=><ResearchCorrectionNotice key={note.old_run_id+note.role} note={note} onOpen={id=>void openCorrection(id)}/>)}
-          <header><div><span>{run.agent_surface}</span><h2>{run.question_text}</h2></div>{!corrected&&(run.validation_report.valid?<CheckCircle2 className="valid" aria-label="校验通过"/>:<ShieldAlert className="invalid" aria-label="校验未通过"/>)}</header>
+          <header><div><span>{run.agent_surface}</span><h2>{identity?.corrected_question??run.question_text}</h2></div>{!corrected&&(run.validation_report.valid?<CheckCircle2 className="valid" aria-label={identity?'正文结构校验通过，身份登记已更正':'校验通过'}/>:<ShieldAlert className="invalid" aria-label="校验未通过"/>)}</header>
+          {identity&&<ResearchIdentityNotice note={identity}/>}
           <div className="audit-meta"><span><Clock3 size={13}/>{new Date(run.created_at).toLocaleString('zh-CN')}</span><span>{run.normalized_intent}</span><span>{run.evidence_pack_ids.length} 个 EvidencePack</span><span>{run.experience_candidate_ids.length} 个经验候选</span></div>
           <details><summary>{corrected?'查看旧研究原文（含已更正内容）':'查看回答与基础审计'}</summary><pre>{run.final_answer}</pre><dl>{Object.entries(run.source_freshness).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><pre>{JSON.stringify(run.validation_report,null,2)}</pre></details>
-          {corrected?<details><summary>原判断说明（含已更正内容）</summary>{isDecisionAudit(run.decision_audit)&&<DecisionAuditView audit={run.decision_audit}/>}</details>:<>{isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}<RunFeedback run={run}/></>}
-          <section className="pack-list" aria-label="EvidencePack 列表"><h3>EvidencePack</h3>{run.evidence_pack_ids.map(packId=><EvidencePackView key={packId} packId={packId} run={run}/>)}</section>
+          {corrected?<details><summary>原判断说明（含已更正内容）</summary>{isDecisionAudit(run.decision_audit)&&<DecisionAuditView audit={run.decision_audit}/>}</details>:<>{isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}{identity||identityError?<p>身份更正待核或原登记已校正，暂不以旧上下文沉淀经验；后续研究须以显式身份重新绑定。</p>:<RunFeedback run={run}/>}</>}
+          <section className="pack-list" aria-label="EvidencePack 列表"><h3>EvidencePack</h3>{run.evidence_pack_ids.map(packId=><EvidencePackView key={packId} packId={packId} run={run} identityCorrected={Boolean(identity)}/>)}</section>
         </article>})}
       </section>
     </div>

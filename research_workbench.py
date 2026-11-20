@@ -206,13 +206,16 @@ def main() -> int:
             raise SystemExit("refusing to record an invalid or mismatched answer")
         if draft.decision_audit is None:
             raise SystemExit("refusing to record without a structured decision_audit")
+        if "study_identity_v1" in pack.validation_catalog:
+            from research_identity_notes import validate_bound_identity
+            validate_bound_identity(pack)
         ledger.store_evidence_pack(pack.model_dump(mode="json"))
         scope = pack.question_scope
         record_value = ledger.record(ResearchRunCreate(
             request_id=str(pack.deterministic_response.get("request_id") or pack.pack_id),
             question_text=str(scope["question"]),
             normalized_intent=str(scope["intent"]),
-            object_refs=[str(scope["object"].get("ref") or "unknown")],
+            object_refs=scope.get("object_refs") or [str(scope["object"].get("ref") or "unknown")],
             evidence_pack_ids=[pack.pack_id],
             final_answer=_render_answer(draft),
             research_draft=draft.model_dump(mode="json"),

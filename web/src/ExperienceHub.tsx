@@ -1,3 +1,4 @@
+import {ResearchIdentitySummary} from './ResearchIdentityNotice'
 import type {CurrentExtension} from './STCurrentExtension'
 import {STCurrentCompanyReading} from './STCurrentCompanyReading'
 import {lazy,Suspense,useEffect,useState} from 'react'
@@ -47,6 +48,7 @@ export function ExperienceHub(){
     {error&&<p role="alert" className="reading-error">{error}。{data?'当前保留已加载的记录。':'请稍后重试。'}</p>}
     <p className="reading-intro">先读市场与公司的变化，再回到原判断，看看哪些经验值得保留。</p>
     {data&&<nav className="reading-section-links" aria-label="本页内容"><a href="#st-cross-section">ST横向比较 ↓</a><a href="#research-history" onClick={()=>setHistoryOpen(true)}>原问与历史复盘 ↓</a><a href="#tracked-stocks">持续跟踪 ↓</a><a href="#swing-watch">反弹观察 ↓</a><a href="#experience-library">经验库 ↓</a></nav>}
+    <ResearchIdentitySummary/>
     <Suspense fallback={<p className="reading-muted">正在读取ST横向复盘…</p>}><STRegimeSection onCurrentUpdate={setCurrent}/></Suspense>
     {!data?<div className="reading-placeholder" role="status"><h2>{error?'跟踪记录暂时无法显示':'正在读取跟踪与经验'}</h2><p>{error?'请同步重试；本地保存的研究没有因此被删除。':'已有记录准备好后会直接显示。'}</p></div>:<>
       <details className="editorial-history-archive" open={historyOpen} onToggle={event=>setHistoryOpen(event.currentTarget.open)}><summary><strong>原问与历史复盘</strong><span>回看当时的判断、后来的公告与价格</span></summary>{historyOpen&&<Suspense fallback={<p className="reading-muted">正在读取历史复盘…</p>}><ResearchHistorySection/></Suspense>}</details>

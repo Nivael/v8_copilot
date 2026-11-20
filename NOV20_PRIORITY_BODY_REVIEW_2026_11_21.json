@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "sources": [
+    {
+      "announcement_id": "1225679819",
+      "adjunct_url": "finalpage/2026-11-20/1225679819.PDF",
+      "title": "关于收到《执行裁定书》暨仲裁事项执行进展的公告",
+      "codes": [
+        "000010"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679819.PDF",
+      "sha256": "4863f7bc83d4806e45936871994c17b98499e63877e1907655fd615284adc7db",
+      "bytes": 93334,
+      "observed_at": "2026-11-20T23:14:23.591743+00:00",
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/4863f7bc83d4806e45936871994c17b98499e63877e1907655fd615284adc7db.pdf",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "4e98ecffb24d409eca6f775090fb5accc93ddc2e524ba38be5c92794ed9c588b",
+        "2": "b970824d67d73d5670085b98b803648232466197e98699d8d7d92b24cb21c425"
+      }
+    },
+    {
+      "announcement_id": "1225679977",
+      "adjunct_url": "finalpage/2026-11-20/1225679977.PDF",
+      "title": "关于撤销公司股票交易其他风险警示暨停复牌的公告",
+      "codes": [
+        "002122"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679977.PDF",
+      "sha256": "6fd9b90f10417edaed40b1a45fed246a03623e682d699a2c4f1f9388f4071665",
+      "bytes": 163264,
+      "observed_at": "2026-11-20T23:14:23.682304+00:00",
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/6fd9b90f10417edaed40b1a45fed246a03623e682d699a2c4f1f9388f4071665.pdf",
+      "visual_physical_pages": [
+        1,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "40a3513132bce2a6949139f834a56f6563184006b77ff44526695d518645c4a2",
+        "3": "4f8799aaf00f9c71c6d72e5379eec8ce5025f16ef25ecf24964d5d271cfb4f22"
+      }
+    },
+    {
+      "announcement_id": "1225679946",
+      "adjunct_url": "finalpage/2026-11-20/1225679946.PDF",
+      "title": "关于签订《电气业务合作框架合同》暨关联交易的公告",
+      "codes": [
+        "002168"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679946.PDF",
+      "sha256": "4775f9f7f18dcaded4dbee5edf3c58a2e2083c75cc327de1c3671c19e9183e2d",
+      "bytes": 265311,
+      "observed_at": "2026-11-20T23:14:23.795756+00:00",
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/4775f9f7f18dcaded4dbee5edf3c58a2e2083c75cc327de1c3671c19e9183e2d.pdf",
+      "visual_physical_pages": [
+        1,
+        4,
+        5
+      ],
+      "visual_image_sha256": {
+        "1": "20168e88a1ca7b00a61b5b26856c870075fdaaee02ed001dc76b79faad2ac9a3",
+        "4": "7a87391744b5bc6bb4ea560a66d26717a7d4f4c31952b55d907907445040f39c",
+        "5": "62b663e870e91c0d1883e2f6e5f6e116a6708654b207c1452d4985ca47b2991c"
+      }
+    },
+    {
+      "announcement_id": "1225679944",
+      "adjunct_url": "finalpage/2026-11-20/1225679944.PDF",
+      "title": "关于控股子公司购买股权资产的公告",
+      "codes": [
+        "002168"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679944.PDF",
+      "sha256": "9732c9318def8c11b1fff95a0388642c869c9b01145c8c6e1e8000cd3e63af98",
+      "bytes": 252430,
+      "observed_at": "2026-11-20T23:14:23.891797+00:00",
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9732c9318def8c11b1fff95a0388642c869c9b01145c8c6e1e8000cd3e63af98.pdf",
+      "visual_physical_pages": [
+        1,
+        3,
+        5
+      ],
+      "visual_image_sha256": {
+        "1": "b096b54544525c98285a727e3e165d51b76d59605b7f3e1b8f23271f7c93e083",
+        "3": "2db0367017f2b4f7e4759cb45151a549fd036ad5e59c6b6dac1a9bab4ab0c832",
+        "5": "bf01f280c55838a02e92207900dfd715c6d91a35b0286546122b17e608029538"
+      }
+    }
+  ],
+  "review_method": "pypdf complete text extraction plus physical-page image inspection; selected pages only",
+  "findings": [
+    {
+      "code": "002122",
+      "announcement_id": "1225679977",
+      "pages": [
+        1,
+        3
+      ],
+      "answer": "公告称撤销其他风险警示申请已获深交所同意；11月20日停牌，23日复牌并生效，涨跌幅限制仍10%。",
+      "boundary": "截至21日不可将23日拟生效状态倒填为20日已摘帽；未独立取得交易所批准原件。"
+    },
+    {
+      "code": "000010",
+      "announcement_id": "1225679819",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "控股子公司为申请执行人，本金7725.87万元；公告披露终结本次执行，仍享有要求继续履行和申请恢复执行的权利。",
+      "boundary": "未披露本次实收，不推定债权消灭、回款或确定损益；正文落款19日，目录附件路径20日。"
+    },
+    {
+      "code": "002168",
+      "announcement_id": "1225679944",
+      "pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "answer": "拟零元受让卓焱100%股权，同时承接4000万元未实缴出资义务；标的尚未开展经营，公告列最近年度及一期财务指标均零。",
+      "boundary": "工商及资质变更尚有不确定性，不当已交割、免费收益或已实缴4000万元。"
+    },
+    {
+      "code": "002168",
+      "announcement_id": "1225679946",
+      "pages": [
+        1,
+        4,
+        5
+      ],
+      "answer": "拟开展电气业务关联合作，框架预计累计不超过1500万元，以实际结算为准；涵盖委托生产、货物及原料采购。",
+      "boundary": "不当1500万元已实现收入、现金实收或确定订单；累计关联事项24788.22万元为公告所述已批准交易金额，不能当现金流。"
+    }
+  ],
+  "body_documents_text_reviewed": 4,
+  "independent_cases_added": 0,
+  "remaining_catalog_attachments_unreviewed": 37,
+  "limits": [
+    "尚未接入页面或研究账本",
+    "未核生效后交易事实",
+    "未使用公告解释当日涨跌的因果关系",
+    "只核看10个关键图像页，非16页逐页视觉核对"
+  ]
+}

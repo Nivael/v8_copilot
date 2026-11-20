@@ -1,0 +1,1509 @@
+{
+  "fixed_symbols": [
+    "000010",
+    "000016",
+    "000056",
+    "000078",
+    "000488",
+    "000609",
+    "000610",
+    "000615",
+    "000632",
+    "000639",
+    "000669",
+    "000677",
+    "000698",
+    "000711",
+    "000752",
+    "000793",
+    "000820",
+    "000821",
+    "000826",
+    "000838",
+    "000903",
+    "000909",
+    "000911",
+    "002005",
+    "002024",
+    "002055",
+    "002082",
+    "002102",
+    "002109",
+    "002122",
+    "002168",
+    "002175",
+    "002193",
+    "002198",
+    "002199",
+    "002207",
+    "002211",
+    "002214",
+    "002217",
+    "002227",
+    "002305",
+    "002306",
+    "002323",
+    "002360",
+    "002424",
+    "002431",
+    "002485",
+    "002501",
+    "002512",
+    "002514",
+    "002528",
+    "002538",
+    "002542",
+    "002547",
+    "002569",
+    "002581",
+    "002586",
+    "002592",
+    "002598",
+    "002620",
+    "002630",
+    "002634",
+    "002650",
+    "002656",
+    "002667",
+    "002689",
+    "002691",
+    "002694",
+    "002713",
+    "002717",
+    "002719",
+    "002726",
+    "002731",
+    "002789",
+    "002816",
+    "002822",
+    "002856",
+    "002872",
+    "002883",
+    "002932",
+    "002977",
+    "600053",
+    "600079",
+    "600080",
+    "600082",
+    "600084",
+    "600107",
+    "600119",
+    "600136",
+    "600165",
+    "600169",
+    "600180",
+    "600187",
+    "600238",
+    "600239",
+    "600243",
+    "600265",
+    "600289",
+    "600302",
+    "600337",
+    "600340",
+    "600365",
+    "600370",
+    "600381",
+    "600423",
+    "600476",
+    "600491",
+    "600525",
+    "600537",
+    "600543",
+    "600568",
+    "600581",
+    "600624",
+    "600678",
+    "600730",
+    "600734",
+    "600735",
+    "600745",
+    "600753",
+    "600759",
+    "600818",
+    "600889",
+    "600965",
+    "601010",
+    "601718",
+    "603008",
+    "603021",
+    "603189",
+    "603272",
+    "603359",
+    "603377",
+    "603378",
+    "603398",
+    "603429",
+    "603517",
+    "603557",
+    "603595",
+    "603718",
+    "603729",
+    "603789",
+    "603822",
+    "603825",
+    "603828",
+    "603838",
+    "603843",
+    "603869",
+    "603922",
+    "603959",
+    "605199",
+    "605336"
+  ],
+  "identities": {
+    "600423": {
+      "code": "600423",
+      "org_id": "gssh0600423",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600423-1.json",
+        "sha256": "05c0d8c51b8da8096e0b5099904a13e89d2f1f49407e5254c1a16821a3cb29f9",
+        "bytes": 13775
+      }
+    },
+    "600476": {
+      "code": "600476",
+      "org_id": "gssh0600476",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600476-1.json",
+        "sha256": "a430c8dad63c1acc79220c103b87e577c781bca38866dcc1f3b7ce58163897df",
+        "bytes": 22212
+      }
+    },
+    "600525": {
+      "code": "600525",
+      "org_id": "gssh0600525",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600525-1.json",
+        "sha256": "a8edd3db87e35ac1ed44f6ec29ad1ba5aca3fedcd119ed1dcad43731cd61500e",
+        "bytes": 20061
+      }
+    },
+    "600537": {
+      "code": "600537",
+      "org_id": "gssh0600537",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighteenth-period-followup-20261120/out/st-eighteenth-period-followup-20261120/catalog-period-600537-1.json",
+        "sha256": "c79f84555a1bd43104531a3adc63d9cd2edd9833dbdbee8cd8d78baeb14d45c7",
+        "bytes": 20061
+      }
+    },
+    "002528": {
+      "code": "002528",
+      "org_id": "9900016568",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002528-1.json",
+        "sha256": "6ea90f0ede366a957ea56cb2b06b0745774f5b959e901f77cfc58db70103e515",
+        "bytes": 22033
+      }
+    },
+    "002581": {
+      "code": "002581",
+      "org_id": "9900019530",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002581-1.json",
+        "sha256": "8c76f02d0087e69bbfea729b678a8a8935b77e6fbac50a4d4cc1c85253b6b25d",
+        "bytes": 14339
+      }
+    },
+    "002630": {
+      "code": "002630",
+      "org_id": "9900021630",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002630-1.json",
+        "sha256": "b4a866082cc9b62697c78c1e02d273d2574f1bcd0fe3d100708a57edc24110a0",
+        "bytes": 20083
+      }
+    },
+    "002634": {
+      "code": "002634",
+      "org_id": "9900021794",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eighth-period-followup-20261120/out/st-eighth-period-followup-20261120/catalog-period-002634-1.json",
+        "sha256": "48d71076d3c0ad84861beee0d15c29bab6065636aa41237211c76a3c0ca66eae",
+        "bytes": 18116
+      }
+    },
+    "002822": {
+      "code": "002822",
+      "org_id": "9900027671",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002822-1.json",
+        "sha256": "9dc20fdc74e79a85510e955957ea5244c6858c08f666f2835ea8adbed8059b72",
+        "bytes": 11604
+      }
+    },
+    "002856": {
+      "code": "002856",
+      "org_id": "9900028823",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002856-1.json",
+        "sha256": "ba852658d6a63f8a8fdcab7049301a919efeb2a2dc02c6f0cfbdc6dfa5c14d98",
+        "bytes": 20111
+      }
+    },
+    "002872": {
+      "code": "002872",
+      "org_id": "9900030826",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002872-1.json",
+        "sha256": "d81774685c32251d044876bd6ded17d8ccf3b8867362a45459260bbfc4e13940",
+        "bytes": 15775
+      }
+    },
+    "002883": {
+      "code": "002883",
+      "org_id": "9900031776",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-eleventh-period-followup-20261120/out/st-eleventh-period-followup-20261120/catalog-period-002883-1.json",
+        "sha256": "cecd5d2470b1b509efdf326af0e7b8e3f1414581f45665002c9f9a6777a7f6fd",
+        "bytes": 7969
+      }
+    },
+    "600187": {
+      "code": "600187",
+      "org_id": "gssh0600187",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600187-1.json",
+        "sha256": "c5f525225945ba212cd694b7c9b7da14e3c1d6aa68d98347127fbc8aa8b0cdf4",
+        "bytes": 21071
+      }
+    },
+    "600238": {
+      "code": "600238",
+      "org_id": "gssh0600238",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600238-1.json",
+        "sha256": "9c2730151739abdfdd06f3c852bc50da3493ff812219ee59f1d632a27a78a00a",
+        "bytes": 20238
+      }
+    },
+    "600239": {
+      "code": "600239",
+      "org_id": "gssh0600239",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600239-1.json",
+        "sha256": "36a388be9a721391a85c350c483cc0cdeaf90278dd9826e9bdf822b5d261f465",
+        "bytes": 22135
+      }
+    },
+    "600243": {
+      "code": "600243",
+      "org_id": "gssh0600243",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fifteenth-period-followup-20261120/out/st-fifteenth-period-followup-20261120/catalog-period-600243-1.json",
+        "sha256": "674c40111ba9bef9a4ba2056954495a5202a213a7f9c6ecd836973ced2095c90",
+        "bytes": 6716
+      }
+    },
+    "600136": {
+      "code": "600136",
+      "org_id": "gssh0600136",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600136-1.json",
+        "sha256": "7c9db4d9e4ab660817ff189e9231db06e9570c92467b9253ba6dbabf9e79cc8a",
+        "bytes": 17910
+      }
+    },
+    "600165": {
+      "code": "600165",
+      "org_id": "gssh0600165",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600165-1.json",
+        "sha256": "dfae8f0daffa51cc0099dd4c9c9d039028cd3c0d21919ac74515b66107ff3482",
+        "bytes": 17608
+      }
+    },
+    "600169": {
+      "code": "600169",
+      "org_id": "gssh0600169",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600169-1.json",
+        "sha256": "55d96f2d7b395e2ed29f5dfe2d2b80193bf74f0fd0ed1d29dbfab7043b3e1288",
+        "bytes": 17146
+      }
+    },
+    "600180": {
+      "code": "600180",
+      "org_id": "gssh0600180",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-fourteenth-period-followup-20261120/out/st-fourteenth-period-followup-20261120/catalog-period-600180-1.json",
+        "sha256": "2d4d39fe81101958fc49556bbc5d636717b072324436661ecb228e508e13c4c9",
+        "bytes": 20354
+      }
+    },
+    "600543": {
+      "code": "600543",
+      "org_id": "gssh0600543",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600543-1.json",
+        "sha256": "4836511daff3e1f89941a6fb6a1673ec9f4910d3ed14fa0667134bd606f1a11d",
+        "bytes": 17787
+      }
+    },
+    "600568": {
+      "code": "600568",
+      "org_id": "gssh0600568",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600568-1.json",
+        "sha256": "b082f5555be74f4194a3b22bace3f8a3978162ed5dc753f5cd1b64e3d02c9384",
+        "bytes": 22057
+      }
+    },
+    "600581": {
+      "code": "600581",
+      "org_id": "gssh0600581",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600581-1.json",
+        "sha256": "3d770dde1f19d91d8ba47b7c353c2da701fe9928d96c09bcad4963eb3392bb2d",
+        "bytes": 22022
+      }
+    },
+    "600624": {
+      "code": "600624",
+      "org_id": "gssh0600624",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-nineteenth-period-followup-20261120/out/st-nineteenth-period-followup-20261120/catalog-period-600624-1.json",
+        "sha256": "d90154501008bb2aa7e92f706733dc47ae277dc88665bbc6277d426af32a03c2",
+        "bytes": 12441
+      }
+    },
+    "002650": {
+      "code": "002650",
+      "org_id": "9900021914",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002650-1.json",
+        "sha256": "ff4d4114b61270a8fb210efb0fe4e6811a0df654e77828adfc31acc0186c5bbb",
+        "bytes": 5681
+      }
+    },
+    "002694": {
+      "code": "002694",
+      "org_id": "9900023214",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002694-1.json",
+        "sha256": "a22674192ee72ee4d0675eadd52e7ffd9a56a303f56535228ca32c7ce634d53c",
+        "bytes": 20928
+      }
+    },
+    "002713": {
+      "code": "002713",
+      "org_id": "9900022996",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002713-1.json",
+        "sha256": "7715713c62679fb05554c16ad89a6c9dd55922ff51324ee924f1df98a0c252d0",
+        "bytes": 21641
+      }
+    },
+    "002719": {
+      "code": "002719",
+      "org_id": "9900023119",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-ninth-period-followup-20261120/out/st-ninth-period-followup-20261120/catalog-period-002719-1.json",
+        "sha256": "b99c302e66078df9d8cd0fd9f25d0e47ada4c510aed10f6ddc4ed5b685374d0d",
+        "bytes": 12663
+      }
+    },
+    "600340": {
+      "code": "600340",
+      "org_id": "gssh0600340",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600340-1.json",
+        "sha256": "f6e27666d42b14165be4a631e9704a0716738210636f5b05a5deb6f32a6d874f",
+        "bytes": 16212
+      }
+    },
+    "600365": {
+      "code": "600365",
+      "org_id": "gssh0600365",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600365-1.json",
+        "sha256": "01ce7bb0bebfb04eef7f95ea547339bea0033dfd6b4e847406e72a870c537294",
+        "bytes": 19300
+      }
+    },
+    "600370": {
+      "code": "600370",
+      "org_id": "gssh0600370",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600370-1.json",
+        "sha256": "8805cb6983afa58f5ecb6a341bd2a451a471f5e6e43542f3034b2b32649850fa",
+        "bytes": 23496
+      }
+    },
+    "600381": {
+      "code": "600381",
+      "org_id": "gssh0600381",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventeenth-period-followup-20261120/out/st-seventeenth-period-followup-20261120/catalog-period-600381-1.json",
+        "sha256": "a81c823120c1ae7b5c1cff5eded0a5b17dc40618cf4d8be1e1391224a9d39250",
+        "bytes": 11658
+      }
+    },
+    "002424": {
+      "code": "002424",
+      "org_id": "9900012790",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002424-1.json",
+        "sha256": "80ab0c661ff9dfcefe3d3e5ee71aeffd83d5dbbe11b6d09943806bf459c662d9",
+        "bytes": 17217
+      }
+    },
+    "002431": {
+      "code": "002431",
+      "org_id": "9900012875",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002431-1.json",
+        "sha256": "780b841f3bc489b3abdc1916baf614b907071260c85accdf18cc104c0cc638c0",
+        "bytes": 20829
+      }
+    },
+    "002485": {
+      "code": "002485",
+      "org_id": "9900014994",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002485-1.json",
+        "sha256": "dbddfaebcfdf49ad41f3288807428f57319d20d1f8d59c9f29bf391105dda74d",
+        "bytes": 10639
+      }
+    },
+    "002501": {
+      "code": "002501",
+      "org_id": "9900015790",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-seventh-period-followup-20261120/out/st-seventh-period-followup-20261120/catalog-period-002501-1.json",
+        "sha256": "369a653ce1895c1e191f0c3c8621c3f825e97337977ba38d4d0ac8fcbaf4ed39",
+        "bytes": 20243
+      }
+    },
+    "600265": {
+      "code": "600265",
+      "org_id": "gssh0600265",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600265-1.json",
+        "sha256": "cf2950e9a17c2aaccc4e08c5c53d766e2dca6f98f25278a94d7b194f05ed9703",
+        "bytes": 13933
+      }
+    },
+    "600289": {
+      "code": "600289",
+      "org_id": "gssh0600289",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600289-1.json",
+        "sha256": "f18aac5d14374a3c73d2da8620bfd4bbb3072002f23e5e225e5f8b26499aad83",
+        "bytes": 21194
+      }
+    },
+    "600302": {
+      "code": "600302",
+      "org_id": "gssh0600302",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600302-1.json",
+        "sha256": "e62a9536db33fc3d765dc325d7a97803809e62ae763ffc2fb442f25965f9d0b8",
+        "bytes": 20584
+      }
+    },
+    "600337": {
+      "code": "600337",
+      "org_id": "gssh0600337",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-sixteenth-period-followup-20261120/out/st-sixteenth-period-followup-20261120/catalog-period-600337-1.json",
+        "sha256": "5c9a53b9c7cf0cec8cda7121ee092dec7325aef476be0649685236576f479a14",
+        "bytes": 21779
+      }
+    },
+    "002726": {
+      "code": "002726",
+      "org_id": "9900023003",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002726-1.json",
+        "sha256": "b39eb2c631110f87afce74851f79fd1ddd662e96372773c0bdd618beaa14d461",
+        "bytes": 20956
+      }
+    },
+    "002731": {
+      "code": "002731",
+      "org_id": "9900022974",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002731-1.json",
+        "sha256": "fa6795f7026eaef5138942876caf49053bd6571a3bd9a7753eac35711b9fb45d",
+        "bytes": 21947
+      }
+    },
+    "002789": {
+      "code": "002789",
+      "org_id": "9900026451",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002789-1.json",
+        "sha256": "a1b047ee73db0abe6d01354dac204d4687f34d7d2ca82db1c91bb1edc34ae4e0",
+        "bytes": 19826
+      }
+    },
+    "002816": {
+      "code": "002816",
+      "org_id": "9900026779",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-tenth-period-followup-20261120/out/st-tenth-period-followup-20261120/catalog-period-002816-1.json",
+        "sha256": "f9fe12e18dc9b30ead352fab83beaf37647a50d5bcd0b7ce97e1ec44a098ec0c",
+        "bytes": 10794
+      }
+    },
+    "600082": {
+      "code": "600082",
+      "org_id": "gssh0600082",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600082-1.json",
+        "sha256": "34ef8af9965a00231babede67fb248c7b3ca30ab4ad3ff4a91134ef07f845b4d",
+        "bytes": 18034
+      }
+    },
+    "600084": {
+      "code": "600084",
+      "org_id": "gssh0600084",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600084-1.json",
+        "sha256": "dd83a9c8910619d6dc89d2ee2569e1c9f26619fa040682505d2ad60b7d09ac45",
+        "bytes": 21780
+      }
+    },
+    "600107": {
+      "code": "600107",
+      "org_id": "gssh0600107",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600107-1.json",
+        "sha256": "640927b29eb097a41f77d5ee6192d1efd9e545c0f527bb5baeea2b33793c7e0b",
+        "bytes": 19402
+      }
+    },
+    "600119": {
+      "code": "600119",
+      "org_id": "gssh0600119",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-thirteenth-period-followup-20261120/out/st-thirteenth-period-followup-20261120/catalog-period-600119-1.json",
+        "sha256": "4c474ec2443e4abc7a81f10f90a0923878162b7b8451ad51c2463357038180b4",
+        "bytes": 15086
+      }
+    },
+    "002932": {
+      "code": "002932",
+      "org_id": "gfbj0430591",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-002932-1.json",
+        "sha256": "9cb50cb29e300ad5c77633a055e63c478d60940e97f3cdf0c4dc716a7ad77f6f",
+        "bytes": 21070
+      }
+    },
+    "600053": {
+      "code": "600053",
+      "org_id": "gssh0600053",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600053-1.json",
+        "sha256": "90ba3b3b32e4af9457ba10a79d16af55cef8007d534e91f9c4cfa5b8da60ce29",
+        "bytes": 12164
+      }
+    },
+    "600079": {
+      "code": "600079",
+      "org_id": "gssh0600079",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600079-1.json",
+        "sha256": "49110963eb7f2db7b2abf104687eb35b117ba461aa783901caaa8bc9e95e1b2f",
+        "bytes": 22097
+      }
+    },
+    "600080": {
+      "code": "600080",
+      "org_id": "gssh0600080",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twelfth-period-followup-20261120/out/st-twelfth-period-followup-20261120/catalog-period-600080-1.json",
+        "sha256": "b1362dfe7df1054003fa980b77a464dd729cacf62adad2243b7c487065cdd913",
+        "bytes": 22129
+      }
+    },
+    "600678": {
+      "code": "600678",
+      "org_id": "gssh0600678",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600678-1.json",
+        "sha256": "e847d0330c9b7fc068a59a47f9830af2ff914876f92b6e1271e827bb6fe6b893",
+        "bytes": 22084
+      }
+    },
+    "600734": {
+      "code": "600734",
+      "org_id": "gssh0600734",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600734-1.json",
+        "sha256": "86e153b235b03df320870d088ee70deed91885078da83afe47ba9e07191a2264",
+        "bytes": 19839
+      }
+    },
+    "600735": {
+      "code": "600735",
+      "org_id": "gssh0600735",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600735-1.json",
+        "sha256": "69c3354fdfa15f753664c2e604a2d0b68a2914ea2fa567c6b321973068642431",
+        "bytes": 13673
+      }
+    },
+    "600745": {
+      "code": "600745",
+      "org_id": "gssh0600745",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentieth-period-followup-20261120/out/st-twentieth-period-followup-20261120/catalog-period-600745-1.json",
+        "sha256": "f8fbd8eb56ce3462ffe4d1cc9d4b88d5090dfc55febe9ba7160896a95e23374f",
+        "bytes": 20199
+      }
+    },
+    "603718": {
+      "code": "603718",
+      "org_id": "9900023467",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603718-1.json",
+        "sha256": "22c90a17b532384c0a79d320175384a0471d295acb7cf821c87f28cc4fb4780e",
+        "bytes": 16363
+      }
+    },
+    "603729": {
+      "code": "603729",
+      "org_id": "9900023473",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603729-1.json",
+        "sha256": "19152025bd87e7c539e783a8a796196e0167a16c157860a59ad461edc95896f9",
+        "bytes": 22179
+      }
+    },
+    "603789": {
+      "code": "603789",
+      "org_id": "9900023454",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603789-1.json",
+        "sha256": "8f3565a9d02eac2a101f1f0318532f44a35706b17cf1b2ef67f88f6bf4070b71",
+        "bytes": 13619
+      }
+    },
+    "603825": {
+      "code": "603825",
+      "org_id": "9900024448",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfifth-period-followup-20261120/out/st-twentyfifth-period-followup-20261120/catalog-period-603825-1.json",
+        "sha256": "879b98100e02e2dd763b07bf8e6a59c31a574b13e556027fec5743b8d6867798",
+        "bytes": 22985
+      }
+    },
+    "600753": {
+      "code": "600753",
+      "org_id": "gssh0600753",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600753-1.json",
+        "sha256": "fcd5402e07ec8ae2fed9026fe5f6d0e668c521dbc7a2cf587aa504160bf280d5",
+        "bytes": 18515
+      }
+    },
+    "600759": {
+      "code": "600759",
+      "org_id": "gssh0600759",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600759-1.json",
+        "sha256": "2175ae4c7b3646ba0f37d88c743a2771a304c22068902017f9860f47400da03b",
+        "bytes": 21629
+      }
+    },
+    "600818": {
+      "code": "600818",
+      "org_id": "gssh0600818",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600818-1.json",
+        "sha256": "439ad2ce168a5a8a9ebbd47d91f1e2d3251f09afef8213c49f7a26766cfa0cab",
+        "bytes": 19355
+      }
+    },
+    "600889": {
+      "code": "600889",
+      "org_id": "gssh0600889",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfirst-period-followup-20261120/out/st-twentyfirst-period-followup-20261120/catalog-period-600889-1.json",
+        "sha256": "00f981d6a687f50e3683aebe0f1293e033a7422bb7c15158930ce65491c7ec21",
+        "bytes": 21239
+      }
+    },
+    "603429": {
+      "code": "603429",
+      "org_id": "9900033051",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603429-1.json",
+        "sha256": "9c5d371429f80ae0634433f2cafc08915cb8d507f9de3a40bace9aca0c752a8f",
+        "bytes": 21526
+      }
+    },
+    "603517": {
+      "code": "603517",
+      "org_id": "9900029519",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603517-1.json",
+        "sha256": "b80bb1746df39a620f8a2ea8e9fc528659f7777a8b9d9659bf545fcb57651859",
+        "bytes": 20709
+      }
+    },
+    "603557": {
+      "code": "603557",
+      "org_id": "9900032999",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603557-1.json",
+        "sha256": "b192d3cb16e92971b93ef436bce8f0b5b417bddd2394564bce84678b33605b9c",
+        "bytes": 20478
+      }
+    },
+    "603595": {
+      "code": "603595",
+      "org_id": "9900032656",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyfourth-period-followup-20261120/out/st-twentyfourth-period-followup-20261120/catalog-period-603595-1.json",
+        "sha256": "fd7d657d717ed83799256b20cc4644a699e9f05f61fe99f20703b2e167281e23",
+        "bytes": 17555
+      }
+    },
+    "600965": {
+      "code": "600965",
+      "org_id": "gssh0600965",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-600965-1.json",
+        "sha256": "6c351f021945f20b8193533436fbc817172a23231b4f90bd45e0fdd0d504f6d3",
+        "bytes": 21158
+      }
+    },
+    "601010": {
+      "code": "601010",
+      "org_id": "9900019963",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-601010-1.json",
+        "sha256": "e10fddd6db5d3d80553ebc79a718ca9890c583fa8cf2916c8012065868419218",
+        "bytes": 20122
+      }
+    },
+    "601718": {
+      "code": "601718",
+      "org_id": "9900013870",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-601718-1.json",
+        "sha256": "1348a9b4b12f3d4cf1be0c80f37841dc56294c8e7a3f542497b4d8637e828ce6",
+        "bytes": 20898
+      }
+    },
+    "603008": {
+      "code": "603008",
+      "org_id": "9900023007",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysecond-period-followup-20261120/out/st-twentysecond-period-followup-20261120/catalog-period-603008-1.json",
+        "sha256": "5b8e2e44c971087567a14bac0df1bb7e4b20d1a75984f0793fc5867228cd6d55",
+        "bytes": 17509
+      }
+    },
+    "603922": {
+      "code": "603922",
+      "org_id": "9900032570",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-603922-1.json",
+        "sha256": "2de3a5fcd5959993c424e522ea63811e561b2ffa76e356e1dc6760e2e57233be",
+        "bytes": 21154
+      }
+    },
+    "603959": {
+      "code": "603959",
+      "org_id": "9900024644",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-603959-1.json",
+        "sha256": "a21fe5e907289a660709656bdd6ad5bd077b3b1c2bc26efeca1660e90accf901",
+        "bytes": 20165
+      }
+    },
+    "605199": {
+      "code": "605199",
+      "org_id": "9900039731",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605199-1.json",
+        "sha256": "5dd5bc930cdbd77e72f9be94bb5d95da159ad5f2447271ba73437e6fd10209c7",
+        "bytes": 22849
+      }
+    },
+    "605336": {
+      "code": "605336",
+      "org_id": "9900039798",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentyseventh-period-followup-20261120/out/st-twentyseventh-period-followup-20261120/catalog-v2-605336-1.json",
+        "sha256": "6ece758c56c3834f61a23f7c5d548bf045df0e95af7aa73c633dab970095c398",
+        "bytes": 22564
+      }
+    },
+    "603828": {
+      "code": "603828",
+      "org_id": "9900023713",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603828-1.json",
+        "sha256": "adb76b8204c74b8ddcb9488ca243a8c62c9c1225779e0f561565dfb5a4fc0121",
+        "bytes": 20387
+      }
+    },
+    "603838": {
+      "code": "603838",
+      "org_id": "9900024445",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603838-1.json",
+        "sha256": "e037022e168db2e8eef4905e95a7828ef602d0ee166fe3c8da1011e5edc4ba79",
+        "bytes": 19722
+      }
+    },
+    "603843": {
+      "code": "603843",
+      "org_id": "9900027728",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603843-1.json",
+        "sha256": "511838d8df0ef903ee8e4cc28b2d72f6743cb28719a55db6cd502a3754e83ae1",
+        "bytes": 11763
+      }
+    },
+    "603869": {
+      "code": "603869",
+      "org_id": "9900023784",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentysixth-period-followup-20261120/out/st-twentysixth-period-followup-20261120/catalog-v2-603869-1.json",
+        "sha256": "63a165daadcf504e45337d591cc1eaffb5cb7b774b71dbdc06c90af25fbe5412",
+        "bytes": 17666
+      }
+    },
+    "603272": {
+      "code": "603272",
+      "org_id": "nssc1000337",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603272-1.json",
+        "sha256": "ddddc431b868378a72426153f1b3c0edd603d6f2956908bce2b630099f732ad9",
+        "bytes": 20135
+      }
+    },
+    "603359": {
+      "code": "603359",
+      "org_id": "9900023958",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603359-1.json",
+        "sha256": "43dd96433e8a92f0a7b9a07c2aa0fbe0791a3fa52af83bf2dbec26c3b5eefec1",
+        "bytes": 18034
+      }
+    },
+    "603377": {
+      "code": "603377",
+      "org_id": "9900023616",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603377-1.json",
+        "sha256": "c5a631132107490443238414a6bdb5327346b1c6b96ad8182238ca60ce5ac1a2",
+        "bytes": 21134
+      }
+    },
+    "603378": {
+      "code": "603378",
+      "org_id": "9900030399",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-twentythird-period-followup-20261120/out/st-twentythird-period-followup-20261120/catalog-period-603378-1.json",
+        "sha256": "062f6a0f2f33c5ddc214d65de8bd236fb06597aaeb6f44e444d8b2a92c37a5b2",
+        "bytes": 20539
+      }
+    },
+    "002217": {
+      "code": "002217",
+      "org_id": "9900004262",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-helitai-yunwang-followup-20261120/out/st-helitai-yunwang-followup-20261120/catalog-v2-002217-1.json",
+        "sha256": "f4c3df22e37236c87df8895c880c032477f0b6b14ebd5a358279c973300efb85",
+        "bytes": 19929
+      }
+    },
+    "002306": {
+      "code": "002306",
+      "org_id": "9900008769",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-helitai-yunwang-followup-20261120/out/st-helitai-yunwang-followup-20261120/catalog-v2-002306-1.json",
+        "sha256": "4a85ec654f3900d0fbeb3506f61ed65d1ebb785c355968ee12e0da6c18043d5f",
+        "bytes": 8488
+      }
+    },
+    "002199": {
+      "code": "002199",
+      "org_id": "9900003906",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-dongjing-dali-followup-20261120/out/st-dongjing-dali-followup-20261120/catalog-v2-002199-1.json",
+        "sha256": "c5b91d898152ccef51fd87ae75922d817e6babd2172fe44f806a5472fc981041",
+        "bytes": 20440
+      }
+    },
+    "002214": {
+      "code": "002214",
+      "org_id": "9900004201",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-dongjing-dali-followup-20261120/out/st-dongjing-dali-followup-20261120/catalog-v2-002214-1.json",
+        "sha256": "97c6c0f564baeb82f8399873233aa663553b6d30b2fdbeba3064d888888cc619",
+        "bytes": 21816
+      }
+    },
+    "002024": {
+      "code": "002024",
+      "org_id": "gssz0002024",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-yigou-settlement-20261120/out/st-yigou-settlement-20261120/catalog-v2-002024-1.json",
+        "sha256": "03ace3355d813afb6eac3313e1f5324d62e7ff2be3d4f911a083614c755ab553",
+        "bytes": 19959
+      }
+    },
+    "000610": {
+      "code": "000610",
+      "org_id": "gssz0000610",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-xilv-timeline-20261120/out/st-xilv-timeline-20261120/catalog-timeline-000610-1.json",
+        "sha256": "8aa80dad5977cacc6f4d2f8ead5c62feef0e92302e344e7a2cd63be407a85bd7",
+        "bytes": 20584
+      }
+    },
+    "000010": {
+      "code": "000010",
+      "org_id": "gssz0000010",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000010-1.json",
+        "sha256": "22f5d2d5cfaab00cb2a61f62b5a7a7c9d7ea26eb63cb1b65e7c3971211eb6088",
+        "bytes": 20914
+      }
+    },
+    "000016": {
+      "code": "000016",
+      "org_id": "gssz0000016",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000016-1.json",
+        "sha256": "bf8c1e23c921965a40acf0f42b7f3a1625d202daaf10fcd899201caf1065f8fe",
+        "bytes": 21929
+      }
+    },
+    "000056": {
+      "code": "000056",
+      "org_id": "gssz0000056",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000056-1.json",
+        "sha256": "ba49baf9f3e8cf205774b9be8a1a42e49e3b6c99a078090d96c59edf5328b4f4",
+        "bytes": 12327
+      }
+    },
+    "000078": {
+      "code": "000078",
+      "org_id": "gssz0000078",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000078-1.json",
+        "sha256": "498c1e134f3f0c9bc54ea51bfd521d491b5afa602d612e8c3312d4e73b116c0c",
+        "bytes": 20583
+      }
+    },
+    "000488": {
+      "code": "000488",
+      "org_id": "gssz0000488",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000488-1.json",
+        "sha256": "18df4c31650c67859d7fb1d401050ab45dd85388197fc838308db9c0950f8d88",
+        "bytes": 14902
+      }
+    },
+    "000609": {
+      "code": "000609",
+      "org_id": "gssz0000609",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000609-1.json",
+        "sha256": "f58eb5dd907f58a546b6df8b69b2a069879b8a2373a5893a5017934be65fc6be",
+        "bytes": 22221
+      }
+    },
+    "000615": {
+      "code": "000615",
+      "org_id": "gssz0000615",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000615-1.json",
+        "sha256": "58d95699133e3eafafcb5c73f727f1bf67be772e20259d3e50871af479551738",
+        "bytes": 20517
+      }
+    },
+    "000632": {
+      "code": "000632",
+      "org_id": "gssz0000632",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000632-1.json",
+        "sha256": "cffc86475a06e0500e1697c97be051e7c68782423b3e6b80e87cd22d8ca24894",
+        "bytes": 19645
+      }
+    },
+    "000639": {
+      "code": "000639",
+      "org_id": "gssz0000639",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000639-1.json",
+        "sha256": "c5c4a95de94f8a9a263d7143390a2571a9a3ffe55cd5564ae8c163754594292c",
+        "bytes": 20051
+      }
+    },
+    "000669": {
+      "code": "000669",
+      "org_id": "gssz0000669",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000669-1.json",
+        "sha256": "c0ef9c2fdcf1e9990bf6d8500b08d82a61bb3bdc9967b2470aec78b461ac812f",
+        "bytes": 21631
+      }
+    },
+    "000677": {
+      "code": "000677",
+      "org_id": "gssz0000677",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000677-1.json",
+        "sha256": "31f5494ed160d66809de99a5cad8ca0fb8ee26ced4562565e4238d78da278f6f",
+        "bytes": 15638
+      }
+    },
+    "000698": {
+      "code": "000698",
+      "org_id": "gssz0000698",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000698-1.json",
+        "sha256": "e17ed714cd1036ed85b00eb2c1e92bc448afcf6020e9dcde5962e71b02742e21",
+        "bytes": 17930
+      }
+    },
+    "000711": {
+      "code": "000711",
+      "org_id": "gssz0000711",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000711-1.json",
+        "sha256": "d4de07ffc44270e540f5230501a7d3c606fa57c4d539d84a760a3d4896c7227f",
+        "bytes": 21406
+      }
+    },
+    "000752": {
+      "code": "000752",
+      "org_id": "gssz0000752",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000752-1.json",
+        "sha256": "5ed95363ecf472030cf3b21e60748209479df0f4dc686c291c544e57d1bc033b",
+        "bytes": 21213
+      }
+    },
+    "000793": {
+      "code": "000793",
+      "org_id": "gssz0000793",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000793-1.json",
+        "sha256": "133413efa2621c569c51bf6f142143fc2bf3b0bbbadb34d717047637bf5ba498",
+        "bytes": 19434
+      }
+    },
+    "000820": {
+      "code": "000820",
+      "org_id": "gssz0000820",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000820-1.json",
+        "sha256": "3e72af844c84c32b0674818c2aa96d248eccb6174f81c40d4db221565f28feb3",
+        "bytes": 21189
+      }
+    },
+    "000821": {
+      "code": "000821",
+      "org_id": "gssz0000821",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000821-1.json",
+        "sha256": "7795836c60b1cc49cb7c7a625a209f45b666896dcdb3ca94d871b25d2add3cf2",
+        "bytes": 9616
+      }
+    },
+    "000826": {
+      "code": "000826",
+      "org_id": "gssz0000826",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000826-1.json",
+        "sha256": "c66b061f60202fed60c4fae8fb9fb98dcf4077dfb1604746517611787ad1ec4c",
+        "bytes": 21694
+      }
+    },
+    "000838": {
+      "code": "000838",
+      "org_id": "gssz0000838",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000838-1.json",
+        "sha256": "01e7b42138bb451b537280af68ed072884516824dde8bf1fc37e924891e32148",
+        "bytes": 21239
+      }
+    },
+    "000903": {
+      "code": "000903",
+      "org_id": "gssz0000903",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000903-1.json",
+        "sha256": "fc7d63c1955f1ea83d822332d4aca6553c93d7bf4de220ecb01c57e618da80f7",
+        "bytes": 7578
+      }
+    },
+    "000909": {
+      "code": "000909",
+      "org_id": "gssz0000909",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000909-1.json",
+        "sha256": "bf416240e3464ff4ee9e5f062e5ec534724dcae9acba539b4efef69bfeaf6c92",
+        "bytes": 21059
+      }
+    },
+    "000911": {
+      "code": "000911",
+      "org_id": "gssz0000911",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-000911-1.json",
+        "sha256": "3bc1295f8a0b05881e154c1bd11de41184429b8a2c3b700893ec8a3e923aa0c0",
+        "bytes": 23963
+      }
+    },
+    "002005": {
+      "code": "002005",
+      "org_id": "gssz0002005",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002005-1.json",
+        "sha256": "65f277142cc77da7dfeaa13736b464ef0ceb6fe1d744d38aa14a135868ebb82b",
+        "bytes": 20828
+      }
+    },
+    "002055": {
+      "code": "002055",
+      "org_id": "9900000123",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002055-1.json",
+        "sha256": "222fa075e5d8cfc9b2f10d95bd96da73dc8a01a09125629140a1292fc4561e7a",
+        "bytes": 20339
+      }
+    },
+    "002082": {
+      "code": "002082",
+      "org_id": "9900001284",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002082-1.json",
+        "sha256": "77e05dc1f332c99c5cab437f813d1d0c79710888edfc97287364dfe4e7dde6d3",
+        "bytes": 19485
+      }
+    },
+    "002102": {
+      "code": "002102",
+      "org_id": "9900001762",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002102-1.json",
+        "sha256": "4e7baeae14c52f8f21649fb585b1a8404e8482cedc702828689566e22db1dff1",
+        "bytes": 21331
+      }
+    },
+    "002109": {
+      "code": "002109",
+      "org_id": "9900002009",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002109-1.json",
+        "sha256": "6ad9a3ba6341eb77424dac16e7b72e6aca6456934b1b75b79a5268d479893c66",
+        "bytes": 15630
+      }
+    },
+    "002122": {
+      "code": "002122",
+      "org_id": "9900002421",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002122-1.json",
+        "sha256": "73ad30ddf6264ddc6e2f004d07479621e11f0954d4c2766598b3a7a999a59ce7",
+        "bytes": 13456
+      }
+    },
+    "002168": {
+      "code": "002168",
+      "org_id": "9900003601",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002168-1.json",
+        "sha256": "e0006327c70d46f75a7265fd7d4dd484949da871d6c6f21cf24bcbc817f349ae",
+        "bytes": 21057
+      }
+    },
+    "002175": {
+      "code": "002175",
+      "org_id": "9900003698",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002175-1.json",
+        "sha256": "c156bfbe4444861056275f9e68f1e3cf70d5d17c9d2011c86264805e68f4bab2",
+        "bytes": 21488
+      }
+    },
+    "002193": {
+      "code": "002193",
+      "org_id": "9900003911",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002193-1.json",
+        "sha256": "462cba84752ed10055a7eeddca276b526eb8486ed40376e5f146597bbcf2792d",
+        "bytes": 20297
+      }
+    },
+    "002198": {
+      "code": "002198",
+      "org_id": "9900003905",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002198-1.json",
+        "sha256": "6d7743e2cf4a15de90300c376a2bea8d450f4c8870aea1da5502b7a075975b7e",
+        "bytes": 9990
+      }
+    },
+    "002207": {
+      "code": "002207",
+      "org_id": "9900004022",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002207-1.json",
+        "sha256": "ebe0ef9cc289130158c651963f69aeca199dd7d69052f8b23ce8a52f44da3f56",
+        "bytes": 13147
+      }
+    },
+    "002211": {
+      "code": "002211",
+      "org_id": "9900004082",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002211-1.json",
+        "sha256": "26048eeeda7664d810f3845c03568840d93ba812a81f99ab40efe62e75ebbb6e",
+        "bytes": 21022
+      }
+    },
+    "002227": {
+      "code": "002227",
+      "org_id": "9900004544",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002227-1.json",
+        "sha256": "2f1dba2b5067d121a8aae8bdd02476d7dc8911168e20960634ccee11e65cd631",
+        "bytes": 8717
+      }
+    },
+    "002305": {
+      "code": "002305",
+      "org_id": "9900008690",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002305-1.json",
+        "sha256": "957bb5d58461ef415d5681f7a295a98231005727a949a28acca152c6564997aa",
+        "bytes": 11082
+      }
+    },
+    "002323": {
+      "code": "002323",
+      "org_id": "9900009449",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002323-1.json",
+        "sha256": "5f467f08e96dee9454fa54d5a275f7271bac3e1c0e56982187a0ad6258262ef5",
+        "bytes": 20373
+      }
+    },
+    "002360": {
+      "code": "002360",
+      "org_id": "9900010767",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002360-1.json",
+        "sha256": "3d820a934cc1a8d3e670956f7449b3c03241e9a893d7aa704af565fe13d1c22b",
+        "bytes": 20633
+      }
+    },
+    "002512": {
+      "code": "002512",
+      "org_id": "9900016127",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002512-1.json",
+        "sha256": "9218afd8dbc73718dc212f6100b3247e5871c687ee640e99fa740bd66b938c27",
+        "bytes": 8583
+      }
+    },
+    "002514": {
+      "code": "002514",
+      "org_id": "9900016129",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002514-1.json",
+        "sha256": "dab237f0ad2b1cc103dea87f0222b9d0fcc25293dbd50ed581c9545b5cf665f9",
+        "bytes": 22059
+      }
+    },
+    "002538": {
+      "code": "002538",
+      "org_id": "9900017115",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002538-1.json",
+        "sha256": "f1e28efbd49cda13934082822b16e032fea18f06b7843915370826ae9760ce0a",
+        "bytes": 10250
+      }
+    },
+    "002542": {
+      "code": "002542",
+      "org_id": "9900017427",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002542-1.json",
+        "sha256": "f77f1808d03dbbed02e69bb3d0b142520b53a215b80e33d0da71787e9bcd531c",
+        "bytes": 20313
+      }
+    },
+    "002547": {
+      "code": "002547",
+      "org_id": "9900017828",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002547-1.json",
+        "sha256": "c624f69e54b814224c4e483c675da62d8037c194e31730b1fd0dcb27a0652906",
+        "bytes": 20376
+      }
+    },
+    "002569": {
+      "code": "002569",
+      "org_id": "9900019034",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002569-1.json",
+        "sha256": "5f83f1f7a8ac2d9ffe3ea0bf1f4af4fb1721ec2f258831020176d843bd339884",
+        "bytes": 20455
+      }
+    },
+    "002586": {
+      "code": "002586",
+      "org_id": "9900019960",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002586-1.json",
+        "sha256": "093d4183a2834d6d5768667bd811c60f131c87514f298832db8ae84cd4b935e9",
+        "bytes": 20253
+      }
+    },
+    "002592": {
+      "code": "002592",
+      "org_id": "9900020254",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002592-1.json",
+        "sha256": "90661b5accf0bead8e85fe5053b4d2172f272f22790dc75f3f3727d4d739685b",
+        "bytes": 21856
+      }
+    },
+    "002598": {
+      "code": "002598",
+      "org_id": "9900020704",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002598-1.json",
+        "sha256": "37c4d92c0090444aa144febeb7ccfd96103bc1370a5b8487a3ee048de1ae0420",
+        "bytes": 13268
+      }
+    },
+    "002620": {
+      "code": "002620",
+      "org_id": "9900021475",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002620-1.json",
+        "sha256": "f4c6ce216ee06dcba5d0ba40422194bdf26abc71fab3099b08d909ec4259a390",
+        "bytes": 16790
+      }
+    },
+    "002656": {
+      "code": "002656",
+      "org_id": "9900022094",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002656-1.json",
+        "sha256": "013844652330abe741aa131f82d805c903f758e2cbfff95ae587bfe9f0d005c1",
+        "bytes": 18658
+      }
+    },
+    "002667": {
+      "code": "002667",
+      "org_id": "9900022274",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002667-1.json",
+        "sha256": "357e8fb1ebec36158a2d984896c462f3c65064f4cbeda79f92fa0d34cf85aa05",
+        "bytes": 19682
+      }
+    },
+    "002689": {
+      "code": "002689",
+      "org_id": "9900022993",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002689-1.json",
+        "sha256": "60ea612df2068d7cf8a2d91576baf231347d0f06b550023d50b2482336305b9a",
+        "bytes": 13580
+      }
+    },
+    "002691": {
+      "code": "002691",
+      "org_id": "9900023236",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002691-1.json",
+        "sha256": "413fb7342099ab9bebf1f2d82d0ad5d74130550317d37e6c26db4fbf87e768ba",
+        "bytes": 12798
+      }
+    },
+    "002717": {
+      "code": "002717",
+      "org_id": "9900023171",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002717-1.json",
+        "sha256": "56d142de21f208b96540c473f5f5c3a8c2707cc69b02635eba134048d377956a",
+        "bytes": 21519
+      }
+    },
+    "002977": {
+      "code": "002977",
+      "org_id": "9900037750",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-002977-1.json",
+        "sha256": "6dc3a37ded6138593e8cb4bf9617d8fe6bffa0195e9304425cef08cba067054f",
+        "bytes": 8921
+      }
+    },
+    "600491": {
+      "code": "600491",
+      "org_id": "gssh0600491",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-600491-1.json",
+        "sha256": "be93105bc0c8a0b783c8097d43dfa591a6d4c4f898515de2ee0e5ad1c5349e89",
+        "bytes": 21698
+      }
+    },
+    "600730": {
+      "code": "600730",
+      "org_id": "gssh0600730",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-600730-1.json",
+        "sha256": "00a9d93a615212742d7b3dc469782cfefef09825cf8f7d54f5af92c67dc1bc9b",
+        "bytes": 20775
+      }
+    },
+    "603021": {
+      "code": "603021",
+      "org_id": "9900023482",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-603021-1.json",
+        "sha256": "567b4472b036512aecfb7754ec57114155b6803fbe12ae5477c66998066c8388",
+        "bytes": 19147
+      }
+    },
+    "603189": {
+      "code": "603189",
+      "org_id": "9900026063",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-603189-1.json",
+        "sha256": "001d3ded07e811bc856c69242ac56b18123ef85ade3c88f5a60ba8db4e2653ef",
+        "bytes": 20494
+      }
+    },
+    "603398": {
+      "code": "603398",
+      "org_id": "9900024444",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-603398-1.json",
+        "sha256": "3b37fa92094ef1ef992f5730276f741677cafbb3353bcfc0f6d22feba9dbf36b",
+        "bytes": 22602
+      }
+    },
+    "603822": {
+      "code": "603822",
+      "org_id": "9900023474",
+      "identity_source": {
+        "locator": "/Volumes/Leibniz/dev/st_research/v8_copilot/wt/st-catalog-remaining-20261121/out/st-catalog-remaining-20261121/catalog-period-603822-1.json",
+        "sha256": "313ad8b9a3215cc1e7051f1a9222f00818e761ba90bbd42bbf675812789a1768",
+        "bytes": 21713
+      }
+    }
+  },
+  "query_date": "2026-11-20",
+  "positive_control_sha256": "15a130fff4e0192b015d3355c4e012a4802ce17b5a5b449646dfd85e2854d9bf",
+  "prior_four_sha256": "118055e0f805e62281ddfa27f1e47d44620bbb496bc976a19b660b8f0f1083c8"
+}

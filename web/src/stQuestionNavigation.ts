@@ -1,7 +1,9 @@
+import {cashComparisonBound} from './STCashDirectionComparison'
 import {useEffect,useSyncExternalStore} from 'react'
 import type {STRegimeData} from './stRegimeTypes'
 
 export const caseQuestions = [
+  {key:'cashdirection',anchor:'st-cash-direction-comparison',title:'同样说有进展：钱流向谁、兑现到哪一步？',field:'removal_followup'},
   {key:'lingnanbond',anchor:'st-lingnan-bond-followup',title:'岭南：有判决、有质押，就能当作已经兑付吗？',field:'lingnan_exit_followup'},
   {key:'removalclocks',anchor:'st-removal-announcement-clocks',title:'四通20日上涨，为什么最新又是下跌？',field:'removal_mature_windows'},
   {key:'inventory',anchor:'st-evidence-inventory',title:'研究材料有多少，哪些仍未核完？',field:'evidence_inventory'},
@@ -35,7 +37,7 @@ const subscribe=(notify:()=>void)=>{
 }
 const snapshot=()=>window.location.hash.slice(1)
 export function availableQuestions(data:STRegimeData){
-  return caseQuestions.filter(q=>q.key==='issuer'?Boolean(data.themes?.membership_audit?.issuer_checks?.length):Boolean(data.themes?.[q.field]))
+  return caseQuestions.filter(q=>q.key==='cashdirection'?cashComparisonBound(data):q.key==='issuer'?Boolean(data.themes?.membership_audit?.issuer_checks?.length):Boolean(data.themes?.[q.field]))
 }
 export function useQuestionNavigation(data:STRegimeData){
   const hash=useSyncExternalStore(subscribe,snapshot,()=> '')

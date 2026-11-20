@@ -1,0 +1,104 @@
+{
+  "version": "cash_direction_comparison_v1",
+  "through": "2026-11-06",
+  "snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "rows": [
+    {
+      "name": "京蓝：2025年度补偿",
+      "theme": "removal_followup",
+      "field": "compensation",
+      "expected": {
+        "payer": "云南佳骏",
+        "last_received_on": "2026-08-20",
+        "total_received_yuan": "151375161.76",
+        "status": "fully_received"
+      },
+      "direction": "云南佳骏 → 上市公司",
+      "stage": "已收齐151,375,161.76元",
+      "date": "2026-08-21",
+      "meaning": "这笔2025年度补偿已到账；不能据此确认2026年度承诺达标，也不能当作经营回款。",
+      "next": "2026年度须按协议约定范围核验全年扣非归母利润。",
+      "page": 1,
+      "source": {
+        "announcement_id": "1225486131",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-21/3f2ff2b1-0452-4b30-a536-0b0d43071e5c.PDF",
+        "sha256": "b152b8d0ec21a127ba518344ff49ab4d58e13206305a0f5bffbd5f6f9f54140e",
+        "published_on": "2026-08-21",
+        "title": "ST京蓝：关于2025年度公司业绩补偿款支付完毕的公告"
+      }
+    },
+    {
+      "name": "京蓝：另一批补偿诉讼",
+      "theme": "removal_followup",
+      "field": "recovery",
+      "expected": {
+        "case_id": "（2026）京0102民初28638号",
+        "claim_cash_yuan": "16493477.46",
+        "claim_shares": "11644349",
+        "claim_total_yuan": "85893796.80",
+        "received_confirmed_yuan": null,
+        "final_judgment": null
+      },
+      "direction": "37名补偿义务人 → 上市公司（诉请）",
+      "stage": "已受理、已保全；披露时尚未开庭",
+      "date": "2026-09-02",
+      "meaning": "这是另一组义务人和案件；不能用云南佳骏的到账证明这笔款也已收齐。",
+      "next": "后续需判决、履行与现金/股份交付证据；85,893,796.80元是涉案金额，不能全部当现金。",
+      "page": 1,
+      "source": {
+        "announcement_id": "1225542475",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-09-02/6165a141-8157-47b2-a3ea-6a8b064164b8.PDF",
+        "sha256": "18c3c8dd6764e720b30eac607c32a55b3b4e2b14a7c09cda69ff311997b54db2",
+        "published_on": "2026-09-02",
+        "title": "京蓝科技：重大诉讼公告（更正后）"
+      }
+    },
+    {
+      "name": "神雾：股东股份抵债",
+      "theme": "shenwu_execution",
+      "field": "transfer",
+      "expected": {
+        "shares": "33000000",
+        "mode": "court_debt_settlement",
+        "status": "registration_complete_per_disclosures",
+        "issuer_cash_received_yuan": null,
+        "control_changed": false
+      },
+      "direction": "神雾集团所持股份 → 长城资管",
+      "stage": "33,000,000股已完成过户登记",
+      "date": "2026-10-13",
+      "meaning": "完成的是股份权属转移；受让方获得股份，不能当上市公司收到同额现金。",
+      "next": "过户后仍承接相应业绩补偿义务；是否履行须另查，不能从过户自动推出。",
+      "page": 3,
+      "source": {
+        "announcement_id": "1225602417",
+        "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-13/b04d4859-9668-4b8d-9930-68953995f4c8.PDF",
+        "sha256": "cbbb817c9b305e9f5793e604380f3d7406f60b846886473281f8db3fc3b5971d",
+        "published_on": "2026-10-13",
+        "title": "神雾节能：关于股东权益发生变动的提示性公告"
+      }
+    },
+    {
+      "name": "岭南：债券一审判项",
+      "theme": "lingnan",
+      "field": "award",
+      "expected": {
+        "bond_principal_and_interest": "376991941",
+        "payment_trigger": "判决生效之日起七日内"
+      },
+      "direction": "岭南等义务人 → 债券持有人（判项）",
+      "stage": "一审判付；披露时未生效，实付未核",
+      "date": "2026-10-28",
+      "meaning": "公司面对的是支付义务。376,991,941元为债券本息判项，另有占用息及费用，不能当公司回款。",
+      "next": "须核判决生效、执行及实际兑付；不能从公告日直接倒数七天。",
+      "page": 2,
+      "source": {
+        "announcement_id": "1225632581",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632581.PDF",
+        "sha256": "aed1d414f94295d61f4e4d1aa3ea9a475279b09bf7421927c7a821fc205fb760",
+        "published_on": "2026-10-28",
+        "title": "关于重大诉讼的进展公告"
+      }
+    }
+  ]
+}

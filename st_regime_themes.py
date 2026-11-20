@@ -316,4 +316,6 @@ def build_themes(inputs, daily):
     result['jingji_dividend_followup']=jingji_dividend_followup(inputs,result['remaining_basis'])
     from st_evidence_inventory import evidence_inventory
     result['evidence_inventory']=evidence_inventory(inputs)
+    from st_removal_mature_windows import removal_mature_windows
+    result['removal_mature_windows']=removal_mature_windows(inputs,result['removal_era_comparison'])
     return result

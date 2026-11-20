@@ -387,6 +387,7 @@ def publish(inputs, *, root=ROOT):
                'ningke_comparative_processor_sha256': sha256(Path(__file__).with_name('st_ningke_comparative_followup.py').read_bytes()).hexdigest(),
                'jingji_dividend_processor_sha256': sha256(Path(__file__).with_name('st_jingji_dividend_followup.py').read_bytes()).hexdigest(),
                'evidence_inventory_processor_sha256': sha256(Path(__file__).with_name('st_evidence_inventory.py').read_bytes()).hexdigest(),
+               'removal_mature_processor_sha256': sha256(Path(__file__).with_name('st_removal_mature_windows.py').read_bytes()).hexdigest(),
                'integrity_processor_sha256': sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest(),
                'membership_processor_sha256': sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest(),
                'company_risk_cases_processor_sha256':sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest(),
@@ -475,6 +476,7 @@ def load(root=ROOT):
                 or value.get('ningke_comparative_processor_sha256')!=sha256(Path(__file__).with_name('st_ningke_comparative_followup.py').read_bytes()).hexdigest()
                 or value.get('jingji_dividend_processor_sha256')!=sha256(Path(__file__).with_name('st_jingji_dividend_followup.py').read_bytes()).hexdigest()
                 or value.get('evidence_inventory_processor_sha256')!=sha256(Path(__file__).with_name('st_evidence_inventory.py').read_bytes()).hexdigest()
+                or value.get('removal_mature_processor_sha256')!=sha256(Path(__file__).with_name('st_removal_mature_windows.py').read_bytes()).hexdigest()
                 or value.get('integrity_processor_sha256')!=sha256(Path(__file__).with_name('st_sample_integrity.py').read_bytes()).hexdigest()
                 or value.get('membership_processor_sha256')!=sha256(Path(__file__).with_name('st_member_transitions.py').read_bytes()).hexdigest()
                 or value.get('company_risk_cases_processor_sha256')!=sha256(Path(__file__).with_name('st_company_risk_cases.py').read_bytes()).hexdigest()

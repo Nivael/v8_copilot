@@ -1,7 +1,8 @@
 import {useState} from 'react'
-import type {RestatementComparison} from './stRegimeTypes'
+import {STBailiPolicyFollowup} from './STBailiPolicyFollowup'
+import type {RestatementComparison,BailiPolicyFollowup} from './stRegimeTypes'
 const pct=(value:string|null)=>value===null?'—（无共同成交端点）':`${Number(value).toFixed(2)}%`
-export function STRestatementComparison({data}:{data?:RestatementComparison|null}){
+export function STRestatementComparison({data,baili}:{data?:RestatementComparison|null;baili?:BailiPolicyFollowup|null}){
  const [days,setDays]=useState(5)
  if(!data)return null
  return <section id="st-restatement-comparison" aria-label="财报更正比较" style={{scrollMarginTop:80}}>
@@ -12,6 +13,7 @@ export function STRestatementComparison({data}:{data?:RestatementComparison|null
    <p>{c.operations}</p><p><strong>下一步看什么：</strong>{c.watch}</p>
    <details><summary>查看公告依据</summary>{c.refs.map(ref=>{const source=data.source_refs.find(s=>s.announcement_id===ref.id);return source&&<p key={ref.id}><a href={source.url} target="_blank" rel="noreferrer">{source.title}</a> · 第{ref.pages.join('、')}页</p>})}</details>
   </article>)}
+  <STBailiPolicyFollowup data={baili}/>
   <h3>四通：增速提高，为什么不等于多卖了产品？</h3>
   <p>半年收入增速由原披露的 {data.growth_recalculation.original_display_pct}% ，按更正基数重算为 {data.growth_recalculation.corrected_display_pct}%。变化来自上年比较数调低，当期收入没有增加。</p>
   <details><summary>查看计算口径与当时信息边界</summary><p>{data.growth_recalculation.boundary}</p></details>

@@ -1,0 +1,128 @@
+{
+  "through": "2026-11-06",
+  "themes": {
+    "removal_followup": {
+      "compensation": {
+        "agreement": "2023重整投资协议",
+        "commitment_2026_met": null,
+        "commitment_2026_yuan": "60000000.00",
+        "commitment_scope": "剔除中科鼎实合并范围贡献后的全年扣非归母利润",
+        "current_year_profit_equal_receipts": false,
+        "earnings_year": 2025,
+        "last_received_on": "2026-08-20",
+        "last_received_yuan": "75375161.76",
+        "payer": "云南佳骏",
+        "received_before_last_yuan": "76000000.00",
+        "source": {
+          "announcement_id": "1225486131",
+          "observed_at": "2026-11-08T22:11:23.404799+00:00",
+          "page": 1,
+          "page_text_hashes": [
+            "c417dfe2c3a45dcdde42ac344ce0d01e131e2e95c2ba2e4b887a54e9398951a9",
+            "a150dd972a4c3dcddc1a2ec7014681f45d3250ce0c5635f94ae18581bd0646ba",
+            "b97f47e0e368524e0eb4a0649cda5e82c4f3d8b3ac9eef0abe6f5bef971b1f25"
+          ],
+          "pages": 3,
+          "protected_gate_passed": true,
+          "published_on": "2026-08-21",
+          "response_url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-21/3f2ff2b1-0452-4b30-a536-0b0d43071e5c.PDF",
+          "sha256": "b152b8d0ec21a127ba518344ff49ab4d58e13206305a0f5bffbd5f6f9f54140e",
+          "symbol": "000711",
+          "title": "ST京蓝：关于2025年度公司业绩补偿款支付完毕的公告",
+          "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-08-21/3f2ff2b1-0452-4b30-a536-0b0d43071e5c.PDF"
+        },
+        "status": "fully_received",
+        "total_received_yuan": "151375161.76"
+      }
+    },
+    "thirteenth_period_followup": {
+      "chains": [
+        {
+          "chain": "600082-卖房已收款交付，什么还没完成",
+          "source": "1225590832",
+          "pages": [
+            1
+          ],
+          "subject": "卖房已收款交付，什么还没完成",
+          "changed": "10月1日披露55006.89万元交易已签约、全款收到并实际交付；从拟议出售推进到真实履约。",
+          "open": "房产过户登记后续办理，实际收款日未由本件精确给定；不把截至披露日当10月1日当天收款，年度财务影响及处罚警示撤销另核。",
+          "supporting": []
+        },
+        {
+          "chain": "600082-扭亏与经营现金，怎样解释",
+          "source": "1225612213",
+          "pages": [
+            1,
+            3
+          ],
+          "subject": "扭亏与经营现金，怎样解释",
+          "changed": "三季度归母与扣非均54430671.74元，前三季经营现金558045315.92元；公司解释房产销售及融资成本改善。",
+          "open": "房产为开发项目可售库存，不能套用所有出售款均非经营现金；扣非盈利不代表无集中关联交易依赖，也不替代处罚门槛和年度审计。",
+          "supporting": []
+        }
+      ],
+      "sources": [
+        {
+          "symbol": "600082",
+          "announcement_id": "1225590832",
+          "title": "天津海泰科技发展股份有限公司关于出售房产暨关联交易的进展公告",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-01/1225590832.PDF",
+          "sha256": "7cbf128d95e71032d3fd526113d24cdf28bbeeb1bc19d1bc902b6348a46c8a7a",
+          "published_on": "2026-10-01"
+        },
+        {
+          "symbol": "600082",
+          "announcement_id": "1225612213",
+          "title": "天津海泰科技发展股份有限公司2026年第三季度报告",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-21/1225612213.PDF",
+          "sha256": "00e7fb8afc4a1b0ddb490785257644e9ed1129686e447424aec0f2fa8d0c1bc6",
+          "published_on": "2026-10-21"
+        }
+      ]
+    },
+    "twentyseventh_period_followup": {
+      "chains": [
+        {
+          "chain": "603959-1.3亿元赠与，钱到了多少？",
+          "source": "1225507583",
+          "pages": [
+            1,
+            9
+          ],
+          "subject": "1.3亿元赠与，钱到了多少？",
+          "changed": "8月协议约定赠与1.3亿元，付款前要求赠与人具备股东身份。三季报列3900万元吸收投资现金流，并解释筹资现金改善主要来自重整投资人捐赠，支持部分落实；不能认定全额到款或法院已受理重整。",
+          "open": "核逐赠与人收款、剩余9100万元差额进度及法院正式程序；差额不是已确认逾期应收。",
+          "boundary": "协议资本性投入与经营盈利分开；前三季度经营现金仍净流出约2622万元。",
+          "supporting": [
+            {
+              "source": "1225631518",
+              "pages": [
+                4,
+                12
+              ],
+              "state": "实际核验对应原页。"
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "symbol": "603959",
+          "announcement_id": "1225507583",
+          "title": "关于与重整投资人签订《现金赠与协议》的公告",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225507583.PDF",
+          "sha256": "19691f3cfecf417ae710c3c78139785d3b3a672ffa727889de699b7a4c06281e",
+          "published_on": "2026-08-26"
+        },
+        {
+          "symbol": "603959",
+          "announcement_id": "1225631518",
+          "title": "2026年第三季度报告",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225631518.PDF",
+          "sha256": "15c3dc09e2cf3336dd5436a0ccd2d8f34f10d4f4f6fce535d92828d30c78e11c",
+          "published_on": "2026-10-28"
+        }
+      ]
+    }
+  }
+}

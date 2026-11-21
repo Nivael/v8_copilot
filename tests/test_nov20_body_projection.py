@@ -38,5 +38,5 @@ def test_all_phases_rebuild_the_current_projection():
     from build_nov20_catalog_reading import build
     view = json.loads(Path('web/src/catalogNov20Fixed.json').read_text())
     assert build() == view
-    assert (view['reviewed_count'], view['remaining_count'], view['text_pages'], view['visual_pages']) == (13, 28, 52, 37)
-    assert len({f['announcement_id'] for f in view['findings']}) == 13
+    assert (view['reviewed_count'], view['remaining_count'], view['text_pages'], view['visual_pages']) == (18, 23, 76, 52)
+    assert len({f['announcement_id'] for f in view['findings']}) == 18

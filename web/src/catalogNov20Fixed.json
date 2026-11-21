@@ -23,6 +23,11 @@
       "file": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
       "sha256": "e161fa9afd28e10b1030e24ce0fb479aa3e2ee9b878a27f15fcac1b48c4fc3fc",
       "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
+    },
+    {
+      "file": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "sha256": "294beaf73e9a788b153fc1c3a22762dfc8e60ccbb5c088a5aefd6844ae5d5650",
+      "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
     }
   ],
   "counts": {
@@ -32,10 +37,10 @@
     "unique_attachment_identities": 41,
     "nonempty_companies": 20
   },
-  "reviewed_count": 13,
-  "remaining_count": 28,
-  "text_pages": 52,
-  "visual_pages": 37,
+  "reviewed_count": 18,
+  "remaining_count": 23,
+  "text_pages": 76,
+  "visual_pages": 52,
   "findings": [
     {
       "code": "002122",
@@ -506,6 +511,191 @@
         "visual_image_sha256": {
           "1": "394a2d2f92f80f9a7cf1cd60d76a9aebadefdd9ffcdfddfbe91648b7a4f61e2d",
           "2": "578e9f62c63b71c3db748aa243fc8034ba26a681f3acb851bac322efdffa257d"
+        }
+      }
+    },
+    {
+      "code": "002667",
+      "announcement_id": "1225679477",
+      "pages": [
+        2,
+        3
+      ],
+      "answer": "江西领辉签委托担保服务协议，拟由上市公司为5000万元履约保函出具反担保；公告列本次担保后余额79196.62万元。",
+      "boundary": "反担保人、担保机构与被保证人分开；保函期限6个月，反担保至保函有效期届满后三年，不是同一期限。本文仍有“拟出具”措辞，不据此认证已代偿或上市公司取得5000万元现金；2470.94%净资产比率不当损失率。",
+      "label": "威领：反担保与余额",
+      "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679477",
+        "adjunct_url": "finalpage/2026-11-20/1225679477.PDF",
+        "title": "关于为控股子（孙）公司提供担保的进展公告",
+        "codes": [
+          "002667"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679477.PDF",
+        "sha256": "560a9cadbe342f4227516980ae0cfc671366b5ce8f6774b84574f1ceab2adc5d",
+        "bytes": 126000,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/560a9cadbe342f4227516980ae0cfc671366b5ce8f6774b84574f1ceab2adc5d.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:06:20.517223+00:00",
+        "visual_physical_pages": [
+          2,
+          3
+        ],
+        "visual_image_sha256": {
+          "2": "69c4097aa131bec85c717f272b40d03999473c26bd239721076bd6aa8558a24a",
+          "3": "1b6f85e274dfc13eb4aa08a60daf499d569ee2529ffc90e19a6b468d0f7426e5"
+        }
+      }
+    },
+    {
+      "code": "600187",
+      "announcement_id": "1225679178",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "董事会通过为持股80%的太原豪峰申请固定资产贷款提供19303.58万元连带责任担保，公告担保期限八年，无反担保；含本次担保总额38703.58万元。",
+      "boundary": "担保对象是子公司，贷款申请与担保条款不证明贷款已到账或发生代偿。与同日公司回购415.74万元支出分开，不把担保本金当直接现金支出或新增损失。",
+      "label": "国中：子公司贷款担保",
+      "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679178",
+        "adjunct_url": "finalpage/2026-11-20/1225679178.PDF",
+        "title": "关于为控股子公司提供担保公告",
+        "codes": [
+          "600187"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679178.PDF",
+        "sha256": "7025267546ef5085407ddae20a901dd0731c7c422e62b84a107652eadcb8254a",
+        "bytes": 108400,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/7025267546ef5085407ddae20a901dd0731c7c422e62b84a107652eadcb8254a.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:06:20.627557+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "2b5204796af92c160eb10b0f6f9fba8b9c3c82d7a98d2b73d942176202474eff",
+          "2": "889a49a3e34bbbed61dd91970df6288b3f2828ef8ab913280ba854b53a51e77f",
+          "3": "300513d80fb95e9595db43d3885f7b75d127ea0d3257a28201571be0f668bfaa"
+        }
+      }
+    },
+    {
+      "code": "603272",
+      "announcement_id": "1225679620",
+      "pages": [
+        1,
+        3,
+        4,
+        7,
+        8
+      ],
+      "answer": "拟将14000万元担保额度转入资产负债率超70%的子公司类别，预计总额仍19000万元；实际担保余额2200万元，相关协议尚未签署，仍待股东会。",
+      "boundary": "不是新增14000万元已执行担保或19000万元实际余额。首表前后公司额度相同、分类表高负债率类别前期栏为0，两种表格口径分别保留；94.41%与74.10%是两家子公司资产负债率，不是母公司担保损失率。",
+      "label": "联翔：额度分类与实际余额",
+      "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679620",
+        "adjunct_url": "finalpage/2026-11-20/1225679620.PDF",
+        "title": "关于调整对外担保额度预计的公告",
+        "codes": [
+          "603272"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679620.PDF",
+        "sha256": "9faedc0dc3e21f7ea5be44e887444896d106e639bda983df2f1a560c4415f8d9",
+        "bytes": 164693,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9faedc0dc3e21f7ea5be44e887444896d106e639bda983df2f1a560c4415f8d9.pdf",
+        "pages": 8,
+        "observed_at": "2026-11-21T00:06:20.814501+00:00",
+        "visual_physical_pages": [
+          1,
+          3,
+          4,
+          7,
+          8
+        ],
+        "visual_image_sha256": {
+          "1": "be84b666becfaa8ec5ae609c79facc90a4aadc65c01d3ecd66f2ff95356e2dff",
+          "3": "96ee239b8bde9cc290f2d0b3f21a01d369b9e139454a5b9befb2ecd2f81b6c6e",
+          "4": "d473e8820407ac41a13fbc16c0c8bdeaf1ff464a4c2b65e4de281baa231304f4",
+          "7": "5f5c1debe7758b3123ec139142a11607f7ff565b38d21c774e0771e9596a8714",
+          "8": "aaa69e8c7ba367b70bba6457ae5f8be02b737a5f20cf4dfc3ddabbf6dfb15d11"
+        }
+      }
+    },
+    {
+      "code": "603378",
+      "announcement_id": "1225679067",
+      "pages": [
+        1,
+        2,
+        4
+      ],
+      "answer": "滁州子公司签贷款重组协议，借款期限延至2029年11月16日；同一3000万元借款由公司连带保证及子公司应收账款质押支持。披露相互担保累计逾期157793.23万元。",
+      "boundary": "两种担保不简单相加成6000万元新借款，展期不是偿清。总余额221350.75万元与逾期157793.23万元不能相加成损失；末尾“无逾期对外担保”保留其范围措辞，不抵消明确的内部相互担保逾期。摘要表写“亚士创能科技（滁州）”，正文借款人为“亚士创能新材料（滁州）”，主体名称差异保留待核，不自行认证同一法人。",
+      "label": "亚士：展期与担保逾期",
+      "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679067",
+        "adjunct_url": "finalpage/2026-11-20/1225679067.PDF",
+        "title": "亚士创能关于为控股子公司提供担保的公告",
+        "codes": [
+          "603378"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679067.PDF",
+        "sha256": "47f838dc6f5f7be4bf06676d88b6664c3dee91b40487b0193e9f8d0a0b1b7c10",
+        "bytes": 111869,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/47f838dc6f5f7be4bf06676d88b6664c3dee91b40487b0193e9f8d0a0b1b7c10.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:06:21.014828+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          4
+        ],
+        "visual_image_sha256": {
+          "1": "0efcc0f9e4759a7ca39373e635f329507376e602f63bbdf72b101eafe95e9376",
+          "2": "31f1e820ef565686b2c88fb95fbb183c3e9eaa13db073dbf262399d2698b1dae",
+          "4": "9ca95c8d2667880f8585627bb8904b68f3bd2dba448d34dc75faa710d4b84201"
+        }
+      }
+    },
+    {
+      "code": "603828",
+      "announcement_id": "1225680166",
+      "pages": [
+        1,
+        4
+      ],
+      "answer": "董事会通过拟为两家全资子公司申请授信分别提供最高1000万元和500万元担保；公告称协议尚未签，担保余额为0。",
+      "boundary": "1500万元是拟担保上限，不是已借款、已支出或已代偿。零余额是截至披露的公司报告口径，不保证未来没有风险；合同金额和期限仍待实际签署。",
+      "label": "利达：拟担保与未签合同",
+      "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225680166",
+        "adjunct_url": "finalpage/2026-11-20/1225680166.PDF",
+        "title": "柯利达关于为全资子公司申请综合授信提供担保的公告",
+        "codes": [
+          "603828"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225680166.PDF",
+        "sha256": "3390217ae657bbc1ba766a5f8ac34d86432dedc0bf05a5683e85fb990e79676b",
+        "bytes": 121430,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/3390217ae657bbc1ba766a5f8ac34d86432dedc0bf05a5683e85fb990e79676b.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:06:21.148869+00:00",
+        "visual_physical_pages": [
+          1,
+          4
+        ],
+        "visual_image_sha256": {
+          "1": "b7672af64e89d273edec1cddb0bba050b0d234e05bcb37a5041c02b888276137",
+          "4": "f1722a809b94b3c046fb93669ea3eaa79a572f2203dcdb8249abd6ea4251e6cc"
         }
       }
     }

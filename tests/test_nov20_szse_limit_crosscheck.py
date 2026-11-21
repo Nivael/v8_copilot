@@ -18,3 +18,8 @@ def test_recovers_only_prior_missing_active_stock_and_preserves_prior_evidence()
     assert path.read_bytes()==before
     assert result['prior_partial_sha256']==sha256(before).hexdigest()
     assert json.loads(before)['rows'][0]['status']=='unresolved'
+
+
+def test_published_reading_replays_and_retains_scope():
+    from build_nov20_szse_limit_reading import reading as projected
+    assert projected()==json.loads(Path('web/src/nov20SzseLimitComplete.json').read_text())

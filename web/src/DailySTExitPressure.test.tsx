@@ -15,9 +15,12 @@ it('does not fill an uncovered historical date with zero',()=>{
  expect(screen.queryByRole('table')).not.toBeInTheDocument()
  expect(screen.getByRole('complementary')).toHaveTextContent('状态未知，不等于没有跌停')
 })
-it('keeps Nov20 partial scope apart from the prior nine-day groups',()=>{
+it('publishes completed dated scope while retaining the old partial stage',()=>{
  render(<DailySTExitPressure day="2026-11-20"/>);
  expect(screen.queryByRole('table')).not.toBeInTheDocument()
  expect(screen.getByRole('complementary')).toHaveTextContent('1只有成交但报价缺失')
- expect(screen.getByRole('complementary')).toHaveTextContent('不代表全部72只有成交样本')
+ expect(screen.getByRole('complementary')).toHaveTextContent('72只有成交股票已全部核对')
+ expect(screen.getByRole('complementary')).toHaveTextContent('*ST美丽')
+ expect(screen.getByRole('complementary')).toHaveTextContent('补齐改变了覆盖完整性，未改变触限计数')
+ expect(screen.getByRole('link',{name:'查看此前71只阶段与原缺口 →'})).toHaveTextContent('此前71只阶段')
 })

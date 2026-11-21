@@ -33,6 +33,11 @@
       "file": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
       "sha256": "2adc157ac0dc3aca61d3e2887b7ea9a1411c9a2a1990380ccb8251341cbfb542",
       "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
+    },
+    {
+      "file": "NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json",
+      "sha256": "af8bb742f78e05a5b94db0822f9631b5d1467d0380f9ce33e50bbcb7ec279f25",
+      "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
     }
   ],
   "counts": {
@@ -42,10 +47,10 @@
     "unique_attachment_identities": 41,
     "nonempty_companies": 20
   },
-  "reviewed_count": 24,
-  "remaining_count": 17,
-  "text_pages": 90,
-  "visual_pages": 66,
+  "reviewed_count": 26,
+  "remaining_count": 15,
+  "text_pages": 133,
+  "visual_pages": 77,
   "findings": [
     {
       "code": "002122",
@@ -911,6 +916,95 @@
         "visual_image_sha256": {
           "1": "59fb1d47aa215fda66e9413679fa4c3b9ef863fad3b6a65727830d1906bc16af",
           "2": "cb2414cddd48af3671ce2bef33ebdc7eb0968ec5bf82947870b1e6145bce2cbd"
+        }
+      }
+    },
+    {
+      "code": "002586",
+      "announcement_id": "1225679017",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "answer": "围海新购1.3亿元结构性存款，11月19日起息、2027年2月22日到期；截至公告未到期理财合计3.8亿元，不能直接当作随时可用现金。",
+      "boundary": "4亿元是12个月内可滚动使用的授权额度，不把累计买入金额当同时占用。产品列保本浮动收益型、预期年化0.65%—1.90%，不保证已赚取该收益；提前赎回可能违约或损失利息。五笔已到期产品披露投资收益合计104.47万元，但未取得独立银行赎回及收益到账凭证，不认定已逐笔银行核实。",
+      "label": "围海：理财期限与现金",
+      "review_phase": "NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679017",
+        "adjunct_url": "finalpage/2026-11-20/1225679017.PDF",
+        "title": "关于使用公司闲置自有资金进行委托理财的进展公告",
+        "codes": [
+          "002586"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679017.PDF",
+        "sha256": "ad15dc5c92cff687a179e2e26d44d9ea4a75a4aa2288e76c5295012bc3135e96",
+        "bytes": 131296,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/ad15dc5c92cff687a179e2e26d44d9ea4a75a4aa2288e76c5295012bc3135e96.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:14:12.472522+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "visual_image_sha256": {
+          "1": "175c81b0af801b6272be0ee325a0394e0ed7e0e8f05dfd0d1a7f17cc1c4b2910",
+          "2": "f88a60c66083116294e83e2612d95c40ed4f70bd067f271e7131bd6471db9299",
+          "3": "3a6280fc5438b65a15586fa1855afd7d1d3fdfcb165f9f10ad382c206a98801f",
+          "4": "1b81537b621b02449f61b49e24331d5febe9fa77f19663e0cc6280ae222248c8"
+        }
+      }
+    },
+    {
+      "code": "002547",
+      "announcement_id": "1225679971",
+      "pages": [
+        1,
+        5,
+        6,
+        14,
+        37,
+        38,
+        39
+      ],
+      "answer": "春兴拟处置苏州公司及两家子公司房地产，评估附件以9月17日为基准，选收益法市场价值21498.38万元，按71.23%变现折扣列清算价值15313.29万元；这不是成交价或净回款。",
+      "boundary": "清算值含增值税，未扣土地增值税、契税、交易手续费、拍卖佣金、过户费等处置税费及中介费用。部分房屋未办权属登记，报告未考虑未来办证面积差异；部分资产已抵押，不证明解押或交割。报告称未获账面情况、无法作账面比较，不能将与公司另披露账面值的差额当已实现收益。该苏州资产与控股股东上海抵押房产分开。附件39页全文提取，仅核看所列7个关键图像页，未独立重建评估模型。",
+      "label": "春兴：清算估值与净回款",
+      "review_phase": "NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679971",
+        "adjunct_url": "finalpage/2026-11-20/1225679971.PDF",
+        "title": "公司及两家下属子公司名下部分房地产清算价值评估项目资产评估说明",
+        "codes": [
+          "002547"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679971.PDF",
+        "sha256": "1391f912f92862222a711ff901207ee9573496cad7bb069b6a0636709b027c26",
+        "bytes": 11291776,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/1391f912f92862222a711ff901207ee9573496cad7bb069b6a0636709b027c26.pdf",
+        "pages": 39,
+        "observed_at": "2026-11-21T00:14:12.343591+00:00",
+        "visual_physical_pages": [
+          1,
+          5,
+          6,
+          14,
+          37,
+          38,
+          39
+        ],
+        "visual_image_sha256": {
+          "1": "e4aad41265b7656a7f61eca2d8a231f456eea2c59288fb083602ebc134e1dc67",
+          "5": "a219d003db5bc7086dfc2d11825204d4e8d8e3a15d9daa8461543c92646f880d",
+          "6": "24aa67355ee240ae8b8d5333dc0961c562be12ac4b42f9f9d9016610919162f8",
+          "14": "b76e776cb8ed2e31ea12114d8fce0c44f42e89ecb75a51e97be0cd859a479c7a",
+          "37": "bd16eb80e5c369a291c09431ac65d18ba9a74ea0fd3ea0c927e2e301b831ca05",
+          "38": "a73387e87be08ad8a8c44bbba53fb9a430a6c6114f5efb41d136e08a41c1a09b",
+          "39": "b4a8a0293f19ff67e1aeef83d5a2ac16322ee991083e2ae613cac27a35b65ec0"
         }
       }
     }

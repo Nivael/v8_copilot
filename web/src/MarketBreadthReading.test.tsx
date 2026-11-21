@@ -36,3 +36,18 @@ it('opens the severity comparison directly from the first-screen evidence answer
  fireEvent.click(screen.getByRole('button',{name:'先看风险线索'}));
  expect(screen.getByRole('heading',{name:'先分清风险来自哪里'})).toBeVisible()
 })
+it('opens limit state versus price directly from the risk question and can return',()=>{
+ render(<MarketBreadthReading data={data} priceAsOf="2026-11-20"/>);
+ fireEvent.click(screen.getByRole('button',{name:'核对限价与退出缺口'}));
+ expect(screen.getByRole('heading',{name:'离开收盘下限，不等于当天已经涨回来'})).toBeVisible();
+ expect(screen.getByRole('region',{name:'同成员封限与价格变化'})).toHaveTextContent('5只当天仍跌');
+ expect(screen.getByRole('button',{name:'封限减少，风险缓和了吗？'})).toHaveAttribute('aria-pressed','true');
+ fireEvent.click(screen.getByRole('button',{name:'先看风险线索'}));
+ expect(screen.getByRole('heading',{name:'先分清风险来自哪里'})).toBeVisible();
+})
+it('does not apply the Nov20 transition answer to another date',()=>{
+ render(<MarketBreadthReading data={{...data,as_of:'2026-11-23'}} priceAsOf="2026-11-23"/>);
+ fireEvent.click(screen.getByRole('button',{name:'封限减少，风险缓和了吗？'}));
+ expect(screen.queryByRole('region',{name:'同成员封限与价格变化'})).not.toBeInTheDocument();
+ expect(screen.getByText('同成员状态对照截至11月20日，不套用到所选的新日期。')).toBeVisible();
+})

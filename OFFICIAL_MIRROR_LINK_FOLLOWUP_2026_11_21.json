@@ -1,0 +1,31 @@
+{
+  "version": "official_mirror_link_followup_v1",
+  "observed_at": "2026-11-21T02:03:46.325631+00:00",
+  "rows": [
+    {
+      "symbol": "603389",
+      "mirror_id": "SINA-12419797",
+      "candidate_url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-06-30/603389_20260630_MC37.pdf",
+      "discovered_via": "https://q.stock.sohu.com/cn/603389/bw.shtml",
+      "observation": "web reader content type text/html, zero readable lines",
+      "official_pdf_obtained": false
+    },
+    {
+      "symbol": "603721",
+      "mirror_id": "SINA-12361633",
+      "candidate_url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-30/603721_20260530_Q1KV.pdf",
+      "discovered_via": "https://3g.zszq.com/ywgg/bulletin?id=fb4HgAvK",
+      "observation": "web reader content type text/html, zero readable lines",
+      "official_pdf_obtained": false
+    }
+  ],
+  "search_index_caveat": {
+    "url": "https://www.sse.com.cn/assortment/stock/list/info/announcement/index.shtml?productId=603389",
+    "search_snippet": "contained June30 target announcement",
+    "opened_page": "query form and site navigation, no target announcement body",
+    "certifies_official_pdf": false
+  },
+  "unchanged_gap_count": 8,
+  "next_source_policy": "Do not repeat static.sse.com.cn PDF access for this batch without a changed access condition; prefer issuer or another official repository",
+  "new_independent_validations": 0
+}

@@ -2,13 +2,15 @@
 from pathlib import Path
 from hashlib import sha256
 import json,gzip
-from canonical_json import digest
 
 
-def reading():
-    path=Path('TIANZE_OFFICIAL_REPORT_CONFIRMATION_2026_11_21.json');e=json.loads(path.read_text());s=e['source'];store=Path(s['source_store']);raw=(store/(s['sha256']+'.pdf')).read_bytes()
+def reading(path=Path('TIANZE_OFFICIAL_REPORT_CONFIRMATION_2026_11_21.json')):
+    path=Path(path);e=json.loads(path.read_text());s=e['source'];store=Path(s['source_store']);raw=(store/(s['sha256']+'.pdf')).read_bytes()
     if sha256(raw).hexdigest()!=s['sha256'] or len(raw)!=s['bytes'] or not raw.startswith(b'%PDF-'):raise ValueError('official PDF bytes differ')
     if s['symbol']!='603721' or s['announcement_id']!='1225508648' or s['url']!='https://static.cninfo.com.cn/finalpage/2026-08-27/1225508648.PDF' or s['published_on']!='2026-08-27':raise ValueError('report identity differs')
+    if e['confirmation']['effective_on']!='2026-06-02' or e['confirmation']['reported_on']!=s['published_on']:raise ValueError('confirmation dates differ from reviewed clause')
+    if s.get('final_url')!=s['url'] or s.get('status')!=200:raise ValueError('official response identity differs')
+    if e['original_mirror_id']!='SINA-12361633':raise ValueError('mirror event identity differs')
     text=e['selected_page_text'];image=(store/(e['selected_page_image_sha256']+'.png')).read_bytes()
     if sha256(text.encode()).hexdigest()!=e['selected_page_text_sha256'] or sha256(image).hexdigest()!=e['selected_page_image_sha256']:raise ValueError('saved page differs')
     compact=''.join(text.split())

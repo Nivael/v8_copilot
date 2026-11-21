@@ -1,0 +1,22 @@
+{
+  "evidence_sha256": "23cc97893e2ee12a9b1d7c13687c60c72cc0e707518c6ef124af23760831a37d",
+  "fixed_limit_audit_sha256": "7345f8be2b2afafb1467ace999e2d8f9470e243bb00529417034348ef36a4809",
+  "rows": [
+    {
+      "code": "000016.SZ",
+      "date": "2026-10-23",
+      "classification": "主动终止上市后摘牌",
+      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-10-23/4334c9b6-2093-468d-aa67-4d33b8f7a8a1.PDF",
+      "title": "*ST康佳A：关于股票终止上市暨摘牌的公告",
+      "source_sha256": "63d22af39ae73ee789d4492c4643f5a4b4ea02edfe51992d8752028b12dc320d"
+    },
+    {
+      "code": "002731.SZ",
+      "date": "2026-11-13",
+      "classification": "退市整理期结束后摘牌",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-13/1225669888.PDF",
+      "title": "关于公司股票终止上市暨摘牌的公告",
+      "source_sha256": "26788d351ebfd99bd32b4df65aeaa00f2b528cb5e975ad40b420106a78daaac3"
+    }
+  ]
+}

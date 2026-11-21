@@ -1,0 +1,10 @@
+{
+  "version": "tianze_pdf_page_replay_v1",
+  "source_sha256": "0f58a68d432f2d3e20ba185e30fdbc9b12a4046076d6416bba2a885dd3ca77a8",
+  "total_pages": 176,
+  "reviewed_page": 19,
+  "text_exact": true,
+  "image_exact": true,
+  "original_notice_debt_closed": false,
+  "scope": "One selected page re-extracted/rendered; not whole-report review or a new independent case"
+}

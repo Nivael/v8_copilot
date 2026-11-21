@@ -662,3 +662,14 @@ tianze_report_confirmation.py重核已保存PDF头/长度/SHA、明确来源ID/U
 reading支持显式临时候选文件以测试拒绝，不写原件/页面。6项检查通过：真实来源/投影一致，改实施日、改报告日、改最终URL、换原镜像事件、提前关闭原公告缺口均拒绝，原根证据字节保持。未改当前有效数据或投影，未新采集、新研究或独立验证，未重复前端/页面核验。日志out/tianze-confirmation-boundary-20261121。
 
 仍未以PDF解析器重新从源字节生成全文/图像作为该脚本依赖；现有来源字节及已审页文本/图像摘要核验与上一轮实际页图审读分别保留，不将元数据防漂移测试扩称原件全文自动认证。原八份撤销/分红公告官方字节待补限制保持。
+
+
+## 天择已审页原PDF直接重放通过
+
+补上前轮明确保留的页文本/图像来源重放限制。verify_tianze_pdf_page.py直接核保存官方PDF字节SHA/长度，使用PDFium打开核176页，从第19页重新提取原文本并按原1.4倍比例渲染。当前文字与已审文本完全一致，PNG字节与原已审图像完全一致，报告TIANZE_PDF_PAGE_REPLAY_2026_11_21.json。
+
+只读命令：uv run --no-project --with pypdfium2 --with pillow python verify_tianze_pdf_page.py。不写源件或页面；渲染不同即拒绝并要求核版本，不能自动覆盖旧证据。
+
+两项检查通过：实际PDF页重放一致；替换提取文本并重新计算摘要仍不能通过PDF原文核对。测试命令：uv run --no-project --with pypdfium2 --with pillow --with pytest python -m pytest tests/test_tianze_pdf_page_replay.py -q。无新网络来源、研究或独立验证，不改前端，未重复页面/构建。
+
+检查范围仅第19页，不扩为176页全文审读，不认证5月30日撤销原公告已取得官方字节。已阅页来源链现更强，但后续报告日和原实施日的区别、8原公告缺口保持。后续资料改变时先运行原件→页→投影核验，不凭元数据一致就发布。

@@ -43,6 +43,11 @@
       "file": "NOV20_MEETING_BODY_REVIEW_2026_11_21.json",
       "sha256": "8f15b0066efbb1d0a5d445125afd4a7e7bbe42f2b41dd3b6260e030c0a83bae3",
       "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
+    },
+    {
+      "file": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "sha256": "b6c27785c6d876b3c9a61e6e18a47395e7d238615d30381cc17ca1e7fbbcf231",
+      "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
     }
   ],
   "counts": {
@@ -52,10 +57,12 @@
     "unique_attachment_identities": 41,
     "nonempty_companies": 20
   },
-  "reviewed_count": 31,
-  "remaining_count": 10,
-  "text_pages": 153,
-  "visual_pages": 88,
+  "reviewed_count": 41,
+  "remaining_count": 0,
+  "document_pages": 179,
+  "text_pages": 173,
+  "scanned_pages": 6,
+  "visual_pages": 107,
   "findings": [
     {
       "code": "002122",
@@ -68,6 +75,7 @@
       "boundary": "截至21日不可将23日拟生效状态倒填为20日已摘帽；未独立取得交易所批准原件。",
       "label": "汇洲：获批与生效",
       "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679977",
         "adjunct_url": "finalpage/2026-11-20/1225679977.PDF",
@@ -101,6 +109,7 @@
       "boundary": "未披露本次实收，不推定债权消灭、回款或确定损益；正文落款19日，目录附件路径20日。",
       "label": "美丽：执行与回款",
       "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679819",
         "adjunct_url": "finalpage/2026-11-20/1225679819.PDF",
@@ -136,6 +145,7 @@
       "boundary": "工商及资质变更尚有不确定性，不当已交割、免费收益或已实缴4000万元。",
       "label": "惠程：零元收购",
       "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679944",
         "adjunct_url": "finalpage/2026-11-20/1225679944.PDF",
@@ -172,6 +182,7 @@
       "boundary": "不当1500万元已实现收入、现金实收或确定订单；累计关联事项24788.22万元为公告所述已批准交易金额，不能当现金流。",
       "label": "惠程：关联合作",
       "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679946",
         "adjunct_url": "finalpage/2026-11-20/1225679946.PDF",
@@ -208,6 +219,7 @@
       "code": "002547",
       "label": "春兴：无条件利息豁免",
       "review_phase": "NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679975",
         "adjunct_url": "finalpage/2026-11-20/1225679975.PDF",
@@ -246,6 +258,7 @@
       "code": "002547",
       "label": "春兴：先付款才可豁免",
       "review_phase": "NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679974",
         "adjunct_url": "finalpage/2026-11-20/1225679974.PDF",
@@ -286,6 +299,7 @@
       "code": "002547",
       "label": "春兴：拟售资产",
       "review_phase": "NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679970",
         "adjunct_url": "finalpage/2026-11-20/1225679970.PDF",
@@ -324,6 +338,7 @@
       "boundary": "流拍没有产生本笔竞买成交或过户；四笔预告不当已成交。本文件不替代此前其他批次股份过户事实，也不认定控制权已转移。未来表最后一行原文为“3,000000”，保留格式异常，不静默修成已核法院拍卖数量。",
       "label": "宝馨：本笔流拍与后续预告",
       "review_phase": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679913",
         "adjunct_url": "finalpage/2026-11-20/1225679913.PDF",
@@ -360,6 +375,7 @@
       "boundary": "约10.44亿元是本公告案件涉案金额，不等于本期新损失、已支付或全部新案。驳回起诉不直接当债务清偿；拟处置股权不当已成交/到账，损益仍以相关结果和确认口径为准。",
       "label": "瑞茂：旧案进展与拟执行",
       "review_phase": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679789",
         "adjunct_url": "finalpage/2026-11-20/1225679789.PDF",
@@ -399,6 +415,7 @@
       "boundary": "尚未成交、缴款或过户。公告称若本次全部过户，合计持股由36.36%降至32.12%、华易仍为控股股东；这是假设本笔结果，不是最终控制权保证。股东华易及华瀚处预重整，后续正式受理可能影响未完成拍卖；不是上市公司已进入重整。",
       "label": "喜临门：拍卖公示与股东预重整",
       "review_phase": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679623",
         "adjunct_url": "finalpage/2026-11-20/1225679623.PDF",
@@ -436,6 +453,7 @@
       "boundary": "不是本次增加1个百分点。5000万—8000万元为此前增持计划，本文未披露本次实付金额，不能由股数估出资金完成率；计划尚未实施完毕。股东在市场买股不等于上市公司取得融资。正文落款19日、附件路径20日分别保留。",
       "label": "美丽：实际增持与整数刻度",
       "review_phase": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679817",
         "adjunct_url": "finalpage/2026-11-20/1225679817.PDF",
@@ -472,6 +490,7 @@
       "boundary": "本文为计划，未证明已经买入或资金已筹齐；存在延迟/无法完成风险。2元是计划买价上限，不是股价底线或收益承诺；股东增持也不是公司现金流入。",
       "label": "雅博：增持计划尚待执行",
       "review_phase": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679021",
         "adjunct_url": "finalpage/2026-11-20/1225679021.PDF",
@@ -506,6 +525,7 @@
       "boundary": "这是公司回购支出，与股东增持主体不同；只是计划部分执行，不当全部完成。用途为注销减资，本文未证明注销已完成，也不证明经营修复或之后股价上涨。",
       "label": "国中：首次回购与注销用途",
       "review_phase": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679176",
         "adjunct_url": "finalpage/2026-11-20/1225679176.PDF",
@@ -540,6 +560,7 @@
       "boundary": "反担保人、担保机构与被保证人分开；保函期限6个月，反担保至保函有效期届满后三年，不是同一期限。本文仍有“拟出具”措辞，不据此认证已代偿或上市公司取得5000万元现金；2470.94%净资产比率不当损失率。",
       "label": "威领：反担保与余额",
       "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679477",
         "adjunct_url": "finalpage/2026-11-20/1225679477.PDF",
@@ -575,6 +596,7 @@
       "boundary": "担保对象是子公司，贷款申请与担保条款不证明贷款已到账或发生代偿。与同日公司回购415.74万元支出分开，不把担保本金当直接现金支出或新增损失。",
       "label": "国中：子公司贷款担保",
       "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679178",
         "adjunct_url": "finalpage/2026-11-20/1225679178.PDF",
@@ -614,6 +636,7 @@
       "boundary": "不是新增14000万元已执行担保或19000万元实际余额。首表前后公司额度相同、分类表高负债率类别前期栏为0，两种表格口径分别保留；94.41%与74.10%是两家子公司资产负债率，不是母公司担保损失率。",
       "label": "联翔：额度分类与实际余额",
       "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679620",
         "adjunct_url": "finalpage/2026-11-20/1225679620.PDF",
@@ -655,6 +678,7 @@
       "boundary": "两种担保不简单相加成6000万元新借款，展期不是偿清。总余额221350.75万元与逾期157793.23万元不能相加成损失；末尾“无逾期对外担保”保留其范围措辞，不抵消明确的内部相互担保逾期。摘要表写“亚士创能科技（滁州）”，正文借款人为“亚士创能新材料（滁州）”，主体名称差异保留待核，不自行认证同一法人。",
       "label": "亚士：展期与担保逾期",
       "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679067",
         "adjunct_url": "finalpage/2026-11-20/1225679067.PDF",
@@ -691,6 +715,7 @@
       "boundary": "1500万元是拟担保上限，不是已借款、已支出或已代偿。零余额是截至披露的公司报告口径，不保证未来没有风险；合同金额和期限仍待实际签署。",
       "label": "利达：拟担保与未签合同",
       "review_phase": "NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225680166",
         "adjunct_url": "finalpage/2026-11-20/1225680166.PDF",
@@ -725,6 +750,7 @@
       "boundary": "审计及内控无法表示意见的影响消除仍在推进。公司自查称无未披露重大事项，不等于风险清零或股价上涨证明修复；落款19日与目录20日分开，不把本次重述算新的重组受理。",
       "label": "美丽：异动与庭外重组",
       "review_phase": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679818",
         "adjunct_url": "finalpage/2026-11-20/1225679818.PDF",
@@ -759,6 +785,7 @@
       "boundary": "不是A股异动触发事件，不将B股涨跌套到A股或计入A股事件窗口。公司称生产运行正常、无未披露重大事项属于截至披露的自查说明，不认证偿债或经营风险已解除；落款19日。",
       "label": "晨鸣：B股异动范围",
       "review_phase": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225680178",
         "adjunct_url": "finalpage/2026-11-20/1225680178.PDF",
@@ -793,6 +820,7 @@
       "boundary": "公司列19日市净率12.43、行业2.42为披露比较，不当独立估值或价格目标；三季扣非盈利不证明新靶材业务已贡献。正文公司名为铟靶新材（哈尔滨），证券简称仍列京蓝科技、代码000711，名称与状态分别核，不把历史固定样本称当日ST。",
       "label": "京蓝：量产与估值边界",
       "review_phase": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679891",
         "adjunct_url": "finalpage/2026-11-20/1225679891.PDF",
@@ -827,6 +855,7 @@
       "boundary": "这是同一交易的审批配套，不能把会议决议与专项公告重复累计为两次成交或收益；关联议案有一票回避，不把董事会通过当交割、实际订单或收入。",
       "label": "惠程：同交易审批配套",
       "review_phase": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679945",
         "adjunct_url": "finalpage/2026-11-20/1225679945.PDF",
@@ -863,6 +892,7 @@
       "boundary": "截至10月31日两笔应收分别28490.19万和8042.55万，房产2025年末公允值5089.20万。董事会同意附条件配合，不证明第二顺位已登记、融资已到账或应收已回收；估值也不是可回收现金。董责险全体董事回避、直接提交股东会，不写成董事会已通过该险购买。",
       "label": "春兴：附条件追加抵押",
       "review_phase": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679972",
         "adjunct_url": "finalpage/2026-11-20/1225679972.PDF",
@@ -901,6 +931,7 @@
       "boundary": "审批配套不是新增实际担保或已经完成股东会；不因多份文件把同一额度变化算成多次独立风险验证。",
       "label": "联翔：同担保审批配套",
       "review_phase": "NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679616",
         "adjunct_url": "finalpage/2026-11-20/1225679616.PDF",
@@ -937,6 +968,7 @@
       "boundary": "4亿元是12个月内可滚动使用的授权额度，不把累计买入金额当同时占用。产品列保本浮动收益型、预期年化0.65%—1.90%，不保证已赚取该收益；提前赎回可能违约或损失利息。五笔已到期产品披露投资收益合计104.47万元，但未取得独立银行赎回及收益到账凭证，不认定已逐笔银行核实。",
       "label": "围海：理财期限与现金",
       "review_phase": "NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679017",
         "adjunct_url": "finalpage/2026-11-20/1225679017.PDF",
@@ -980,6 +1012,7 @@
       "boundary": "清算值含增值税，未扣土地增值税、契税、交易手续费、拍卖佣金、过户费等处置税费及中介费用。部分房屋未办权属登记，报告未考虑未来办证面积差异；部分资产已抵押，不证明解押或交割。报告称未获账面情况、无法作账面比较，不能将与公司另披露账面值的差额当已实现收益。该苏州资产与控股股东上海抵押房产分开。附件39页全文提取，仅核看所列7个关键图像页，未独立重建评估模型。",
       "label": "春兴：清算估值与净回款",
       "review_phase": "NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679971",
         "adjunct_url": "finalpage/2026-11-20/1225679971.PDF",
@@ -1024,6 +1057,7 @@
       "boundary": "赔偿限额不是已赔款或公司现金，拟投保不是合同已经签署、保费已付或保险已生效；最终以合同为准。委员会也全体回避，不能把审议过该议题写成董事会表决通过。",
       "label": "春兴：拟投保与回避表决",
       "review_phase": "NOV20_MEETING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679976",
         "adjunct_url": "finalpage/2026-11-20/1225679976.PDF",
@@ -1058,6 +1092,7 @@
       "boundary": "第2页概称上述议案已由董事会审议通过，与同日董责险专项公告及董事会决议明确全体回避、直接上股东会的表述不同。差异保留，不据通知认定董责险已经董事会表决通过，也不把未来股东会当资产成交或保险生效。",
       "label": "春兴：股东会安排与措辞差异",
       "review_phase": "NOV20_MEETING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679973",
         "adjunct_url": "finalpage/2026-11-20/1225679973.PDF",
@@ -1093,6 +1128,7 @@
       "boundary": "股东会会议资料在20日目录公开，封面及议案落款为未来会议日25日，不证明会议已开或人事已完成。12.29%股东赣州发展美家继续行使提名权；简历另称候选人与控股股东、实际控制人及5%以上股东等无关联关系，两项披露分列，未独立核关联认定。人事变化不证明注资、控制权变更或经营修复。",
       "label": "美克：补选安排与生效条件",
       "review_phase": "NOV20_MEETING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679385",
         "adjunct_url": "finalpage/2026-11-20/1225679385.PDF",
@@ -1129,6 +1165,7 @@
       "boundary": "通知、董事会决议和专项公告是同一事项配套，不累计为多次新增担保或独立验证；未来审议安排不证明签署合同、实际担保余额增加或风险解除。",
       "label": "联翔：担保调整待股东会",
       "review_phase": "NOV20_MEETING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679624",
         "adjunct_url": "finalpage/2026-11-20/1225679624.PDF",
@@ -1163,6 +1200,7 @@
       "boundary": "三季报已于10月21日披露，说明会预告不是新增业绩结果或已答复投资者问题；落款19日与目录20日分别保留。后续答复需另查正式记录，不从参会人员或会议安排推断重组、盈利修复或行情因果。",
       "label": "龙韵：说明会预告与结果",
       "review_phase": "NOV20_MEETING_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
       "source": {
         "announcement_id": "1225679216",
         "adjunct_url": "finalpage/2026-11-20/1225679216.PDF",
@@ -1184,6 +1222,409 @@
           "1": "ee86efaccb77cdba9205be29150d89598505c32b0a36087d6fa3203b3aa8634e",
           "2": "aaab6e81d5a2b7fdfbb738b7bfc10c59c6c15c0fcac3fa17d9860b5cad8257c5"
         }
+      }
+    },
+    {
+      "code": "002323",
+      "announcement_id": "1225679022",
+      "pages": [
+        1,
+        3
+      ],
+      "answer": "雅博披露王东挺职工董事辞职于11月19日送达生效，当日职工代表大会选举王立冠，任期从表决通过日起算。",
+      "boundary": "这是公司披露已完成的职工代表选举，不是等待股东会的独立董事提名。前任仍在公司任职；简历任职资格和无关联等为公司披露，未作独立人事核验，不推控制权、增持或经营修复。",
+      "label": "雅博：职工董事已选举",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679022",
+        "adjunct_url": "finalpage/2026-11-20/1225679022.PDF",
+        "title": "关于职工董事辞职及补选第七届董事会职工董事的公告",
+        "codes": [
+          "002323"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679022.PDF",
+        "sha256": "d25e01711a27c30c9262db8d8e13c12ece71e51d7a31eba12c7ea2ddd82709c5",
+        "bytes": 110553,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/d25e01711a27c30c9262db8d8e13c12ece71e51d7a31eba12c7ea2ddd82709c5.pdf",
+        "pages": 3,
+        "observed_at": "2026-11-21T00:28:57.317853+00:00",
+        "visual_physical_pages": [
+          1,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "280211c62eced8b7abf15e6191f1bac5f5e971328d7469e03735ceb799fdf9ac",
+          "3": "133bbca2168a48be3e0f6a4578d14b5d7432fe435b8d99444e127b58496430e7"
+        },
+        "text_physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600525",
+      "announcement_id": "1225679959",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "长园杨欢于11月18日辞去董秘并不再在公司及子公司任职；董事长由杨在空缺期间代行，正式选聘尚待完成。",
+      "boundary": "正文证券简称为长园集团，历史固定样本不代表当日仍ST。代行不是已聘任新董秘；公司称不影响日常经营属于自述，不能据离职推断未披露风险或据正常措辞认风险解除。",
+      "label": "长园：董秘空缺与代行",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679959",
+        "adjunct_url": "finalpage/2026-11-20/1225679959.PDF",
+        "title": "关于董事会秘书离任暨董事长代行董事会秘书职责的公告",
+        "codes": [
+          "600525"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679959.PDF",
+        "sha256": "a9bafcfd9086b2baaa3f75f06a4c2ad793e28e4681f61d6a20d889196e94ee4e",
+        "bytes": 81911,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/a9bafcfd9086b2baaa3f75f06a4c2ad793e28e4681f61d6a20d889196e94ee4e.pdf",
+        "pages": 2,
+        "observed_at": "2026-11-21T00:28:57.416532+00:00",
+        "visual_physical_pages": [
+          1,
+          2
+        ],
+        "visual_image_sha256": {
+          "1": "799ac3016a0f6402052cab3896954df4b9f640cfdb1406f780602fae3a5a82df",
+          "2": "e92c8ef6b235e5d5e3565584cdaf96f0bdb6d4995740d88076f0fb88b2fc8bb3"
+        },
+        "text_physical_pages": [
+          1,
+          2
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679993",
+      "pages": [
+        1,
+        3
+      ],
+      "answer": "高科11月19日董事会聘梁永振为董秘，任期从董事会通过日起；唐庆辞董秘后继续任副董事长等职务。",
+      "boundary": "公司称已完成交易所备案，未独立取得备案凭据；本项可推进为公司披露已聘任，不混同独立董事仍待股东会选举。旧任并非离开公司，聘任不证明财务或内控问题已修复。",
+      "label": "高科：董秘已聘任",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679993",
+        "adjunct_url": "finalpage/2026-11-20/1225679993.PDF",
+        "title": "中国高科关于变更董事会秘书的公告",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679993.PDF",
+        "sha256": "be66dff0bbf7c945843cdb010646fbda04808bc868af1e921560a7bf14857735",
+        "bytes": 136731,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/be66dff0bbf7c945843cdb010646fbda04808bc868af1e921560a7bf14857735.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:28:57.675700+00:00",
+        "visual_physical_pages": [
+          1,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "50ecff4d28820a0c3e7606ac4315b10dbbfa26b4386ec7fd4938a34a1f2a8690",
+          "3": "9deeb381b347b5b6e94c8c64c3aff70e9c90659a6c1a7f010cf1aac53b3fcae7"
+        },
+        "text_physical_pages": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679990",
+      "pages": [
+        1
+      ],
+      "answer": "高科11月19日董事会聘童方宁为证券事务代表，协助董秘；潘睿莹因工作调整辞去该职。",
+      "boundary": "这是证券事务代表聘任，与董秘聘任及独立董事提名为不同岗位，不把三个岗位合成三个经营利好，也不从履历推断注资或重组。",
+      "label": "高科：证代已聘任",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679990",
+        "adjunct_url": "finalpage/2026-11-20/1225679990.PDF",
+        "title": "中国高科关于变更证券事务代表的公告",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679990.PDF",
+        "sha256": "f94a81a6410c40355485156d1520c6db11a8ca556eb2b25237933b84f709827e",
+        "bytes": 121795,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/f94a81a6410c40355485156d1520c6db11a8ca556eb2b25237933b84f709827e.pdf",
+        "pages": 2,
+        "observed_at": "2026-11-21T00:28:57.850571+00:00",
+        "visual_physical_pages": [
+          1
+        ],
+        "visual_image_sha256": {
+          "1": "cc31876d456bf170ecba77e33deb7a23a659377c0c033c3de02e7a8d308e3164"
+        },
+        "text_physical_pages": [
+          1,
+          2
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679989",
+      "pages": [
+        1
+      ],
+      "answer": "高科提名唐勇为独立董事候选人，当选后拟任审计委员会主任；仍待股东会审议。",
+      "boundary": "公告说明前独董辞职后独董比例、审计委员会构成及会计专业召集人存在不足，这是补选背景。候选人承诺参加培训不等于已取得证明，提名与资格审查不证明完成补选或审计意见已消除。",
+      "label": "高科：独董仍待选举",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679989",
+        "adjunct_url": "finalpage/2026-11-20/1225679989.PDF",
+        "title": "中国高科关于补选公司第十一届董事会独立董事的公告",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679989.PDF",
+        "sha256": "66a666f29c7f86ca63b4a2ddb8c9cd60ed3d7a46a23e8fb3831bee58c7f74345",
+        "bytes": 116601,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/66a666f29c7f86ca63b4a2ddb8c9cd60ed3d7a46a23e8fb3831bee58c7f74345.pdf",
+        "pages": 2,
+        "observed_at": "2026-11-21T00:28:57.948677+00:00",
+        "visual_physical_pages": [
+          1
+        ],
+        "visual_image_sha256": {
+          "1": "299b497c2ee6c4ed43c764c2c21f680fc91c7f4f3f2d59d7dbac805e7b733e0f"
+        },
+        "text_physical_pages": [
+          1,
+          2
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679988",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "高科董事会通过通知时限豁免、独董候选人提名及董秘/证券事务代表聘任；仅独董提名明确继续提交股东会。",
+      "boundary": "同日董事会与专项公告是相同事项的配套，不重复计为多次聘任；全体议案通过不等于独董已获股东会选举，未由表决票数推断经营成效。",
+      "label": "高科：同事项董事会决议",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679988",
+        "adjunct_url": "finalpage/2026-11-20/1225679988.PDF",
+        "title": "中国高科第十一届董事会第十二次会议决议公告",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679988.PDF",
+        "sha256": "c5b67ac860deb9aab75bca99e02e106cf4065db26fac4b119fb514d741bd8c06",
+        "bytes": 114988,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/c5b67ac860deb9aab75bca99e02e106cf4065db26fac4b119fb514d741bd8c06.pdf",
+        "pages": 2,
+        "observed_at": "2026-11-21T00:28:58.041828+00:00",
+        "visual_physical_pages": [
+          1,
+          2
+        ],
+        "visual_image_sha256": {
+          "1": "dc44d0682b51e7c3e98684922824894052c14350118ee8346c1dfbefd7c3bd8e",
+          "2": "3ca133ff655f4cdb7c6f0bc6aad0ac10610f4ee3e70b2ab561549c780978cec6"
+        },
+        "text_physical_pages": [
+          1,
+          2
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679986",
+      "pages": [
+        1
+      ],
+      "answer": "高科提名委员会11月19日出具唐勇任职资格审查意见，并重述其将参加培训取得证明的承诺。",
+      "boundary": "公司内部审查意见不是独立第三方资格认证、交易所最终审核或股东会当选结果；与候选人/提名人声明共同组成同一补选依据。",
+      "label": "高科：内部资格审查",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679986",
+        "adjunct_url": "finalpage/2026-11-20/1225679986.PDF",
+        "title": "中国高科董事会提名委员会关于公司第十一届董事会独立董事候选人唐勇的任职资格审查意见",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679986.PDF",
+        "sha256": "9b0d7a6f1c86c0f62f5964697c7af32ac16a523cfeeba70297005b30ffd84d0f",
+        "bytes": 90451,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9b0d7a6f1c86c0f62f5964697c7af32ac16a523cfeeba70297005b30ffd84d0f.pdf",
+        "pages": 1,
+        "observed_at": "2026-11-21T00:28:58.148574+00:00",
+        "visual_physical_pages": [
+          1
+        ],
+        "visual_image_sha256": {
+          "1": "f85e12290475332759d09a5283785ce1840ecf83bb91b3cdd322cc7dbd316f7a"
+        },
+        "text_physical_pages": [
+          1
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679985",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "高科11月30日股东会增加独董选举临时提案，20.03%股东珠海长世芯于19日提出，原登记日11月23日不变。",
+      "boundary": "会后结果尚未发生；议程同时保留聘任会计师事务所议案，不把议程列示当已经续聘、完成审计或修复旧意见。股东提出提案不表示新持股或增资。",
+      "label": "高科：股东会增加提案",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "已提取全文",
+      "source": {
+        "announcement_id": "1225679985",
+        "adjunct_url": "finalpage/2026-11-20/1225679985.PDF",
+        "title": "中国高科关于2026年第六次临时股东会增加临时提案的公告",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679985.PDF",
+        "sha256": "95c731571e3559c0b4a54091a6827757ee4a00a2d6eb7e9628edcd1b6de53921",
+        "bytes": 137555,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/95c731571e3559c0b4a54091a6827757ee4a00a2d6eb7e9628edcd1b6de53921.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:28:58.339967+00:00",
+        "visual_physical_pages": [
+          1,
+          2
+        ],
+        "visual_image_sha256": {
+          "1": "7fa777e901953bdc32e3cd30cb7724f56eaede347f22b2723550b45c311badc8",
+          "2": "7b5dbf2bf9a267d15b216a642a146d9e474616767d032012aadb9181795930eb"
+        },
+        "text_physical_pages": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "scanned_physical_pages": []
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679995",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "高科唐勇候选人声明属于独立董事补选配套，承诺任职资格与独立性，并承诺将参加培训取得证明。",
+      "boundary": "三页为扫描件，无可提取文字，已逐页图像核看。声明末页手写日期读为11月12日，与20日目录公开、19日董事会正式提名分别保留，不倒填为12日市场已知；自我声明不等于当选、实际履职或第三方核验。",
+      "label": "高科：候选人扫描声明",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "扫描原件3页无可提取文字，按图像核看，未称全文提取",
+      "source": {
+        "announcement_id": "1225679995",
+        "adjunct_url": "finalpage/2026-11-20/1225679995.PDF",
+        "title": "独立董事候选人声明与承诺（唐勇）",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679995.PDF",
+        "sha256": "766319b0d711dff62ac2dc80fc0e7eaddf2ca427c7b1b9032e1ed53cf7962b90",
+        "bytes": 295931,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/766319b0d711dff62ac2dc80fc0e7eaddf2ca427c7b1b9032e1ed53cf7962b90.pdf",
+        "pages": 3,
+        "observed_at": "2026-11-21T00:28:57.512191+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "2112de99dbfbe25e9ff7e7a7ba56248b4376fe307759dc208c9fc455323f8452",
+          "2": "c9dc68f81efdae8a2cf5f56dcb0f488a082fe8a281b7c52a108569653f6e9ca9",
+          "3": "1d129e60a12eac274eba0948aeebc4dffb9f9a2481e575ebfcff4dd389e55284"
+        },
+        "text_physical_pages": [],
+        "scanned_physical_pages": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679984",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "高科董事会作为提名人出具唐勇声明，列其独立性、任职要求及培训承诺，是同一候选人的配套材料。",
+      "boundary": "三页扫描件已逐页图像核看，无可提取文字；末页手写日期读为11月12日，不能据此认定当日已经公开或正式获选。提名人声明不增加独立验证，也不替代后续股东会结果。",
+      "label": "高科：提名人扫描声明",
+      "review_phase": "NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json",
+      "extraction_note": "扫描原件3页无可提取文字，按图像核看，未称全文提取",
+      "source": {
+        "announcement_id": "1225679984",
+        "adjunct_url": "finalpage/2026-11-20/1225679984.PDF",
+        "title": "独立董事提名人声明与承诺（唐勇）",
+        "codes": [
+          "600730"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679984.PDF",
+        "sha256": "2892b09529e14a681c3e85da7f6918eab09c6d820ae36a10bf03ea52f04adc4a",
+        "bytes": 818421,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/2892b09529e14a681c3e85da7f6918eab09c6d820ae36a10bf03ea52f04adc4a.pdf",
+        "pages": 3,
+        "observed_at": "2026-11-21T00:28:58.490797+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "0fd0250852ef841d07d8a4cf1ee5595a93a77dc7ba25dbede74846d4e8db01fc",
+          "2": "aee0700ac929b1db3577dcb2716b0b69165a14bad5809cdfaaab693032cf2aac",
+          "3": "4edba8c796858f70a1f77b15486efdc12724e2c2be9290ca1e1c33c0204506e2"
+        },
+        "text_physical_pages": [],
+        "scanned_physical_pages": [
+          1,
+          2,
+          3
+        ]
       }
     }
   ],

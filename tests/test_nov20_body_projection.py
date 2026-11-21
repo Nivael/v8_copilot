@@ -18,7 +18,7 @@ def test_body_sources_and_reading_projection_match_saved_evidence():
     pages = images = 0
     for finding, shown in zip(body['findings'], view['findings'][:4], strict=True):
         source = next(s for s in body['sources'] if s['announcement_id'] == finding['announcement_id'])
-        assert {k:v for k,v in shown.items() if k not in ('label','review_phase')} == dict(finding, source=source)
+        assert {k:v for k,v in shown.items() if k not in ('label','review_phase','extraction_note')} == dict(finding, source=source)
         p = Path(source['source_store'])
         assert digest(p) == source['sha256'] and p.stat().st_size == source['bytes']
         doc = PdfReader(p)
@@ -38,5 +38,12 @@ def test_all_phases_rebuild_the_current_projection():
     from build_nov20_catalog_reading import build
     view = json.loads(Path('web/src/catalogNov20Fixed.json').read_text())
     assert build() == view
-    assert (view['reviewed_count'], view['remaining_count'], view['text_pages'], view['visual_pages']) == (31, 10, 153, 88)
-    assert len({f['announcement_id'] for f in view['findings']}) == 31
+    assert (view['reviewed_count'], view['remaining_count'], view['text_pages'], view['visual_pages']) == (41, 0, 173, 107)
+    assert len({f['announcement_id'] for f in view['findings']}) == 41
+
+
+def test_scanned_pages_are_not_counted_as_extracted_text():
+    view = json.loads(Path('web/src/catalogNov20Fixed.json').read_text())
+    assert (view['document_pages'], view['text_pages'], view['scanned_pages']) == (179, 173, 6)
+    scans = [f for f in view['findings'] if '扫描原件' in f['extraction_note']]
+    assert {f['announcement_id'] for f in scans} == {'1225679995', '1225679984'}

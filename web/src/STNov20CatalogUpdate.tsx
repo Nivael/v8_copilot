@@ -17,14 +17,14 @@ export function STNov20CatalogUpdate({data}:{data:STRegimeData}){
    <h5>{f.code} · {f.label}</h5>
    <p><strong>{f.answer}</strong></p><p>{f.boundary}</p>
    <details><summary>查看公告依据 · {f.announcement_id}</summary>
-    <p>{f.source.title}。已提取全文，图像核看物理第{f.source.visual_physical_pages.join('、')}页。</p>
+    <p>{f.source.title}。{f.extraction_note}，图像核看物理第{f.source.visual_physical_pages.join('、')}页。</p>
     {f.pages.map(page=><p key={page}><a href={`${f.source.url}#page=${page}`} target="_blank" rel="noreferrer">原件第{page}页 ↗</a></p>)}
     <p>保存摘要：<code style={{overflowWrap:'anywhere'}}>{f.source.sha256}</code>。</p>
    </details>
   </article>)}
-  <details><summary>单日查询范围与其余候选</summary>
+  <details><summary>单日查询范围与全部候选</summary>
    <p>150家查询均完成来源重放；先用已知11月12日公告作正向控制，再复用四家先行查询，仅新增146家。空返回未声明数据日，不能证明当天没有公告。原7—11月期间记录保持，未直接相加成统一窗口总数。</p>
-   <p>{update.reviewed_count}份正文共{update.text_pages}页、{update.visual_pages}个关键图像页已核。未独立取得法院或交易所决定原件，未核生效后交易及实收，也未据公告推定当日涨跌原因。</p>
+   <p>{update.reviewed_count}份附件共{update.document_pages}页，其中{update.text_pages}页保留提取文本、{update.scanned_pages}页扫描件无可提取文字；共核看{update.visual_pages}个图像页。未独立取得法院或交易所决定原件，未核生效后交易及实收，也未据公告推定当日涨跌原因。</p>
    <ul>{update.titles.map(t=><li key={t.announcement_id}><a href={'https://static.cninfo.com.cn/'+t.adjunct_url} target="_blank" rel="noreferrer">{t.codes.join('、')} · {t.title}</a> — {update.findings.some(f=>f.announcement_id===t.announcement_id)?'本轮正文已核，执行边界见上':'标题候选，正文待核'}</li>)}</ul>
    <p>目录证据摘要：<code style={{overflowWrap:'anywhere'}}>{update.catalog_evidence_sha256}</code>；正文补核摘要：<code style={{overflowWrap:'anywhere'}}>{update.body_phases.map(p=>p.sha256).join('；')}</code>。</p>
   </details>

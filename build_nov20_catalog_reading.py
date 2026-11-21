@@ -5,9 +5,11 @@ import json
 from pypdf import PdfReader
 from verify_nov20_fixed_catalog import verify
 
-PHASES = ['NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json', 'NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json', 'NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json', 'NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json', 'NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json', 'NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json', 'NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json', 'NOV20_MEETING_BODY_REVIEW_2026_11_21.json']
-LABELS = {'1225679977':'汇洲：获批与生效', '1225679819':'美丽：执行与回款', '1225679944':'惠程：零元收购', '1225679946':'惠程：关联合作', '1225679975':'春兴：无条件利息豁免', '1225679974':'春兴：先付款才可豁免', '1225679970':'春兴：拟售资产', '1225679913':'宝馨：本笔流拍与后续预告', '1225679789':'瑞茂：旧案进展与拟执行', '1225679623':'喜临门：拍卖公示与股东预重整', '1225679817':'美丽：实际增持与整数刻度', '1225679021':'雅博：增持计划尚待执行', '1225679176':'国中：首次回购与注销用途', '1225679477':'威领：反担保与余额', '1225679178':'国中：子公司贷款担保', '1225679620':'联翔：额度分类与实际余额', '1225679067':'亚士：展期与担保逾期', '1225680166':'利达：拟担保与未签合同', '1225679818':'美丽：异动与庭外重组', '1225680178':'晨鸣：B股异动范围', '1225679891':'京蓝：量产与估值边界', '1225679945':'惠程：同交易审批配套', '1225679972':'春兴：附条件追加抵押', '1225679616':'联翔：同担保审批配套', '1225679017':'围海：理财期限与现金', '1225679971':'春兴：清算估值与净回款', '1225679976':'春兴：拟投保与回避表决', '1225679973':'春兴：股东会安排与措辞差异', '1225679385':'美克：补选安排与生效条件', '1225679624':'联翔：担保调整待股东会', '1225679216':'龙韵：说明会预告与结果'}
+PHASES = ['NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json', 'NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json', 'NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json', 'NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json', 'NOV20_GUARANTEE_BODY_REVIEW_2026_11_21.json', 'NOV20_VOLATILITY_BOARD_BODY_REVIEW_2026_11_21.json', 'NOV20_CASH_VALUATION_BODY_REVIEW_2026_11_21.json', 'NOV20_MEETING_BODY_REVIEW_2026_11_21.json', 'NOV20_PERSONNEL_BODY_REVIEW_2026_11_21.json']
+LABELS = {'1225679977':'汇洲：获批与生效', '1225679819':'美丽：执行与回款', '1225679944':'惠程：零元收购', '1225679946':'惠程：关联合作', '1225679975':'春兴：无条件利息豁免', '1225679974':'春兴：先付款才可豁免', '1225679970':'春兴：拟售资产', '1225679913':'宝馨：本笔流拍与后续预告', '1225679789':'瑞茂：旧案进展与拟执行', '1225679623':'喜临门：拍卖公示与股东预重整', '1225679817':'美丽：实际增持与整数刻度', '1225679021':'雅博：增持计划尚待执行', '1225679176':'国中：首次回购与注销用途', '1225679477':'威领：反担保与余额', '1225679178':'国中：子公司贷款担保', '1225679620':'联翔：额度分类与实际余额', '1225679067':'亚士：展期与担保逾期', '1225680166':'利达：拟担保与未签合同', '1225679818':'美丽：异动与庭外重组', '1225680178':'晨鸣：B股异动范围', '1225679891':'京蓝：量产与估值边界', '1225679945':'惠程：同交易审批配套', '1225679972':'春兴：附条件追加抵押', '1225679616':'联翔：同担保审批配套', '1225679017':'围海：理财期限与现金', '1225679971':'春兴：清算估值与净回款', '1225679976':'春兴：拟投保与回避表决', '1225679973':'春兴：股东会安排与措辞差异', '1225679385':'美克：补选安排与生效条件', '1225679624':'联翔：担保调整待股东会', '1225679216':'龙韵：说明会预告与结果', '1225679022':'雅博：职工董事已选举', '1225679959':'长园：董秘空缺与代行', '1225679993':'高科：董秘已聘任', '1225679990':'高科：证代已聘任', '1225679989':'高科：独董仍待选举', '1225679988':'高科：同事项董事会决议', '1225679986':'高科：内部资格审查', '1225679985':'高科：股东会增加提案', '1225679995':'高科：候选人扫描声明', '1225679984':'高科：提名人扫描声明'}
 
+
+NAMED_ATTACHMENTS = {'1225679995': {'sha256': '766319b0d711dff62ac2dc80fc0e7eaddf2ca427c7b1b9032e1ed53cf7962b90', 'code': '600730', 'scanned': True}, '1225679986': {'sha256': '9b0d7a6f1c86c0f62f5964697c7af32ac16a523cfeeba70297005b30ffd84d0f', 'code': '600730', 'scanned': False}, '1225679984': {'sha256': '2892b09529e14a681c3e85da7f6918eab09c6d820ae36a10bf03ea52f04adc4a', 'code': '600730', 'scanned': True}}
 
 def build():
     load = lambda f: json.loads(Path(f).read_text())
@@ -18,7 +20,7 @@ def build():
     titles = {t['announcement_id']:t for t in review['titles']}
     full = load('web/src/catalogFullCoverage.json')
     findings, phases = [], []
-    total_pages = total_images = 0
+    total_pages = total_images = total_text = 0
     seen = set()
     for name in PHASES:
         body = load(name)
@@ -43,16 +45,22 @@ def build():
             first_page = doc.pages[0].extract_text()
             # This report has no ticker on its cover; retain the exact catalog/PDF binding above.
             identity_ok = code in first_page or (identity == '1225679971' and code == '002547' and '苏州春兴精工股份有限公司' in first_page and '资产评估说明' in first_page)
+            named = NAMED_ATTACHMENTS.get(identity)
+            if named and code == named['code'] and source['sha256'] == named['sha256']:
+                identity_ok = (not first_page.strip() and source['visual_physical_pages'] == list(range(1, len(doc.pages)+1))) if named['scanned'] else ('中国高科集团股份有限公司' in first_page and '唐勇' in first_page and '任职资格审查意见' in first_page)
             if not identity_ok or any(page<1 or page>len(doc.pages) for page in finding['pages']):
                 raise ValueError('body code or page differs')
             total_pages += len(doc.pages)
+            text_count = sum(bool(p.extract_text().strip()) for p in doc.pages)
+            total_text += text_count
+            extraction_note = "已提取全文" if text_count == len(doc.pages) else f"扫描原件{len(doc.pages)-text_count}页无可提取文字，按图像核看，未称全文提取"
             for page, signature in source['visual_image_sha256'].items():
                 if int(page) not in source['visual_physical_pages'] or digest(p.parent/(signature+'.png')) != signature:
                     raise ValueError('visual source differs')
                 total_images += 1
-            findings.append(dict(finding, code=code, label=LABELS[identity], review_phase=name, source=source))
+            findings.append(dict(finding, code=code, label=LABELS[identity], review_phase=name, extraction_note=extraction_note, source=source))
         phases.append(dict(file=name, sha256=digest(name), catalog_review_sha256=body['catalog_review_sha256']))
-    return dict(baseline_snapshot_digest=full['baseline_snapshot_digest'], full_catalog_evidence_sha256=full['evidence_sha256'], catalog_evidence_sha256=digest('NOV20_FIXED_CATALOG_EVIDENCE_2026_11_21.json'), catalog_review_sha256=digest('NOV20_FIXED_CATALOG_REVIEW_2026_11_21.json'), body_phases=phases, counts={k:review[k] for k in ['requested_companies','captured_companies','title_sightings','unique_attachment_identities','nonempty_companies']}, reviewed_count=len(seen), remaining_count=len(titles)-len(seen), text_pages=total_pages, visual_pages=total_images, findings=findings, titles=review['titles'])
+    return dict(baseline_snapshot_digest=full['baseline_snapshot_digest'], full_catalog_evidence_sha256=full['evidence_sha256'], catalog_evidence_sha256=digest('NOV20_FIXED_CATALOG_EVIDENCE_2026_11_21.json'), catalog_review_sha256=digest('NOV20_FIXED_CATALOG_REVIEW_2026_11_21.json'), body_phases=phases, counts={k:review[k] for k in ['requested_companies','captured_companies','title_sightings','unique_attachment_identities','nonempty_companies']}, reviewed_count=len(seen), remaining_count=len(titles)-len(seen), document_pages=total_pages, text_pages=total_text, scanned_pages=total_pages-total_text, visual_pages=total_images, findings=findings, titles=review['titles'])
 
 
 if __name__ == '__main__':

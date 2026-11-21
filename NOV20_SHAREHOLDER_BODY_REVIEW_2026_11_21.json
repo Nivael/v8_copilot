@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "sources": [
+    {
+      "announcement_id": "1225679817",
+      "adjunct_url": "finalpage/2026-11-20/1225679817.PDF",
+      "title": "关于第一大股东及其一致行动人权益变动触及1%整数倍的公告",
+      "codes": [
+        "000010"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679817.PDF",
+      "sha256": "3ca278aefb4fca19c50dffbc1c4e1fe59ee42440e65ab464060f4c04cdd39c26",
+      "bytes": 122923,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/3ca278aefb4fca19c50dffbc1c4e1fe59ee42440e65ab464060f4c04cdd39c26.pdf",
+      "pages": 4,
+      "observed_at": "2026-11-21T00:01:18.154389+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "04bd98caf7791ab105c4f82746840aa5daf6371634412d3b45242faf613aae39",
+        "2": "4b4f5ac5f270e82bef030a26dac5e1e8cbf17befb70daa40e8435f2e9f6c0c87",
+        "3": "17ea33ac2b8f26f68026db839f163b1138e556604a075bcf467df7606da9d32c"
+      }
+    },
+    {
+      "announcement_id": "1225679021",
+      "adjunct_url": "finalpage/2026-11-20/1225679021.PDF",
+      "title": "关于控股股东增持公司股份计划的公告",
+      "codes": [
+        "002323"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679021.PDF",
+      "sha256": "8d0e2988c9d5e77eb76aef61b4c50acc629c8014d622d10149b55f6c796853b1",
+      "bytes": 114280,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/8d0e2988c9d5e77eb76aef61b4c50acc629c8014d622d10149b55f6c796853b1.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-21T00:01:18.290110+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "21994276d28e243589e2cf39e50aec1c7004d0b01daf87581a4d182dba793b11",
+        "2": "c552b42d42f7dfd822bed4564db572889d47523e0939419d445467f8d6e16c09"
+      }
+    },
+    {
+      "announcement_id": "1225679176",
+      "adjunct_url": "finalpage/2026-11-20/1225679176.PDF",
+      "title": "关于以集中竞价交易方式首次回购股份的公告",
+      "codes": [
+        "600187"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679176.PDF",
+      "sha256": "89c945f5288293fb305147476f9102331407cab9766673c2bf4e4e52ec8db019",
+      "bytes": 82824,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/89c945f5288293fb305147476f9102331407cab9766673c2bf4e4e52ec8db019.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:01:18.476355+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "394a2d2f92f80f9a7cf1cd60d76a9aebadefdd9ffcdfddfbe91648b7a4f61e2d",
+        "2": "578e9f62c63b71c3db748aa243fc8034ba26a681f3acb851bac322efdffa257d"
+      }
+    }
+  ],
+  "text_pages": 9,
+  "critical_visual_pages": 7,
+  "findings": [
+    {
+      "code": "000010",
+      "announcement_id": "1225679817",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "郑财11月18—19日集中竞价增持350万股，占总股本0.3044%；与宝立盛合计持股从约8.70%升至9.00%，触及整数刻度。",
+      "boundary": "不是本次增加1个百分点。5000万—8000万元为此前增持计划，本文未披露本次实付金额，不能由股数估出资金完成率；计划尚未实施完毕。股东在市场买股不等于上市公司取得融资。正文落款19日、附件路径20日分别保留。"
+    },
+    {
+      "code": "002323",
+      "announcement_id": "1225679021",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "控股股东拟自披露日起6个月内增持，金额下限5000万元（含）、上限10000万元（不含），计划价格上限2元/股。",
+      "boundary": "本文为计划，未证明已经买入或资金已筹齐；存在延迟/无法完成风险。2元是计划买价上限，不是股价底线或收益承诺；股东增持也不是公司现金流入。"
+    },
+    {
+      "code": "600187",
+      "announcement_id": "1225679176",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "公司披露11月19日首次回购401.40万股，支付415.74万元（不含交易费用），成交区间1.02—1.07元；计划总额2000万—2500万元。",
+      "boundary": "这是公司回购支出，与股东增持主体不同；只是计划部分执行，不当全部完成。用途为注销减资，本文未证明注销已完成，也不证明经营修复或之后股价上涨。"
+    }
+  ],
+  "calculation_checks": {
+    "meili_before_shares": 100000000,
+    "meili_after_shares": 103500000,
+    "meili_added_shares": 3500000,
+    "guozhong_buyback_shares": "4014000",
+    "guozhong_buyback_yuan": "4157400",
+    "guozhong_implied_average_yuan": "1.035724962630792227204783259",
+    "average_check_boundary": "按披露精度计算的平均金额/股数，非逐笔成交重建"
+  },
+  "limits": [
+    "未独立取得账户成交回报或银行流水",
+    "尚未据公告推断行情因果、底部或风险解除",
+    "不同主体的支出不合并成公司融资",
+    "同一计划重复进展不自动增加独立案例"
+  ]
+}

@@ -6,8 +6,9 @@ import type {STRegimeData} from './stRegimeTypes'
 afterEach(cleanup)
 it('shows effective-date, cash and obligation boundaries before opening sources',()=>{
  render(<STNov20CatalogUpdate data={{content_digest:update.baseline_snapshot_digest} as STRegimeData}/>)
+ fireEvent.change(screen.getByRole('combobox',{name:'公告补核阅读范围'}),{target:{value:'all'}})
  const r=screen.getByRole('complementary',{name:'11月20日固定样本公告更新'})
- expect(r).toHaveTextContent('31份待筛审')
+ expect(r).toHaveTextContent('28份待筛审')
  expect(r).toHaveTextContent('不可将23日拟生效状态倒填为20日已摘帽')
  expect(r).toHaveTextContent('未披露本次实收')
  expect(r).toHaveTextContent('4000万元未实缴出资义务')
@@ -24,4 +25,12 @@ it('withholds updates for a different frozen baseline',()=>{
  render(<STNov20CatalogUpdate data={{content_digest:'changed'} as STRegimeData}/>)
  expect(screen.getByRole('status')).toHaveTextContent('暂不显示更新')
  expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
+})
+it('starts with the latest phase and lets readers select a company',()=>{
+ render(<STNov20CatalogUpdate data={{content_digest:update.baseline_snapshot_digest} as STRegimeData}/>);
+ expect(screen.getByRole('complementary')).toHaveTextContent('不是本次增加1个百分点')
+ expect(screen.queryByText(/公司及子公司作为被告的八项既有诉讼/)).not.toBeInTheDocument()
+ fireEvent.change(screen.getByRole('combobox',{name:'公告补核阅读范围'}),{target:{value:'002514'}})
+ expect(screen.getByRole('complementary')).toHaveTextContent('一拍流拍')
+ expect(screen.queryByText(/本文为计划，未证明已经买入/)).not.toBeInTheDocument()
 })

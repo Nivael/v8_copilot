@@ -1,17 +1,23 @@
+import {useState} from 'react'
 import update from './catalogNov20Fixed.json'
 import full from './catalogFullCoverage.json'
 import type {STRegimeData} from './stRegimeTypes'
 export function STNov20CatalogUpdate({data}:{data:STRegimeData}){
+ const [scope,setScope]=useState('latest')
+ const latest=update.body_phases[update.body_phases.length-1].file
+ const findings=update.findings.filter(f=>scope==='all'||(scope==='latest'?f.review_phase===latest:f.code===scope))
+ const companies=[...new Set(update.findings.map(f=>f.code))]
  const bound=data.content_digest===update.baseline_snapshot_digest&&full.evidence_sha256===update.full_catalog_evidence_sha256&&update.body_phases.every(p=>p.catalog_review_sha256===update.catalog_review_sha256)
  if(!bound)return <p role="status">20日公告补核与当前来源未对应，暂不显示更新。</p>
  return <aside aria-label="11月20日固定样本公告更新">
   <h4>最新补核：获批、回款和交易完成，要分开看</h4>
   <p>11月20日单日目录已补到固定历史150家公司：20家公司有41份附件候选，其中{update.reviewed_count}份已核正文，{update.remaining_count}份待筛审。固定历史样本不等于当日法律ST名单；这些附件也不是41个独立案例。</p>
-  {update.findings.map(f=><article key={f.announcement_id}>
+  <label>先看哪部分补核？ <select aria-label="公告补核阅读范围" value={scope} onChange={e=>setScope(e.target.value)}><option value="latest">最新一批正文补核</option><option value="all">全部已核正文</option>{companies.map(code=><option key={code} value={code}>{code} · {update.findings.find(f=>f.code===code)!.label.split('：')[0]}</option>)}</select></label>
+  {findings.map(f=><article key={f.announcement_id}>
    <h5>{f.code} · {f.label}</h5>
    <p><strong>{f.answer}</strong></p><p>{f.boundary}</p>
    <details><summary>查看公告依据 · {f.announcement_id}</summary>
-    <p>{f.source.title}。已提取全文，关键图像核看物理第{f.source.visual_physical_pages.join('、')}页；非全部页面逐页看图。</p>
+    <p>{f.source.title}。已提取全文，图像核看物理第{f.source.visual_physical_pages.join('、')}页。</p>
     {f.pages.map(page=><p key={page}><a href={`${f.source.url}#page=${page}`} target="_blank" rel="noreferrer">原件第{page}页 ↗</a></p>)}
     <p>保存摘要：<code style={{overflowWrap:'anywhere'}}>{f.source.sha256}</code>。</p>
    </details>

@@ -5,8 +5,8 @@ import json
 from pypdf import PdfReader
 from verify_nov20_fixed_catalog import verify
 
-PHASES = ['NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json', 'NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json', 'NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json']
-LABELS = {'1225679977':'汇洲：获批与生效', '1225679819':'美丽：执行与回款', '1225679944':'惠程：零元收购', '1225679946':'惠程：关联合作', '1225679975':'春兴：无条件利息豁免', '1225679974':'春兴：先付款才可豁免', '1225679970':'春兴：拟售资产', '1225679913':'宝馨：本笔流拍与后续预告', '1225679789':'瑞茂：旧案进展与拟执行', '1225679623':'喜临门：拍卖公示与股东预重整'}
+PHASES = ['NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json', 'NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json', 'NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json', 'NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json']
+LABELS = {'1225679977':'汇洲：获批与生效', '1225679819':'美丽：执行与回款', '1225679944':'惠程：零元收购', '1225679946':'惠程：关联合作', '1225679975':'春兴：无条件利息豁免', '1225679974':'春兴：先付款才可豁免', '1225679970':'春兴：拟售资产', '1225679913':'宝馨：本笔流拍与后续预告', '1225679789':'瑞茂：旧案进展与拟执行', '1225679623':'喜临门：拍卖公示与股东预重整', '1225679817':'美丽：实际增持与整数刻度', '1225679021':'雅博：增持计划尚待执行', '1225679176':'国中：首次回购与注销用途'}
 
 
 def build():
@@ -47,7 +47,7 @@ def build():
                 if int(page) not in source['visual_physical_pages'] or digest(p.parent/(signature+'.png')) != signature:
                     raise ValueError('visual source differs')
                 total_images += 1
-            findings.append(dict(finding, code=code, label=LABELS[identity], source=source))
+            findings.append(dict(finding, code=code, label=LABELS[identity], review_phase=name, source=source))
         phases.append(dict(file=name, sha256=digest(name), catalog_review_sha256=body['catalog_review_sha256']))
     return dict(baseline_snapshot_digest=full['baseline_snapshot_digest'], full_catalog_evidence_sha256=full['evidence_sha256'], catalog_evidence_sha256=digest('NOV20_FIXED_CATALOG_EVIDENCE_2026_11_21.json'), catalog_review_sha256=digest('NOV20_FIXED_CATALOG_REVIEW_2026_11_21.json'), body_phases=phases, counts={k:review[k] for k in ['requested_companies','captured_companies','title_sightings','unique_attachment_identities','nonempty_companies']}, reviewed_count=len(seen), remaining_count=len(titles)-len(seen), text_pages=total_pages, visual_pages=total_images, findings=findings, titles=review['titles'])
 

@@ -18,6 +18,11 @@
       "file": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
       "sha256": "7b04d1cbcead444a1a1c53d086cef6ad3b91642916844c081ff06002ca818711",
       "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
+    },
+    {
+      "file": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "sha256": "e161fa9afd28e10b1030e24ce0fb479aa3e2ee9b878a27f15fcac1b48c4fc3fc",
+      "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c"
     }
   ],
   "counts": {
@@ -27,10 +32,10 @@
     "unique_attachment_identities": 41,
     "nonempty_companies": 20
   },
-  "reviewed_count": 10,
-  "remaining_count": 31,
-  "text_pages": 43,
-  "visual_pages": 30,
+  "reviewed_count": 13,
+  "remaining_count": 28,
+  "text_pages": 52,
+  "visual_pages": 37,
   "findings": [
     {
       "code": "002122",
@@ -42,6 +47,7 @@
       "answer": "公告称撤销其他风险警示申请已获深交所同意；11月20日停牌，23日复牌并生效，涨跌幅限制仍10%。",
       "boundary": "截至21日不可将23日拟生效状态倒填为20日已摘帽；未独立取得交易所批准原件。",
       "label": "汇洲：获批与生效",
+      "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679977",
         "adjunct_url": "finalpage/2026-11-20/1225679977.PDF",
@@ -74,6 +80,7 @@
       "answer": "控股子公司为申请执行人，本金7725.87万元；公告披露终结本次执行，仍享有要求继续履行和申请恢复执行的权利。",
       "boundary": "未披露本次实收，不推定债权消灭、回款或确定损益；正文落款19日，目录附件路径20日。",
       "label": "美丽：执行与回款",
+      "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679819",
         "adjunct_url": "finalpage/2026-11-20/1225679819.PDF",
@@ -108,6 +115,7 @@
       "answer": "拟零元受让卓焱100%股权，同时承接4000万元未实缴出资义务；标的尚未开展经营，公告列最近年度及一期财务指标均零。",
       "boundary": "工商及资质变更尚有不确定性，不当已交割、免费收益或已实缴4000万元。",
       "label": "惠程：零元收购",
+      "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679944",
         "adjunct_url": "finalpage/2026-11-20/1225679944.PDF",
@@ -143,6 +151,7 @@
       "answer": "拟开展电气业务关联合作，框架预计累计不超过1500万元，以实际结算为准；涵盖委托生产、货物及原料采购。",
       "boundary": "不当1500万元已实现收入、现金实收或确定订单；累计关联事项24788.22万元为公告所述已批准交易金额，不能当现金流。",
       "label": "惠程：关联合作",
+      "review_phase": "NOV20_PRIORITY_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679946",
         "adjunct_url": "finalpage/2026-11-20/1225679946.PDF",
@@ -178,6 +187,7 @@
       "boundary": "豁免不是现金流入；预计净利润增加约207万元仍待审计。公告未披露此前归还本金的金额与完整日期。",
       "code": "002547",
       "label": "春兴：无条件利息豁免",
+      "review_phase": "NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679975",
         "adjunct_url": "finalpage/2026-11-20/1225679975.PDF",
@@ -215,6 +225,7 @@
       "boundary": "截至11月18日，近12个月累计已付611.36万元、已获豁免1426.52万元；全部签约履行后可获3951.75万元不是当前已获金额。预计利润均待审计，不将两种豁免合并冒充已完成或现金流。",
       "code": "002547",
       "label": "春兴：先付款才可豁免",
+      "review_phase": "NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679974",
         "adjunct_url": "finalpage/2026-11-20/1225679974.PDF",
@@ -254,6 +265,7 @@
       "boundary": "部分抵押、部分未办权属；清算估值不等于成交或实收。庭外重组不等于法院重整受理，出售完成后的租回成本尚待协商。",
       "code": "002547",
       "label": "春兴：拟售资产",
+      "review_phase": "NOV20_CHUNXING_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679970",
         "adjunct_url": "finalpage/2026-11-20/1225679970.PDF",
@@ -291,6 +303,7 @@
       "answer": "江苏立青所持200万股首发后限售股，11月18—19日一拍流拍；另列四笔未来拍卖，公告合计3020万股。",
       "boundary": "流拍没有产生本笔竞买成交或过户；四笔预告不当已成交。本文件不替代此前其他批次股份过户事实，也不认定控制权已转移。未来表最后一行原文为“3,000000”，保留格式异常，不静默修成已核法院拍卖数量。",
       "label": "宝馨：本笔流拍与后续预告",
+      "review_phase": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679913",
         "adjunct_url": "finalpage/2026-11-20/1225679913.PDF",
@@ -326,6 +339,7 @@
       "answer": "公司及子公司作为被告的八项既有诉讼有新进展，披露涉案合计约104449.1965万元；包含判决、三份执行通知、驳回起诉及拟处置所持子公司股权的通知。",
       "boundary": "约10.44亿元是本公告案件涉案金额，不等于本期新损失、已支付或全部新案。驳回起诉不直接当债务清偿；拟处置股权不当已成交/到账，损益仍以相关结果和确认口径为准。",
       "label": "瑞茂：旧案进展与拟执行",
+      "review_phase": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679789",
         "adjunct_url": "finalpage/2026-11-20/1225679789.PDF",
@@ -364,6 +378,7 @@
       "answer": "控股股东、实控人及一致行动人合计15616487股（总股本4.24%）预告12月19—20日拍卖，截至公告仍公示。",
       "boundary": "尚未成交、缴款或过户。公告称若本次全部过户，合计持股由36.36%降至32.12%、华易仍为控股股东；这是假设本笔结果，不是最终控制权保证。股东华易及华瀚处预重整，后续正式受理可能影响未完成拍卖；不是上市公司已进入重整。",
       "label": "喜临门：拍卖公示与股东预重整",
+      "review_phase": "NOV20_JUDICIAL_BODY_REVIEW_2026_11_21.json",
       "source": {
         "announcement_id": "1225679623",
         "adjunct_url": "finalpage/2026-11-20/1225679623.PDF",
@@ -386,6 +401,111 @@
           "1": "63dc12acce63342bfca8a504e7c1994b6d711301aa99ff4013758dd58e58a0c7",
           "2": "f654b8c289230065e10a010db59bd75664d5e6a899a0ad5635b38b18b71b27e0",
           "3": "944ae8c3b5efb26ecc58c19155b56452c49a53a911b87102d00a624adaec5128"
+        }
+      }
+    },
+    {
+      "code": "000010",
+      "announcement_id": "1225679817",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "郑财11月18—19日集中竞价增持350万股，占总股本0.3044%；与宝立盛合计持股从约8.70%升至9.00%，触及整数刻度。",
+      "boundary": "不是本次增加1个百分点。5000万—8000万元为此前增持计划，本文未披露本次实付金额，不能由股数估出资金完成率；计划尚未实施完毕。股东在市场买股不等于上市公司取得融资。正文落款19日、附件路径20日分别保留。",
+      "label": "美丽：实际增持与整数刻度",
+      "review_phase": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679817",
+        "adjunct_url": "finalpage/2026-11-20/1225679817.PDF",
+        "title": "关于第一大股东及其一致行动人权益变动触及1%整数倍的公告",
+        "codes": [
+          "000010"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679817.PDF",
+        "sha256": "3ca278aefb4fca19c50dffbc1c4e1fe59ee42440e65ab464060f4c04cdd39c26",
+        "bytes": 122923,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/3ca278aefb4fca19c50dffbc1c4e1fe59ee42440e65ab464060f4c04cdd39c26.pdf",
+        "pages": 4,
+        "observed_at": "2026-11-21T00:01:18.154389+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "04bd98caf7791ab105c4f82746840aa5daf6371634412d3b45242faf613aae39",
+          "2": "4b4f5ac5f270e82bef030a26dac5e1e8cbf17befb70daa40e8435f2e9f6c0c87",
+          "3": "17ea33ac2b8f26f68026db839f163b1138e556604a075bcf467df7606da9d32c"
+        }
+      }
+    },
+    {
+      "code": "002323",
+      "announcement_id": "1225679021",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "控股股东拟自披露日起6个月内增持，金额下限5000万元（含）、上限10000万元（不含），计划价格上限2元/股。",
+      "boundary": "本文为计划，未证明已经买入或资金已筹齐；存在延迟/无法完成风险。2元是计划买价上限，不是股价底线或收益承诺；股东增持也不是公司现金流入。",
+      "label": "雅博：增持计划尚待执行",
+      "review_phase": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679021",
+        "adjunct_url": "finalpage/2026-11-20/1225679021.PDF",
+        "title": "关于控股股东增持公司股份计划的公告",
+        "codes": [
+          "002323"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679021.PDF",
+        "sha256": "8d0e2988c9d5e77eb76aef61b4c50acc629c8014d622d10149b55f6c796853b1",
+        "bytes": 114280,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/8d0e2988c9d5e77eb76aef61b4c50acc629c8014d622d10149b55f6c796853b1.pdf",
+        "pages": 3,
+        "observed_at": "2026-11-21T00:01:18.290110+00:00",
+        "visual_physical_pages": [
+          1,
+          2
+        ],
+        "visual_image_sha256": {
+          "1": "21994276d28e243589e2cf39e50aec1c7004d0b01daf87581a4d182dba793b11",
+          "2": "c552b42d42f7dfd822bed4564db572889d47523e0939419d445467f8d6e16c09"
+        }
+      }
+    },
+    {
+      "code": "600187",
+      "announcement_id": "1225679176",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "公司披露11月19日首次回购401.40万股，支付415.74万元（不含交易费用），成交区间1.02—1.07元；计划总额2000万—2500万元。",
+      "boundary": "这是公司回购支出，与股东增持主体不同；只是计划部分执行，不当全部完成。用途为注销减资，本文未证明注销已完成，也不证明经营修复或之后股价上涨。",
+      "label": "国中：首次回购与注销用途",
+      "review_phase": "NOV20_SHAREHOLDER_BODY_REVIEW_2026_11_21.json",
+      "source": {
+        "announcement_id": "1225679176",
+        "adjunct_url": "finalpage/2026-11-20/1225679176.PDF",
+        "title": "关于以集中竞价交易方式首次回购股份的公告",
+        "codes": [
+          "600187"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679176.PDF",
+        "sha256": "89c945f5288293fb305147476f9102331407cab9766673c2bf4e4e52ec8db019",
+        "bytes": 82824,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/89c945f5288293fb305147476f9102331407cab9766673c2bf4e4e52ec8db019.pdf",
+        "pages": 2,
+        "observed_at": "2026-11-21T00:01:18.476355+00:00",
+        "visual_physical_pages": [
+          1,
+          2
+        ],
+        "visual_image_sha256": {
+          "1": "394a2d2f92f80f9a7cf1cd60d76a9aebadefdd9ffcdfddfbe91648b7a4f61e2d",
+          "2": "578e9f62c63b71c3db748aa243fc8034ba26a681f3acb851bac322efdffa257d"
         }
       }
     }

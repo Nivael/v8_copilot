@@ -1,0 +1,38 @@
+{
+  "version": "tianze_official_report_confirmation_v1",
+  "source": {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225508648.PDF",
+    "final_url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225508648.PDF",
+    "observed_at": "2026-11-21T02:04:40.115048+00:00",
+    "status": 200,
+    "sha256": "0f58a68d432f2d3e20ba185e30fdbc9b12a4046076d6416bba2a885dd3ca77a8",
+    "bytes": 1060739,
+    "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/official_mirror_recovery/20261121",
+    "title": "中广天择传媒股份有限公司2026年半年度报告",
+    "announcement_id": "1225508648",
+    "published_on": "2026-08-27",
+    "symbol": "603721"
+  },
+  "total_pages": 176,
+  "selected_page": 19,
+  "selected_page_text": "中广天择传媒股份有限公司2026 年半年度报告\r\n19 / 176\r\n中广天择传媒股份有限公司为积极响应上海证券交易所深化提质增效、重视股东回报的工作\r\n倡议，于年初制定年度提质增效行动方案。2026 年上半年，公司紧扣风险化解、转型突破、规范\r\n运营、稳健回报核心任务，在摘星脱帽、控股股东战略变更、加快发展新质生产力等方面取得积\r\n极进展。现将行动进展简要报告如下：\r\n1.成功撤销退市风险警示，公司发展迈入新阶段。公司聚焦主业经营，全面改善财务状况与\r\n治理水平，经审计确认各项指标符合上市规则要求后，向上交所申请撤销退市风险警示并获得批\r\n准。公司股票自 2026 年 6 月 2 日起正式复牌并撤销退市风险警示，证券简称由“*ST天择”恢复\r\n为“中广天择”，标志着公司资本市场状态重回正轨。\r\n2.控股股东战略变更，开启文旅融合发展新篇章。2026 年 6 月，公司控股股东长沙广播电视\r\n集团有限公司与长沙城发文化旅游集团有限公司签署股份转让协议。本次控股权变更是国资体系\r\n内部的资源再配置，旨在优化国有资本布局、促进长沙文旅体消费规模持续增长，为公司切入文\r\n旅赛道、实现“IP×场景”协同发展打开了全新空间。\r\n3.积极实施现金分红，切实回报全体股东。公司始终坚守回报股东初心，严格执行《未来三\r\n年股东回报规划（2026 年—2028 年）》，2025 年年度利润分配方案经 2026 年 5 月 8 日召开的\r\n2025 年年度股东会审议通过，以实施权益分派股权登记日登记的总股本 130,000,000 股为基数，\r\n向全体股东每股派发现金红利 0.08 元（含税），合计派发现金红利 1,040 万元。公司在撤销退市\r\n风险警示后实施现金分红，充分体现了公司以扎实经营成效回馈投资者的决心与诚意。\r\n4.聚力主业数智赋能，发展传媒产业新质生产力。公司坚持内容精品化、“文化+科技”双轮\r\n驱动战略，深耕纪实IP、文旅演艺、体育赛事、产教融合、AI 短剧等多赛道业务；依托中国V链\r\n开展版权确权、算料交易、短剧智能审核数字化服务。旗下数智中心创新落地“采标一体”数据\r\n生产模式，项目入选全省首批高质量数据集先行先试名单。以自研数据集为基础，布局 AIGC、具\r\n身智能、世界模型等前沿方向，打造产业级 AI 算料底座，实现内容、数据要素与数字技术全域\r\n融合，以数智创新加快培育传媒领域新质生产力。",
+  "selected_page_text_sha256": "51229e671fbe1d64119ca390ca171f4cbffd11beebce0bbebd58ab8dc4fcd07a",
+  "selected_page_image_sha256": "eac048edf236063fc69afec3ade175f62d353f728d93e24b798e808d40a40a1a",
+  "visually_reviewed_pages": [
+    19
+  ],
+  "confirmation": {
+    "effective_on": "2026-06-02",
+    "reported_on": "2026-08-27",
+    "scope": "issuer later report confirms resumption and removal of delisting warning"
+  },
+  "original_mirror_id": "SINA-12361633",
+  "original_announcement_official_bytes_recovered": false,
+  "official_mirror_gaps_remaining": 8,
+  "limits": [
+    "Only page19 visually reviewed; not all176 pages",
+    "Later issuer self-report, not replacement for May30 implementation notice",
+    "Does not prove historical then-known information or independent underlying event",
+    "No new independent strategy validation"
+  ]
+}

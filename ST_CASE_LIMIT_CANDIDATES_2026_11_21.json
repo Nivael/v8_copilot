@@ -1,0 +1,98 @@
+{
+  "scope": "three previously selected cases only; no full-cohort or executable-fill claim",
+  "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/eastmoney_limit_candidate/20261120",
+  "ohlc_evidence_sha256": "3f87a4bd8872ec325b481c5c5385d147cba876c1824243a2cf59326641c3ec48",
+  "field_mapping_evidence": "EASTMONEY_LIMIT_CANDIDATE_2026_11_21.json",
+  "rows": [
+    {
+      "symbol": "600180.SH",
+      "url": "https://push2.eastmoney.com/api/qt/stock/get?invt=2&fltt=1&secid=1.600180&fields=f43%2Cf44%2Cf45%2Cf46%2Cf51%2Cf52%2Cf57%2Cf58%2Cf59%2Cf60%2Cf86&dect=1",
+      "observed_at": "2026-11-20T21:51:28.208414+00:00",
+      "sha256": "79b41015210137c30d215a1257f35923a43c25f667508662ab22faee1954c7e9",
+      "bytes": 199,
+      "data": {
+        "f43": 55,
+        "f44": 60,
+        "f45": 55,
+        "f46": 56,
+        "f51": 67,
+        "f52": 55,
+        "f57": "600180",
+        "f58": "*ST瑞茂",
+        "f59": 2,
+        "f60": 61,
+        "f86": 1795162308
+      },
+      "reading": {
+        "trade_time": "2026-11-20T16:11:48+08:00",
+        "upper": "0.67",
+        "lower": "0.55",
+        "close": "0.55",
+        "touch_lower": true,
+        "close_lower": true,
+        "one_price": false
+      },
+      "status": "candidate_matched_saved_ohlc"
+    },
+    {
+      "symbol": "600340.SH",
+      "url": "https://push2.eastmoney.com/api/qt/stock/get?invt=2&fltt=1&secid=1.600340&fields=f43%2Cf44%2Cf45%2Cf46%2Cf51%2Cf52%2Cf57%2Cf58%2Cf59%2Cf60%2Cf86&dect=1",
+      "observed_at": "2026-11-20T21:51:28.336755+00:00",
+      "sha256": "31fef1c4744f8b286a8ce50c2fb87837871a0097da4bbf1947202ed0618bf8f8",
+      "bytes": 199,
+      "data": {
+        "f43": 85,
+        "f44": 85,
+        "f45": 72,
+        "f46": 72,
+        "f51": 85,
+        "f52": 69,
+        "f57": "600340",
+        "f58": "*ST华幸",
+        "f59": 2,
+        "f60": 77,
+        "f86": 1795162297
+      },
+      "reading": {
+        "trade_time": "2026-11-20T16:11:37+08:00",
+        "upper": "0.85",
+        "lower": "0.69",
+        "close": "0.85",
+        "touch_lower": false,
+        "close_lower": false,
+        "one_price": false
+      },
+      "status": "candidate_matched_saved_ohlc"
+    },
+    {
+      "symbol": "603359.SH",
+      "url": "https://push2.eastmoney.com/api/qt/stock/get?invt=2&fltt=1&secid=1.603359&fields=f43%2Cf44%2Cf45%2Cf46%2Cf51%2Cf52%2Cf57%2Cf58%2Cf59%2Cf60%2Cf86&dect=1",
+      "observed_at": "2026-11-20T21:51:28.443255+00:00",
+      "sha256": "7933307f321806e243273ce56d5a654844794b54adfac46e4ae2132f71e1a8dc",
+      "bytes": 199,
+      "data": {
+        "f43": 86,
+        "f44": 93,
+        "f45": 80,
+        "f46": 83,
+        "f51": 98,
+        "f52": 80,
+        "f57": "603359",
+        "f58": "*ST东珠",
+        "f59": 2,
+        "f60": 89,
+        "f86": 1795162305
+      },
+      "reading": {
+        "trade_time": "2026-11-20T16:11:45+08:00",
+        "upper": "0.98",
+        "lower": "0.8",
+        "close": "0.86",
+        "touch_lower": true,
+        "close_lower": false,
+        "one_price": false
+      },
+      "status": "candidate_matched_saved_ohlc"
+    }
+  ]
+}

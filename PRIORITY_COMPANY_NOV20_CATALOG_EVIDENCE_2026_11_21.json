@@ -1,0 +1,310 @@
+{
+  "version": "priority_company_nov20_catalog_v1",
+  "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/announcement_nov20_priority/20261121",
+  "query_date": "2026-11-20",
+  "companies": [
+    {
+      "code": "002717",
+      "query_date": "2026-11-20",
+      "lookup": {
+        "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+        "params": {
+          "keyWord": "002717",
+          "maxNum": "10"
+        },
+        "sha256": "042de6bddabf8491da806cfadee14e4aa0fbdea8fd6958acab50d9ff9d8b8b7d",
+        "bytes": 145,
+        "observed_at": "2026-11-20T23:01:09.395029+00:00"
+      },
+      "status": "captured",
+      "org_id": "9900023171",
+      "pages": [
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "szse",
+            "tabName": "fulltext",
+            "plate": "sz",
+            "stock": "002717,9900023171",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-11-20~2026-11-20",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "bytes": 165,
+          "observed_at": "2026-11-20T23:01:09.930951+00:00"
+        }
+      ],
+      "rows": [],
+      "total": 0
+    },
+    {
+      "code": "600165",
+      "query_date": "2026-11-20",
+      "lookup": {
+        "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+        "params": {
+          "keyWord": "600165",
+          "maxNum": "10"
+        },
+        "sha256": "d12003b3ebe99735aa89e67fb391c04d338df27d2adcf7bc8c01829e485c025c",
+        "bytes": 149,
+        "observed_at": "2026-11-20T23:01:10.478845+00:00"
+      },
+      "status": "captured",
+      "org_id": "gssh0600165",
+      "pages": [
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "600165,gssh0600165",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-11-20~2026-11-20",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "bytes": 165,
+          "observed_at": "2026-11-20T23:01:11.078243+00:00"
+        }
+      ],
+      "rows": [],
+      "total": 0
+    },
+    {
+      "code": "601718",
+      "query_date": "2026-11-20",
+      "lookup": {
+        "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+        "params": {
+          "keyWord": "601718",
+          "maxNum": "10"
+        },
+        "sha256": "a45a01a1bdae56978fac8c8b7468352711d6fc2257d45e028a52a727e9f231cb",
+        "bytes": 144,
+        "observed_at": "2026-11-20T23:01:11.636261+00:00"
+      },
+      "status": "captured",
+      "org_id": "9900013870",
+      "pages": [
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "601718,9900013870",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-11-20~2026-11-20",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "bytes": 165,
+          "observed_at": "2026-11-20T23:01:12.166406+00:00"
+        }
+      ],
+      "rows": [],
+      "total": 0
+    },
+    {
+      "code": "000826",
+      "query_date": "2026-11-20",
+      "lookup": {
+        "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+        "params": {
+          "keyWord": "000826",
+          "maxNum": "10"
+        },
+        "sha256": "f087a23938f8c24701b3b6c9b780443e75eb09cfbd5ff017caa1a5b788658abf",
+        "bytes": 146,
+        "observed_at": "2026-11-20T23:01:12.691510+00:00"
+      },
+      "status": "captured",
+      "org_id": "gssz0000826",
+      "pages": [
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "szse",
+            "tabName": "fulltext",
+            "plate": "sz",
+            "stock": "000826,gssz0000826",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-11-20~2026-11-20",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "bytes": 165,
+          "observed_at": "2026-11-20T23:01:13.235236+00:00"
+        }
+      ],
+      "rows": [],
+      "total": 0
+    }
+  ],
+  "all_source_refs": [
+    {
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "002717",
+        "maxNum": "10"
+      },
+      "sha256": "042de6bddabf8491da806cfadee14e4aa0fbdea8fd6958acab50d9ff9d8b8b7d",
+      "bytes": 145,
+      "observed_at": "2026-11-20T23:01:09.395029+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "30",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "002717,9900023171",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-11-20~2026-11-20",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+      "bytes": 165,
+      "observed_at": "2026-11-20T23:01:09.930951+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600165",
+        "maxNum": "10"
+      },
+      "sha256": "d12003b3ebe99735aa89e67fb391c04d338df27d2adcf7bc8c01829e485c025c",
+      "bytes": 149,
+      "observed_at": "2026-11-20T23:01:10.478845+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "30",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600165,gssh0600165",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-11-20~2026-11-20",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+      "bytes": 165,
+      "observed_at": "2026-11-20T23:01:11.078243+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "601718",
+        "maxNum": "10"
+      },
+      "sha256": "a45a01a1bdae56978fac8c8b7468352711d6fc2257d45e028a52a727e9f231cb",
+      "bytes": 144,
+      "observed_at": "2026-11-20T23:01:11.636261+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "30",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "601718,9900013870",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-11-20~2026-11-20",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+      "bytes": 165,
+      "observed_at": "2026-11-20T23:01:12.166406+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "000826",
+        "maxNum": "10"
+      },
+      "sha256": "f087a23938f8c24701b3b6c9b780443e75eb09cfbd5ff017caa1a5b788658abf",
+      "bytes": 146,
+      "observed_at": "2026-11-20T23:01:12.691510+00:00"
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "30",
+        "column": "szse",
+        "tabName": "fulltext",
+        "plate": "sz",
+        "stock": "000826,gssz0000826",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-11-20~2026-11-20",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+      "bytes": 165,
+      "observed_at": "2026-11-20T23:01:13.235236+00:00"
+    }
+  ],
+  "limits": [
+    "Only four companies and one catalog day; not all channels or all 150 companies",
+    "Title discovery is not announcement-body review",
+    "Empty catalog response is not proof no final decision exists"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "source_commit": "1a80fe8db33b1fe2b976727cf026874c53525259",
+  "frontend_files_passed": 206,
+  "frontend_tests_passed": 1002,
+  "lint_errors": 0,
+  "lint_warnings": 12,
+  "calculation_tests_passed": 40,
+  "backend_full_suite_rerun": false,
+  "st_api_exact": true,
+  "market_api_exact": true,
+  "old_297_rows_exact": true,
+  "ledger_count": 298,
+  "methods_and_accepted_exact": true,
+  "new_research_runs": 0,
+  "independent_validations_added": 0
+}

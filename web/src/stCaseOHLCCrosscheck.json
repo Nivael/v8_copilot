@@ -1,0 +1,154 @@
+{
+  "cohort_evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "processor_sha256": "c99171ce66543e6870cdd26f5bbd15241ab09ac8cb616b77ed35627ab4f1bc5b",
+  "reading": {
+    "version": "selected_sse_ohlc_crosscheck_v1",
+    "paired_start": "2026-11-09",
+    "paired_through": "2026-11-19",
+    "new_day": "2026-11-20",
+    "cases": [
+      {
+        "symbol": "600180.SH",
+        "name": "*ST瑞茂",
+        "matched_ohlc_days": 9,
+        "matched_ohlc_values": 36,
+        "sse_close_control_days": 10,
+        "one_price_dates": [],
+        "new_day": {
+          "date": "2026-11-20",
+          "open": "0.560",
+          "close": "0.550",
+          "high": "0.600",
+          "low": "0.550",
+          "previous_observed_close": "0.610",
+          "one_observed_price": false,
+          "close_vs_previous": "lower",
+          "actual_down_limit": null
+        }
+      },
+      {
+        "symbol": "600340.SH",
+        "name": "*ST华幸",
+        "matched_ohlc_days": 9,
+        "matched_ohlc_values": 36,
+        "sse_close_control_days": 10,
+        "one_price_dates": [
+          "2026-11-18"
+        ],
+        "new_day": {
+          "date": "2026-11-20",
+          "open": "0.720",
+          "close": "0.850",
+          "high": "0.850",
+          "low": "0.720",
+          "previous_observed_close": "0.770",
+          "one_observed_price": false,
+          "close_vs_previous": "higher",
+          "actual_down_limit": null
+        }
+      },
+      {
+        "symbol": "603359.SH",
+        "name": "*ST东珠",
+        "matched_ohlc_days": 9,
+        "matched_ohlc_values": 36,
+        "sse_close_control_days": 10,
+        "one_price_dates": [
+          "2026-11-18"
+        ],
+        "new_day": {
+          "date": "2026-11-20",
+          "open": "0.830",
+          "close": "0.860",
+          "high": "0.930",
+          "low": "0.800",
+          "previous_observed_close": "0.890",
+          "one_observed_price": false,
+          "close_vs_previous": "lower",
+          "actual_down_limit": null
+        }
+      }
+    ],
+    "boundary": "三家九日原始OHLC由另一行情渠道核同，另用保存上交所收盘控制到20日；官方收盘不冒充完整OHLC或实际限价。20日只补各公司日线，整组窗口不推进，实际限价字段、历史队列与执行仍另核。跨渠道同案例不增加独立经验验证。",
+    "independent_validations_added": 0
+  },
+  "source_refs": [
+    {
+      "symbol": "600180",
+      "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh600180%2Cday%2C2026-11-06%2C2026-11-20%2C320%2C",
+      "params": {
+        "param": "sh600180,day,2026-11-06,2026-11-20,320,"
+      },
+      "sha256": "06611bbcfb97633a5284e204b84f6386772588cffff2eb686424abc045c920d2",
+      "bytes": 2251,
+      "observed_at": "2026-11-20T21:02:40.628645+00:00"
+    },
+    {
+      "symbol": "600340",
+      "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh600340%2Cday%2C2026-11-06%2C2026-11-20%2C320%2C",
+      "params": {
+        "param": "sh600340,day,2026-11-06,2026-11-20,320,"
+      },
+      "sha256": "5b8960ccb746c902b5b1a5a706e4bff62ebe4f3f82655f25a9e862fab8d1d298",
+      "bytes": 2259,
+      "observed_at": "2026-11-20T21:02:40.652425+00:00"
+    },
+    {
+      "symbol": "603359",
+      "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603359%2Cday%2C2026-11-06%2C2026-11-20%2C320%2C",
+      "params": {
+        "param": "sh603359,day,2026-11-06,2026-11-20,320,"
+      },
+      "sha256": "efb88844b355ba94f0112b30ffee2d8714ddb048159ba73e310ed2a1ef6e4e85",
+      "bytes": 2249,
+      "observed_at": "2026-11-20T21:02:40.624495+00:00"
+    },
+    {
+      "code": "600180",
+      "status": "captured",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/600180",
+      "params": {
+        "select": "date,close,prevClose,chg_rate,volume,amount",
+        "begin": -126,
+        "end": -1,
+        "period": "day"
+      },
+      "sha256": "ede8beb0c2c64aa717bd2806e1237f9fc000ff779213cc502e103b0b33667cf2",
+      "bytes": 6125,
+      "observed_at": "2026-11-20T17:05:45.418327+00:00",
+      "symbol": "600180"
+    },
+    {
+      "code": "600340",
+      "status": "captured",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/600340",
+      "params": {
+        "select": "date,close,prevClose,chg_rate,volume,amount",
+        "begin": -126,
+        "end": -1,
+        "period": "day"
+      },
+      "sha256": "8d9eb9935b6d5f5c70899ae587c0f94b9ae28e234b1a1c6c4f216464be832c34",
+      "bytes": 6166,
+      "observed_at": "2026-11-20T17:06:33.024671+00:00",
+      "symbol": "600340"
+    },
+    {
+      "code": "603359",
+      "status": "captured",
+      "url": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/603359",
+      "params": {
+        "select": "date,close,prevClose,chg_rate,volume,amount",
+        "begin": -126,
+        "end": -1,
+        "period": "day"
+      },
+      "sha256": "dba2fe0d08e1d54e25b8b0ebae15cd73c41d7f53a879101dabd0e7015eb30370",
+      "bytes": 6040,
+      "observed_at": "2026-11-20T17:13:18.228877+00:00",
+      "symbol": "603359"
+    }
+  ],
+  "evidence_sha256": "3f87a4bd8872ec325b481c5c5385d147cba876c1824243a2cf59326641c3ec48",
+  "research_run_id": "RUN-0200BDE0FB79438586E1663A"
+}

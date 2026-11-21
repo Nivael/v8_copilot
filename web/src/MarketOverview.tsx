@@ -8,6 +8,12 @@ import {MarketBreadthSequence} from './MarketBreadthSequence'
 import {MarketBreadthReading} from './MarketBreadthReading'
 import {MarketPriceContext} from './MarketPriceContext'
 import {BroadETFSection} from './BroadETFSection'
+import {STFixedNov20} from './STFixedNov20'
+import {RiskListNov20} from './RiskListNov20'
+import {SZSEOHLCFieldReview} from './SZSEOHLCFieldReview'
+import {LongBreadthSTComparison} from './LongBreadthSTComparison'
+import alignment from './stBreadthAlignment.json'
+import recentBreadth from './recentMarketBreadth.json'
 
 export function MarketOverview(){
   const {packet,error,busy,reload}=useReadingView<MarketReading>('market')
@@ -24,9 +30,9 @@ export function MarketOverview(){
     {error&&<p role="alert" className="reading-error">{error}。{data?'当前保留上次判断。':'请稍后重试。'}</p>}
     {!data||!price?<div className="reading-placeholder" role="status"><h2>正在整理最近的市场判断</h2><p>完成后会显示大盘、ST和ETF的结论。</p></div>:<>
       <section className="reading-verdict" aria-label="已保存的市场价格判断"><span className="reading-stance">{price.stance}</span><h2>{price.headline}</h2><p>{price.summary}</p><a className="reading-text-link" href="#market-reasons">为什么这样判断 ↓</a></section>
-      <section className="reading-section" aria-label="市场数据日期与判断范围"><h2>这份判断能说明什么？</h2><p>价格判断截至{price.as_of}；上涨股票占比截至{breadthDay}；ST同窗参考截至{data.as_of}；ETF份额与同窗价格截至{broad?.as_of||data.as_of}。刷新只重读已保存资料。</p><p>已能核对价格与参与面是否同向走弱。逐股跌停、连续跌停、均线覆盖与退出能力尚未接齐，当前不能据此给出完整危机等级或仓位上限。</p><p><a href="#market-breadth-sequence">连续转弱后是否必跌？查看历史反例 →</a></p></section>
+      <section className="reading-section" aria-label="市场数据日期与判断范围"><h2>这份判断能说明什么？</h2><p>价格判断截至{price.as_of}；上涨股票占比截至{breadthDay}；下方旧ST走势图截至{data.as_of}；ETF份额与同窗价格截至{broad?.as_of||data.as_of}。刷新只重读已保存资料。</p>{breadth&&alignment.breadth_evidence_sha256===recentBreadth.evidence_sha256&&<p>近期动态ST与大盘的冻结同窗复盘另截至{alignment.reading.common_through}，见下方“大盘转弱后，ST怎样？”。它与旧走势图分别保留日期，不把后来的行情接成旧图，也不是实时更新。</p>}<p>已能核对价格与参与面是否同向走弱。已补11月9—19日两组样本的限价配对及窗口内连续状态；20日另以腾讯公开报价补齐沪深5216只当日成交普通A股的限价配对，收盘/前收与交易所核同；与前九日来源分列，ST局部名单核验仍分别保留范围。逐股均线覆盖与实际退出能力尚未接齐，当前不能据此给出完整危机等级或仓位上限。</p><p><a href="#market-breadth-sequence">连续转弱后是否必跌？查看历史反例 →</a></p></section>
       {breadth&&<MarketBreadthReading data={breadth} priceAsOf={price.as_of}/>}
-      <MarketPriceContext data={latest?.price_context} priceAsOf={price.as_of}/>
+      <LongBreadthSTComparison priceAsOf={price.as_of}/><STFixedNov20 priceAsOf={price.as_of} priceDigest={latest?.source_digest}/><RiskListNov20 priceAsOf={price.as_of}/><SZSEOHLCFieldReview priceAsOf={price.as_of}/><MarketPriceContext data={latest?.price_context} priceAsOf={price.as_of}/>
       <dl className="reading-metrics"><div><dt>最近一个交易日</dt><dd>{percent(price.metrics.day_change_pct)}</dd></div><div><dt>最近5个交易日</dt><dd>{percent(price.metrics.five_day_change_pct)}</dd></div><div><dt>最近20个交易日</dt><dd>{percent(price.metrics.twenty_day_change_pct)}</dd></div><div><dt>{`上涨股票占比（${breadthDay}）`}</dt><dd>{advancing==null?'待更新':`${advancing.toFixed(1)}%`}</dd></div></dl>
       <section className="reading-section"><header><h2>大盘与ST，放在一起看</h2><p>{data.start} — {data.as_of} · 同期累计涨跌</p></header><ReadingChart series={data.chart} label="大盘与ST走势比较"/><p className="reading-caption">线越低，期间跌幅越大。一次上涨，要放回整段走势里看。</p></section>
       <section className="reading-section reading-reasons" id="market-reasons"><header><h2>这个判断怎么用</h2><p>先判断反弹是否持续，再看ST有没有跟上。</p></header><ol>{reasons.map(reason=><li key={reason.title}><h3>{reason.title}</h3><p>{reason.text}</p><a href={reason.source_url} target={reason.source_url.startsWith('http')?'_blank':undefined} rel="noreferrer">{reason.source_label} ↗</a></li>)}</ol><p className="reading-next">接下来盯：{data.watch_next.join('；')}。</p></section>

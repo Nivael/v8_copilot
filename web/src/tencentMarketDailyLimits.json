@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-20",
+  "breadth_sha256": "03488f4f855c814d6649b7e3c64ff1b29dbe94f03b387daf480ae785470428dd",
+  "official_trading": 5216,
+  "paired": 5216,
+  "limit_counts_in_paired": {
+    "open_at_down": 20,
+    "touch_down": 107,
+    "close_at_down": 68,
+    "one_price_down": 3
+  },
+  "evidence_sha256": "7ba9706479bb16e0edd13d6c215ad9e0fd7199c028d8f9fd2ffd56a276f9f7d4",
+  "source": "Tencent public quote fields; official close/reference cross-check"
+}

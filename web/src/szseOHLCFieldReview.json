@@ -1,0 +1,198 @@
+{
+  "reading": {
+    "version": "szse_main_risk_ohlc_field_review_v1",
+    "date": "2026-11-20",
+    "official_dated_mainboard_members": 74,
+    "trading": 72,
+    "nontrading": 2,
+    "one_price_trading": 1,
+    "one_price_higher": 1,
+    "one_price_lower": 0,
+    "one_price_flat": 0,
+    "close_at_daily_low": 8,
+    "actual_limit_columns": [],
+    "boundary": "只限有明确20日适用日期的深市主板风险警示74只，沪市、创业板、科创板及B股不在本统计。无成交参考价不计全天同价成交；全天同价需再分上涨/下跌/平盘，收盘等于日内最低也不等于跌停。十二列表中未提供实际限价，不据此补跌停数量、历史队列或可执行退出。",
+    "independent_validations_added": 0,
+    "one_price_rows": [
+      {
+        "symbol": "000838.SZ",
+        "name": "*ST发展",
+        "is_trading": true,
+        "close": "1.32",
+        "reference": "1.20",
+        "status": "observed_trade",
+        "open": "1.32",
+        "high": "1.32",
+        "low": "1.32",
+        "one_observed_price": true,
+        "close_at_low": true,
+        "close_direction": "higher"
+      }
+    ],
+    "nontrading_rows": [
+      {
+        "symbol": "002122.SZ",
+        "name": "ST汇洲",
+        "is_trading": false,
+        "close": "2.69",
+        "reference": "2.69",
+        "status": "no_trade_reference_only"
+      },
+      {
+        "symbol": "002717.SZ",
+        "name": "*ST岭南",
+        "is_trading": false,
+        "close": "0.45",
+        "reference": "0.45",
+        "status": "no_trade_reference_only"
+      }
+    ],
+    "close_at_low_rows": [
+      {
+        "symbol": "000793.SZ",
+        "name": "ST华闻",
+        "is_trading": true,
+        "close": "1.67",
+        "reference": "1.74",
+        "status": "observed_trade",
+        "open": "1.71",
+        "high": "1.73",
+        "low": "1.67",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "lower"
+      },
+      {
+        "symbol": "000821.SZ",
+        "name": "ST京机",
+        "is_trading": true,
+        "close": "5.76",
+        "reference": "6.11",
+        "status": "observed_trade",
+        "open": "5.98",
+        "high": "6.04",
+        "low": "5.76",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "lower"
+      },
+      {
+        "symbol": "000838.SZ",
+        "name": "*ST发展",
+        "is_trading": true,
+        "close": "1.32",
+        "reference": "1.20",
+        "status": "observed_trade",
+        "open": "1.32",
+        "high": "1.32",
+        "low": "1.32",
+        "one_observed_price": true,
+        "close_at_low": true,
+        "close_direction": "higher"
+      },
+      {
+        "symbol": "002024.SZ",
+        "name": "ST易购",
+        "is_trading": true,
+        "close": "1.02",
+        "reference": "1.04",
+        "status": "observed_trade",
+        "open": "1.03",
+        "high": "1.04",
+        "low": "1.02",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "lower"
+      },
+      {
+        "symbol": "002305.SZ",
+        "name": "*ST南置",
+        "is_trading": true,
+        "close": "1.69",
+        "reference": "1.74",
+        "status": "observed_trade",
+        "open": "1.71",
+        "high": "1.75",
+        "low": "1.69",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "lower"
+      },
+      {
+        "symbol": "002323.SZ",
+        "name": "*ST雅博",
+        "is_trading": true,
+        "close": "1.16",
+        "reference": "1.14",
+        "status": "observed_trade",
+        "open": "1.20",
+        "high": "1.23",
+        "low": "1.16",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "higher"
+      },
+      {
+        "symbol": "002630.SZ",
+        "name": "*ST华西",
+        "is_trading": true,
+        "close": "1.59",
+        "reference": "1.70",
+        "status": "observed_trade",
+        "open": "1.71",
+        "high": "1.71",
+        "low": "1.59",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "lower"
+      },
+      {
+        "symbol": "002759.SZ",
+        "name": "ST天际",
+        "is_trading": true,
+        "close": "8.95",
+        "reference": "9.49",
+        "status": "observed_trade",
+        "open": "9.19",
+        "high": "9.34",
+        "low": "8.95",
+        "one_observed_price": false,
+        "close_at_low": true,
+        "close_direction": "lower"
+      }
+    ]
+  },
+  "reported_columns": [
+    "交易日期",
+    "证券代码",
+    "证券简称",
+    "前收",
+    "开盘",
+    "最高",
+    "最低",
+    "今收",
+    "涨跌幅（%）",
+    "成交量(万股)",
+    "成交金额(万元)",
+    "市盈率"
+  ],
+  "risk_evidence_sha256": "c8ebca78a421e851f119dc78cc87a0d415ac3b7d755f9416270c88058d278480",
+  "szse_day_sha256": "2897fcb8c2cf55837a39bb8a08486759d7594c76ae5e727b2a4fe5e70de06d21",
+  "export_source": {
+    "kind": "szse_complete_xlsx",
+    "venue": "SZSE",
+    "url": "http://www.szse.cn/api/report/ShowReport",
+    "params": {
+      "SHOWTYPE": "xlsx",
+      "CATALOGID": "1815_stock_snapshot",
+      "txtBeginDate": "2026-11-20",
+      "txtEndDate": "2026-11-20"
+    },
+    "response_sha256": "cfe7ede4c2ea6cf31eeea7c732434549686d91e70eac3c915845616ecf33b479",
+    "observed_at": "2026-11-20T16:33:50.439697+00:00",
+    "bytes": 232496
+  },
+  "export_url": "http://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1815_stock_snapshot&txtBeginDate=2026-11-20&txtEndDate=2026-11-20",
+  "evidence_sha256": "26a01f05c1a734ab5d90be643493968049d500707dd59c499895adb6b299b30b",
+  "research_run_id": "RUN-85471F0D24364A8C9D8237F5"
+}

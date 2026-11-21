@@ -1,0 +1,1275 @@
+{
+  "sources": [
+    {
+      "date": "2026-11-09",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261109"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "47b67d2d2d6f1dc7bde7f53cf2949cd52722093a3ccf2e46fc72cc2e351da771",
+      "bytes": 276002,
+      "fetched_at": "2026-11-19T15:27:58.168974+00:00"
+    },
+    {
+      "date": "2026-11-10",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261110"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "978116d78198afa4d51b8efad84e37140422372731d1a8d36be424b9c69181ca",
+      "bytes": 276025,
+      "fetched_at": "2026-11-19T15:28:00.831145+00:00"
+    },
+    {
+      "date": "2026-11-11",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261111"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "2442c0a7259985fb886d2831c9ebb17ddbf288748de44a3af415262a04d87f62",
+      "bytes": 276185,
+      "fetched_at": "2026-11-19T15:28:03.276505+00:00"
+    },
+    {
+      "date": "2026-11-12",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261112"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "837b7a7a3b58cf475614e610d4cca75b2ac6d725a62bda0262703ec6b27a2b7e",
+      "bytes": 276246,
+      "fetched_at": "2026-11-19T15:28:05.718415+00:00"
+    },
+    {
+      "date": "2026-11-13",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261113"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "2da4f3a0a6674fa95d53fc0966ec588b26a68485004f3de423f39ef3b47f9145",
+      "bytes": 276096,
+      "fetched_at": "2026-11-19T15:28:08.157208+00:00"
+    },
+    {
+      "date": "2026-11-16",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261116"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "bd1244b5d98f5bda56a0c31e3040f830322e55751467911d9800908dafb26756",
+      "bytes": 275928,
+      "fetched_at": "2026-11-19T15:28:10.610290+00:00"
+    },
+    {
+      "date": "2026-11-17",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "9894fc6124ddc4a347a9388b29fae88d972b8e2ed70a55ab5c236c7a1e0381ce",
+      "bytes": 275835,
+      "fetched_at": "2026-11-19T15:28:13.160531+00:00"
+    },
+    {
+      "date": "2026-11-18",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261118"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "d8c7ffd34f1c01111b7707f8f7a202e7309d4622e51b51d242f9870df477fc82",
+      "bytes": 275679,
+      "fetched_at": "2026-11-19T15:28:15.617411+00:00"
+    },
+    {
+      "date": "2026-11-19",
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261119"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "30179da26789da2b422b3d222edcb7050dedf98714f158f22b4e2fcd27472b93",
+      "bytes": 275666,
+      "fetched_at": "2026-11-19T15:28:18.139805+00:00"
+    }
+  ],
+  "ohlc_reading": {
+    "version": "st_exit_daily_observation_v1",
+    "start": "2026-11-09",
+    "through": "2026-11-19",
+    "companies": [
+      {
+        "symbol": "603398",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 1,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "6.420",
+            "close": "6.030",
+            "high": "6.440",
+            "low": "6.010",
+            "source_volume_native_units": "81100.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.430"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "6.060",
+            "close": "6.020",
+            "high": "6.090",
+            "low": "5.960",
+            "source_volume_native_units": "49632.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.130"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "6.020",
+            "close": "6.020",
+            "high": "6.070",
+            "low": "5.830",
+            "source_volume_native_units": "58940.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.240"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "6.000",
+            "close": "6.020",
+            "high": "6.160",
+            "low": "5.950",
+            "source_volume_native_units": "57155.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.210"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "6.010",
+            "close": "5.700",
+            "high": "6.010",
+            "low": "5.650",
+            "source_volume_native_units": "69612.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.360"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "5.660",
+            "close": "5.480",
+            "high": "5.750",
+            "low": "5.450",
+            "source_volume_native_units": "59571.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.300"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "5.440",
+            "close": "5.120",
+            "high": "5.480",
+            "low": "5.000",
+            "source_volume_native_units": "99523.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.480"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "5.070",
+            "close": "4.880",
+            "high": "5.170",
+            "low": "4.800",
+            "source_volume_native_units": "96716.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.370"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "4.850",
+            "close": "4.390",
+            "high": "4.870",
+            "low": "4.390",
+            "source_volume_native_units": "167919.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "0.480"
+          }
+        ],
+        "source": {
+          "key": "sh603398-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603398%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "e6244d27462005a573a0d2144e835ce106970aa73f524f1d248e289e70f55efc",
+          "observed_at": "2026-11-19T15:31:28.352610+00:00"
+        }
+      },
+      {
+        "symbol": "600363",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 0,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "9.260",
+            "close": "8.970",
+            "high": "9.300",
+            "low": "8.960",
+            "source_volume_native_units": "196237.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.340"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "9.080",
+            "close": "9.300",
+            "high": "9.420",
+            "low": "9.040",
+            "source_volume_native_units": "196521.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.380"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "9.310",
+            "close": "9.390",
+            "high": "9.530",
+            "low": "9.170",
+            "source_volume_native_units": "176528.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.360"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "9.400",
+            "close": "9.630",
+            "high": "9.970",
+            "low": "9.380",
+            "source_volume_native_units": "306724.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.590"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "9.530",
+            "close": "9.210",
+            "high": "9.680",
+            "low": "9.080",
+            "source_volume_native_units": "243612.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.600"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "9.100",
+            "close": "8.650",
+            "high": "9.130",
+            "low": "8.600",
+            "source_volume_native_units": "205876.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.530"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "8.500",
+            "close": "8.420",
+            "high": "8.810",
+            "low": "8.390",
+            "source_volume_native_units": "173956.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.420"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "8.510",
+            "close": "8.210",
+            "high": "8.550",
+            "low": "8.020",
+            "source_volume_native_units": "226348.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.530"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "8.130",
+            "close": "7.920",
+            "high": "8.200",
+            "low": "7.830",
+            "source_volume_native_units": "177332.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.370"
+          }
+        ],
+        "source": {
+          "key": "sh600363-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh600363%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "eb5fe985ca957ab3d0989d5fe6dc7c8e67ebe4dd4f9e9df3fd9ed04a8db5a8f4",
+          "observed_at": "2026-11-19T15:31:28.348689+00:00"
+        }
+      },
+      {
+        "symbol": "002667",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 1,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "27.000",
+            "close": "22.750",
+            "high": "27.000",
+            "low": "22.750",
+            "source_volume_native_units": "239715.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "4.250"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "22.240",
+            "close": "22.260",
+            "high": "23.360",
+            "low": "22.000",
+            "source_volume_native_units": "135163.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.360"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "22.200",
+            "close": "21.990",
+            "high": "22.380",
+            "low": "21.600",
+            "source_volume_native_units": "98605.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.780"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "22.010",
+            "close": "21.250",
+            "high": "22.200",
+            "low": "21.120",
+            "source_volume_native_units": "102333.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.080"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "21.550",
+            "close": "22.780",
+            "high": "22.780",
+            "low": "21.300",
+            "source_volume_native_units": "138858.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.480"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "22.760",
+            "close": "21.790",
+            "high": "22.760",
+            "low": "21.510",
+            "source_volume_native_units": "91409.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.250"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "21.390",
+            "close": "21.580",
+            "high": "22.090",
+            "low": "21.200",
+            "source_volume_native_units": "72084.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.890"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "21.560",
+            "close": "22.200",
+            "high": "22.420",
+            "low": "21.380",
+            "source_volume_native_units": "87352.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.040"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "22.000",
+            "close": "20.270",
+            "high": "22.050",
+            "low": "20.000",
+            "source_volume_native_units": "91734.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "2.050"
+          }
+        ],
+        "source": {
+          "key": "sz002667-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002667%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "8bdf554631145f0937d60d24b66578e52b1b6d54952e70c9e6f2a895f9e2959e",
+          "observed_at": "2026-11-19T15:31:28.511453+00:00"
+        }
+      },
+      {
+        "symbol": "688053",
+        "observed_trading_days": 8,
+        "one_price_days": 0,
+        "close_at_low_days": 1,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "36.200",
+            "close": "37.500",
+            "high": "37.790",
+            "low": "36.200",
+            "source_volume_native_units": "1161425.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.590"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "37.300",
+            "close": "35.850",
+            "high": "37.300",
+            "low": "34.900",
+            "source_volume_native_units": "3156803.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "2.400"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "35.560",
+            "close": "35.100",
+            "high": "36.960",
+            "low": "34.700",
+            "source_volume_native_units": "2103391.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "2.260"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "35.020",
+            "close": "32.050",
+            "high": "35.440",
+            "low": "32.000",
+            "source_volume_native_units": "1679977.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "3.440"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "32.090",
+            "close": "29.200",
+            "high": "32.090",
+            "low": "29.200",
+            "source_volume_native_units": "1539810.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "2.890"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "29.260",
+            "close": "28.230",
+            "high": "29.900",
+            "low": "27.990",
+            "source_volume_native_units": "1412704.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.910"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "28.740",
+            "close": "28.150",
+            "high": "28.770",
+            "low": "27.500",
+            "source_volume_native_units": "1094801.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.270"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "28.150",
+            "close": "27.830",
+            "high": "28.800",
+            "low": "27.500",
+            "source_volume_native_units": "893496.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.300"
+          }
+        ],
+        "source": {
+          "key": "sh688053-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688053%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "6950c8d0a2e51475d3a789a7c13be58a495f01388aa93863ee3fcfaf8ad8a5a0",
+          "observed_at": "2026-11-19T15:31:28.534053+00:00"
+        }
+      },
+      {
+        "symbol": "002514",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 2,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "2.110",
+            "close": "2.140",
+            "high": "2.230",
+            "low": "2.110",
+            "source_volume_native_units": "103438.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.120"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "2.140",
+            "close": "2.140",
+            "high": "2.180",
+            "low": "2.110",
+            "source_volume_native_units": "86574.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.070"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "2.150",
+            "close": "2.140",
+            "high": "2.170",
+            "low": "2.080",
+            "source_volume_native_units": "69352.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.090"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "2.150",
+            "close": "2.040",
+            "high": "2.150",
+            "low": "2.040",
+            "source_volume_native_units": "96465.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "0.110"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "2.040",
+            "close": "1.990",
+            "high": "2.060",
+            "low": "1.980",
+            "source_volume_native_units": "91453.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.080"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "1.980",
+            "close": "1.890",
+            "high": "2.000",
+            "low": "1.890",
+            "source_volume_native_units": "92298.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "0.110"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "1.880",
+            "close": "1.820",
+            "high": "1.920",
+            "low": "1.800",
+            "source_volume_native_units": "103861.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.120"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "1.850",
+            "close": "1.900",
+            "high": "1.900",
+            "low": "1.750",
+            "source_volume_native_units": "118977.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.150"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "1.910",
+            "close": "2.050",
+            "high": "2.080",
+            "low": "1.890",
+            "source_volume_native_units": "180003.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.190"
+          }
+        ],
+        "source": {
+          "key": "sz002514-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002514%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "107e89b18121ef80812b668043bc24a160c01ae34b1b84da98217677822d4766",
+          "observed_at": "2026-11-19T15:31:28.720089+00:00"
+        }
+      }
+    ],
+    "total_trading_stock_days": 44,
+    "one_price_stock_days": 0,
+    "close_at_low_stock_days": 5,
+    "actual_limit_price_available": false,
+    "queue_data_available": false,
+    "executable_exit_verified": false
+  },
+  "ohlc_evidence_sha256": "d6c04f43f90c69f3b82ea427a36bbd52b593387aee2d44a49a435178ec40dc15",
+  "processor_sha256": "de3076d2beddff3e75a25c2112c1e8f24837901dece736b84458426b7bc2cbb8",
+  "reading": {
+    "version": "recovered_selected_limits_v1",
+    "start": "2026-11-09",
+    "through": "2026-11-19",
+    "limit_records": 45,
+    "trading_ohlc_pairs": 44,
+    "without_trading_ohlc": [
+      {
+        "symbol": "688053",
+        "date": "2026-11-10"
+      }
+    ],
+    "close_at_down_limit_days": 2,
+    "touch_down_limit_days": 2,
+    "one_price_at_down_limit_days": 0,
+    "response_rows_by_day": {
+      "2026-11-09": 5938,
+      "2026-11-10": 5939,
+      "2026-11-11": 5939,
+      "2026-11-12": 5939,
+      "2026-11-13": 5939,
+      "2026-11-16": 5939,
+      "2026-11-17": 5940,
+      "2026-11-18": 5940,
+      "2026-11-19": 5940
+    },
+    "rows": [
+      {
+        "symbol": "603398",
+        "date": "2026-11-09",
+        "pre_close": "6.4",
+        "up_limit": "7.04",
+        "down_limit": "5.76",
+        "close": "6.030",
+        "low": "6.010",
+        "high": "6.440",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-10",
+        "pre_close": "6.03",
+        "up_limit": "6.63",
+        "down_limit": "5.43",
+        "close": "6.020",
+        "low": "5.960",
+        "high": "6.090",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-11",
+        "pre_close": "6.02",
+        "up_limit": "6.62",
+        "down_limit": "5.42",
+        "close": "6.020",
+        "low": "5.830",
+        "high": "6.070",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-12",
+        "pre_close": "6.02",
+        "up_limit": "6.62",
+        "down_limit": "5.42",
+        "close": "6.020",
+        "low": "5.950",
+        "high": "6.160",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-13",
+        "pre_close": "6.02",
+        "up_limit": "6.62",
+        "down_limit": "5.42",
+        "close": "5.700",
+        "low": "5.650",
+        "high": "6.010",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-16",
+        "pre_close": "5.7",
+        "up_limit": "6.27",
+        "down_limit": "5.13",
+        "close": "5.480",
+        "low": "5.450",
+        "high": "5.750",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-17",
+        "pre_close": "5.48",
+        "up_limit": "6.03",
+        "down_limit": "4.93",
+        "close": "5.120",
+        "low": "5.000",
+        "high": "5.480",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-18",
+        "pre_close": "5.12",
+        "up_limit": "5.63",
+        "down_limit": "4.61",
+        "close": "4.880",
+        "low": "4.800",
+        "high": "5.170",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "603398",
+        "date": "2026-11-19",
+        "pre_close": "4.88",
+        "up_limit": "5.37",
+        "down_limit": "4.39",
+        "close": "4.390",
+        "low": "4.390",
+        "high": "4.870",
+        "close_at_down_limit": true,
+        "low_at_down_limit": true,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-09",
+        "pre_close": "9.16",
+        "up_limit": "10.08",
+        "down_limit": "8.24",
+        "close": "8.970",
+        "low": "8.960",
+        "high": "9.300",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-10",
+        "pre_close": "8.97",
+        "up_limit": "9.87",
+        "down_limit": "8.07",
+        "close": "9.300",
+        "low": "9.040",
+        "high": "9.420",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-11",
+        "pre_close": "9.3",
+        "up_limit": "10.23",
+        "down_limit": "8.37",
+        "close": "9.390",
+        "low": "9.170",
+        "high": "9.530",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-12",
+        "pre_close": "9.39",
+        "up_limit": "10.33",
+        "down_limit": "8.45",
+        "close": "9.630",
+        "low": "9.380",
+        "high": "9.970",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-13",
+        "pre_close": "9.63",
+        "up_limit": "10.59",
+        "down_limit": "8.67",
+        "close": "9.210",
+        "low": "9.080",
+        "high": "9.680",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-16",
+        "pre_close": "9.21",
+        "up_limit": "10.13",
+        "down_limit": "8.29",
+        "close": "8.650",
+        "low": "8.600",
+        "high": "9.130",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-17",
+        "pre_close": "8.65",
+        "up_limit": "9.52",
+        "down_limit": "7.79",
+        "close": "8.420",
+        "low": "8.390",
+        "high": "8.810",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-18",
+        "pre_close": "8.42",
+        "up_limit": "9.26",
+        "down_limit": "7.58",
+        "close": "8.210",
+        "low": "8.020",
+        "high": "8.550",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "600363",
+        "date": "2026-11-19",
+        "pre_close": "8.21",
+        "up_limit": "9.03",
+        "down_limit": "7.39",
+        "close": "7.920",
+        "low": "7.830",
+        "high": "8.200",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-09",
+        "pre_close": "25.28",
+        "up_limit": "27.81",
+        "down_limit": "22.75",
+        "close": "22.750",
+        "low": "22.750",
+        "high": "27.000",
+        "close_at_down_limit": true,
+        "low_at_down_limit": true,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-10",
+        "pre_close": "22.75",
+        "up_limit": "25.03",
+        "down_limit": "20.48",
+        "close": "22.260",
+        "low": "22.000",
+        "high": "23.360",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-11",
+        "pre_close": "22.26",
+        "up_limit": "24.49",
+        "down_limit": "20.03",
+        "close": "21.990",
+        "low": "21.600",
+        "high": "22.380",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-12",
+        "pre_close": "21.99",
+        "up_limit": "24.19",
+        "down_limit": "19.79",
+        "close": "21.250",
+        "low": "21.120",
+        "high": "22.200",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-13",
+        "pre_close": "21.25",
+        "up_limit": "23.38",
+        "down_limit": "19.13",
+        "close": "22.780",
+        "low": "21.300",
+        "high": "22.780",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-16",
+        "pre_close": "22.78",
+        "up_limit": "25.06",
+        "down_limit": "20.5",
+        "close": "21.790",
+        "low": "21.510",
+        "high": "22.760",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-17",
+        "pre_close": "21.79",
+        "up_limit": "23.97",
+        "down_limit": "19.61",
+        "close": "21.580",
+        "low": "21.200",
+        "high": "22.090",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-18",
+        "pre_close": "21.58",
+        "up_limit": "23.74",
+        "down_limit": "19.42",
+        "close": "22.200",
+        "low": "21.380",
+        "high": "22.420",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002667",
+        "date": "2026-11-19",
+        "pre_close": "22.2",
+        "up_limit": "24.42",
+        "down_limit": "19.98",
+        "close": "20.270",
+        "low": "20.000",
+        "high": "22.050",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-09",
+        "pre_close": "36.48",
+        "up_limit": "43.78",
+        "down_limit": "29.18",
+        "close": "37.500",
+        "low": "36.200",
+        "high": "37.790",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-11",
+        "pre_close": "37.5",
+        "up_limit": "45.0",
+        "down_limit": "30.0",
+        "close": "35.850",
+        "low": "34.900",
+        "high": "37.300",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-12",
+        "pre_close": "35.85",
+        "up_limit": "43.02",
+        "down_limit": "28.68",
+        "close": "35.100",
+        "low": "34.700",
+        "high": "36.960",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-13",
+        "pre_close": "35.1",
+        "up_limit": "42.12",
+        "down_limit": "28.08",
+        "close": "32.050",
+        "low": "32.000",
+        "high": "35.440",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-16",
+        "pre_close": "32.05",
+        "up_limit": "38.46",
+        "down_limit": "25.64",
+        "close": "29.200",
+        "low": "29.200",
+        "high": "32.090",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-17",
+        "pre_close": "29.2",
+        "up_limit": "35.04",
+        "down_limit": "23.36",
+        "close": "28.230",
+        "low": "27.990",
+        "high": "29.900",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-18",
+        "pre_close": "28.23",
+        "up_limit": "33.88",
+        "down_limit": "22.58",
+        "close": "28.150",
+        "low": "27.500",
+        "high": "28.770",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "688053",
+        "date": "2026-11-19",
+        "pre_close": "28.15",
+        "up_limit": "33.78",
+        "down_limit": "22.52",
+        "close": "27.830",
+        "low": "27.500",
+        "high": "28.800",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-09",
+        "pre_close": "2.11",
+        "up_limit": "2.32",
+        "down_limit": "1.9",
+        "close": "2.140",
+        "low": "2.110",
+        "high": "2.230",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-10",
+        "pre_close": "2.14",
+        "up_limit": "2.35",
+        "down_limit": "1.93",
+        "close": "2.140",
+        "low": "2.110",
+        "high": "2.180",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-11",
+        "pre_close": "2.14",
+        "up_limit": "2.35",
+        "down_limit": "1.93",
+        "close": "2.140",
+        "low": "2.080",
+        "high": "2.170",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-12",
+        "pre_close": "2.14",
+        "up_limit": "2.35",
+        "down_limit": "1.93",
+        "close": "2.040",
+        "low": "2.040",
+        "high": "2.150",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-13",
+        "pre_close": "2.04",
+        "up_limit": "2.24",
+        "down_limit": "1.84",
+        "close": "1.990",
+        "low": "1.980",
+        "high": "2.060",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-16",
+        "pre_close": "1.99",
+        "up_limit": "2.19",
+        "down_limit": "1.79",
+        "close": "1.890",
+        "low": "1.890",
+        "high": "2.000",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-17",
+        "pre_close": "1.89",
+        "up_limit": "2.08",
+        "down_limit": "1.7",
+        "close": "1.820",
+        "low": "1.800",
+        "high": "1.920",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-18",
+        "pre_close": "1.82",
+        "up_limit": "2.0",
+        "down_limit": "1.64",
+        "close": "1.900",
+        "low": "1.750",
+        "high": "1.900",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      },
+      {
+        "symbol": "002514",
+        "date": "2026-11-19",
+        "pre_close": "1.9",
+        "up_limit": "2.09",
+        "down_limit": "1.71",
+        "close": "2.050",
+        "low": "1.890",
+        "high": "2.080",
+        "close_at_down_limit": false,
+        "low_at_down_limit": false,
+        "one_price_at_down_limit": false
+      }
+    ],
+    "scope": "此前五家公司，含科创板且期间摘帽的思科瑞；不代表同期主板ST或全市场。",
+    "boundary": "主库缺近期数据不等于所有留档都缺。这里只复用九日供应商限价原件；不是交易所独立限价确认，不提供历史队列、可成交量、实际委托或退出成本，也不延伸到11月20日。"
+  }
+}

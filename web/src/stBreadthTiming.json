@@ -1,0 +1,85 @@
+{
+  "reading": {
+    "version": "st_breadth_timing_v1",
+    "rows": [
+      {
+        "first_weak_day": "2026-09-09",
+        "anchor": "2026-09-08",
+        "signal_date": "2026-09-11",
+        "observed_closes": 3,
+        "already_st_pct": -1.3551721836500272,
+        "already_market_pct": -2.132658046300218,
+        "following": {
+          "date": "2026-09-11",
+          "three_closes": [
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11"
+          ],
+          "observed_following_sessions": 5,
+          "through": "2026-09-18",
+          "complete_five": true,
+          "st_pct": -0.8327084440853595,
+          "market_pct": 1.6122001381446882,
+          "st_minus_market_pp": -2.4449085822300476,
+          "five_st_pct": -0.8327084440853595,
+          "five_market_pct": 1.6122001381446882
+        }
+      },
+      {
+        "first_weak_day": "2026-09-22",
+        "anchor": "2026-09-21",
+        "signal_date": "2026-09-24",
+        "observed_closes": 3,
+        "already_st_pct": -2.1162256364507015,
+        "already_market_pct": -2.259011354091703,
+        "following": {
+          "date": "2026-09-24",
+          "three_closes": [
+            "2026-09-22",
+            "2026-09-23",
+            "2026-09-24"
+          ],
+          "observed_following_sessions": 5,
+          "through": "2026-10-09",
+          "complete_five": true,
+          "st_pct": -1.7592444390246307,
+          "market_pct": -3.763228858342282,
+          "st_minus_market_pp": 2.0039844193176513,
+          "five_st_pct": -1.7592444390246307,
+          "five_market_pct": -3.763228858342282
+        }
+      },
+      {
+        "first_weak_day": "2026-11-12",
+        "anchor": "2026-11-11",
+        "signal_date": "2026-11-16",
+        "observed_closes": 3,
+        "already_st_pct": -5.590081184432938,
+        "already_market_pct": -4.763770325358413,
+        "following": {
+          "date": "2026-11-16",
+          "three_closes": [
+            "2026-11-12",
+            "2026-11-13",
+            "2026-11-16"
+          ],
+          "observed_following_sessions": 3,
+          "through": "2026-11-19",
+          "complete_five": false,
+          "st_pct": -5.880245046179585,
+          "market_pct": -1.6483770650412122,
+          "st_minus_market_pp": -4.231867981138373,
+          "five_st_pct": null,
+          "five_market_pct": null
+        }
+      }
+    ],
+    "boundary": "前三日变动在提示收盘已发生，不是提示后的损失；前后复合，不能直接相加，也不推定提示前持仓或提前可卖出。"
+  },
+  "alignment_evidence_sha256": "2b6fbc2ab6d9eb3e3c994b98c23727b8c6c9c90c8aa09d8a4cb3024c30d5348f",
+  "processor_sha256": "77eb0c8a774e65aa64b57588873dbc58724982b5e2456b363b91594840087f57",
+  "independent_validations_added": 0,
+  "evidence_sha256": "8cacb4fbb94adb6e8db5d30c591e1dd6465c715edeee0b7e5e24fc18ddf6adb2",
+  "research_run_id": "RUN-62EDC7C7628749109830A1E8"
+}

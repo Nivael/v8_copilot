@@ -1,8 +1,13 @@
+import {STNov20CatalogUpdate} from './STNov20CatalogUpdate'
+import {STCatalogResolutionAudit} from './STCatalogResolutionAudit'
+import {STAccountantBodyReview,accountantBodyBound,accountantReviewedIds} from './STAccountantBodyReview'
+import {STSubsidiaryExitFollowup,subsidiaryExitBound,subsidiaryExitReviewedIds} from './STSubsidiaryExitFollowup'
 import {STCashPlanFollowup,cashPlanBound,cashPlanReviewedIds} from './STCashPlanFollowup'
 import audit from './catalogSelectionAudit.json'
 import followup from './catalogLeadFollowup.json'
 import coverage from './catalogCoverageReuse.json'
 import full from './catalogFullCoverage.json'
+import nov20 from './catalogNov20Priority.json'
 import type {STRegimeData} from './stRegimeTypes'
 export function catalogCaseBound(context:unknown,symbol:string){
  const review=audit.review_outcomes.find(r=>r.symbol===symbol)
@@ -33,11 +38,19 @@ export function STCatalogSelectionAudit({data}:{data:STRegimeData}){
  const newReviews=followupBound?followup.sources:[]
  const coverageBound=followupBound&&coverage.baseline_snapshot_digest===data.content_digest&&coverage.prior_evidence_sha256===audit.evidence_sha256&&coverage.body_review_sha256===followup.source_review_sha256
  const bodyBound=cashPlanBound(data)
+ const subsidiaryBound=subsidiaryExitBound(data)
+ const reviewedIds=new Set([...(bodyBound?cashPlanReviewedIds:[]),...(subsidiaryBound?subsidiaryExitReviewedIds:[]),...(accountantBodyBound(data)?accountantReviewedIds:[])])
+ const reviewedCount=full.candidates.filter(r=>reviewedIds.has(r.announcement_id)).length
+ const nov20Bound=nov20.baseline_snapshot_digest===data.content_digest&&nov20.full_catalog_evidence_sha256===full.evidence_sha256
  const fullBound=coverageBound&&full.baseline_snapshot_digest===data.content_digest&&full.prior_90_evidence_sha256===coverage.evidence_sha256
  return <section aria-label="保存目录与选源完整性核对" className="regime-topic-body">
   <h3>公告已经列在目录里，是否都选进了研究？</h3>
-  {fullBound&&<><p><strong>固定150家公司均有完整保存查询；{bodyBound?'原11条线索已核2条正文，仍有9条待核。':'原11条线索的后续正文状态待重新绑定。'}</strong>目录覆盖不等于正文已读、所有事项完成或研究无遗漏。本轮补60家公司105页，合计253页保存响应；没有因此增加独立经验验证。</p><details><summary>查看原11条线索：2条已核正文，9条待核</summary><p>涉及5家公司。这里只列目录标题与身份，不把它们当已确认的新事实、研究遗漏或11个独立事件。康佳连续倒计时与说明会可能回指同一退出安排；会计师专项说明、核查报告也不自动当公司公告。</p><div className="regime-scroll"><table className="regime-table"><caption>原11条标题线索及后续正文核对状态</caption><thead><tr><th>公司与目录日</th><th>标题与原件入口</th><th>状态</th></tr></thead><tbody>{full.candidates.map(r=><tr key={r.announcement_id}><th>{r.symbol}<small>{r.published_on}</small></th><td><a href={r.url} target="_blank" rel="noreferrer">{r.title}</a><small>{r.announcement_id}</small></td><td>{bodyBound&&cashPlanReviewedIds.includes(r.announcement_id)?'正文已核，后续执行另看':'标题线索，正文待核'}</td></tr>)}</tbody></table></div></details><details><summary>150家目录覆盖的日期、来源与限制</summary><p>共同目标期间2026-07-04至2026-11-19。原6家查询额外包含7月1—3日，其余144家从7月4日起；保存查询去重{full.counts.unique_catalog_announcements}条是混合起点的记录数，不是统一窗口公告总数。</p><p>全部查询核公司身份、日期参数、原字节摘要和完整分页；没有认证其他渠道、最早公开分钟或所有正文。完整目录核对时，有限标题规则命中25条，其中11条未进入当时已选源集合；后续正文处理状态见上方，不表示规则之外没有缺口。</p><p>原84家、90家阶段及8条旧线索在下方保留。证据摘要：<code>{full.evidence_sha256}</code>。</p><p><a href={'/runs#research-'+full.research_run_id}>查看150家公司目录核对研究 →</a></p></details></>}
+  <STCatalogResolutionAudit data={data}/>
+  <STNov20CatalogUpdate data={data}/>
+  {fullBound&&<><p><strong>固定150家公司均有完整保存查询；{bodyBound?`原11条线索已核${reviewedCount}条正文，仍有${11-reviewedCount}条待核。`:'原11条线索的后续正文状态待重新绑定。'}</strong>本队列正文已核不等于疑点消除，启环报告内仍有余额表述和日期冲突。目录覆盖不等于所有事项完成或研究无遗漏。本轮补60家公司105页，合计253页保存响应；没有因此增加独立经验验证。</p><details><summary>查看原11条线索：{reviewedCount}条已核正文，{11-reviewedCount}条待核</summary><p>涉及5家公司。这里只列目录标题与身份，不把它们当已确认的新事实、研究遗漏或11个独立事件。康佳连续倒计时与说明会可能回指同一退出安排；会计师专项说明、核查报告也不自动当公司公告。</p><div className="regime-scroll"><table className="regime-table"><caption>原11条标题线索及后续正文核对状态</caption><thead><tr><th>公司与目录日</th><th>标题与原件入口</th><th>状态</th></tr></thead><tbody>{full.candidates.map(r=><tr key={r.announcement_id}><th>{r.symbol}<small>{r.published_on}</small></th><td><a href={r.url} target="_blank" rel="noreferrer">{r.title}</a><small>{r.announcement_id}</small></td><td>{reviewedIds.has(r.announcement_id)?'正文已核，后续执行另看':'标题线索，正文待核'}</td></tr>)}</tbody></table></div></details><details><summary>150家目录覆盖的日期、来源与限制</summary><p>共同目标期间2026-07-04至2026-11-19。原6家查询额外包含7月1—3日，其余144家从7月4日起；保存查询去重{full.counts.unique_catalog_announcements}条是混合起点的记录数，不是统一窗口公告总数。</p><p>全部查询核公司身份、日期参数、原字节摘要和完整分页；没有认证其他渠道、最早公开分钟或所有正文。完整目录核对时，有限标题规则命中25条，其中11条未进入当时已选源集合；后续正文处理状态见上方，不表示规则之外没有缺口。</p>{nov20Bound&&<aside aria-label="四家公司20日目录增量查询"><p>此前四家先行阶段：11月20日另补岭南、宁科、际华、启环四家单日目录参数查询，均返回0条，未取得新正文候选。它不延长150家统一覆盖日期，也不改变最终退出、财报差异或占款事项判断。</p><p>四个空响应为同一份字节内容，且未声明数据日；不算四份独立事实，不认证当天没有公告、问题已经解决或最终决定不存在。旧目录与法律原件缺口保留。</p><details><summary>核对四次查询与空响应身份</summary>{nov20.reading.companies.map(c=><p key={c.code}>{c.code} · 请求日期{c.requested_date} · 返回{c.reported_records}条；原件SHA256 <code style={{overflowWrap:'anywhere'}}>{c.response_sha256}</code>。</p>)}<p>范围仅四家公司与一天的巨潮目录参数查询，不代表其他渠道、所有150家公司或公告正文审阅。来源完整摘要 <code style={{overflowWrap:'anywhere'}}>{nov20.evidence_sha256}</code>。</p></details></aside>}<p>原84家、90家阶段及8条旧线索在下方保留。证据摘要：<code>{full.evidence_sha256}</code>。</p><p><a href={'/runs#research-'+full.research_run_id}>查看150家公司目录核对研究 →</a></p></details></>}
+  <STAccountantBodyReview data={data}/>
   <STCashPlanFollowup data={data}/>
+  <STSubsidiaryExitFollowup data={data}/>
   <details><summary>保留90家覆盖阶段与当时剩余60家</summary>
   {coverageBound&&<><p><strong>当时目录覆盖90／150家公司，仍有60家未纳入完整期间查询核对。</strong>这是目录范围，不是正文已读率。复用本地6家公司10页完整保存响应，并回核原138页，没有新增下载。</p><details><summary>90家覆盖了哪段日期，为什么不是统一窗口公告总数？</summary><p>共同目标期间为{coverage.target_period}。原84家查询从7月4日开始，新增6家从7月1日开始，均到11月19日；新增范围包含更早三天，保存查询去重{coverage.counts.unique_catalog_announcements}条不当作统一日期窗口的公告总数。</p><p>新增公司代码：{coverage.new_symbols.join('、')}。148页原始响应分别与查询参数、文件摘要、连续分页及终页标记核对；只认证这些保存查询，不认证所有渠道的全部公告。</p><p>沿用原有限标题规则，新增6家未出现新未选线索。原8条现均有正文补核，更新已选源集合后未选命中为0，不意味着零遗漏或所有事项已完成。</p><p>尚未纳入的60家公司：{coverage.uncovered_symbols.join('、')}。</p><p>覆盖核对证据摘要：<code>{coverage.evidence_sha256}</code>。原8条线索与原84家范围继续保留在下面。</p><p><a href={'/runs#research-'+coverage.research_run_id}>查看目录覆盖续核研究 →</a></p></details></>}
   </details>

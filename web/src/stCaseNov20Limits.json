@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "symbol": "600180.SH",
+      "trade_time": "2026-11-20T16:11:48+08:00",
+      "upper": "0.67",
+      "lower": "0.55",
+      "close": "0.55",
+      "touch_lower": true,
+      "close_lower": true,
+      "one_price": false,
+      "source_sha256": "79b41015210137c30d215a1257f35923a43c25f667508662ab22faee1954c7e9"
+    },
+    {
+      "symbol": "600340.SH",
+      "trade_time": "2026-11-20T16:11:37+08:00",
+      "upper": "0.85",
+      "lower": "0.69",
+      "close": "0.85",
+      "touch_lower": false,
+      "close_lower": false,
+      "one_price": false,
+      "source_sha256": "31fef1c4744f8b286a8ce50c2fb87837871a0097da4bbf1947202ed0618bf8f8"
+    },
+    {
+      "symbol": "603359.SH",
+      "trade_time": "2026-11-20T16:11:45+08:00",
+      "upper": "0.98",
+      "lower": "0.8",
+      "close": "0.86",
+      "touch_lower": true,
+      "close_lower": false,
+      "one_price": false,
+      "source_sha256": "7933307f321806e243273ce56d5a654844794b54adfac46e4ae2132f71e1a8dc"
+    }
+  ],
+  "ohlc_evidence_sha256": "3f87a4bd8872ec325b481c5c5385d147cba876c1824243a2cf59326641c3ec48",
+  "research_run_id": "RUN-42578BDC43F94976B97541E9"
+}

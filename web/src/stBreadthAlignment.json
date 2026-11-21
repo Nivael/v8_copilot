@@ -1,0 +1,74 @@
+{
+  "reading": {
+    "version": "st_breadth_alignment_v1",
+    "common_start": "2026-09-04",
+    "common_through": "2026-11-19",
+    "common_days": 49,
+    "breadth_through": "2026-11-20",
+    "st_through": "2026-11-19",
+    "signals": [
+      {
+        "date": "2026-09-11",
+        "three_closes": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ],
+        "observed_following_sessions": 5,
+        "through": "2026-09-18",
+        "complete_five": true,
+        "st_pct": -0.8327084440853595,
+        "market_pct": 1.6122001381446882,
+        "st_minus_market_pp": -2.4449085822300476,
+        "five_st_pct": -0.8327084440853595,
+        "five_market_pct": 1.6122001381446882
+      },
+      {
+        "date": "2026-09-24",
+        "three_closes": [
+          "2026-09-22",
+          "2026-09-23",
+          "2026-09-24"
+        ],
+        "observed_following_sessions": 5,
+        "through": "2026-10-09",
+        "complete_five": true,
+        "st_pct": -1.7592444390246307,
+        "market_pct": -3.763228858342282,
+        "st_minus_market_pp": 2.0039844193176513,
+        "five_st_pct": -1.7592444390246307,
+        "five_market_pct": -3.763228858342282
+      },
+      {
+        "date": "2026-11-16",
+        "three_closes": [
+          "2026-11-12",
+          "2026-11-13",
+          "2026-11-16"
+        ],
+        "observed_following_sessions": 3,
+        "through": "2026-11-19",
+        "complete_five": false,
+        "st_pct": -5.880245046179585,
+        "market_pct": -1.6483770650412122,
+        "st_minus_market_pp": -4.231867981138373,
+        "five_st_pct": null,
+        "five_market_pct": null
+      }
+    ],
+    "method_promotions": 0
+  },
+  "st_content_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "breadth_evidence_sha256": "6459d6bb3efde67511edddfdcf4937a7506f48c942d03faeed627174811dbe3b",
+  "processor_sha256": "681ca2b88fc68e497f166d823114eb70c0bf01a7a066eb960ddfe0e6c88de9fb",
+  "boundaries": [
+    "动态ST等权日收益复合，不是账户收益或固定成员组合。",
+    "信号沿用未优化的连续三日上涨不足半数示例，每段只取第三日。",
+    "收盘后观察，随后窗口从提示收盘起算，不代表可在该收盘成交。",
+    "基准使用ST原快照配对的中证全指日收益，未与近期广度官方指数的精度混拼。",
+    "同一市场阶段三段不是三次独立经验验证，未校准危机概率或仓位。",
+    "ST仅到11月19日，广度到20日；最近一段共同后窗只有3日，不填成5日。"
+  ],
+  "evidence_sha256": "2b6fbc2ab6d9eb3e3c994b98c23727b8c6c9c90c8aa09d8a4cb3024c30d5348f",
+  "research_run_id": "RUN-CD820EB14E8E48788BA34D71"
+}

@@ -1,0 +1,36 @@
+{
+  "observed_at": "2026-11-21T01:55:54.091393+00:00",
+  "scope": "Bounded public web search plus saved issuer catalog, not exhaustive absence certification",
+  "queries": [
+    "岭南股份 2026 11 终止上市 决定 002717",
+    "site.cninfo.com.cn 岭南 2026 摘牌"
+  ],
+  "located_prior_sources": [
+    {
+      "announcement_id": "1225609701",
+      "date": "2026-10-17",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-17/1225609701.PDF",
+      "stage": "prior notice, conditional future final decision"
+    },
+    {
+      "announcement_id": "1225602315",
+      "date": "2026-10-13",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-13/1225602315.PDF",
+      "stage": "trading trigger and halt, not final decision"
+    },
+    {
+      "announcement_id": "1225632584",
+      "date": "2026-10-28",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225632584.PDF",
+      "stage": "later restatement of prior notice"
+    }
+  ],
+  "new_final_decision_source": null,
+  "new_delisting_source": null,
+  "interpretation": "Final decision and delisting date remain unverified; search result absence is not event absence",
+  "requests_not_repeated": [
+    "existing failed historical quotes",
+    "prior 150-company Nov20 catalog capture"
+  ],
+  "independent_validations_added": 0
+}

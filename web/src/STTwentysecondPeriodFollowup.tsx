@@ -1,3 +1,4 @@
+import {STJudicialNov20CaseUpdate} from './STJudicialNov20CaseUpdate'
 import {STCatalogCaseUpdate} from './STCatalogSelectionAudit'
 import {useState} from 'react'
 type Source={announcement_id:string;symbol:string;title:string;url:string;published_on:string;document_dated_on:string|null}
@@ -23,6 +24,7 @@ export function STTwentysecondPeriodFollowup({data:d}:{data?:TwentysecondPeriodF
  <label>想弄清哪件事？<select aria-label="选择期间复盘事项" value={chain.chain} onChange={e=>{setChosen(e.target.value);setEvent('')}}>{chains.map(c=><option key={c.chain} value={c.chain}>{c.chain.split('-').slice(1).join(' · ')}</option>)}</select></label>
 
  <STCatalogCaseUpdate symbol={company} context={d}/>
+ <STJudicialNov20CaseUpdate code={company} context={d}/>
  <h4>{chain.chain.split('-').slice(1).join(' · ')}</h4><p>{readable(readingChanged)}</p><h5>还不能关闭什么？</h5><p>{readable(chain.open)}</p>{chain.boundary&&<p>{chain.boundary}</p>}
  <details><summary>查看事项过程、原件与日期</summary><p>精确表述：{readingChanged}；{chain.open}</p>{chain.continuity?.map(c=><article key={c.source}><p>{c.published_on} · {c.stage}</p><a href={source(c.source).url+'#page='+c.page} target="_blank" rel="noreferrer">本次原文第{c.page}页 ↗</a></article>)}{chain.supporting?.map(s=><article key={s.source}><p>{s.state}</p>{s.pages.map(n=><p key={n}><a href={source(s.source).url+'#page='+n} target="_blank" rel="noreferrer">{source(s.source).title} · 第{n}页 ↗</a></p>)}</article>)}<p>本项依据披露{source(chain.source).published_on}，文件落款{source(chain.source).document_dated_on??'未确认，采用正式披露日'}。</p>{chain.pages.map(n=><p key={n}><a href={source(chain.source).url+'#page='+n} target="_blank" rel="noreferrer">{source(chain.source).title} · 第{n}页 ↗</a></p>)}</details>
 

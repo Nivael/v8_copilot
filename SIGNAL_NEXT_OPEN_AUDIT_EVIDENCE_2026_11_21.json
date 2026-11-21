@@ -1,0 +1,216 @@
+{
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "version": "signal_next_open_audit_v1",
+  "signal_date": "2026-11-16",
+  "next_session": "2026-11-17",
+  "signal_evidence_sha256": "2ec483fffd7dfbfe0c592caa2c5cdbf82529d2ca8224ca254840cd9d315c084a",
+  "cohort_evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "market_scope_evidence_sha256": "28d1ba418590aaeaef746bf88f3a82d457fae5efe72311387e04cc2c3941e699",
+  "sources": [
+    {
+      "api_name": "daily",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "ts_code,trade_date,open,high,low,close,pre_close,change,pct_chg,vol,amount",
+      "response_sha256": "7ed240a4a3be91bc75c12ddcec0e8911347beb85b13a021d7385bde7fa45574f",
+      "bytes": 539517,
+      "fetched_at": "2026-11-19T15:28:11.719493+00:00"
+    },
+    {
+      "api_name": "stk_limit",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "trade_date,ts_code,pre_close,up_limit,down_limit",
+      "response_sha256": "9894fc6124ddc4a347a9388b29fae88d972b8e2ed70a55ab5c236c7a1e0381ce",
+      "bytes": 275835,
+      "fetched_at": "2026-11-19T15:28:13.160531+00:00"
+    },
+    {
+      "api_name": "stock_st",
+      "params": {
+        "trade_date": "20261117"
+      },
+      "fields": "ts_code,name,trade_date,type,type_name",
+      "response_sha256": "bed3be4349ab788ad02fefddc658b6314a9bb5d5d1f90c2bd30d670ffd88a56d",
+      "bytes": 12800,
+      "fetched_at": "2026-11-19T15:28:10.972011+00:00"
+    }
+  ],
+  "focus": [
+    {
+      "symbol": "603398.SH",
+      "status": "paired",
+      "open": "5.44",
+      "high": "5.48",
+      "low": "5.0",
+      "close": "5.12",
+      "pre_close": "5.48",
+      "down_limit": "4.93",
+      "up_limit": "6.03",
+      "open_vs_reference_pct": -0.7299270072992701,
+      "open_at_lower": false,
+      "close_at_lower": false,
+      "touched_lower": false,
+      "one_price_lower": false,
+      "volume_reported": "99523.0",
+      "label": "沐邦",
+      "in_saved_st_mainboard": true
+    },
+    {
+      "symbol": "002514.SZ",
+      "status": "paired",
+      "open": "1.88",
+      "high": "1.92",
+      "low": "1.8",
+      "close": "1.82",
+      "pre_close": "1.89",
+      "down_limit": "1.7",
+      "up_limit": "2.08",
+      "open_vs_reference_pct": -0.5291005291005291,
+      "open_at_lower": false,
+      "close_at_lower": false,
+      "touched_lower": false,
+      "one_price_lower": false,
+      "volume_reported": "103860.75",
+      "label": "宝馨",
+      "in_saved_st_mainboard": true
+    },
+    {
+      "symbol": "600363.SH",
+      "status": "paired",
+      "open": "8.5",
+      "high": "8.81",
+      "low": "8.39",
+      "close": "8.42",
+      "pre_close": "8.65",
+      "down_limit": "7.79",
+      "up_limit": "9.52",
+      "open_vs_reference_pct": -1.7341040462427746,
+      "open_at_lower": false,
+      "close_at_lower": false,
+      "touched_lower": false,
+      "one_price_lower": false,
+      "volume_reported": "173955.78",
+      "label": "联光",
+      "in_saved_st_mainboard": true
+    },
+    {
+      "symbol": "002667.SZ",
+      "status": "paired",
+      "open": "21.39",
+      "high": "22.09",
+      "low": "21.2",
+      "close": "21.58",
+      "pre_close": "21.79",
+      "down_limit": "19.61",
+      "up_limit": "23.97",
+      "open_vs_reference_pct": -1.835704451583295,
+      "open_at_lower": false,
+      "close_at_lower": false,
+      "touched_lower": false,
+      "one_price_lower": false,
+      "volume_reported": "72084.0",
+      "label": "威领",
+      "in_saved_st_mainboard": true
+    },
+    {
+      "symbol": "688053.SH",
+      "status": "paired",
+      "open": "29.26",
+      "high": "29.9",
+      "low": "27.99",
+      "close": "28.23",
+      "pre_close": "29.2",
+      "down_limit": "23.36",
+      "up_limit": "35.04",
+      "open_vs_reference_pct": 0.2054794520547945,
+      "open_at_lower": false,
+      "close_at_lower": false,
+      "touched_lower": false,
+      "one_price_lower": false,
+      "volume_reported": "14127.04",
+      "label": "思科瑞",
+      "in_saved_st_mainboard": false
+    }
+  ],
+  "groups": [
+    {
+      "key": "daily_members",
+      "members": 142,
+      "paired": 141,
+      "open_at_lower": 1,
+      "close_at_lower": 10,
+      "one_price_lower": 0,
+      "unpaired": [
+        {
+          "symbol": "002717.SZ",
+          "status": "missing_daily"
+        }
+      ]
+    },
+    {
+      "key": "fixed150",
+      "members": 150,
+      "paired": 147,
+      "open_at_lower": 1,
+      "close_at_lower": 10,
+      "one_price_lower": 0,
+      "unpaired": [
+        {
+          "symbol": "000016.SZ",
+          "status": "missing_daily"
+        },
+        {
+          "symbol": "002717.SZ",
+          "status": "missing_daily"
+        },
+        {
+          "symbol": "002731.SZ",
+          "status": "missing_daily"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "signal_date": "2026-07-08",
+      "next_session": "2026-07-09",
+      "available": false
+    },
+    {
+      "signal_date": "2026-07-20",
+      "next_session": "2026-07-21",
+      "available": false
+    },
+    {
+      "signal_date": "2026-09-04",
+      "next_session": "2026-09-07",
+      "available": false
+    },
+    {
+      "signal_date": "2026-09-11",
+      "next_session": "2026-09-14",
+      "available": false
+    },
+    {
+      "signal_date": "2026-09-24",
+      "next_session": "2026-09-28",
+      "available": false
+    },
+    {
+      "signal_date": "2026-11-16",
+      "next_session": "2026-11-17",
+      "available": true
+    }
+  ],
+  "limits": [
+    "Only the Nov16 signal has a next day in the saved nine-session OHLC/limit scope",
+    "Open is a reported opening price, not a certified executable order price",
+    "Open changes use the same-day pre-close reference; corporate-action adjustment is not original previous-close return",
+    "Official audit controls close and reference, not independently the open or actual lower limit",
+    "One-price lower and volume cannot establish any individual order fill or queue position",
+    "Five selected cases are not a representative portfolio or personal positions"
+  ]
+}

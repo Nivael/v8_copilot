@@ -1,3 +1,4 @@
+import {STJudicialNov20CaseUpdate} from './STJudicialNov20CaseUpdate'
 import {useState} from 'react'
 type Source={announcement_id:string;symbol:string;title:string;url:string;published_on:string;document_dated_on:string|null}
 type Change={source:string;published_on:string;page:number;stage:string}
@@ -19,6 +20,7 @@ export function STFourteenthPeriodFollowup({data:d}:{data?:FourteenthPeriodFollo
  <label>先看哪家公司？<select aria-label="选择期间复盘公司" value={company} onChange={e=>{setCompany(e.target.value);setChosen('');setEvent('')}}>{companies.map(([code,name])=><option key={code} value={code}>{name}</option>)}</select></label>
  <label>想弄清哪件事？<select aria-label="选择期间复盘事项" value={chain.chain} onChange={e=>{setChosen(e.target.value);setEvent('')}}>{chains.map(c=><option key={c.chain} value={c.chain}>{c.chain.split('-').slice(1).join(' · ')}</option>)}</select></label>
 
+ <STJudicialNov20CaseUpdate code={company} context={d}/>
  <h4>{chain.chain.split('-').slice(1).join(' · ')}：判断怎样更新？</h4><p className="reading-caption">对象与口径：{chain.subject}</p><p>{readable(chain.changed??chain.closed??'')}</p><h5>还不能关闭什么？</h5><p>{readable(chain.open)}</p>{chain.boundary&&<p>{chain.boundary}</p>}
  <details><summary>查看事项过程、原件与日期</summary><p>精确表述：{chain.changed??chain.closed}；{chain.open}</p>{chain.continuity?.map(c=><article key={c.source}><p>{c.published_on} · {c.stage}</p><a href={source(c.source).url+'#page='+c.page} target="_blank" rel="noreferrer">本次原文第{c.page}页 ↗</a></article>)}{chain.supporting?.map(s=><article key={s.source}><p>{s.state}</p>{s.pages.map(n=><p key={n}><a href={source(s.source).url+'#page='+n} target="_blank" rel="noreferrer">{source(s.source).title} · 第{n}页 ↗</a></p>)}</article>)}<p>本项依据披露{source(chain.source).published_on}，文件落款{source(chain.source).document_dated_on??'未确认，采用正式披露日'}。</p>{chain.pages.map(n=><p key={n}><a href={source(chain.source).url+'#page='+n} target="_blank" rel="noreferrer">{source(chain.source).title} · 第{n}页 ↗</a></p>)}</details>
  {company==='600165'&&<details><summary>数据有冲突：净资产和诉请金额怎样处理？</summary><p>半年报第6页上年末归母净资产为负9920.68万元，第33页合并表为正12.08亿元；三季报上年末与合并表一致。两处原数保留，不自行纠正会计真值，也不据首页计算净资产转正幅度。</p><p>7月技术秘密案首页诉请96586.25万元、正文96587.25万元，另有100万元合理费用。不据此精算总敞口，不把原告诉请当公司确认债务。</p>{[['1225530042',6],['1225530042',33],['1225425493',1],['1225425493',3]].map(([aid,n])=><p key={String(aid)+n}><a href={source(String(aid)).url+'#page='+n} target="_blank" rel="noreferrer">冲突原件第{n}页 ↗</a></p>)}</details>}

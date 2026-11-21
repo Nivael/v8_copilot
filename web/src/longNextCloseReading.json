@@ -1,0 +1,119 @@
+{
+  "evidence_sha256": "2ec483fffd7dfbfe0c592caa2c5cdbf82529d2ca8224ca254840cd9d315c084a",
+  "research_run_id": "RUN-1F2BE0A53F164A98A975DD38",
+  "index_evidence_sha256": "0c611eb9d87ff4110b6991f08041978061e158b381665501e50a3e5358b4bc12",
+  "version": "next_close_observation_split_v1",
+  "waiting_sha256": "e81d3cbcedec94cd1b0e373d688293a2aa4e0993f684c2fa877ac345c9d4a1f7",
+  "alignment_sha256": "9f3abc3359f7fd52b24ef0657f9e0fd82d64af9eb00f226759bed9e85bd3cbeb",
+  "rows": [
+    {
+      "signal_date": "2026-07-08",
+      "next_close": "2026-07-09",
+      "through": "2026-07-15",
+      "complete_five": true,
+      "remaining_sessions": 4,
+      "st": {
+        "first_day_pct": -0.5798778523489933,
+        "remaining_pct": -0.756878063439655,
+        "whole_pct": -1.3323669475294737
+      },
+      "market": {
+        "first_day_pct": 2.393236240551899,
+        "remaining_pct": -3.628699785557005,
+        "whole_pct": -1.322306903333885
+      }
+    },
+    {
+      "signal_date": "2026-07-20",
+      "next_close": "2026-07-21",
+      "through": "2026-07-27",
+      "complete_five": true,
+      "remaining_sessions": 4,
+      "st": {
+        "first_day_pct": -1.8580304054054053,
+        "remaining_pct": 4.027267731592662,
+        "whole_pct": 2.094409467227185
+      },
+      "market": {
+        "first_day_pct": 3.4602127549467676,
+        "remaining_pct": -0.44443287951024546,
+        "whole_pct": 3.0004015522525314
+      }
+    },
+    {
+      "signal_date": "2026-09-04",
+      "next_close": "2026-09-07",
+      "through": "2026-09-11",
+      "complete_five": true,
+      "remaining_sessions": 4,
+      "st": {
+        "first_day_pct": 0.8629262411347518,
+        "remaining_pct": -0.6881303005007803,
+        "whole_pct": 0.16885788369775082
+      },
+      "market": {
+        "first_day_pct": 1.079831942934728,
+        "remaining_pct": -2.1053659008075742,
+        "whole_pct": -1.0482683713854217
+      }
+    },
+    {
+      "signal_date": "2026-09-11",
+      "next_close": "2026-09-14",
+      "through": "2026-09-18",
+      "complete_five": true,
+      "remaining_sessions": 4,
+      "st": {
+        "first_day_pct": -0.1341408450704225,
+        "remaining_pct": -0.6995059221702539,
+        "whole_pct": -0.8327084440853595
+      },
+      "market": {
+        "first_day_pct": -0.12373845194452171,
+        "remaining_pct": 1.7380892748513248,
+        "whole_pct": 1.6122001381446882
+      }
+    },
+    {
+      "signal_date": "2026-09-24",
+      "next_close": "2026-09-28",
+      "through": "2026-10-09",
+      "complete_five": true,
+      "remaining_sessions": 4,
+      "st": {
+        "first_day_pct": -1.681694366197183,
+        "remaining_pct": -0.07887653507403926,
+        "whole_pct": -1.7592444390246307
+      },
+      "market": {
+        "first_day_pct": -2.728698118145423,
+        "remaining_pct": -1.0635518597801816,
+        "whole_pct": -3.763228858342282
+      }
+    },
+    {
+      "signal_date": "2026-11-16",
+      "next_close": "2026-11-17",
+      "through": "2026-11-19",
+      "complete_five": false,
+      "remaining_sessions": 2,
+      "st": {
+        "first_day_pct": -3.011826241134752,
+        "remaining_pct": -2.9574933663318346,
+        "whole_pct": -5.880245046179585
+      },
+      "market": {
+        "first_day_pct": -0.5895946483859271,
+        "remaining_pct": -1.0650619650029365,
+        "whole_pct": -1.6483770650412122
+      }
+    }
+  ],
+  "limits": [
+    "Next close is an observation boundary, not a feasible sale price",
+    "First day includes the overnight and full next session; not a measured overnight gap",
+    "Full 5-session windows split 1+4; the partial 3-session window splits 1+2",
+    "Dynamic ST reference is not a held or executable portfolio",
+    "No transaction cost, intraday queue or future threshold optimization"
+  ]
+}

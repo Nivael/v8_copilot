@@ -1,0 +1,175 @@
+{
+  "reading": {
+    "version": "mainboard_risk_list_nov20_review_v1",
+    "target_day": "2026-11-20",
+    "observation_day": "2026-11-21",
+    "szse_delisting_empty_source_as_of": null,
+    "complete_two_venue_target_membership": false,
+    "boundary": "深市风险警示表明确20日适用日期，沪市当前列表未声明数据日，不能因代码简称与19日供应商相同就认证沪市20日法定名单。深市退市整理空表也未声明日期，不当作20日零记录证明。仅主板A股对照，创业/科创/B股范围分别保留。读取日不是适用日，不倒填历史时点已知。",
+    "independent_validations_added": 0,
+    "comparisons": [
+      {
+        "group": "szse_risk",
+        "source_as_of": "2026-11-20",
+        "observed_on": "2026-11-21",
+        "all_rows": 115,
+        "a_shares": 113,
+        "b_shares": 2,
+        "main_a_shares": 74,
+        "prior_reference_day": "2026-11-19",
+        "codes_equal_prior": true,
+        "new_codes": [],
+        "absent_codes": [],
+        "name_differences": []
+      },
+      {
+        "group": "sse_main_risk",
+        "source_as_of": null,
+        "observed_on": "2026-11-21",
+        "all_rows": 69,
+        "a_shares": 68,
+        "b_shares": 1,
+        "main_a_shares": 68,
+        "prior_reference_day": "2026-11-19",
+        "codes_equal_prior": true,
+        "new_codes": [],
+        "absent_codes": [],
+        "name_differences": []
+      }
+    ]
+  },
+  "input_asset": "inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "evidence_sha256": "c8ebca78a421e851f119dc78cc87a0d415ac3b7d755f9416270c88058d278480",
+  "research_run_id": "RUN-2C1B1B6688DA410081B27971",
+  "source_refs": [
+    {
+      "key": "szse_risk:1",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab1",
+        "PAGENO": "1"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab1&PAGENO=1",
+      "observed_at": "2026-11-20T21:24:06.514858+00:00",
+      "response_sha256": "cc3b473e54ba74baf73e7ef1bba5bd3667311520a27066c0eb8d8cb435422533",
+      "bytes": 3915
+    },
+    {
+      "key": "szse_delisting:1",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab2",
+        "PAGENO": "1"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab2&PAGENO=1",
+      "observed_at": "2026-11-20T21:24:06.639952+00:00",
+      "response_sha256": "aac59b2863f882588456090de2e0ffc93c22ed0df8fdc6ad7e9466e00acf081c",
+      "bytes": 1133
+    },
+    {
+      "key": "sse_main_risk",
+      "url": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "sqlId": "PL_SSGSXX_FXJSBGPLB",
+        "domesticIndicator": "S",
+        "productType": "0"
+      },
+      "final_url": "https://query.sse.com.cn/commonSoaQuery.do?sqlId=PL_SSGSXX_FXJSBGPLB&domesticIndicator=S&productType=0",
+      "observed_at": "2026-11-20T21:24:06.982518+00:00",
+      "response_sha256": "6092bf3711fc1f6d82526a63cac22e15588057b245a75de01a1c2f11e5d868ec",
+      "bytes": 8448
+    },
+    {
+      "key": "szse_risk:2",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab1",
+        "PAGENO": "2"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab1&PAGENO=2",
+      "observed_at": "2026-11-20T21:24:44.362173+00:00",
+      "response_sha256": "e6f7a48117e7d56a78db7242519b4269eb8d20142ba9e5a80cb7515fb5494d8c",
+      "bytes": 3914
+    },
+    {
+      "key": "szse_risk:3",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab1",
+        "PAGENO": "3"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab1&PAGENO=3",
+      "observed_at": "2026-11-20T21:24:44.487997+00:00",
+      "response_sha256": "7bb3a64ddd27c3c12a661547493460aedc7fe87d2e6b939f60e8580ecdb3aa86",
+      "bytes": 3917
+    },
+    {
+      "key": "szse_risk:4",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab1",
+        "PAGENO": "4"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab1&PAGENO=4",
+      "observed_at": "2026-11-20T21:24:44.599290+00:00",
+      "response_sha256": "52cf02bf5797fbfa26dd5aa10b7676edf48789cba22aabd8c33e27326d5b8f62",
+      "bytes": 3917
+    },
+    {
+      "key": "szse_risk:5",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab1",
+        "PAGENO": "5"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab1&PAGENO=5",
+      "observed_at": "2026-11-20T21:24:44.785823+00:00",
+      "response_sha256": "a13964a32ad69ddd444bc013760b2f4086748d82c9ccfffec0462661b59567b8",
+      "bytes": 3920
+    },
+    {
+      "key": "szse_risk:6",
+      "url": "http://www.szse.cn/api/report/ShowReport/data",
+      "params": {
+        "SHOWTYPE": "JSON",
+        "CATALOGID": "fxjsb",
+        "TABKEY": "tab1",
+        "PAGENO": "6"
+      },
+      "final_url": "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fxjsb&TABKEY=tab1&PAGENO=6",
+      "observed_at": "2026-11-20T21:24:44.920043+00:00",
+      "response_sha256": "87b4174dbe30a80a0a6b79bf0ea8251418878b129b9c217574ee133df517b269",
+      "bytes": 3218
+    },
+    {
+      "key": "sse_definition",
+      "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_listedCompanyInfo_2021.js",
+      "params": {},
+      "final_url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_listedCompanyInfo_2021.js",
+      "observed_at": "2026-11-20T21:24:45.169557+00:00",
+      "response_sha256": "19c3b4620c268c5b73f56178404cd8895f1cb0eff0465eb422c7d6c1c161d880",
+      "bytes": 104267
+    },
+    {
+      "key": "szse_definition",
+      "url": "http://www.szse.cn/disclosure/listed/warn/index.html",
+      "params": {},
+      "final_url": "http://www.szse.cn/disclosure/listed/warn/index.html",
+      "observed_at": "2026-11-20T21:24:45.374764+00:00",
+      "response_sha256": "f23d5460534a30c404428a3580d7f962d862ad5a8cf55eccee089569f9de79c3",
+      "bytes": 32744
+    }
+  ]
+}

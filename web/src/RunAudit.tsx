@@ -1,3 +1,4 @@
+import {readingLabels} from './researchReadingLabels'
 import {ResearchIdentityNotice,type ResearchIdentityNote} from './ResearchIdentityNotice'
 import {CheckCircle2, ChevronDown, Clock3, FileClock, MessageSquarePlus, Scale, ShieldAlert} from 'lucide-react'
 import {useEffect, useMemo, useState} from 'react'
@@ -162,7 +163,9 @@ export function RunAudit() {
       {!loading&&!error&&runs.length===0&&<section className="experience-empty"><h2>还没有 Codex 研究运行</h2><p>通过项目 skill 完成并校验的研究会记录在这里。</p></section>}
       {linkError&&<p role="alert">{linkError}</p>}{identityError&&<p role="status">身份更正暂不可读；以下原始登记不视为已核身份。</p>}
       <section className="audit-list">
-        {runs.map(run=>{
+        {runs.map(originalRun=>{
+          const labelView=readingLabels(originalRun)
+          const run=labelView.run
           const notes:ResearchCorrectionNote[]=corrections.filter(note=>note.old_run_id===run.run_id||note.replacement_run_id===run.run_id).map(note=>({...note,role:note.old_run_id===run.run_id?'corrected_study':'replacement_study'}))
           const corrected=notes.some(note=>note.role==='corrected_study')
           const identity=identityNotes.find(n=>n.run_id===run.run_id)
@@ -170,9 +173,11 @@ export function RunAudit() {
           {notes.map(note=><ResearchCorrectionNotice key={note.old_run_id+note.role} note={note} onOpen={id=>void openCorrection(id)}/>)}
           <header><div><span>{run.agent_surface}</span><h2>{identity?.corrected_question??run.question_text}</h2></div>{!corrected&&(run.validation_report.valid?<CheckCircle2 className="valid" aria-label={identity?'正文结构校验通过，身份登记已更正':'校验通过'}/>:<ShieldAlert className="invalid" aria-label="校验未通过"/>)}</header>
           {identity&&<ResearchIdentityNotice note={identity}/>}
+          {labelView.entry&&<aside aria-label="研究说明标题更正"><p>说明标题已更正，原结论、行情数值与依据保持。这里是阅读展示更正，原始登记与校验记录未改写，也不新增验证。</p><details><summary>查看标题更正及原始说明</summary><p>推理标题：{labelView.entry.old_title} → {labelView.entry.new_title}</p><p>因素标签：{labelView.entry.old_factor_label} → {labelView.entry.new_factor_label}</p><pre>{originalRun.final_answer}</pre></details></aside>}
+          {labelView.mismatch&&<p role="status">说明标题更正与当前记录绑定不一致，暂展示原文，待核对。</p>}
           <div className="audit-meta"><span><Clock3 size={13}/>{new Date(run.created_at).toLocaleString('zh-CN')}</span><span>{run.normalized_intent}</span><span>{run.evidence_pack_ids.length} 个 EvidencePack</span><span>{run.experience_candidate_ids.length} 个经验候选</span></div>
           <details><summary>{corrected?'查看旧研究原文（含已更正内容）':'查看回答与基础审计'}</summary><pre>{run.final_answer}</pre><dl>{Object.entries(run.source_freshness).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><pre>{JSON.stringify(run.validation_report,null,2)}</pre></details>
-          {corrected?<details><summary>原判断说明（含已更正内容）</summary>{isDecisionAudit(run.decision_audit)&&<DecisionAuditView audit={run.decision_audit}/>}</details>:<>{isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}{identity||identityError?<p>身份更正待核或原登记已校正，暂不以旧上下文沉淀经验；后续研究须以显式身份重新绑定。</p>:<RunFeedback run={run}/>}</>}
+          {corrected?<details><summary>原判断说明（含已更正内容）</summary>{isDecisionAudit(run.decision_audit)&&<DecisionAuditView audit={run.decision_audit}/>}</details>:<>{isDecisionAudit(run.decision_audit)?<DecisionAuditView audit={run.decision_audit}/>:<p className="audit-missing">该旧运行没有结构化判断权重审计。</p>}{identity||identityError?<p>身份更正待核或原登记已校正，暂不以旧上下文沉淀经验；后续研究须以显式身份重新绑定。</p>:<RunFeedback run={originalRun}/>}</>}
           <section className="pack-list" aria-label="EvidencePack 列表"><h3>EvidencePack</h3>{run.evidence_pack_ids.map(packId=><EvidencePackView key={packId} packId={packId} run={run} identityCorrected={Boolean(identity)}/>)}</section>
         </article>})}
       </section>

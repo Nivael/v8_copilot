@@ -1,0 +1,527 @@
+[
+  {
+    "request_id": "study-a5555dfe882bbecb8506b08b",
+    "question_text": "把七至十一月完整广度放在一起，连续三日上涨不足半数后，ST与大盘是否必然继续下跌？新增历史是否改变旧判断？",
+    "normalized_intent": "research_question",
+    "object_refs": [
+      "SSE_SZSE_A_SHARES",
+      "ST_DYNAMIC_REFERENCE",
+      "000985_CSI"
+    ],
+    "evidence_pack_ids": [
+      "EP-01A4B93FF5D6B975B289"
+    ],
+    "final_answer": "97日广度发现6次第三日提示，5次共同后窗完整、1次未满。新增历史既有共同下跌，也有共同上涨及大盘跌而ST略涨。连续参与面偏弱不等于随后必跌，市场修复也不保证ST同步；旧反例保留。\n\n判断依据\n1. 逐项核日线并补单家公司右边界：先重放97日广度来源，再核动态ST及官方指数日期，逐日按固定三日条件仅取首提示；所有提示保留，后5日与最新未满窗口分开。\n\n不确定性\n- 后窗为事后收盘对照，最新仅3日，不混入完整5日；日期段并非独立制度实验，不认证危机概率、行动规则或执行效果。\n\n后续观察\n- 补其他独立市场阶段与实时可用性，检验反例和确认滞后；保留旧研究和新增前序日期的解释。",
+    "research_draft": {
+      "narrative": {
+        "direct_answer": {
+          "text": "97日广度发现6次第三日提示，5次共同后窗完整、1次未满。新增历史既有共同下跌，也有共同上涨及大盘跌而ST略涨。连续参与面偏弱不等于随后必跌，市场修复也不保证ST同步；旧反例保留。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_st_alignment_v1"
+            }
+          ]
+        },
+        "reasoning_steps": [
+          {
+            "text": "先重放97日广度来源，再核动态ST及官方指数日期，逐日按固定三日条件仅取首提示；所有提示保留，后5日与最新未满窗口分开。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_st_alignment_v1"
+              }
+            ],
+            "title": "逐项核日线并补单家公司右边界"
+          }
+        ],
+        "uncertainties": [
+          {
+            "text": "后窗为事后收盘对照，最新仅3日，不混入完整5日；日期段并非独立制度实验，不认证危机概率、行动规则或执行效果。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_st_alignment_v1"
+              }
+            ]
+          }
+        ],
+        "watch_items": [
+          {
+            "text": "补其他独立市场阶段与实时可用性，检验反例和确认滞后；保留旧研究和新增前序日期的解释。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_st_alignment_v1"
+              }
+            ]
+          }
+        ],
+        "basis_note": "广度97日、ST与官方指数核对共同94日；完整与未满后窗分列，保留旧50日研究。"
+      },
+      "decision_audit": {
+        "weighting_method": "ordinal_evidence_weighting_v0",
+        "judgment": "97日广度发现6次第三日提示，5次共同后窗完整、1次未满。新增历史既有共同下跌，也有共同上涨及大盘跌而ST略涨。连续参与面偏弱不等于随后必跌，市场修复也不保证ST同步；旧反例保留。",
+        "judgment_backing": [
+          {
+            "kind": "query_row",
+            "ref": "long_breadth_st_alignment_v1"
+          }
+        ],
+        "confidence": "medium",
+        "factors": [
+          {
+            "factor_id": "confirmation_lag",
+            "label": "限价留档与已选样本",
+            "direction": "supports",
+            "importance": "high",
+            "rationale": "97日广度发现6次第三日提示，5次共同后窗完整、1次未满。新增历史既有共同下跌，也有共同上涨及大盘跌而ST略涨。连续参与面偏弱不等于随后必跌，市场修复也不保证ST同步；旧反例保留。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_st_alignment_v1"
+              }
+            ]
+          },
+          {
+            "factor_id": "date_execution",
+            "label": "收盘观察与实际执行限制",
+            "direction": "limits",
+            "importance": "decisive",
+            "rationale": "后窗为事后收盘对照，最新仅3日，不混入完整5日；日期段并非独立制度实验，不认证危机概率、行动规则或执行效果。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_st_alignment_v1"
+              }
+            ]
+          }
+        ],
+        "alternatives": [],
+        "not_hidden_chain_of_thought": true
+      }
+    },
+    "decision_audit": {
+      "weighting_method": "ordinal_evidence_weighting_v0",
+      "judgment": "97日广度发现6次第三日提示，5次共同后窗完整、1次未满。新增历史既有共同下跌，也有共同上涨及大盘跌而ST略涨。连续参与面偏弱不等于随后必跌，市场修复也不保证ST同步；旧反例保留。",
+      "judgment_backing": [
+        {
+          "kind": "query_row",
+          "ref": "long_breadth_st_alignment_v1"
+        }
+      ],
+      "confidence": "medium",
+      "factors": [
+        {
+          "factor_id": "confirmation_lag",
+          "label": "限价留档与已选样本",
+          "direction": "supports",
+          "importance": "high",
+          "rationale": "97日广度发现6次第三日提示，5次共同后窗完整、1次未满。新增历史既有共同下跌，也有共同上涨及大盘跌而ST略涨。连续参与面偏弱不等于随后必跌，市场修复也不保证ST同步；旧反例保留。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_st_alignment_v1"
+            }
+          ]
+        },
+        {
+          "factor_id": "date_execution",
+          "label": "收盘观察与实际执行限制",
+          "direction": "limits",
+          "importance": "decisive",
+          "rationale": "后窗为事后收盘对照，最新仅3日，不混入完整5日；日期段并非独立制度实验，不认证危机概率、行动规则或执行效果。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_st_alignment_v1"
+            }
+          ]
+        }
+      ],
+      "alternatives": [],
+      "not_hidden_chain_of_thought": true
+    },
+    "validation_report": {
+      "contract_version": "v8_research_validation_report_v1",
+      "valid": true,
+      "pack_id": "EP-01A4B93FF5D6B975B289",
+      "pack_digest": "01a4b93ff5d6b975b2894123539bf2127b7fdcf257478a306290846e9a01bce5",
+      "draft_digest": "f5e72d507b52c5676d2b8612e36790dc21eaf7a9f2f1cf393565f02dcef7e5ba",
+      "issues": [],
+      "checked_statements": 7,
+      "checked_backings": 7,
+      "decision_audit_status": "complete"
+    },
+    "source_freshness": {
+      "research_cutoff": "2026-11-20",
+      "source_dates": "mixed; retain individual saved source dates"
+    },
+    "tool_calls": [
+      "study-a5555dfe882bbecb8506b08b",
+      "validate_research_draft"
+    ],
+    "experience_hits": [],
+    "agent_surface": "codex_desktop",
+    "model": "",
+    "config_digest": "",
+    "thread_id": "",
+    "turn_id": "",
+    "started_at": "2026-11-20T22:29:28.287390+00:00",
+    "completed_at": "2026-11-20T22:29:28.287390+00:00",
+    "run_id": "RUN-492A3EE6677A4EC18B458E7E",
+    "created_at": "2026-11-20T22:29:28.287390+00:00",
+    "experience_candidate_ids": [],
+    "feedback_count": 0
+  },
+  {
+    "request_id": "study-ccf9b97b64df54ca8009b144",
+    "question_text": "全部六次连续偏弱提示成立时，ST和大盘此前已经怎样变化？确认滞后是否等于此后必跌？",
+    "normalized_intent": "research_question",
+    "object_refs": [
+      "SSE_SZSE_A_SHARES",
+      "ST_DYNAMIC_REFERENCE",
+      "000985_CSI"
+    ],
+    "evidence_pack_ids": [
+      "EP-14C530AB7BCB98643566"
+    ],
+    "final_answer": "六次三日条件成立时，大盘在确认段均已下跌，ST有一次仍上涨。七月二十日确认前已大跌而后窗共同反弹；九月四日ST确认前后均略涨。确认滞后与后续方向必须分开，不能把三日条件说成下跌前预警。\n\n判断依据\n1. 逐项核日线并补单家公司右边界：重放六次提示与原始ST输入，以第一弱日前一交易日为起点，三日复合到确认日；后窗与旧研究一致，前后复合勾稽。\n\n不确定性\n- 确认段是此前已发生的三日复合变化，不是账户损失、行动机会成本或已执行效果；后窗最新仅3日，不能排名等待规则。\n\n后续观察\n- 补其他独立市场阶段与实时可用性，检验反例和确认滞后；保留旧研究和新增前序日期的解释。",
+    "research_draft": {
+      "narrative": {
+        "direct_answer": {
+          "text": "六次三日条件成立时，大盘在确认段均已下跌，ST有一次仍上涨。七月二十日确认前已大跌而后窗共同反弹；九月四日ST确认前后均略涨。确认滞后与后续方向必须分开，不能把三日条件说成下跌前预警。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_confirmation_cost_v1"
+            }
+          ]
+        },
+        "reasoning_steps": [
+          {
+            "text": "重放六次提示与原始ST输入，以第一弱日前一交易日为起点，三日复合到确认日；后窗与旧研究一致，前后复合勾稽。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_confirmation_cost_v1"
+              }
+            ],
+            "title": "逐项核日线并补单家公司右边界"
+          }
+        ],
+        "uncertainties": [
+          {
+            "text": "确认段是此前已发生的三日复合变化，不是账户损失、行动机会成本或已执行效果；后窗最新仅3日，不能排名等待规则。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_confirmation_cost_v1"
+              }
+            ]
+          }
+        ],
+        "watch_items": [
+          {
+            "text": "补其他独立市场阶段与实时可用性，检验反例和确认滞后；保留旧研究和新增前序日期的解释。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_confirmation_cost_v1"
+              }
+            ]
+          }
+        ],
+        "basis_note": "全部六次提示的三日确认段与既有后窗逐一配对；复合勾稽，不简单相加，保留旧短窗研究。"
+      },
+      "decision_audit": {
+        "weighting_method": "ordinal_evidence_weighting_v0",
+        "judgment": "六次三日条件成立时，大盘在确认段均已下跌，ST有一次仍上涨。七月二十日确认前已大跌而后窗共同反弹；九月四日ST确认前后均略涨。确认滞后与后续方向必须分开，不能把三日条件说成下跌前预警。",
+        "judgment_backing": [
+          {
+            "kind": "query_row",
+            "ref": "long_breadth_confirmation_cost_v1"
+          }
+        ],
+        "confidence": "medium",
+        "factors": [
+          {
+            "factor_id": "confirmation_lag",
+            "label": "限价留档与已选样本",
+            "direction": "supports",
+            "importance": "high",
+            "rationale": "六次三日条件成立时，大盘在确认段均已下跌，ST有一次仍上涨。七月二十日确认前已大跌而后窗共同反弹；九月四日ST确认前后均略涨。确认滞后与后续方向必须分开，不能把三日条件说成下跌前预警。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_confirmation_cost_v1"
+              }
+            ]
+          },
+          {
+            "factor_id": "date_execution",
+            "label": "收盘观察与实际执行限制",
+            "direction": "limits",
+            "importance": "decisive",
+            "rationale": "确认段是此前已发生的三日复合变化，不是账户损失、行动机会成本或已执行效果；后窗最新仅3日，不能排名等待规则。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_confirmation_cost_v1"
+              }
+            ]
+          }
+        ],
+        "alternatives": [],
+        "not_hidden_chain_of_thought": true
+      }
+    },
+    "decision_audit": {
+      "weighting_method": "ordinal_evidence_weighting_v0",
+      "judgment": "六次三日条件成立时，大盘在确认段均已下跌，ST有一次仍上涨。七月二十日确认前已大跌而后窗共同反弹；九月四日ST确认前后均略涨。确认滞后与后续方向必须分开，不能把三日条件说成下跌前预警。",
+      "judgment_backing": [
+        {
+          "kind": "query_row",
+          "ref": "long_breadth_confirmation_cost_v1"
+        }
+      ],
+      "confidence": "medium",
+      "factors": [
+        {
+          "factor_id": "confirmation_lag",
+          "label": "限价留档与已选样本",
+          "direction": "supports",
+          "importance": "high",
+          "rationale": "六次三日条件成立时，大盘在确认段均已下跌，ST有一次仍上涨。七月二十日确认前已大跌而后窗共同反弹；九月四日ST确认前后均略涨。确认滞后与后续方向必须分开，不能把三日条件说成下跌前预警。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_confirmation_cost_v1"
+            }
+          ]
+        },
+        {
+          "factor_id": "date_execution",
+          "label": "收盘观察与实际执行限制",
+          "direction": "limits",
+          "importance": "decisive",
+          "rationale": "确认段是此前已发生的三日复合变化，不是账户损失、行动机会成本或已执行效果；后窗最新仅3日，不能排名等待规则。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_confirmation_cost_v1"
+            }
+          ]
+        }
+      ],
+      "alternatives": [],
+      "not_hidden_chain_of_thought": true
+    },
+    "validation_report": {
+      "contract_version": "v8_research_validation_report_v1",
+      "valid": true,
+      "pack_id": "EP-14C530AB7BCB98643566",
+      "pack_digest": "14c530ab7bcb986435664f6eb6ab49ab89b7452d2e5c58f6315ef28dee3f06ce",
+      "draft_digest": "b679f3d3854bf235b370e149111d7ec41199d69383eb2501a0e47e130be8d932",
+      "issues": [],
+      "checked_statements": 7,
+      "checked_backings": 7,
+      "decision_audit_status": "complete"
+    },
+    "source_freshness": {
+      "research_cutoff": "2026-11-20",
+      "source_dates": "mixed; retain individual saved source dates"
+    },
+    "tool_calls": [
+      "study-ccf9b97b64df54ca8009b144",
+      "validate_research_draft"
+    ],
+    "experience_hits": [],
+    "agent_surface": "codex_desktop",
+    "model": "",
+    "config_digest": "",
+    "thread_id": "",
+    "turn_id": "",
+    "started_at": "2026-11-20T22:33:08.152368+00:00",
+    "completed_at": "2026-11-20T22:33:08.152368+00:00",
+    "run_id": "RUN-3450ABE427A94B5DB4242BD2",
+    "created_at": "2026-11-20T22:33:08.152368+00:00",
+    "experience_candidate_ids": [],
+    "feedback_count": 0
+  },
+  {
+    "request_id": "study-2b550831ebc3e5bb6d6f725c",
+    "question_text": "完整长窗有哪些不足三日的偏弱片段？在同一终点看等待一二三日，怎样区分此前变化与剩余变化？",
+    "normalized_intent": "research_question",
+    "object_refs": [
+      "SSE_SZSE_A_SHARES",
+      "ST_DYNAMIC_REFERENCE",
+      "000985_CSI"
+    ],
+    "evidence_pack_ids": [
+      "EP-8288E8E136E06C7C8470"
+    ],
+    "final_answer": "长窗共27段偏弱，其中21段不足三日，等待三日不会形成提示但不等于无风险。同段统一终点后，等待一二三日的此前变化与剩余变化逐项复合一致；剩余天数不同，不能排名等待规则。\n\n判断依据\n1. 逐项核日线并补单家公司右边界：复用原等待算法，按完整日期序列分段；不足二三日标条件未形成，前后百分比复合核到每段同一终点。\n\n不确定性\n- 事后分段不是当时已知持续时间；七月二日短段使用主源收益，独立官方指数控制从七月三日开始。没有成交执行、现金、再参与或交易成本模型，不认证行动效果。\n\n后续观察\n- 补其他独立市场阶段与实时可用性，检验反例和确认滞后；保留旧研究和新增前序日期的解释。",
+    "research_draft": {
+      "narrative": {
+        "direct_answer": {
+          "text": "长窗共27段偏弱，其中21段不足三日，等待三日不会形成提示但不等于无风险。同段统一终点后，等待一二三日的此前变化与剩余变化逐项复合一致；剩余天数不同，不能排名等待规则。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_wait_comparison_v1"
+            }
+          ]
+        },
+        "reasoning_steps": [
+          {
+            "text": "复用原等待算法，按完整日期序列分段；不足二三日标条件未形成，前后百分比复合核到每段同一终点。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_wait_comparison_v1"
+              }
+            ],
+            "title": "逐项核日线并补单家公司右边界"
+          }
+        ],
+        "uncertainties": [
+          {
+            "text": "事后分段不是当时已知持续时间；七月二日短段使用主源收益，独立官方指数控制从七月三日开始。没有成交执行、现金、再参与或交易成本模型，不认证行动效果。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_wait_comparison_v1"
+              }
+            ]
+          }
+        ],
+        "watch_items": [
+          {
+            "text": "补其他独立市场阶段与实时可用性，检验反例和确认滞后；保留旧研究和新增前序日期的解释。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_wait_comparison_v1"
+              }
+            ]
+          }
+        ],
+        "basis_note": "全部27段保留；同一片段首日后的第五交易日固定为终点，不随等待时刻改变。原各自后五日仍存证据。"
+      },
+      "decision_audit": {
+        "weighting_method": "ordinal_evidence_weighting_v0",
+        "judgment": "长窗共27段偏弱，其中21段不足三日，等待三日不会形成提示但不等于无风险。同段统一终点后，等待一二三日的此前变化与剩余变化逐项复合一致；剩余天数不同，不能排名等待规则。",
+        "judgment_backing": [
+          {
+            "kind": "query_row",
+            "ref": "long_breadth_wait_comparison_v1"
+          }
+        ],
+        "confidence": "medium",
+        "factors": [
+          {
+            "factor_id": "confirmation_lag",
+            "label": "限价留档与已选样本",
+            "direction": "supports",
+            "importance": "high",
+            "rationale": "长窗共27段偏弱，其中21段不足三日，等待三日不会形成提示但不等于无风险。同段统一终点后，等待一二三日的此前变化与剩余变化逐项复合一致；剩余天数不同，不能排名等待规则。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_wait_comparison_v1"
+              }
+            ]
+          },
+          {
+            "factor_id": "date_execution",
+            "label": "收盘观察与实际执行限制",
+            "direction": "limits",
+            "importance": "decisive",
+            "rationale": "事后分段不是当时已知持续时间；七月二日短段使用主源收益，独立官方指数控制从七月三日开始。没有成交执行、现金、再参与或交易成本模型，不认证行动效果。",
+            "backing": [
+              {
+                "kind": "query_row",
+                "ref": "long_breadth_wait_comparison_v1"
+              }
+            ]
+          }
+        ],
+        "alternatives": [],
+        "not_hidden_chain_of_thought": true
+      }
+    },
+    "decision_audit": {
+      "weighting_method": "ordinal_evidence_weighting_v0",
+      "judgment": "长窗共27段偏弱，其中21段不足三日，等待三日不会形成提示但不等于无风险。同段统一终点后，等待一二三日的此前变化与剩余变化逐项复合一致；剩余天数不同，不能排名等待规则。",
+      "judgment_backing": [
+        {
+          "kind": "query_row",
+          "ref": "long_breadth_wait_comparison_v1"
+        }
+      ],
+      "confidence": "medium",
+      "factors": [
+        {
+          "factor_id": "confirmation_lag",
+          "label": "限价留档与已选样本",
+          "direction": "supports",
+          "importance": "high",
+          "rationale": "长窗共27段偏弱，其中21段不足三日，等待三日不会形成提示但不等于无风险。同段统一终点后，等待一二三日的此前变化与剩余变化逐项复合一致；剩余天数不同，不能排名等待规则。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_wait_comparison_v1"
+            }
+          ]
+        },
+        {
+          "factor_id": "date_execution",
+          "label": "收盘观察与实际执行限制",
+          "direction": "limits",
+          "importance": "decisive",
+          "rationale": "事后分段不是当时已知持续时间；七月二日短段使用主源收益，独立官方指数控制从七月三日开始。没有成交执行、现金、再参与或交易成本模型，不认证行动效果。",
+          "backing": [
+            {
+              "kind": "query_row",
+              "ref": "long_breadth_wait_comparison_v1"
+            }
+          ]
+        }
+      ],
+      "alternatives": [],
+      "not_hidden_chain_of_thought": true
+    },
+    "validation_report": {
+      "contract_version": "v8_research_validation_report_v1",
+      "valid": true,
+      "pack_id": "EP-8288E8E136E06C7C8470",
+      "pack_digest": "8288e8e136e06c7c847051695a29cc5ba7327249fca16f95448cb7fb6cf2edf5",
+      "draft_digest": "18018ec209c37cf4442aa9b5cb86b001cd2959660f38905b21fca6ab25017eae",
+      "issues": [],
+      "checked_statements": 7,
+      "checked_backings": 7,
+      "decision_audit_status": "complete"
+    },
+    "source_freshness": {
+      "research_cutoff": "2026-11-20",
+      "source_dates": "mixed; retain individual saved source dates"
+    },
+    "tool_calls": [
+      "study-2b550831ebc3e5bb6d6f725c",
+      "validate_research_draft"
+    ],
+    "experience_hits": [],
+    "agent_surface": "codex_desktop",
+    "model": "",
+    "config_digest": "",
+    "thread_id": "",
+    "turn_id": "",
+    "started_at": "2026-11-20T22:37:29.176352+00:00",
+    "completed_at": "2026-11-20T22:37:29.176352+00:00",
+    "run_id": "RUN-DAF379030FCC4D09861F2B51",
+    "created_at": "2026-11-20T22:37:29.176352+00:00",
+    "experience_candidate_ids": [],
+    "feedback_count": 0
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "official_source": {
+    "symbol": "000826",
+    "url": "https://www.szse.cn/api/market/ssjjhq/getHistoryData?cycleType=32&marketId=1&code=000826",
+    "params": {
+      "cycleType": 32,
+      "marketId": 1,
+      "code": "000826"
+    },
+    "sha256": "21e81fe49e022415fb6868e0946ca9f34aef4f6eb4c4234628268dc51dbbd245",
+    "bytes": 21576,
+    "observed_at": "2026-11-20T20:56:49.434267+00:00"
+  },
+  "cohort_evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "processor_sha256": "89576128c73fe5ca48628540e730453310db6dd7f18531ede069ee3095bf465f",
+  "reading": {
+    "version": "qihuan_official_ohlc_crosscheck_v1",
+    "symbol": "000826.SZ",
+    "paired_start": "2026-11-09",
+    "paired_through": "2026-11-19",
+    "paired_ohlc_days": 9,
+    "paired_ohlc_values": 36,
+    "one_price_dates": [
+      "2026-11-18",
+      "2026-11-19"
+    ],
+    "new_day": {
+      "date": "2026-11-20",
+      "open": "1.05",
+      "close": "1.06",
+      "low": "1.05",
+      "high": "1.29",
+      "one_observed_price": false,
+      "single_price_streak_observed_end": "2026-11-19",
+      "close_at_actual_down_limit": null
+    },
+    "boundary": "九日OHLC跨渠道相同，实际下限价仍来自保存供应商原件；官网日线本身没有实际限价字段。20日不再全天同价可由高低不同确认，不据此断言20日收盘是否达到实际下限价或真实退出能力；不推进整组共同窗口。",
+    "independent_validations_added": 0
+  },
+  "evidence_sha256": "603ffbb5da25441694c12ff1f411aacdc6f5292d4c9e12ca439f0eec8f61f9fa",
+  "research_run_id": "RUN-C63C3484397340E99B552029"
+}

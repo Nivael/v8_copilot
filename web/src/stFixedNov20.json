@@ -1,0 +1,54 @@
+{
+  "reading": {
+    "version": "fixed150_official_nov20_v1",
+    "anchor": "2026-11-19",
+    "through": "2026-11-20",
+    "fixed_members": 150,
+    "paired": 146,
+    "advancing": 24,
+    "declining": 115,
+    "flat": 7,
+    "declining_at_least_5pct": 24,
+    "equal_weight_one_day_pct": -2.379803606754907,
+    "median_one_day_pct": -2.596296296296296,
+    "market_one_day_pct": -2.7074072859087703,
+    "equal_weight_minus_market_pp": 0.32760367915386335,
+    "boundary": "固定7月3日150只旧样本，包含后来离开ST的公司，不是20日法定ST名单。只比较19日和20日实际有成交且当日参考前收与19日原价一致的子样本；停牌、无报价和参考差异分别保留，不记零。单日算术等权不是旧动态ST复合参考、账户收益或趋势判断；跌幅至少5%不是实际跌停。",
+    "independent_validations_added": 0,
+    "unpaired": [
+      {
+        "symbol": "000016.SZ",
+        "status": "missing_quote20"
+      },
+      {
+        "symbol": "002122.SZ",
+        "status": "nontrading20"
+      },
+      {
+        "symbol": "002717.SZ",
+        "status": "nontrading20"
+      },
+      {
+        "symbol": "002731.SZ",
+        "status": "missing_quote20"
+      }
+    ]
+  },
+  "cohort_evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "benchmark_source_digest": "27046da6996bc2b5584a60618f18d7c804fb06b02b8ff4531bf6b18498f4b9ba",
+  "benchmark_source": {
+    "code": "000985.CSI",
+    "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000985&startDate=20260820&endDate=20261120",
+    "response_sha256": "f97dd51230a853c794a64593fc581806091e7ac523d3f1ce93177eb7a6e1af9b",
+    "observed_at": "2026-11-20T16:23:33.633263+00:00",
+    "reported_amount_unit": "CNY100M",
+    "normalized_amount_unit": "CNY"
+  },
+  "evidence_sha256": "a7676606ef26bcf3d05f780c6f9a7ed04ab0869964fc79b98d2f1d33e511b678",
+  "research_run_id": "RUN-6B2C5D024F7A4B989CD5396B",
+  "source_counts": {
+    "sse_stock_responses": 69,
+    "szse_day_packets": 2,
+    "szse_original_files": 6
+  }
+}

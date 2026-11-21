@@ -76,10 +76,19 @@ it('shows current coverage without turning mixed-date totals or zero title leads
 it('shows fixed-cohort complete query scope while keeping eleven titles unresolved',()=>{
  render(<STCatalogSelectionAudit data={data()}/>);
  expect(screen.getByText(/固定150家公司均有完整保存查询/)).toBeVisible()
- fireEvent.click(screen.getByText('查看原11条线索：2条已核正文，9条待核'))
+ fireEvent.click(screen.getByText('查看原11条线索：11条已核正文，0条待核'))
  const table=screen.getByRole('table',{name:'原11条标题线索及后续正文核对状态'})
  expect(within(table).getAllByRole('row')).toHaveLength(12)
- expect(within(table).getAllByText('标题线索，正文待核')).toHaveLength(9)
+ expect(within(table).queryAllByText('标题线索，正文待核')).toHaveLength(0)
+ expect(within(table).getAllByText('正文已核，后续执行另看')).toHaveLength(11)
  expect(table).toHaveTextContent('1225677325')
  expect(screen.getByText(/可能回指同一退出安排/)).toBeVisible()
+})
+it('keeps four empty Nov20 queries separate from the 150-company dated coverage',()=>{
+ render(<STCatalogSelectionAudit data={data()}/>);fireEvent.click(screen.getByText('150家目录覆盖的日期、来源与限制'))
+ const note=screen.getByRole('complementary',{name:'四家公司20日目录增量查询'})
+ expect(note).toHaveTextContent('它不延长150家统一覆盖日期')
+ expect(note).toHaveTextContent('四个空响应为同一份字节内容，且未声明数据日')
+ expect(note).toHaveTextContent('不认证当天没有公告')
+ expect(screen.getByText(/共同目标期间2026-07-04至2026-11-19/)).toBeVisible()
 })

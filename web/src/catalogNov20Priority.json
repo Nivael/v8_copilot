@@ -1,0 +1,42 @@
+{
+  "reading": {
+    "companies": [
+      {
+        "code": "002717",
+        "requested_date": "2026-11-20",
+        "reported_records": 0,
+        "source_data_date": null,
+        "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+      },
+      {
+        "code": "600165",
+        "requested_date": "2026-11-20",
+        "reported_records": 0,
+        "source_data_date": null,
+        "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+      },
+      {
+        "code": "601718",
+        "requested_date": "2026-11-20",
+        "reported_records": 0,
+        "source_data_date": null,
+        "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+      },
+      {
+        "code": "000826",
+        "requested_date": "2026-11-20",
+        "reported_records": 0,
+        "source_data_date": null,
+        "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+      }
+    ],
+    "query_count": 4,
+    "unique_empty_response_bodies": 1,
+    "new_body_candidates": 0,
+    "legal_or_financial_status_changed": false
+  },
+  "baseline_snapshot_digest": "e0ed59aa8cc346fc45349f5daac23d091211c82c145b91c38d031e47579e612f",
+  "full_catalog_evidence_sha256": "ae3c889256a57225469515486e3e5f8447dfd1653628e001cdd56f6b09b428fc",
+  "evidence_sha256": "118055e0f805e62281ddfa27f1e47d44620bbb496bc976a19b660b8f0f1083c8",
+  "query_date": "2026-11-20"
+}

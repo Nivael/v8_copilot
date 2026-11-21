@@ -1,3 +1,4 @@
+import {STReadingDates} from './STReadingDates'
 import type {CurrentExtension} from './STCurrentExtension'
 import {STPriceBandAudit} from './STPriceBandAudit'
 import {STEndpointAudit} from './STEndpointAudit'
@@ -96,6 +97,7 @@ export function STRegimeSection({onCurrentUpdate}:{onCurrentUpdate?:(value:Curre
     {error&&<p role="alert">{error}。已有个股复盘仍可在下方查看。</p>}
     {!data&&!error&&<p role="status">正在读取整批ST的同窗比较…</p>}
     {data&&comparison&&after&&before&&fixed&&<>
+      <STReadingDates snapshot={data.content_digest} comparisonThrough={data.themes?.current_extension?.through} baselineThrough={data.through}/>
       <STRegimeThemes data={data} comparison={comparison} onEvidence={(nextView,targetId)=>{setView(nextView);setEvidenceOpen(true);if(targetId&&['st-member-entries','st-member-transitions','st-sample-integrity','st-label-changes','st-membership-audit'].includes(targetId))setWindowKey('all');requestAnimationFrame(()=>document.getElementById(targetId??'st-evidence')?.scrollIntoView?.({behavior:'smooth',block:'start'}))}} chart={<figure className="regime-story-figure"><figcaption><strong>这段行情，放回市场里看</strong><span>{comparison.after.start} — {comparison.after.through}，从前一交易日收盘起算</span></figcaption><ReadingChart key={`story-${windowKey}`} series={(['st','market','small'] as const).map((key,index)=>{const start=data.daily.find(row=>row.date===comparison.after.start)?.anchor;const path=data.path.filter(row=>start!=null&&row.date>=start&&row.date<=comparison.after.through);return {key,name:['主板ST等权参考','中证全指','中证2000'][index],points:path.map(row=>({date:row.date,value:row[key],level:row[key]/path[0][key]*100})),change_pct:(path.at(-1)![key]/path[0][key]-1)*100}})} label="ST与市场同期走势"/><p className="reading-caption">三线从同一天归零，比较路径；ST线是每日在场股票的等权参考，不是固定持仓回报。</p></figure>}/>
       <details id="st-evidence" className="regime-evidence" open={evidenceOpen} onToggle={event=>setEvidenceOpen(event.currentTarget.open)}><summary><span>数据、图表与全部样本</span><small>切换观察窗口，核对计算与原始来源</small></summary>
       <p className="regime-boundary"><strong>完整横截面截至 {data.through}</strong> · 7月6日生效；主板A股ST/*ST；创业板、科创板及北交所不混入。</p>

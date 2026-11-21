@@ -1,0 +1,342 @@
+{
+  "requested_companies": 150,
+  "captured_companies": 150,
+  "unresolved": [],
+  "query_pages": 150,
+  "title_sightings": 41,
+  "unique_attachment_identities": 41,
+  "nonempty_companies": 20,
+  "unique_empty_response_bodies": 1,
+  "titles": [
+    {
+      "announcement_id": "1225679819",
+      "adjunct_url": "finalpage/2026-11-20/1225679819.PDF",
+      "title": "关于收到《执行裁定书》暨仲裁事项执行进展的公告",
+      "codes": [
+        "000010"
+      ]
+    },
+    {
+      "announcement_id": "1225679818",
+      "adjunct_url": "finalpage/2026-11-20/1225679818.PDF",
+      "title": "股票交易异常波动公告",
+      "codes": [
+        "000010"
+      ]
+    },
+    {
+      "announcement_id": "1225679817",
+      "adjunct_url": "finalpage/2026-11-20/1225679817.PDF",
+      "title": "关于第一大股东及其一致行动人权益变动触及1%整数倍的公告",
+      "codes": [
+        "000010"
+      ]
+    },
+    {
+      "announcement_id": "1225680178",
+      "adjunct_url": "finalpage/2026-11-20/1225680178.PDF",
+      "title": "关于公司股价异动的公告",
+      "codes": [
+        "000488"
+      ]
+    },
+    {
+      "announcement_id": "1225679891",
+      "adjunct_url": "finalpage/2026-11-20/1225679891.PDF",
+      "title": "关于公司股票交易异常波动情况的公告",
+      "codes": [
+        "000711"
+      ]
+    },
+    {
+      "announcement_id": "1225679977",
+      "adjunct_url": "finalpage/2026-11-20/1225679977.PDF",
+      "title": "关于撤销公司股票交易其他风险警示暨停复牌的公告",
+      "codes": [
+        "002122"
+      ]
+    },
+    {
+      "announcement_id": "1225679946",
+      "adjunct_url": "finalpage/2026-11-20/1225679946.PDF",
+      "title": "关于签订《电气业务合作框架合同》暨关联交易的公告",
+      "codes": [
+        "002168"
+      ]
+    },
+    {
+      "announcement_id": "1225679945",
+      "adjunct_url": "finalpage/2026-11-20/1225679945.PDF",
+      "title": "第八届董事会第二十五次会议决议公告",
+      "codes": [
+        "002168"
+      ]
+    },
+    {
+      "announcement_id": "1225679944",
+      "adjunct_url": "finalpage/2026-11-20/1225679944.PDF",
+      "title": "关于控股子公司购买股权资产的公告",
+      "codes": [
+        "002168"
+      ]
+    },
+    {
+      "announcement_id": "1225679022",
+      "adjunct_url": "finalpage/2026-11-20/1225679022.PDF",
+      "title": "关于职工董事辞职及补选第七届董事会职工董事的公告",
+      "codes": [
+        "002323"
+      ]
+    },
+    {
+      "announcement_id": "1225679021",
+      "adjunct_url": "finalpage/2026-11-20/1225679021.PDF",
+      "title": "关于控股股东增持公司股份计划的公告",
+      "codes": [
+        "002323"
+      ]
+    },
+    {
+      "announcement_id": "1225679913",
+      "adjunct_url": "finalpage/2026-11-20/1225679913.PDF",
+      "title": "关于公司控股股东所持公司部分股份司法拍卖流拍的公告",
+      "codes": [
+        "002514"
+      ]
+    },
+    {
+      "announcement_id": "1225679976",
+      "adjunct_url": "finalpage/2026-11-20/1225679976.PDF",
+      "title": "关于购买董事、高级管理人员责任险的公告",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679975",
+      "adjunct_url": "finalpage/2026-11-20/1225679975.PDF",
+      "title": "关于签署《债务豁免协议》暨关联交易的公告",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679974",
+      "adjunct_url": "finalpage/2026-11-20/1225679974.PDF",
+      "title": "关于签署《债权债务和解协议》的公告",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679973",
+      "adjunct_url": "finalpage/2026-11-20/1225679973.PDF",
+      "title": "关于召开2026年第六次临时股东会的通知",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679972",
+      "adjunct_url": "finalpage/2026-11-20/1225679972.PDF",
+      "title": "第六届董事会第三十八次会议决议公告",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679971",
+      "adjunct_url": "finalpage/2026-11-20/1225679971.PDF",
+      "title": "公司及两家下属子公司名下部分房地产清算价值评估项目资产评估说明",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679970",
+      "adjunct_url": "finalpage/2026-11-20/1225679970.PDF",
+      "title": "关于拟出售资产事项的公告",
+      "codes": [
+        "002547"
+      ]
+    },
+    {
+      "announcement_id": "1225679017",
+      "adjunct_url": "finalpage/2026-11-20/1225679017.PDF",
+      "title": "关于使用公司闲置自有资金进行委托理财的进展公告",
+      "codes": [
+        "002586"
+      ]
+    },
+    {
+      "announcement_id": "1225679477",
+      "adjunct_url": "finalpage/2026-11-20/1225679477.PDF",
+      "title": "关于为控股子（孙）公司提供担保的进展公告",
+      "codes": [
+        "002667"
+      ]
+    },
+    {
+      "announcement_id": "1225679789",
+      "adjunct_url": "finalpage/2026-11-20/1225679789.PDF",
+      "title": "关于公司及子公司诉讼进展的公告",
+      "codes": [
+        "600180"
+      ]
+    },
+    {
+      "announcement_id": "1225679178",
+      "adjunct_url": "finalpage/2026-11-20/1225679178.PDF",
+      "title": "关于为控股子公司提供担保公告",
+      "codes": [
+        "600187"
+      ]
+    },
+    {
+      "announcement_id": "1225679176",
+      "adjunct_url": "finalpage/2026-11-20/1225679176.PDF",
+      "title": "关于以集中竞价交易方式首次回购股份的公告",
+      "codes": [
+        "600187"
+      ]
+    },
+    {
+      "announcement_id": "1225679385",
+      "adjunct_url": "finalpage/2026-11-20/1225679385.PDF",
+      "title": "美克国际家居用品股份有限公司2026年第三次临时股东会会议资料",
+      "codes": [
+        "600337"
+      ]
+    },
+    {
+      "announcement_id": "1225679959",
+      "adjunct_url": "finalpage/2026-11-20/1225679959.PDF",
+      "title": "关于董事会秘书离任暨董事长代行董事会秘书职责的公告",
+      "codes": [
+        "600525"
+      ]
+    },
+    {
+      "announcement_id": "1225679995",
+      "adjunct_url": "finalpage/2026-11-20/1225679995.PDF",
+      "title": "独立董事候选人声明与承诺（唐勇）",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679993",
+      "adjunct_url": "finalpage/2026-11-20/1225679993.PDF",
+      "title": "中国高科关于变更董事会秘书的公告",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679990",
+      "adjunct_url": "finalpage/2026-11-20/1225679990.PDF",
+      "title": "中国高科关于变更证券事务代表的公告",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679989",
+      "adjunct_url": "finalpage/2026-11-20/1225679989.PDF",
+      "title": "中国高科关于补选公司第十一届董事会独立董事的公告",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679988",
+      "adjunct_url": "finalpage/2026-11-20/1225679988.PDF",
+      "title": "中国高科第十一届董事会第十二次会议决议公告",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679986",
+      "adjunct_url": "finalpage/2026-11-20/1225679986.PDF",
+      "title": "中国高科董事会提名委员会关于公司第十一届董事会独立董事候选人唐勇的任职资格审查意见",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679985",
+      "adjunct_url": "finalpage/2026-11-20/1225679985.PDF",
+      "title": "中国高科关于2026年第六次临时股东会增加临时提案的公告",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679984",
+      "adjunct_url": "finalpage/2026-11-20/1225679984.PDF",
+      "title": "独立董事提名人声明与承诺（唐勇）",
+      "codes": [
+        "600730"
+      ]
+    },
+    {
+      "announcement_id": "1225679623",
+      "adjunct_url": "finalpage/2026-11-20/1225679623.PDF",
+      "title": "喜临门健康睡眠科技股份公司关于控股股东、实际控制人及其一致行动人部分股份将被司法拍卖的提示性公告",
+      "codes": [
+        "603008"
+      ]
+    },
+    {
+      "announcement_id": "1225679624",
+      "adjunct_url": "finalpage/2026-11-20/1225679624.PDF",
+      "title": "关于召开2026年第四次临时股东会的通知",
+      "codes": [
+        "603272"
+      ]
+    },
+    {
+      "announcement_id": "1225679620",
+      "adjunct_url": "finalpage/2026-11-20/1225679620.PDF",
+      "title": "关于调整对外担保额度预计的公告",
+      "codes": [
+        "603272"
+      ]
+    },
+    {
+      "announcement_id": "1225679616",
+      "adjunct_url": "finalpage/2026-11-20/1225679616.PDF",
+      "title": "第四届董事会第十次会议决议公告",
+      "codes": [
+        "603272"
+      ]
+    },
+    {
+      "announcement_id": "1225679067",
+      "adjunct_url": "finalpage/2026-11-20/1225679067.PDF",
+      "title": "亚士创能关于为控股子公司提供担保的公告",
+      "codes": [
+        "603378"
+      ]
+    },
+    {
+      "announcement_id": "1225679216",
+      "adjunct_url": "finalpage/2026-11-20/1225679216.PDF",
+      "title": "上海龙韵文创科技集团股份有限公司关于召开2026年第三季度业绩说明会的公告",
+      "codes": [
+        "603729"
+      ]
+    },
+    {
+      "announcement_id": "1225680166",
+      "adjunct_url": "finalpage/2026-11-20/1225680166.PDF",
+      "title": "柯利达关于为全资子公司申请综合授信提供担保的公告",
+      "codes": [
+        "603828"
+      ]
+    }
+  ],
+  "positive_control_matched": true,
+  "body_reviewed": 0
+}

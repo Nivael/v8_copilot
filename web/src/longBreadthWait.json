@@ -1,0 +1,1132 @@
+{
+  "summary": {
+    "episode_count": 27,
+    "short_episode_count": 21
+  },
+  "reading": {
+    "version": "breadth_common_end_v1",
+    "start": "2026-07-01",
+    "through": "2026-11-19",
+    "episodes": [
+      {
+        "first": "2026-07-02",
+        "last_observed_weak": "2026-07-02",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-01",
+        "target_end": "2026-07-09",
+        "observed_end": "2026-07-09",
+        "complete": true,
+        "total_st_pct": 1.0611674723211661,
+        "total_market_pct": -3.9422826003437015,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-02",
+            "already_st_pct": 3.1058711409395974,
+            "already_market_pct": -2.8462488530875962,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -1.983110802510405,
+            "remaining_market_pct": -1.12814351923347,
+            "partial_st_pct": -1.983110802510405,
+            "partial_market_pct": -1.12814351923347
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-07-06",
+        "last_observed_weak": "2026-07-09",
+        "observed_weak_sessions": 4,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-03",
+        "target_end": "2026-07-13",
+        "observed_end": "2026-07-13",
+        "complete": true,
+        "total_st_pct": -5.5743065419578475,
+        "total_market_pct": -6.28855329964179,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-06",
+            "already_st_pct": -1.0932452702702702,
+            "already_market_pct": -0.8353964082206344,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -4.530591751728606,
+            "remaining_market_pct": -5.4990961430850875,
+            "partial_st_pct": -4.530591751728606,
+            "partial_market_pct": -5.4990961430850875
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-07-07",
+            "already_st_pct": -5.604101564518406,
+            "already_market_pct": -2.472813715615088,
+            "remaining_sessions": 4,
+            "remaining_st_pct": 0.03156389531153487,
+            "remaining_market_pct": -3.9124881270543126,
+            "partial_st_pct": 0.03156389531153487,
+            "partial_market_pct": -3.9124881270543126
+          },
+          {
+            "wait": 3,
+            "formed": true,
+            "date": "2026-07-08",
+            "already_st_pct": -3.7567757327245905,
+            "already_market_pct": -3.8617813915243526,
+            "remaining_sessions": 3,
+            "remaining_st_pct": -1.8884766414161518,
+            "remaining_market_pct": -2.5242530423831777,
+            "partial_st_pct": -1.8884766414161518,
+            "partial_market_pct": -2.5242530423831777
+          }
+        ]
+      },
+      {
+        "first": "2026-07-13",
+        "last_observed_weak": "2026-07-13",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-10",
+        "target_end": "2026-07-20",
+        "observed_end": "2026-07-20",
+        "complete": true,
+        "total_st_pct": -9.832791338887374,
+        "total_market_pct": -9.275698218108255,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-13",
+            "already_st_pct": -2.1256114093959733,
+            "already_market_pct": -3.4345469265582906,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -7.874562529048883,
+            "remaining_market_pct": -6.048903728652882,
+            "partial_st_pct": -7.874562529048883,
+            "partial_market_pct": -6.048903728652882
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-07-16",
+        "last_observed_weak": "2026-07-20",
+        "observed_weak_sessions": 3,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-15",
+        "target_end": "2026-07-23",
+        "observed_end": "2026-07-23",
+        "complete": true,
+        "total_st_pct": -7.686793759742528,
+        "total_market_pct": -4.272465984134225,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-16",
+            "already_st_pct": 0.08556866666666665,
+            "already_market_pct": -1.9612231268796965,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -7.765717405568149,
+            "remaining_market_pct": -2.357478266222854,
+            "partial_st_pct": -7.765717405568149,
+            "partial_market_pct": -2.357478266222854
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-07-17",
+            "already_st_pct": -3.5706356021723784,
+            "already_market_pct": -6.647952094073779,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -4.268573357580775,
+            "remaining_market_pct": 2.5446534524163895,
+            "partial_st_pct": -4.268573357580775,
+            "partial_market_pct": 2.5446534524163895
+          },
+          {
+            "wait": 3,
+            "formed": true,
+            "date": "2026-07-20",
+            "already_st_pct": -8.393799154537835,
+            "already_market_pct": -7.193277435405145,
+            "remaining_sessions": 3,
+            "remaining_st_pct": 0.7717877046205747,
+            "remaining_market_pct": 3.1471981453046056,
+            "partial_st_pct": 0.7717877046205747,
+            "partial_market_pct": 3.1471981453046056
+          }
+        ]
+      },
+      {
+        "first": "2026-07-22",
+        "last_observed_weak": "2026-07-22",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-21",
+        "target_end": "2026-07-29",
+        "observed_end": "2026-07-29",
+        "complete": true,
+        "total_st_pct": 5.959213009735062,
+        "total_market_pct": -2.4235862399315757,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-22",
+            "already_st_pct": -0.43795918367346937,
+            "already_market_pct": -0.7364863229453955,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 6.42531243931623,
+            "remaining_market_pct": -1.699617366432359,
+            "partial_st_pct": 6.42531243931623,
+            "partial_market_pct": -1.699617366432359
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-07-24",
+        "last_observed_weak": "2026-07-24",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-23",
+        "target_end": "2026-07-31",
+        "observed_end": "2026-07-31",
+        "complete": true,
+        "total_st_pct": 4.282525787040149,
+        "total_market_pct": -2.3183324031244372,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-24",
+            "already_st_pct": -1.311030612244898,
+            "already_market_pct": -2.214925933495626,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 5.6678638291455,
+            "remaining_market_pct": -0.10574872557593366,
+            "partial_st_pct": 5.6678638291455,
+            "partial_market_pct": -0.10574872557593366
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-07-28",
+        "last_observed_weak": "2026-07-28",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-27",
+        "target_end": "2026-08-04",
+        "observed_end": "2026-08-04",
+        "complete": true,
+        "total_st_pct": 5.673093310787774,
+        "total_market_pct": -0.7140259896699576,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-28",
+            "already_st_pct": 0.6629965986394558,
+            "already_market_pct": -2.739267975456039,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 4.977098716944051,
+            "remaining_market_pct": 2.082281249204465,
+            "partial_st_pct": 4.977098716944051,
+            "partial_market_pct": 2.082281249204465
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-07-30",
+        "last_observed_weak": "2026-07-30",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-07-29",
+        "target_end": "2026-08-06",
+        "observed_end": "2026-08-06",
+        "complete": true,
+        "total_st_pct": 5.4095581584570445,
+        "total_market_pct": 3.5840331010364053,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-07-30",
+            "already_st_pct": -1.4627406896551725,
+            "already_market_pct": -1.9495334556005384,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 6.974314991314901,
+            "remaining_market_pct": 5.643590236392419,
+            "partial_st_pct": 6.974314991314901,
+            "partial_market_pct": 5.643590236392419
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-08-11",
+        "last_observed_weak": "2026-08-11",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-08-10",
+        "target_end": "2026-08-18",
+        "observed_end": "2026-08-18",
+        "complete": true,
+        "total_st_pct": 1.0557254510890628,
+        "total_market_pct": 1.4638057768742798,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-08-11",
+            "already_st_pct": 0.4656877551020408,
+            "already_market_pct": -0.7146727659530727,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 0.5873026992313181,
+            "remaining_market_pct": 2.194159603958387,
+            "partial_st_pct": 0.5873026992313181,
+            "partial_market_pct": 2.194159603958387
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-08-13",
+        "last_observed_weak": "2026-08-14",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-08-12",
+        "target_end": "2026-08-20",
+        "observed_end": "2026-08-20",
+        "complete": true,
+        "total_st_pct": -1.013730406933381,
+        "total_market_pct": -2.350274373753076,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-08-13",
+            "already_st_pct": -1.0970054421768707,
+            "already_market_pct": -0.8429584264767254,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 0.08419869955990389,
+            "remaining_market_pct": -1.5201300113000054,
+            "partial_st_pct": 0.08419869955990389,
+            "partial_market_pct": -1.5201300113000054
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-08-14",
+            "already_st_pct": -0.8863010223900134,
+            "already_market_pct": -0.5482461819346166,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -0.12856889194717103,
+            "remaining_market_pct": -1.8119622054278155,
+            "partial_st_pct": -0.12856889194717103,
+            "partial_market_pct": -1.8119622054278155
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-08-18",
+        "last_observed_weak": "2026-08-19",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-08-17",
+        "target_end": "2026-08-25",
+        "observed_end": "2026-08-25",
+        "complete": true,
+        "total_st_pct": 1.2477285168341983,
+        "total_market_pct": -4.577043926229224,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-08-18",
+            "already_st_pct": -0.5467006802721088,
+            "already_market_pct": -0.2486152351761528,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 1.8042932807462506,
+            "remaining_market_pct": -4.339216644719142,
+            "partial_st_pct": 1.8042932807462506,
+            "partial_market_pct": -4.339216644719142
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-08-19",
+            "already_st_pct": -2.7618138677245594,
+            "already_market_pct": -4.356128404564226,
+            "remaining_sessions": 4,
+            "remaining_st_pct": 4.123423671338831,
+            "remaining_market_pct": -0.23097718440283277,
+            "partial_st_pct": 4.123423671338831,
+            "partial_market_pct": -0.23097718440283277
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-08-21",
+        "last_observed_weak": "2026-08-24",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-08-20",
+        "target_end": "2026-08-28",
+        "observed_end": "2026-08-28",
+        "complete": true,
+        "total_st_pct": 3.6681017438288612,
+        "total_market_pct": 0.8935949289277564,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-08-21",
+            "already_st_pct": 1.674182993197279,
+            "already_market_pct": 0.3339008959510892,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 1.9610865727487472,
+            "remaining_market_pct": 0.5578314288378807,
+            "partial_st_pct": 1.9610865727487472,
+            "partial_market_pct": 0.5578314288378807
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-08-24",
+            "already_st_pct": 0.7217396380307987,
+            "already_market_pct": -1.0871685742573152,
+            "remaining_sessions": 4,
+            "remaining_st_pct": 2.9252494212138953,
+            "remaining_market_pct": 2.002534428176894,
+            "partial_st_pct": 2.9252494212138953,
+            "partial_market_pct": 2.002534428176894
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-09-02",
+        "last_observed_weak": "2026-09-04",
+        "observed_weak_sessions": 3,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-09-01",
+        "target_end": "2026-09-09",
+        "observed_end": "2026-09-09",
+        "complete": true,
+        "total_st_pct": 1.0741224932231885,
+        "total_market_pct": -0.675415662263871,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-09-02",
+            "already_st_pct": 0.057745070422535225,
+            "already_market_pct": -1.3183114795339068,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 1.0157908536568634,
+            "remaining_market_pct": 0.6514844110482589,
+            "partial_st_pct": 1.0157908536568634,
+            "partial_market_pct": 0.6514844110482589
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-09-03",
+            "already_st_pct": -0.6325039885777821,
+            "already_market_pct": -1.211617629594938,
+            "remaining_sessions": 4,
+            "remaining_st_pct": 1.7174896724828361,
+            "remaining_market_pct": 0.5427783656995094,
+            "partial_st_pct": 1.7174896724828361,
+            "partial_market_pct": 0.5427783656995094
+          },
+          {
+            "wait": 3,
+            "formed": true,
+            "date": "2026-09-04",
+            "already_st_pct": 0.2483585600008624,
+            "already_market_pct": -1.8353490647732806,
+            "remaining_sessions": 3,
+            "remaining_st_pct": 0.8237181586650001,
+            "remaining_market_pct": 1.1816202588799343,
+            "partial_st_pct": 0.8237181586650001,
+            "partial_market_pct": 1.1816202588799343
+          }
+        ]
+      },
+      {
+        "first": "2026-09-09",
+        "last_observed_weak": "2026-09-11",
+        "observed_weak_sessions": 3,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-09-08",
+        "target_end": "2026-09-16",
+        "observed_end": "2026-09-16",
+        "complete": true,
+        "total_st_pct": -3.1451412374942156,
+        "total_market_pct": -1.648646696380637,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-09-09",
+            "already_st_pct": -0.710275352112676,
+            "already_market_pct": 0.07279373817101753,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -2.452283853154334,
+            "remaining_market_pct": -1.7201882452243773,
+            "partial_st_pct": -2.452283853154334,
+            "partial_market_pct": -1.7201882452243773
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-09-10",
+            "already_st_pct": -0.6434680511163211,
+            "already_market_pct": -0.7278983638593716,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -2.51787490697133,
+            "remaining_market_pct": -0.9274995868386664,
+            "partial_st_pct": -2.51787490697133,
+            "partial_market_pct": -0.9274995868386664
+          },
+          {
+            "wait": 3,
+            "formed": true,
+            "date": "2026-09-11",
+            "already_st_pct": -1.3551721836500272,
+            "already_market_pct": -2.132658046300218,
+            "remaining_sessions": 3,
+            "remaining_st_pct": -1.814559458886813,
+            "remaining_market_pct": 0.4945585935587815,
+            "partial_st_pct": -1.814559458886813,
+            "partial_market_pct": 0.4945585935587815
+          }
+        ]
+      },
+      {
+        "first": "2026-09-15",
+        "last_observed_weak": "2026-09-15",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-09-14",
+        "target_end": "2026-09-22",
+        "observed_end": "2026-09-22",
+        "complete": true,
+        "total_st_pct": 0.05390195014206068,
+        "total_market_pct": 2.804839187427671,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-09-15",
+            "already_st_pct": -2.3848633802816903,
+            "already_market_pct": -0.6628872667306163,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 2.4983475051871404,
+            "remaining_market_pct": 3.490866966779574,
+            "partial_st_pct": 2.4983475051871404,
+            "partial_market_pct": 3.490866966779574
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-09-17",
+        "last_observed_weak": "2026-09-17",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-09-16",
+        "target_end": "2026-09-24",
+        "observed_end": "2026-09-24",
+        "complete": true,
+        "total_st_pct": 0.15786554981580958,
+        "total_market_pct": -0.16236501377202728,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-09-17",
+            "already_st_pct": 0.4031612676056338,
+            "already_market_pct": -0.33116722458007564,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -0.24431075146731177,
+            "remaining_market_pct": 0.16936308583888415,
+            "partial_st_pct": -0.24431075146731177,
+            "partial_market_pct": 0.16936308583888415
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-09-22",
+        "last_observed_weak": "2026-09-28",
+        "observed_weak_sessions": 4,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-09-21",
+        "target_end": "2026-09-30",
+        "observed_end": "2026-09-30",
+        "complete": true,
+        "total_st_pct": -2.938157576191861,
+        "total_market_pct": -4.621244333339307,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-09-22",
+            "already_st_pct": -0.5443119718309859,
+            "already_market_pct": 0.026651838137570216,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -2.4069469045177807,
+            "remaining_market_pct": -4.646657751774067,
+            "partial_st_pct": -2.4069469045177807,
+            "partial_market_pct": -4.646657751774067
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-09-23",
+            "already_st_pct": -1.4446731092752927,
+            "already_market_pct": -0.409688212501425,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -1.5153767067025212,
+            "remaining_market_pct": -4.228881349246416,
+            "partial_st_pct": -1.5153767067025212,
+            "partial_market_pct": -4.228881349246416
+          },
+          {
+            "wait": 3,
+            "formed": true,
+            "date": "2026-09-24",
+            "already_st_pct": -2.1162256364507015,
+            "already_market_pct": -2.259011354091703,
+            "remaining_sessions": 3,
+            "remaining_st_pct": -0.839701927194214,
+            "remaining_market_pct": -2.416829430491435,
+            "partial_st_pct": -0.839701927194214,
+            "partial_market_pct": -2.416829430491435
+          }
+        ]
+      },
+      {
+        "first": "2026-09-30",
+        "last_observed_weak": "2026-10-08",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-09-29",
+        "target_end": "2026-10-14",
+        "observed_end": "2026-10-14",
+        "complete": true,
+        "total_st_pct": -3.4190735792443583,
+        "total_market_pct": -4.343735923181276,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-09-30",
+            "already_st_pct": 0.450330985915493,
+            "already_market_pct": -0.035309962035645626,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -3.8520575563881367,
+            "remaining_market_pct": -4.3099478020783,
+            "partial_st_pct": -3.8520575563881367,
+            "partial_market_pct": -4.3099478020783
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-10-08",
+            "already_st_pct": -0.31300522718042045,
+            "already_market_pct": -1.597124925587323,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -3.1158210347723627,
+            "remaining_market_pct": -2.7911897853766505,
+            "partial_st_pct": -3.1158210347723627,
+            "partial_market_pct": -2.7911897853766505
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-10-12",
+        "last_observed_weak": "2026-10-12",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-10-09",
+        "target_end": "2026-10-19",
+        "observed_end": "2026-10-19",
+        "complete": true,
+        "total_st_pct": -6.500565979894031,
+        "total_market_pct": -4.992759662182432,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-10-12",
+            "already_st_pct": -1.844741958041958,
+            "already_market_pct": -1.422871525410696,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -4.743326149539402,
+            "remaining_market_pct": -3.62141623722785,
+            "partial_st_pct": -4.743326149539402,
+            "partial_market_pct": -3.62141623722785
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-10-14",
+        "last_observed_weak": "2026-10-15",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-10-13",
+        "target_end": "2026-10-21",
+        "observed_end": "2026-10-21",
+        "complete": true,
+        "total_st_pct": -4.162855031170059,
+        "total_market_pct": -3.7828420361673185,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-10-14",
+            "already_st_pct": -1.076394366197183,
+            "already_market_pct": -1.5736642538186185,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -3.120044649806226,
+            "remaining_market_pct": -2.244498655365628,
+            "partial_st_pct": -3.120044649806226,
+            "partial_market_pct": -2.244498655365628
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-10-15",
+            "already_st_pct": -3.7950811674461415,
+            "already_market_pct": -3.797272322577732,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -0.3822817670726723,
+            "remaining_market_pct": 0.014999872414012941,
+            "partial_st_pct": -0.3822817670726723,
+            "partial_market_pct": 0.014999872414012941
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-10-19",
+        "last_observed_weak": "2026-10-19",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-10-16",
+        "target_end": "2026-10-26",
+        "observed_end": "2026-10-26",
+        "complete": true,
+        "total_st_pct": -2.5970370858856953,
+        "total_market_pct": -1.4252766821322653,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-10-19",
+            "already_st_pct": -1.1209257142857143,
+            "already_market_pct": 0.053588582238406346,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -1.4928450557038078,
+            "remaining_market_pct": -1.4780731859058986,
+            "partial_st_pct": -1.4928450557038078,
+            "partial_market_pct": -1.4780731859058986
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-10-21",
+        "last_observed_weak": "2026-10-22",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-10-20",
+        "target_end": "2026-10-28",
+        "observed_end": "2026-10-28",
+        "complete": true,
+        "total_st_pct": -3.035107953868725,
+        "total_market_pct": -2.4320799425150614,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-10-21",
+            "already_st_pct": 0.19494428571428574,
+            "already_market_pct": -0.43472688617065547,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -3.2237676886892075,
+            "remaining_market_pct": -2.006073999376173,
+            "partial_st_pct": -3.2237676886892075,
+            "partial_market_pct": -2.006073999376173
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-10-22",
+            "already_st_pct": -2.500212402834265,
+            "already_market_pct": -2.8746103582366427,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -0.5486120167199308,
+            "remaining_market_pct": 0.4556279437887535,
+            "partial_st_pct": -0.5486120167199308,
+            "partial_market_pct": 0.4556279437887535
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-10-26",
+        "last_observed_weak": "2026-10-27",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-10-23",
+        "target_end": "2026-11-02",
+        "observed_end": "2026-11-02",
+        "complete": true,
+        "total_st_pct": -4.568285164981977,
+        "total_market_pct": -4.1721101827226565,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-10-26",
+            "already_st_pct": 0.013942142857142854,
+            "already_market_pct": -0.7564667181539142,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -4.5815885362202735,
+            "remaining_market_pct": -3.4416786178586625,
+            "partial_st_pct": -4.5815885362202735,
+            "partial_market_pct": -3.4416786178586625
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-10-27",
+            "already_st_pct": -1.4066994688433623,
+            "already_market_pct": -2.956125912506886,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -3.206694247079716,
+            "remaining_market_pct": -1.2530252750621427,
+            "partial_st_pct": -3.206694247079716,
+            "partial_market_pct": -1.2530252750621427
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-10-29",
+        "last_observed_weak": "2026-10-30",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-10-28",
+        "target_end": "2026-11-05",
+        "observed_end": "2026-11-05",
+        "complete": true,
+        "total_st_pct": -0.2193668271516418,
+        "total_market_pct": 0.6620282749652158,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-10-29",
+            "already_st_pct": -2.645705714285714,
+            "already_market_pct": -2.06747332165077,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 2.4922772076322386,
+            "remaining_market_pct": 2.7871246553055795,
+            "partial_st_pct": 2.4922772076322386,
+            "partial_market_pct": 2.7871246553055795
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-10-30",
+            "already_st_pct": -4.508647588061041,
+            "already_market_pct": -4.346057653549122,
+            "remaining_sessions": 4,
+            "remaining_st_pct": 4.491800202395211,
+            "remaining_market_pct": 5.235629400799241,
+            "partial_st_pct": 4.491800202395211,
+            "partial_market_pct": 5.235629400799241
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-11-03",
+        "last_observed_weak": "2026-11-03",
+        "observed_weak_sessions": 1,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-11-02",
+        "target_end": "2026-11-10",
+        "observed_end": "2026-11-10",
+        "complete": true,
+        "total_st_pct": 4.553295452224288,
+        "total_market_pct": 2.5144282406788605,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-11-03",
+            "already_st_pct": 0.9000457142857143,
+            "already_market_pct": -0.980588837557661,
+            "remaining_sessions": 5,
+            "remaining_st_pct": 3.620662123665754,
+            "remaining_market_pct": 3.5296282185549566,
+            "partial_st_pct": 3.620662123665754,
+            "partial_market_pct": 3.5296282185549566
+          },
+          {
+            "wait": 2,
+            "formed": false
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-11-06",
+        "last_observed_weak": "2026-11-09",
+        "observed_weak_sessions": 2,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": false,
+        "anchor": "2026-11-05",
+        "target_end": "2026-11-13",
+        "observed_end": "2026-11-13",
+        "complete": true,
+        "total_st_pct": -1.8089465942299825,
+        "total_market_pct": -2.9455659530077725,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-11-06",
+            "already_st_pct": -0.16488652482269503,
+            "already_market_pct": -1.8501053841467496,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -1.6467753801031753,
+            "remaining_market_pct": -1.116109775918275,
+            "partial_st_pct": -1.6467753801031753,
+            "partial_market_pct": -1.116109775918275
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-11-09",
+            "already_st_pct": 0.14963373344932349,
+            "already_market_pct": -1.769685790846203,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -1.9556540095714328,
+            "remaining_market_pct": -1.1970644414898886,
+            "partial_st_pct": -1.9556540095714328,
+            "partial_market_pct": -1.1970644414898886
+          },
+          {
+            "wait": 3,
+            "formed": false
+          }
+        ]
+      },
+      {
+        "first": "2026-11-12",
+        "last_observed_weak": "2026-11-19",
+        "observed_weak_sessions": 6,
+        "left_boundary_unknown": false,
+        "ongoing_at_cutoff": true,
+        "anchor": "2026-11-11",
+        "target_end": "2026-11-19",
+        "observed_end": "2026-11-19",
+        "complete": true,
+        "total_st_pct": -11.141615758687488,
+        "total_market_pct": -6.333622492925178,
+        "checks": [
+          {
+            "wait": 1,
+            "formed": true,
+            "date": "2026-11-12",
+            "already_st_pct": -1.3987929078014185,
+            "already_market_pct": -1.2788163127183894,
+            "remaining_sessions": 5,
+            "remaining_st_pct": -9.881038111202729,
+            "remaining_market_pct": -5.120285222894878,
+            "partial_st_pct": -9.881038111202729,
+            "partial_market_pct": -5.120285222894878
+          },
+          {
+            "wait": 2,
+            "formed": true,
+            "date": "2026-11-13",
+            "already_st_pct": -2.842581711979498,
+            "already_market_pct": -2.859259668098102,
+            "remaining_sessions": 4,
+            "remaining_st_pct": -8.541842911166835,
+            "remaining_market_pct": -3.5766279039630335,
+            "partial_st_pct": -8.541842911166835,
+            "partial_market_pct": -3.5766279039630335
+          },
+          {
+            "wait": 3,
+            "formed": true,
+            "date": "2026-11-16",
+            "already_st_pct": -5.590081184432938,
+            "already_market_pct": -4.763770325358413,
+            "remaining_sessions": 3,
+            "remaining_st_pct": -5.880245046179585,
+            "remaining_market_pct": -1.6483770650412122,
+            "partial_st_pct": -5.880245046179585,
+            "partial_market_pct": -1.6483770650412122
+          }
+        ]
+      }
+    ],
+    "endpoint_rule": "每段首个可观察偏弱日收盘之后第5个交易日；与等待一二三日无关。",
+    "boundary": "同一终点只消除了终点差异，各行剩余天数不同。条件未形成的片段仍保留，不把它们当作无风险；首段起点未知。同段不同等待不增加独立案例。没有同价执行、空仓现金、再入场与交易成本模型，不推减仓效果或最优等待天数。",
+    "independent_validations_added": 0
+  },
+  "alignment_sha256": "9f3abc3359f7fd52b24ef0657f9e0fd82d64af9eb00f226759bed9e85bd3cbeb",
+  "research_run_id": "RUN-DAF379030FCC4D09861F2B51",
+  "evidence_sha256": "e81d3cbcedec94cd1b0e373d688293a2aa4e0993f684c2fa877ac345c9d4a1f7"
+}

@@ -1,0 +1,396 @@
+{
+  "original_input_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "judicial_review_sha256": "7b04d1cbcead444a1a1c53d086cef6ad3b91642916844c081ff06002ca818711",
+  "links": [
+    {
+      "code": "603008",
+      "expected_context": {
+        "through": "2026-11-19",
+        "sources": [
+          {
+            "symbol": "603008",
+            "announcement_id": "1225647137",
+            "title": "喜临门健康睡眠科技股份公司2026年第三季度报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647137.PDF",
+            "sha256": "d510dfc3d3d1238ef1de056c7119ea28f9e71ed1a173ab3393a4b4f94a7c0ad7",
+            "pages": 12,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T06:09:57.910168+00:00",
+            "published_on": "2026-10-31",
+            "document_dated_on": null,
+            "document_date_boundary": "未确认原件落款，采用正式披露日。"
+          },
+          {
+            "symbol": "603008",
+            "announcement_id": "1225647128",
+            "title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225647128.PDF",
+            "sha256": "fb6562609ea94c1e40f9ab67a752fd3ecaa13a3e60b53b0c48f3ca2e610e2113",
+            "pages": 5,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T06:09:57.910105+00:00",
+            "published_on": "2026-10-31",
+            "document_dated_on": null,
+            "document_date_boundary": "未确认原件落款，采用正式披露日。"
+          },
+          {
+            "symbol": "603008",
+            "announcement_id": "1225571174",
+            "title": "喜临门健康睡眠科技股份公司关于控股股东及其一致行动人预重整投资人招募的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225571174.PDF",
+            "sha256": "670cc94a192e801a504b340525244ff026fbe1fb557f69b0e56fa833dee217e1",
+            "pages": 6,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T06:09:58.388946+00:00",
+            "published_on": "2026-09-19",
+            "document_dated_on": null,
+            "document_date_boundary": "未确认原件落款，采用正式披露日。"
+          },
+          {
+            "symbol": "603008",
+            "announcement_id": "1225502356",
+            "title": "喜临门健康睡眠科技股份公司2026年半年度报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502356.PDF",
+            "sha256": "6bb083f195cd17f97d1cef84dc9c2aadd27e082592ae4a5fcdf723c559a5ada9",
+            "pages": 157,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T06:10:01.935710+00:00",
+            "published_on": "2026-08-26",
+            "document_dated_on": null,
+            "document_date_boundary": "未确认原件落款，采用正式披露日。"
+          },
+          {
+            "symbol": "603008",
+            "announcement_id": "1225446681",
+            "title": "喜临门健康睡眠科技股份公司关于公司股票被实施其他风险警示相关事项的进展公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-30/1225446681.PDF",
+            "sha256": "a72daf43237bb4c019445cdbbb601f4d2ef3011a5e602abfb874d2d49f427d8c",
+            "pages": 5,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T06:09:58.930197+00:00",
+            "published_on": "2026-07-30",
+            "document_dated_on": null,
+            "document_date_boundary": "未确认原件落款，采用正式披露日。"
+          }
+        ],
+        "chains": [
+          {
+            "chain": "603008-喜临门担保下降，是不是占款问题在收敛？",
+            "source": "1225647128",
+            "pages": [
+              4
+            ],
+            "subject": "喜临门担保下降，是不是占款问题在收敛？",
+            "changed": "6月至10月底初步占款余额由49280.91万元增至74206.54万元，担保由45905.95万元降至38934.04万元。担保转占款、新查占用与保证期满等因素并存；下降不等于回收，不能将不同余额相加成确定损失。股东及一致行动人仍为预重整，非上市公司自身重整，也非正式受理。单季虽微利，前三季仍累计亏损。",
+            "open": "继续核实际回款及担保责任司法裁定、调查和审计；补完整余额流水调节，单季现金改善与占款、现金可用性分别看。",
+            "boundary": "按当时已知信息更新；同窗行情不是公告因果识别。",
+            "supporting": [
+              {
+                "source": "1225647137",
+                "pages": [
+                  1
+                ],
+                "state": "仅已核原页，不认证全文。"
+              },
+              {
+                "source": "1225502356",
+                "pages": [
+                  6,
+                  7
+                ],
+                "state": "仅已核原页，不认证全文。"
+              }
+            ]
+          }
+        ]
+      },
+      "finding": {
+        "code": "603008",
+        "announcement_id": "1225679623",
+        "pages": [
+          1,
+          2,
+          3
+        ],
+        "answer": "控股股东、实控人及一致行动人合计15616487股（总股本4.24%）预告12月19—20日拍卖，截至公告仍公示。",
+        "boundary": "尚未成交、缴款或过户。公告称若本次全部过户，合计持股由36.36%降至32.12%、华易仍为控股股东；这是假设本笔结果，不是最终控制权保证。股东华易及华瀚处预重整，后续正式受理可能影响未完成拍卖；不是上市公司已进入重整。"
+      },
+      "source": {
+        "announcement_id": "1225679623",
+        "adjunct_url": "finalpage/2026-11-20/1225679623.PDF",
+        "title": "喜临门健康睡眠科技股份公司关于控股股东、实际控制人及其一致行动人部分股份将被司法拍卖的提示性公告",
+        "codes": [
+          "603008"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679623.PDF",
+        "sha256": "9a2bcc56e54566c26ac088453f4d40daa542536158067290db5dcfb4bf8ae373",
+        "bytes": 126150,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9a2bcc56e54566c26ac088453f4d40daa542536158067290db5dcfb4bf8ae373.pdf",
+        "pages": 3,
+        "observed_at": "2026-11-20T23:46:33.744556+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "visual_image_sha256": {
+          "1": "63dc12acce63342bfca8a504e7c1994b6d711301aa99ff4013758dd58e58a0c7",
+          "2": "f654b8c289230065e10a010db59bd75664d5e6a899a0ad5635b38b18b71b27e0",
+          "3": "944ae8c3b5efb26ecc58c19155b56452c49a53a911b87102d00a624adaec5128"
+        }
+      },
+      "reading": {
+        "title": "11月20日更新：拍卖预告没有关闭占款与担保问题",
+        "meaning": "新公告推进的是股东股份拟被执行的状态。原问题中的占款回收、担保责任、独立审计仍须各自证据；拍卖公示不能当作上市公司已经回款或风险解除。",
+        "watch": "继续核拍卖实际结果、缴款与过户，股东预重整是否转为正式受理，以及占款实际回收和担保司法结果。公告关于后续受理的影响是条件说明，不是已观察到拍卖停止。"
+      },
+      "prior_fixture_sha256": "3286cf212d5d452c57ef7bc35eae40749eefa939052139084bf324c5c32ba700"
+    },
+    {
+      "code": "600180",
+      "expected_context": {
+        "through": "2026-11-19",
+        "sources": [
+          {
+            "symbol": "600180",
+            "announcement_id": "1225678141",
+            "title": "股票交易异常波动暨风险提示公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225678141.PDF",
+            "sha256": "5b1b7affcb1b0da93954f2fc64f403acc81b5f6b9e56a5393c9a172e0a68bace",
+            "pages": 5,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:12.612754+00:00",
+            "published_on": "2026-11-19",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225668568",
+            "title": "关于公司股票存在可能因股价低于1元而终止上市的首次风险提示公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-11-13/1225668568.PDF",
+            "sha256": "ab0e150f29d5b41e7885ca216b3ab72ae6abb5a9511db4f24539dbbca04d3927",
+            "pages": 4,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:12.727315+00:00",
+            "published_on": "2026-11-13",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225649881",
+            "title": "2026年第三季度报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649881.PDF",
+            "sha256": "8a2307b2c96c8070817dc4833daf5beb5043af2bc87554267c689ad10ef642a7",
+            "pages": 14,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:13.298295+00:00",
+            "published_on": "2026-10-31",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225619481",
+            "title": "关于公司股票被实施退市风险警示及其他风险警示相关事项的进展公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225619481.PDF",
+            "sha256": "b1d05c36c226be1abf7f03c3a5a2ec66ac3a1ecd8cec477e432e96ead152c80b",
+            "pages": 3,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:13.248988+00:00",
+            "published_on": "2026-10-24",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225564124",
+            "title": "关于公司庭外重组进展暨风险提示的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225564124.PDF",
+            "sha256": "bb81284d6829a7911a52cf793f29d2c13fea2ff661f09f585156f1b499b41073",
+            "pages": 10,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:13.796856+00:00",
+            "published_on": "2026-09-15",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225527619",
+            "title": "2026年半年度报告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225527619.PDF",
+            "sha256": "ce606ee25c00cbb64e0ab97267e91c96ff28f1c96a3a45f62126a8a2c0295329",
+            "pages": 330,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:20.033624+00:00",
+            "published_on": "2026-08-29",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225475744",
+            "title": "关于新增金融机构、票据等逾期的公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475744.PDF",
+            "sha256": "c800b6c5e024a610d6e730a7ef262de698e45e0e69c6bdf671175102b901f58e",
+            "pages": 6,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:14.186970+00:00",
+            "published_on": "2026-08-15",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225439257",
+            "title": "中审众环会计师事务所（特殊普通合伙）关于对瑞茂通供应链管理股份有限公司2025年年度报告的信息披露监管问询函的回复",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-24/1225439257.PDF",
+            "sha256": "20ead9ce86d382334b03a9b43a52b6dcefebe4289e3b42c676dd53b9199eb23c",
+            "pages": 36,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:16.120841+00:00",
+            "published_on": "2026-07-24",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225439252",
+            "title": "关于2025年年度报告的信息披露监管问询函的回复公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-24/1225439252.PDF",
+            "sha256": "8053ee6937cbdbfa713b9644e26beeed14c1595fe6880c31fc32eee7f66b9ca6",
+            "pages": 46,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:17.318720+00:00",
+            "published_on": "2026-07-24",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225421621",
+            "title": "关于公司庭外重组的进展公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-14/1225421621.PDF",
+            "sha256": "f61cbb454490dbdda2196ac233ea79a921dcc6f9cca216cda8e1721300149a39",
+            "pages": 3,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:16.670999+00:00",
+            "published_on": "2026-07-14",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          },
+          {
+            "symbol": "600180",
+            "announcement_id": "1225409633",
+            "title": "关于公司庭外重组的进展公告",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-04/1225409633.PDF",
+            "sha256": "7753d7f4e900e7b8a87a6fc2f4d084681af2cf1568d8afe0f6749300853b4394",
+            "pages": 3,
+            "protected_gate_passed": true,
+            "observed_at": "2026-11-20T01:23:17.291618+00:00",
+            "published_on": "2026-07-04",
+            "document_dated_on": null,
+            "document_date_boundary": "尚未视觉确认整份文件签章日期，采用正式披露日；不借内文日期。"
+          }
+        ],
+        "chains": [
+          {
+            "chain": "600180-签投资人后，哪些钱和程序还没到",
+            "source": "1225564124",
+            "pages": [
+              1,
+              2,
+              6,
+              7,
+              8
+            ],
+            "subject": "签投资人后，哪些钱和程序还没到",
+            "changed": "9月确定金正实业并签重整投资协议，拟6亿元认购6亿股；初步确认债权75.09亿元、暂缓确认125.40亿元分别列示。",
+            "open": "1000万元报名保证金以投标保证保险保单方式，不当现金到账；6000万元履约保证金可用保函等形式，6亿元投资款有法院批准方案后通知等条件。签约仍非司法受理、方案批准或全款收到。",
+            "supporting": []
+          },
+          {
+            "chain": "600180-现金短期转正，不足以证明业务恢复",
+            "source": "1225649881",
+            "pages": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "subject": "现金短期转正，不足以证明业务恢复",
+            "changed": "前三季收入8.91亿元，三季度仅0.87亿元；三季度归母亏13.88亿元、扣非亏13.74亿元；季度经营现金约3678.85万元为正，累计仍流出4270.80万元。",
+            "open": "季度现金用累计减半年得到。收入收缩、减值和联营收益变化要与回款并看；不把单季现金为正或协议签订当危机解除。",
+            "supporting": [
+              {
+                "source": "1225527619",
+                "pages": [
+                  5,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "chain": "600180-低于1元要逐日计数，不能拼接两段",
+            "source": "1225668568",
+            "pages": [
+              1,
+              2
+            ],
+            "subject": "低于1元要逐日计数，不能拼接两段",
+            "changed": "未复权收盘价两源核对：11月2、3日低于1元，4日回升打断，9日恰为1元；12日至19日连续6个交易日低于1元。",
+            "open": "同份公告首次日期措辞冲突保留；只计算已核窗口，不认定全历史首次、不把6日说成20日，不推测19日之后。",
+            "supporting": []
+          }
+        ]
+      },
+      "finding": {
+        "code": "600180",
+        "announcement_id": "1225679789",
+        "pages": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "answer": "公司及子公司作为被告的八项既有诉讼有新进展，披露涉案合计约104449.1965万元；包含判决、三份执行通知、驳回起诉及拟处置所持子公司股权的通知。",
+        "boundary": "约10.44亿元是本公告案件涉案金额，不等于本期新损失、已支付或全部新案。驳回起诉不直接当债务清偿；拟处置股权不当已成交/到账，损益仍以相关结果和确认口径为准。"
+      },
+      "source": {
+        "announcement_id": "1225679789",
+        "adjunct_url": "finalpage/2026-11-20/1225679789.PDF",
+        "title": "关于公司及子公司诉讼进展的公告",
+        "codes": [
+          "600180"
+        ],
+        "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679789.PDF",
+        "sha256": "8ea7c237f306cc1949854301479e3987966b0012eaacb400f4305062ad0a9bad",
+        "bytes": 117319,
+        "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/8ea7c237f306cc1949854301479e3987966b0012eaacb400f4305062ad0a9bad.pdf",
+        "pages": 5,
+        "observed_at": "2026-11-20T23:46:33.618884+00:00",
+        "visual_physical_pages": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "visual_image_sha256": {
+          "1": "59133a57da0ae428f31cc69799271f0ba5348396d31a170d267b6ad0ffabee38",
+          "2": "440fc9eef0900029d21e4426b4fe19937ac8549d21af1ae1f9b1eac0c0ffc43e",
+          "3": "17e08b7dd038eac19b0ee314ea839053dd470779537378ec0e12a182879cb096",
+          "4": "16beb299ff1c4d1405445a65586524ce2b5afd3aa5530f1a4660abddd32090f4"
+        }
+      },
+      "reading": {
+        "title": "11月20日更新：执行压力推进，投资协议与现金仍需另核",
+        "meaning": "八项既有诉讼进入不同阶段，补强了原问题中的司法执行压力；它没有证明投资款到账、重整方案批准或经营恢复。公告涉案约10.44亿元不能直接加到原债权或亏损上，存在不同口径及事项重叠。",
+        "watch": "继续核判决履行、拟处置股权的实际结果、负债与费用确认及投资协议条件。20日诉讼公告没有延长原低于1元的价格连续计数，新的收盘和名单须另核。"
+      },
+      "prior_fixture_sha256": "691ce43c5c4da2785c4b1c00c1867eb2c3d31840ce9b022a60cbe3807805512b"
+    }
+  ]
+}

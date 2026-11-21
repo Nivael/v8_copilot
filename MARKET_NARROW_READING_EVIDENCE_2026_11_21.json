@@ -1,0 +1,33 @@
+{
+  "viewport_test": {
+    "width": 390,
+    "height": 844
+  },
+  "risk_questions": {
+    "page_width": 390,
+    "table_width": 350
+  },
+  "daily_distribution": {
+    "button_navigation_passed": true,
+    "page_width": 390
+  },
+  "long_wait": {
+    "container_width": 350,
+    "container_scroll_width": 486,
+    "observed_scroll_left": 136.5,
+    "page_width": 390,
+    "short_episode_select_passed": true
+  },
+  "restored": {
+    "viewport_width": 1280,
+    "page_width": 1280
+  },
+  "source": "CUA actual viewport override, read-only DOM bounds and native horizontal scroll; not a physical-phone test",
+  "code_sha256": {
+    "web/src/reading.css": "53998ac0894ceced93c20bcd0e4791b7b488341a5ffbfef6afd5efaf0c1ea4f0",
+    "web/src/LongBreadthSTComparison.tsx": "d3bb1099b3c6adc24b82f3de184e41fa17b9a05415b907278fadfb6aa896071b"
+  },
+  "tests": "8 focused frontend checks and production build passed",
+  "new_research": 0,
+  "new_independent_validations": 0
+}

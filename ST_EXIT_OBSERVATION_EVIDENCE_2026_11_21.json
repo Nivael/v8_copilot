@@ -1,0 +1,1032 @@
+{
+  "reading": {
+    "version": "st_exit_daily_observation_v1",
+    "start": "2026-11-09",
+    "through": "2026-11-19",
+    "companies": [
+      {
+        "symbol": "603398",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 1,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "6.420",
+            "close": "6.030",
+            "high": "6.440",
+            "low": "6.010",
+            "source_volume_native_units": "81100.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.430"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "6.060",
+            "close": "6.020",
+            "high": "6.090",
+            "low": "5.960",
+            "source_volume_native_units": "49632.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.130"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "6.020",
+            "close": "6.020",
+            "high": "6.070",
+            "low": "5.830",
+            "source_volume_native_units": "58940.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.240"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "6.000",
+            "close": "6.020",
+            "high": "6.160",
+            "low": "5.950",
+            "source_volume_native_units": "57155.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.210"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "6.010",
+            "close": "5.700",
+            "high": "6.010",
+            "low": "5.650",
+            "source_volume_native_units": "69612.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.360"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "5.660",
+            "close": "5.480",
+            "high": "5.750",
+            "low": "5.450",
+            "source_volume_native_units": "59571.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.300"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "5.440",
+            "close": "5.120",
+            "high": "5.480",
+            "low": "5.000",
+            "source_volume_native_units": "99523.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.480"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "5.070",
+            "close": "4.880",
+            "high": "5.170",
+            "low": "4.800",
+            "source_volume_native_units": "96716.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.370"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "4.850",
+            "close": "4.390",
+            "high": "4.870",
+            "low": "4.390",
+            "source_volume_native_units": "167919.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "0.480"
+          }
+        ],
+        "source": {
+          "key": "sh603398-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603398%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "e6244d27462005a573a0d2144e835ce106970aa73f524f1d248e289e70f55efc",
+          "observed_at": "2026-11-19T15:31:28.352610+00:00"
+        }
+      },
+      {
+        "symbol": "600363",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 0,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "9.260",
+            "close": "8.970",
+            "high": "9.300",
+            "low": "8.960",
+            "source_volume_native_units": "196237.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.340"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "9.080",
+            "close": "9.300",
+            "high": "9.420",
+            "low": "9.040",
+            "source_volume_native_units": "196521.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.380"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "9.310",
+            "close": "9.390",
+            "high": "9.530",
+            "low": "9.170",
+            "source_volume_native_units": "176528.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.360"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "9.400",
+            "close": "9.630",
+            "high": "9.970",
+            "low": "9.380",
+            "source_volume_native_units": "306724.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.590"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "9.530",
+            "close": "9.210",
+            "high": "9.680",
+            "low": "9.080",
+            "source_volume_native_units": "243612.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.600"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "9.100",
+            "close": "8.650",
+            "high": "9.130",
+            "low": "8.600",
+            "source_volume_native_units": "205876.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.530"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "8.500",
+            "close": "8.420",
+            "high": "8.810",
+            "low": "8.390",
+            "source_volume_native_units": "173956.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.420"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "8.510",
+            "close": "8.210",
+            "high": "8.550",
+            "low": "8.020",
+            "source_volume_native_units": "226348.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.530"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "8.130",
+            "close": "7.920",
+            "high": "8.200",
+            "low": "7.830",
+            "source_volume_native_units": "177332.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.370"
+          }
+        ],
+        "source": {
+          "key": "sh600363-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh600363%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "eb5fe985ca957ab3d0989d5fe6dc7c8e67ebe4dd4f9e9df3fd9ed04a8db5a8f4",
+          "observed_at": "2026-11-19T15:31:28.348689+00:00"
+        }
+      },
+      {
+        "symbol": "002667",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 1,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "27.000",
+            "close": "22.750",
+            "high": "27.000",
+            "low": "22.750",
+            "source_volume_native_units": "239715.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "4.250"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "22.240",
+            "close": "22.260",
+            "high": "23.360",
+            "low": "22.000",
+            "source_volume_native_units": "135163.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.360"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "22.200",
+            "close": "21.990",
+            "high": "22.380",
+            "low": "21.600",
+            "source_volume_native_units": "98605.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.780"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "22.010",
+            "close": "21.250",
+            "high": "22.200",
+            "low": "21.120",
+            "source_volume_native_units": "102333.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.080"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "21.550",
+            "close": "22.780",
+            "high": "22.780",
+            "low": "21.300",
+            "source_volume_native_units": "138858.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.480"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "22.760",
+            "close": "21.790",
+            "high": "22.760",
+            "low": "21.510",
+            "source_volume_native_units": "91409.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.250"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "21.390",
+            "close": "21.580",
+            "high": "22.090",
+            "low": "21.200",
+            "source_volume_native_units": "72084.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.890"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "21.560",
+            "close": "22.200",
+            "high": "22.420",
+            "low": "21.380",
+            "source_volume_native_units": "87352.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.040"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "22.000",
+            "close": "20.270",
+            "high": "22.050",
+            "low": "20.000",
+            "source_volume_native_units": "91734.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "2.050"
+          }
+        ],
+        "source": {
+          "key": "sz002667-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002667%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "8bdf554631145f0937d60d24b66578e52b1b6d54952e70c9e6f2a895f9e2959e",
+          "observed_at": "2026-11-19T15:31:28.511453+00:00"
+        }
+      },
+      {
+        "symbol": "688053",
+        "observed_trading_days": 8,
+        "one_price_days": 0,
+        "close_at_low_days": 1,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "36.200",
+            "close": "37.500",
+            "high": "37.790",
+            "low": "36.200",
+            "source_volume_native_units": "1161425.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.590"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "37.300",
+            "close": "35.850",
+            "high": "37.300",
+            "low": "34.900",
+            "source_volume_native_units": "3156803.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "2.400"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "35.560",
+            "close": "35.100",
+            "high": "36.960",
+            "low": "34.700",
+            "source_volume_native_units": "2103391.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "2.260"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "35.020",
+            "close": "32.050",
+            "high": "35.440",
+            "low": "32.000",
+            "source_volume_native_units": "1679977.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "3.440"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "32.090",
+            "close": "29.200",
+            "high": "32.090",
+            "low": "29.200",
+            "source_volume_native_units": "1539810.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "2.890"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "29.260",
+            "close": "28.230",
+            "high": "29.900",
+            "low": "27.990",
+            "source_volume_native_units": "1412704.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.910"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "28.740",
+            "close": "28.150",
+            "high": "28.770",
+            "low": "27.500",
+            "source_volume_native_units": "1094801.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.270"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "28.150",
+            "close": "27.830",
+            "high": "28.800",
+            "low": "27.500",
+            "source_volume_native_units": "893496.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "1.300"
+          }
+        ],
+        "source": {
+          "key": "sh688053-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688053%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "6950c8d0a2e51475d3a789a7c13be58a495f01388aa93863ee3fcfaf8ad8a5a0",
+          "observed_at": "2026-11-19T15:31:28.534053+00:00"
+        }
+      },
+      {
+        "symbol": "002514",
+        "observed_trading_days": 9,
+        "one_price_days": 0,
+        "close_at_low_days": 2,
+        "days": [
+          {
+            "date": "2026-11-09",
+            "open": "2.110",
+            "close": "2.140",
+            "high": "2.230",
+            "low": "2.110",
+            "source_volume_native_units": "103438.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.120"
+          },
+          {
+            "date": "2026-11-10",
+            "open": "2.140",
+            "close": "2.140",
+            "high": "2.180",
+            "low": "2.110",
+            "source_volume_native_units": "86574.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.070"
+          },
+          {
+            "date": "2026-11-11",
+            "open": "2.150",
+            "close": "2.140",
+            "high": "2.170",
+            "low": "2.080",
+            "source_volume_native_units": "69352.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.090"
+          },
+          {
+            "date": "2026-11-12",
+            "open": "2.150",
+            "close": "2.040",
+            "high": "2.150",
+            "low": "2.040",
+            "source_volume_native_units": "96465.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "0.110"
+          },
+          {
+            "date": "2026-11-13",
+            "open": "2.040",
+            "close": "1.990",
+            "high": "2.060",
+            "low": "1.980",
+            "source_volume_native_units": "91453.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.080"
+          },
+          {
+            "date": "2026-11-16",
+            "open": "1.980",
+            "close": "1.890",
+            "high": "2.000",
+            "low": "1.890",
+            "source_volume_native_units": "92298.000",
+            "one_observed_price": false,
+            "close_at_low": true,
+            "intraday_range_yuan": "0.110"
+          },
+          {
+            "date": "2026-11-17",
+            "open": "1.880",
+            "close": "1.820",
+            "high": "1.920",
+            "low": "1.800",
+            "source_volume_native_units": "103861.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.120"
+          },
+          {
+            "date": "2026-11-18",
+            "open": "1.850",
+            "close": "1.900",
+            "high": "1.900",
+            "low": "1.750",
+            "source_volume_native_units": "118977.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.150"
+          },
+          {
+            "date": "2026-11-19",
+            "open": "1.910",
+            "close": "2.050",
+            "high": "2.080",
+            "low": "1.890",
+            "source_volume_native_units": "180003.000",
+            "one_observed_price": false,
+            "close_at_low": false,
+            "intraday_range_yuan": "0.190"
+          }
+        ],
+        "source": {
+          "key": "sz002514-raw",
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002514%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C",
+          "sha256": "107e89b18121ef80812b668043bc24a160c01ae34b1b84da98217677822d4766",
+          "observed_at": "2026-11-19T15:31:28.720089+00:00"
+        }
+      }
+    ],
+    "total_trading_stock_days": 44,
+    "one_price_stock_days": 0,
+    "close_at_low_stock_days": 5,
+    "actual_limit_price_available": false,
+    "queue_data_available": false,
+    "executable_exit_verified": false
+  },
+  "inputs": {
+    "sources": [
+      {
+        "key": "sh603398-raw",
+        "observed_at": "2026-11-19T15:31:28.352610+00:00",
+        "sha256": "e6244d27462005a573a0d2144e835ce106970aa73f524f1d248e289e70f55efc",
+        "text": "{\"code\":0,\"msg\":\"\",\"data\":{\"sh603398\":{\"day\":[[\"2026-11-06\",\"6.040\",\"6.400\",\"6.420\",\"6.000\",\"59253.000\"],[\"2026-11-09\",\"6.420\",\"6.030\",\"6.440\",\"6.010\",\"81100.000\"],[\"2026-11-10\",\"6.060\",\"6.020\",\"6.090\",\"5.960\",\"49632.000\"],[\"2026-11-11\",\"6.020\",\"6.020\",\"6.070\",\"5.830\",\"58940.000\"],[\"2026-11-12\",\"6.000\",\"6.020\",\"6.160\",\"5.950\",\"57155.000\"],[\"2026-11-13\",\"6.010\",\"5.700\",\"6.010\",\"5.650\",\"69612.000\"],[\"2026-11-16\",\"5.660\",\"5.480\",\"5.750\",\"5.450\",\"59571.000\"],[\"2026-11-17\",\"5.440\",\"5.120\",\"5.480\",\"5.000\",\"99523.000\"],[\"2026-11-18\",\"5.070\",\"4.880\",\"5.170\",\"4.800\",\"96716.000\"],[\"2026-11-19\",\"4.850\",\"4.390\",\"4.870\",\"4.390\",\"167919.000\"]],\"qt\":{\"sh603398\":[\"1\",\"*ST\\u6c90\\u90a6\",\"603398\",\"4.39\",\"4.88\",\"4.85\",\"167919\",\"83854\",\"84065\",\"0.00\",\"0\",\"0.00\",\"0\",\"0.00\",\"0\",\"0.00\",\"0\",\"0.00\",\"0\",\"4.39\",\"322\",\"4.40\",\"513\",\"4.41\",\"250\",\"4.42\",\"411\",\"4.43\",\"660\",\"\",\"20261119161446\",\"-0.49\",\"-10.04\",\"4.87\",\"4.39\",\"4.39\\/167919\\/76451451\",\"167919\",\"7645\",\"3.87\",\"-2.24\",\"\",\"4.87\",\"4.39\",\"9.84\",\"19.04\",\"19.04\",\"-7.92\",\"5.37\",\"4.39\",\"2.19\",\"-2156\",\"4.55\",\"-3.70\",\"-2.32\",\"\",\"\",\"0.51\",\"7645.1451\",\"32.4860\",\"740\",\"   A\",\"GP-A\",\"-46.92\",\"-27.08\",\"0.00\",\"353.14\",\"-28.24\",\"15.59\",\"4.39\",\"-30.76\",\"-32.46\",\"-59.54\",\"433641524\",\"433641524\",\"-100.00\",\"-53.25\",\"433641524\",\"\",\"\",\"-53.74\",\"0.00\",\"\",\"CNY\",\"0\",\"___S__F__N\",\"4.44\",\"-1320\",\"\"],\"market\":[\"2026-11-19 23:31:25|HK_close_\\u5df2\\u6536\\u76d8|SH_close_\\u5df2\\u6536\\u76d8|SZ_close_\\u5df2\\u6536\\u76d8|US_open_\\u4ea4\\u6613\\u4e2d|SQ_close_\\u5df2\\u4f11\\u5e02|DS_close_\\u5df2\\u4f11\\u5e02|ZS_close_\\u5df2\\u4f11\\u5e02|NEWSH_close_\\u5df2\\u6536\\u76d8|NEWSZ_close_\\u5df2\\u6536\\u76d8|NEWHK_close_\\u5df2\\u6536\\u76d8|NEWUS_open_\\u4ea4\\u6613\\u4e2d|REPO_close_\\u5df2\\u6536\\u76d8|UK_open_\\u4ea4\\u6613\\u4e2d|KCB_close_\\u5df2\\u6536\\u76d8|HSZB_close_\\u5df2\\u6536\\u76d8|IT_open_\\u4ea4\\u6613\\u4e2d|MY_close_\\u5df2\\u6536\\u76d8|EU_open_\\u4ea4\\u6613\\u4e2d|AH_close_\\u5df2\\u6536\\u76d8|DE_open_\\u4ea4\\u6613\\u4e2d|JW_close_\\u5df2\\u6536\\u76d8|CYB_close_\\u5df2\\u6536\\u76d8|USA_close_\\u672a\\u5f00\\u76d8|USB_close_\\u5df2\\u6536\\u76d8|USN_close_\\u672a\\u5f00\\u76d8|ZQ_close_\\u5df2\\u6536\\u76d8\"]},\"mx_price\":{\"mx\":[],\"price\":[]},\"prec\":\"13.970\",\"version\":\"16\"}}}",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh603398%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C"
+      },
+      {
+        "key": "sh600363-raw",
+        "observed_at": "2026-11-19T15:31:28.348689+00:00",
+        "sha256": "eb5fe985ca957ab3d0989d5fe6dc7c8e67ebe4dd4f9e9df3fd9ed04a8db5a8f4",
+        "text": "{\"code\":0,\"msg\":\"\",\"data\":{\"sh600363\":{\"day\":[[\"2026-11-06\",\"9.110\",\"9.160\",\"9.440\",\"9.090\",\"202161.000\"],[\"2026-11-09\",\"9.260\",\"8.970\",\"9.300\",\"8.960\",\"196237.000\"],[\"2026-11-10\",\"9.080\",\"9.300\",\"9.420\",\"9.040\",\"196521.000\"],[\"2026-11-11\",\"9.310\",\"9.390\",\"9.530\",\"9.170\",\"176528.000\"],[\"2026-11-12\",\"9.400\",\"9.630\",\"9.970\",\"9.380\",\"306724.000\"],[\"2026-11-13\",\"9.530\",\"9.210\",\"9.680\",\"9.080\",\"243612.000\"],[\"2026-11-16\",\"9.100\",\"8.650\",\"9.130\",\"8.600\",\"205876.000\"],[\"2026-11-17\",\"8.500\",\"8.420\",\"8.810\",\"8.390\",\"173956.000\"],[\"2026-11-18\",\"8.510\",\"8.210\",\"8.550\",\"8.020\",\"226348.000\"],[\"2026-11-19\",\"8.130\",\"7.920\",\"8.200\",\"7.830\",\"177332.000\"]],\"qt\":{\"sh600363\":[\"1\",\"ST\\u8054\\u5149\",\"600363\",\"7.92\",\"8.21\",\"8.13\",\"177332\",\"71385\",\"105947\",\"7.91\",\"1414\",\"7.90\",\"574\",\"7.89\",\"948\",\"7.88\",\"2945\",\"7.87\",\"86\",\"7.92\",\"1079\",\"7.93\",\"497\",\"7.94\",\"438\",\"7.95\",\"209\",\"7.96\",\"132\",\"\",\"20261119161446\",\"-0.29\",\"-3.53\",\"8.20\",\"7.83\",\"7.92\\/177332\\/141630188\",\"177332\",\"14163\",\"3.93\",\"9.61\",\"\",\"8.20\",\"7.83\",\"4.51\",\"35.71\",\"35.71\",\"0.75\",\"9.03\",\"7.39\",\"0.77\",\"3612\",\"7.99\",\"9.18\",\"7.44\",\"\",\"\",\"1.95\",\"14163.0188\",\"2.9304\",\"37\",\"   A\",\"GP-A\",\"-87.44\",\"-17.76\",\"0.00\",\"7.82\",\"4.60\",\"78.76\",\"7.83\",\"-16.54\",\"-8.65\",\"-56.84\",\"450888450\",\"450888450\",\"43.40\",\"-87.91\",\"450888450\",\"\",\"\",\"-86.06\",\"0.00\",\"\",\"CNY\",\"0\",\"___S__F__N\",\"7.83\",\"471\",\"\"],\"market\":[\"2026-11-19 23:31:25|HK_close_\\u5df2\\u6536\\u76d8|SH_close_\\u5df2\\u6536\\u76d8|SZ_close_\\u5df2\\u6536\\u76d8|US_open_\\u4ea4\\u6613\\u4e2d|SQ_close_\\u5df2\\u4f11\\u5e02|DS_close_\\u5df2\\u4f11\\u5e02|ZS_close_\\u5df2\\u4f11\\u5e02|NEWSH_close_\\u5df2\\u6536\\u76d8|NEWSZ_close_\\u5df2\\u6536\\u76d8|NEWHK_close_\\u5df2\\u6536\\u76d8|NEWUS_open_\\u4ea4\\u6613\\u4e2d|REPO_close_\\u5df2\\u6536\\u76d8|UK_open_\\u4ea4\\u6613\\u4e2d|KCB_close_\\u5df2\\u6536\\u76d8|HSZB_close_\\u5df2\\u6536\\u76d8|IT_open_\\u4ea4\\u6613\\u4e2d|MY_close_\\u5df2\\u6536\\u76d8|EU_open_\\u4ea4\\u6613\\u4e2d|AH_close_\\u5df2\\u6536\\u76d8|DE_open_\\u4ea4\\u6613\\u4e2d|JW_close_\\u5df2\\u6536\\u76d8|CYB_close_\\u5df2\\u6536\\u76d8|USA_close_\\u672a\\u5f00\\u76d8|USB_close_\\u5df2\\u6536\\u76d8|USN_close_\\u672a\\u5f00\\u76d8|ZQ_close_\\u5df2\\u6536\\u76d8\"]},\"mx_price\":{\"mx\":[],\"price\":[]},\"prec\":\"6.660\",\"version\":\"16\"}}}",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh600363%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C"
+      },
+      {
+        "key": "sz002667-raw",
+        "observed_at": "2026-11-19T15:31:28.511453+00:00",
+        "sha256": "8bdf554631145f0937d60d24b66578e52b1b6d54952e70c9e6f2a895f9e2959e",
+        "text": "{\"code\":0,\"msg\":\"\",\"data\":{\"sz002667\":{\"day\":[[\"2026-11-06\",\"23.820\",\"25.280\",\"25.480\",\"23.480\",\"103546.000\"],[\"2026-11-09\",\"27.000\",\"22.750\",\"27.000\",\"22.750\",\"239715.000\"],[\"2026-11-10\",\"22.240\",\"22.260\",\"23.360\",\"22.000\",\"135163.000\"],[\"2026-11-11\",\"22.200\",\"21.990\",\"22.380\",\"21.600\",\"98605.000\"],[\"2026-11-12\",\"22.010\",\"21.250\",\"22.200\",\"21.120\",\"102333.000\"],[\"2026-11-13\",\"21.550\",\"22.780\",\"22.780\",\"21.300\",\"138858.000\"],[\"2026-11-16\",\"22.760\",\"21.790\",\"22.760\",\"21.510\",\"91409.000\"],[\"2026-11-17\",\"21.390\",\"21.580\",\"22.090\",\"21.200\",\"72084.000\"],[\"2026-11-18\",\"21.560\",\"22.200\",\"22.420\",\"21.380\",\"87352.000\"],[\"2026-11-19\",\"22.000\",\"20.270\",\"22.050\",\"20.000\",\"91734.000\"]],\"qt\":{\"sz002667\":[\"51\",\"*ST\\u5a01\\u9886\",\"002667\",\"20.27\",\"22.20\",\"22.00\",\"91734\",\"33019\",\"58715\",\"20.23\",\"1\",\"20.22\",\"136\",\"20.20\",\"87\",\"20.19\",\"10\",\"20.18\",\"7\",\"20.27\",\"21\",\"20.28\",\"198\",\"20.29\",\"90\",\"20.30\",\"115\",\"20.31\",\"7\",\"\",\"20261119161409\",\"-1.93\",\"-8.69\",\"22.05\",\"20.00\",\"20.27\\/91734\\/193604814\",\"91734\",\"19360\",\"3.88\",\"-11.97\",\"\",\"22.05\",\"20.00\",\"9.23\",\"47.96\",\"52.82\",\"-73.10\",\"24.42\",\"19.98\",\"0.93\",\"-190\",\"21.11\",\"-99.61\",\"-12.74\",\"\",\"\",\"1.43\",\"19360.4814\",\"35.6752\",\"176\",\"   A\",\"GP-A\",\"54.85\",\"-4.61\",\"0.00\",\"610.70\",\"-28.21\",\"35.68\",\"7.27\",\"-17.77\",\"-3.98\",\"27.73\",\"236611000\",\"260591500\",\"-28.27\",\"-2.17\",\"236611000\",\"\",\"\",\"31.45\",\"-0.49\",\"\",\"CNY\",\"0\",\"E\",\"20.32\",\"-223\",\"\"],\"market\":[\"2026-11-19 23:31:25|HK_close_\\u5df2\\u6536\\u76d8|SH_close_\\u5df2\\u6536\\u76d8|SZ_close_\\u5df2\\u6536\\u76d8|US_open_\\u4ea4\\u6613\\u4e2d|SQ_close_\\u5df2\\u4f11\\u5e02|DS_close_\\u5df2\\u4f11\\u5e02|ZS_close_\\u5df2\\u4f11\\u5e02|NEWSH_close_\\u5df2\\u6536\\u76d8|NEWSZ_close_\\u5df2\\u6536\\u76d8|NEWHK_close_\\u5df2\\u6536\\u76d8|NEWUS_open_\\u4ea4\\u6613\\u4e2d|REPO_close_\\u5df2\\u6536\\u76d8|UK_open_\\u4ea4\\u6613\\u4e2d|KCB_close_\\u5df2\\u6536\\u76d8|HSZB_close_\\u5df2\\u6536\\u76d8|IT_open_\\u4ea4\\u6613\\u4e2d|MY_close_\\u5df2\\u6536\\u76d8|EU_open_\\u4ea4\\u6613\\u4e2d|AH_close_\\u5df2\\u6536\\u76d8|DE_open_\\u4ea4\\u6613\\u4e2d|JW_close_\\u5df2\\u6536\\u76d8|CYB_close_\\u5df2\\u6536\\u76d8|USA_close_\\u672a\\u5f00\\u76d8|USB_close_\\u5df2\\u6536\\u76d8|USN_close_\\u672a\\u5f00\\u76d8|ZQ_close_\\u5df2\\u6536\\u76d8\"]},\"mx_price\":{\"mx\":[],\"price\":[]},\"prec\":\"25.000\",\"version\":\"16\"}}}",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002667%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C"
+      },
+      {
+        "key": "sh688053-raw",
+        "observed_at": "2026-11-19T15:31:28.534053+00:00",
+        "sha256": "6950c8d0a2e51475d3a789a7c13be58a495f01388aa93863ee3fcfaf8ad8a5a0",
+        "text": "{\"code\":0,\"msg\":\"\",\"data\":{\"sh688053\":{\"day\":[[\"2026-11-06\",\"32.790\",\"36.480\",\"36.480\",\"32.790\",\"1189034.000\"],[\"2026-11-09\",\"36.200\",\"37.500\",\"37.790\",\"36.200\",\"1161425.000\"],[\"2026-11-11\",\"37.300\",\"35.850\",\"37.300\",\"34.900\",\"3156803.000\"],[\"2026-11-12\",\"35.560\",\"35.100\",\"36.960\",\"34.700\",\"2103391.000\"],[\"2026-11-13\",\"35.020\",\"32.050\",\"35.440\",\"32.000\",\"1679977.000\"],[\"2026-11-16\",\"32.090\",\"29.200\",\"32.090\",\"29.200\",\"1539810.000\"],[\"2026-11-17\",\"29.260\",\"28.230\",\"29.900\",\"27.990\",\"1412704.000\"],[\"2026-11-18\",\"28.740\",\"28.150\",\"28.770\",\"27.500\",\"1094801.000\"],[\"2026-11-19\",\"28.150\",\"27.830\",\"28.800\",\"27.500\",\"893496.000\"]],\"qt\":{\"sh688053\":[\"1\",\"\\u601d\\u79d1\\u745e\",\"688053\",\"27.83\",\"28.15\",\"28.15\",\"893496\",\"345536\",\"547960\",\"27.82\",\"2\",\"27.81\",\"10\",\"27.78\",\"7\",\"27.77\",\"23\",\"27.73\",\"6\",\"27.83\",\"2\",\"27.84\",\"12\",\"27.89\",\"8\",\"27.90\",\"35\",\"27.96\",\"2\",\"\",\"20261119161454\",\"-0.32\",\"-1.14\",\"28.80\",\"27.50\",\"27.83\\/893496\\/24948277\",\"893496\",\"2495\",\"0.89\",\"-239.98\",\"\",\"28.80\",\"27.50\",\"4.62\",\"27.83\",\"27.83\",\"1.74\",\"33.78\",\"22.52\",\"0.57\",\"-11\",\"27.92\",\"208.76\",\"-133.92\",\"\",\"\",\"1.64\",\"2494.8277\",\"2.5047\",\"900\",\"A RA\",\"GP-A-KCB\",\"-24.27\",\"-20.71\",\"0.00\",\"-0.73\",\"-0.99\",\"54.80\",\"27.00\",\"-20.14\",\"-22.44\",\"-16.17\",\"100000000\",\"100000000\",\"-10.28\",\"-37.59\",\"100000000\",\"\",\"\",\"-2.96\",\"-0.18\",\"\",\"CNY\",\"0\",\"___D__F__NY\",\"27.65\",\"20\",\"100\"],\"market\":[\"2026-11-19 23:31:22|HK_close_\\u5df2\\u6536\\u76d8|SH_close_\\u5df2\\u6536\\u76d8|SZ_close_\\u5df2\\u6536\\u76d8|US_open_\\u4ea4\\u6613\\u4e2d|SQ_close_\\u5df2\\u4f11\\u5e02|DS_close_\\u5df2\\u4f11\\u5e02|ZS_close_\\u5df2\\u4f11\\u5e02|NEWSH_close_\\u5df2\\u6536\\u76d8|NEWSZ_close_\\u5df2\\u6536\\u76d8|NEWHK_close_\\u5df2\\u6536\\u76d8|NEWUS_open_\\u4ea4\\u6613\\u4e2d|REPO_close_\\u5df2\\u6536\\u76d8|UK_open_\\u4ea4\\u6613\\u4e2d|KCB_close_\\u5df2\\u6536\\u76d8|HSZB_close_\\u5df2\\u6536\\u76d8|IT_open_\\u4ea4\\u6613\\u4e2d|MY_close_\\u5df2\\u6536\\u76d8|EU_open_\\u4ea4\\u6613\\u4e2d|AH_close_\\u5df2\\u6536\\u76d8|DE_open_\\u4ea4\\u6613\\u4e2d|JW_close_\\u5df2\\u6536\\u76d8|CYB_close_\\u5df2\\u6536\\u76d8|USA_close_\\u672a\\u5f00\\u76d8|USB_close_\\u5df2\\u6536\\u76d8|USN_close_\\u672a\\u5f00\\u76d8|ZQ_close_\\u5df2\\u6536\\u76d8\"]},\"mx_price\":{\"mx\":[],\"price\":[]},\"prec\":\"55.530\",\"version\":\"16\"}}}",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688053%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C"
+      },
+      {
+        "key": "sz002514-raw",
+        "observed_at": "2026-11-19T15:31:28.720089+00:00",
+        "sha256": "107e89b18121ef80812b668043bc24a160c01ae34b1b84da98217677822d4766",
+        "text": "{\"code\":0,\"msg\":\"\",\"data\":{\"sz002514\":{\"day\":[[\"2026-11-06\",\"2.100\",\"2.110\",\"2.160\",\"2.080\",\"79485.000\"],[\"2026-11-09\",\"2.110\",\"2.140\",\"2.230\",\"2.110\",\"103438.000\"],[\"2026-11-10\",\"2.140\",\"2.140\",\"2.180\",\"2.110\",\"86574.000\"],[\"2026-11-11\",\"2.150\",\"2.140\",\"2.170\",\"2.080\",\"69352.000\"],[\"2026-11-12\",\"2.150\",\"2.040\",\"2.150\",\"2.040\",\"96465.000\"],[\"2026-11-13\",\"2.040\",\"1.990\",\"2.060\",\"1.980\",\"91453.000\"],[\"2026-11-16\",\"1.980\",\"1.890\",\"2.000\",\"1.890\",\"92298.000\"],[\"2026-11-17\",\"1.880\",\"1.820\",\"1.920\",\"1.800\",\"103861.000\"],[\"2026-11-18\",\"1.850\",\"1.900\",\"1.900\",\"1.750\",\"118977.000\"],[\"2026-11-19\",\"1.910\",\"2.050\",\"2.080\",\"1.890\",\"180003.000\"]],\"qt\":{\"sz002514\":[\"51\",\"*ST\\u5b9d\\u99a8\",\"002514\",\"2.05\",\"1.90\",\"1.91\",\"180003\",\"99831\",\"80172\",\"2.04\",\"3003\",\"2.03\",\"1563\",\"2.02\",\"1380\",\"2.01\",\"2386\",\"2.00\",\"2018\",\"2.05\",\"3742\",\"2.06\",\"2484\",\"2.07\",\"2285\",\"2.08\",\"11538\",\"2.09\",\"15902\",\"\",\"20261119161430\",\"0.15\",\"7.89\",\"2.08\",\"1.89\",\"2.05\\/180003\\/36353923\",\"180003\",\"3635\",\"3.25\",\"-6.38\",\"\",\"2.08\",\"1.89\",\"10.00\",\"11.36\",\"14.76\",\"-13.59\",\"2.09\",\"1.71\",\"1.79\",\"-25601\",\"2.02\",\"-15.54\",\"-6.88\",\"\",\"\",\"0.83\",\"3635.3923\",\"2.2345\",\"109\",\"   A\",\"GP-A\",\"-65.14\",\"0.49\",\"0.00\",\"212.88\",\"-15.53\",\"7.22\",\"1.40\",\"-5.53\",\"-13.50\",\"20.59\",\"554030027\",\"720034264\",\"-55.29\",\"-61.32\",\"554030027\",\"\",\"\",\"-68.02\",\"1.49\",\"\",\"CNY\",\"0\",\"E\",\"1.99\",\"1701\",\"\"],\"market\":[\"2026-11-19 23:31:25|HK_close_\\u5df2\\u6536\\u76d8|SH_close_\\u5df2\\u6536\\u76d8|SZ_close_\\u5df2\\u6536\\u76d8|US_open_\\u4ea4\\u6613\\u4e2d|SQ_close_\\u5df2\\u4f11\\u5e02|DS_close_\\u5df2\\u4f11\\u5e02|ZS_close_\\u5df2\\u4f11\\u5e02|NEWSH_close_\\u5df2\\u6536\\u76d8|NEWSZ_close_\\u5df2\\u6536\\u76d8|NEWHK_close_\\u5df2\\u6536\\u76d8|NEWUS_open_\\u4ea4\\u6613\\u4e2d|REPO_close_\\u5df2\\u6536\\u76d8|UK_open_\\u4ea4\\u6613\\u4e2d|KCB_close_\\u5df2\\u6536\\u76d8|HSZB_close_\\u5df2\\u6536\\u76d8|IT_open_\\u4ea4\\u6613\\u4e2d|MY_close_\\u5df2\\u6536\\u76d8|EU_open_\\u4ea4\\u6613\\u4e2d|AH_close_\\u5df2\\u6536\\u76d8|DE_open_\\u4ea4\\u6613\\u4e2d|JW_close_\\u5df2\\u6536\\u76d8|CYB_close_\\u5df2\\u6536\\u76d8|USA_close_\\u672a\\u5f00\\u76d8|USB_close_\\u5df2\\u6536\\u76d8|USN_close_\\u672a\\u5f00\\u76d8|ZQ_close_\\u5df2\\u6536\\u76d8\"]},\"mx_price\":{\"mx\":[],\"price\":[]},\"prec\":\"23.000\",\"version\":\"16\"}}}",
+        "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002514%2Cday%2C2026-11-06%2C2026-11-19%2C320%2C"
+      }
+    ],
+    "primary": {
+      "002514.SZ": [
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-06",
+          "factor_query": "35243fb20a7e7b23d06202075de2c21756e9cb47080abb67421541f4c8a98673",
+          "raw_close": 2.11,
+          "source_query": "4282c8c010488a53581713d135dc4996ba3b32145eb713f990c7b16491005db9",
+          "volume": 79485.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-09",
+          "factor_query": "01890777f5149ae11a1962d20374ea5c95d4bb23c09be39a8887a20687c99eba",
+          "raw_close": 2.14,
+          "source_query": "c889c2ef8996fce101bd849f854b46caeecc73c919a9269d883e81c1e320efd2",
+          "volume": 103438.3
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-10",
+          "factor_query": "7b53634b24ba36a3c35d650edd6f71f0346813cbf7cd475cdf5b90f974d87750",
+          "raw_close": 2.14,
+          "source_query": "0c20c0450eebf770ae5501316b0e2b972afa7b6f947be2dade0d6386185c0774",
+          "volume": 86574.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-11",
+          "factor_query": "eebe1c6555d7d3f0dc03074b1a52aef5cdad489fb34e4b4b6fc5a824546165e7",
+          "raw_close": 2.14,
+          "source_query": "221e1ad2ab10908326ad65de512c494bd801891ce21d7ac2b9492691d923b8ff",
+          "volume": 69352.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-12",
+          "factor_query": "f6df41caa5b619d00983394598a42be94e86992b1cc5d2047659327851743469",
+          "raw_close": 2.04,
+          "source_query": "3ba56a6dcf24e36b51e376ed5181f729caecde922c65ca8b4fe968fb8edb3f23",
+          "volume": 96465.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-13",
+          "factor_query": "834fa794655b57594df644b61d95c9a591347028be016c448fb5b0d465fcff1b",
+          "raw_close": 1.99,
+          "source_query": "9f92a89aac9018b2ad78553d91e0512f858b674c9ce599e90b467414d00c687f",
+          "volume": 91453.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-16",
+          "factor_query": "4a8a1917bd552cab7a166e0df06d68565d1a083660d2a6154d51988761babfea",
+          "raw_close": 1.89,
+          "source_query": "33676a549b1688c3bda1308b6c2d78504ce8a421290a6f0b180f0328cec1878f",
+          "volume": 92298.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-17",
+          "factor_query": "83ed6af8f67cf72dc12a40ada1ab9740a0250ac5b070eb2896c18ab4f5753d91",
+          "raw_close": 1.82,
+          "source_query": "248ba15167cbc6aa1e6263ea415a1eac48c202814ca886e9bb7460560e01a065",
+          "volume": 103860.75
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-18",
+          "factor_query": "1684166b67f4f3c6458c0048b9fd0d7fa3e27f2a2f192a7244deffa08a37da55",
+          "raw_close": 1.9,
+          "source_query": "5f1715cef5c3d351c66f927a8c366dd32b8045526554b3d7cb53877b1b96dba3",
+          "volume": 118977.0
+        },
+        {
+          "adj_factor": 6.661,
+          "date": "2026-11-19",
+          "factor_query": "6bdd47d4c87e575be6a92e1f8a4eb52b6a7adb02925b7470005d67c918b0ed61",
+          "raw_close": 2.05,
+          "source_query": "8660d7ba60848561544fc80f32b7f338fb5401da5b43edbe1dfbed41782ef4fc",
+          "volume": 180003.0
+        }
+      ],
+      "002667.SZ": [
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-06",
+          "factor_query": "35243fb20a7e7b23d06202075de2c21756e9cb47080abb67421541f4c8a98673",
+          "raw_close": 25.28,
+          "source_query": "4282c8c010488a53581713d135dc4996ba3b32145eb713f990c7b16491005db9",
+          "volume": 103545.74
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-09",
+          "factor_query": "01890777f5149ae11a1962d20374ea5c95d4bb23c09be39a8887a20687c99eba",
+          "raw_close": 22.75,
+          "source_query": "c889c2ef8996fce101bd849f854b46caeecc73c919a9269d883e81c1e320efd2",
+          "volume": 239714.89
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-10",
+          "factor_query": "7b53634b24ba36a3c35d650edd6f71f0346813cbf7cd475cdf5b90f974d87750",
+          "raw_close": 22.26,
+          "source_query": "0c20c0450eebf770ae5501316b0e2b972afa7b6f947be2dade0d6386185c0774",
+          "volume": 135163.1
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-11",
+          "factor_query": "eebe1c6555d7d3f0dc03074b1a52aef5cdad489fb34e4b4b6fc5a824546165e7",
+          "raw_close": 21.99,
+          "source_query": "221e1ad2ab10908326ad65de512c494bd801891ce21d7ac2b9492691d923b8ff",
+          "volume": 98604.54
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-12",
+          "factor_query": "f6df41caa5b619d00983394598a42be94e86992b1cc5d2047659327851743469",
+          "raw_close": 21.25,
+          "source_query": "3ba56a6dcf24e36b51e376ed5181f729caecde922c65ca8b4fe968fb8edb3f23",
+          "volume": 102333.0
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-13",
+          "factor_query": "834fa794655b57594df644b61d95c9a591347028be016c448fb5b0d465fcff1b",
+          "raw_close": 22.78,
+          "source_query": "9f92a89aac9018b2ad78553d91e0512f858b674c9ce599e90b467414d00c687f",
+          "volume": 138858.0
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-16",
+          "factor_query": "4a8a1917bd552cab7a166e0df06d68565d1a083660d2a6154d51988761babfea",
+          "raw_close": 21.79,
+          "source_query": "33676a549b1688c3bda1308b6c2d78504ce8a421290a6f0b180f0328cec1878f",
+          "volume": 91409.0
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-17",
+          "factor_query": "83ed6af8f67cf72dc12a40ada1ab9740a0250ac5b070eb2896c18ab4f5753d91",
+          "raw_close": 21.58,
+          "source_query": "248ba15167cbc6aa1e6263ea415a1eac48c202814ca886e9bb7460560e01a065",
+          "volume": 72084.0
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-18",
+          "factor_query": "1684166b67f4f3c6458c0048b9fd0d7fa3e27f2a2f192a7244deffa08a37da55",
+          "raw_close": 22.2,
+          "source_query": "5f1715cef5c3d351c66f927a8c366dd32b8045526554b3d7cb53877b1b96dba3",
+          "volume": 87352.0
+        },
+        {
+          "adj_factor": 3.469,
+          "date": "2026-11-19",
+          "factor_query": "6bdd47d4c87e575be6a92e1f8a4eb52b6a7adb02925b7470005d67c918b0ed61",
+          "raw_close": 20.27,
+          "source_query": "8660d7ba60848561544fc80f32b7f338fb5401da5b43edbe1dfbed41782ef4fc",
+          "volume": 91734.0
+        }
+      ],
+      "600363.SH": [
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-06",
+          "factor_query": "35243fb20a7e7b23d06202075de2c21756e9cb47080abb67421541f4c8a98673",
+          "raw_close": 9.16,
+          "source_query": "4282c8c010488a53581713d135dc4996ba3b32145eb713f990c7b16491005db9",
+          "volume": 202161.0
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-09",
+          "factor_query": "01890777f5149ae11a1962d20374ea5c95d4bb23c09be39a8887a20687c99eba",
+          "raw_close": 8.97,
+          "source_query": "c889c2ef8996fce101bd849f854b46caeecc73c919a9269d883e81c1e320efd2",
+          "volume": 196236.88
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-10",
+          "factor_query": "7b53634b24ba36a3c35d650edd6f71f0346813cbf7cd475cdf5b90f974d87750",
+          "raw_close": 9.3,
+          "source_query": "0c20c0450eebf770ae5501316b0e2b972afa7b6f947be2dade0d6386185c0774",
+          "volume": 196520.93
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-11",
+          "factor_query": "eebe1c6555d7d3f0dc03074b1a52aef5cdad489fb34e4b4b6fc5a824546165e7",
+          "raw_close": 9.39,
+          "source_query": "221e1ad2ab10908326ad65de512c494bd801891ce21d7ac2b9492691d923b8ff",
+          "volume": 176528.0
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-12",
+          "factor_query": "f6df41caa5b619d00983394598a42be94e86992b1cc5d2047659327851743469",
+          "raw_close": 9.63,
+          "source_query": "3ba56a6dcf24e36b51e376ed5181f729caecde922c65ca8b4fe968fb8edb3f23",
+          "volume": 306723.8
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-13",
+          "factor_query": "834fa794655b57594df644b61d95c9a591347028be016c448fb5b0d465fcff1b",
+          "raw_close": 9.21,
+          "source_query": "9f92a89aac9018b2ad78553d91e0512f858b674c9ce599e90b467414d00c687f",
+          "volume": 243612.02
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-16",
+          "factor_query": "4a8a1917bd552cab7a166e0df06d68565d1a083660d2a6154d51988761babfea",
+          "raw_close": 8.65,
+          "source_query": "33676a549b1688c3bda1308b6c2d78504ce8a421290a6f0b180f0328cec1878f",
+          "volume": 205875.93
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-17",
+          "factor_query": "83ed6af8f67cf72dc12a40ada1ab9740a0250ac5b070eb2896c18ab4f5753d91",
+          "raw_close": 8.42,
+          "source_query": "248ba15167cbc6aa1e6263ea415a1eac48c202814ca886e9bb7460560e01a065",
+          "volume": 173955.78
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-18",
+          "factor_query": "1684166b67f4f3c6458c0048b9fd0d7fa3e27f2a2f192a7244deffa08a37da55",
+          "raw_close": 8.21,
+          "source_query": "5f1715cef5c3d351c66f927a8c366dd32b8045526554b3d7cb53877b1b96dba3",
+          "volume": 226348.22
+        },
+        {
+          "adj_factor": 3.2712,
+          "date": "2026-11-19",
+          "factor_query": "6bdd47d4c87e575be6a92e1f8a4eb52b6a7adb02925b7470005d67c918b0ed61",
+          "raw_close": 7.92,
+          "source_query": "8660d7ba60848561544fc80f32b7f338fb5401da5b43edbe1dfbed41782ef4fc",
+          "volume": 177332.0
+        }
+      ],
+      "603398.SH": [
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-06",
+          "factor_query": "35243fb20a7e7b23d06202075de2c21756e9cb47080abb67421541f4c8a98673",
+          "raw_close": 6.4,
+          "source_query": "4282c8c010488a53581713d135dc4996ba3b32145eb713f990c7b16491005db9",
+          "volume": 59253.2
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-09",
+          "factor_query": "01890777f5149ae11a1962d20374ea5c95d4bb23c09be39a8887a20687c99eba",
+          "raw_close": 6.03,
+          "source_query": "c889c2ef8996fce101bd849f854b46caeecc73c919a9269d883e81c1e320efd2",
+          "volume": 81100.0
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-10",
+          "factor_query": "7b53634b24ba36a3c35d650edd6f71f0346813cbf7cd475cdf5b90f974d87750",
+          "raw_close": 6.02,
+          "source_query": "0c20c0450eebf770ae5501316b0e2b972afa7b6f947be2dade0d6386185c0774",
+          "volume": 49632.0
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-11",
+          "factor_query": "eebe1c6555d7d3f0dc03074b1a52aef5cdad489fb34e4b4b6fc5a824546165e7",
+          "raw_close": 6.02,
+          "source_query": "221e1ad2ab10908326ad65de512c494bd801891ce21d7ac2b9492691d923b8ff",
+          "volume": 58940.0
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-12",
+          "factor_query": "f6df41caa5b619d00983394598a42be94e86992b1cc5d2047659327851743469",
+          "raw_close": 6.02,
+          "source_query": "3ba56a6dcf24e36b51e376ed5181f729caecde922c65ca8b4fe968fb8edb3f23",
+          "volume": 57155.0
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-13",
+          "factor_query": "834fa794655b57594df644b61d95c9a591347028be016c448fb5b0d465fcff1b",
+          "raw_close": 5.7,
+          "source_query": "9f92a89aac9018b2ad78553d91e0512f858b674c9ce599e90b467414d00c687f",
+          "volume": 69612.0
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-16",
+          "factor_query": "4a8a1917bd552cab7a166e0df06d68565d1a083660d2a6154d51988761babfea",
+          "raw_close": 5.48,
+          "source_query": "33676a549b1688c3bda1308b6c2d78504ce8a421290a6f0b180f0328cec1878f",
+          "volume": 59570.81
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-17",
+          "factor_query": "83ed6af8f67cf72dc12a40ada1ab9740a0250ac5b070eb2896c18ab4f5753d91",
+          "raw_close": 5.12,
+          "source_query": "248ba15167cbc6aa1e6263ea415a1eac48c202814ca886e9bb7460560e01a065",
+          "volume": 99523.0
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-18",
+          "factor_query": "1684166b67f4f3c6458c0048b9fd0d7fa3e27f2a2f192a7244deffa08a37da55",
+          "raw_close": 4.88,
+          "source_query": "5f1715cef5c3d351c66f927a8c366dd32b8045526554b3d7cb53877b1b96dba3",
+          "volume": 96715.97
+        },
+        {
+          "adj_factor": 3.136,
+          "date": "2026-11-19",
+          "factor_query": "6bdd47d4c87e575be6a92e1f8a4eb52b6a7adb02925b7470005d67c918b0ed61",
+          "raw_close": 4.39,
+          "source_query": "8660d7ba60848561544fc80f32b7f338fb5401da5b43edbe1dfbed41782ef4fc",
+          "volume": 167918.68
+        }
+      ],
+      "688053.SH": [
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-06",
+          "factor_query": "35243fb20a7e7b23d06202075de2c21756e9cb47080abb67421541f4c8a98673",
+          "raw_close": 36.48,
+          "source_query": "4282c8c010488a53581713d135dc4996ba3b32145eb713f990c7b16491005db9",
+          "volume": 11890.34
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-09",
+          "factor_query": "01890777f5149ae11a1962d20374ea5c95d4bb23c09be39a8887a20687c99eba",
+          "raw_close": 37.5,
+          "source_query": "c889c2ef8996fce101bd849f854b46caeecc73c919a9269d883e81c1e320efd2",
+          "volume": 11614.25
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-10",
+          "factor_query": "7b53634b24ba36a3c35d650edd6f71f0346813cbf7cd475cdf5b90f974d87750",
+          "raw_close": 37.5,
+          "source_query": "0c20c0450eebf770ae5501316b0e2b972afa7b6f947be2dade0d6386185c0774",
+          "volume": 0.0
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-11",
+          "factor_query": "eebe1c6555d7d3f0dc03074b1a52aef5cdad489fb34e4b4b6fc5a824546165e7",
+          "raw_close": 35.85,
+          "source_query": "221e1ad2ab10908326ad65de512c494bd801891ce21d7ac2b9492691d923b8ff",
+          "volume": 31568.03
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-12",
+          "factor_query": "f6df41caa5b619d00983394598a42be94e86992b1cc5d2047659327851743469",
+          "raw_close": 35.1,
+          "source_query": "3ba56a6dcf24e36b51e376ed5181f729caecde922c65ca8b4fe968fb8edb3f23",
+          "volume": 21033.91
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-13",
+          "factor_query": "834fa794655b57594df644b61d95c9a591347028be016c448fb5b0d465fcff1b",
+          "raw_close": 32.05,
+          "source_query": "9f92a89aac9018b2ad78553d91e0512f858b674c9ce599e90b467414d00c687f",
+          "volume": 16799.77
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-16",
+          "factor_query": "4a8a1917bd552cab7a166e0df06d68565d1a083660d2a6154d51988761babfea",
+          "raw_close": 29.2,
+          "source_query": "33676a549b1688c3bda1308b6c2d78504ce8a421290a6f0b180f0328cec1878f",
+          "volume": 15398.1
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-17",
+          "factor_query": "83ed6af8f67cf72dc12a40ada1ab9740a0250ac5b070eb2896c18ab4f5753d91",
+          "raw_close": 28.23,
+          "source_query": "248ba15167cbc6aa1e6263ea415a1eac48c202814ca886e9bb7460560e01a065",
+          "volume": 14127.04
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-18",
+          "factor_query": "1684166b67f4f3c6458c0048b9fd0d7fa3e27f2a2f192a7244deffa08a37da55",
+          "raw_close": 28.15,
+          "source_query": "5f1715cef5c3d351c66f927a8c366dd32b8045526554b3d7cb53877b1b96dba3",
+          "volume": 10948.01
+        },
+        {
+          "adj_factor": 1.0133,
+          "date": "2026-11-19",
+          "factor_query": "6bdd47d4c87e575be6a92e1f8a4eb52b6a7adb02925b7470005d67c918b0ed61",
+          "raw_close": 27.83,
+          "source_query": "8660d7ba60848561544fc80f32b7f338fb5401da5b43edbe1dfbed41782ef4fc",
+          "volume": 8934.96
+        }
+      ]
+    }
+  },
+  "input_asset": "inputs-93929179971e89fd4787986afd0d891bfde54971c7a31faa33aa3cc2b22c57f9.json.gz",
+  "input_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "processor_sha256": "2b97f047fb49ce5713952e2e7fc3cef801bc82eb9f280539899278f414838be6",
+  "independent_experience_validations_added": 0,
+  "limits": [
+    "只限此前已选的沐邦、宝馨、联光、威领、思科瑞五家，不代表全部ST或全市场。",
+    "思科瑞为科创板且期间撤销ST，未将五家全部计为同期主板ST。",
+    "最高最低仅为当日观察区间，不能证明委托到达时可成交、排队位置、实际限价或退出成本。",
+    "日线全天同价不等于一字跌停；没有全天同价也不证明容易退出。",
+    "成交量保留渠道原单位，不跨股票或渠道相加；本轮仅核主源同日有成交与收盘一致。",
+    "44证券日不是44次独立经验验证，没有新增市场数据或独立案例。"
+  ]
+}

@@ -1,0 +1,391 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "sources": [
+    {
+      "announcement_id": "1225679022",
+      "adjunct_url": "finalpage/2026-11-20/1225679022.PDF",
+      "title": "关于职工董事辞职及补选第七届董事会职工董事的公告",
+      "codes": [
+        "002323"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679022.PDF",
+      "sha256": "d25e01711a27c30c9262db8d8e13c12ece71e51d7a31eba12c7ea2ddd82709c5",
+      "bytes": 110553,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/d25e01711a27c30c9262db8d8e13c12ece71e51d7a31eba12c7ea2ddd82709c5.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-21T00:28:57.317853+00:00",
+      "visual_physical_pages": [
+        1,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "280211c62eced8b7abf15e6191f1bac5f5e971328d7469e03735ceb799fdf9ac",
+        "3": "133bbca2168a48be3e0f6a4578d14b5d7432fe435b8d99444e127b58496430e7"
+      },
+      "text_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679959",
+      "adjunct_url": "finalpage/2026-11-20/1225679959.PDF",
+      "title": "关于董事会秘书离任暨董事长代行董事会秘书职责的公告",
+      "codes": [
+        "600525"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679959.PDF",
+      "sha256": "a9bafcfd9086b2baaa3f75f06a4c2ad793e28e4681f61d6a20d889196e94ee4e",
+      "bytes": 81911,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/a9bafcfd9086b2baaa3f75f06a4c2ad793e28e4681f61d6a20d889196e94ee4e.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:28:57.416532+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "799ac3016a0f6402052cab3896954df4b9f640cfdb1406f780602fae3a5a82df",
+        "2": "e92c8ef6b235e5d5e3565584cdaf96f0bdb6d4995740d88076f0fb88b2fc8bb3"
+      },
+      "text_physical_pages": [
+        1,
+        2
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679995",
+      "adjunct_url": "finalpage/2026-11-20/1225679995.PDF",
+      "title": "独立董事候选人声明与承诺（唐勇）",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679995.PDF",
+      "sha256": "766319b0d711dff62ac2dc80fc0e7eaddf2ca427c7b1b9032e1ed53cf7962b90",
+      "bytes": 295931,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/766319b0d711dff62ac2dc80fc0e7eaddf2ca427c7b1b9032e1ed53cf7962b90.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-21T00:28:57.512191+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "2112de99dbfbe25e9ff7e7a7ba56248b4376fe307759dc208c9fc455323f8452",
+        "2": "c9dc68f81efdae8a2cf5f56dcb0f488a082fe8a281b7c52a108569653f6e9ca9",
+        "3": "1d129e60a12eac274eba0948aeebc4dffb9f9a2481e575ebfcff4dd389e55284"
+      },
+      "text_physical_pages": [],
+      "scanned_physical_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "announcement_id": "1225679993",
+      "adjunct_url": "finalpage/2026-11-20/1225679993.PDF",
+      "title": "中国高科关于变更董事会秘书的公告",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679993.PDF",
+      "sha256": "be66dff0bbf7c945843cdb010646fbda04808bc868af1e921560a7bf14857735",
+      "bytes": 136731,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/be66dff0bbf7c945843cdb010646fbda04808bc868af1e921560a7bf14857735.pdf",
+      "pages": 4,
+      "observed_at": "2026-11-21T00:28:57.675700+00:00",
+      "visual_physical_pages": [
+        1,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "50ecff4d28820a0c3e7606ac4315b10dbbfa26b4386ec7fd4938a34a1f2a8690",
+        "3": "9deeb381b347b5b6e94c8c64c3aff70e9c90659a6c1a7f010cf1aac53b3fcae7"
+      },
+      "text_physical_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679990",
+      "adjunct_url": "finalpage/2026-11-20/1225679990.PDF",
+      "title": "中国高科关于变更证券事务代表的公告",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679990.PDF",
+      "sha256": "f94a81a6410c40355485156d1520c6db11a8ca556eb2b25237933b84f709827e",
+      "bytes": 121795,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/f94a81a6410c40355485156d1520c6db11a8ca556eb2b25237933b84f709827e.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:28:57.850571+00:00",
+      "visual_physical_pages": [
+        1
+      ],
+      "visual_image_sha256": {
+        "1": "cc31876d456bf170ecba77e33deb7a23a659377c0c033c3de02e7a8d308e3164"
+      },
+      "text_physical_pages": [
+        1,
+        2
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679989",
+      "adjunct_url": "finalpage/2026-11-20/1225679989.PDF",
+      "title": "中国高科关于补选公司第十一届董事会独立董事的公告",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679989.PDF",
+      "sha256": "66a666f29c7f86ca63b4a2ddb8c9cd60ed3d7a46a23e8fb3831bee58c7f74345",
+      "bytes": 116601,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/66a666f29c7f86ca63b4a2ddb8c9cd60ed3d7a46a23e8fb3831bee58c7f74345.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:28:57.948677+00:00",
+      "visual_physical_pages": [
+        1
+      ],
+      "visual_image_sha256": {
+        "1": "299b497c2ee6c4ed43c764c2c21f680fc91c7f4f3f2d59d7dbac805e7b733e0f"
+      },
+      "text_physical_pages": [
+        1,
+        2
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679988",
+      "adjunct_url": "finalpage/2026-11-20/1225679988.PDF",
+      "title": "中国高科第十一届董事会第十二次会议决议公告",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679988.PDF",
+      "sha256": "c5b67ac860deb9aab75bca99e02e106cf4065db26fac4b119fb514d741bd8c06",
+      "bytes": 114988,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/c5b67ac860deb9aab75bca99e02e106cf4065db26fac4b119fb514d741bd8c06.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:28:58.041828+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "dc44d0682b51e7c3e98684922824894052c14350118ee8346c1dfbefd7c3bd8e",
+        "2": "3ca133ff655f4cdb7c6f0bc6aad0ac10610f4ee3e70b2ab561549c780978cec6"
+      },
+      "text_physical_pages": [
+        1,
+        2
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679986",
+      "adjunct_url": "finalpage/2026-11-20/1225679986.PDF",
+      "title": "中国高科董事会提名委员会关于公司第十一届董事会独立董事候选人唐勇的任职资格审查意见",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679986.PDF",
+      "sha256": "9b0d7a6f1c86c0f62f5964697c7af32ac16a523cfeeba70297005b30ffd84d0f",
+      "bytes": 90451,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9b0d7a6f1c86c0f62f5964697c7af32ac16a523cfeeba70297005b30ffd84d0f.pdf",
+      "pages": 1,
+      "observed_at": "2026-11-21T00:28:58.148574+00:00",
+      "visual_physical_pages": [
+        1
+      ],
+      "visual_image_sha256": {
+        "1": "f85e12290475332759d09a5283785ce1840ecf83bb91b3cdd322cc7dbd316f7a"
+      },
+      "text_physical_pages": [
+        1
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679985",
+      "adjunct_url": "finalpage/2026-11-20/1225679985.PDF",
+      "title": "中国高科关于2026年第六次临时股东会增加临时提案的公告",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679985.PDF",
+      "sha256": "95c731571e3559c0b4a54091a6827757ee4a00a2d6eb7e9628edcd1b6de53921",
+      "bytes": 137555,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/95c731571e3559c0b4a54091a6827757ee4a00a2d6eb7e9628edcd1b6de53921.pdf",
+      "pages": 4,
+      "observed_at": "2026-11-21T00:28:58.339967+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "7fa777e901953bdc32e3cd30cb7724f56eaede347f22b2723550b45c311badc8",
+        "2": "7b5dbf2bf9a267d15b216a642a146d9e474616767d032012aadb9181795930eb"
+      },
+      "text_physical_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scanned_physical_pages": []
+    },
+    {
+      "announcement_id": "1225679984",
+      "adjunct_url": "finalpage/2026-11-20/1225679984.PDF",
+      "title": "独立董事提名人声明与承诺（唐勇）",
+      "codes": [
+        "600730"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679984.PDF",
+      "sha256": "2892b09529e14a681c3e85da7f6918eab09c6d820ae36a10bf03ea52f04adc4a",
+      "bytes": 818421,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/2892b09529e14a681c3e85da7f6918eab09c6d820ae36a10bf03ea52f04adc4a.pdf",
+      "pages": 3,
+      "observed_at": "2026-11-21T00:28:58.490797+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "visual_image_sha256": {
+        "1": "0fd0250852ef841d07d8a4cf1ee5595a93a77dc7ba25dbede74846d4e8db01fc",
+        "2": "aee0700ac929b1db3577dcb2716b0b69165a14bad5809cdfaaab693032cf2aac",
+        "3": "4edba8c796858f70a1f77b15486efdc12724e2c2be9290ca1e1c33c0204506e2"
+      },
+      "text_physical_pages": [],
+      "scanned_physical_pages": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "document_pages": 26,
+  "text_pages": 20,
+  "critical_visual_pages": 19,
+  "scanned_pages": 6,
+  "findings": [
+    {
+      "code": "002323",
+      "announcement_id": "1225679022",
+      "pages": [
+        1,
+        3
+      ],
+      "answer": "雅博披露王东挺职工董事辞职于11月19日送达生效，当日职工代表大会选举王立冠，任期从表决通过日起算。",
+      "boundary": "这是公司披露已完成的职工代表选举，不是等待股东会的独立董事提名。前任仍在公司任职；简历任职资格和无关联等为公司披露，未作独立人事核验，不推控制权、增持或经营修复。"
+    },
+    {
+      "code": "600525",
+      "announcement_id": "1225679959",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "长园杨欢于11月18日辞去董秘并不再在公司及子公司任职；董事长由杨在空缺期间代行，正式选聘尚待完成。",
+      "boundary": "正文证券简称为长园集团，历史固定样本不代表当日仍ST。代行不是已聘任新董秘；公司称不影响日常经营属于自述，不能据离职推断未披露风险或据正常措辞认风险解除。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679993",
+      "pages": [
+        1,
+        3
+      ],
+      "answer": "高科11月19日董事会聘梁永振为董秘，任期从董事会通过日起；唐庆辞董秘后继续任副董事长等职务。",
+      "boundary": "公司称已完成交易所备案，未独立取得备案凭据；本项可推进为公司披露已聘任，不混同独立董事仍待股东会选举。旧任并非离开公司，聘任不证明财务或内控问题已修复。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679990",
+      "pages": [
+        1
+      ],
+      "answer": "高科11月19日董事会聘童方宁为证券事务代表，协助董秘；潘睿莹因工作调整辞去该职。",
+      "boundary": "这是证券事务代表聘任，与董秘聘任及独立董事提名为不同岗位，不把三个岗位合成三个经营利好，也不从履历推断注资或重组。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679989",
+      "pages": [
+        1
+      ],
+      "answer": "高科提名唐勇为独立董事候选人，当选后拟任审计委员会主任；仍待股东会审议。",
+      "boundary": "公告说明前独董辞职后独董比例、审计委员会构成及会计专业召集人存在不足，这是补选背景。候选人承诺参加培训不等于已取得证明，提名与资格审查不证明完成补选或审计意见已消除。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679988",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "高科董事会通过通知时限豁免、独董候选人提名及董秘/证券事务代表聘任；仅独董提名明确继续提交股东会。",
+      "boundary": "同日董事会与专项公告是相同事项的配套，不重复计为多次聘任；全体议案通过不等于独董已获股东会选举，未由表决票数推断经营成效。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679986",
+      "pages": [
+        1
+      ],
+      "answer": "高科提名委员会11月19日出具唐勇任职资格审查意见，并重述其将参加培训取得证明的承诺。",
+      "boundary": "公司内部审查意见不是独立第三方资格认证、交易所最终审核或股东会当选结果；与候选人/提名人声明共同组成同一补选依据。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679985",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "高科11月30日股东会增加独董选举临时提案，20.03%股东珠海长世芯于19日提出，原登记日11月23日不变。",
+      "boundary": "会后结果尚未发生；议程同时保留聘任会计师事务所议案，不把议程列示当已经续聘、完成审计或修复旧意见。股东提出提案不表示新持股或增资。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679995",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "高科唐勇候选人声明属于独立董事补选配套，承诺任职资格与独立性，并承诺将参加培训取得证明。",
+      "boundary": "三页为扫描件，无可提取文字，已逐页图像核看。声明末页手写日期读为11月12日，与20日目录公开、19日董事会正式提名分别保留，不倒填为12日市场已知；自我声明不等于当选、实际履职或第三方核验。"
+    },
+    {
+      "code": "600730",
+      "announcement_id": "1225679984",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "answer": "高科董事会作为提名人出具唐勇声明，列其独立性、任职要求及培训承诺，是同一候选人的配套材料。",
+      "boundary": "三页扫描件已逐页图像核看，无可提取文字；末页手写日期读为11月12日，不能据此认定当日已经公开或正式获选。提名人声明不增加独立验证，也不替代后续股东会结果。"
+    }
+  ],
+  "limits": [
+    "扫描声明签名及日期为人工图像读数，未用签名认证法律真实性",
+    "人员聘任、提名、审议与实际治理改善不同阶段",
+    "单日41附件核完不证明完整期间所有公告无遗漏，空返回限制保持",
+    "文件数量不增加独立案例验证"
+  ]
+}

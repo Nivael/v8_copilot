@@ -1,0 +1,69 @@
+{
+  "version": "huawei_official_dividend_recovery_v1",
+  "symbol": "600360",
+  "mirror_id": "SINA-12649852",
+  "official_announcement_id": "1225611990",
+  "published_on": "2026-10-21",
+  "catalog_refs": [
+    {
+      "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+      "params": {
+        "keyWord": "600360",
+        "maxNum": "10"
+      },
+      "observed_at": "2026-11-21T02:12:34.527008+00:00",
+      "status": 200,
+      "sha256": "d8324b4102abff89a24f6082068edfe200e0a22cb46d869316fb9dc9986c7b6c",
+      "bytes": 149
+    },
+    {
+      "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "params": {
+        "pageNum": "1",
+        "pageSize": "30",
+        "column": "sse",
+        "tabName": "fulltext",
+        "plate": "sh",
+        "stock": "600360,gssh0600360",
+        "searchkey": "",
+        "secid": "",
+        "category": "",
+        "trade": "",
+        "seDate": "2026-10-21~2026-10-21",
+        "sortName": "",
+        "sortType": "",
+        "isHLtitle": "true"
+      },
+      "observed_at": "2026-11-21T02:12:34.642367+00:00",
+      "status": 200,
+      "sha256": "989f8d038fc87239757d5965d27b393ba4688065501825b701e1a568dd87dd43",
+      "bytes": 880
+    }
+  ],
+  "pdf": {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-21/1225611990.PDF",
+    "observed_at": "2026-11-21T02:12:52.332084+00:00",
+    "sha256": "7072f09867a6102bef1785994d0671fe3088a1e02430c4804f32b8c85ef8fafc",
+    "bytes": 144514,
+    "status": 200,
+    "final_url": "https://static.cninfo.com.cn/finalpage/2026-10-21/1225611990.PDF",
+    "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/official_mirror_recovery/20261121",
+    "mirror_sha256": "7072f09867a6102bef1785994d0671fe3088a1e02430c4804f32b8c85ef8fafc",
+    "exact_mirror_bytes": true
+  },
+  "total_pages": 3,
+  "selected_page_text": "1 / 3\r\n证券代码：600360 证券简称：华微电子 公告编号：2026-039\r\n吉林华微电子股份有限公司\r\n2026年半年度权益分派实施公告\r\n本公司董事会及全体董事保证本公告内容不存在任何虚假记载、误导性陈述或者重大\r\n遗漏，并对其内容的真实性、准确性和完整性承担法律责任。\r\n重要内容提示：\r\n 每股分配比例\r\nA 股每股现金红利0.043元（含税）\r\n 相关日期\r\n股份类别 股权登记日 最后交易日 除权（息）日 现金红利发放日\r\nＡ股 2026/10/26 － 2026/10/27 2026/10/27\r\n 差异化分红送转： 否\r\n一、 通过分配方案的股东会届次和日期\r\n本次利润分配授权安排经公司2026 年 5 月 11 日的2025年年度股东会审议通过。利润分配\r\n方案经公司 2026 年 9 月 17 日的第九届董事会第二十二次会议审议通过。\r\n二、 分配方案\r\n1. 发放年度：2026年半年度\r\n2. 分派对象：\r\n截至股权登记日下午上海证券交易所收市后，在中国证券登记结算有限责任公司上海分\r\n公司（以下简称“中国结算上海分公司”）登记在册的本公司全体股东。\r\n3. 分配方案：\r\n本次利润分配以方案实施前的公司总股本960,295,304股为基数，每股派发现金红利\r\n0.043元（含税），共计派发现金红利41,292,698.07元。",
+  "selected_page_text_sha256": "81dc477c507a6c566cd27c8da29706a233d62cbbe980c3ae7f00493829fb9e94",
+  "viewed_pages": [
+    1
+  ],
+  "page1_image_sha256": "7b74cbe541ced75721e7112689da7a2cf154e9e70f068d1e78f73e50c7184b56",
+  "original_official_bytes_recovered": true,
+  "original_mirror_debts_remaining": 7,
+  "limits": [
+    "Exact issuer-event PDF bytes now match mirror; original frozen source retained",
+    "Only page1 visually reviewed; three pages extracted, not full visual review",
+    "Dividend implementation arrangements do not prove account receipt or investment return",
+    "No new independent event or strategy validation"
+  ]
+}

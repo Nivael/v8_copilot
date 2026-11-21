@@ -1,0 +1,179 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "sources": [
+    {
+      "announcement_id": "1225679976",
+      "adjunct_url": "finalpage/2026-11-20/1225679976.PDF",
+      "title": "关于购买董事、高级管理人员责任险的公告",
+      "codes": [
+        "002547"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679976.PDF",
+      "sha256": "ba5d5c23ae97c97e775b1a13a034b924fb7a627d72418ecee5bd34e6a9730b80",
+      "bytes": 138812,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/ba5d5c23ae97c97e775b1a13a034b924fb7a627d72418ecee5bd34e6a9730b80.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:25:02.544536+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "6b4cadb09c3636aada662df865a5510999e1860413859906eb14a54358c30fe1",
+        "2": "4cdbf9e442d655298943c3e77f0082aa490935d456505f754f1120445bba8f3f"
+      }
+    },
+    {
+      "announcement_id": "1225679973",
+      "adjunct_url": "finalpage/2026-11-20/1225679973.PDF",
+      "title": "关于召开2026年第六次临时股东会的通知",
+      "codes": [
+        "002547"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679973.PDF",
+      "sha256": "53b8b4b836bf74c4ca832c371e6dfb6c02b113083cd041047ee81e37c250d65d",
+      "bytes": 175851,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/53b8b4b836bf74c4ca832c371e6dfb6c02b113083cd041047ee81e37c250d65d.pdf",
+      "pages": 5,
+      "observed_at": "2026-11-21T00:25:02.687973+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "a8dc2101b979b6be1a409d54150e169a10138a41cf4e0bb2c3a90ccd8165b0eb",
+        "2": "328219ec7afc968dbe2a2c57d7ad043dd4d6a5cd92d8159a0bb21b0a782e03e5"
+      }
+    },
+    {
+      "announcement_id": "1225679385",
+      "adjunct_url": "finalpage/2026-11-20/1225679385.PDF",
+      "title": "美克国际家居用品股份有限公司2026年第三次临时股东会会议资料",
+      "codes": [
+        "600337"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679385.PDF",
+      "sha256": "b3a20cac0290c20590642fa6cb5d920557c405f3fe02cfa59ed174057914fcbe",
+      "bytes": 356739,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/b3a20cac0290c20590642fa6cb5d920557c405f3fe02cfa59ed174057914fcbe.pdf",
+      "pages": 5,
+      "observed_at": "2026-11-21T00:25:02.911318+00:00",
+      "visual_physical_pages": [
+        1,
+        4,
+        5
+      ],
+      "visual_image_sha256": {
+        "1": "d3ee3a4220d8dcfbab24f25f1b9e37d2b4c3f3e7ee0dba578582643001d9b888",
+        "4": "50dbe86ed74ec0db5feb3f37b5d71a5ba2c38b840a19d00e7e80d88a2ca6275b",
+        "5": "70ef0437ebe26ce2e27524213cd241338c10c18d30db165799156cbc516ddd46"
+      }
+    },
+    {
+      "announcement_id": "1225679624",
+      "adjunct_url": "finalpage/2026-11-20/1225679624.PDF",
+      "title": "关于召开2026年第四次临时股东会的通知",
+      "codes": [
+        "603272"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679624.PDF",
+      "sha256": "9c277b0e81312a11d66aa0f1bf1800ae2d1d1700f9791bd333d119b38fe1c7f0",
+      "bytes": 117656,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/9c277b0e81312a11d66aa0f1bf1800ae2d1d1700f9791bd333d119b38fe1c7f0.pdf",
+      "pages": 6,
+      "observed_at": "2026-11-21T00:25:03.031346+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "04fb6532e2b494b986e65f4a4b949643d2a50a01895e4a2e54d845d1e3882a02",
+        "2": "828b1cd63144d304a36e3ae9f116dc769032c7b6deb0bc842c4cd6c7e5f603ee"
+      }
+    },
+    {
+      "announcement_id": "1225679216",
+      "adjunct_url": "finalpage/2026-11-20/1225679216.PDF",
+      "title": "上海龙韵文创科技集团股份有限公司关于召开2026年第三季度业绩说明会的公告",
+      "codes": [
+        "603729"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679216.PDF",
+      "sha256": "b05951d4863d8de6d2c45c5c2cb898a18b1cdb434edd8b971ac427d630f2f7cc",
+      "bytes": 68482,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/b05951d4863d8de6d2c45c5c2cb898a18b1cdb434edd8b971ac427d630f2f7cc.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:25:03.129793+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "ee86efaccb77cdba9205be29150d89598505c32b0a36087d6fa3203b3aa8634e",
+        "2": "aaab6e81d5a2b7fdfbb738b7bfc10c59c6c15c0fcac3fa17d9860b5cad8257c5"
+      }
+    }
+  ],
+  "text_pages": 20,
+  "critical_visual_pages": 11,
+  "findings": [
+    {
+      "code": "002547",
+      "announcement_id": "1225679976",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "春兴拟购董责险：赔偿限额不超过5000万元、年保费不超过30万元、期限12个月；全体董事回避，直接提交股东会审议。",
+      "boundary": "赔偿限额不是已赔款或公司现金，拟投保不是合同已经签署、保费已付或保险已生效；最终以合同为准。委员会也全体回避，不能把审议过该议题写成董事会表决通过。"
+    },
+    {
+      "code": "002547",
+      "announcement_id": "1225679973",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "春兴通知12月7日14时召开临时股东会，审议拟售资产与董责险，股权登记日12月1日；这是待审安排，不是结果公告。",
+      "boundary": "第2页概称上述议案已由董事会审议通过，与同日董责险专项公告及董事会决议明确全体回避、直接上股东会的表述不同。差异保留，不据通知认定董责险已经董事会表决通过，也不把未来股东会当资产成交或保险生效。"
+    },
+    {
+      "code": "600337",
+      "announcement_id": "1225679385",
+      "pages": [
+        1,
+        4,
+        5
+      ],
+      "answer": "美克会议资料拟于11月25日补选胡辉为非独立董事；孟佳聪辞职要等新任董事补选产生才生效，生效前继续履职。",
+      "boundary": "股东会会议资料在20日目录公开，封面及议案落款为未来会议日25日，不证明会议已开或人事已完成。12.29%股东赣州发展美家继续行使提名权；简历另称候选人与控股股东、实际控制人及5%以上股东等无关联关系，两项披露分列，未独立核关联认定。人事变化不证明注资、控制权变更或经营修复。"
+    },
+    {
+      "code": "603272",
+      "announcement_id": "1225679624",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "联翔通知12月7日14时审议对外担保额度调整；对应已核额度分类调整事项，仍待股东会结果。",
+      "boundary": "通知、董事会决议和专项公告是同一事项配套，不累计为多次新增担保或独立验证；未来审议安排不证明签署合同、实际担保余额增加或风险解除。"
+    },
+    {
+      "code": "603729",
+      "announcement_id": "1225679216",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "龙韵计划11月27日11—12时召开三季度业绩说明会，提问预征集至11月26日16时；本文件提供交流安排。",
+      "boundary": "三季报已于10月21日披露，说明会预告不是新增业绩结果或已答复投资者问题；落款19日与目录20日分别保留。后续答复需另查正式记录，不从参会人员或会议安排推断重组、盈利修复或行情因果。"
+    }
+  ],
+  "limits": [
+    "通知和会议资料不作为已经表决、交割、投保或业绩改善的结果",
+    "春兴通知与专项公告审批措辞差异保留，不替来源消除冲突",
+    "原件全文提取，图像只核所列关键页，未核未来会议结果",
+    "同一事项配套文件不增加独立经验验证"
+  ]
+}

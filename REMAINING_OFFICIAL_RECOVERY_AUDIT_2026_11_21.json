@@ -1,0 +1,83 @@
+{
+  "version": "remaining_official_recovery_audit_v1",
+  "capture_sha256": "a09ebaa86cd77ce402e567b8ff5da0762f8eec6d081dc1dba4904fb5bccbd472",
+  "verified": [
+    {
+      "symbol": "600777",
+      "mirror_id": "SINA-12401725",
+      "mirror_sha256": "4263fead061a77a611c1e3967283c4befb609a6cf04a84b7077d3adb6fd9f731",
+      "official_id": "1225378259",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-06-19/1225378259.PDF",
+      "published_on": "2026-06-19",
+      "title": "山东新潮能源股份有限公司关于撤销退市风险警示及其他风险警示暨停牌的公告",
+      "bytes": 131170
+    },
+    {
+      "symbol": "603261",
+      "mirror_id": "SINA-12391668",
+      "mirror_sha256": "422c5d14b84279c38ceea2746e79c08c5561de686efd473712d0077602337c20",
+      "official_id": "1225368908",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225368908.PDF",
+      "published_on": "2026-06-13",
+      "title": "成都立航科技股份有限公司关于撤销退市风险警示暨停复牌的公告",
+      "bytes": 93966
+    },
+    {
+      "symbol": "603389",
+      "mirror_id": "SINA-12419797",
+      "mirror_sha256": "10466cabebe275d9cf5b2b182d30f5d06dbd2ec7551483e27f0925e58ef65d22",
+      "official_id": "1225397352",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-06-30/1225397352.PDF",
+      "published_on": "2026-06-30",
+      "title": "关于撤销退市风险警示暨停牌的公告",
+      "bytes": 132831
+    },
+    {
+      "symbol": "603721",
+      "mirror_id": "SINA-12361633",
+      "mirror_sha256": "641918d419d67c646b8eab3dbf460d3b32e32b8d7403b3378224b21f1c63207b",
+      "official_id": "1225337556",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-05-30/1225337556.PDF",
+      "published_on": "2026-05-30",
+      "title": "中广天择传媒股份有限公司关于撤销退市风险警示暨停牌的公告",
+      "bytes": 93226
+    },
+    {
+      "symbol": "603813",
+      "mirror_id": "SINA-12390955",
+      "mirror_sha256": "1585c10325b09c99b8c765cd47721536dc8157a595180a51362d1ed815601db0",
+      "official_id": "1225368522",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225368522.PDF",
+      "published_on": "2026-06-13",
+      "title": "广东原尚物流股份有限公司关于撤销退市风险警示暨停牌的公告",
+      "bytes": 155404
+    },
+    {
+      "symbol": "603580",
+      "mirror_id": "SINA-12483004",
+      "mirror_sha256": "48bec97729562211dc419930660cf0698c3e4ec62ece89c9a33ee153994e7a3e",
+      "official_id": "1225463681",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-08-08/1225463681.PDF",
+      "published_on": "2026-08-08",
+      "title": "艾艾精工2025年年度权益分派实施公告",
+      "bytes": 119494
+    },
+    {
+      "symbol": "603721",
+      "mirror_id": "SINA-12329033",
+      "mirror_sha256": "cb782f050646f2b31f74711b2aaed93a5b32e410a13d635e8c3d3a39a4a0a382",
+      "official_id": "1225312843",
+      "official_url": "https://static.cninfo.com.cn/finalpage/2026-05-19/1225312843.PDF",
+      "published_on": "2026-05-19",
+      "title": "中广天择传媒股份有限公司2025年年度权益分派实施公告",
+      "bytes": 121375
+    }
+  ],
+  "verified_count": 7,
+  "new_independent_validations": 0,
+  "limits": [
+    "Source byte recovery only; not a new event or full-page rereview",
+    "Official availability observed retrospectively, not proof of then-known access",
+    "Exact byte equality preserves old content; does not certify accounting truth or actual cash receipt"
+  ]
+}

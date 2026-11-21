@@ -1,0 +1,629 @@
+{
+  "version": "remaining_official_recovery_capture_v1",
+  "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/official_mirror_recovery/20261121",
+  "rows": [
+    {
+      "mirror": {
+        "symbol": "600777",
+        "announcement_id": "SINA-12401725",
+        "title": "山东新潮能源股份有限公司关于撤销退市风险警示及其他风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-19/12401725.PDF",
+        "sha256": "4263fead061a77a611c1e3967283c4befb609a6cf04a84b7077d3adb6fd9f731",
+        "official_original_status": "script_challenge_not_pdf"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "600777",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.127787+00:00",
+          "status": 200,
+          "sha256": "15ebe3807e4b153212ac944e3f57789790cbe020aa6cd762194251e97e27438d",
+          "bytes": 149
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "600777,gssh0600777",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-06-19~2026-06-19",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.277031+00:00",
+          "status": 200,
+          "sha256": "bc17c1e2b6efad28b21722dde7e0f9eac7a53cc075dca7a069a4570dd729191e",
+          "bytes": 3222
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:49.127637+00:00",
+      "catalog_total": 4,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "600777",
+          "secName": "*ST新潮",
+          "orgId": "gssh0600777",
+          "announcementId": "1225378259",
+          "announcementTitle": "山东新潮能源股份有限公司关于撤销退市风险警示及其他风险警示暨停牌的公告",
+          "announcementTime": 1781798400000,
+          "adjunctUrl": "finalpage/2026-06-19/1225378259.PDF",
+          "adjunctSize": 129,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302||2705",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||012399||012501",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "*ST新潮",
+          "shortTitle": "山东新潮能源股份有限公司关于撤销退市风险警示及其他风险警示暨停牌的公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-06-19",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-06-19/1225378259.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-06-19/1225378259.PDF",
+        "status": 200,
+        "sha256": "4263fead061a77a611c1e3967283c4befb609a6cf04a84b7077d3adb6fd9f731",
+        "bytes": 131170,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:49.566830+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    },
+    {
+      "mirror": {
+        "symbol": "603261",
+        "announcement_id": "SINA-12391668",
+        "title": "成都立航科技股份有限公司关于撤销退市风险警示暨停复牌的公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-13/12391668.PDF",
+        "sha256": "422c5d14b84279c38ceea2746e79c08c5561de686efd473712d0077602337c20",
+        "official_original_status": "not_attempted_this_round"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "603261",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.128048+00:00",
+          "status": 200,
+          "sha256": "4c2837227488b0712c019ef65ffdc8352ece2f7b5e4ad5330da655d5b6fe9e07",
+          "bytes": 148
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "603261,9900039859",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-06-13~2026-06-13",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.300260+00:00",
+          "status": 200,
+          "sha256": "4e1d07cb0e4db454508f8256316506cf3d2ffaee251df7e63ebc80bf2d26c53d",
+          "bytes": 2587
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:49.128043+00:00",
+      "catalog_total": 3,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "603261",
+          "secName": "*ST立航",
+          "orgId": "9900039859",
+          "announcementId": "1225368908",
+          "announcementTitle": "成都立航科技股份有限公司关于撤销退市风险警示暨停复牌的公告",
+          "announcementTime": 1781280000000,
+          "adjunctUrl": "finalpage/2026-06-13/1225368908.PDF",
+          "adjunctSize": 93,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||012399",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "*ST立航",
+          "shortTitle": "成都立航科技股份有限公司关于撤销退市风险警示暨停复牌的公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-06-13",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225368908.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225368908.PDF",
+        "status": 200,
+        "sha256": "422c5d14b84279c38ceea2746e79c08c5561de686efd473712d0077602337c20",
+        "bytes": 93966,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:49.945410+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    },
+    {
+      "mirror": {
+        "symbol": "603389",
+        "announcement_id": "SINA-12419797",
+        "title": "关于撤销退市风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-30/12419797.PDF",
+        "sha256": "10466cabebe275d9cf5b2b182d30f5d06dbd2ec7551483e27f0925e58ef65d22",
+        "official_original_status": "not_attempted_this_round"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "603389",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.567214+00:00",
+          "status": 200,
+          "sha256": "7e656864e2d4b5372e3d1d7c2548bc2976e5f38dbfdbfd3fd4368d4370ffbbd0",
+          "bytes": 148
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "603389,9900026793",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-06-30~2026-06-30",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.719567+00:00",
+          "status": 200,
+          "sha256": "4e73f1d6084774a8595567486fa42f5642b94b212332748a64a487e27258e33e",
+          "bytes": 4251
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:49.567207+00:00",
+      "catalog_total": 6,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "603389",
+          "secName": "*ST亚振",
+          "orgId": "9900026793",
+          "announcementId": "1225397352",
+          "announcementTitle": "关于撤销退市风险警示暨停牌的公告",
+          "announcementTime": 1782748800000,
+          "adjunctUrl": "finalpage/2026-06-30/1225397352.PDF",
+          "adjunctSize": 131,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||012399",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "*ST亚振",
+          "shortTitle": "关于撤销退市风险警示暨停牌的公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-06-30",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-06-30/1225397352.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-06-30/1225397352.PDF",
+        "status": 200,
+        "sha256": "10466cabebe275d9cf5b2b182d30f5d06dbd2ec7551483e27f0925e58ef65d22",
+        "bytes": 132831,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:49.955312+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    },
+    {
+      "mirror": {
+        "symbol": "603721",
+        "announcement_id": "SINA-12361633",
+        "title": "中广天择传媒股份有限公司关于撤销退市风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-5/2026-05-30/12361633.PDF",
+        "sha256": "641918d419d67c646b8eab3dbf460d3b32e32b8d7403b3378224b21f1c63207b",
+        "official_original_status": "not_attempted_this_round"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "603721",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.945785+00:00",
+          "status": 200,
+          "sha256": "a9eb4d31ea7417e6a24e9c45da580000eeb4c6a681cf0f0939383ccdfc7c9c06",
+          "bytes": 148
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "603721,9900030820",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-05-30~2026-05-30",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:50.122491+00:00",
+          "status": 200,
+          "sha256": "e0faad6511b1b2aa27ee50513abfc301af3f0bcabab513fb88e3efc5b1e53321",
+          "bytes": 2466
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:49.945779+00:00",
+      "catalog_total": 3,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "603721",
+          "secName": "*ST天择",
+          "orgId": "9900030820",
+          "announcementId": "1225337556",
+          "announcementTitle": "中广天择传媒股份有限公司关于撤销退市风险警示暨停牌的公告",
+          "announcementTime": 1780070400000,
+          "adjunctUrl": "finalpage/2026-05-30/1225337556.PDF",
+          "adjunctSize": 92,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||012399",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "*ST天择",
+          "shortTitle": "中广天择传媒股份有限公司关于撤销退市风险警示暨停牌的公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-05-30",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-05-30/1225337556.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-05-30/1225337556.PDF",
+        "status": 200,
+        "sha256": "641918d419d67c646b8eab3dbf460d3b32e32b8d7403b3378224b21f1c63207b",
+        "bytes": 93226,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:50.348266+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    },
+    {
+      "mirror": {
+        "symbol": "603813",
+        "announcement_id": "SINA-12390955",
+        "title": "广东原尚物流股份有限公司关于撤销退市风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-13/12390955.PDF",
+        "sha256": "1585c10325b09c99b8c765cd47721536dc8157a595180a51362d1ed815601db0",
+        "official_original_status": "not_attempted_this_round"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "603813",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:49.955615+00:00",
+          "status": 200,
+          "sha256": "7d2a3219c73f3b2713ca69dade59643cfedf86f36c2704b4bc82eb024fbf16b2",
+          "bytes": 148
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "603813,9900031908",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-06-13~2026-06-13",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:50.187367+00:00",
+          "status": 200,
+          "sha256": "45dd11f78bef481ebbe005c6f3c6f937f42b43ee54a0e2aafbd955d303d83e64",
+          "bytes": 883
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:49.955608+00:00",
+      "catalog_total": 1,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "603813",
+          "secName": "*ST原尚",
+          "orgId": "9900031908",
+          "announcementId": "1225368522",
+          "announcementTitle": "广东原尚物流股份有限公司关于撤销退市风险警示暨停牌的公告",
+          "announcementTime": 1781280000000,
+          "adjunctUrl": "finalpage/2026-06-13/1225368522.PDF",
+          "adjunctSize": 153,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||012399",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "*ST原尚",
+          "shortTitle": "广东原尚物流股份有限公司关于撤销退市风险警示暨停牌的公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-06-13",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225368522.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225368522.PDF",
+        "status": 200,
+        "sha256": "1585c10325b09c99b8c765cd47721536dc8157a595180a51362d1ed815601db0",
+        "bytes": 155404,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:50.491562+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    },
+    {
+      "mirror": {
+        "symbol": "603580",
+        "announcement_id": "SINA-12483004",
+        "title": "艾艾精工2025年年度权益分派实施公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-8/2026-08-08/12483004.PDF",
+        "sha256": "48bec97729562211dc419930660cf0698c3e4ec62ece89c9a33ee153994e7a3e",
+        "official_original_status": "not_attempted_this_round"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "603580",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:50.348521+00:00",
+          "status": 200,
+          "sha256": "c1cbf517ac570aa8b8c24d18c145b231bc9981fe86fca657380b3e8a0f52a83b",
+          "bytes": 149
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "603580,gfbj0430599",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-08-08~2026-08-08",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:50.496753+00:00",
+          "status": 200,
+          "sha256": "a8c82a13f50bd493bd6047b4de47f4211fa242ac94fe92ef6fa433c41f203eaf",
+          "bytes": 826
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:50.348516+00:00",
+      "catalog_total": 1,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "603580",
+          "secName": "艾艾精工",
+          "orgId": "gfbj0430599",
+          "announcementId": "1225463681",
+          "announcementTitle": "艾艾精工2025年年度权益分派实施公告",
+          "announcementTime": 1786118400000,
+          "adjunctUrl": "finalpage/2026-08-08/1225463681.PDF",
+          "adjunctSize": 118,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302||2705",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||011301",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "艾艾精工",
+          "shortTitle": "艾艾精工2025年年度权益分派实施公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-08-08",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-08/1225463681.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-08-08/1225463681.PDF",
+        "status": 200,
+        "sha256": "48bec97729562211dc419930660cf0698c3e4ec62ece89c9a33ee153994e7a3e",
+        "bytes": 119494,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:50.819446+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    },
+    {
+      "mirror": {
+        "symbol": "603721",
+        "announcement_id": "SINA-12329033",
+        "title": "中广天择传媒股份有限公司2025年年度权益分派实施公告（发行人PDF镜像，官方原字节待补）",
+        "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-5/2026-05-19/12329033.PDF",
+        "sha256": "cb782f050646f2b31f74711b2aaed93a5b32e410a13d635e8c3d3a39a4a0a382",
+        "official_original_status": "not_attempted_this_round"
+      },
+      "refs": [
+        {
+          "url": "https://www.cninfo.com.cn/new/information/topSearch/query",
+          "params": {
+            "keyWord": "603721",
+            "maxNum": "10"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:50.492100+00:00",
+          "status": 200,
+          "sha256": "a9eb4d31ea7417e6a24e9c45da580000eeb4c6a681cf0f0939383ccdfc7c9c06",
+          "bytes": 148
+        },
+        {
+          "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+          "params": {
+            "pageNum": "1",
+            "pageSize": "30",
+            "column": "sse",
+            "tabName": "fulltext",
+            "plate": "sh",
+            "stock": "603721,9900030820",
+            "searchkey": "",
+            "secid": "",
+            "category": "",
+            "trade": "",
+            "seDate": "2026-05-19~2026-05-19",
+            "sortName": "",
+            "sortType": "",
+            "isHLtitle": "true"
+          },
+          "method": "POST",
+          "observed_at": "2026-11-21T02:16:50.685686+00:00",
+          "status": 200,
+          "sha256": "83e4fcaca8388607ec5078216c60e00f25bc39f9a56c39921192ddf39fe7b61c",
+          "bytes": 867
+        }
+      ],
+      "observed_at": "2026-11-21T02:16:50.492088+00:00",
+      "catalog_total": 1,
+      "candidate_rows": [
+        {
+          "id": null,
+          "secCode": "603721",
+          "secName": "*ST天择",
+          "orgId": "9900030820",
+          "announcementId": "1225312843",
+          "announcementTitle": "中广天择传媒股份有限公司2025年年度权益分派实施公告",
+          "announcementTime": 1779120000000,
+          "adjunctUrl": "finalpage/2026-05-19/1225312843.PDF",
+          "adjunctSize": 120,
+          "adjunctType": "PDF",
+          "storageTime": null,
+          "columnId": "250401||251302||2705",
+          "pageColumn": "SHZB",
+          "announcementType": "01010503||010113||011301",
+          "associateAnnouncement": null,
+          "important": null,
+          "batchNum": null,
+          "announcementContent": "",
+          "orgName": null,
+          "tileSecName": "*ST天择",
+          "shortTitle": "中广天择传媒股份有限公司2025年年度权益分派实施公告",
+          "announcementTypeName": null,
+          "secNameList": null
+        }
+      ],
+      "target_day": "2026-05-19",
+      "pdf": {
+        "url": "https://static.cninfo.com.cn/finalpage/2026-05-19/1225312843.PDF",
+        "final_url": "https://static.cninfo.com.cn/finalpage/2026-05-19/1225312843.PDF",
+        "status": 200,
+        "sha256": "cb782f050646f2b31f74711b2aaed93a5b32e410a13d635e8c3d3a39a4a0a382",
+        "bytes": 121375,
+        "pdf_header": true,
+        "exact_mirror_bytes": true,
+        "observed_at": "2026-11-21T02:16:50.933381+00:00"
+      },
+      "status": "exact_pdf_bytes"
+    }
+  ]
+}

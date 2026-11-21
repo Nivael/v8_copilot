@@ -23,13 +23,24 @@ it('rejects another signal-source binding',()=>{
  expect(screen.queryByRole('table')).not.toBeInTheDocument()
 })
 
-it('switches to the earlier raw quote day without inheriting Nov17 limit prices or group counts',()=>{
+it('switches to the earlier raw quote day without inheriting Nov17 group counts',()=>{
  render(<SignalNextOpenReading/>);fireEvent.click(screen.getByText('六次提示后，五只跟踪比较股的开盘怎样？'));
  fireEvent.change(screen.getByRole('combobox',{name:'提示后开盘观察日'}),{target:{value:'2026-07-09'}});
  const r=screen.getByRole('region',{name:'提示后下一开盘核对'});
  expect(within(r).getAllByRole('row')).toHaveLength(6);
  expect(r).toHaveTextContent('14.7');expect(r).toHaveTextContent('1.93');
- expect(r).toHaveTextContent('本次未核');expect(r).not.toHaveTextContent('141/142');
+ expect(r).toHaveTextContent('13.19');expect(r).not.toHaveTextContent('141/142');
  expect(r).toHaveTextContent('当前简称不回填当时ST身份');
- expect(r).toHaveTextContent('不能据日内价格直接判断是否触及跌停');
+ expect(r).toHaveTextContent('并与保存的逐股实际限价配对');
+});
+
+it('separates July21 intraday touch, closing limit and opening loss',()=>{
+ render(<SignalNextOpenReading/>);fireEvent.click(screen.getByText('六次提示后，五只跟踪比较股的开盘怎样？'));
+ fireEvent.change(screen.getByRole('combobox',{name:'提示后开盘观察日'}),{target:{value:'2026-07-21'}});
+ const r=screen.getByRole('region',{name:'提示后下一开盘核对'});
+ expect(r).toHaveTextContent('7.96%');
+ expect(r).toHaveTextContent('触及且收盘仍在下限');
+ expect(r).toHaveTextContent('盘中触及，收盘离开');
+ expect(r).toHaveTextContent('未取得独立交易所限价原件');
+ expect(r).not.toHaveTextContent('本次未核');
 });

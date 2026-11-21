@@ -45,7 +45,7 @@ export function ExperienceHub(){
   const [historyOpen,setHistoryOpen]=useState(()=>window.location.hash==='#research-history')
   useEffect(()=>{const open=()=>{if(window.location.hash==='#research-history')setHistoryOpen(true)};window.addEventListener('hashchange',open);return()=>window.removeEventListener('hashchange',open)},[])
   const data=packet?.data
-  return <div className="reading-page"><header className="reading-page-head"><div><p className="reading-kicker">横向看整批 · 纵向看个股 · 沉淀新经验</p><h1>跟踪与经验</h1></div><div className="reading-updated"><span>{packet?.as_of?current&&current.through>packet.as_of?`后续证据截至 ${current.through} · 旧跟踪价格截至 ${packet.as_of}`:`个股跟踪价格截至 ${packet.as_of}`:error?'跟踪记录读取未完成':'正在读取跟踪记录'}</span><button onClick={reload} disabled={busy}>{busy?'读取中…':'同步记录'}</button></div></header>
+  return <div className="reading-page"><header className="reading-page-head"><div><p className="reading-kicker">横向看整批 · 纵向看个股 · 沉淀新经验</p><h1>跟踪与经验</h1></div><div className="reading-updated"><span>{packet?.as_of?current&&current.through>packet.as_of?`原同窗复盘截至 ${current.through} · 旧跟踪价格截至 ${packet.as_of}`:`个股跟踪价格截至 ${packet.as_of}`:error?'跟踪记录读取未完成':'正在读取跟踪记录'}</span><button onClick={reload} disabled={busy}>{busy?'读取中…':'同步记录'}</button></div></header>
     {error&&<p role="alert" className="reading-error">{error}。{data?'当前保留已加载的记录。':'请稍后重试。'}</p>}
     <p className="reading-intro">先读市场与公司的变化，再回到原判断，看看哪些经验值得保留。</p>
     {data&&<nav className="reading-section-links" aria-label="本页内容"><a href="#st-cross-section">ST横向比较 ↓</a><a href="#research-history" onClick={()=>setHistoryOpen(true)}>原问与历史复盘 ↓</a><a href="#tracked-stocks">持续跟踪 ↓</a><a href="#swing-watch">反弹观察 ↓</a><a href="#experience-library">经验库 ↓</a><a href="#research-source-notes">资料与更正 ↓</a></nav>}

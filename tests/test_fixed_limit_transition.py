@@ -19,3 +19,8 @@ def test_same_members_and_exhaustive_transition_matrix_reconcile_with_price_chan
     assert sum(D(r['change_pct'])<0 for r in leaving)==5
     assert sum(D(r['change_pct'])>0 for r in leaving)==1
     assert {r['code'] for r in leaving}==set(result['left_close_lower']['codes'])
+
+
+def test_registered_reading_matches_replayed_transition():
+    from build_fixed_limit_transition_reading import reading
+    assert reading()==json.loads(Path('web/src/fixedLimitTransition.json').read_text())

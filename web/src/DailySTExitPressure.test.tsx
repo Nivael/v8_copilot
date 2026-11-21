@@ -17,9 +17,9 @@ it('does not fill an uncovered historical date with zero',()=>{
 })
 it('publishes completed dated scope while retaining the old partial stage',()=>{
  render(<DailySTExitPressure day="2026-11-20"/>);
- expect(screen.getByRole('table')).toHaveTextContent('146／150')
- expect(screen.getByRole('table')).toHaveTextContent('8只')
- expect(screen.getByRole('table')).toHaveTextContent('缺报价2只；无成交2只')
+ expect(screen.getByRole('table',{name:'11月20日：当日深市样本与固定历史样本分别读'})).toHaveTextContent('146／150')
+ expect(screen.getByRole('table',{name:'11月20日：当日深市样本与固定历史样本分别读'})).toHaveTextContent('8只')
+ expect(screen.getByRole('table',{name:'11月20日：当日深市样本与固定历史样本分别读'})).toHaveTextContent('缺报价2只；无成交2只')
  expect(screen.getByRole('complementary')).toHaveTextContent('1只有成交但报价缺失')
  expect(screen.getByRole('complementary')).toHaveTextContent('72只有成交股票已全部核对')
  expect(screen.getByRole('complementary')).toHaveTextContent('*ST美丽')

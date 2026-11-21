@@ -1,0 +1,94 @@
+{
+  "version": "official_mirror_recovery_queue_v1",
+  "observed_at": "2026-11-21T02:02:02.957662+00:00",
+  "frozen_asset_sha256": "77ece10df1b70da14007a415b6564bc70c4628d413c8be116771b8c41b5ca292",
+  "rows": [
+    {
+      "symbol": "600777",
+      "announcement_id": "SINA-12401725",
+      "title": "山东新潮能源股份有限公司关于撤销退市风险警示及其他风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-19/12401725.PDF",
+      "sha256": "4263fead061a77a611c1e3967283c4befb609a6cf04a84b7077d3adb6fd9f731",
+      "official_original_status": "script_challenge_not_pdf"
+    },
+    {
+      "symbol": "603261",
+      "announcement_id": "SINA-12391668",
+      "title": "成都立航科技股份有限公司关于撤销退市风险警示暨停复牌的公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-13/12391668.PDF",
+      "sha256": "422c5d14b84279c38ceea2746e79c08c5561de686efd473712d0077602337c20",
+      "official_original_status": "not_attempted_this_round"
+    },
+    {
+      "symbol": "603389",
+      "announcement_id": "SINA-12419797",
+      "title": "关于撤销退市风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-30/12419797.PDF",
+      "sha256": "10466cabebe275d9cf5b2b182d30f5d06dbd2ec7551483e27f0925e58ef65d22",
+      "official_original_status": "not_attempted_this_round"
+    },
+    {
+      "symbol": "603721",
+      "announcement_id": "SINA-12361633",
+      "title": "中广天择传媒股份有限公司关于撤销退市风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-5/2026-05-30/12361633.PDF",
+      "sha256": "641918d419d67c646b8eab3dbf460d3b32e32b8d7403b3378224b21f1c63207b",
+      "official_original_status": "not_attempted_this_round"
+    },
+    {
+      "symbol": "603813",
+      "announcement_id": "SINA-12390955",
+      "title": "广东原尚物流股份有限公司关于撤销退市风险警示暨停牌的公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-6/2026-06-13/12390955.PDF",
+      "sha256": "1585c10325b09c99b8c765cd47721536dc8157a595180a51362d1ed815601db0",
+      "official_original_status": "not_attempted_this_round"
+    },
+    {
+      "symbol": "600360",
+      "announcement_id": "SINA-12649852",
+      "title": "吉林华微电子股份有限公司2026年半年度权益分派实施公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-10/2026-10-21/12649852.PDF",
+      "sha256": "7072f09867a6102bef1785994d0671fe3088a1e02430c4804f32b8c85ef8fafc",
+      "official_original_status": "not_attempted_this_round"
+    },
+    {
+      "symbol": "603580",
+      "announcement_id": "SINA-12483004",
+      "title": "艾艾精工2025年年度权益分派实施公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-8/2026-08-08/12483004.PDF",
+      "sha256": "48bec97729562211dc419930660cf0698c3e4ec62ece89c9a33ee153994e7a3e",
+      "official_original_status": "not_attempted_this_round"
+    },
+    {
+      "symbol": "603721",
+      "announcement_id": "SINA-12329033",
+      "title": "中广天择传媒股份有限公司2025年年度权益分派实施公告（发行人PDF镜像，官方原字节待补）",
+      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-5/2026-05-19/12329033.PDF",
+      "sha256": "cb782f050646f2b31f74711b2aaed93a5b32e410a13d635e8c3d3a39a4a0a382",
+      "official_original_status": "not_attempted_this_round"
+    }
+  ],
+  "xinchao_candidate": {
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-06-19/600777_20260619_BPQ4.pdf",
+    "discovered_via": "https://3g.zszq.com/ywgg/bulletin?id=AIQuYbFB",
+    "observed_at": "2026-11-21T02:01:07.621418+00:00",
+    "expected_mirror_sha256": "4263fead061a77a611c1e3967283c4befb609a6cf04a84b7077d3adb6fd9f731",
+    "status": 200,
+    "final_url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-06-19/600777_20260619_BPQ4.pdf",
+    "sha256": "f723376b15bcbcaaa6ecd4e67facaf24d2651fe49399ab7db694b5cc4193a7bf",
+    "bytes": 3872,
+    "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/official_mirror_recovery/20261121",
+    "pdf_header": false,
+    "exact_mirror_bytes": false,
+    "content_encoding_detected": "gzip",
+    "decoded_sha256": "61fb6e4a134eca793872cc5bca0812ccbbeb1bdb5b5576ed27d884cc9c1c2053",
+    "decoded_bytes": 7373,
+    "decoded_pdf_header": false,
+    "outcome": "script_challenge_not_pdf",
+    "official_original_verified": false,
+    "raw_filename": "f723376b15bcbcaaa6ecd4e67facaf24d2651fe49399ab7db694b5cc4193a7bf.bin",
+    "decoded_filename": "61fb6e4a134eca793872cc5bca0812ccbbeb1bdb5b5576ed27d884cc9c1c2053.html"
+  },
+  "closed_gaps": 0,
+  "remaining_official_byte_gaps": 8
+}

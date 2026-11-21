@@ -1,0 +1,64 @@
+{
+  "version": "nov20_limit_reading_verification_v1",
+  "results": [
+    {
+      "path": "TENCENT_NOV20_MARKET_AUDIT_2026_11_21.json",
+      "sha256": "7ba9706479bb16e0edd13d6c215ad9e0fd7199c028d8f9fd2ffd56a276f9f7d4",
+      "verified": true
+    },
+    {
+      "path": "NOV20_SZSE_LIMIT_CROSSCHECK_2026_11_21.json",
+      "sha256": "f34ac9f0a302ec7c2aa3636fe1c8a375418b0619f0606410195967cbda8a82a9",
+      "verified": true
+    },
+    {
+      "path": "FIXED_NOV20_LIMIT_AUDIT_2026_11_21.json",
+      "sha256": "7345f8be2b2afafb1467ace999e2d8f9470e243bb00529417034348ef36a4809",
+      "verified": true
+    },
+    {
+      "path": "FIXED_LIMIT_TRANSITION_2026_11_21.json",
+      "sha256": "b1c4492f30e7d1533d5830f0a45c5faf893892f93c11653fd45c9900b5b77f5c",
+      "verified": true
+    },
+    {
+      "path": "FIXED_NOV20_GAP_CONTEXT_2026_11_21.json",
+      "sha256": "23cc97893e2ee12a9b1d7c13687c60c72cc0e707518c6ef124af23760831a37d",
+      "verified": true
+    },
+    {
+      "path": "web/src/tencentMarketDailyLimits.json",
+      "sha256": "5e66cff917efdb3696f22b657225973ce79b510091faeec197333488c2729672",
+      "verified": true
+    },
+    {
+      "path": "web/src/nov20SzseLimitComplete.json",
+      "sha256": "0becd0b5c8e0c4052c976f0d88db6482ab02e4530bbcc74cb5f8bc86d18596f0",
+      "verified": true
+    },
+    {
+      "path": "web/src/fixedNov20Limits.json",
+      "sha256": "70676f4f4ee7195ecc1986e82b24a280fe40acb0aac207d7928a54c40d5804e7",
+      "verified": true
+    },
+    {
+      "path": "web/src/fixedLimitTransition.json",
+      "sha256": "5b7e825e9de1e4dfba8ce6be4448c6e3c0f7541fe86ebc8c938281c6f1b22318",
+      "verified": true
+    },
+    {
+      "path": "web/src/fixedGapContext.json",
+      "sha256": "1ad8eb14f452ba79ccccc60b89ac20b66740c29176a60f874cbf9d8dc5017865",
+      "verified": true
+    }
+  ],
+  "verified_files": 10,
+  "new_source_requests": 0,
+  "new_research_records": 0,
+  "limitations": [
+    "Checks saved source bytes, computation and generated JSON; not live provider freshness",
+    "Does not independently certify supplier limits, legal ST completeness or executable exits",
+    "Does not run browser, frontend or full backend tests",
+    "Research append proof is historical, not a fresh database integrity audit"
+  ]
+}

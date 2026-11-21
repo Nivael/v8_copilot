@@ -28,3 +28,16 @@ it('keeps same-day price windows and early missing history distinct from zero',(
  expect(price).not.toHaveTextContent('-9.68%')
  expect(price).toHaveTextContent('不是危机概率')
 })
+it('updates the plain-language risk reading with the selected day and keeps actions uncalibrated',()=>{
+ render(<LongBreadthReplay/>);
+ const reading=()=>screen.getByRole('complementary',{name:'当天风险怎样理解'})
+ expect(reading()).toHaveTextContent('2026-11-20')
+ expect(reading()).toHaveTextContent('指数近5日-6.19%')
+ fireEvent.click(screen.getByText('把市场观察变成行动前，还要核对什么？'))
+ expect(reading()).toHaveTextContent('未取得你的当前持仓')
+ expect(reading()).toHaveTextContent('尚无已验证的触发阈值')
+ fireEvent.change(screen.getByRole('combobox',{name:'长窗广度观察日'}),{target:{value:0}})
+ expect(reading()).toHaveTextContent('2026-07-01')
+ expect(reading()).toHaveTextContent('未取得可合并数值')
+ expect(reading()).not.toHaveTextContent('-6.19%')
+})

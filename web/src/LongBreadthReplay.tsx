@@ -1,3 +1,4 @@
+import {MarketRiskDayReading} from './MarketRiskDayReading'
 import {DailyMarketLimitPressure} from './DailyMarketLimitPressure'
 import {DailySTExitPressure} from './DailySTExitPressure'
 import {useState} from 'react'
@@ -17,6 +18,7 @@ export function LongBreadthReplay(){
   <p>先分清市场参与面、当日跌幅和持续时间。这里重建的是历史收盘状态，资料在事后取得，不证明当时已经能拿到这些完整数据，也不代表盘中预警。</p>
   <label>观察日 <select aria-label="长窗广度观察日" value={index} onChange={e=>setIndex(Number(e.target.value))}>{data.rows.map((r,i)=><option key={r.date} value={i}>{r.date}</option>)}</select></label>
   <div role="group" aria-label="逐日回放控制"><button type="button" disabled={index===0} onClick={()=>setIndex(i=>i-1)}>前一交易日</button><button type="button" disabled={index===data.rows.length-1} onClick={()=>setIndex(i=>i+1)}>后一交易日</button></div>
+  <MarketRiskDayReading date={row.date} advancingPct={row.advancing_pct} medianPct={row.median_return_pct} streak={row.streak} fiveDayPct={price?.five_day_pct??null} priceBound={priceBound}/>
   <p className="reading-lead">{row.date}，有成交股票中{row.advancing_pct.toFixed(1)}%上涨，个股涨跌中位数{percent(row.median_return_pct)}；{row.tail_pct.toFixed(1)}%跌幅至少5%。</p>
   <p>{row.streak?`从${row.weak_start}起，上涨股票在覆盖内连续${row.streak}日不足半数。`:'这一天上涨股票不低于半数，覆盖内连续偏弱计数归零。'}{row.third_day_first_signal?'今天刚达到沿用的连续三日示例条件。':row.streak>3?'三日条件此前已经达到，今天不是新的独立提示。':'尚未在当前连续段形成三日提示。'}</p>
   {priceBound?<aside aria-label="同日指数价格压力"><h4>同一天，指数跌了多深，波动有多大？</h4>

@@ -5,13 +5,13 @@ import data from './signalNextOpenReading.json'
 const original=data.signal_evidence_sha256
 afterEach(()=>{cleanup();data.signal_evidence_sha256=original})
 it('keeps the five quoted cases separate from ST groups and order execution',()=>{
- render(<SignalNextOpenReading/>);fireEvent.click(screen.getByText('11月16日提示后，五只跟踪比较股次日开盘怎样？'))
+ render(<SignalNextOpenReading/>);fireEvent.click(screen.getByText('六次提示后，五只跟踪比较股的开盘怎样？'))
  const r=screen.getByRole('region',{name:'提示后下一开盘核对'})
  expect(within(r).getAllByRole('row')).toHaveLength(6)
  expect(r).toHaveTextContent('600363.SH')
  expect(r).toHaveTextContent('141/142只成交报价配对，开盘在下限1只，收盘在下限10只')
  expect(r).toHaveTextContent('147/150只成交报价配对')
- expect(r).toHaveTextContent('其余五次的下一开盘未核')
+ expect(r).toHaveTextContent('早期五次共25个报价位置经两渠道核同')
  expect(r).toHaveTextContent('思科瑞为科创板')
  expect(r).toHaveTextContent('相对当日行情给出的前收参考')
  expect(r).toHaveTextContent('开盘和实际限价仍为供应商记录')
@@ -22,3 +22,14 @@ it('rejects another signal-source binding',()=>{
  expect(screen.getByRole('status')).toHaveTextContent('暂不展示')
  expect(screen.queryByRole('table')).not.toBeInTheDocument()
 })
+
+it('switches to the earlier raw quote day without inheriting Nov17 limit prices or group counts',()=>{
+ render(<SignalNextOpenReading/>);fireEvent.click(screen.getByText('六次提示后，五只跟踪比较股的开盘怎样？'));
+ fireEvent.change(screen.getByRole('combobox',{name:'提示后开盘观察日'}),{target:{value:'2026-07-09'}});
+ const r=screen.getByRole('region',{name:'提示后下一开盘核对'});
+ expect(within(r).getAllByRole('row')).toHaveLength(6);
+ expect(r).toHaveTextContent('14.7');expect(r).toHaveTextContent('1.93');
+ expect(r).toHaveTextContent('本次未核');expect(r).not.toHaveTextContent('141/142');
+ expect(r).toHaveTextContent('当前简称不回填当时ST身份');
+ expect(r).toHaveTextContent('不能据日内价格直接判断是否触及跌停');
+});

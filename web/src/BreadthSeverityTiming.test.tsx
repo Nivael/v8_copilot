@@ -25,3 +25,8 @@ it('withholds the comparison on another breadth source',()=>{
  expect(screen.getByRole('status')).toHaveTextContent('暂不合并')
  expect(screen.queryByRole('table')).not.toBeInTheDocument()
 })
+it('does not merge the historical comparison into another current date',()=>{
+ render(<BreadthSeverityTiming expanded asOf="2026-11-23"/>);
+ expect(screen.getByRole('status')).toHaveTextContent('暂不合并')
+ expect(screen.queryByRole('table')).not.toBeInTheDocument()
+})

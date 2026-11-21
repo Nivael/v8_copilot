@@ -3,6 +3,7 @@ import {cleanup,fireEvent,render,screen} from '@testing-library/react'
 import {MarketRiskQuestions} from './MarketRiskQuestions'
 import type {BreadthReading} from './readingTypes'
 import recent from './recentMarketBreadth.json'
+import severity from './breadthSeverityReading.json'
 const last=recent.rows[recent.rows.length-1]
 const data={as_of:recent.as_of,groups:[{observed_trading_stocks:last.trading,advancing:last.advancing,declining_5pct_or_more:last.declining_5pct_or_more}]} as BreadthReading
 afterEach(cleanup)
@@ -33,3 +34,13 @@ it('shows waiting cost and rebound counterexample before the indicator table',()
  expect(warning).toHaveTextContent('不是你的账户损失')
  expect(warning.compareDocumentPosition(screen.getByRole('table')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
 })
+
+it('does not attach the July example when the long-window evidence changes',()=>{
+ const original=severity.breadth_sha256;
+ try{
+  severity.breadth_sha256='changed';render(<MarketRiskQuestions data={data} onRead={()=>{}}/>);
+  expect(screen.queryByRole('button',{name:'核对冲击与三日确认的先后'})).not.toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('长窗冲击资料与当前截面尚未对应');
+  expect(screen.getByRole('table')).toHaveTextContent('51.9%');
+ }finally{severity.breadth_sha256=original}
+});

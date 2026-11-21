@@ -25,3 +25,14 @@ it('date inspection uses the selected day and the complete raw series stays expa
  expect(screen.getByRole('table',{name:'沪深同日有成交股票作比例分母，非账户收益'})).not.toBeVisible()
  fireEvent.click(screen.getByText('展开逐日数字'));expect(screen.getByRole('table',{name:'沪深同日有成交股票作比例分母，非账户收益'})).toBeVisible();expect(screen.getByRole('columnheader',{name:'中证全指当日'})).toBeVisible()
 })
+it('opens the severity comparison directly from the first-screen evidence answer',()=>{
+ render(<MarketBreadthReading data={data} priceAsOf="2026-11-20"/>);
+ expect(screen.getByRole('complementary',{name:'风险信号怎样读'})).toHaveTextContent('39.5%')
+ fireEvent.click(screen.getByRole('button',{name:'核对冲击与三日确认的先后'}));
+ expect(screen.getByRole('button',{name:'冲击与持续性怎样分开看？'})).toHaveAttribute('aria-pressed','true')
+ expect(screen.getByRole('region',{name:'当日冲击与连续确认'})).toBeVisible()
+ expect(screen.getByRole('table',{name:'全部符合示例的日期，包含尚未三日确认的情况'})).toBeVisible()
+ expect(screen.queryByRole('heading',{name:'先分清风险来自哪里'})).not.toBeInTheDocument()
+ fireEvent.click(screen.getByRole('button',{name:'先看风险线索'}));
+ expect(screen.getByRole('heading',{name:'先分清风险来自哪里'})).toBeVisible()
+})

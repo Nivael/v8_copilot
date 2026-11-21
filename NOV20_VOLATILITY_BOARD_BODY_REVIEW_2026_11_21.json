@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "catalog_review_sha256": "5871ff1c351895142077b0e275c4ea1b3fda35110dfc4719868244018158d95c",
+  "sources": [
+    {
+      "announcement_id": "1225679818",
+      "adjunct_url": "finalpage/2026-11-20/1225679818.PDF",
+      "title": "股票交易异常波动公告",
+      "codes": [
+        "000010"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679818.PDF",
+      "sha256": "6e586fcbd4d1ead580c912c7dea46731022a98fe8a8c6d53fc6537f42c224b38",
+      "bytes": 92881,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/6e586fcbd4d1ead580c912c7dea46731022a98fe8a8c6d53fc6537f42c224b38.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:10:23.569791+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "7b2dc003b33eb24eee7823c2dbe42e9abb2ffe5cc0d65f7b324b1ede3eeae00b",
+        "2": "58ef7fe6fde8aa62dd24965296567a33c5fa55435e700d7e1553a0622643d9db"
+      }
+    },
+    {
+      "announcement_id": "1225680178",
+      "adjunct_url": "finalpage/2026-11-20/1225680178.PDF",
+      "title": "关于公司股价异动的公告",
+      "codes": [
+        "000488"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225680178.PDF",
+      "sha256": "ef541625957cf2315f4a717261ef7f3ac3d3a4dccf9f5ed6958d27bcd88ebe49",
+      "bytes": 86629,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/ef541625957cf2315f4a717261ef7f3ac3d3a4dccf9f5ed6958d27bcd88ebe49.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:10:23.727699+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "c3ecfc72a6a1bdbff76277f905d9bc9a8694f9d0dfa3922d04e30da00148bb7b",
+        "2": "f4f042383b2bad88b809e4cd271e63aa6290940b861e68a972dae15615476533"
+      }
+    },
+    {
+      "announcement_id": "1225679891",
+      "adjunct_url": "finalpage/2026-11-20/1225679891.PDF",
+      "title": "关于公司股票交易异常波动情况的公告",
+      "codes": [
+        "000711"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679891.PDF",
+      "sha256": "86224d8fc331a6f7b6514bde7431e16b91dc467e6d50bd8b015c299f4863e8e0",
+      "bytes": 154876,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/86224d8fc331a6f7b6514bde7431e16b91dc467e6d50bd8b015c299f4863e8e0.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:10:23.853512+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "b42441316199cd44ab06c86fae6b8a8efe2f4c7b3ef69206c15472eeccb748a5",
+        "2": "39c6198bfd9d57cdd18b623eae8ef7c6acbe7a73fb357dad35ee60f182a758d3"
+      }
+    },
+    {
+      "announcement_id": "1225679945",
+      "adjunct_url": "finalpage/2026-11-20/1225679945.PDF",
+      "title": "第八届董事会第二十五次会议决议公告",
+      "codes": [
+        "002168"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679945.PDF",
+      "sha256": "3862861606fe3ade5a4e5ab3d13a498f0beff98073e67599c34df6f76862d923",
+      "bytes": 236047,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/3862861606fe3ade5a4e5ab3d13a498f0beff98073e67599c34df6f76862d923.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:10:23.974908+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "e8b304d56a95dc5155d5240bdd35affe04a7e31b16385a58c86764705e95ff9f",
+        "2": "75b1b46f794a3f2a12020b68206665f553b5eeb6d142d2acf66b1239e67d9eca"
+      }
+    },
+    {
+      "announcement_id": "1225679972",
+      "adjunct_url": "finalpage/2026-11-20/1225679972.PDF",
+      "title": "第六届董事会第三十八次会议决议公告",
+      "codes": [
+        "002547"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679972.PDF",
+      "sha256": "92b06306a83efdd558889a4863b3e1b48ebd49fd0c43716f4e7b08f5c0c4f5d2",
+      "bytes": 178264,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/92b06306a83efdd558889a4863b3e1b48ebd49fd0c43716f4e7b08f5c0c4f5d2.pdf",
+      "pages": 4,
+      "observed_at": "2026-11-21T00:10:24.101796+00:00",
+      "visual_physical_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "visual_image_sha256": {
+        "1": "4cdf40bb45f4d609d1819f01a0cf4880fc47c492e639bb12d55779cb19246b28",
+        "2": "cf570a0930c83d1a97c5ebf0dfea0722def6502a5176b0ae1bede8b495dcc548",
+        "3": "db24d8446bbbe02ba50de623a383dffee8fb16602f7b8fc7511579abf7674bb5",
+        "4": "b9a08843b400876a49f2a09d0fb4bb93b29498e318dbe516bace9d78c1e8221f"
+      }
+    },
+    {
+      "announcement_id": "1225679616",
+      "adjunct_url": "finalpage/2026-11-20/1225679616.PDF",
+      "title": "第四届董事会第十次会议决议公告",
+      "codes": [
+        "603272"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2026-11-20/1225679616.PDF",
+      "sha256": "08fccf134d20e8de0c1d54793cf513d51f446fac0be8efd64720c94ee9876843",
+      "bytes": 117365,
+      "source_store": "/Volumes/Leibniz/dev/st_research/local_data/v8_copilot/market_risk/nov20_announcement_bodies/20261121/08fccf134d20e8de0c1d54793cf513d51f446fac0be8efd64720c94ee9876843.pdf",
+      "pages": 2,
+      "observed_at": "2026-11-21T00:10:24.266679+00:00",
+      "visual_physical_pages": [
+        1,
+        2
+      ],
+      "visual_image_sha256": {
+        "1": "59fb1d47aa215fda66e9413679fa4c3b9ef863fad3b6a65727830d1906bc16af",
+        "2": "cb2414cddd48af3671ce2bef33ebdc7eb0968ec5bf82947870b1e6145bce2cbd"
+      }
+    }
+  ],
+  "text_pages": 14,
+  "critical_visual_pages": 14,
+  "findings": [
+    {
+      "code": "000010",
+      "announcement_id": "1225679818",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "美丽披露18—19日上涨偏离触发异动，重申增持正在实施；庭外重组申请获服务中心受理，但截至公告未进入预重整或重整等破产程序。",
+      "boundary": "审计及内控无法表示意见的影响消除仍在推进。公司自查称无未披露重大事项，不等于风险清零或股价上涨证明修复；落款19日与目录20日分开，不把本次重述算新的重组受理。"
+    },
+    {
+      "code": "000488",
+      "announcement_id": "1225680178",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "该文件明确针对200488晨鸣B在17—19日连续三日下跌偏离触发异动，虽然A股000488的目录也返回了它。",
+      "boundary": "不是A股异动触发事件，不将B股涨跌套到A股或计入A股事件窗口。公司称生产运行正常、无未披露重大事项属于截至披露的自查说明，不认证偿债或经营风险已解除；落款19日。"
+    },
+    {
+      "code": "000711",
+      "announcement_id": "1225679891",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "京蓝18—19日上涨偏离触发异动；公司明确靶材产线尚未量产、未产生相关收入和利润，量产良率与客户验证仍有不确定性。",
+      "boundary": "公司列19日市净率12.43、行业2.42为披露比较，不当独立估值或价格目标；三季扣非盈利不证明新靶材业务已贡献。正文公司名为铟靶新材（哈尔滨），证券简称仍列京蓝科技、代码000711，名称与状态分别核，不把历史固定样本称当日ST。"
+    },
+    {
+      "code": "002168",
+      "announcement_id": "1225679945",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "董事会审议1500万元关联框架及零元股权收购/4000万元未实缴义务，分别对应已核073、074号专项公告。",
+      "boundary": "这是同一交易的审批配套，不能把会议决议与专项公告重复累计为两次成交或收益；关联议案有一票回避，不把董事会通过当交割、实际订单或收入。"
+    },
+    {
+      "code": "002547",
+      "announcement_id": "1225679972",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "answer": "除已核售产与豁免事项，董事会还同意在先决条件落实后配合控股股东上海房产追加第二顺位抵押；公司称第一顺位不受减损。",
+      "boundary": "截至10月31日两笔应收分别28490.19万和8042.55万，房产2025年末公允值5089.20万。董事会同意附条件配合，不证明第二顺位已登记、融资已到账或应收已回收；估值也不是可回收现金。董责险全体董事回避、直接提交股东会，不写成董事会已通过该险购买。"
+    },
+    {
+      "code": "603272",
+      "announcement_id": "1225679616",
+      "pages": [
+        1,
+        2
+      ],
+      "answer": "联翔董事会通过担保额度分类调整并提议召开临时股东会，明确担保调整仍待股东会审议，回指已核084号专项公告。",
+      "boundary": "审批配套不是新增实际担保或已经完成股东会；不因多份文件把同一额度变化算成多次独立风险验证。"
+    }
+  ],
+  "calculation_checks": {
+    "chunxing_receivable_parts_wan": [
+      "28490.19",
+      "8042.55"
+    ],
+    "chunxing_receivable_sum_wan": "36532.74",
+    "chunxing_property_fair_value_wan": "5089.20",
+    "fair_value_date": "2025-12-31",
+    "boundary": "旧估值、应收余额、融资用途与现金回收不同口径，不以差额推损失或保证回收比例"
+  },
+  "classification": {
+    "1225680178": "B_share_specific_notice_not_A_share_trigger",
+    "1225679945": "same_transaction_approval_support",
+    "1225679616": "same_guarantee_approval_support",
+    "1225679972": "board_resolution_with_additional_substantive_collateral_item"
+  },
+  "limits": [
+    "公司自查不是独立认证；未取法院/不动产登记或银行执行原件",
+    "董事会决议可能包含专项公告标题未显示的其他事项，不能预设全部重复",
+    "披露异常波动不代表识别了行情因果",
+    "公告页数与核看页数不增加独立经验验证"
+  ]
+}

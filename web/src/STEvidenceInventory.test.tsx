@@ -11,7 +11,7 @@ it('searches the deduplicated inventory with bounded pagination',()=>{
 })
 
 it('keeps mirror limitations visible even when the selected title omits them',()=>{
- render(<STEvidenceInventory data={data}/>);fireEvent.click(screen.getByText('查找逐文件清单'));fireEvent.change(screen.getByRole('textbox'),{target:{value:'SINA-'}});const table=screen.getByRole('table',{name:'文件身份与保存范围'});expect(within(table).getAllByRole('row')).toHaveLength(9);expect(within(table).getAllByText('新浪镜像保存件；官方原件字节待补核。')).toHaveLength(8);expect(within(table).getAllByText('核对文件身份')).toHaveLength(8);
+ render(<STEvidenceInventory data={data}/>);fireEvent.click(screen.getByText('查找逐文件清单'));fireEvent.change(screen.getByRole('textbox'),{target:{value:'SINA-'}});const table=screen.getByRole('table',{name:'文件身份与保存范围'});expect(within(table).getAllByRole('row')).toHaveLength(9);expect(within(table).getAllByText('新浪镜像保存件；官方原件字节待补核。')).toHaveLength(7);expect(within(table).getAllByText('核对文件身份')).toHaveLength(8);
 })
 it('exposes the exact saved identity without inferring official verification from a hash',()=>{
  render(<STEvidenceInventory data={data}/>);fireEvent.click(screen.getByText('查找逐文件清单'));fireEvent.change(screen.getByRole('textbox'),{target:{value:'1225669888'}});fireEvent.click(screen.getByText('核对文件身份'));const entry=data.documents.find(d=>d.announcement_id==='1225669888')!;expect(screen.getByText('保存文件摘要（SHA-256）：'+entry.sha256)).toBeVisible();expect(screen.getByText('摘要用于区分保存文件，不单独证明来源官方、正文完整或已经人工核读。')).toBeVisible();expect(screen.queryByText('新浪镜像保存件；官方原件字节待补核。')).not.toBeInTheDocument();
@@ -31,4 +31,12 @@ it('does not attach a later report to a replaced mirror identity',()=>{
  fireEvent.click(screen.getByText('查找逐文件清单'));
  fireEvent.change(screen.getByRole('textbox'),{target:{value:'SINA-12361633'}});
  expect(screen.queryByText('后来官方报告是否确认了实施日期？')).not.toBeInTheDocument();
+})
+
+it('recovers only the exact Huawei mirror identity and leaves other debts intact',()=>{
+ render(<STEvidenceInventory data={data}/>);fireEvent.click(screen.getByText('查找逐文件清单'));
+ fireEvent.change(screen.getByRole('textbox'),{target:{value:'SINA-12649852'}});
+ expect(screen.getByText(/原新浪镜像保留；已补官方原件/)).toBeVisible();
+ expect(screen.queryByText('新浪镜像保存件；官方原件字节待补核。')).not.toBeInTheDocument();
+ expect(screen.getByRole('link',{name:'官方实施公告 ↗'})).toHaveAttribute('href','https://static.cninfo.com.cn/finalpage/2026-10-21/1225611990.PDF');
 })

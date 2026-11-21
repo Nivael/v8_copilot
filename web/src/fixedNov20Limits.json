@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-20",
+  "members": 150,
+  "paired": 146,
+  "gaps": [
+    {
+      "code": "000016.SZ",
+      "status": "missing_quote20"
+    },
+    {
+      "code": "002122.SZ",
+      "status": "nontrading20"
+    },
+    {
+      "code": "002717.SZ",
+      "status": "nontrading20"
+    },
+    {
+      "code": "002731.SZ",
+      "status": "missing_quote20"
+    }
+  ],
+  "hits": {
+    "open_lower": [
+      "000826.SZ"
+    ],
+    "touch_lower": [
+      "000826.SZ",
+      "002082.SZ",
+      "002656.SZ",
+      "600180.SH",
+      "600238.SH",
+      "603359.SH",
+      "603378.SH",
+      "603843.SH"
+    ],
+    "close_lower": [
+      "600180.SH",
+      "600238.SH"
+    ],
+    "one_price_lower": []
+  },
+  "market_audit_sha256": "7ba9706479bb16e0edd13d6c215ad9e0fd7199c028d8f9fd2ffd56a276f9f7d4",
+  "cohort_evidence_sha256": "d8cfdc279536967e5e39a5c688cef2ee5d4dabfe5ea4c7a619fa13b352085e0e",
+  "evidence_sha256": "7345f8be2b2afafb1467ace999e2d8f9470e243bb00529417034348ef36a4809"
+}

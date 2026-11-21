@@ -17,3 +17,8 @@ def test_full_saved_source_replay_preserves_all_members_and_unresolved_categorie
     assert result['hits']['open_lower']==['000826.SZ']
     assert result['hits']['one_price_lower']==[]
     assert prior_path.read_bytes()==before
+
+
+def test_reading_matches_replayed_fixed_limit_audit():
+    from build_fixed_nov20_limit_reading import reading as projected
+    assert projected()==json.loads(Path('web/src/fixedNov20Limits.json').read_text())
